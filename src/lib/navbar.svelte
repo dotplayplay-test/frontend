@@ -3,27 +3,39 @@ import "../styles/navbar/mobileNavbar.css"
 import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
+export let styles;
+
 </script>
 
-<div class="Navbar">
-    <div class=Navbar-container>
-        <div class="logo">
-            <a href="/">DOTPLAYPLAY</a>
-        </div>
-        <div class="logins">
-            <div class="login">
-                <a href="/login">Login</a>
-            </div>
-            <div class="signup">
-                <a href="/signup">Signup</a>
-            </div>
-            <div class="chat" >
-                <div class="icon">
-                    <img src="https://www.linkpicture.com/q/play_2.png" alt="" />
+<div class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; `} >
+    <div class="header-wrap">
+        <div class="header">
+            <div class="sc-hGnimi ftyLxH left">
+                <div class="sc-iukxot jivBdD logo-pc">
+                    <img alt="logo" class="logo-com" src="https://static.nanogames.io/assets/logo.cebcfe09.png">
                 </div>
-                <div class="num">
-                    <p>1</p>
+                <div class="sc-jtXEFf jsyNKG search-pc">
+                    <div class="search-input-wrap-pc">
+                        <div class="sc-kTLmzF dwaOxj">
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                                <use xlink:href="#icon_Search"></use>
+                            </svg>
+                            <input placeholder="Game name | Provider | Category Tag" value="">
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="login-in">
+                <p>Sign in</p>
+                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                    <div class="button-inner">Sign up</div>
+                </button>
+                <button id="chat" class="sc-eicpiI PGOpB">
+                    <div class="chat-btn ">
+                        <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+                        <div class="sc-fotOHu gGSOuF badge ">26</div>
+                    </div>
+                </button>
             </div>
         </div>
     </div>
@@ -60,3 +72,4 @@ import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
         </div>
     </div>
 </div>
+

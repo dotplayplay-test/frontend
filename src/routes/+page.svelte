@@ -25,7 +25,6 @@
                         disableOnInteraction: false,
                         }} space-between="30"
                         >
-    
                         <swiper-slide>
                             <div class="image-content">
                                 <img src="https://img2.nanogames.io/banner/40/b2/cb/164300069674127.png" alt="">
