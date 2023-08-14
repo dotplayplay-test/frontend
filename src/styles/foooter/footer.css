@@ -1,0 +1,147 @@
+.footer-general {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: rgb(28, 30, 34);
+}
+
+.footer-general-contaner {
+    display: flex;
+    width: 100%;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.footer-logo {
+    width: 100%;
+}
+
+.footer-logo .logo {
+    padding: 1px 25px;
+}
+
+.footer-text-content a {
+    color: var(--text-color);
+}
+
+.footer-text-content a:hover {
+    color: var(--primary-color);
+}
+
+.footer-logo img {
+    width: 120px;
+}
+
+.footer-contacts {
+    display: flex;
+    width: 100%;
+}
+
+.footer-contacts-text {
+    width: 100%;
+}
+
+.footer-text1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-text1 h4 {
+    font-weight: 600;
+    color: #757585;
+    font-size: 12px;
+    line-height: 25px;
+    padding-left: 25px;
+    padding-top: 25px;
+    letter-spacing: 1px;
+}
+
+.footer-text2 {
+    color: #ffffff;
+    padding: 60px;
+    font-weight: 600;
+    line-height: 30px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.footer-help {
+    font-weight: 600;
+    padding: 50px;
+    line-height: 45px;
+    font-size: 20px;
+}
+
+.footer-help h4 {
+    color: #757585;
+    font-size: 12px;
+}
+
+.footer-help h4 a {
+    color: var(--primary-color);
+    font-size: 12px;
+}
+
+.footer-last-row h4 {
+    color: #605f70;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    color: #757585;
+    font-size: 12px;
+}
+
+.footer-last-row2 h4 {
+    color: #9593a0;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 12px;
+}
+
+.footer-last {
+    display: flex;
+    border-top: 1px solid #9593a01f;
+    ;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    padding-right: 18px;
+}
+
+.footer-last-row2 {
+    display: flex;
+    align-items: center;
+}
+
+.footer-top-arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(53, 60, 66, 0.4);
+    color: rgb(153, 164, 176);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 14px;
+    line-height: normal;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.footer-top-arrow svg {
+    transform: rotate(270deg);
+
+}

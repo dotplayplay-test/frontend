@@ -1,0 +1,257 @@
+.jzbUmw {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0px;
+}
+.ePAxUv {
+    margin-top: 7.375rem;
+}
+.gQxvnl {
+    background-color: rgb(30, 32, 36);
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    border-radius: 0px;
+    position: relative;
+}
+.gQxvnl .banner-head {
+    font-size: 0px;
+    position: relative;
+}
+.gQxvnl .banner-head .vip-bc-img {
+    width: 100%;
+    min-height: 12.5rem;
+}
+.gQxvnl .banner-head .vip-desc {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(245, 246, 247);
+    width: 57%;
+    left: 42%;
+}
+.gQxvnl .banner-head .vip-desc .vip-club-tit {
+    font-weight: bold;
+}
+.gQxvnl .banner-head .vip-desc {
+    position: absolute;
+    width: 50%;
+    top: 0px;
+    height: 100%;
+    left: 40%;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(245, 246, 247);
+}
+.gQxvnl .banner-head .vip-desc {
+    width: 57%;
+    left: 42%;
+}
+.gQxvnl .banner-head .vip-desc .vip-club-tit {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+.gQxvnl .banner-head .vip-desc .vip-club-desc {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1rem;
+}
+
+.jzbUmw .center-cont {
+    position: relative;
+    margin-top: 1.25rem;
+    width: 100%;
+}
+.jzbUmw .svip-title {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    margin-top: 2rem;
+    padding-left: 0.625rem;
+    font-weight: bold;
+    color: rgb(245, 246, 247);
+}
+.bxRPMC {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0px;
+}
+.bxRPMC {
+    width: auto;
+    overflow-x: auto;
+    margin: 0.625rem 0px;
+    padding-bottom: 0px;
+}
+.Ybvgo {
+    display: flex;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    left: 0px;
+    padding: 0px 0.625rem;
+    overflow-x: auto;
+    width: auto;
+}
+.Ybvgo .flag-wrap {
+    width: 9.375rem;
+    min-height: 15.625rem;
+    margin-bottom: 0.9375rem;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 0.5625rem;
+    opacity: 0.5;
+    flex: 0 0 9.375rem;
+    padding: 0.625rem;
+    background: url(https://static.nanogames.io/assets/flag_bg.fcc40855.png) 0% 0% / 100% 100% no-repeat;
+}
+.Ybvgo .flag-wrap.open {
+    opacity: 1;
+}
+
+.Ybvgo .flag-wrap .top {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 0px 0.875rem 0px 0.625rem;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.Ybvgo .flag-wrap .top .top-lock {
+    text-align: left;
+    color: rgb(245, 246, 247);
+    font-size: 0.75rem;
+    transform: scale(0.85);
+}
+
+.Ybvgo .flag-wrap .top .tag-img {
+    width: 1.375rem;
+    height: 1.375rem;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: rgb(49, 52, 58);
+    font-weight: bold;
+}
+.Ybvgo .flag-wrap .flag-img-wrap {
+    margin: 0px auto;
+    width: 6.25rem;
+    border-radius: 50%;
+}
+.Ybvgo .flag-wrap .flag-img-wrap {
+    margin: 0px auto;
+    width: 6.25rem;
+    border-radius: 50%;
+}
+.Ybvgo .flag-wrap .flag-img-wrap .flag-img {
+    height: 6.25rem;
+    display: inline-block;
+    vertical-align: top;
+}
+.Ybvgo .flag-wrap .flag-box .flag-tit {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin: 0.3125rem 0px;
+    color: rgb(245, 246, 247);
+    white-space: nowrap;
+}
+.Ybvgo .flag-wrap .flag-box .flag-desc {
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    margin-top: 0.75rem;
+}
+.jzbUmw .bot-other {
+    position: relative;
+}
+.jzbUmw .bot-other .svip-title {
+    padding: 0px 0.875rem;
+}
+.jzbUmw .svip-title {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    margin-top: 2rem;
+    padding-left: 0.625rem;
+    font-weight: bold;
+    color: rgb(245, 246, 247);
+}
+.jzbUmw .bot-other .card-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    margin-top: 1.5rem;
+}
+.jzbUmw .bot-other .card-wrap {
+    padding: 0px 0.75rem;
+}
+.jzbUmw .bot-other .card-wrap .card {
+    width: 48.5%;
+    padding-bottom: 0.75rem;
+}
+.jzbUmw .bot-other .card-wrap .card .card-cont {
+    border-radius: 1.25rem;
+    background: rgba(49, 52, 58, 0.8);
+}
+
+.jzbUmw .bot-other .card-wrap .card .card-cont .card-img-wrap {
+    font-size: 0px;
+    border-radius: 1.25rem 1.25rem 0px 0px;
+}
+.jzbUmw .bot-other .card-wrap .card .card-cont .card-img-wrap .card-img {
+    width: 100%;
+    height: auto;
+}
+.jzbUmw .bot-other .card-wrap .card .card-cont .card-box {
+    padding: 0px 0.625rem;
+    min-height: 10rem;
+    position: relative;
+    border-radius: 0px 0px 0.625rem 0.625rem;
+}
+.jzbUmw .bot-other .card-wrap .card .card-cont .card-box .card-title {
+    padding: 0px;
+    line-height: 1rem;
+    font-size: 0.75rem;
+}
+.jzbUmw .bot-other .card-wrap .card .card-cont .card-box .card-desc {
+    position: absolute;
+    top: 2rem;
+    left: 0px;
+    font-size: 0.75rem;
+    padding: 0px 0.625rem;
+    width: 111.11%;
+    transform: scale(0.9);
+}
+
+.jzbUmw .foot-desc {
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.75rem;
+    padding: 0px 1.25rem;
+    line-height: 1rem;
+    text-align: center;
+}
+.jzbUmw .foot-desc > div:first-child {
+    padding: 0px 0.75rem;
+}
+.jzbUmw .foot-desc > div:first-child {
+    color: rgb(245, 246, 247);
+}
+.jzbUmw .foot-desc > div {
+    margin-bottom: 0.25rem;
+}
+.jzbUmw .foot-desc > div {
+    margin-bottom: 0.25rem;
+}

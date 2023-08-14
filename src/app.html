@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+		<meta name="viewport" content="width=device-width" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+		<title>DOTPLAYPLAY</title>
+
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+				font-family: Poppins;
+				text-decoration: none;
+				box-sizing: border-box;
+			}
+			body{
+				padding: 0;
+				margin: 0;
+				background-color: #24262b;
+			}
+
+			body, input, textarea, a, button {
+				font-family: Montserrat,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+			}
+
+			button {
+				border: none;
+				padding: 0;
+				user-select: none;
+				cursor: pointer;
+				background-color: transparent;
+			}
+
+			body, input, textarea, a, button {
+				color: var(--text-color);
+			}
+			:root {
+				--text-color: rgba(153,164,176,.8);
+				--primary-color: #43b309;
+				--background-color: #24262b;
+				--placeholder-color: #75808c;
+				--autofill-color: #f5f6f7;
+				--scroll-color: #24262B;
+			}
+			.ttu {
+				text-transform: uppercase;
+			}
+
+			/*=========================================================== Main screen ================================================ */
+			@media only screen and ( min-width : 650px) {
+				.mobile-navbar {
+					display: none;
+				}
+				.side-barmobile{
+					display: none;
+				}
+				#right-bar{
+					width: 82%;
+					height: 100vh;
+				}
+				#mobile-home{
+					display: none;
+				}
+				.menubar{
+					display: none;
+				}
+				.lottery-mobile{
+					display: none;
+				}
+
+				header{
+					position: relative;
+					width: 100%;
+					height: 4rem;
+				}
+				main{
+					width: 100%;
+					margin: 10px 0;
+				}
+				.app{
+					position: relative;
+					display: flex;
+					transition: 0.4s ease-in;
+				}
+				#side-bar{
+					width: 240px;
+					height: 100vh;
+					background: var(--background-color);
+				}
+				#menu{
+					display: block;
+					width: 0.1764%;
+					position: relative;
+				}
+				.menu{
+					border: none;
+					width: 1.875rem;
+					height: 1.875rem;
+					border-radius: 0.9375rem;
+					background-color: rgb(26, 28, 32);
+					box-shadow: transparent 0px 2px 4px 0px;
+					z-index: 203;
+					position: fixed;
+					cursor: pointer;
+					top: 16px;
+					left: 224px;
+					transition: left 0.2s linear 0s;
+				}
+				.menu:hover{
+					background-color: rgb(46, 49, 56);
+				}
+				.menu img{
+					width: 0.625rem;
+					height: 0.625rem;
+				}
+				footer{
+					padding: 0;
+					margin: 0;
+					width: 100%;
+				}
+				.vip-mobile-page{
+					display: none;
+				}
+			}
+			/* ============================= mobile screen ====================================================== */
+			@media only screen and ( max-width : 650px) {
+				.Navbar{
+					display: none;
+				}
+				.side-bar{
+					display: none;
+				}
+				#right-bar{
+					width: 100%;
+					height: 100vh;
+				}
+				.menu{
+					display: none;
+				}
+				#mobile-home{
+				    margin-top: 3.175rem;	
+				}
+				.home{
+					display: none;
+				}
+				.footer-general{
+					display: none;
+				}
+				#right-bar{
+					width: 100%;
+				}
+				.lottery-page{
+					display: none;
+				}
+				.casino-page {
+					display: none;
+				}
+				.vip-main-page{
+					display: none;
+				}
+			}
+
+		</style>
+
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+
+	<!-- Swiper JS -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+	</body>
+</html>

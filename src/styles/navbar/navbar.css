@@ -1,0 +1,88 @@
+.Navbar{
+    height: 4rem;
+    position: fixed;
+    z-index: 101;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    background-color: rgb(36, 38, 43);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.197);
+    transition: all 0.2s linear 0s;
+  }
+  .Navbar-container{
+    padding-left: 0px;
+    display: flex;
+  }
+  .Navbar-container .logo{
+    padding: 15px 25px;
+    width: 72%;
+  }
+  .Navbar-container .logo a{
+    text-decoration: none;
+    color:  #F17140;
+    font-weight: 900;
+    font-size: 23px;
+  }
+  .Navbar-container .login{
+    padding-right: 10px;
+    padding-top: 16px;
+  }
+  .logins{
+    display: flex;
+    gap: 20px;
+  }
+  .Navbar-container .login a{
+    color: #43b309;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.09em;
+  }
+  .Navbar-container .signup{
+    padding: 16px;
+  }
+  .Navbar-container .signup a{
+    background: #43b309;
+    font-weight: 500;
+    color: #f5f6f7;
+    padding: 9px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    letter-spacing: 0.09em;
+
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(67, 179, 9);
+    background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
+  }
+  .Navbar-container .chat{
+    display: flex;
+    position: relative;
+  }
+  .Navbar-container .chat .icon{
+    padding: 18px 25px;
+  }
+  .Navbar-container .chat .icon img{
+    width: 20px;
+  }
+  .Navbar-container .chat .num{
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top:5px;
+    right: 7px;
+    background: #43b309;
+    display: flex;
+    border-radius: 50%;
+    color: #f5f6f7;
+    font-size: 11px;
+    padding: 3px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media only screen and (min-width: 1300px){
+    .Navbar-container .logo{
+      padding: 9px 30px;
+      width: 78%;
+    }
+  }

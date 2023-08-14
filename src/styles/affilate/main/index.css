@@ -1,0 +1,652 @@
+.casino-page {
+    overflow: auto;
+    padding: 0px 20px;
+}
+
+.fnthVB.casino-header {
+    background-color: rgb(36, 38, 43);
+    margin: 0px -1.25rem;
+    position: relative;
+    padding: 0px 1.25rem;
+    border-bottom: 1px solid rgb(46, 49, 56);
+}
+
+.fnthVB .header-sub {
+    height: 60px;
+    max-width: 1328px;
+    margin: 0px auto;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fnthVB .header-sub .m-item.rules {
+    margin-right: 1.875rem;
+}
+
+.fnthVB .header-sub .m-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.sc-gsDKAQ {
+    margin-right: 0.625rem;
+}
+
+.hxODWG {
+    width: 1.4em;
+    height: 1.4em;
+    fill: rgba(153, 164, 176, 0.6);
+}
+
+.fnthVB .header-sub .m-item span {
+    margin-left: 0.625rem;
+}
+
+.ewdXwg .m-casino::before {
+    content: "";
+    width: 100%;
+    height: 106px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: url(https://static.nanogames.io/assets/my-casino.925e409c.png) center 20px / 176px no-repeat;
+}
+
+.ewdXwg .m-casino {
+    width: 320px;
+    height: 416px;
+    border-radius: 20px;
+    background-image: linear-gradient(rgb(159, 31, 244), rgb(62, 14, 95));
+    padding: 106px 32px 0px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.ttu {
+    text-transform: uppercase;
+}
+
+.ewdXwg .spec {
+    display: none;
+}
+
+.ewdXwg .new {
+    display: block;
+    font-size: 14px;
+    text-align: center;
+    background-image: conic-gradient(from 1turn, rgb(232, 153, 6), rgb(246, 199, 34));
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    height: 44px;
+    border-radius: 22px;
+    margin-top: 1.5rem;
+}
+
+.ewdXwg .tip {
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.welcome .sc-bnOPBZ .tip {
+    white-space: normal;
+    font-size: 24px;
+    line-height: 1.22;
+}
+
+.welcome .sc-bnOPBZ .m-casino {
+    height: 317px;
+    background-image: linear-gradient(rgb(159, 31, 244), rgba(49, 52, 60, 0));
+}
+
+.kguWsM>.banner {
+    height: 464px;
+    max-width: 1328px;
+    margin: 0px auto;
+    background-image: radial-gradient(circle at 92% -19%, rgb(163, 20, 220), rgb(123, 16, 185) 20%, rgb(49, 52, 60) 158%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+    position: relative;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.kguWsM>.banner .bokeh {
+    background: url(https://static.nanogames.io/assets/banner.bokeh.fa3a37e6.png) center center / auto 62% no-repeat;
+}
+
+.kguWsM>.banner .banner-layer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.ewdXwg {
+    width: 790px;
+    height: 100%;
+    margin: 0px auto;
+    padding-top: 23px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.kguWsM>.banner .character.welcome {
+    background-image: url(https://static.nanogames.io/assets/banner.welcome.character.ec0bae0b.png);
+}
+
+.kguWsM>.banner .character {
+    background: url(https://static.nanogames.io/assets/banner.character.ce48e661.png) center center / auto 100% no-repeat;
+}
+
+.kguWsM>.banner .management {
+    position: absolute;
+    right: 32px;
+    top: 23px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background-color: rgb(152, 30, 234);
+    height: 44px;
+    line-height: 44px;
+    padding: 0px 20px;
+    border-radius: 22px;
+    color: rgb(255, 255, 255);
+}
+
+.kguWsM>.banner .management .icon {
+    margin-right: 5px;
+    color: rgb(255, 255, 255);
+}
+
+.hxODWG {
+    width: 1.4em;
+    height: 1.4em;
+    fill: rgba(153, 164, 176, 0.6);
+}
+
+.kguWsM .button-create {
+    position: relative;
+    transform: translateY(-50%);
+    margin-bottom: -40px;
+}
+
+.kguWsM .button {
+    width: 350px;
+    height: 50px;
+    display: block;
+    margin: 0px auto;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.fnKcEH.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(67, 179, 9);
+    background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
+}
+
+.cBmlor {
+    display: block;
+    width: 100%;
+    border-radius: 6.25rem;
+    height: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
+
+.cBmlor > .button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.kguWsM > .container > .section.why {
+    margin-top: 60px;
+}
+
+.kguWsM>.container>.section:first-child {
+    margin-top: 60px;
+}
+
+.kguWsM>.container>.section.why > .title {
+    font-size: 25px;
+}
+
+.kguWsM .section>.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.esTNSq {
+    display: flex;
+    padding: 0px 54px;
+}
+
+.esTNSq .left {
+    background-image: url(https://static.nanogames.io/assets/why.left.53b9505a.png);
+}
+
+.kguWsM .theme {
+    color: rgb(67, 179, 9);
+}
+
+.esTNSq .desc {
+    margin: 15px 0px 20px;
+}
+
+.esTNSq .desc {
+    margin: 15px 0px 20px;
+}
+
+.kguWsM .theme {
+    color: rgb(67, 179, 9);
+}
+
+.esTNSq .right {
+    background-image: url(https://static.nanogames.io/assets/why.right.663ca386.png);
+    margin-left: 30px;
+}
+
+.esTNSq .left,
+.esTNSq .right {
+    flex: 1 1 0%;
+    font-size: 14px;
+    line-height: 1.43;
+    background-color: rgb(30, 32, 36);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: auto 190px;
+    border-radius: 1.25rem;
+    padding: 114px 30px 40px;
+    color: rgb(153, 164, 176);
+}
+
+.esTNSq .title {
+    font-size: 24px;
+    line-height: 1.17;
+    font-weight: 600;
+}
+
+.kguWsM>.container>.section {
+    margin-bottom: 70px;
+}
+
+.kguWsM>.container>.section.rewards-system {
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.kguWsM .section>.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.kguWsM>.container>.section .tip {
+    font-size: 14px;
+    color: rgb(153, 164, 176);
+    text-align: center;
+    width: 914px;
+    line-height: 1.43;
+    margin: 0px auto;
+    position: relative;
+    padding-bottom: 38px;
+}
+
+.kguWsM>.container>.section .tip::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    transform: translateX(-50%);
+    width: 0px;
+    height: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(67, 179, 9) transparent transparent;
+}
+
+.kguWsM .section>.title.pc-spec {
+    font-weight: 600;
+    height: 68px;
+    line-height: 68px;
+    background: url(https://static.nanogames.io/assets/star.321c7b6c.png) 23px center / 30px no-repeat rgb(30, 32, 36);
+    border-radius: 12px 0px 0px 12px;
+    padding: 0px 5px 0px 65px;
+    margin: 0px auto 0px -25px;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.kguWsM .section>.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.kguWsM .section>.title.pc-spec::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: -44px;
+    height: 100%;
+    width: 50px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAADUCAMAAAB5wzuWAAAAk1BMVEUAAAAeICQgKi0eICQeICQeISUeISUeISUeISUfICUpLi5OTk4eICQfICQfIiUgIiYgIiYeICUfICQeICUeICQfICUhIicfICUeISQfISQfISQjIyktLS0eICQeICQeICQfISQfISUfISUfISUeIiYhIychJCciIismJiaAgIAfICQeICQfICUfICUfISUhISYeICRbUIDiAAAAMHRSTlMA9w/v/fu6opJmBwPbxks+NPPp5uFfJtfSeFkVC87AmYaAc1JCKyMdGgK2sKyeai/GNLYaAAACYElEQVR42uzOS07CUABA0bavpdBaoFBAfsof/OHd/+qMYWZiogPjHfSs4ET8WBaaKp8Piujv8Fvx8ySJbv4/A9SbW0eRgbD97EgyEHpRpMlAvhJluJ+KMoS+KEM6EWVIr6IMzE0ZNqYMj0+iDHkpyvBSiDJ0VqIMVSLKcL8UZbg7izI0U1GG0bsoQxiKMtQHUYZ4L8qQLUQZ0qsoA3NTho0pQ9eUIS9FGV4KUYbOSpShSkQZ1ktRhtlZlKE5iTKMj6IMYSjKUB9EGeK+KEO2EGVIe6IM7EwZtqYMXVOGvBRleC1EGTorUYYqEWVYL0UZZhdRhuYkyjA+ijKEoShDPRBliPuiDNlClCHtiTKwM2XYmjJ0TRneSlGG10KU4bkQZXhIRBnWS1GG2UWU4e4kyjA+ijKMhqIMYSDKEPdFGbK9KEO6EGVI96IM8UCUYXQRZahKUYadKVOfRRlyUyadijK8mTJxIsowMWU6pkxciDIcTJm5KZObMpUp05gywZTJTBnaTJtpM23mizbznTbz0c4d2zAIBEAQNEigf/ECCwQmgpj+G3QD3tS6YLeCaeCOEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKzL/qkjBrEqYlYcYkTEnC1CTMEYTZkhamdxJmCcK0pL32HoQ5nyDMHHQ4cAX9QgzvIEwN+hIpQS8r45SD+fQ5Zzhjn3MTVKaYA6Wh5vxcXTkPYOccc9TW9ifkwm67l4Dbw25tY6nH61dfgXj42O/H5kkAAAAASUVORK5CYII=) right top / auto 69px no-repeat;
+}
+
+.jIdaRB {
+    display: flex;
+    padding-top: 80px;
+    background: url(https://static.nanogames.io/assets/rewards-arrow.614d6e26.png) center top / auto 80px no-repeat;
+}
+
+.jIdaRB .item {
+    background: rgb(30, 32, 36);
+    border-radius: 16px;
+    flex: 1 1 0%;
+}
+
+.jIdaRB .system {
+    background-color: rgb(30, 32, 36);
+    background-repeat: no-repeat;
+    background-position: 95% 5px;
+    background-size: auto 200px;
+    padding: 44px 38px;
+    height: 254px;
+    border-radius: 16px;
+    position: relative;
+}
+
+.jIdaRB .item {
+    background: rgb(30, 32, 36);
+    border-radius: 16px;
+    flex: 1 1 0%;
+}
+
+.jIdaRB .rewards .graph {
+    background-image: url(https://static.nanogames.io/assets/graph.line.c9ea1201.png);
+}
+
+.jIdaRB .graph {
+    margin: 0px 18px;
+    background-color: rgb(23, 24, 27);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    border-radius: 10px;
+    height: 520px;
+}
+
+.jIdaRB .item.commission {
+    margin-left: 30px;
+}
+
+.jIdaRB .system .desc {
+    font-size: 14px;
+    line-height: 1.43;
+    max-width: 70%;
+    margin: 20px 0px;
+    color: rgb(245, 246, 247);
+}
+.jIdaRB .commission .graph {
+    background-image: url(https://static.nanogames.io/assets/graph.pit.9f962d2f.png);
+}
+.jIdaRB .system .flex {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1;
+}
+.jIdaRB .footer {
+    text-align: center;
+    height: 98px;
+    padding-top: 16px;
+}
+.jIdaRB .footer .text {
+    color: rgba(153, 164, 176, 0.6);
+    font-size: 14px;
+    margin: 0px 0px 8px;
+}
+.jIdaRB .contact {
+    height: 36px;
+    border-radius: 18px;
+    background: rgb(23, 24, 27);
+    font-size: 14px;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-left: 6px;
+    padding-right: 12px;
+}
+.jIdaRB .contact .icon-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+.jIdaRB .contact .icon {
+    width: 14px;
+    height: 14px;
+}
+.jIdaRB .system .amount {
+    font-size: 24px;
+    color: rgb(246, 199, 34);
+    font-weight: 600;
+}
+.jIdaRB .system .hover {
+    font-size: 14px;
+    margin: 0px 8px;
+}
+.kguWsM > .container > .section {
+    margin-bottom: 70px;
+}
+.fLdMfS .is-pc {
+    background-color: rgb(30, 32, 36);
+    border-radius: 20px;
+    padding: 24px 20px 32px;
+    margin-top: -50px;
+}
+.fLdMfS .title {
+    text-align: center;
+    color: rgb(245, 246, 247);
+    font-size: 24px;
+    line-height: normal;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.fLdMfS .is-pc .fc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.fLdMfS .is-pc .rewards {
+    background-image: url(https://static.nanogames.io/assets/rewards.total.a2ab034b.png);
+    position: relative;
+    padding-right: 60px;
+    margin-left: 30px;
+}
+.fLdMfS .is-pc .commission {
+    background-image: url(https://static.nanogames.io/assets/commission.total.a9f0535e.png);
+    padding-right: 30px;
+    margin-left: 30px;
+}
+.fLdMfS .is-pc .rewards, .fLdMfS .is-pc .commission {
+    padding-left: 140px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 100px;
+    flex: 0 1 42%;
+}
+.fLdMfS .desc {
+    color: rgba(153, 164, 176, 0.6);
+    font-size: 14px;
+    text-align: center;
+    max-width: 334px;
+    white-space: nowrap;
+}
+.fLdMfS .number-wrap {
+    max-width: 334px;
+    height: 51px;
+    border-radius: 20px;
+    background-color: rgba(23, 24, 27, 0.7);
+    color: rgb(246, 199, 34);
+    font-weight: 600;
+    font-size: 24px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+}
+.fLdMfS .number-wrap .type {
+    margin-left: 8px;
+}
+.fLdMfS .number-wrap::after {
+    content: "";
+    width: 20px;
+    height: 36px;
+    position: absolute;
+    top: 0px;
+    right: -4px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAA+CAMAAAB5jTkQAAAAllBMVEUAAAD/4wD/zQD/zQD/zQD/zgD/2QD/zQD/zQD/0QD/0QD/0QD/zAD/zAD/zQD/zQD/zQD/zQD/zQD/zQD/zQD/zgD/zQD/zgD/0wD/zQD/zQD/zQD/zAD/zQD/zQD/zQD/zgD/zgD/zwD/zgD/0AD/0gD/zQD/zQD/zQD/zQD/zQD/zQD/zQD/zAD/zQD/0gD/zwD/zAAIjeTFAAAAMXRSTlMABFvPti8G9O8hDgv63cbBuqWOdHBWUUAX+Orh2MqYZU08NSklEuWriYF7sp94axxHbGQApQAAAZZJREFUSMeFlNlygkAQABflMIpo1MT7vu/0//9cGDREkB36gSq2umB2LhPTd0fVutHoQnOjGgtgrRr+Dlyj8gXMdWUPfOnKBFjoSgBUdKUGdHSlCUS68gkEvqrMKQ2mMQImflmJ4KoqThUY6lVahUDVUZ0jpblxInG+VedDUlz7UJ1vJJxG+tkiuyPOPlWuReG0xDmleTAFDHYvIfsUDsQylHp6RtiwMkXciNndk+htrTpLr3WkFz+tIbtxJVybYgZjcWbGCayK8QJxun3o6VkmUtvwxIOl3u2CVlI/QrgnL+q19JVUQWg75dF82o3tkAcHq9Ljj5u2b9otsG+mPjHzbZOY4dIe7MBsasTU1rZgp/K1UJzxwLIDTulSIXpLj5PE4P3PDZ2iTU7zqbsI+UZPTo/Pl/okqURutjON8LxW9lYHYlrZ5U830yuj/Gq8AJe3NggaLyf1MexflXYyI9l6ZA+24TMp2fAq+f+c88l0X398LsqUyVRA7tPWN70+YoKXpk1VfnTFD6WXdKYsyhRvakqxzPEvSmlIJn6vSEMAAAAASUVORK5CYII=) center center / contain no-repeat;
+}
+.kguWsM .section > .content > .flex {
+    margin-top: -0.625rem;
+}
+.flex {
+    display: flex;
+}
+.kguWsM .section > .content > .flex .flex-left, .kguWsM .section > .content > .flex .flex-right {
+    flex: 1 1 49%;
+}
+.khcCBN .tbody .tr:nth-child(2n-1) {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+}
+.khcCBN .tbody .tr:nth-child(2n-1) {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+}
+
+.khcCBN .tbody .tr:nth-child(2n-1) {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+}
+.khcCBN .tbody .tr {
+    height: 3.5rem;
+    font-weight: 600;
+}
+.khcCBN .fc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.khcCBN .tr {
+    padding: 0px 46px;
+}
+.khcCBN .th, .khcCBN .td {
+    color: rgb(245, 246, 247);
+    overflow: hidden;
+}
+.khcCBN .fc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.khcCBN .th {
+    color: rgba(153, 164, 176, 0.6);
+}
+.khcCBN .th, .khcCBN .td {
+    color: rgb(245, 246, 247);
+    overflow: hidden;
+}
+.khcCBN .th {
+    color: rgba(153, 164, 176, 0.6);
+}
+
+.khcCBN .th:last-child, .khcCBN .td:last-child {
+    text-align: right;
+}
+.khcCBN .nickname {
+    padding-right: 10px;
+}
+.khcCBN .nickname {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.khcCBN .th:last-child, .khcCBN .td:last-child {
+    text-align: right;
+}
+.table .sc-Galmp {
+    font-family: Monmono;
+}
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}
+.erPQzq .coin-icon {
+    width: 1.4em;
+    height: 1.4em;
+    margin-right: 0.25em;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}
+.kguWsM .section > .content > .flex .flex-right {
+    margin-left: 30px;
+}

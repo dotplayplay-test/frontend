@@ -1,0 +1,633 @@
+.jlxrhk {
+    max-width: 1368px;
+    margin: 0px auto;
+    padding: 1.25rem 0.625rem;
+}
+
+.jtyGOM {
+    height: 332px;
+    border-radius: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-image: url(https://static.nanogames.io/assets/banner.a6e03510.png);
+    background-size: auto 100%;
+    background-position: center center;
+}
+
+.jtyGOM .wrap {
+    padding: 0.9375rem;
+    height: 282px;
+    position: relative;
+    background-image: url(https://static.nanogames.io/assets/banner_1.838b0b15.png), url(https://static.nanogames.io/assets/banner_2.8d6d7d1c.png);
+    background-position: left bottom, right bottom;
+    background-size: 40%, 40%;
+    background-repeat: no-repeat;
+}
+
+.jtyGOM .wrap .period {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgba(152, 167, 181, 0.7);
+}
+
+.jtyGOM .wrap .rule {
+    position: absolute;
+    right: 8.125rem;
+    top: 0.9375rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(67, 179, 9);
+}
+
+.jtyGOM .wrap .fairness {
+    position: absolute;
+    right: 0.9375rem;
+    top: 0.9375rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(67, 179, 9);
+}
+
+.jtyGOM .wrap .period span {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-left: 0.25rem;
+}
+
+.jtyGOM .desc {
+    height: 50px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0.8125rem 1.125rem 1.125rem 0.9375rem;
+    font-size: 0.75rem;
+}
+
+.gAsrpM {
+    margin-right: 0.3125rem;
+    overflow-y: hidden;
+    position: relative;
+    width: 15.625rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+
+.jtyGOM .desc .sp {
+    color: rgba(152, 167, 181, 0.7);
+}
+
+.jtyGOM .wrap .cont {
+    text-align: center;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    top: 10.9375rem;
+    left: 50%;
+    width: 16.875rem;
+    white-space: nowrap;
+    margin-left: -8.4375rem;
+}
+
+.jtyGOM .wrap .cont .next-time {
+    width: 13.5rem;
+    margin: 0px auto;
+}
+
+.jtyGOM .wrap .cont .button {
+    margin: 0.5rem auto 0px;
+    width: 13.5rem;
+}
+
+.jtyGOM .wrap .cont .next-time .txt {
+    color: rgb(255, 191, 57);
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+
+.jtyGOM .wrap .cont .next-time .time {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin-top: 0.1875rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.blefOg.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(241, 149, 17);
+    background-image: conic-gradient(from 1turn, rgb(241, 149, 17), rgb(246, 199, 34));
+}
+
+.jtyGOM .wrap .cont .button {
+    margin: 0.5rem auto 0px;
+    width: 13.5rem;
+}
+
+.cBmlor {
+    display: block;
+    width: 100%;
+    border-radius: 6.25rem;
+    height: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
+
+.jtyGOM .wrap .cont .button .sub-tit {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.jtyGOM .desc {
+    height: 50px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0.8125rem 1.125rem 1.125rem 0.9375rem;
+    font-size: 0.75rem;
+}
+
+.gAsrpM {
+    margin-right: 0.3125rem;
+    overflow-y: hidden;
+    position: relative;
+    width: 15.625rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+
+.jtyGOM .desc .sp {
+    color: rgba(152, 167, 181, 0.7);
+}
+
+.gAsrpM>div {
+    right: 0px;
+    width: 100%;
+}
+
+.jtyGOM .lottery-green {
+    color: rgb(67, 179, 9);
+    font-weight: 800;
+}
+
+.gAsrpM .win-item {
+    height: 1.2rem;
+    line-height: 1.25rem;
+    padding: 0px 0.1875rem;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(152, 167, 181, 0.7);
+}
+
+.iifTce {
+    margin-top: 2.5rem;
+}
+
+.iifTce .tabs .tabs-navs {
+    width: 13.75rem;
+}
+
+.iifTce .tabs .tabs-navs {
+    margin-left: 0.625rem;
+}
+
+.kQfmQV .tabs-navs {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 2.25rem;
+    position: relative;
+    border-radius: 1.125rem;
+    background-color: rgba(49, 52, 60, 0.7);
+}
+
+.kQfmQV .tabs-nav.is-active {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+
+.kQfmQV .tabs-nav {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 1;
+}
+
+.kQfmQV .tabs-navs .bg.is-reverse {
+    transition: left 0.2s ease-out 0s, right 0.3s ease-out 0s;
+}
+
+.kQfmQV .tabs-navs .bg {
+    border-radius: 1.125rem;
+    background-image: linear-gradient(to left, rgb(85, 89, 102), rgb(85, 89, 102), rgb(88, 174, 20));
+    opacity: 0.4;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: right 0.2s ease-out 0s, left 0.3s ease-out 0s;
+    transform: translateZ(0px);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
+}
+
+.iifTce .tabs .tabs-view {
+    background-color: rgb(30, 32, 36);
+    margin-top: 0.625rem;
+    border-radius: 1.25rem;
+}
+
+.iBMYzh {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 1.5rem 1.875rem;
+}
+
+.iBMYzh .button {
+    width: 8.9375rem;
+}
+
+.blefOg.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(241, 149, 17);
+    background-image: conic-gradient(from 1turn, rgb(241, 149, 17), rgb(246, 199, 34));
+}
+
+.cBmlor {
+    display: block;
+    width: 100%;
+    border-radius: 6.25rem;
+    height: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
+
+.guxePV {
+    margin-top: 2.5rem;
+}
+
+.gEYowd {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.gEYowd .item {
+    position: relative;
+    height: 16.125rem;
+    flex: 1 1 0%;
+}
+
+.kgfLJt.col-1 {
+    background-image: linear-gradient(146deg, rgb(147, 23, 146) -80%, rgb(24, 25, 28) 30%);
+}
+
+.kgfLJt {
+    border-radius: 1.25rem;
+    text-align: center;
+    padding: 0.9375rem 1.875rem;
+}
+
+.kgfLJt img {
+    height: 50%;
+}
+
+.kgfLJt .tit {
+    font-size: 1.125rem;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.kgfLJt .cont {
+    color: rgba(152, 167, 181, 0.7);
+    line-height: 1.25rem;
+    margin: 0.4375rem auto;
+    max-width: 16.9375rem;
+    width: auto;
+}
+
+.kgfLJt.col-2 {
+    background-image: linear-gradient(146deg, rgb(10, 228, 56) -80%, rgb(24, 25, 28) 30%);
+    margin: 0px 14px;
+}
+
+.kgfLJt {
+    border-radius: 1.25rem;
+    text-align: center;
+    padding: 0.9375rem 1.875rem;
+}
+
+.gEYowd .item {
+    position: relative;
+    height: 16.125rem;
+    flex: 1 1 0%;
+}
+
+.kgfLJt.col-3 {
+    background-image: linear-gradient(146deg, rgb(255, 96, 96) -80%, rgb(24, 25, 28) 30%);
+}
+
+.kgfLJt {
+    border-radius: 1.25rem;
+    text-align: center;
+    padding: 0.9375rem 1.875rem;
+}
+
+.ewSsiv {
+    margin-top: 2.5rem;
+}
+
+.ewSsiv .cont {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+    padding: 1.25rem;
+    background: rgb(30, 32, 35);
+}
+
+.ewSsiv .cont .table {
+    border-radius: 0.625rem;
+    min-height: 18.75rem;
+    background: rgb(25, 27, 30);
+}
+
+.ewSsiv .cont .table th {
+    padding: 0.75rem 1.875rem;
+}
+
+.iUeetX th:first-child,
+.iUeetX td:first-child {
+    text-align: left;
+}
+
+.iUeetX {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+.iUeetX th,
+.iUeetX td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+}
+
+.ewSsiv .cont .big-prize .matches {
+    color: rgb(67, 179, 9);
+    font-style: italic;
+    line-height: 0.9375rem;
+    font-weight: 800;
+    padding-left: 1.875rem;
+}
+
+.ewSsiv .cont .matches img {
+    height: 1.75rem;
+    position: absolute;
+    left: 0.125rem;
+    top: 50%;
+    margin-top: -0.875rem;
+    animation: 5s linear 0s infinite normal none running rotate;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ewSsiv .cont .big-prize .matches {
+    color: rgb(67, 179, 9);
+    font-style: italic;
+    line-height: 0.9375rem;
+    font-weight: 800;
+    padding-left: 1.875rem;
+}
+
+.ewSsiv .cont .matches {
+    color: rgb(255, 255, 255);
+    position: relative;
+    border-radius: 0px;
+}
+
+.iUeetX td:first-child {
+    border-radius: 0.625rem 0px 0px 0.625rem;
+}
+
+.exEirK.jackpot {
+    background: url(https://static.nanogames.io/assets/ball_full_bg.41740bd0.png) 0% 0% / 100% 100% no-repeat;
+}
+
+.exEirK {
+    width: 12.5rem;
+    height: 2.5rem;
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background: url(https://static.nanogames.io/assets/ball_bg.10eb599f.png) 0% 0% / 100% 100% no-repeat;
+    margin: 0px auto;
+    padding: 0px 0.3125rem;
+}
+
+.exEirK .ball.active {
+    opacity: 1;
+}
+
+.exEirK .ball {
+    width: 1.4375rem;
+    height: 1.4375rem;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 0.21875rem;
+    opacity: 0.5;
+}
+
+.iUeetX th {
+    font-weight: normal;
+    color: rgba(153, 164, 176, 0.6);
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.ewSsiv .cont .big-prize .prize {
+    color: rgb(67, 179, 9);
+    font-style: italic;
+    font-weight: 800;
+}
+
+.ewSsiv .cont .prize {
+    border-radius: 0px;
+}
+
+.iUeetX th:last-child,
+.iUeetX td:last-child {
+    text-align: right;
+}
+
+.ewSsiv .cont .prize img {
+    height: 1rem;
+    margin: 0.1875rem 0.625rem 0px 0px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ewSsiv .cont .table td {
+    padding: 0.75rem 1.875rem;
+    border-top: 1px solid rgb(30, 32, 36);
+}
+
+.ewSsiv .cont .prize {
+    border-radius: 0px;
+}
+
+.hnkTVY {
+    padding: 2.5rem 1.875rem;
+    border-bottom-left-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+    position: relative;
+    background: rgb(30, 32, 35);
+    overflow: hidden;
+}
+
+.hnkTVY #lottery_rule {
+    position: absolute;
+    top: -12.5rem;
+}
+
+.hnkTVY .tit {
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.6875rem;
+    font-weight: 800;
+}
+
+.hnkTVY .cont {
+    margin-bottom: 2.375rem;
+}
+
+.hnkTVY .tit {
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.6875rem;
+    font-weight: 800;
+}
+
+.hnkTVY .btn {
+    width: 10.9375rem;
+    height: 3rem;
+    line-height: 3rem;
+    background-color: rgb(46, 50, 58);
+    color: rgb(67, 179, 9);
+}
+
+.cBmlor {
+    display: block;
+    width: 100%;
+    border-radius: 6.25rem;
+    height: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
+
+.cBmlor>.button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.biQums {
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    padding: 0.875rem;
+    margin-top: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.biQums .cont.sh {
+    padding-left: 0.375rem;
+}
+.biQums .cont {
+    margin: 0.625rem;
+}
+.biQums .cont .title {
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    font-family: FuturaBold;
+    font-style: italic;
+    font-weight: 800;
+    margin-left: 0px;
+}
+.guxePV .title {
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    margin: 0px 0px 0.625rem 1.125rem;
+    color: rgb(255, 255, 255);
+    font-family: FuturaBold;
+}
+.biQums .cont .title span {
+    color: rgb(67, 179, 9);
+}
+
+.biQums .cont .desc {
+    margin: 0.625rem 0px 0.875rem;
+    line-height: 1.125rem;
+}
+.biQums .cont .btn button {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(67, 179, 9);
+    cursor: pointer;
+}
+.biQums .empty {
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 90%;
+    min-width: 33.125rem;
+    align-self: stretch;
+    display: flex;
+}
+.biQums .empty img {
+    height: 9.375rem;
+}

@@ -1,0 +1,113 @@
+.kFLjc {
+    margin-top: 2.5rem;
+}
+.kFLjc .title {
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    margin: 0px 0px 0.625rem 1.125rem;
+    color: rgb(255, 255, 255);
+    font-family: FuturaBold;
+}
+.kFLjc .cont {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+    padding: 1.25rem;
+    background: rgb(30, 32, 35);
+}
+.kFLjc .cont {
+    padding: 0.5rem;
+}
+.kFLjc .cont .table {
+    border-radius: 0.625rem;
+    min-height: 18.75rem;
+    background: rgb(25, 27, 30);
+}
+.kFLjc .cont .table .big-prize .matches {
+    padding-left: 1.5625rem;
+}
+.kFLjc .cont .matches img {
+    height: 1.75rem;
+    position: absolute;
+    left: 0.125rem;
+    top: 50%;
+    margin-top: -0.875rem;
+    animation: 5s linear 0s infinite normal none running rotate;
+}
+.kFLjc .cont .table td {
+    padding: 0.75rem 1.875rem;
+    border-top: 1px solid rgb(30, 32, 36);
+}
+.kFLjc .cont .table td {
+    padding: 0.875rem;
+}
+.CKSAj {
+   width: 12.5rem;
+   height: 2.5rem;
+   position: relative;
+   display: flex;
+   -webkit-box-align: center;
+   align-items: center;
+   background: url(https://static.nanogames.io/assets/ball_bg.10eb599f.png) 0% 0% / 100% 100% no-repeat;
+   margin: 0px auto;
+   padding: 0px 0.3125rem;
+}
+.CKSAj {
+    width: 7.625rem;
+    max-width: 100%;
+    height: 1.625rem;
+    padding: 0px 0.25rem;
+}
+.CKSAj.jackpot {
+    background: url(https://static.nanogames.io/assets/ball_full_bg.41740bd0.png) 0% 0% / 100% 100% no-repeat;
+}
+.CKSAj .ball.active {
+    opacity: 1;
+}
+.CKSAj .ball {
+    width: 1.4375rem;
+    height: 1.4375rem;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 0.21875rem;
+    opacity: 0.5;
+}
+.CKSAj .ball {
+    width: 10%;
+    height: auto;
+    margin: 0px 0.1875rem;
+}
+.kFLjc .cont .table td {
+    padding: 0.875rem;
+}
+.kFLjc .cont .big-prize .prize {
+    color: rgb(67, 179, 9);
+    font-style: italic;
+    font-weight: 800;
+}
+.kFLjc .cont .big-prize .matches {
+   position: relative;
+    color: rgb(67, 179, 9);
+    font-style: italic;
+    line-height: 0.9375rem;
+    font-weight: 800;
+    padding-left: 1.875rem;
+    font-size: 12px;
+}
+.kFLjc .cont .prize .star-img {
+   display: inline-block;
+   height: 0.875rem;
+   width: 0.875rem;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAoNJREFUSEu1lEtME1EUhv9zZwBpqyAbDQkmKqgxxAcbo4kPdAotHRI3bDWauDRxobJgAxvfC/cmGt2ypDxaBzDERF2IiS4QEBeSSNwUgU6rZeYeU0JJC2WmA3GS2dx7zv+d1z2E//xRqfrhgcDRZSnvr9hXVNw0gvM/SvEtCdA9ekF9m/wwwUD9qujk2cCpxu7mN5YbpCSA1u+/xlI+zxcjIa4bEfPFtgEd3KEk+qOTYBwsECPM1ET0w73UaztBXDPQ+vxXGPJlMRGCuGq0m6+2DAj27WqQZI2BeW9RANGcoqrnYqHFb5tB1jJoiVXtl5Z1GuAGcPanQwA3MaC4RGgDNA7iKRBNAzStCvFxKLw0mfVbAWhRXxeYe9zE3BpaMASgHqM91b0KqEwyw+9FwM2WCKahpwO5DD4x8wk3J0/3hLFhPX1+BZB9pRlbjgC8x5PIpsb0i0g0G3pyIq/JO4/IjD3M4NrtQAj0U5Qrl+KtS1/XmpwTbB3aVW8vL48wULcVCAGzSlnZxfyx3fDQQoP+Y5Ylx71OFAG2qoqmobD5uXCaioSqRStnmHHASxZE+G7o6cJ1knsH64W0qO83M1d5A9CCoaeq1/tsKFFLrKbOzqRL2vXrxZTyyn3x1sSsY4laBnxh2+YBL9HnbBWF2uJtqUFHgNbvv8NSPiq+PSGz5wyIovdC3DUi5mNHQDDq75QsHxQYESWI6WE5qc+y5xm2bjBxJzPXFICI7g3rqS7nEkUDjRL2+9XdlCTQU+yoeGIE5xfyHbXXu6vw5+9tBt8CEACQJCHOGBHzi+uYBuO+Ws7gpKKq72KhxYRTPy6PVlebaeu4EHIqFkrNuU7RVprr5PMPn5HrGfvBH44AAAAASUVORK5CYII=);
+   background-size: 100% 100%;
+   margin: 0.25rem 0px 0px 0.375rem;
+   vertical-align: top;
+}
+.kFLjc .cont .prize .star-img {
+   margin: 0.1875rem 0px 0px 0.375rem;
+}
+.kFLjc .cont .prize img {
+   height: 1rem;
+   margin: 0.1875rem 0.625rem 0px 0px;
+   display: inline-block;
+   vertical-align: top;
+}

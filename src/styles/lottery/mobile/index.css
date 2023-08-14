@@ -1,0 +1,288 @@
+.ePAxUv {
+    margin-top: 7.375rem;
+    font-size: .775rem;
+}
+
+.iGGbRn {
+    padding: 0.625rem;
+}
+
+.emJdUB {
+    height: 332px;
+    border-radius: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-image: url(https://static.nanogames.io/assets/banner.a6e03510.png);
+    background-size: auto 100%;
+    background-position: center center;
+}
+.emJdUB {
+    background-image: url(https://static.nanogames.io/assets/banner_mobile.20561a0b.png);
+    background-repeat: no-repeat;
+    /* background-size: 100%; */
+    height: 27.1875rem;
+}
+.emJdUB .wrap {
+    padding: 0.9375rem;
+    height: 282px;
+    position: relative;
+    background-image: url(https://static.nanogames.io/assets/banner_1.838b0b15.png), url(https://static.nanogames.io/assets/banner_2.8d6d7d1c.png);
+    background-position: left bottom, right bottom;
+    background-size: 40%, 40%;
+    background-repeat: no-repeat;
+}
+.emJdUB .wrap {
+    background-image: none;
+    height: 18.625rem;
+}
+
+
+.emJdUB .wrap .period {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgba(152, 167, 181, 0.7);
+}
+.emJdUB .wrap .period span {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-left: 0.25rem;
+}
+.emJdUB .wrap .rule {
+    position: absolute;
+    right: 8.125rem;
+    top: 0.8375rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(67, 179, 9);
+}
+.emJdUB .wrap .fairness {
+    position: absolute;
+    right: 0.9375rem;
+    top: 0.8375rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(67, 179, 9);
+}
+.emJdUB .wrap .cont {
+    text-align: center;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    top: 10.9375rem;
+    left: 50%;
+    width: 16.875rem;
+    white-space: nowrap;
+    margin-left: -8.4375rem;
+}
+.emJdUB .wrap .cont {
+    top: auto;
+    bottom: 0.625rem;
+}
+.emJdUB .wrap .cont .button {
+    margin: 0.5rem auto 0px;
+    width: 13.5rem;
+}
+.emJdUB .wrap .cont .next-time {
+    width: 13.5rem;
+    margin: 0px auto;
+}
+.emJdUB .wrap .cont .button {
+    width: 12.5rem;
+}
+
+.blefOg.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(241, 149, 17);
+    background-image: conic-gradient(from 1turn, rgb(241, 149, 17), rgb(246, 199, 34));
+}
+.cBmlor > .button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.emJdUB .wrap .cont .next-time .txt {
+    color: rgb(255, 191, 57);
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+.emJdUB .wrap .cont .next-time .time {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin-top: 0.1875rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.emJdUB .wrap .cont .button .sub-tit {
+    font-size: 12px;
+    font-weight: normal;
+}
+.emJdUB .wrap .cont .button .sub-tit {
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+.emJdUB .desc {
+    height: 50px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: block;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0.8125rem 1.125rem 1.125rem 0.9375rem;
+    font-size: 0.75rem;
+}
+.emJdUB .desc {
+    margin-top: 0.625rem;
+    height: 4.375rem;
+    padding: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.gGPXLx {
+    margin-right: 0.3125rem;
+    overflow-y: hidden;
+    position: relative;
+    width: 15.625rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+.gGPXLx > div{
+    right: 0px;
+    width: 100%;
+}
+.emJdUB .desc .sp {
+    color: rgba(152, 167, 181, 0.7);
+}
+.emJdUB .lottery-green {
+    color: rgb(67, 179, 9);
+    font-weight: 800;
+}
+.gGPXLx .win-item{
+    height: 1.25rem;
+    line-height: 1.25rem;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(152, 167, 181, 0.7);
+}
+.gGPXLx .win-item b{
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+.gOIhrR {
+    margin-top: 2.5rem;
+}
+.gOIhrR .tabs .tabs-navs {
+    width: 13.75rem;
+}
+.gOIhrR .tabs .tabs-navs {
+    margin-left: 0.625rem;
+}
+.kQfmQV .tabs-navs {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 2.25rem;
+    position: relative;
+    border-radius: 1.125rem;
+    background-color: rgba(49, 52, 60, 0.7);
+}
+.kQfmQV .tabs-nav.is-active {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+.kQfmQV .tabs-nav {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 1;
+}
+.kQfmQV .tabs-navs .bg.is-reverse {
+    transition: left 0.2s ease-out 0s, right 0.3s ease-out 0s;
+}
+.kQfmQV .tabs-navs .bg {
+    border-radius: 1.125rem;
+    background-image: linear-gradient(to left, rgb(85, 89, 102), rgb(85, 89, 102), rgb(88, 174, 20));
+    opacity: 0.4;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: right 0.2s ease-out 0s, left 0.3s ease-out 0s;
+    transform: translateZ(0px);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
+}
+.gOIhrR .tabs .tabs-view {
+    background-color: rgb(30, 32, 36);
+    margin-top: 0.625rem;
+    border-radius: 1.25rem;
+}
+.kQfmQV .tabs-view {
+    position: relative;
+}
+.iZZitX {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 1.5rem 1.875rem;
+}
+.iZZitX {
+    padding: 1.125rem 1rem;
+}
+.iZZitX .button {
+    width: 8.9375rem;
+}
+.iZZitX .button {
+    height: 2.5rem;
+}
+
+.cBmlor:disabled.sc-iqseJM:not(.is-loading) {
+    opacity: 0.5;
+    cursor: default;
+}
+.cBmlor > .button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.jmLDmK .gameno-control .time {
+    margin-left: 2.05rem;
+    white-space: nowrap;
+}
+.jmLDmK .gameno-control .time {
+    margin-left: auto;
+    font-size: 11px;
+}

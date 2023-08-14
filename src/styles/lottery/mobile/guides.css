@@ -1,0 +1,209 @@
+.bighmL {
+    padding: 2.5rem 1.875rem;
+    border-bottom-left-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+    position: relative;
+    background: rgb(30, 32, 35);
+    overflow: hidden;
+}
+.bighmL {
+    padding: 2.5rem 1.25rem;
+}
+.bighmL #lottery_rule {
+    position: absolute;
+    top: -12.5rem;
+}
+.bighmL .tit {
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.6875rem;
+    font-weight: 800;
+}
+.bighmL .cont {
+    margin-bottom: 2.375rem;
+}
+.iRAkvM .empty {
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 90%;
+    align-self: stretch;
+    display: flex;
+}
+.iRAkvM .empty {
+    display: block;
+    width: auto;
+}
+.iRAkvM .empty img {
+    height: 9.375rem;
+}
+.bighmL .btn {
+    width: 10.9375rem;
+    height: 3rem;
+    line-height: 3rem;
+    background-color: rgb(46, 50, 58);
+    color: rgb(67, 179, 9);
+}
+.iRAkvM {
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    padding: 0.875rem;
+    margin-top: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.iRAkvM {
+    display: block;
+}
+.iRAkvM .cont.sh {
+    padding-left: 0px;
+    margin: 0px 0.375rem;
+}
+.bEzeAo .title {
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    margin: 0px 0px 0.625rem 1.125rem;
+    color: rgb(255, 255, 255);
+    font-family: FuturaBold;
+}
+.iRAkvM .cont .title {
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    font-family: FuturaBold;
+    font-style: italic;
+    font-weight: 800;
+    margin-left: 0px;
+}
+.iRAkvM .cont .title span {
+    color: rgb(67, 179, 9);
+}
+.iRAkvM .cont .desc {
+    margin: 0.625rem 0px 0.875rem;
+    line-height: 1.125rem;
+}
+.iRAkvM .cont .btn button {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(67, 179, 9);
+    cursor: pointer;
+}
+
+
+
+/* ================== dtails guides ==================== */
+.kBjSXI {
+    position: fixed;
+    z-index: 1000;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    filter: none !important;
+}
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+.dialog {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+.dialog-head {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 3.75rem;
+    margin-left: 1.125rem;
+    transition: all 0.5s ease 0s;
+}
+.dialog-head.has-close {
+    margin-right: 3.75rem;
+}
+.fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+.default-style {
+    padding-top: 3.75rem;
+    background-color: rgb(23, 24, 27);
+}
+.dialog-body {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    overflow: hidden;
+}
+.dialog-head .dialog-title {
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: bold;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(245, 246, 247);
+}
+.default-style > div {
+    border-radius: 1.25rem 1.25rem 0rem 0rem;
+    background-color: rgb(30, 32, 36);
+    padding: 1.25rem 1.25rem 0px;
+}
+.dialog-body > div {
+    flex: 1 1 0%;
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+.kBIMm h2 {
+    font-weight: bold;
+    color: rgb(153, 164, 176);
+}
+.kBIMm .lottery-green {
+    color: rgb(67, 179, 9);
+}
+
+.gtkhbl .pri-tips {
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgb(37, 39, 44);
+    padding: 0.9375rem 1.25rem;
+    border-radius: 1.25rem;
+    color: rgb(67, 179, 9);
+    margin: 0.875rem 0px;
+}
+.gtkhbl span {
+    color: rgb(67, 179, 9);
+}
