@@ -3,6 +3,24 @@
     import SideBar from "$lib/sideBar.svelte";
     import Footer from "$lib/footer.svelte";
     import Menubar from "$lib/mobile/menu/menubar.svelte";
+    import { browser } from '$app/environment'
+    let isOpenSide = true
+    import { onMount } from "svelte";
+
+    onMount(()=>{
+        if(browser && window.innerWidth > 1000){
+            isOpenSide = true
+        }else{
+            isOpenSide = false
+        }
+    })
+
+
+    let ens = browser && window.innerWidth - 240
+    browser &&  addEventListener("resize", ()=>{
+        ens = (window.innerWidth - 240 )
+    })
+
 
     let isMenu = false
 
@@ -16,7 +34,7 @@
 </script>
 
 <div class="app">
-    <div id="side-bar">
+    <div id="side-bar" style={`width:${isOpenSide ? 240 : 76}px`}>
         <SideBar />
     </div>
 
@@ -33,7 +51,7 @@
         </div>
     {/if}
 
-    <div id="right-bar">
+    <div id="right-bar" style={`width: ${ens}px;`} >
         <header>
             <Navbar on:menu={handleMenu} />
         </header>

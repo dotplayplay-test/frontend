@@ -1,3 +1,6 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/environment'
 
-export const count = writable(0);
+let screens = browser && window.innerWidth 
+
+export const screen = writable(screens);
