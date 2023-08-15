@@ -8,7 +8,7 @@ import {
     browser
 } from '$app/environment'
 import Closesidebar from "$lib/closesidebar.svelte";
-let isOpenSide = false
+let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
 let sideDetection = 240
@@ -64,11 +64,11 @@ const handleMenu = () => {
 
     {#if (isOpenSide) }
     <div id="side-bar" style={`width:${isOpenSide ? 240 : 76}px`}>
-        <SideBar />
+        <SideBar styls={isOpenSide} />
     </div>
     {:else}
     <div id="side-bar" style={`width:${isOpenSide ? 240 : 76}px`}>
-        <Closesidebar />
+        <Closesidebar styls={isOpenSide} />
     </div>
     {/if}
     <div id="menu">

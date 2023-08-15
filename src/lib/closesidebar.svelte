@@ -1,6 +1,17 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import Original from "./original.svelte";
+export let styls;
+let showOriginals = false
+
+const openOriginal = ((e) => {
+    if (e) {
+        showOriginals = true
+    } else {
+        showOriginals = false
+    }
+})
 </script>
 
 <div class="sc-jHkVzv eTxQfM fold">
@@ -17,7 +28,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/home.e1cf89b4.png">
             </div>
         </button>
-        <button class="sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item ">
+        <button on:mouseenter={()=> openOriginal(1)} on:mouseleave={()=> openOriginal(0)} class="sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item">
             <div class="menu-mobile">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
             </div>
@@ -26,10 +37,25 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                ">
              <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
             </div>
+            {#if (showOriginals)}
+             <Original styls={styls} />
+            {/if}
         </button>
-        <button class="sc-iNGGcK knLCVT menu-item"><div class="menu-mobile"><img alt="menu-icon" src="https://static.nanogames.io/assets/slots.42749df8.png"></div></button>
-        <button class="sc-iNGGcK knLCVT menu-item"><div class="menu-mobile"><img alt="menu-icon" src="https://static.nanogames.io/assets/affiliate.6f434c33.png"></div></button>
-        <button class="sc-iNGGcK knLCVT menu-item special-nav vip"><div class="menu-mobile"><img alt="menu-icon" src="https://static.nanogames.io/assets/vipclub.3b37e72c.png"></div></button>
+        <button class="sc-iNGGcK knLCVT menu-item">
+            <div class="menu-mobile">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/slots.42749df8.png">
+            </div>
+        </button>
+        <button class="sc-iNGGcK knLCVT menu-item">
+            <div class="menu-mobile">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/affiliate.6f434c33.png">
+            </div>
+        </button>
+        <button class="sc-iNGGcK knLCVT menu-item special-nav vip">
+            <div class="menu-mobile">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/vipclub.3b37e72c.png">
+            </div>
+        </button>
         <button class="sc-iNGGcK knLCVT menu-item"><div class="menu-mobile"><img alt="menu-icon" src="https://static.nanogames.io/assets/fairness.12d49bfb.png"></div></button>
         <div class="sc-eGPXGI kCbnNh"></div>
         <button class="sc-iNGGcK knLCVT menu-item"><div class="menu-mobile"><img alt="menu-icon" src="https://static.nanogames.io/assets/myfavorite.466f0741.png"></div></button>

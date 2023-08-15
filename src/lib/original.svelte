@@ -5,7 +5,7 @@ import IoDice from "svelte-icons-pack/io/IoDice";
 import {
     createEventDispatcher
 } from 'svelte';
-
+export let styls;
 let dispatch = createEventDispatcher()
 
 import {
@@ -149,7 +149,7 @@ const handleOriginalRoute = ((e, i) => {
 })
 </script>
 
-<div class="orginal-game-routes">
+<div class="orginal-game-routes" style={`left: ${styls ? 240 : 76}px;`}>
     <div class="orginal-game-routes-container">
         {#each games as game (game.id)}
         <button on:click={()=> handleOriginalRoute(game.route, 2)}>
@@ -173,7 +173,6 @@ const handleOriginalRoute = ((e, i) => {
     width: 200px;
     height: 100vh;
     top: 0;
-    left: 240px;
     background-color: rgb(45, 48, 53);
 }
 
@@ -185,7 +184,7 @@ const handleOriginalRoute = ((e, i) => {
     width: 100%;
     background: none;
     border: none;
-    margin: 5px 0;
+    margin: 0;
 }
 
 .original-content .icon,

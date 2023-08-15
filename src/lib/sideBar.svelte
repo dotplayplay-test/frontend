@@ -16,11 +16,11 @@ import {
 import Original from "./original.svelte";
 import '../styles/sidebar/sidebar.css'
 import '../styles/sidebar/sidebarmobile.css'
-
+export let styls;
 let showOriginals = false
 
 const openOriginal = ((e) => {
-    if (e === 1) {
+    if (e) {
         showOriginals = true
     } else {
         showOriginals = false
@@ -120,7 +120,7 @@ const handleNavigation = ((e) => {
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/home.e1cf89b4.png"><span>Home</span>
             </div>
         </button>
-        <button class={`sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item ${original ? "select" : ""}`}>
+        <button on:mouseenter={()=> openOriginal(1)} on:mouseleave={()=> openOriginal(0)} class={`sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item ${original ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
                 <span>DP Originals</span>
@@ -128,8 +128,8 @@ const handleNavigation = ((e) => {
             <svg class="sc-gsDKAQ hxODWG icon right" fill="none" viewBox="0 0 24 24" height="15" width="15" xmlns="http://www.w3.org/2000/svg">
                 <path xmlns="http://www.w3.org/2000/svg" d="M9.29289 18.7071C8.90237 18.3166 8.90237 17.6834 9.29289 17.2929L14.5858 12L9.29289 6.70711C8.90237 6.31658 8.90237 5.68342 9.29289 5.29289C9.68342 4.90237 10.3166 4.90237 10.7071 5.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L10.7071 18.7071C10.3166 19.0976 9.68342 19.0976 9.29289 18.7071Z" fill="rgba(153,164,176,.8)"></path>
             </svg>
-            {#if showOriginals}
-            <Original />
+            {#if (showOriginals)}
+            <Original styls={styls} />
             {/if}
         </button>
         <button  on:click={()=> handleNavigation("/lottery")} class={`sc-iNGGcK knLCVT menu-item ${lottery ? "select" : ""} `}>
