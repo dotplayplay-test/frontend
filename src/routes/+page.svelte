@@ -6,6 +6,7 @@ import {
 } from 'swiper/element/bundle';
 import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';
 import Latestbet from '$lib/homecomponents/latestbet.svelte';
+import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
 
 register();
 </script>
@@ -55,16 +56,16 @@ register();
                 </div>
             </div>
         </div>
+
+        <div class="sc-gFSQbh gyJkwe">
+            <Homeanimaton />
+        </div>
+
     </div>
 </div>
 
 <!-- <div class="home">
         <div class="index">
-            <div class="sliding-images">
-                <div class="sliding-images-container">
-
-                </div>
-            </div>
             <div class="jwTuwwx dhghsgiw">
                 <div class="shgvuvvvqq RabqooNu" style="height: 195.429px;">
                     <div class="wiwTvqwl gahwwmnx" style="width: 980px; transform: scale(1.02857);">
@@ -79,106 +80,7 @@ register();
                                     </div>
                                 </div>
                                 <div class="swiper swiper-initialized swiper-vertical swiper-pointer-events">
-                                    <swiper-container class="mySwiper"
-                                        slides-per-view={1}
-                                        speed={2800}
-                                        direction={"vertical"}
-                                        loop={true}
-                                        autoplay={{
-                                        delay: 2700,
-                                        disableOnInteraction: false,
-                                        }} space-between="30"
-                                        >
-
-                                        <swiper-slide>
-                                            <div class="sc-gLDmcm bZpQzZ">
-                                                <div class="item-wrap">
-                                                    <div class="sc-bnOPBZ gZglJR win-game-item">
-                                                        <div class="sc-cxVPaa gPcmgp left">
-                                                            <div class="image-inner">
-                                                                <img alt="logo" src="https://img2.nanogames.io/game/image/42026a73-a033-4a57-bb1c-7e09fd2ea30f.png">
-                                                            </div>
-                                                        </div>
-                                                        <div class="right">
-                                                            <div class="right-word-wrap">
-                                                                <p class="sp">mpletcher</p>
-                                                            </div>
-                                                            <div class="right-word-wrap big-word">
-                                                                <p title="Won: $264.8">Won:<span>$264.80</span></p>
-                                                            </div>
-                                                            <div class="right-word-wrap">
-                                                                <p>In Video Poker</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-wrap">
-                                                    <div class="sc-bnOPBZ gZglJR win-game-item">
-                                                        <div class="sc-cxVPaa gPcmgp left">
-                                                            <div class="image-inner">
-                                                                <img alt="logo" src="https://img2.nanogames.io/game/image/d06bd2b7-e5c5-45c2-9f50-fe0f2c0eefdb.png">
-                                                            </div>
-                                                        </div>
-                                                        <div class="right">
-                                                            <div class="right-word-wrap">
-                                                                <p class="sp hidden">Hidden</p>
-                                                            </div>
-                                                            <div class="right-word-wrap big-word">
-                                                                <p title="Won: $303.07">Won:<span>$303.07</span></p>
-                                                            </div>
-                                                            <div class="right-word-wrap">
-                                                                <p>In Keno Single</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </swiper-slide>
-
-                                                <swiper-slide>
-                                                    <div class="sc-gLDmcm bZpQzZ">
-                                                        <div class="item-wrap">
-                                                            <div class="sc-bnOPBZ gZglJR win-game-item">
-                                                                <div class="sc-cxVPaa gPcmgp left">
-                                                                    <div class="image-inner">
-                                                                        <img alt="logo" src="https://img2.nanogames.io/game/image/42026a73-a033-4a57-bb1c-7e09fd2ea30f.png">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="right">
-                                                                    <div class="right-word-wrap">
-                                                                        <p class="sp">mpletcher</p>
-                                                                    </div>
-                                                                    <div class="right-word-wrap big-word">
-                                                                        <p title="Won: $264.8">Won:<span>$264.80</span></p>
-                                                                    </div>
-                                                                    <div class="right-word-wrap">
-                                                                        <p>In Video Poker</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-wrap">
-                                                            <div class="sc-bnOPBZ gZglJR win-game-item">
-                                                                <div class="sc-cxVPaa gPcmgp left">
-                                                                    <div class="image-inner">
-                                                                        <img alt="logo" src="https://img2.nanogames.io/game/image/d06bd2b7-e5c5-45c2-9f50-fe0f2c0eefdb.png">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="right">
-                                                                    <div class="right-word-wrap">
-                                                                        <p class="sp hidden">Hidden</p>
-                                                                    </div>
-                                                                    <div class="right-word-wrap big-word">
-                                                                        <p title="Won: $303.07">Won:<span>$303.07</span></p>
-                                                                    </div>
-                                                                    <div class="right-word-wrap">
-                                                                        <p>In Keno Single</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </swiper-slide>
-                                                </swiper-container>
+                                   
                                             </div>
                                             </div>
 
