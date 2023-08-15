@@ -11,29 +11,36 @@ import Closesidebar from "$lib/closesidebar.svelte";
 let isOpenSide = false
 let isChatRoom = 0
 let isMenu = false
+let sideDetection = 240
+
 import {
     onMount
 } from "svelte";
+let ens = browser && window.innerWidth
 
 onMount(() => {
     if (browser && window.innerWidth > 1000) {
         isOpenSide = true
+        sideDetection = 240
     } else {
         isOpenSide = false
+        sideDetection = 76
     }
 })
 
 const handleMainMenu = (() => {
     if (isOpenSide) {
         isOpenSide = false
+        sideDetection = 76
     } else {
         isOpenSide = true
+        sideDetection = 240
     }
 })
 
-let ens = browser && window.innerWidth - 240
+
 browser && addEventListener("resize", () => {
-    ens = (window.innerWidth - 240)
+    ens = (window.innerWidth)
 })
 
 const handleChatroom = (() => {
@@ -77,7 +84,7 @@ const handleMenu = () => {
     </div>
     {/if}
 
-    <div id="right-bar" style={`width: ${isChatRoom ? (ens - 360) : ens }px;`} >
+    <div id="right-bar" style={`width: ${isChatRoom ? ((ens - sideDetection) - 360) : ens - sideDetection}px;`} >
         <header >
             <Navbar on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>

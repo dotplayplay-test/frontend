@@ -1,4 +1,4 @@
-swiper-container {
+/* swiper-container {
     width: 100%;
     height: 100%;
     padding: 5px;
@@ -48,8 +48,6 @@ swiper-container {
 .image-content img{
     width: 100%;
     border-radius: 10px;
-    /* margin-left: 10px;
-  margin-right: 10px; */
 }
 .dhghsgiw{
     max-width: 1832px;
@@ -462,4 +460,104 @@ background-color: rgb(49, 52, 60);
     max-width: 1368px;
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
+} */
+
+
+.bPsBUR {
+    margin: 0px auto;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    max-width: 2300px;
+    padding-top: 24px;
+}
+.bPsBUR .gradient-wrap {
+    max-width: 1832px;
+    padding: 0px 0.75rem;
+    width: 100%;
+    position: relative;
+    margin: 0px;
+}
+.swiper {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+}
+.iyCsvj {
+    margin: 0px -0.5rem;
+    overflow: visible;
+}
+.swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    box-sizing: content-box;
+}
+.swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+}
+.bPsBUR .swiper-slide {
+    padding: 0px 8px;
+}
+.dnfJpJ {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.joQyOD {
+    flex: 2 1 0%;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(49, 52, 60);
+    display: block;
+    position: relative;
+    margin: 0px 0.375rem;
+}
+.joQyOD img {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    image-rendering: -webkit-optimize-contrast;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.joQyOD::after {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: 28%;
+}
+.ktmMpR {
+    flex: 1 1 0%;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(49, 52, 60);
+    display: block;
+    position: relative;
+    margin: 0px 0.375rem;
+}
+.ktmMpR img {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    image-rendering: -webkit-optimize-contrast;
+    position: absolute;
+    left: 0px;
+    top: 0px;
 }
