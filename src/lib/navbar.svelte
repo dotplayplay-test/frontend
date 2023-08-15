@@ -4,10 +4,18 @@ import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 export let styles;
+export let chatroom;
+import { createEventDispatcher } from 'svelte'
+const dispatch = createEventDispatcher()
+
+const handleChat = (()=>{
+    dispatch("handleChatRoom", "abek open")
+})
+
 
 </script>
 
-<div class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; `} >
+<div class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
     <div class="header-wrap">
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
@@ -30,7 +38,7 @@ export let styles;
                 <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Sign up</div>
                 </button>
-                <button id="chat" class="sc-eicpiI PGOpB">
+                <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
                     <div class="chat-btn ">
                         <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
                         <div class="sc-fotOHu gGSOuF badge ">26</div>

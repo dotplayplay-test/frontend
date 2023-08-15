@@ -1,0 +1,321 @@
+.bJUiGv {
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    width: 360px;
+    height: 100%;
+    z-index: 103;
+}
+.bJUiGv > div {
+    position: relative;
+}
+.bJUiGv > div::before {
+    content: "";
+    position: absolute;
+    left: -0.75rem;
+    top: 0rem;
+    width: 0.75rem;
+    pointer-events: none;
+    height: 100%;
+    background-image: linear-gradient(to left, rgb(4, 4, 4), rgba(36, 38, 43, 0));
+    opacity: 0.1;
+}
+.hHMWvP {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.dWgZek {
+    height: 4rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px;
+    background-color: rgb(30, 32, 36);
+}
+.dWgZek .select-wrap {
+    height: 100%;
+    position: relative;
+}
+.gOHquD {
+    position: relative;
+    /* height: 2.5rem; */
+    opacity: 1;
+}
+.dWgZek .select-wrap .select {
+    height: 100%;
+}
+.dWgZek .select-wrap .select .select-trigger {
+    color: rgb(245, 246, 247);
+    background: transparent;
+    border-radius: 0px;
+    padding: 0px;
+    width: 7.25rem;
+    font-weight: bold;
+}
+.dWgZek .select-wrap .select .select-trigger .select-label {
+    width: 5.75rem;
+    line-height: 3.875rem;
+    background-image: linear-gradient(to top, rgba(91, 174, 28, 0.15), rgba(91, 174, 28, 0) 50%);
+    border-bottom: 2px solid rgb(67, 179, 9);
+    text-align: center;
+}
+.gOHquD .select-trigger .arrow {
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.dWgZek .select-wrap .select .select-trigger .arrow {
+    width: 1.5rem;
+    height: 100%;
+}
+.dWgZek::after {
+    content: "";
+    position: absolute;
+    bottom: -0.75rem;
+    height: 0.75rem;
+    width: 100%;
+    background-image: linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
+    opacity: 0.25;
+}
+.dWgZek .chat-features {
+    display: flex;
+}
+.dWgZek .chat-features .inform {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.625rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.dWgZek .chat-features .rich-btn {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.bXthlR > img {
+    width: 1.25rem;
+}
+.dWgZek .chat-features .close-icon {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.625rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.ddROGz {
+    position: relative;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    background-color: rgba(49, 52, 58, 0.8);
+    padding: 1rem 0.625rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+}
+.ddROGz .send-input {
+    position: relative;
+    min-height: 2.625rem;
+    display: flex;
+}
+.ddROGz .send-input .input-area {
+    position: relative;
+    margin: 0px;
+    flex: 1 1 0%;
+    width: 100%;
+    padding-right: 0px;
+    transition: padding 0.4s ease 0s;
+}
+.kDuLvp .input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 1.25rem;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    height: 3.5rem;
+    padding: 0px 1.25rem;
+    opacity: 1;
+}
+.ddROGz .send-input .input-area .input-control {
+    height: auto;
+    padding: 0px 1.25rem;
+    background-color: rgb(30, 32, 36);
+    align-items: flex-end;
+    border: 1px solid rgba(49, 52, 58, 0.8);
+    border-radius: 1.375rem;
+}
+.ddROGz .send-input .input-area textarea {
+    display: block;
+    padding: 0.625rem 0px;
+    height: 2.75rem;
+    width: 100%;
+    line-height: 1.5rem;
+    color: rgb(202, 209, 217);
+}
+.ddROGz .send-input .input-area .emoji-r-wrap {
+    margin-right: -0.375rem;
+    margin-bottom: 0.6875rem;
+}
+.eA-dYOl .chat-infos {
+    position: absolute;
+    left: 0px;
+    bottom: 6.625rem;
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.eA-dYOl {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    background: rgb(30, 32, 36);
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+.fuYrTE {
+    height: 0px;
+    flex: 1 1 auto;
+}
+.kgsidd {
+    position: relative;
+}
+.kgsidd .flat-item {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+}
+.VfNib {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.jgIKJt {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.VfNib .head {
+    width: 2.5rem;
+    padding-top: 0.875rem;
+    flex: 0 0 auto;
+}
+.VfNib .head .head-link {
+    position: relative;
+    display: block;
+}
+.VfNib .head .head-link .avatar {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0px;
+    display: block;
+}
+.VfNib .head .head-link .user-level {
+    width: 2.375rem;
+    height: 1.125rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 2rem;
+    left: 0.0625rem;
+}
+.jgIKJt .head {
+    width: 2.5rem;
+    flex: 0 0 auto;
+}
+.jgIKJt .head .head-link {
+    position: relative;
+    display: none;
+}
+.jgIKJt .head .head-link .avatar {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0px;
+    display: block;
+}
+textarea {
+    padding: 0.625rem;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+}
+.kDuLvp .input-control textarea, .kDuLvp .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+}
+.cVsgdS {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.ddROGz .send-controls {
+    display: flex;
+    position: relative;
+    z-index: 10;
+    margin-top: 1.25rem;
+    height: 1.125rem;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.ddROGz .send-controls .left-actions {
+    padding-left: 0.375rem;
+    margin-bottom: 0.375rem;
+    display: flex;
+    height: 100%;
+}
+.ddROGz .send-controls .left-actions .chat-icon {
+    line-height: 1;
+}

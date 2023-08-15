@@ -3,11 +3,14 @@ import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
+import ChatSide from "../lib/chat-room/index.svelte"
 import {
     browser
 } from '$app/environment'
 import Closesidebar from "$lib/closesidebar.svelte";
-let isOpenSide = true
+let isOpenSide = false
+let isChatRoom = 0
+let isMenu = false
 import {
     onMount
 } from "svelte";
@@ -33,7 +36,13 @@ browser && addEventListener("resize", () => {
     ens = (window.innerWidth - 240)
 })
 
-let isMenu = false
+const handleChatroom = (() => {
+    if (isChatRoom) {
+        isChatRoom = 0
+    } else {
+        isChatRoom = 360
+    }
+})
 
 const handleMenu = () => {
     if (isMenu) {
@@ -63,14 +72,14 @@ const handleMenu = () => {
 
     <!-- ======================  mobile menu bar ================= -->
     {#if (isMenu)}
-        <div class="menubar">
-            <Menubar  on:menu={handleMenu}   />
-        </div>
+    <div class="menubar">
+        <Menubar  on:menu={handleMenu}   />
+    </div>
     {/if}
 
-    <div id="right-bar" style={`width: ${ens}px;`} >
+    <div id="right-bar" style={`width: ${isChatRoom ? (ens - 360) : ens }px;`} >
         <header >
-            <Navbar styles={isOpenSide} on:menu={handleMenu} />
+            <Navbar on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
         <main>
             <slot></slot>
@@ -80,4 +89,7 @@ const handleMenu = () => {
             <Footer />
         </footer>
     </div>
+    {#if (isChatRoom)}
+    <ChatSide on:closeChat={handleChatroom} />
+    {/if}
 </div>

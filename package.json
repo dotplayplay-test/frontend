@@ -18,7 +18,9 @@
 		"axios": "^1.4.0",
 		"canvas": "^2.11.2",
 		"firebase": "^10.1.0",
+		"konva": "^9.2.0",
 		"svelte-icons-pack": "^2.1.0",
+		"svelte-konva": "^0.3.0",
 		"swiper": "^10.1.0"
 	}
 }
