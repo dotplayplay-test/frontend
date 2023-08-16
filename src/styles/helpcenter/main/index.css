@@ -1,0 +1,259 @@
+.dUhyFv {
+    width: 96%;
+    margin: 0px auto 0.75rem;
+    max-width: 85.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding-left: 0.625rem;
+    padding-top: 1.5rem;
+    position: relative;
+}
+.dUhyFv .title {
+    font-size: 1rem;
+    margin: 0px;
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 100%;
+}
+.dUhyFv .close-icon {
+    right: 0px;
+    top: 0.25rem;
+}
+.fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+.hJFGXE {
+    width: 96%;
+    margin: 0px auto;
+    max-width: 85.5rem;
+    min-height: 60vh;
+}
+.hJFGXE .content-area {
+    width: 100%;
+    display: flex;
+}
+.hJFGXE .content-area .menuee {
+    flex: 1 1 0%;
+    padding: 1rem;
+    background-color: rgb(49, 52, 60);
+    border-radius: 1.25rem;
+    max-width: 15rem;
+    min-width: 10rem;
+    min-height: 15.25rem;
+    height: auto;
+    align-self: flex-start;
+}
+.hJFGXE .content-area .menuee > a.select {
+    background-color: rgba(30, 32, 36, 0.4);
+    font-weight: bold;
+    color: rgb(245, 246, 247);
+}
+.hJFGXE .content-area .menuee > a {
+    display: block;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    padding-left: 1rem;
+    line-height: 2.25rem;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(153, 164, 176, 0.8);
+}
+.hJFGXE .content-area .right-info {
+    flex: 5 1 0%;
+    margin-left: 0.25rem;
+    background-color: rgb(49, 52, 60);
+    border-radius: 1.25rem;
+    min-height: 47.5rem;
+    padding: 1.5rem 1.875rem;
+}
+.hJFGXE .content-area .right-info > div {
+    height: 100%;
+}
+.fSBjam .title {
+    padding-left: 0.625rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+    color: rgb(223, 227, 230);
+}
+.gOHquD {
+    position: relative;
+    height: 2.5rem;
+    opacity: 1;
+}
+.fSBjam .select {
+    height: 3rem;
+    margin-bottom: 0.75rem;
+}
+.gOHquD .select-trigger {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    padding: 0px 1.25rem;
+    user-select: none;
+    border-radius: 1.25rem;
+    background-color: rgb(23, 24, 27);
+}
+.fSBjam .select .select-trigger {
+    border-radius: 1.5rem;
+    margin-bottom: 0.75rem;
+    background: rgba(36, 38, 43, 0.5);
+}
+.gOHquD .select-trigger .arrow {
+    width: 2.5rem;
+    height: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+.fVyucj {
+    line-height: normal;
+    user-select: text;
+    color: rgba(153, 164, 176, 0.8);
+    padding-bottom: 1.5rem !important;
+}
+.fVyucj .item {
+    margin-bottom: 2.75rem;
+}
+.fSBjam .item {
+    padding-left: 0.625rem;
+    min-height: 20vh;
+}
+.fVyucj .item h2:first-of-type {
+    margin-top: 0.5rem;
+}
+.fVyucj .item .help-content {
+    margin-bottom: 2.75rem;
+}
+.fVyucj .item h2 {
+    font-size: 0.875rem;
+    margin: 0px 0px 0.5rem;
+    font-weight: 600;
+    color: rgb(153, 164, 176);
+}
+.fVyucj .item .cl-primary {
+    color: rgb(67, 179, 9);
+}
+.fkQdDC {
+    line-height: normal;
+    user-select: text;
+    color: rgba(153, 164, 176, 0.8);
+}
+.fkQdDC .item {
+    margin-bottom: 2.75rem;
+}
+.fkQdDC .item h2 {
+    font-size: 0.875rem;
+    margin: 0.5rem 0px;
+    font-weight: 600;
+    color: rgb(223, 227, 230);
+}
+.fkQdDC .item p {
+    margin: 0.75rem 0px;
+}
+.cHkrIg .button {
+    width: 19.75rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    margin: 1.25rem auto 4rem;
+}
+.eWZHfu.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(88, 26, 196);
+    background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
+}
+.cBmlor > .button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.cBmlor {
+    display: block;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
+.iUeetX {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+.iUeetX th:first-child, .iUeetX td:first-child {
+    text-align: left;
+}
+.dGuDeP thead tr th, .dGuDeP tbody tr td {
+    width: 50%;
+    text-align: center;
+}
+.dGuDeP thead tr th span, .dGuDeP tbody tr td span {
+    width: 7.5rem;
+    text-align: left;
+    display: block;
+    margin: 0px auto;
+    white-space: nowrap;
+}
+.dGuDeP tbody tr:nth-child(2n-1) td {
+    background: rgba(36, 38, 43, 0.6) !important;
+}
+.iUeetX td:first-child {
+    border-radius: 0.625rem 0px 0px 0.625rem;
+}
+.iUeetX th:first-child, .iUeetX td:first-child {
+    text-align: left;
+}
+.dGuDeP thead tr th span, .dGuDeP tbody tr td span {
+    width: 7.5rem;
+    text-align: left;
+    display: block;
+    margin: 0px auto;
+    white-space: nowrap;
+}
+.iUeetX td {
+    border: 1px solid transparent;
+    color: rgb(153, 164, 176);
+}
+.iUeetX th, .iUeetX td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+}

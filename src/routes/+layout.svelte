@@ -91,7 +91,6 @@ const handleMenu = () => {
         <main>
             <slot></slot>
         </main>
-
         <footer>
             <Footer />
         </footer>

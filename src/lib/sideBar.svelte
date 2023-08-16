@@ -47,7 +47,20 @@ onMount(() => {
         lottery = true
     } else if (browser && window.location.pathname === "/affiliate") {
         affiliate = true
-    } else if (browser && window.location.pathname === "/help/probably-fair") {
+    } else if (browser && window.location.pathname === "/help/provably-fair" ||
+                browser && window.location.pathname === "/help/agreement" ||
+                browser && window.location.pathname === "/help/coinlimit" ||
+                browser && window.location.pathname === "/help/contactus" ||
+                browser && window.location.pathname === "/help/fee" ||
+                browser && window.location.pathname === "/help/googlecheck" ||
+                browser && window.location.pathname === "/help/faq" ||
+                browser && window.location.pathname === "/help/passcurrency" ||
+                browser && window.location.pathname === "/help/privacy" ||
+                browser && window.location.pathname === "/help/reglog" ||
+                browser && window.location.pathname === "/help/swappolicy" ||
+                browser && window.location.pathname === "/help/terms-service"
+                ) 
+     {
         probablyFair = true
     }
     else if (browser && window.location.pathname === "/vip-games") {
@@ -71,6 +84,7 @@ const handleNavigation = ((e) => {
         recent = false
         favourite = false
         original = false
+        probablyFair = false
     } else if (e === "/lottery") {
         lottery = true
         home = false
@@ -79,6 +93,7 @@ const handleNavigation = ((e) => {
         recent = false
         favourite = false
         original = false
+        probablyFair = false
         goto(e)
     } else if (e === "/affiliate") {
         lottery = false
@@ -89,6 +104,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         goto(e)
+        probablyFair = false
     }
     else if (e === "/vip-games") {
         lottery = false
@@ -98,7 +114,19 @@ const handleNavigation = ((e) => {
         recent = false
         favourite = false
         original = false
+        probablyFair = false
         goto(e)
+    }
+    else if (e === "/help/provably-fair") {
+        lottery = false
+        home = false
+        vipclub = false
+        affiliate = false
+        recent = false
+        favourite = false
+        original = false
+        goto(e)
+        probablyFair = true
     }
     else if (e === "/recent-play") {
         lottery = false
@@ -109,6 +137,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         goto(e)
+        probablyFair = false
     }
     else if (e === "/favourite") {
         lottery = false
@@ -128,6 +157,7 @@ const handleNavigation = ((e) => {
         affiliate = false
         favourite = false
         original = true
+        probablyFair = false
     }
 })
 
@@ -171,7 +201,7 @@ const handleNavigation = ((e) => {
                 <span>VIP Club</span>
             </div>
         </button>
-        <button class={`sc-iNGGcK knLCVT menu-item ${probablyFair ? "select" : ""}`}>
+        <button on:click={()=> handleNavigation("/help/provably-fair")} class={`sc-iNGGcK knLCVT menu-item ${probablyFair ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/fairness.12d49bfb.png">
                 <span>Provably Fair</span>
