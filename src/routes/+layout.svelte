@@ -86,8 +86,8 @@ const handleMenu = () => {
     {/if}
 
     <div id="right-bar" style={`width: ${isChatRoom ? ((ens - sideDetection) - 360) : ens - sideDetection}px;`} >
-        <header >
-            <Navbar on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
+        <header>
+            <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
         <main>
             <slot></slot>

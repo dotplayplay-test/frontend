@@ -1,5 +1,5 @@
 <script>
-import '../style/index.css'
+import '../styles/index.css'
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -10,8 +10,8 @@ import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
 import { createEventDispatcher } from 'svelte'
 const dispatch = createEventDispatcher()
 
-const handleMenu = ((e)=>{
-    dispatch("menu", e)
+const handleMenu = (()=>{
+    dispatch("menu")
 })
 
 let isGames = true 
@@ -25,9 +25,12 @@ const handleOriginals = (()=>{
 </script>
 
 <div class="sc-fXEqDS hZgDyO">
-    <span role="button" tabindex="0" on:keyup={handleMenu} class="close-wrap">
-        <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="20" className="custom-icon" title="Custom icon params" />
-    </span>
+    <button on:click={handleMenu}>
+        <span  class="close-wrap">
+            <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="20" className="custom-icon" title="Custom icon params" />
+        </span>
+    </button>
+
 
     <div id="sidebar" class="sc-xiLah beBixG">
         <div class="mobile-sidebar-top-tab">
@@ -41,12 +44,14 @@ const handleOriginals = (()=>{
             <img alt="menu-icon" src="https://static.nanogames.io/assets/home.e1cf89b4.png">
             <div class="nav-right">Home</div>
         </div>
+        <button on:click={handleOriginals}>
+            <div  role="button" tabindex="0"  class="nav-item">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
+                <div class="nav-right">NG Originals</div>
+                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="17" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
+            </div>
+        </button>
 
-        <div  role="button" tabindex="0" on:keyup={handleOriginals} class="nav-item">
-            <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
-            <div class="nav-right">NG Originals</div>
-            <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="17" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
-        </div>
 
         <!-- =================== Games ============================ -->
         {#if (isGames)}

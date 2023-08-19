@@ -23,9 +23,15 @@ const handleAuth = (e)=>{
     }
 }
 
+
+const handleMenu = (()=>{
+    dispatch("handleMenuMobile")
+})
+
+
 </script>
 
-<div class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
+<div id="navbar" class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
     <div class="header-wrap">
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
@@ -69,7 +75,7 @@ const handleAuth = (e)=>{
             <div class="logo-wrap">
                 <img alt="logo" src="https://static.nanogames.io/assets/logo_small.c965cce9.png">
             </div>
-            <button class="sc-bQtKYq cUTdQJ">
+            <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
                     <Icon src={HiSolidMenu}  size="18"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>

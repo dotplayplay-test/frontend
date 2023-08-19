@@ -19,7 +19,7 @@ register();
                     <swiper-container class="swiper-wrapper"
                         slides-per-view={1}
                         speed={2000}
-                        loop={true}
+                        loop={true},
                         autoplay={{
                         delay: 2000,
                         disableOnInteraction: false,
@@ -39,7 +39,6 @@ register();
                             </div>
                         </swiper-slide>
                         <swiper-slide>
-
                             <div class="sc-kTqLtj dnfJpJ">
                                 <a gridnum="2" href="/lottery" class="sc-cfJLRR joQyOD">
                                     <img src="https://img2.nanogames.io/banner/40/b2/cb/164300069674127.png" alt="">
