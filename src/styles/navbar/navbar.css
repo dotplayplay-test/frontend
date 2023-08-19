@@ -61,7 +61,7 @@
   -webkit-box-pack: end;
   justify-content: flex-end;
 }
-.gAvMHL .login-in > p {
+.gAvMHL .login-in > button p {
   margin: 0px 0.5rem 0px 0px;
   padding: 1rem;
   cursor: pointer;

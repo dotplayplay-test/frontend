@@ -7,10 +7,8 @@ import Games from '../components/games.svelte';
 import IoMoon from "svelte-icons-pack/io/IoMoon";
 import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
-
 import { createEventDispatcher } from 'svelte'
 const dispatch = createEventDispatcher()
-
 
 const handleMenu = ((e)=>{
     dispatch("menu", e)
@@ -24,7 +22,6 @@ const handleOriginals = (()=>{
         isGames = true
     }
 })
-
 </script>
 
 <div class="sc-fXEqDS hZgDyO">

@@ -69,11 +69,11 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
                     <div class="sc-haTkiu fgzCdg rewards-graph">
                         <div class="title">Affiliate Rewards</div>
                         <div class="rewards-wrap">
-                            <a href="#" class="item-rewards">
+                            <a href="/#" class="item-rewards">
                                 <div class="type ttu">USD Rewards</div>
                                 <div class="tip-detail">Click for more details</div>
                             </a>
-                            <a href="#" class="item-commission">
+                            <a href="/#" class="item-commission">
                                 <div class="type">Commission Rewards</div>
                                 <div class="tip-detail">Click for more details</div>
                             </a>
@@ -91,7 +91,7 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
                                     <div class="desc">Every friend you invite will get you</div>
                                     <div class="flex">
                                         <div class="amount">100 USD</div>
-                                        <a href="#" class="hover theme">USD Rewards Rules</a>
+                                        <a href="/#" class="hover theme">USD Rewards Rules</a>
                                         <Icon src={RiSystemArrowRightSLine} color="rgb(245, 246, 247)" size="18" title="Custom icon params" />
                                     </div>
                                 </div>

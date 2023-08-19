@@ -1,4 +1,7 @@
 <script>
+import {
+    goto
+} from "$app/navigation"
 import "../styles/navbar/mobileNavbar.css"
 import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
@@ -12,6 +15,13 @@ const handleChat = (()=>{
     dispatch("handleChatRoom", "abek open")
 })
 
+const handleAuth = (e)=>{
+    if(e === 1){
+        goto("/register")
+    }else{
+        goto("/login")
+    }
+}
 
 </script>
 
@@ -34,8 +44,10 @@ const handleChat = (()=>{
                 </div>
             </div>
             <div class="login-in">
-                <p>Sign in</p>
-                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <button  on:click={()=>handleAuth(2)} >
+                    <p >Sign in</p>
+                </button>
+                <button on:click={()=>handleAuth(1)} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Sign up</div>
                 </button>
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">

@@ -35,6 +35,7 @@ let vipclub
 let recent
 let probablyFair
 let favourite
+let promotion
 
 onMount(() => {
     if (browser && window.location.pathname === "/") {
@@ -72,6 +73,9 @@ onMount(() => {
     else if (browser && window.location.pathname === "/favourite") {
         favourite = true
     }
+    else if (browser && window.location.pathname === "/promotion") {
+        promotion = true
+    }
 })
 
 const handleNavigation = ((e) => {
@@ -94,6 +98,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         probablyFair = false
+        promotion = false
         goto(e)
     } else if (e === "/affiliate") {
         lottery = false
@@ -105,6 +110,7 @@ const handleNavigation = ((e) => {
         original = false
         goto(e)
         probablyFair = false
+        promotion = false
     }
     else if (e === "/vip-games") {
         lottery = false
@@ -115,6 +121,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         probablyFair = false
+        promotion = false
         goto(e)
     }
     else if (e === "/help/provably-fair") {
@@ -126,6 +133,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         goto(e)
+        promotion = false
         probablyFair = true
     }
     else if (e === "/recent-play") {
@@ -138,6 +146,7 @@ const handleNavigation = ((e) => {
         original = false
         goto(e)
         probablyFair = false
+        promotion = false
     }
     else if (e === "/favourite") {
         lottery = false
@@ -148,6 +157,18 @@ const handleNavigation = ((e) => {
         favourite = true
         original = false
         goto(e)
+        promotion = false
+    }
+    else if (e === "/promotion") {
+        lottery = false
+        recent = false
+        home = false
+        vipclub = false
+        affiliate = false
+        favourite = true
+        original = false
+        goto(e)
+        promotion = true
     }
     else {
         lottery = false
@@ -158,6 +179,7 @@ const handleNavigation = ((e) => {
         favourite = false
         original = true
         probablyFair = false
+        promotion = false
     }
 })
 
@@ -184,6 +206,11 @@ const handleNavigation = ((e) => {
             {#if (showOriginals)}
             <Original on:bc={handleNavigation} styls={styls} />
             {/if}
+        </button>
+        <button on:click={()=> handleNavigation("/promotion")} class={`sc-iNGGcK knLCVT menu-item special-nav  ${promotion ? "select" : ""} `}>
+            <div class="menu-pc">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/promotion.316446ec.png"><span>Promotions</span>
+            </div>
         </button>
         <button  on:click={()=> handleNavigation("/lottery")} class={`sc-iNGGcK knLCVT menu-item ${lottery ? "select" : ""} `}>
             <div class="menu-pc">
