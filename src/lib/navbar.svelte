@@ -31,7 +31,7 @@ const handleMenu = (()=>{
 
 </script>
 
-<div id="navbar" class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
+<div id="main" class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
     <div class="header-wrap">
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
@@ -69,7 +69,7 @@ const handleMenu = (()=>{
 
 
 <!-- ============================================ Mobile view =========================================== -->
-<div class="mobile-navbar">
+<div class="mobile">
     <div class="sc-hJhJFJ jVgBRe" style="transform: translate3d(0px, 0%, 0px);">
         <div class="login-top">
             <div class="logo-wrap">

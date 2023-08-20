@@ -6,7 +6,7 @@
 </script>
 
 
-    <div class="sc-eySxxw kguWsM welcome">
+    <div id="main" class="sc-eySxxw kguWsM welcome">
         <div class="sc-cxVPaa fnthVB casino-header">
             <div class="header-sub flex-center">
                 <div class="left flex-center">

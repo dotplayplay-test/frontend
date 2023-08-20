@@ -3,7 +3,7 @@
     import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
     </script>
     
-    <div class="sc-zjkyB jlxrhk">
+    <div id="main" class="sc-zjkyB jlxrhk">
         <div class="sc-gDGHff jtyGOM lottery-header">
             <div class="wrap">
                 <div class="period">Lottery Game ID. <span>20230807</span></div>

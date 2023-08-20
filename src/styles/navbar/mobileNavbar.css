@@ -101,6 +101,7 @@
     -webkit-box-align: center;
     align-items: center;
     padding-right: 1.25rem;
+    position: relative;
 }
 
 .mobile-navbar .PGOpB {

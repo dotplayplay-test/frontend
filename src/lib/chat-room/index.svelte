@@ -17,7 +17,7 @@ const handlecloseChat = (()=>{
 
 </script>
 
-<div class="sc-cVAmsi bJUiGv" style="transform: none;">
+<div id="sidebar-chatroom" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
         <div class="sc-hJZKUC dWgZek">
             <div class="select-wrap">

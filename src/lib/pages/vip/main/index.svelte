@@ -1,7 +1,7 @@
 <script>
   
 </script>
-<div id="game-vip" class="sc-hUplSX jzbUmw">
+<div id="main" class="sc-hUplSX jzbUmw">
     <div class="sc-cfJLRR gQxvnl vip-top-banner">
         <div class="banner-head">
             <img class="vip-bc-img" alt="banner.png" src="https://static.nanogames.io/assets/bg.7ad42530.png">

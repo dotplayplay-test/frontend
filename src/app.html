@@ -8,9 +8,7 @@
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
 		<title>DOTPLAYPLAY</title>
-
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 
 		<style>
@@ -19,6 +17,9 @@
 				margin: 0;
 				font-family: Poppins;
 				text-decoration: none;
+				box-sizing: border-box;
+			}
+			*, *:before, *:after {
 				box-sizing: border-box;
 			}
 			body{
@@ -57,24 +58,13 @@
 
 			/*=========================================================== Main screen ================================================ */
 			@media only screen and ( min-width : 650px) {
-				.mobile-navbar {
+				.mobile {
 					display: none;
 				}
 				.ePAxUv {
 					margin-top: 4rem;
 				}
-				.side-barmobile{
-					display: none;
-				}
-				#mobile-home{
-					display: none;
-				}
-				.menubar{
-					display: none;
-				}
-				.lottery-mobile{
-					display: none;
-				}
+
 				main{
 					width: 100%;
 					margin: 10px 0;
@@ -122,29 +112,10 @@
 					margin: 0;
 					width: 100%;
 				}
-				.vip-mobile-page{
-					display: none;
-				}
 			}
 			/* ============================= mobile screen ====================================================== */
 			@media only screen and ( max-width : 650px) {
-				#navbar{
-					display: none;
-				}
-				#side-bar{
-					display: none;
-				}
-				#right-bar{
-					width: 100%;
-					height: 100vh;
-				}
-				.menu{
-					display: none;
-				}
-				#mobile-home{
-				    margin-top: 3.175rem;	
-				}
-				#home-main{
+				#main{
 					display: none;
 				}
 				.footer-general{
@@ -153,14 +124,8 @@
 				#right-bar{
 					width: 100%;
 				}
-				.lottery-page{
-					display: none;
-				}
-				.casino-page {
-					display: none;
-				}
-				.vip-main-page{
-					display: none;
+				.ePAxUv{
+					margin-top: 7.375rem;
 				}
 			}
 

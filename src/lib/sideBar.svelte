@@ -185,7 +185,7 @@ const handleNavigation = ((e) => {
 
 </script>
 
-<div id="sidebar" class="sc-jHkVzv eTxQfM unfold">
+<div id="main" class="sc-jHkVzv eTxQfM unfold">
     <div class="large-sidebar hidden-scroll-y">
         <div class="sc-uojGG hksQGj">
             <a aria-current="page" class="is-active active" href="/">Casino</a>

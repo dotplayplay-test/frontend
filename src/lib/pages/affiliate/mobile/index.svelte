@@ -6,8 +6,7 @@ import CgLoadbarDoc from "svelte-icons-pack/cg/CgLoadbarDoc";
 import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
 </script>
 
-<div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
-    <div class="casino-mobile">
+    <div class="mobile">
         <div class="sc-bvFjSx fHLJnX welcome">
             <div class="sc-cQMzAB bBIfBG casino-header">
                 <div class="header-sub flex-center">
@@ -152,4 +151,3 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
             </div>
         </div>
     </div>
-</div>

@@ -12,7 +12,7 @@ import Closesidebar from "$lib/closesidebar.svelte";
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
-let sideDetection = 240
+let sideDetection = 0
 
 import {
     onMount
@@ -20,10 +20,14 @@ import {
 let ens = browser && window.innerWidth
 
 onMount(() => {
-    if (browser && window.innerWidth > 1000) {
+    if (browser && window.innerWidth < 650) {
+        isOpenSide = true
+        sideDetection = 0
+    }
+    else if (browser && window.innerWidth > 1000) {
         isOpenSide = true
         sideDetection = 240
-    } else {
+    }  else {
         isOpenSide = false
         sideDetection = 76
     }
@@ -64,18 +68,20 @@ const handleMenu = () => {
 <div class="app">
 
     {#if (isOpenSide) }
-    <div id="side-bar" style={`width:${isOpenSide ? 240 : 76}px`}>
+    <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
         <SideBar styls={isOpenSide} />
     </div>
     {:else}
-    <div id="side-bar" style={`width:${isOpenSide ? 240 : 76}px`}>
+    <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
         <Closesidebar styls={isOpenSide} />
     </div>
     {/if}
-    <div id="menu">
-        <button style={`left:${isOpenSide ? 224 : 60}px`} on:click={handleMainMenu}  class="menu">
-            <img src='https://www.linkpicture.com/q/menu_2.svg' alt="" />
-        </button>
+    <div id="main">
+        <div id="menu">
+            <button style={`left:${isOpenSide ? 224 : 60}px`} on:click={handleMainMenu}  class="menu">
+                <img src='https://www.linkpicture.com/q/menu_2.svg' alt="" />
+            </button>
+        </div>
     </div>
 
     <!-- ======================  mobile menu bar ================= -->
@@ -89,7 +95,7 @@ const handleMenu = () => {
         <header>
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
-        <main>
+        <main class="sc-lhMiDA ePAxUv">
             <slot></slot>
         </main>
         <footer>
