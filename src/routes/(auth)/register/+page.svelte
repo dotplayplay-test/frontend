@@ -1,10 +1,36 @@
 <script>
+    import { goto } from "$app/navigation"
    import Icon from 'svelte-icons-pack/Icon.svelte';
    import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
    import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
    import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
    import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
+   import { useLogin } from "../../../lib/hook/useLogin"
+   const { login } = useLogin()
    let isREf = false
+    let email = ''
+    let password = ''
+    let aggreement = false
+
+    const handleAgreement = (()=>{
+        if(aggreement){
+            aggreement = false
+        }else{
+            aggreement = true
+        }
+    })
+
+    const handleSubmit = (()=>{
+        let data = { email, password}
+        if(!email){
+            console.log("email can't be empty")
+        }else if(!password){
+            console.log("Password is required")
+        }
+        else{
+            login(data)
+        }
+    })
 
    </script>
    
@@ -13,7 +39,7 @@
            <div class="dialog-head has-close">
                <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
            </div>
-           <button class="sc-ieecCq fLASqZ close-icon dialog-close">
+           <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
                <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
            </button>
            <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
@@ -28,13 +54,13 @@
                      <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">Email Address</div>
                         <div class="input-control">
-                           <input type="text"  autocomplete="off" placeholder="Registered Email Address." value="">
+                           <input type="text" bind:value={email} autocomplete="off" placeholder="Registered Email Address." >
                         </div>
                      </div>
                      <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">Login Password</div>
                         <div class="input-control">
-                           <input type="password"  autocomplete="off" placeholder="Login Password" value="">
+                           <input type="password"  autocomplete="off" placeholder="Login Password" bind:value={password} >
                         </div>
                      </div>
                      {#if  isREf}
@@ -53,20 +79,24 @@
                   <hr>
                   <div class="box">
                     <div class="argument-check">
-                       <div class="sc-iJKOTD kdCtGQ checkbox ">
-                        <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
-                          </div>
+                       <button on:click={handleAgreement} class="sc-iJKOTD kdCtGQ checkbox ">
+                        {#if (!aggreement)}
+                            <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
+                        {:else}
+                            ""
+                        {/if}
+                       </button>
                           <div class="label">I agree with <a href="/help/agreement" class="argument">user agreement</a>,
                               and confirm that I am at least 18 years old!</div>
                              </div>
                              <div class="buttons">
-                                <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin">
+                                <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin" >
                                    <div class="button-inner">
                                     <Icon src={RiSystemArrowDropLeftLine}  size="25"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                                       <span>Sign in</span>
                                    </div>
                                 </button>
-                                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big">
+                                <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big" disabled={aggreement} >
                                    <div class="button-inner">Sign up</div>
                                 </button>
                              </div>
@@ -164,7 +194,13 @@ img {
     justify-content: center;
     width: 3.75rem;
     height: 3.75rem;
+    transition: 0.5s ease-in-out;
     cursor: pointer;
+}
+
+.fLASqZ:hover {
+    transition: 0.5s ease-in-out;
+    transform: rotate(60deg);
 }
 .ipnwmW.dialog-body {
     padding: 0px;
@@ -375,11 +411,6 @@ input:-webkit-autofill {
     box-shadow: 200px 200px 100px #273642 inset;
     -webkit-text-fill-color: var(--autofill-color);
 }
- .icon {
-    width: 1rem;
-    height: 1rem;
-    transform: rotate(90deg);
-}
 .cfNMkN .box {
     padding: 1.25rem;
 }
@@ -462,5 +493,9 @@ input:-webkit-autofill {
 .cfNMkN .signin {
     color: rgb(245, 246, 247);
     background-color: rgb(49, 52, 60);
+}
+.cBmlor:disabled.sc-iqseJM:not(.is-loading) {
+    opacity: 0.5;
+    cursor: default;
 }
 </style>

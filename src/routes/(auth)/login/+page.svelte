@@ -47,7 +47,7 @@
                      <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
                         <div class="button-inner">
                            <span>Sign up</span>
-                           <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" class="sc-gsDKAQ hxODWG icon" title="arror" />
+                           <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
                         </div>
                      </button>
                   </div>
