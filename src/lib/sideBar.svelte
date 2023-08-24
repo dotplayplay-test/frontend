@@ -7,6 +7,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import IoMoon from "svelte-icons-pack/io/IoMoon";
 import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
+import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
 import {
     browser
 } from '$app/environment'
@@ -36,6 +37,7 @@ let recent
 let probablyFair
 let favourite
 let promotion
+let bonus 
 
 onMount(() => {
     if (browser && window.location.pathname === "/") {
@@ -67,6 +69,9 @@ onMount(() => {
     else if (browser && window.location.pathname === "/vip-games") {
         vipclub = true
     }
+    else if (browser && window.location.pathname === "/bonus") {
+        bonus= true
+    }
     else if (browser && window.location.pathname === "/recent-play") {
         recent = true
     }
@@ -89,7 +94,22 @@ const handleNavigation = ((e) => {
         favourite = false
         original = false
         probablyFair = false
-    } else if (e === "/lottery") {
+        bonus = false
+    }
+    else if (e === "/bonus") {
+        bonus = true
+        lottery = false
+        home = false
+        affiliate = false
+        vipclub = false
+        recent = false
+        favourite = false
+        original = false
+        probablyFair = false
+        promotion = false
+        goto(e)
+    } 
+     else if (e === "/lottery") {
         lottery = true
         home = false
         affiliate = false
@@ -99,6 +119,7 @@ const handleNavigation = ((e) => {
         original = false
         probablyFair = false
         promotion = false
+        bonus = false
         goto(e)
     } else if (e === "/affiliate") {
         lottery = false
@@ -111,6 +132,7 @@ const handleNavigation = ((e) => {
         goto(e)
         probablyFair = false
         promotion = false
+        bonus = false
     }
     else if (e === "/vip-games") {
         lottery = false
@@ -122,6 +144,7 @@ const handleNavigation = ((e) => {
         original = false
         probablyFair = false
         promotion = false
+        bonus = false
         goto(e)
     }
     else if (e === "/help/provably-fair") {
@@ -132,12 +155,14 @@ const handleNavigation = ((e) => {
         recent = false
         favourite = false
         original = false
+        bonus = false
         goto(e)
         promotion = false
         probablyFair = true
     }
     else if (e === "/recent-play") {
         lottery = false
+        bonus = false
         recent = true
         home = false
         vipclub = false
@@ -153,6 +178,7 @@ const handleNavigation = ((e) => {
         recent = false
         home = false
         vipclub = false
+        bonus = false
         affiliate = false
         favourite = true
         original = false
@@ -164,6 +190,7 @@ const handleNavigation = ((e) => {
         recent = false
         home = false
         vipclub = false
+        bonus = false
         affiliate = false
         favourite = true
         original = false
@@ -177,11 +204,23 @@ const handleNavigation = ((e) => {
         vipclub = false
         affiliate = false
         favourite = false
+        bonus = false
         original = true
         probablyFair = false
         promotion = false
     }
 })
+
+
+let isLight = false
+const handeTheme = ((e)=>{
+    if(e === `light`){
+        isLight = true  
+    }else{
+        isLight = false
+    }
+})
+
 
 </script>
 
@@ -190,7 +229,7 @@ const handleNavigation = ((e) => {
         <div class="sc-uojGG hksQGj">
             <a aria-current="page" class="is-active active" href="/">Casino</a>
         </div>
-        <button on:click={()=> handleNavigation("/")} class={`sc-iNGGcK knLCVT menu-item ${home ? "select" : ""}  `}>
+        <button on:click={()=> handleNavigation("/")} class={`sc-iNGGcK knLCVT menu-item ${home ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/home.e1cf89b4.png"><span>Home</span>
             </div>
@@ -207,6 +246,14 @@ const handleNavigation = ((e) => {
             <Original on:bc={handleNavigation} styls={styls} />
             {/if}
         </button>
+        <button on:click={()=> handleNavigation("/bonus")} class={`sc-iNGGcK knLCVT menu-item  ${bonus ? "select" : ""} `}>
+            <div class="menu-pc">
+                <span style="padding: 10px">
+                    <Icon src={AiFillGift}  size="25"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                </span>
+                <span>Bonus</span>
+            </div>
+        </button>
         <button on:click={()=> handleNavigation("/promotion")} class={`sc-iNGGcK knLCVT menu-item special-nav  ${promotion ? "select" : ""} `}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/promotion.316446ec.png"><span>Promotions</span>
@@ -218,9 +265,11 @@ const handleNavigation = ((e) => {
                 <span>Lottery</span>
             </div>
         </button>
-        <button on:click={()=> handleNavigation("/affiliate")} class={`sc-iNGGcK knLCVT menu-item ${affiliate ? "select" : ""}`}><div class="menu-pc"><img alt="menu-icon" src="https://static.nanogames.io/assets/affiliate.6f434c33.png">
-            <span>Affiliate</span>
-        </div>
+        <button on:click={()=> handleNavigation("/affiliate")} class={`sc-iNGGcK knLCVT menu-item ${affiliate ? "select" : ""}`}>
+            <div class="menu-pc">
+                <img alt="menu-icon" src="https://static.nanogames.io/assets/affiliate.6f434c33.png">
+                <span>Affiliate</span>
+            </div>
         </button>
         <button  on:click={()=> handleNavigation("/vip-games")} class={`sc-iNGGcK knLCVT menu-item special-nav vip ${vipclub ? "select" : ""}`} >
             <div class="menu-pc">
@@ -260,15 +309,15 @@ const handleNavigation = ((e) => {
             </div>
             <div class="sc-gSQFLo dprxuS theme">
                 <div class="theme-check">
-                    <div class="item is-active">
+                    <button on:click={()=>handeTheme("dark")} class={ `item ${isLight ? "" : "is-active"} `}>
                         <Icon src={IoMoon}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="moon" />
-                    </div>
-                    <div class="item">
-                        <Icon src={HiSolidLightBulb}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="moon" />
-                    </div>
+                    </button>
+                    <button on:click={()=>handeTheme("light")} class={ `item ${isLight ? "is-active" : ""} `}>
+                        <Icon  src={HiSolidLightBulb}  size="18"  color="#ffff" className="custom-icon" title="light" />
+                    </button>
                 </div>
                 <div class="theme-word">
-                    <p>Darkmode</p>
+                    <p>{ isLight ? `Lightmode` : `Darkmode` }</p>
                     <p>Currently</p>
                 </div>
             </div>

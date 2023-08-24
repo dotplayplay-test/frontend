@@ -1,0 +1,41 @@
+.cMCBIc > .pc .switch {
+    background-color: rgba(30, 32, 36, 0.6);
+}
+.isgvhu .item .switch {
+    min-width: 1.75rem;
+}
+.hRMjrF {
+    width: 1.75rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(49, 52, 60);
+    position: relative;
+    cursor: pointer;
+}
+.hRMjrF .dot {
+    transition: all 0.2s ease 0s;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(153, 164, 176, 0.6);
+}
+.cMCBIc > .pc .switch.open {
+    background-color: rgba(93, 160, 0, 0.2);
+}
+.hRMjrF.open {
+    background-color: rgba(93, 160, 0, 0.2);
+}
+.hRMjrF.open .dot {
+    left: 0.75rem;
+    background-color: rgb(67, 179, 9);
+}
+
+.cMCBIc > .pc table > tbody > tr:nth-child(2n-1) > td {
+    background-color: rgba(35, 38, 42, 0.5);
+}
+.gDzJtG > .pc .input .input-control {
+    background-color: rgba(30, 32, 36, 0.6);
+}

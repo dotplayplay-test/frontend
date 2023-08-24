@@ -9,6 +9,8 @@ import IoMoon from "svelte-icons-pack/io/IoMoon";
 import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
 import { createEventDispatcher } from 'svelte'
+import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
+
 const dispatch = createEventDispatcher()
 
 const handleMenu = (()=>{
@@ -63,6 +65,12 @@ const handleNavigation = ((e) => {
             <Games />
         {/if}
 
+        <button on:click={()=>handleNavigation("/bonus")}  class="nav-item">
+            <span style="padding: 10px">
+                <Icon src={AiFillGift}  size="25"  color="rgb(67, 179, 9)" className="custom-icon" title="bonus" />
+            </span>
+            <div class="nav-right">Bonus</div>
+        </button>
         <button on:click={()=>handleNavigation("/lottery")}  class="nav-item">
             <img alt="menu-icon" src="https://static.nanogames.io/assets/lottery.bc95b607.png">
             <div class="nav-right">Lottery</div>

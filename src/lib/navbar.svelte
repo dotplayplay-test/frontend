@@ -4,6 +4,8 @@ import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
 import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
 import BiSolidMessageAltDetail from "svelte-icons-pack/bi/BiSolidMessageAltDetail";
 import IoNotifications from "svelte-icons-pack/io/IoNotifications";
+import Navprofile from "./profilecomponent/main/navprofile.svelte";
+import Coins from "./profilecomponent/main/coins.svelte";
 import {
     goto
 } from "$app/navigation"
@@ -12,6 +14,7 @@ import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 export let styles;
+
 export let chatroom;
 import {
     createEventDispatcher
@@ -23,6 +26,16 @@ const handleChat = (() => {
     dispatch("handleChatRoom", "abek open")
 })
 
+let isCoinDrop = false
+const handleCoinsDrop = ((e)=>{
+    if(isCoinDrop){
+        isCoinDrop = false
+    }else{
+        isCoinDrop = true
+    }
+})
+
+
 const handleAuth = (e) => {
     if (e === 1) {
         goto("/register")
@@ -30,20 +43,32 @@ const handleAuth = (e) => {
         goto("/login")
     }
 }
+let userProfile = false
+const handleUserProfile = (()=>{
+    if(userProfile){
+        userProfile = false
+    }else{
+        userProfile = true
+    }
+})
 
 const handleMenu = (() => {
     dispatch("handleMenuMobile")
 })
 </script>
 
-<div id="main" class="sc-gVkuDy gAvMHL" style={`padding-left:${styles ? 240 : 76}px; margin-right: ${chatroom}px; `} >
+<div id="main" class="sc-gVkuDy gAvMHL" style={` margin-right: ${chatroom}px; `} >
     <div class="header-wrap">
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
                 <div class="sc-iukxot jivBdD logo-pc">
-                    <img alt="logo" class="logo-com" src="https://www.linkpicture.com/q/dpp-favicon-logo-allwhite-transparent-final.png">
+                    {#if styles }
+                    <img alt="logo" class="logo-com" src="https://www.linkpicture.com/q/dpp-logowhite.png">
+                    {:else}
+                    <img style="border-radius: 12px;" class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
+                {/if}
                 </div>
-                <div class="sc-jtXEFf jsyNKG search-pc">
+                <!-- <div class="sc-jtXEFf jsyNKG search-pc">
                     <div class="search-input-wrap-pc">
                         <div class="sc-kTLmzF dwaOxj">
                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -52,14 +77,14 @@ const handleMenu = (() => {
                             <input placeholder="Game name | Provider | Category Tag" value="">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             {#if ($AuthContext)}
             <div class="sc-DtmNo euzHLF right">
                 <div class="sc-gjNHFA juteh wallet-enter">
                     <div class="sc-fmciRz LQlWw">
-                        <div class="sc-iFMAIt icGouR">
+                        <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                             <div class="sc-eXlEPa boxpOO">
                                 <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579">
                                 <span class="currency">USDT</span>
@@ -70,7 +95,11 @@ const handleMenu = (() => {
                                     <span class="amount-str">0.<span class="suffix">00000000</span></span>
                                 </div>
                             </div>
-                        </div>
+                        </button>
+                        {#if isCoinDrop}
+                            <Coins />
+                        {/if}
+
                         <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                             <div class="button-inner">
                                 <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
@@ -84,10 +113,12 @@ const handleMenu = (() => {
                         <a href="/user/profile/505090">
                             <img class="avatar" alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1692615121845">
                         </a>
-                        <div class="svg">
+                        <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                             <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
-
-                        </div>
+                            {#if userProfile}
+                                <Navprofile />
+                            {/if}
+                        </button>
                     </div>
                 </div>
                 <button class="sc-dcgwPl bbYXSv private-chat">
@@ -130,24 +161,69 @@ const handleMenu = (() => {
     <div class="sc-hJhJFJ jVgBRe" style="transform: translate3d(0px, 0%, 0px);">
         <div class="login-top">
             <div class="logo-wrap">
-                <img alt="logo" src="https://static.nanogames.io/assets/logo_small.c965cce9.png">
+                <img alt="logo" style="border-radius: 12px;" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
             </div>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
-            <div class="header-login">
-                <p>Sign in</p>
-                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                    <div class="button-inner">Sign up</div>
-                </button>
+            {#if ($AuthContext)}
+            <div class="sc-gjNHFA jlttqa wallet-enter">
+                <div class="sc-fmciRz LQlWw">
+                    <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
+                        <div class="sc-eXlEPa boxpOO">
+                            <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579">
+                            <span class="currency">USDT</span>
+                            <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
+                        </div>
+                        <div class="sc-Galmp erPQzq coin notranslate balance">
+                            <div class="amount">
+                                <span class="amount-str">0.<span class="suffix">00000000</span></span>
+                            </div>
+                        </div>
+                    </button>
+      
+                    <button on:click={()=> goto("wallet/deposit")} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
+                        <div class="button-inner">
+                            <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
+                            <span>Wallet</span>
+                        </div>
+                    </button>
+                </div>
+                {#if isCoinDrop}
+                    <Coins />
+                {/if}
             </div>
+            <div class="sc-gnnDb fhlUmF">
+                <div class="user-wrap">
+                    <a href="/user/profile/505090">
+                        <img class="avatar" alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1692755604086">
+                    </a>
+                    <button on:click={handleUserProfile} class="svg">
+                        <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                            {#if userProfile}
+                                <Navprofile />
+                            {/if}
+                    </button>
+                </div>
+            </div>
+            {:else}
+                <div class="header-login">
+                    <button on:click={()=> goto("/login")} >
+                        <p>Sign in</p>
+                    </button>
+                    <button on:click={()=> goto("/register")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                        <div class="button-inner">Sign up</div>
+                    </button>
+                </div>
+            {/if}
+
         </div>
         <div class="bottom">
             <div class="left"></div>
             <div class="right">
-                <button id="chat" class="sc-eicpiI PGOpB chat-btn">
+                <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB chat-btn">
                     <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
                     <div class="sc-fotOHu gGSOuF badge ">99</div>
                 </button>
@@ -363,5 +439,110 @@ const handleMenu = (() => {
     width: 6.25rem;
     height: 2.5rem;
     margin-right: 3.125rem;
+}
+
+.gAvMHL .left {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex: 1 1 0%;
+}
+.gAvMHL .right {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+.jlttqa {
+    cursor: pointer;
+}
+.LQlWw {
+    background-color: rgb(30, 32, 36);
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: 3rem;
+    border-radius: 1.5rem;
+    padding-left: 0.875rem;
+    line-height: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+}
+.icGouR {
+    position: relative;
+    margin: 0.4375rem 0.25rem 0.4375rem 0.4375rem;
+}
+.boxpOO {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 800;
+    min-width: 5.75rem;
+}
+.boxpOO .coin-icon {
+    width: 1rem;
+    height: 1rem;
+}
+.boxpOO .currency {
+    margin: 0px 0.625rem 0px 0.4375rem;
+    font-size: 14px;
+}
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.icGouR .balance .amount {
+    color: rgb(245, 246, 247);
+    font-weight: 800;
+    font-size: 12.3px;
+}
+.erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}
+
+.fhlUmF {
+    width: 5rem;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    cursor: pointer;
+    z-index: 9;
+}
+.fhlUmF .user-wrap {
+    display: flex;
+}
+.fhlUmF .user-wrap > a {
+    font-size: 0px;
+}
+.fhlUmF .user-wrap > a .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+.fhlUmF .svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.fGPfpD {
+    height: 80%;
+    width: 5.85rem;
+    padding-right: 10px;
 }
 </style>

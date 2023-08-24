@@ -4,7 +4,6 @@ import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
-import AuthContext from "../lib/hook/authContext";
 import "../styles/errors/error.css"
 import {
     browser

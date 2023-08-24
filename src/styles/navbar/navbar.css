@@ -1,7 +1,7 @@
 .gAvMHL {
   height: 4rem;
   position: fixed;
-  z-index: 101;
+  z-index: 201;
   left: 0px;
   top: 0px;
   right: 0px;
@@ -41,7 +41,7 @@
 }
 .ftyLxH {
   margin-right: 24px;
-  padding-left: 2%;
+  padding-left: 0.2%;
 }
 .jivBdD {
   height: 100%;

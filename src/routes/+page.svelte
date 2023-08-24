@@ -2,6 +2,7 @@
 import "../styles/home/index.css"
 import "../styles/home/indexmobile.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
+import Biggestwin from "$lib/homecomponents/biggestwin.svelte";
 
 import {
     register
@@ -62,7 +63,10 @@ register();
         <div class="sc-gFSQbh gyJkwe">
             <Homeanimaton />
             <Homeoriginals />
-            <Latestbet />
+            <div class="screen-wrap">
+                <Biggestwin />
+                <Latestbet />
+            </div>
         </div>
     </div>
 </div>
@@ -459,7 +463,9 @@ register();
             </div>
 
             <div class="screen-wrap">
-                <div class="sc-gsFzgR fjPUUh">
+                <Biggestwin />
+
+                <div style="margin-top: 0.875rem;" class="sc-gsFzgR fjPUUh">
                     <div class="sc-cxpSdN kQfmQV tabs sc-cAhXWc fufAIq">
                         <div class="tabs-navs">
                             <button class="tabs-nav is-active">Latest bets</button>
@@ -509,3 +515,12 @@ register();
         </div>
     </div>
 </div>
+
+
+<style>
+.gyJkwe .screen-wrap {
+    max-width: 1368px;
+    margin: 0px auto;
+    padding: 1.25rem 0.625rem;
+}
+</style>

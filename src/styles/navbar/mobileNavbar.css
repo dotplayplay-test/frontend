@@ -48,7 +48,7 @@
     align-items: center;
     margin-left: auto;
 }
-.jVgBRe .login-top .header-login p {
+.jVgBRe .login-top .header-login button p {
     width: 6.25rem;
     height: 2.5rem;
     line-height: 2.5rem;
@@ -56,7 +56,7 @@
     color: rgb(116, 201, 23);
     font-weight: bold;
 }
-.jVgBRe .login-top .header-login button {
+.jVgBRe .login-top .header-login .fnKcEH.button  {
     width: 6.25rem;
     height: 2.5rem;
 }
