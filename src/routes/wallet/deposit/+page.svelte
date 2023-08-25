@@ -1,92 +1,342 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCopy from "svelte-icons-pack/io/IoCopy";
+import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
+let isSelectCoin = false
+const handlecoinSelect = (() => {
+    if (isSelectCoin) {
+        isSelectCoin = false
+    } else {
+        isSelectCoin = true
+    }
+})
+
+let defaultCoin = {
+    id: 1,
+    coin_symbol: "USDT",
+    coin_name: "Tether",
+    coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+    amount: 0,
+    suffix: "000000",
+    select: true,
+    networks: {
+        erc: {
+            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
+        },
+        bep: {
+            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+            address: "0x351455346d88ee6FE927c79f23395143662EC88e"
+        },
+        trc: {
+            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+            address: "TEosAyZA7Kwv4q84es3uyLgXHDHQWyYrsq"
+        }
+    }
+}
+
+let erc = true
+let trc = false
+let bep = false
+
+const handleNetwork = ((e)=>{
+    if(e === 1){
+        erc = true
+        trc = false
+        bep = false
+    }else if(e === 2){
+        erc = false
+        trc = false
+        bep = true
+    }else{
+        erc = false
+        trc = true
+        bep = false
+    }
+})
+
+const handleCoins = ((e) => {
+    defaultCoin = e.detail
+    handlecoinSelect()
+})
 </script>
 
 <div class="sc-gLEhor lhZODp" id="deposit">
-    <div class="sc-ezbkAF kDuLvp input ">
-        <div class="input-label">
-            <div style="flex: 1 1 0%;">Deposit Currency</div>
-            <a href="/transactions/deposit/DOGE">Record</a>
-        </div>
-        <div class="sc-kszsFN evIEvq input-control">
-            <div class="sc-cBIieI wvKye">
-                <div class="wrap">
-                    <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579">
-                    <span class="currency">DOGE</span>
-                    <span class="svg">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-                    </span>
-                </div>
+    {#if isSelectCoin}
+    <Selectcoin on:handleCoinSelect={handleCoins}/>
+        {/if}
+        <div class="sc-ezbkAF kDuLvp input ">
+            <div class="input-label">
+                <div style="flex: 1 1 0%;">Deposit Currency</div>
+                <a href="/transactions/deposit/DOGE">Record</a>
             </div>
-            <div class="sc-kqnjJL kdWfvE">
-                <div class="wrap">
-                    <div class="tit">Balance : </div>
-                    <div class="amount">0</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="sc-zjkyB cpVBtC">
-        <div class="sc-czvZiG exgnid bcd-label">
-            <p>First Deposit Bonus</p>
-            <span>More</span>
-        </div>
-        <div class="sc-dXNJws kyYKJa">
-            <div class="bg-light light-ani">
-                <div class="sc-jFkwbb bNDdwa bcd-left">
-                    <p class="one">$30<span>(or above to get bonus)</span>
-                    </p>
-                    <p class="two">≈ 475.209884 DOGE</p>
-                </div>
-                <div class="sc-bOtlzW gCfefU bcd-right">
+            <button on:click={handlecoinSelect} class="sc-kszsFN evIEvq input-control">
+                <div class="sc-cBIieI wvKye">
                     <div class="wrap">
-                        <div class="sc-bQFuvY dftgop sun-flower">
-                            <img class="img-bg" src="https://static.nanogames.io/assets/sf_w.adddd7aa.png" alt="sf">
-                            <img class="img-bonus" src="https://static.nanogames.io/assets/bonus.8a408dd9.png" alt="bonus">
-                        </div>
-                        <div class="info">
-                            <p class="one">
-                                <b>+80%</b>
-                                <span>Bonus</span>
-                            </p>
+                        <img class="coin-icon" alt="" src={defaultCoin.coin_image}>
+                        <span class="currency">{defaultCoin.coin_symbol}</span>
+                        <span class="svg">
+                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+                        </span>
+                    </div>
+                </div>
+                <div class="sc-kqnjJL kdWfvE">
+                    <div class="wrap">
+                        <div class="tit">Balance : </div>
+                        <div class="amount">{defaultCoin.amount}</div>
+                    </div>
+                </div>
+            </button>
+        </div>
+
+        {#if defaultCoin.coin_symbol === "USDT"}
+        <div class="sc-zjkyB cpVBtC">
+            <div class="sc-czvZiG exgnid bcd-label">
+                <p>First Deposit Bonus</p>
+                <span>More</span>
+            </div>
+            <div class="sc-dXNJws kyYKJa">
+                <div class="bg-light light-ani">
+                    <div class="sc-jFkwbb bNDdwa bcd-left">
+                        <p class="one">$30<span>(or above to get bonus)</span>
+                        </p>
+                        <p class="two">≈ 30 USDT</p>
+                    </div>
+                    <div class="sc-bOtlzW gCfefU bcd-right">
+                        <div class="wrap">
+                            <div class="sc-bQFuvY dftgop sun-flower">
+                                <img class="img-bg" src="https://static.nanogames.io/assets/sf_w.adddd7aa.png" alt="sf">
+                                <img class="img-bonus" src="https://static.nanogames.io/assets/bonus.8a408dd9.png" alt="bonus">
+                            </div>
+                            <div class="info">
+                                <p class="one">
+                                    <b>+80%</b>
+                                    <span>Bonus</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="sc-dpAhYB emReoO">
-        <div class="sc-wkwDy blotCy">
-            <div class="label"><div>Deposit Address&nbsp;( Note: Only <span class="cl-primary"> Doge Coin </span> )</div>
-                <div class="notranslate">DR1P...PQxDS</div>
-            </div>
-            <div class="box">
-                <div class="cont">
-                    <input class="address" readonly="" value="DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS">
-                    <button class="sc-iqseJM cBmlor button button-normal copy-button">
-                        <div class="button-inner">
-                           <Icon src={IoCopy}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+        <div class="sc-dpAhYB emReoO">
+            <div class="sc-fSDTwv hgHrvG">
+                <div class="label">Choose Network</div>
+                <div class="btn-wrap">
+                    <div class="scroll-box">
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(1)} class={erc ? `active` : ""} disabled={erc}>ERC20</button>
                         </div>
-                    </button>
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(2)} class={bep ? `active` : ""} disabled={bep}>BEP20</button>
+                        </div>
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(3)} class={trc ? `active` : ""} disabled={trc}>TRC20</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="sc-wkwDy blotCy">
+                <div class="label">
+                    <div>Deposit Address&nbsp;( Note: Only <span class="cl-primary"> {defaultCoin.coin_symbol} Coin </span> )</div>
+                    {#if erc}
+                        <div class="notranslate">{defaultCoin.networks.erc.address.substring(0, 7).concat('.......')}</div> 
+                        {:else if trc}
+                        <div class="notranslate">{defaultCoin.networks.trc.address.substring(0, 7).concat('.......')}</div> 
+                        {:else if bep}
+                        <div class="notranslate">{defaultCoin.networks.bep.address.substring(0, 7).concat('.......')}</div> 
+                    {/if}
+                </div>
+                <div class="box">
+                    <div class="cont">
+                        {#if erc}
+                        <input class="address" readonly="" value={defaultCoin.networks.erc.address}>
+                        {:else if trc}
+                        <input class="address" readonly="" value={defaultCoin.networks.trc.address}>
+                        {:else if bep}
+                        <input class="address" readonly="" value={defaultCoin.networks.bep.address}>
+                    {/if}
+
+                        <button class="sc-iqseJM cBmlor button button-normal copy-button">
+                            <div class="button-inner">
+                                <Icon src={IoCopy}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="sc-gDGHff jeroAP">
+                {#if erc}
+                 <img src={defaultCoin.networks.erc.qr_code} alt="qr.png">
+                 {:else if trc}
+                 <img src={defaultCoin.networks.trc.qr_code} alt="qr.png">
+                 {:else if bep}
+                 <img src={defaultCoin.networks.bep.qr_code} alt="qr.png">
+                {/if}
+            </div>
+            <div class="sc-ywFzA egWBux">
+                <p><span class="cl-primary">NOTICE:</span> Send only USDT to this address. Coins will be deposited after 6 network confirmations.</p>
+            </div>
         </div>
-        <div class="sc-gDGHff jeroAP">
-            <img src="/api/game/support/qrcode/320/?text=DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS" alt="qr.png">
+        {:else}
+        <div class="sc-gRtYjc fIolUb">
+            <div class="oval">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-left">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-center">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-right">
+            </div>
+            <div class="bcd-usd">
+                <img alt="bcd-usd" src="https://static.nanogames.io/assets/bcd_usd.ae5190d3.png">
+            </div>
+            <p><span class="word">{defaultCoin.coin_symbol}</span> (DPP Dollar) is a crypto launched by DOTPLAYPLAY. You can play games, tip, coindrop, rain with it.</p>
+            <p><span class="word">1 {defaultCoin.coin_symbol} = 1 USD</span> , You can <a class="hover" href="/wallet/swap">DPPSwap</a> DPP into any other currencies at any time and withdraw it to your wallet.</p>
+            <p>Deposit {defaultCoin.coin_symbol} into Vault, Enjoy up to <span class="word">10%</span> Annual Percentage Rate return.</p>
+            <p><span class="hover">Deposit</span> to claim your {defaultCoin.coin_symbol} bonus now.</p>
+            <button class="more-about">
+                <span>More about {defaultCoin.coin_symbol}</span>
+                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+            </button>
         </div>
-        <div class="sc-ywFzA egWBux">
-            <p><span class="cl-primary">NOTICE:</span> Send only DOGE to this address. Coins will be deposited after 2 network confirmations.</p>
+        {/if}
+
+    
         </div>
-    </div>
-</div>
 
 <style>
+    .fIolUb {
+    margin-top: 1rem;
+    border-radius: 1.25rem;
+    padding: 0px 0.75rem 1rem;
+    position: relative;
+    color: rgba(153, 164, 176, 0.6);
+    background-color: rgb(23, 24, 27);
+}
+.fIolUb .oval {
+    position: absolute;
+    top: 0px;
+    z-index: 0;
+    width: 15.5rem;
+    height: 12.0625rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url(https://static.nanogames.io/assets/oval.7db862c7.png) center center / 100% 100% no-repeat;
+}
+.fIolUb .oval .bcd-left {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: 2rem;
+    left: 2rem;
+    transform: rotate(115deg);
+}
+.fIolUb .oval .bcd-center {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    top: 1.125rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.fIolUb .oval .bcd-right {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: -0.375rem;
+    right: 2rem;
+    transform: rotate3d(0, 0, 3, 35deg);
+}
+.fIolUb .bcd-usd {
+    padding-top: 5.625rem;
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-size: 0px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.fIolUb .bcd-usd {
+    padding-top: 5.625rem;
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-size: 0px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.fIolUb > p {
+    margin-top: 1rem;
+}
+.fIolUb > p .word {
+    font-weight: bold;
+    color: rgb(245, 246, 247);
+}
+.fIolUb .more-about {
+    margin: 1rem 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(67, 179, 9);
+    font-size: 0.875rem;
+}
+@media screen and (min-width: 650px) {
+    #deposit {
+        border-radius: 20px;
+        background-color: rgb(30, 32, 36);
+        padding: 1.25rem 1.25rem 0px;
+        box-sizing: border-box;
+        height: 380px;
+        overflow-y: auto;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
+    }
+}
+.hgHrvG {
+    margin-top: 1rem;
+}
+.hgHrvG .label {
+    margin: 0px 1rem 0.375rem 0.75rem;
+}
+.hgHrvG .btn-wrap {
+    display: flex;
+}
+.hgHrvG .btn-wrap .scroll-box {
+    width: 100px;
+    display: flex;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    position: relative;
+    height: 2.1875rem;
+}
+.hgHrvG .btn-wrap .btn-space {
+    padding: 0px 0.1875rem;
+    scroll-snap-align: start;
+}
+.hgHrvG .btn-wrap button {
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    padding: 0px 1.25rem;
+    height: 2.125rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 0.875rem;
+}
+.hgHrvG .btn-wrap .active {
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(67, 179, 9);
+    font-weight: 800;
+    background-color: rgba(93, 160, 0, 0.15);
+}
 .kDuLvp {
     margin-top: 1rem;
+    width: 100%;
 }
 
 .kDuLvp .input-control {
@@ -115,6 +365,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 .evIEvq.input-control {
     border-radius: 1.25rem;
     height: 4.5rem;
+    width: 100%;
 }
 
 .input-control {

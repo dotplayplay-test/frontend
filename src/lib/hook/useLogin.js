@@ -1,14 +1,10 @@
-import { goto } from "$app/navigation"
-import { authReducer } from "./authContext"
 
 export const useLogin = () => {
   let error;
   let isLoading;
-
   const login = async (data) => {
     isLoading = true
     error = null
-
     const response = await fetch(
       "http://localhost:8000/api/users/signup",{
         method: "POST",
@@ -18,21 +14,18 @@ export const useLogin = () => {
         },
       }
     );
-
     const json = await response.json();
     if (!response.ok) {
       isLoading = false;
       error = json.error
       console.log(error)
     }
-
     if (response.ok) {
       // Save user to localStorage
       localStorage.setItem("user", JSON.stringify(json));
-      // Update the auth store
-       authReducer('Login', JSON.stringify(json));
+      // // Update the auth store
       isLoading = false
-      goto("/")
+      
     }
   };
   return { login, isLoading, error };

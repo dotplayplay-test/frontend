@@ -1,19 +1,39 @@
 <script>
-import {
-    goto
-} from "$app/navigation"
+import {  goto } from "$app/navigation"
 import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import { handleLogin } from "$lib/firebaseAuth/index"
+import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
+let email = ''
+let password = ''
+const googleAuth = (()=>{
+    handleGoogleAuth()
+})
+
+const handleFacebookAuthi = (()=>{
+    handleFacebookAuth()
+})
+
+const handleSubmit = (() => {
+    if (!email) {
+        console.log("email can't be empty")
+    } else if (!password) {
+        console.log("Password is required")
+    } else {
+        handleLogin(email, password)
+    }
+})
+
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
-    <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 535px; margin-top: -264px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 585px; margin-top: -294px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
             <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
         </div>
-        <button class="sc-ieecCq fLASqZ close-icon dialog-close">
+        <button on:click={()=>goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
@@ -22,50 +42,52 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <img src="https://static.nanogames.io/assets/login_coco.1855b11e.png" alt="">
             </div>
             <div class="sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf" style="transform: none;">
-                <div id="login" class="sc-czvZiG lnrkkr">
-                    <div class="box">
-                        <div class="sc-ezbkAF kDuLvp input ">
-                            <div class="input-label">Email Address</div>
-                            <div class="input-control">
-                                <input type="text" autocomplete="off" placeholder="Email" value="">
+                    <div id="login" class="sc-czvZiG lnrkkr">
+                        <div class="box">
+                            <div class="sc-ezbkAF kDuLvp input ">
+                                <div class="input-label">Email Address</div>
+                                <div class="input-control">
+                                    <input  bind:value={email} type="text" autocomplete="off" placeholder="Email" >
+                                </div>
+                            </div>
+                            <div class="sc-ezbkAF kDuLvp input sc-bYoBSM ixxYMF">
+                                <div class="input-label">
+                                    <div style="flex: 1 1 0%;">Login Password</div>
+                                    <a class="forget" href="/forget">Forgot password?</a>
+                                </div><div class="input-control">
+                                    <input  bind:value={password}  type="password" autocomplete="off"  placeholder="Login Password" >
+                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                                        <use xlink:href="#icon_View"></use>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                        <div class="sc-ezbkAF kDuLvp input sc-bYoBSM ixxYMF">
-                            <div class="input-label">
-                                <div style="flex: 1 1 0%;">Login Password</div>
-                                <a class="forget" href="/forget">Forgot password?</a>
-                            </div><div class="input-control">
-                                <input type="password" autocomplete="off"  placeholder="Login Password" value="">
-                                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                    <use xlink:href="#icon_View"></use>
-                                </svg>
-                            </div>
+                        <hr>
+                        <div class="buttons">
+                            <button type="submit" on:click={handleSubmit} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-big">
+                                <div class="button-inner">Sign in</div>
+                            </button>
+                            <button on:click={()=> goto("/register")} class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
+                                <div class="button-inner">
+                                    <span>Sign up</span>
+                                    <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
+                                </div>
+                            </button>
                         </div>
                     </div>
-                    <hr>
-                    <div class="buttons">
-                        <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-big">
-                            <div class="button-inner">Sign in</div>
-                        </button>
-                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
-                            <div class="button-inner">
-                                <span>Sign up</span>
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                            </div>
-                        </button>
-                    </div>
-                </div>
+    
+     
                 <div id="other-login" class="sc-jFkwbb iajVfs">
                     <div class="box-title"> Log in directly with  </div>
                     <div class="other-group">
-                        <button id="gg_login" type="button" title="google">
+                        <button on:click={googleAuth} id="gg_login" type="button" title="google">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                                 <path fill="#fa455e" d="M16 0a16 16 0 110 32 16 16 0 010-32z"></path>
                                 <path fill="#fff" d="M19.5 12.3c-.5-.5-1.1-.9-1.8-1a4.8 4.8 0 00-2-.2c-.9 0-1.7.4-2.3 1a5 5 0 00-2 4 5 5 0 004 4.8 5 5 0 001.6 0c.8 0 1.6-.3 2.2-.7.5-.4 1-.9 1.2-1.4l.3-.9v-.2h-4.4v-3.2h7.5l.2.1.1 1v1.2c0 .5 0 1-.2 1.6v-.1a7.4 7.4 0 01-1.4 3 7 7 0 01-3 2.4h-.1c-.6.2-1.2.4-1.9.4a8.8 8.8 0 01-1.9 0c-.8 0-1.5-.1-2.2-.4-.9-.4-1.6-.8-2.3-1.4-1-.8-1.9-2-2.4-3.2l-.5-1.9v-1.4-.1c0-.9.2-1.7.4-2.5.3-.7.7-1.4 1.2-2 1-1.4 2.5-2.5 4.3-3l1.5-.3a11.1 11.1 0 011.3 0 7.7 7.7 0 014.8 2l-.1.3-2 2h-.1z"></path>
                             </svg>
                         </button>
 
-                        <button id="fb_login" type="button" title="facebook">
+                        <button on:click={handleFacebookAuthi} id="fb_login" type="button" title="facebook">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                                 <path fill="#fff" d="M31.7 16.3a15.7 15.7 0 11-31.4 0 15.7 15.7 0 0131.4 0z"></path>
                                 <path fill="#227aee" d="M0 16a16 16 0 0013.4 15.8V20.6h-4v-4.7h4v-4.4c0-2.7 2.3-5.7 6.5-5.6 1.5 0 3.4.5 3.4.5v4s-1.9-.2-3 0c-1.6.2-2 1.4-2 2v3.3h4.9l-1 4.9h-3.8v11.2A16 16 0 100 16z"></path>

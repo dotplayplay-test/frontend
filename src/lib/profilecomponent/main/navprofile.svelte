@@ -1,6 +1,11 @@
 <script>
-  
+  import {handleLogout } from "$lib/firebaseAuth/index"
+  const handleSignOut = (()=>{
+    handleLogout()
+  })
 </script>
+
+
 
 <div class="setting-wrap" style="opacity: 1; transform: none;">
    <div class="sc-cjrPHo emGYim">
@@ -125,14 +130,14 @@
                </div>
 
            </div>
-           <div class="logout">
+           <button on:click={handleSignOut} class="logout">
                <span>
                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                        <use xlink:href="#icon_Logout"></use>
                    </svg>
                    Logout
                </span>
-           </div>
+           </button>
    </div>
 </div>
 

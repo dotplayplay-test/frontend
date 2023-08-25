@@ -1,3 +1,4 @@
+
 <script>
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
@@ -9,17 +10,26 @@ import Coins from "./profilecomponent/main/coins.svelte";
 import {
     goto
 } from "$app/navigation"
+import {
+    onMount
+} from "svelte";
+import {
+    browser
+} from '$app/environment'
 import "../styles/navbar/mobileNavbar.css"
 import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 export let styles;
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {app} from "$lib/firebaseAuth/index"
 export let chatroom;
+
+
 import {
     createEventDispatcher
 } from 'svelte'
-import AuthContext from "./hook/authContext";
+
 const dispatch = createEventDispatcher()
 
 const handleChat = (() => {
@@ -34,6 +44,26 @@ const handleCoinsDrop = ((e)=>{
         isCoinDrop = true
     }
 })
+
+let authUser
+let isLoading = true
+$: {
+    onMount(()=>{
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        authUser =(user)
+        isLoading = false
+    }else{
+        authUser = null
+        isLoading = false
+    }
+    });
+})
+}
+
+
 
 
 const handleAuth = (e) => {
@@ -51,6 +81,43 @@ const handleUserProfile = (()=>{
         userProfile = true
     }
 })
+const user = browser && JSON.parse(localStorage.getItem('user'))
+let profile
+let error
+$:{
+    onMount(async()=>{
+    const response = await fetch(
+        "http://localhost:8000/api/profile",{
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                'Authorization': `Bearer ${user.Token}`
+            },
+        }
+    );
+    const json = await response.json();
+    if (!response.ok) {
+        error = json.error
+        console.log(error)
+    }
+    if (response.ok) {
+        profile = (json[0])
+    }
+    })
+}
+
+let activeCoin = {
+    id:1, coin_symbol: "USDT", 
+    coin_name: "Tether",
+    coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+    amount: 0, 
+    suffix: "000000", select: true
+}
+const handleCoinSelect = ((e)=>{
+    activeCoin = (e.detail)
+    handleCoinsDrop()
+})
+
 
 const handleMenu = (() => {
     dispatch("handleMenuMobile")
@@ -80,78 +147,85 @@ const handleMenu = (() => {
                 </div> -->
             </div>
 
-            {#if ($AuthContext)}
-            <div class="sc-DtmNo euzHLF right">
-                <div class="sc-gjNHFA juteh wallet-enter">
-                    <div class="sc-fmciRz LQlWw">
-                        <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
-                            <div class="sc-eXlEPa boxpOO">
-                                <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579">
-                                <span class="currency">USDT</span>
-                                <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
-                            </div>
-                            <div class="sc-Galmp erPQzq coin notranslate balance">
-                                <div class="amount">
-                                    <span class="amount-str">0.<span class="suffix">00000000</span></span>
+            {#if isLoading}
+                <p>{""}</p>
+                {:else}
+                {#if (authUser)}
+                <div class="sc-DtmNo euzHLF right">
+                    <div class="sc-gjNHFA juteh wallet-enter">
+                        <div class="sc-fmciRz LQlWw">
+                            <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
+                                <div class="sc-eXlEPa boxpOO">
+                                    <img class="coin-icon" alt="" src={activeCoin.coin_image}>
+                                    <span class="currency">{activeCoin.coin_symbol}</span>
+                                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                                 </div>
-                            </div>
-                        </button>
-                        {#if isCoinDrop}
-                            <Coins />
-                        {/if}
-
-                        <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
-                            <div class="button-inner">
-                                <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
-                                <span>Wallet</span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="sc-gnnDb fWkueO">
-                    <div class="user-wrap">
-                        <a href="/user/profile/505090">
-                            <img class="avatar" alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1692615121845">
-                        </a>
-                        <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
-                            <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
-                            {#if userProfile}
-                                <Navprofile />
+                                <div class="sc-Galmp erPQzq coin notranslate balance">
+                                    <div class="amount">
+                                        <span class="amount-str">{activeCoin.amount}.<span class="suffix">{activeCoin.suffix}</span></span>
+                                    </div>
+                                </div>
+                            </button>
+                            {#if isCoinDrop}
+                                <Coins on:coinDefault={handleCoinSelect} />
                             {/if}
-                        </button>
+                            <button on:click={()=> goto("/wallet/deposit")} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
+                                <div class="button-inner">
+                                    <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
+                                    <span>Wallet</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
+                    <div class="sc-gnnDb fWkueO">
+                        <div class="user-wrap">
+                            <a href="/user/profile/505090">
+                            {#if profile}
+                             <img class="avatar" alt="" src={profile.profile_image}>
+                            {/if}
+                            </a>
+                            <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
+                                <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                                {#if userProfile}
+                                    <Navprofile />
+                                {/if}
+                            </button>
+                        </div>
+                    </div>
+                    <button class="sc-dcgwPl bbYXSv private-chat">
+                        <span class="nav-message"><Icon src={BiSolidMessageAltDetail}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                    </button>
+                    <button id="notice" class="sc-ksHpcM kultDa notice">
+                        <div class="notice-btn ">
+                            <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                        </div>
+                    </button>
+                    <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
+                        <div class="chat-btn ">
+                            <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+                            <div class="sc-fotOHu gGSOuF badge ">26</div>
+                        </div>
+                    </button>
                 </div>
-                <button class="sc-dcgwPl bbYXSv private-chat">
-                    <span class="nav-message"><Icon src={BiSolidMessageAltDetail}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
-                </button>
-                <button id="notice" class="sc-ksHpcM kultDa notice">
-                    <div class="notice-btn ">
-                        <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
-                    </div>
-                </button>
-                <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
-                    <div class="chat-btn ">
-                        <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
-                        <div class="sc-fotOHu gGSOuF badge ">26</div>
-                    </div>
-                </button>
-            </div>
-            {:else}
-            <div class="login-in">
-                <button  on:click={()=>handleAuth(2)} >
-                    <p >Sign in</p>
-                </button>
-                <button on:click={()=>handleAuth(1)} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                    <div class="button-inner">Sign up</div>
-                </button>
-                <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
-                    <div class="chat-btn ">
-                        <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
-                        <div class="sc-fotOHu gGSOuF badge ">26</div>
-                    </div>
-                </button>
-            </div>
+                {:else}
+                <div class="login-in">
+                    <button  on:click={()=>handleAuth(2)} >
+                        <p >Sign in</p>
+                    </button>
+                    <button on:click={()=>handleAuth(1)} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                        <div class="button-inner">Sign up</div>
+                    </button>
+                    <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
+                        <div class="chat-btn ">
+                            <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+                            <div class="sc-fotOHu gGSOuF badge ">26</div>
+                        </div>
+                    </button>
+                </div>
+                {/if}
             {/if}
+
+      
         </div>
     </div>
 </div>
@@ -168,13 +242,13 @@ const handleMenu = (() => {
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
-            {#if ($AuthContext)}
+            {#if (authUser)}
             <div class="sc-gjNHFA jlttqa wallet-enter">
                 <div class="sc-fmciRz LQlWw">
                     <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                         <div class="sc-eXlEPa boxpOO">
-                            <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579">
-                            <span class="currency">USDT</span>
+                            <img class="coin-icon" alt="" src={activeCoin.coin_image}>
+                            <span class="currency">{activeCoin.coin_symbol}</span>
                             <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                         </div>
                         <div class="sc-Galmp erPQzq coin notranslate balance">
@@ -186,13 +260,14 @@ const handleMenu = (() => {
       
                     <button on:click={()=> goto("wallet/deposit")} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                         <div class="button-inner">
-                            <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
+                            <span class="wallet-icon">
+                                <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
                             <span>Wallet</span>
                         </div>
                     </button>
                 </div>
                 {#if isCoinDrop}
-                    <Coins />
+                    <Coins on:coinDefault={handleCoinSelect} />
                 {/if}
             </div>
             <div class="sc-gnnDb fhlUmF">
@@ -230,6 +305,8 @@ const handleMenu = (() => {
             </div>
         </div>
     </div>
+
+<!-- <div class="top"><div class="logo-wrap"><img alt="logo" src="https://static.nanogames.io/assets/logo_small.c965cce9.png"></div><button class="sc-bQtKYq cUTdQJ"><span class="open-wrap"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Tighten"></use></svg></span></button><div class="sc-gjNHFA jlttqa wallet-enter"><div class="sc-fmciRz LQlWw"><div class="sc-iFMAIt icGouR"><div class="sc-eXlEPa boxpOO"><img class="coin-icon" src="/coin/BTC.black.png"><span class="currency">BTC</span><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Arrow"></use></svg></div><div class="sc-Galmp erPQzq coin notranslate balance"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div><button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD"><div class="button-inner"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Wallet"></use></svg><span>Wallet</span></div></button></div><div class="sc-gyElHZ eqDSYn" style="opacity: 1; transform: none;"><div class="sc-dUbtfd bkvHTY balance-select"><div class="sc-ezbkAF kDuLvp input sc-fWCJzd eAGpdQ search-input"><div class="input-control"><input type="text" value=""><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon search"><use xlink:href="#icon_Search"></use></svg></div></div><div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list"><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/CUB.black.png"></div><div class="name-wrap"><div class="currency-name">CUB</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">100134.81<span class="suffix">0</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate  active "><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/BTC.black.png"></div><div class="name-wrap"><div class="currency-name">BTC</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/NANO.black.png"></div><div class="name-wrap"><div class="currency-name">NANO</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/NND.black.png"></div><div class="name-wrap"><div class="currency-name">NND<button class="sc-gUQvok fkfnUV"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon icon-help"><use xlink:href="#icon_Help"></use></svg></button></div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/ETH.black.png"></div><div class="name-wrap"><div class="currency-name">ETH</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/USDT.black.png"></div><div class="name-wrap"><div class="currency-name">USDT</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/DOGE.black.png"></div><div class="name-wrap"><div class="currency-name">DOGE</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/TRX.black.png"></div><div class="name-wrap"><div class="currency-name">TRX</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/LTC.black.png"></div><div class="name-wrap"><div class="currency-name">LTC</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/BNB.black.png"></div><div class="name-wrap"><div class="currency-name">BNB</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/NNL.black.png"></div><div class="name-wrap"><div class="currency-name">NNL<button class="sc-gUQvok fkfnUV"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon icon-help"><use xlink:href="#icon_Help"></use></svg></button></div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div><div class="sc-TBWPX kjMlDW currency-item notranslate   normal"><div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"><div class="coin-wrap"><img class="coin-icon" src="/coin/BANANO.black.png"></div><div class="name-wrap"><div class="currency-name">BANANO</div></div><div class="amount-wrap"><div class="sc-Galmp erPQzq coin notranslate monospace"><div class="amount"><span class="amount-str">0.<span class="suffix">00000000</span></span></div></div></div></div></div></div><div class="sc-lkgTHX fkihw"><button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal manage-list"><div class="button-inner"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_ManageList"></use></svg> Manage List</div></button><div class="cont"><div>BTC Price: <span class="icon-usd">$</span><span>26430.0000</span></div><div class="wrap">View in <span>USD</span> <div class="sc-giYglK hRMjrF switch  "><div class="dot"></div></div></div></div></div></div></div></div><div class="sc-gnnDb fhlUmF"><div class="user-wrap"><a href="/user/profile/505090"><img class="avatar " src="https://img2.nanogames.io/avatar/505090/s?t=1692842506239"></a><div class="svg"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Menu"></use></svg></div></div></div></div> -->
 </div>
 
 <style>

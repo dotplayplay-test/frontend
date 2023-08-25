@@ -1,4 +1,4 @@
-import {  writable } from "svelte/store"
+import { writable } from "svelte/store"
 import {
     browser
 } from '$app/environment'
@@ -22,8 +22,6 @@ const user = browser && JSON.parse(localStorage.getItem("user"));
 if(user){
     userAuth = user
 }
-$: console.log("AuthContext : ", userAuth);
+// $: console.log("AuthContext : ", userAuth);
 
-const AuthContext = writable(userAuth);
-
-export default AuthContext
+export const AuthContext = writable(userAuth);

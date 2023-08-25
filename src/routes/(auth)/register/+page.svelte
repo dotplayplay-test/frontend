@@ -7,12 +7,8 @@ import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
 import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
-import {
-    useLogin
-} from "../../../lib/hook/useLogin"
-const {
-    login
-} = useLogin()
+import {handleSignIn } from "$lib/firebaseAuth/index"
+import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
 let isREf = false
 let email = ''
 let password = ''
@@ -26,19 +22,24 @@ const handleAgreement = (() => {
     }
 })
 
+const googleAuth = (()=>{
+    handleGoogleAuth()
+})
+
+const handleFacebookAuthi = (()=>{
+    handleFacebookAuth()
+})
+
 const handleSubmit = (() => {
-    let data = {
-        email,
-        password
-    }
     if (!email) {
         console.log("email can't be empty")
     } else if (!password) {
         console.log("Password is required")
     } else {
-        login(data)
+        handleSignIn(email, password)
     }
 })
+
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
@@ -55,79 +56,74 @@ const handleSubmit = (() => {
                 <img src="https://static.nanogames.io/assets/login_coco.1855b11e.png" alt="">
             </div>
             <div class="sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf" style="transform: none;">
-
-                <div id="regist" class="sc-fSDTwv cfNMkN">
-                    <div class="box">
-                        <div class="sc-ezbkAF kDuLvp input ">
-                            <div class="input-label">Email Address</div>
-                            <div class="input-control">
-                                <input type="text" bind:value={email} autocomplete="off" placeholder="Registered Email Address." >
-                            </div>
-                        </div>
-                        <div class="sc-ezbkAF kDuLvp input ">
-                            <div class="input-label">Login Password</div>
-                            <div class="input-control">
-                                <input type="password"  autocomplete="off" placeholder="Login Password" bind:value={password} >
-                            </div>
-                        </div>
-                        {#if  isREf}
-                        <div class="sc-ezbkAF kDuLvp input ">
-                            <div class="input-label">Referral/Promo Code (Optional)</div>
-                            <div class="input-control">
-                                <input type="text" autocomplete="off" placeholder="Referral/Promo Code" value="">
-                            </div>
-                        </div>
-                        {:else}
-                        <div class="casino-code hover">Referral/Promo Code (Optional)
-                             <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                        </div>
-                        {/if}
-                    </div>
-                    <hr>
-                    <div class="box">
-                        <div class="argument-check">
-                            <button on:click={handleAgreement} class="sc-iJKOTD kdCtGQ checkbox ">
-                                {#if (!aggreement)}
-                                <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
-                                {:else}
-                                ""
-                                {/if}
-                            </button>
-                            <div class="label">I agree with <a href="/help/agreement" class="argument">user agreement</a>,
-                                and confirm that I am at least 18 years old!</div>
-                        </div>
-                        <div class="buttons">
-                            <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin" >
-                                <div class="button-inner">
-                                    <Icon src={RiSystemArrowDropLeftLine}  size="25"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-                                    <span>Sign in</span>
+                    <div id="regist" class="sc-fSDTwv cfNMkN">
+                        <div class="box">
+                            <div class="sc-ezbkAF kDuLvp input ">
+                                <div class="input-label">Email Address</div>
+                                <div class="input-control">
+                                    <input type="text" bind:value={email} autocomplete="off" placeholder="Registered Email Address." >
                                 </div>
-                            </button>
-                            <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big" disabled={aggreement} >
-                                <div class="button-inner">Sign up</div>
-                            </button>
+                            </div>
+                            <div class="sc-ezbkAF kDuLvp input ">
+                                <div class="input-label">Login Password</div>
+                                <div class="input-control">
+                                    <input type="password"  autocomplete="off" placeholder="Login Password" bind:value={password} >
+                                </div>
+                            </div>
+                            {#if  isREf}
+                            <div class="sc-ezbkAF kDuLvp input ">
+                                <div class="input-label">Referral/Promo Code (Optional)</div>
+                                <div class="input-control">
+                                    <input type="text" autocomplete="off" placeholder="Referral/Promo Code" value="">
+                                </div>
+                            </div>
+                            {:else}
+                            <div class="casino-code hover">Referral/Promo Code (Optional)
+                                 <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
+                            </div>
+                            {/if}
+                        </div>
+                        <hr>
+                        <div class="box">
+                            <div class="argument-check">
+                                <input bind:checked={aggreement} class="sc-iJKOTD kdCtGQ checkbox" type="checkbox">
+                                <div class="label">I agree with <a href="/help/agreement" class="argument">user agreement</a>,
+                                    and confirm that I am at least 18 years old!</div>
+                            </div>
+                            <div class="buttons">
+                                <button on:click={()=> goto("/login")} class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin" >
+                                    <div class="button-inner">
+                                        <Icon src={RiSystemArrowDropLeftLine}  size="25"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+                                        <span>Sign in</span>
+                                    </div>
+                                </button>
+                                <button on:click={handleSubmit}  type="submit" class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big" disabled={!aggreement} >
+                                    <div class="button-inner">Sign up</div>
+                                </button>
+                            </div>
+                        </div>
+    
+                        <div id="other-login" class="sc-jFkwbb iajVfs">
+                            <div class="box-title"> Log in directly with  </div>
+                            <div class="other-group">
+                                <button on:click={googleAuth} id="gg_login" type="button" title="google">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <path fill="#fa455e" d="M16 0a16 16 0 110 32 16 16 0 010-32z"></path>
+                                        <path fill="#fff" d="M19.5 12.3c-.5-.5-1.1-.9-1.8-1a4.8 4.8 0 00-2-.2c-.9 0-1.7.4-2.3 1a5 5 0 00-2 4 5 5 0 004 4.8 5 5 0 001.6 0c.8 0 1.6-.3 2.2-.7.5-.4 1-.9 1.2-1.4l.3-.9v-.2h-4.4v-3.2h7.5l.2.1.1 1v1.2c0 .5 0 1-.2 1.6v-.1a7.4 7.4 0 01-1.4 3 7 7 0 01-3 2.4h-.1c-.6.2-1.2.4-1.9.4a8.8 8.8 0 01-1.9 0c-.8 0-1.5-.1-2.2-.4-.9-.4-1.6-.8-2.3-1.4-1-.8-1.9-2-2.4-3.2l-.5-1.9v-1.4-.1c0-.9.2-1.7.4-2.5.3-.7.7-1.4 1.2-2 1-1.4 2.5-2.5 4.3-3l1.5-.3a11.1 11.1 0 011.3 0 7.7 7.7 0 014.8 2l-.1.3-2 2h-.1z"></path>
+                                    </svg>
+                                </button>
+                                <button on:click={handleFacebookAuthi} id="fb_login" type="button" title="facebook">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <path fill="#fff" d="M31.7 16.3a15.7 15.7 0 11-31.4 0 15.7 15.7 0 0131.4 0z"></path>
+                                        <path fill="#227aee" d="M0 16a16 16 0 0013.4 15.8V20.6h-4v-4.7h4v-4.4c0-2.7 2.3-5.7 6.5-5.6 1.5 0 3.4.5 3.4.5v4s-1.9-.2-3 0c-1.6.2-2 1.4-2 2v3.3h4.9l-1 4.9h-3.8v11.2A16 16 0 100 16z"></path>
+                                    </svg>
+                                </button>
+                                <div class="line"></div>
+                            </div>
                         </div>
                     </div>
-
-                    <div id="other-login" class="sc-jFkwbb iajVfs">
-                        <div class="box-title"> Log in directly with  </div>
-                        <div class="other-group">
-                            <button id="gg_login" type="button" title="google">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fa455e" d="M16 0a16 16 0 110 32 16 16 0 010-32z"></path>
-                                    <path fill="#fff" d="M19.5 12.3c-.5-.5-1.1-.9-1.8-1a4.8 4.8 0 00-2-.2c-.9 0-1.7.4-2.3 1a5 5 0 00-2 4 5 5 0 004 4.8 5 5 0 001.6 0c.8 0 1.6-.3 2.2-.7.5-.4 1-.9 1.2-1.4l.3-.9v-.2h-4.4v-3.2h7.5l.2.1.1 1v1.2c0 .5 0 1-.2 1.6v-.1a7.4 7.4 0 01-1.4 3 7 7 0 01-3 2.4h-.1c-.6.2-1.2.4-1.9.4a8.8 8.8 0 01-1.9 0c-.8 0-1.5-.1-2.2-.4-.9-.4-1.6-.8-2.3-1.4-1-.8-1.9-2-2.4-3.2l-.5-1.9v-1.4-.1c0-.9.2-1.7.4-2.5.3-.7.7-1.4 1.2-2 1-1.4 2.5-2.5 4.3-3l1.5-.3a11.1 11.1 0 011.3 0 7.7 7.7 0 014.8 2l-.1.3-2 2h-.1z"></path>
-                                </svg>
-                            </button>
-                            <button id="fb_login" type="button" title="facebook">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fff" d="M31.7 16.3a15.7 15.7 0 11-31.4 0 15.7 15.7 0 0131.4 0z"></path>
-                                    <path fill="#227aee" d="M0 16a16 16 0 0013.4 15.8V20.6h-4v-4.7h4v-4.4c0-2.7 2.3-5.7 6.5-5.6 1.5 0 3.4.5 3.4.5v4s-1.9-.2-3 0c-1.6.2-2 1.4-2 2v3.3h4.9l-1 4.9h-3.8v11.2A16 16 0 100 16z"></path>
-                                </svg>
-                            </button>
-                            <div class="line"></div>
-                        </div>
-                    </div>
-                </div>
+          
+           
 
             </div>
         </div>
@@ -242,7 +238,9 @@ const handleSubmit = (() => {
     background-color: rgba(0, 0, 0, 0.7);
     filter: none !important;
 }
-
+input[type="checkbox"]{
+    color: aqua;
+}
 .ipnwmW {
     background-color: rgb(67, 179, 9);
 }

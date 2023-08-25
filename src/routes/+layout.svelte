@@ -5,18 +5,34 @@ import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
 import "../styles/errors/error.css"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {app} from "$lib/firebaseAuth/index"
 import {
     browser
 } from '$app/environment'
+import {
+    onMount
+} from "svelte";
 import Closesidebar from "$lib/closesidebar.svelte";
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
+let page_load = true
 
-import {
-    onMount
-} from "svelte";
+onMount(()=>{
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        // console.log(user)
+        page_load = false
+    } else {
+        page_load = false
+        }
+    });
+})
+
 let ens = browser && window.innerWidth
 
 onMount(() => {
@@ -67,6 +83,8 @@ const handleMenu = () => {
 
 <div class="app">
 
+
+
     {#if (isOpenSide) }
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
         <SideBar styls={isOpenSide} />
@@ -95,12 +113,20 @@ const handleMenu = () => {
         <header>
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
-        <main class="sc-lhMiDA ePAxUv">
-            <slot></slot>
-        </main>
-        <footer>
-            <Footer />
-        </footer>
+        
+            {#if page_load}
+            <!-- Loading animation -->
+                <p>{""}</p>
+             {:else}
+            <main class="sc-lhMiDA ePAxUv">
+                <slot></slot>
+            </main>
+            <footer>
+                <Footer />
+            </footer>
+            {/if}
+    
+
     </div>
     {#if (isChatRoom)}
     <ChatSide on:closeChat={handleChatroom} />
