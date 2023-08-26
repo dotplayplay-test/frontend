@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import {  goto } from "$app/navigation"
 import { useLogin } from "../hook/useLogin";
 import { useProfile } from "../hook/useProfile";
+import { browser } from '$app/environment'
+
 
 const { createProfile } = useProfile()
 const { login } = useLogin()
@@ -73,8 +75,9 @@ export const handleSignIn = (async (email, password)=>{
  })
 
 
- export const handleLogout = (()=>{
+ export const handleLogout = (async()=>{
     const auth = getAuth(app);
+    // localStorage.removeItem('user')
     signOut(auth).then((res) => {
         console.log(res)
       }).catch((error) => {

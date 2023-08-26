@@ -7,12 +7,8 @@ import ChatSide from "../lib/chat-room/index.svelte"
 import "../styles/errors/error.css"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {app} from "$lib/firebaseAuth/index"
-import {
-    browser
-} from '$app/environment'
-import {
-    onMount
-} from "svelte";
+import { browser } from '$app/environment'
+import { onMount } from "svelte";
 import Closesidebar from "$lib/closesidebar.svelte";
 let isOpenSide = true
 let isChatRoom = 0

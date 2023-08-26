@@ -17,6 +17,17 @@ const dispatch = createEventDispatcher()
 const handlecloseChat = (() => {
     dispatch("closeChat")
 })
+
+
+let chatMessage = [
+    { id:1, type:"normal", text:"Hello ma'am", time: "2:23pm",name:"valiant",level: 3 },
+    { id:2, type:"normal", text:"Hel ma'am", time: "2:23pm",name:"valiant",level: 3 },
+]
+
+const handleSendMessage = (()=>{
+    
+})
+
 </script>
 
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
@@ -47,15 +58,16 @@ const handlecloseChat = (() => {
         </div>
         <div class="sc-bSqaIl eA-dYOl">
             <div class="sc-dkPtRN jScFby scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
-                <div class="sc-AjmGg kgsidd" >
-                    <div class="flat-item" style="transform: translateY(146389px);">
-                        <div class="sc-tAExr VfNib notranslate ">
+                <div class="sc-AjmGg kgsidd">
+                    {#each chatMessage as chat (chat.id) }
+                    <div class="flat-item">
+                        <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
                                 <a class="head-link" href="/user/profile/78805">
                                     <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/78805/s">
                                     <div class="sc-jQrDum jouJMO user-level type-1">
                                         <div class="level-wrap">
-                                            <span>V</span><span>7</span>
+                                            <span>V</span><span>{chat.level}</span>
                                         </div>
                                     </div>
                                     <div class="sc-khQegj fPtvsS level levelnums_2">
@@ -71,19 +83,24 @@ const handlecloseChat = (() => {
                                 <div class="title">
                                     <div class="name">
                                         <a href="/user/profile/78805">
-                                            <span>Ricardo Moragull</span>
+                                            <span>{chat.name}</span>
                                         </a>
-                                        <div class="time">16:29</div>
+                                        <div class="time">{chat.time}</div>
                                     </div>
                                 </div>
                                 <div class="msg-wrap">
-                                    <div class="sc-jKTccl bkGvjR">Mod</div>
+                                    <div class="sc-jKTccl bkGvjR">{chat.text}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/each}
+                  
                 </div>
-                <div class="chat-infos "></div>
+            </div>
+
+
+            <div class="chat-infos "></div>
                 <div class="sc-hkgtus ddROGz">
                     <div class="send-input">
                         <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
@@ -114,8 +131,12 @@ const handlecloseChat = (() => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
+
+
+
+
+
     </div>
 </div>
 
@@ -464,7 +485,7 @@ textarea {
     position: relative;
 }
 .kgsidd .flat-item {
-    position: absolute;
+    position: relative;
     left: 0px;
     top: 0px;
     width: 100%;
