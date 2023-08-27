@@ -21,6 +21,7 @@
 		"canvas": "^2.11.2",
 		"firebase": "^10.3.0",
 		"konva": "^9.2.0",
+		"pusher-js": "^8.3.0",
 		"svelte-icons-pack": "^2.1.0",
 		"svelte-kit-cookie-session": "^4.0.0",
 		"svelte-konva": "^0.3.0",

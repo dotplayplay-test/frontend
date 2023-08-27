@@ -10,8 +10,10 @@ import IoClose from "svelte-icons-pack/io/IoClose";
 import BsFiletypeGif from "svelte-icons-pack/bs/BsFiletypeGif";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import {
-    createEventDispatcher
+    createEventDispatcher,
+    onMount
 } from 'svelte'
+
 const dispatch = createEventDispatcher()
 
 const handlecloseChat = (() => {

@@ -112,7 +112,18 @@ const handleMenu = () => {
         
             {#if page_load}
             <!-- Loading animation -->
-                <p>{""}</p>
+                <div class="center">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
              {:else}
             <main class="sc-lhMiDA ePAxUv">
                 <slot></slot>

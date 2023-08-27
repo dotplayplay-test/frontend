@@ -19,7 +19,6 @@ import {
 } from '$app/environment'
 const user = browser && JSON.parse(localStorage.getItem('user'))
 let profile = ''
-let not = false
 $:{
     onMount(async()=>{
     const response = await fetch(
