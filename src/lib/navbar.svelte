@@ -1,4 +1,3 @@
-
 <script>
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
@@ -7,6 +6,8 @@ import BiSolidMessageAltDetail from "svelte-icons-pack/bi/BiSolidMessageAltDetai
 import IoNotifications from "svelte-icons-pack/io/IoNotifications";
 import Navprofile from "./profilecomponent/main/navprofile.svelte";
 import Coins from "./profilecomponent/main/coins.svelte";
+import {app, db} from "$lib/firebaseAuth/index"
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import {
     goto
 } from "$app/navigation"
@@ -22,9 +23,7 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 export let styles;
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {app} from "$lib/firebaseAuth/index"
 export let chatroom;
-
 
 import {
     createEventDispatcher
@@ -47,6 +46,21 @@ const handleCoinsDrop = ((e)=>{
 
 let authUser
 let isLoading = true
+let profile
+const id = browser && JSON.parse(localStorage.getItem('user'))
+$: {
+    onMount(async()=>{
+        const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
+        onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                profile = (doc.data());
+            });
+        });
+
+    })
+}
+
+
 $: {
     onMount(()=>{
     const auth = getAuth(app);
@@ -62,9 +76,6 @@ $: {
     });
 })
 }
-
-
-
 
 const handleAuth = (e) => {
     if (e === 1) {
@@ -82,30 +93,6 @@ const handleUserProfile = (()=>{
     }
 })
 const user = browser && JSON.parse(localStorage.getItem('user'))
-let profile
-let error
-$:{
-    onMount(async()=>{
-    const response = await fetch(
-        "http://localhost:8000/api/profile",{
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                'Authorization': `Bearer ${user.Token}`
-            },
-        }
-    );
-    const json = await response.json();
-    if (!response.ok) {
-        error = json.error
-        console.log(error)
-    }
-    if (response.ok) {
-        profile = (json[0])
-    }
-    })
-}
-
 let activeCoin = {
     id:1, coin_symbol: "USDT", 
     coin_name: "Tether",
@@ -135,7 +122,7 @@ const handleMenu = (() => {
                     <img style="border-radius: 12px;" class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
                 {/if}
                 </div>
-                <!-- <div class="sc-jtXEFf jsyNKG search-pc">
+                <div class="sc-jtXEFf jsyNKG search-pc">
                     <div class="search-input-wrap-pc">
                         <div class="sc-kTLmzF dwaOxj">
                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -144,7 +131,7 @@ const handleMenu = (() => {
                             <input placeholder="Game name | Provider | Category Tag" value="">
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
 
             {#if isLoading}
@@ -179,17 +166,26 @@ const handleMenu = (() => {
                     </div>
                     <div class="sc-gnnDb fWkueO">
                         <div class="user-wrap">
-                            <a href="/user/profile/505090">
                             {#if profile}
+                            <a href="/user/profile/505090">
                              <img class="avatar" alt="" src={profile.profile_image}>
-                            {/if}
                             </a>
+                            {:else}
+                            <div class="center">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                            {/if}
                             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                                 {#if userProfile}
                                     <Navprofile />
                                 {/if}
                             </button>
+                          
                         </div>
                     </div>
                     <button class="sc-dcgwPl bbYXSv private-chat">

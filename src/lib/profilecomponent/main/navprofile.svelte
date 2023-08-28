@@ -1,11 +1,10 @@
 <script>
+    import {goto} from "$app/navigation"
   import {handleLogout } from "$lib/firebaseAuth/index"
   const handleSignOut = (()=>{
     handleLogout()
   })
 </script>
-
-
 
 <div class="setting-wrap" style="opacity: 1; transform: none;">
    <div class="sc-cjrPHo emGYim">
@@ -29,12 +28,12 @@
                    </div>
                </div>
            </a>
-           <div class="right">
+           <button on:click={()=> goto("/setting/general")} class="right">
                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                    <use xlink:href="#icon_Setting"></use>
                </svg>
                <p>Global Settings</p>
-           </div>
+           </button>
        </div>
        <div class="vip-info notranslate">
            <div class="num">
@@ -56,14 +55,14 @@
                    User Information
                </div>
            </div>
-               <div class="link-item">
+               <button on:click={()=> goto("/wallet/deposit")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Wallet"></use>
                        </svg>
                        Wallet
                    </div>
-               </div>
+               </button>
                <div class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -72,14 +71,14 @@
                        Statistics
                    </div>
                </div>
-               <div class="link-item">
+               <button on:click={()=> goto("/wallet/swap")}  class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Swap"></use>
                        </svg>
-                       NGSwap
+                       PDDSwap
                    </div>
-               </div>
+               </button>
                <div class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -88,14 +87,14 @@
                        Transactions
                    </div>
                </div>
-               <div class="link-item">
+               <button on:click={()=> goto("/wallet/vault")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Vault"></use>
                        </svg>
                        Vault Pro
                    </div>
-               </div>
+               </button>
                <div class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">

@@ -1,7 +1,7 @@
 <script>
     import "../styles/foooter/footer.css"
 </script>
-
+<!-- server Seed -->
 
 <div class="footer-general">
     <div class="footer-general-contaner">

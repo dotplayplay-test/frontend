@@ -1,4 +1,3 @@
-
 export const useLogin = () => {
   let error;
   let isLoading;
@@ -23,9 +22,8 @@ export const useLogin = () => {
     if (response.ok) {
       // Save user to localStorage
       localStorage.setItem("user", JSON.stringify(json));
-      // // Update the auth store
+      // Update the auth store
       isLoading = false
-      
     }
   };
   return { login, isLoading, error };

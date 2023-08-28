@@ -4,48 +4,36 @@ import "../styles/home/indexmobile.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import Biggestwin from "$lib/homecomponents/biggestwin.svelte";
 import ProfileAuth from "../lib/profleAuth/index.svelte";
-import {
-    register
-} from 'swiper/element/bundle';
+import { register } from 'swiper/element/bundle';
 import BsQuestionCircle from "svelte-icons-pack/bs/BsQuestionCircle";
 import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';
 import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
-import {
-    onMount
-} from "svelte";
-import {
-    browser
-} from '$app/environment'
-const user = browser && JSON.parse(localStorage.getItem('user'))
-let profile = ''
-$:{
-    onMount(async()=>{
-    const response = await fetch(
-        "http://localhost:8000/api/profile",{
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                'Authorization': `Bearer ${user.Token}`
-            },
-        }
-    );
-    const json = await response.json();
-    if (!response.ok) {
-        error = json.error
-        console.log(error)
-    }
-    if (response.ok) {
-        profile = (json[0])
-    }
-    })
-}
+import {  onMount } from "svelte";
+import { browser } from '$app/environment'
+import {app, db} from "$lib/firebaseAuth/index"
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+const id = browser && JSON.parse(localStorage.getItem('user'))
+let profile
 
+onMount(async()=>{
+    const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
+    onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            profile = (doc.data());
+        });
+    });
+})
 
 register();
 </script>
 
+
 <div id="main" class="sc-lhMiDA ePAxUv">
+    {#if profile && profile.lastname === ''}
+        <ProfileAuth />
+    {/if}
+    
     <div id="home" class="sc-jwQYvw eRdxAb">
         <div class="sc-bLdqUH bPsBUR banner">
             <div class="gradient-wrap">

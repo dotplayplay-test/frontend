@@ -2,8 +2,12 @@
 import {
     goto
 } from "$app/navigation"
+import {
+    browser
+} from '$app/environment'
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+import { handleProfileUpdate } from "$lib/firebaseAuth/index"
 import { updateUser } from "$lib/hook/updateUser"
 const {useUpdate} = updateUser()
 import {
@@ -18,7 +22,7 @@ let img5 = false
 let img6 = false
 let profile_img = "https://img2.nanogames.io/avatar/head1.png"
 
-const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 function generateString(length) {
     let result = ' ';
     const charactersLength = characters.length;
@@ -91,13 +95,14 @@ const handleImgeSelect = ((e)=>{
         profile_img = "https://img2.nanogames.io/avatar/head6.png"
     }
 })
-
+const id = browser && JSON.parse(localStorage.getItem('profileID'))
 const handleSubmit = (() => {
     if (!username) {
         console.log("username can't be empty")
     } else {
-        let data = {username, profile_image:profile_img }
+        let data = {username, profile_image:profile_img, user_id : id }
         useUpdate(data)
+        handleProfileUpdate(data)
     }
 })
 </script>
@@ -116,7 +121,6 @@ const handleSubmit = (() => {
                 <img src="https://static.nanogames.io/assets/login_coco.1855b11e.png" alt="">
             </div>
             <div class="sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf" style="transform: none;">
-
                 <div id="regist-info" class="sc-fSDTwv kYCmoV">
                     <h2>Glad to have you onboard!</h2>
                     <hr><div class="box">

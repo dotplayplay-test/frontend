@@ -129,10 +129,10 @@ const handleNavigation = ((e) => {
         recent = false
         favourite = false
         original = false
-        goto(e)
         probablyFair = false
         promotion = false
         bonus = false
+        goto(e)
     }
     else if (e === "/vip-games") {
         lottery = false
@@ -169,9 +169,9 @@ const handleNavigation = ((e) => {
         affiliate = false
         favourite = false
         original = false
-        goto(e)
         probablyFair = false
         promotion = false
+        goto(e)
     }
     else if (e === "/favourite") {
         lottery = false
@@ -182,6 +182,7 @@ const handleNavigation = ((e) => {
         affiliate = false
         favourite = true
         original = false
+        probablyFair = false
         goto(e)
         promotion = false
     }
@@ -192,7 +193,7 @@ const handleNavigation = ((e) => {
         vipclub = false
         bonus = false
         affiliate = false
-        favourite = true
+        favourite = false
         original = false
         goto(e)
         promotion = true
