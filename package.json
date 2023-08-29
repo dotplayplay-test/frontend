@@ -19,6 +19,7 @@
 		"@auth/sveltekit": "^0.3.6",
 		"axios": "^1.4.0",
 		"canvas": "^2.11.2",
+		"date-fns": "^2.30.0",
 		"firebase": "^10.3.0",
 		"konva": "^9.2.0",
 		"pusher-js": "^8.3.0",

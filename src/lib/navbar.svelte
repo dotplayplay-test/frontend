@@ -122,7 +122,7 @@ const handleMenu = (() => {
                     <img style="border-radius: 12px;" class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
                 {/if}
                 </div>
-                <div class="sc-jtXEFf jsyNKG search-pc">
+                <!-- <div class="sc-jtXEFf jsyNKG search-pc">
                     <div class="search-input-wrap-pc">
                         <div class="sc-kTLmzF dwaOxj">
                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -131,7 +131,7 @@ const handleMenu = (() => {
                             <input placeholder="Game name | Provider | Category Tag" value="">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             {#if isLoading}
@@ -171,13 +171,13 @@ const handleMenu = (() => {
                              <img class="avatar" alt="" src={profile.profile_image}>
                             </a>
                             {:else}
-                            <div class="center">
-                                <div class="wave"></div>
-                                <div class="wave"></div>
-                                <div class="wave"></div>
-                                <div class="wave"></div>
-                                <div class="wave"></div>
-                            </div>
+                                <div class="center">
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                </div>
                             {/if}
                             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>

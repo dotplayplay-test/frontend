@@ -8,15 +8,33 @@ import CgInfo from "svelte-icons-pack/cg/CgInfo";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import IoClose from "svelte-icons-pack/io/IoClose";
 import BsFiletypeGif from "svelte-icons-pack/bs/BsFiletypeGif";
+import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
+import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
+import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
+import {
+    emojis
+} from "./data/index"
 
-import {createEventDispatcher,  onMount } from "svelte";
-import { browser } from '$app/environment'
-import { db} from "$lib/firebaseAuth/index"
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import {
+    createEventDispatcher,
+    onMount
+} from "svelte";
+import {
+    browser
+} from '$app/environment'
+import {
+    db
+} from "$lib/firebaseAuth/index"
+import {
+    collection,
+    query,
+    where,
+    onSnapshot
+} from "firebase/firestore";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
-onMount(async()=>{
+onMount(async () => {
     const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
     onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -36,6 +54,7 @@ let chatMessage = [{
         type: "normal",
         text: "Hello ma'am",
         time: "2:23pm",
+        image: "https://img2.nanogames.io/avatar/78805/s",
         name: "valiant",
         level: 3
     },
@@ -44,31 +63,79 @@ let chatMessage = [{
         type: "normal",
         text: "Hel ma'am",
         time: "2:23pm",
+        image: "https://img2.nanogames.io/avatar/78805/s",
+        name: "valiant",
+        level: 3
+    },
+    {
+        id: 34,
+        type: "emoji",
+        text: "",
+        time: "2:23pm",
+        image: "https://img2.nanogames.io/avatar/78805/s",
+        name: "valiant",
+        level: 3
+    },
+    {
+        id: 3,
+        type: "wol",
+        text: "",
+        time: "2:23pm",
+        image: "https://img2.nanogames.io/avatar/78805/s",
         name: "valiant",
         level: 3
     },
 ]
-
+// $: console.log(profile && profile)
 let messages
 const handleSendMessage = ((e) => {
-    if(e.key === "Enter" && messages){
-        let data = { 
-            id: Math.floor(Math.random()*10)+ 1,
+    if (e.key === "Enter" && messages) {
+
+        let date = new Date();
+
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+
+        // Check whether AM or PM
+        let newformat = hours >= 12 ? 'PM' : 'AM';
+
+        // Find current hour in AM-PM Format
+        hours = hours % 12;
+
+        // To display "0" as "12"
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        let time = (hours + ':' + minutes + ' ' + newformat);
+        let data = {
+            id: Math.floor(Math.random() * 100000) + 1,
             type: "normal",
             text: messages,
-            time: "2:23pm",
-            name: "valiant",
+            time: time,
+            image: profile && profile.profile_image,
+            name: profile && profile.username,
             level: 2
-         }
-         chatMessage = [...chatMessage, data]
+        }
+        chatMessage = [...chatMessage, data]
         messages = ''
     }
 })
+let isEmoji = false
+const handleEmoji = (()=>{
+    if(isEmoji){
+        isEmoji = false
+    }else{
+        isEmoji = true
+    }
+})
 
+const handleMerge = ((e)=>{
+    messages += (e)
+})
 
 </script>
-<svelte:body on:keypress={handleSendMessage} />
 
+<svelte:body on:keypress={handleSendMessage} />
 
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -104,7 +171,7 @@ const handleSendMessage = ((e) => {
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
                                 <a class="head-link" href="/user/profile/78805">
-                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/78805/s">
+                                    <img class="avatar " alt="" src={chat.image}>
                                     <div class="sc-jQrDum jouJMO user-level type-1">
                                         <div class="level-wrap">
                                             <span>V</span><span>{chat.level}</span>
@@ -128,44 +195,12 @@ const handleSendMessage = ((e) => {
                                         <div class="time">{chat.time}</div>
                                     </div>
                                 </div>
+                                {#if (chat.type === "normal")}
                                 <div class="msg-wrap">
                                     <div class="sc-jKTccl bkGvjR">{chat.text}</div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/each}
-
-                    <!-- ====================== Win or lose ======================= -->
-                    <div class="flat-item">
-                        <div class="sc-tAExr VfNib notranslate ">
-                            <div class="head">
-                                <a class="head-link" href="/user/profile/495791">
-                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/495791/s">
-                                    <div class="sc-jQrDum jouJMO user-level type-2">
-                                        <div class="level-wrap">
-                                            <span>V</span>
-                                            <span>8</span>
-                                        </div>
-                                    </div>
-                                    <div class="sc-khQegj fPtvsS level levelnums_3">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg==">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAABhlBMVEUAAADU1Pzm5v/R0fy7u+Pr6//OzvXs7P++vuLX1//d3f3s7P93d7rj4//Y2P7W1v15ebttbbTv7/90dLjT0/zKyu7m5v+8vOLl5f/T0/vy8v/q6v/BwejR0fR9fb3Pz+vBweSystzu7v/k5P7g4PzAwObCwuhzc7i7u+G4uN/R0fh2drm6uuHc3P7Jyem/v+e2tuJ6er7CwuZ7e7rHx+ytrdfW1v7m5vzX1/vPz/J6eru2tuB2dri0tOG8vOO1teF7e7u+vuZzc7fOzut7e7rHx+t2drnBweRzc7h5ebqsrNidnc/Nze2oqNXl5f7U1PPw8P+MjMW4uOTQ0O1+frt3d7nCwu2NjdDT0++Ghs7h4f3m5v/T0/zy8v/f3/vU1PR3d7nk5P3Q0Pvd3ft1dbbY2P/W1v7g4P2/v+bw8P/s7P/v7/7Y2PbOzvTMzO3Gxuq5ueJra7Ho6P/W1vvNzfC6uuO7u+JycrX09P/p6f/Q0PTJye67u+Snp9WcnM6KisSAgL5tbbKWOUpcAAAAWnRSTlMAWVlZ8mJfWVRZWU4PWVliXVpZLPZkYl1OTvb2aVlYKQv79vb2qIFpZmNiXFZOTk5JQzMiFgX29vb28OzRzMu2nZV7cnJxbWVjYmBcWllYU05OPTo4OCsmGRfA0BrPAAABeElEQVQoz1XR51LCQBQF4E1iREGCQRBBwN6lY++9956QSAq9d3t5c3eRRDy/dr65c2b2XqDkam26H/xPcKOa2/H4Z5pta+ntZYg8s0/3qeReyWd5dqhbd2oe997X6XYkn5NYgRnu7sE1WvPEJawercTTLMswdcQ1Gq3d0gfyWUgw/BxCPW7UmC2gJV2EFJMEG9mjxyFrW9tAyyMLx3g2YSN1iDDsF2MxNsVxg6QONhJEewP51FOCs0E04gTWQIYXuMYkBVHtTHLJXlJn1BOYioLEJJ8RalUsCpIYSaR6yfM/TLMlUSwJ0rzBpacgUhCrr9FoKBQSRdOkFRLWTsEfjVTimQhik8GKiLCP+wHwrMbLImSEFObY8wYByuhANhOKmAwuzHF8qKy5o/YRL2dmDVaH5YhWLtJVK3y95xYm3SdOeqpDwXD4u/A5MHFB052dTRiWC/IuPeVsRlkOL28HfAdj+yreyIvrPvR4uHaOKRjYvAON9Hch/AHVHFf6ivF1hgAAAABJRU5ErkJggg==">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII=">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII=">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII=">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="content">
-                                <div class="title">
-                                    <div class="name">
-                                        <a href="/user/profile/495791">
-                                            <span>Tyranamo</span>
-                                        </a>
-                                        <div class="time">17:55</div>
-                                    </div>
-                                </div>
+                                {:else if (chat.type === "wol")}
+                                <!-- ====================== Win or lose ======================= -->
                                 <div class="msg-wrap">
                                     <div class="sc-eVmaCL blLCEp">
                                         <div class="sc-jKTccl sc-bUbRBg sc-gA-DPUo bkGvjR Gdkwx hsvoqO full-message">
@@ -245,57 +280,33 @@ const handleSendMessage = ((e) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ====================== tips ====================== -->
-                    <div class="flat-item" >
-                        <div class="sc-tAExr VfNib notranslate ">
-                            <div class="head">
-                                <a class="head-link" href="/user/profile/442688">
-                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/442688/s">
-                                    <div class="sc-jQrDum jouJMO user-level type-3">
-                                        <div class="level-wrap">
-                                            <span>V</span><span>22</span>
-                                        </div>
-                                    </div>
-                                    <div class="sc-khQegj fPtvsS level levelnums_5">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAABMlBMVEUAAADllzDllS3LcwjMdwbuoTflly3PdhDhjh3LdArijyTilC7jjSbjlCvOdQ/rnjTomzDuoTfsoDXtsGHQfhDMdQrvs0btnzXbei3OdQzUfxPnkB/6qT3/uVz/vmL8qz7NdQrLdAfzoznIbwT+rD/2rU3jkyn/u13/s1rlmS//wGT/vGH7pT77oz7qnDT/5Wv/uFvuozz7qDr10Df01TbllS7/4Gn/32f/xmD2pjv1pTrsoDn0zC7djSX/5HL/6G7/tVv3sFD5rzz4tzv4vDrvoTj1zjT/427/t2H/wV7/sFj+t1f6tFX61VH8sEr0qUjwqEX20z73wzn5pTfz1S/Yhh7TfhTPeQ7/7W3/zmn/wWj/2Wf/12b83F38vlP/skr41Ej7qEX5sTz5rDz3rzX1xzSVkSzCAAAAHHRSTlMA8fEvZ0P57OXKxMK6oZeQjXdyaT02LCMhGhMOpg/WFQAAAXFJREFUKM9V0AVzwjAUB/BsY+4+IKQSaGkLLS0Ud3eXue/7f4U9oHTsf7nIL7l3uYdWuTk6ukH/4z6TUinpzL1ul3tmj5CeuXdp0/aB0PfIoih7+sLB9oJujwW9LSseiCK3deH4FqGLHbVACIjfDxMhPnXnAgm6QsS5xeNzFR+JLqDNggz7UFPUco1mSFRab8kNtOkj8CzfiGlaNF7Pdw2DX2AoFH/StFg0m+uURgZjof/5PhqtZV8G458AttCTF2O1bOw9nQ4XbYSaD7lONV2NlIPYRqX+OkhXw+FIyUZZaX18jyNgf1ggXWP0NSx/FstDKIm98E9T9xoY40AwGAgCYcZbMdGpqSa8DF4GKKFKp9C4Q4nHwAvCvHS4bN55JpWEM9wkU5lztIyLTqRKgmESFWlCXRZucXSWUXlezcwot7VClqV0KghTSll2DVmOcjDYdeQ4dt/h2IfVxmtu9+QKQa5OdrlrC52OO2TlzuGE+Rf2K0QhKXSN7QAAAABJRU5ErkJggg==">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAABMlBMVEUAAADllzDllS3LcwjMdwbuoTflly3PdhDhjh3LdArijyTilC7jjSbjlCvOdQ/rnjTomzDuoTfsoDXtsGHQfhDMdQrvs0btnzXbei3OdQzUfxPnkB/6qT3/uVz/vmL8qz7NdQrLdAfzoznIbwT+rD/2rU3jkyn/u13/s1rlmS//wGT/vGH7pT77oz7qnDT/5Wv/uFvuozz7qDr10Df01TbllS7/4Gn/32f/xmD2pjv1pTrsoDn0zC7djSX/5HL/6G7/tVv3sFD5rzz4tzv4vDrvoTj1zjT/427/t2H/wV7/sFj+t1f6tFX61VH8sEr0qUjwqEX20z73wzn5pTfz1S/Yhh7TfhTPeQ7/7W3/zmn/wWj/2Wf/12b83F38vlP/skr41Ej7qEX5sTz5rDz3rzX1xzSVkSzCAAAAHHRSTlMA8fEvZ0P57OXKxMK6oZeQjXdyaT02LCMhGhMOpg/WFQAAAXFJREFUKM9V0AVzwjAUB/BsY+4+IKQSaGkLLS0Ud3eXue/7f4U9oHTsf7nIL7l3uYdWuTk6ukH/4z6TUinpzL1ul3tmj5CeuXdp0/aB0PfIoih7+sLB9oJujwW9LSseiCK3deH4FqGLHbVACIjfDxMhPnXnAgm6QsS5xeNzFR+JLqDNggz7UFPUco1mSFRab8kNtOkj8CzfiGlaNF7Pdw2DX2AoFH/StFg0m+uURgZjof/5PhqtZV8G458AttCTF2O1bOw9nQ4XbYSaD7lONV2NlIPYRqX+OkhXw+FIyUZZaX18jyNgf1ggXWP0NSx/FstDKIm98E9T9xoY40AwGAgCYcZbMdGpqSa8DF4GKKFKp9C4Q4nHwAvCvHS4bN55JpWEM9wkU5lztIyLTqRKgmESFWlCXRZucXSWUXlezcwot7VClqV0KghTSll2DVmOcjDYdeQ4dt/h2IfVxmtu9+QKQa5OdrlrC52OO2TlzuGE+Rf2K0QhKXSN7QAAAABJRU5ErkJggg==">
-                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/gh.adb3fa38.png">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA1VBMVEUAAAD/ul/9qT//vmX/rEHmmDH/tVz9pD/8qD3PdQv4r1D3pDv/5m7/4mn/wWj1pj3NdAn30Tv11jb1zDPMcAT7sDzSfBXikSjZgBvvojz/62//xmLllCfNcAXrnTXnmjPmmjP2rU3kkizMcgfLcAb5uzvvozvonTXKbwXllSvqojntsFTUeA3Wfhbnp0/xp0L+22T/v13+sUz4xTjtoDrjlSvOdg7ekSjZiCD/uGT61036tjzPdgzIdAjjkSDmlC7NfBTunTvyoj/xq0LouG7/0Gv701PBjG8QAAAAR3RSTlMAWVlZWVRZWVlcX19ZWVlZEFlZWWRZWVgGZVlZaWloZV5dXV1bWVlZWUkzJyYVC2NZWVlZaWNiYFxZWVlYSUU9OCsZFxBZWeq79pMAAAFBSURBVCjPVdFpc4IwEAZgTGiMrYCggNwoNyLeV+ut7f//SV0sMPSdfMg8k92dzDJVnufzk/mfYequ1246bNpENUcYj0x1UtM9MWctvgVnZib3F+WXjUZ43IJgnmibSw6Vrg2VIIQUjEe2O2HGGoZKMMMAhR5YGzNv73+26OoLUEyWH2+AGIgYXLfLGQeypLRCYw7E6fpPQClbIpnrHLyci9KqjWpsFcWf/b4oA9Y9v3WgvhS0UY34sBDhmSh91chjgmRJAmsgXtK2vApkOVjJJY5nLKUItV9BYCz8KHVsyqI6LLWdlGEeiSMAlyQ4yYMpctuFAmKBkBDubtUuvH0UCiwrhNHeqzbS83xFjQQhUhXf61XY6cSxoqpKHHc6DTz6A4h/bOLA2p6y7LS1BjVOLeU6fV2uijWtpmc5UybPium/9dQhpeT5/ikAAAAASUVORK5CYII=">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA1VBMVEUAAAD/ul/9qT//vmX/rEHmmDH/tVz9pD/8qD3PdQv4r1D3pDv/5m7/4mn/wWj1pj3NdAn30Tv11jb1zDPMcAT7sDzSfBXikSjZgBvvojz/62//xmLllCfNcAXrnTXnmjPmmjP2rU3kkizMcgfLcAb5uzvvozvonTXKbwXllSvqojntsFTUeA3Wfhbnp0/xp0L+22T/v13+sUz4xTjtoDrjlSvOdg7ekSjZiCD/uGT61036tjzPdgzIdAjjkSDmlC7NfBTunTvyoj/xq0LouG7/0Gv701PBjG8QAAAAR3RSTlMAWVlZWVRZWVlcX19ZWVlZEFlZWWRZWVgGZVlZaWloZV5dXV1bWVlZWUkzJyYVC2NZWVlZaWNiYFxZWVlYSUU9OCsZFxBZWeq79pMAAAFBSURBVCjPVdFpc4IwEAZgTGiMrYCggNwoNyLeV+ut7f//SV0sMPSdfMg8k92dzDJVnufzk/mfYequ1246bNpENUcYj0x1UtM9MWctvgVnZib3F+WXjUZ43IJgnmibSw6Vrg2VIIQUjEe2O2HGGoZKMMMAhR5YGzNv73+26OoLUEyWH2+AGIgYXLfLGQeypLRCYw7E6fpPQClbIpnrHLyci9KqjWpsFcWf/b4oA9Y9v3WgvhS0UY34sBDhmSh91chjgmRJAmsgXtK2vApkOVjJJY5nLKUItV9BYCz8KHVsyqI6LLWdlGEeiSMAlyQ4yYMpctuFAmKBkBDubtUuvH0UCiwrhNHeqzbS83xFjQQhUhXf61XY6cSxoqpKHHc6DTz6A4h/bOLA2p6y7LS1BjVOLeU6fV2uijWtpmc5UybPium/9dQhpeT5/ikAAAAASUVORK5CYII=">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="content">
-                                <div class="title">
-                                    <div class="name">
-                                        <a href="/user/profile/442688">
-                                            <span>👉YourGirlzFav👈</span>
-                                        </a>
-                                        <div class="time">19:19</div>
-                                    </div>
-                                </div>
+                                {:else if (chat.type === "tips")}
+                                <!-- ====================== tips ====================== -->
                                 <div class="msg-wrap">
-                                     <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
+                                    <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
                                         I tipped&nbsp;&nbsp;
                                         <a class="cl-primary" href="/user/profile/285947">@MoonGambler😎</a>
                                         <div class="msg-cont">
-                                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png"> 
+                                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
                                             10.304657 PPD\
                                         </div>
                                     </div>
                                 </div>
+                                {:else if (chat.type === "emoji")}
+
+                                <!-- ============================= Emoji ============================= -->
+                                <div class="msg-wrap">
+                                    <div class="sc-jKTccl bkGvjR">
+                                        <div class="sc-kiIyQV cXaEwo msg-gif">
+                                            <img src="https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                {/if}
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- ============================= Emoji ============================= -->
-                    <div class="flat-item" ><div class="sc-tAExr VfNib notranslate "><div class="head"><a class="head-link" href="/user/profile/4625"><img class="avatar " alt="" src="https://img2.nanogames.io/avatar/4625/s"><div class="sc-jQrDum jouJMO user-level type-2"><div class="level-wrap"><span>V</span><span>14</span></div></div><div class="sc-khQegj fPtvsS level levelnums_4"><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="></div></a></div><div class="content"><div class="title"><div class="name"><a href="/user/profile/4625"><span>LovemyLambo</span></a><div class="time">19:21</div></div></div><div class="msg-wrap"> <div class="sc-jKTccl bkGvjR"><div class="sc-kiIyQV cXaEwo msg-gif"><img src="https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif"></div></div> </div></div></div></div>
-
+                    {/each}
                 </div>
             </div>
 
@@ -305,8 +316,18 @@ const handleSendMessage = ((e) => {
                     <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
                         <div class="input-control">
                             <textarea bind:value={messages} placeholder="Your Message" style="height: 44px;"></textarea>
-                            <button class="sc-JkixQ cVsgdS emoji-r-wrap">
-                                <Icon src={RiSystemArrowRightSLine} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                            <button on:click={handleEmoji} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                                {#if isEmoji}
+                                    <div class="emoji-box-wrap">
+                                        <div class="sc-dkPtRN jScFby scroll-view emoji-box">
+                                            {#each emojis as emoji }
+                                                <button on:click={()=> handleMerge(emoji)} class="emoji">{emoji}</button>
+                                            {/each}
+                                        </div>
+                                    </div>
+                                {/if}
+
+                                <Icon src={BsEmojiSunglasses} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                             </button>
                         </div>
                     </div>
@@ -315,13 +336,13 @@ const handleSendMessage = ((e) => {
                 <div class="send-controls">
                     <div class="left-actions">
                         <a class="chat-icon" href="/user/rain">
-                            <Icon src={FaSolidAt}   size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                            <Icon src={WiRaindrop}   size="28"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </a>
                         <div class="command-btn">
-                            <Icon src={IoLanguageOutline}   size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                            <Icon src={IoLanguageOutline}   size="20"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </div>
                         <a class="chat-icon" href="/user/coindrop_send">
-                            <Icon src={SiRainmeter}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                            <Icon src={RiFinanceCopperCoinLine}  size="20"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </a>
                     </div>
                     <div class="sc-dkQkyq gbjudO gift-r-wrap hide-gift">
@@ -449,22 +470,60 @@ const handleSendMessage = ((e) => {
 </div>
 
 <style>
+.cVsgdS .emoji-box-wrap {
+    width: 280px;
+    height: 200px;
+    background-color: rgb(23, 24, 27);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 12px 0px;
+    padding: 10px 10px 40px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 2.8125rem;
+    left: -250px;
+    z-index: 2;
+}
+
+.cVsgdS .emoji-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
 
 .hsvoqO {
     padding: 0.5rem 0.625rem;
 }
+
 .Gdkwx {
     width: 100%;
 }
+.cVsgdS .emoji {
+    width: 36px;
+    height: 36px;
+    font-size: 25px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 36px;
+}
+
 .dWrldy .mid-area .titles .word {
     margin-left: 0.375rem;
 }
+
 .dWrldy .mid-area .titles .word {
     margin-left: 0.375rem;
 }
+
 .dWrldy .mid-area .titles .word .two {
     max-width: 200px;
 }
+
 .gkHCXh {
     background-image: url(https://static.nanogames.io/assets/tip_glod.df7fc7f5.png), linear-gradient(30deg, rgb(98, 86, 49), rgb(58, 56, 45));
     background-size: 90%, 100% 100%;
@@ -474,9 +533,11 @@ const handleSendMessage = ((e) => {
     border: 1px solid rgb(63, 58, 41);
     overflow: hidden;
 }
+
 .Gdkwx {
     width: 100%;
 }
+
 .bkGvjR {
     user-select: text;
     font-size: 0.875rem;
@@ -489,9 +550,11 @@ const handleSendMessage = ((e) => {
     padding: 0.625rem;
     background-color: rgba(49, 52, 58, 0.6);
 }
+
 .cl-primary {
     color: var(--primary-color);
 }
+
 .gkHCXh .msg-cont {
     background-color: rgba(246, 199, 34, 0.3);
     border-radius: 0.625rem;
@@ -503,10 +566,12 @@ const handleSendMessage = ((e) => {
     font-weight: 800;
     margin-top: 0.5625rem;
 }
+
 .gkHCXh .msg-cont .coin-icon {
     width: 1.125rem;
     margin-right: 0.4375rem;
 }
+
 .ljeDJu .titles .word .two {
     margin: 0px;
     font-size: 0.75rem;
@@ -519,13 +584,16 @@ const handleSendMessage = ((e) => {
     white-space: nowrap;
     overflow: hidden;
 }
-.VfNib .content .title .name > div, .VfNib .content .title .name > a {
+
+.VfNib .content .title .name>div,
+.VfNib .content .title .name>a {
     height: 100%;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     font-size: 12.78px;
 }
+
 .VfNib .content .title .name a {
     line-height: 1.125rem;
     color: rgba(153, 164, 176, 0.6);
@@ -536,13 +604,15 @@ const handleSendMessage = ((e) => {
     -webkit-box-pack: start;
     justify-content: flex-start;
 }
-.VfNib .content .title .name a > span {
+
+.VfNib .content .title .name a>span {
     max-width: 12.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     opacity: 0.9;
 }
+
 .hsvoqO .share-message {
     line-height: 1.125rem;
     margin-bottom: 0.5rem;
@@ -553,24 +623,29 @@ const handleSendMessage = ((e) => {
     height: 13.25rem;
     width: 265px;
 }
-.ljeDJu .info-area .left > p > img {
+
+.ljeDJu .info-area .left>p>img {
     width: 5rem;
     margin-left: -0.5rem;
     margin-bottom: -0.3rem;
 }
+
 .dWrldy .mid-area {
     padding: 0.5rem 0.625rem;
     background-color: rgba(36, 38, 43, 0.85);
     border-radius: 0.625rem;
 }
-.dWrldy .mid-area .info-area > .right .animation-card-wrap .animation-card .win-ribbon {
+
+.dWrldy .mid-area .info-area>.right .animation-card-wrap .animation-card .win-ribbon {
     font-size: 0.745rem;
 }
+
 .ljeDJu .titles {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
 }
+
 .ljeDJu .info-area .right .top {
     display: flex;
     -webkit-box-align: center;
@@ -578,17 +653,20 @@ const handleSendMessage = ((e) => {
     margin-left: 0.5rem;
     height: 1.25rem;
 }
-.ljeDJu .info-area .right .top > p {
+
+.ljeDJu .info-area .right .top>p {
     margin: 0px;
     font-size: 0.75rem;
     color: rgba(153, 164, 176, 0.6);
 }
+
 .dWrldy .mid-area .bet-area {
     margin-top: 0.625rem;
     height: 2.75rem;
     border: 0px;
     border-radius: 0.625rem;
 }
+
 .dWrldy .bottom-btns {
     height: 1rem;
     margin-top: 0.625rem;
@@ -596,34 +674,41 @@ const handleSendMessage = ((e) => {
     -webkit-box-align: center;
     align-items: center;
 }
-.ljeDJu .bet-area > p {
+
+.ljeDJu .bet-area>p {
     margin: 0px 0px 0px 0.875rem;
     color: rgb(245, 246, 247);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .dWrldy .mid-area .bet-area .right {
     margin-left: auto;
     margin-right: 0.6rem;
     height: 0.875rem;
 }
+
 .dWrldy .mid-area .info-area {
     margin-top: 0.375rem;
 }
+
 .ljeDJu .info-area {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     margin-top: 0.75rem;
 }
+
 .ljeDJu .info-area .left {
     width: 49%;
 }
-.dWrldy .mid-area .info-area > .left p {
+
+.dWrldy .mid-area .info-area>.left p {
     margin-left: 0.5rem;
 }
-.ljeDJu .info-area .left > p {
+
+.ljeDJu .info-area .left>p {
     margin: 0px 0px 0px 1rem;
     font-size: 0.75rem;
     height: 1rem;
@@ -632,7 +717,8 @@ const handleSendMessage = ((e) => {
     align-items: center;
     color: rgba(153, 164, 176, 0.6);
 }
-.ljeDJu .info-area .left > p {
+
+.ljeDJu .info-area .left>p {
     margin: 0px 0px 0px 1rem;
     font-size: 0.75rem;
     height: 1rem;
@@ -641,19 +727,24 @@ const handleSendMessage = ((e) => {
     align-items: center;
     color: rgba(153, 164, 176, 0.6);
 }
+
 .dWrldy .mid-area .info-area img {
     animation: auto ease 0s 1 normal none running none;
 }
+
 .ljeDJu .info-area .left .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
     margin-top: 0.25rem;
     border-radius: 1.25rem;
 }
+
 .bJlNFA .animation-card.win {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAABgCAMAAADxVp2mAAAASFBMVEUAAAAmKC0mKS4yNjsqLzgnKS4nLC8nKS4mKC4nKS8nKi8oLDAoLzIpKTAqLDKAgIAoKS4uLjEnKS4mKi4mKi8oKi9LS0smKC7J+jS1AAAAGHRSTlMAZmAGDFsoVFg3QR8UJBkCMRBGTzwsA0uWLpxyAAAC1ElEQVR42u3caa6jMBAE4CrbYBYDYb//TSeaSIRJnPx4r50wor8LgBrFrvYSKKWUUkoppZRS/znXQEW4YoKK1YUDVKwuHKFidaGHeuAyXhmoSF2uFpzb0vTRutDh5FaacWr6x7ow4ORq/nWtTt7v6sIaZ+e5MYabHGeXM+qCs1syxpQ4vQtjKpyeNYzIWiR2/EAwMWrokZIrLOTUFvJ6vjA5JOMK9hDTsEcCA18wFwtZ+4TdCtaFLRJo+VKWdxDUNv09YTeCdWGDFEa+5mvIcaRZy6bNJKNSw6sZKZR8ZwwQU8lHpTxd7nKGb5jSQUyQiEphykO31SVh7qrelsVC0rof2hf8SFeQHG/VyXkzQF4gPzct1f8O7fiRefuVb9/UQ97KF7LZQpwXGNoX8/yuEFe/nKkXJDBINGUln0Ba5xlT5B1SCE+PEervLITNjFqQxsgd38j1d1kOUdYwxiONWig69nzmWyB5tquQxFLwrhXv79YAKY53meFmRhLz/kE2QX9XOdE5ohjKPFj0Zvc1U7BrdWnCgppXhdy0vycTSMNYXeq+e/4MFknNJIc0bYwpIW8L2AUSK3/bXFepG7v4yviA1AbW+IWQsIOJqz60q7SMTioO7TuYdLr1Qxu0Fr/QxKL6gqSsJ2lxaEvBR1WH1FzGDMc280mO9IJZcWixNibgA+qD7+hP3GLptvHe4ROOfc6sN1ssvYV1PUx502Gn1TMIb8P6DBUN6y3Uk+r4wes7upUFDingu6w/6J0QP1l8lTvoGdOVRYsbmx/0Hb+iIll2AMJkqHfjHnYafDt7vYQQW/bTbP72cLleptypSb2c8XY3UyPonh24OWoE/YZ+W3/VNnevNrzTPvfNYQnTQ6FrS88HXsffG9tUGfcOvsfwURNvjMmywmsf+c8eu/4hRIzXu9pxs94vjbNkprNRzKArVHG1TtJxna7cKaWUUkoppZT6lj+R5hbb13ebwwAAAABJRU5ErkJggg==);
 }
-.dWrldy .bottom-btns .share, .dWrldy .bottom-btns .animation-like {
+
+.dWrldy .bottom-btns .share,
+.dWrldy .bottom-btns .animation-like {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -662,16 +753,21 @@ const handleSendMessage = ((e) => {
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
 }
-.dWrldy .mid-area .info-area > .left .animation-card-wrap .animation-card {
+
+.dWrldy .mid-area .info-area>.left .animation-card-wrap .animation-card {
     font-size: 1.125rem;
     border-radius: 0.625rem;
 }
+
 .bJlNFA .animation-card.win {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAABgCAMAAADxVp2mAAAASFBMVEUAAAAmKC0mKS4yNjsqLzgnKS4nLC8nKS4mKC4nKS8nKi8oLDAoLzIpKTAqLDKAgIAoKS4uLjEnKS4mKi4mKi8oKi9LS0smKC7J+jS1AAAAGHRSTlMAZmAGDFsoVFg3QR8UJBkCMRBGTzwsA0uWLpxyAAAC1ElEQVR42u3caa6jMBAE4CrbYBYDYb//TSeaSIRJnPx4r50wor8LgBrFrvYSKKWUUkoppZRS/znXQEW4YoKK1YUDVKwuHKFidaGHeuAyXhmoSF2uFpzb0vTRutDh5FaacWr6x7ow4ORq/nWtTt7v6sIaZ+e5MYabHGeXM+qCs1syxpQ4vQtjKpyeNYzIWiR2/EAwMWrokZIrLOTUFvJ6vjA5JOMK9hDTsEcCA18wFwtZ+4TdCtaFLRJo+VKWdxDUNv09YTeCdWGDFEa+5mvIcaRZy6bNJKNSw6sZKZR8ZwwQU8lHpTxd7nKGb5jSQUyQiEphykO31SVh7qrelsVC0rof2hf8SFeQHG/VyXkzQF4gPzct1f8O7fiRefuVb9/UQ97KF7LZQpwXGNoX8/yuEFe/nKkXJDBINGUln0Ba5xlT5B1SCE+PEervLITNjFqQxsgd38j1d1kOUdYwxiONWig69nzmWyB5tquQxFLwrhXv79YAKY53meFmRhLz/kE2QX9XOdE5ohjKPFj0Zvc1U7BrdWnCgppXhdy0vycTSMNYXeq+e/4MFknNJIc0bYwpIW8L2AUSK3/bXFepG7v4yviA1AbW+IWQsIOJqz60q7SMTioO7TuYdLr1Qxu0Fr/QxKL6gqSsJ2lxaEvBR1WH1FzGDMc280mO9IJZcWixNibgA+qD7+hP3GLptvHe4ROOfc6sN1ssvYV1PUx502Gn1TMIb8P6DBUN6y3Uk+r4wes7upUFDingu6w/6J0QP1l8lTvoGdOVRYsbmx/0Hb+iIll2AMJkqHfjHnYafDt7vYQQW/bTbP72cLleptypSb2c8XY3UyPonh24OWoE/YZ+W3/VNnevNrzTPvfNYQnTQ6FrS88HXsffG9tUGfcOvsfwURNvjMmywmsf+c8eu/4hRIzXu9pxs94vjbNkprNRzKArVHG1TtJxna7cKaWUUkoppZT6lj+R5hbb13ebwwAAAABJRU5ErkJggg==);
 }
-.dWrldy .bottom-btns .share > svg, .dWrldy .bottom-btns .animation-like > svg {
+
+.dWrldy .bottom-btns .share>svg,
+.dWrldy .bottom-btns .animation-like>svg {
     margin-right: 0.375rem;
 }
+
 .bJlNFA .animation-card {
     width: 100%;
     height: 100%;
@@ -692,32 +788,37 @@ const handleSendMessage = ((e) => {
     overflow: hidden;
     white-space: nowrap;
 }
+
 .ljeDJu .info-area .right {
     width: 49%;
     margin-left: 2%;
 }
-.dWrldy .mid-area .info-area > .right .top {
+
+.dWrldy .mid-area .info-area>.right .top {
     height: 1rem;
 }
-.dWrldy .mid-area .info-area > .right .top > img {
+
+.dWrldy .mid-area .info-area>.right .top>img {
     width: 0.875rem;
     height: 0.875rem;
     margin-right: 0.25rem;
 }
-.ljeDJu .info-area .right .top > img {
+
+.ljeDJu .info-area .right .top>img {
     width: 1rem;
     height: 1rem;
     margin-right: 2px;
 }
+
 .dWrldy .mid-area .info-area img {
     animation: auto ease 0s 1 normal none running none;
 }
 
-
-.hjpnCZ > svg {
+.hjpnCZ>svg {
     display: inline-block;
     fill: rgba(153, 164, 176, 0.6);
 }
+
 .hjpnCZ .like-dom {
     width: 3rem;
     top: -6.875rem;
@@ -725,12 +826,15 @@ const handleSendMessage = ((e) => {
     position: absolute;
     z-index: 0;
 }
+
 .hjpnCZ .count-info {
     width: 2rem;
     white-space: nowrap;
     overflow: hidden;
 }
-.dWrldy .bottom-btns .share, .dWrldy .bottom-btns .animation-like {
+
+.dWrldy .bottom-btns .share,
+.dWrldy .bottom-btns .animation-like {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -739,6 +843,7 @@ const handleSendMessage = ((e) => {
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
 }
+
 .bkGvjR {
     user-select: text;
     font-size: 0.875rem;
@@ -751,13 +856,15 @@ const handleSendMessage = ((e) => {
     padding: 0.625rem;
     background-color: rgba(49, 52, 58, 0.6);
 }
+
 .ljeDJu .info-area .right .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
     margin-top: 0.25rem;
     border-radius: 1.25rem;
 }
-.dWrldy .mid-area .info-area > .right .animation-card-wrap {
+
+.dWrldy .mid-area .info-area>.right .animation-card-wrap {
     height: 3rem;
     border-radius: 0.625rem;
 }
@@ -773,7 +880,8 @@ const handleSendMessage = ((e) => {
     overflow: hidden;
     position: relative;
 }
-.bJlNFA .animation-card .win-ribbon > img {
+
+.bJlNFA .animation-card .win-ribbon>img {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -781,67 +889,83 @@ const handleSendMessage = ((e) => {
     left: 0px;
     animation: 4s ease 0s infinite normal none running ribbonAnimation;
 }
-.dWrldy .mid-area .info-area > .right .top {
+
+.dWrldy .mid-area .info-area>.right .top {
     height: 1rem;
 }
-.dWrldy .mid-area .info-area > .right .top {
+
+.dWrldy .mid-area .info-area>.right .top {
     height: 1rem;
 }
-.ljeDJu .info-area .right .top > img {
+
+.ljeDJu .info-area .right .top>img {
     width: 1rem;
     height: 1rem;
     margin-right: 2px;
 }
+
 .dWrldy .mid-area .info-area img {
     animation: auto ease 0s 1 normal none running none;
 }
+
 .dWrldy .mid-area .info-area img {
     animation: auto ease 0s 1 normal none running none;
 }
-.dWrldy .mid-area .info-area > .right .animation-card-wrap {
+
+.dWrldy .mid-area .info-area>.right .animation-card-wrap {
     height: 3rem;
     border-radius: 0.625rem;
 }
+
 .ljeDJu .info-area .right .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
     margin-top: 0.25rem;
     border-radius: 1.25rem;
 }
+
 .bJlNFA.right-win .animation-card {
     font-size: 1rem;
     color: rgb(67, 179, 9);
 }
+
 .bJlNFA .animation-card.win {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAABgCAMAAADxVp2mAAAASFBMVEUAAAAmKC0mKS4yNjsqLzgnKS4nLC8nKS4mKC4nKS8nKi8oLDAoLzIpKTAqLDKAgIAoKS4uLjEnKS4mKi4mKi8oKi9LS0smKC7J+jS1AAAAGHRSTlMAZmAGDFsoVFg3QR8UJBkCMRBGTzwsA0uWLpxyAAAC1ElEQVR42u3caa6jMBAE4CrbYBYDYb//TSeaSIRJnPx4r50wor8LgBrFrvYSKKWUUkoppZRS/znXQEW4YoKK1YUDVKwuHKFidaGHeuAyXhmoSF2uFpzb0vTRutDh5FaacWr6x7ow4ORq/nWtTt7v6sIaZ+e5MYabHGeXM+qCs1syxpQ4vQtjKpyeNYzIWiR2/EAwMWrokZIrLOTUFvJ6vjA5JOMK9hDTsEcCA18wFwtZ+4TdCtaFLRJo+VKWdxDUNv09YTeCdWGDFEa+5mvIcaRZy6bNJKNSw6sZKZR8ZwwQU8lHpTxd7nKGb5jSQUyQiEphykO31SVh7qrelsVC0rof2hf8SFeQHG/VyXkzQF4gPzct1f8O7fiRefuVb9/UQ97KF7LZQpwXGNoX8/yuEFe/nKkXJDBINGUln0Ba5xlT5B1SCE+PEervLITNjFqQxsgd38j1d1kOUdYwxiONWig69nzmWyB5tquQxFLwrhXv79YAKY53meFmRhLz/kE2QX9XOdE5ohjKPFj0Zvc1U7BrdWnCgppXhdy0vycTSMNYXeq+e/4MFknNJIc0bYwpIW8L2AUSK3/bXFepG7v4yviA1AbW+IWQsIOJqz60q7SMTioO7TuYdLr1Qxu0Fr/QxKL6gqSsJ2lxaEvBR1WH1FzGDMc280mO9IJZcWixNibgA+qD7+hP3GLptvHe4ROOfc6sN1ssvYV1PUx502Gn1TMIb8P6DBUN6y3Uk+r4wes7upUFDingu6w/6J0QP1l8lTvoGdOVRYsbmx/0Hb+iIll2AMJkqHfjHnYafDt7vYQQW/bTbP72cLleptypSb2c8XY3UyPonh24OWoE/YZ+W3/VNnevNrzTPvfNYQnTQ6FrS88HXsffG9tUGfcOvsfwURNvjMmywmsf+c8eu/4hRIzXu9pxs94vjbNkprNRzKArVHG1TtJxna7cKaWUUkoppZT6lj+R5hbb13ebwwAAAABJRU5ErkJggg==);
 }
-.dWrldy .mid-area .info-area > .right .animation-card-wrap .animation-card {
+
+.dWrldy .mid-area .info-area>.right .animation-card-wrap .animation-card {
     border-radius: 0.625rem;
 }
+
 .dWrldy .mid-area .bet-area .right {
     margin-left: auto;
     margin-right: 0.6rem;
     height: 0.875rem;
 }
-.dWrldy .mid-area .bet-area .right > svg {
+
+.dWrldy .mid-area .bet-area .right>svg {
     font-size: 0.625rem;
 }
-.ljeDJu .bet-area > p {
+
+.ljeDJu .bet-area>p {
     margin: 0px 0px 0px 0.875rem;
     color: rgb(245, 246, 247);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.dWrldy .mid-area .bet-area > svg {
+
+.dWrldy .mid-area .bet-area>svg {
     width: 1.5rem;
     height: auto;
 }
-.ljeDJu .bet-area > svg {
+
+.ljeDJu .bet-area>svg {
     height: auto;
     width: 1.875rem;
     margin-left: 1rem;
 }
+
 .ljeDJu .bet-area {
     display: flex;
     margin-top: 0.625rem;
@@ -852,6 +976,7 @@ const handleSendMessage = ((e) => {
     border-radius: 1.25rem;
     border: 1px solid rgba(45, 48, 53, 0.5);
 }
+
 /* ======================= mobile =================================== */
 .kBjSXI {
     position: fixed;
