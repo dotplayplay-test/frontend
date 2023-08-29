@@ -9,10 +9,21 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import IoClose from "svelte-icons-pack/io/IoClose";
 import BsFiletypeGif from "svelte-icons-pack/bs/BsFiletypeGif";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
-import {
-    createEventDispatcher,
-    onMount
-} from 'svelte'
+
+import {createEventDispatcher,  onMount } from "svelte";
+import { browser } from '$app/environment'
+import { db} from "$lib/firebaseAuth/index"
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+const id = browser && JSON.parse(localStorage.getItem('user'))
+let profile
+onMount(async()=>{
+    const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
+    onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            profile = (doc.data());
+        });
+    });
+})
 
 const dispatch = createEventDispatcher()
 
@@ -38,10 +49,26 @@ let chatMessage = [{
     },
 ]
 
-const handleSendMessage = (() => {
-
+let messages
+const handleSendMessage = ((e) => {
+    if(e.key === "Enter" && messages){
+        let data = { 
+            id: Math.floor(Math.random()*10)+ 1,
+            type: "normal",
+            text: messages,
+            time: "2:23pm",
+            name: "valiant",
+            level: 2
+         }
+         chatMessage = [...chatMessage, data]
+        messages = ''
+    }
 })
+
+
 </script>
+<svelte:body on:keypress={handleSendMessage} />
+
 
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -266,8 +293,8 @@ const handleSendMessage = (() => {
                     </div>
 
 
-
-                    <div class="flat-item" ><div class="sc-tAExr VfNib notranslate "><div class="head"><a class="head-link" href="/user/profile/4625"><img class="avatar " src="https://img2.nanogames.io/avatar/4625/s"><div class="sc-jQrDum jouJMO user-level type-2"><div class="level-wrap"><span>V</span><span>14</span></div></div><div class="sc-khQegj fPtvsS level levelnums_4"><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="></div></a></div><div class="content"><div class="title"><div class="name"><a href="/user/profile/4625"><span>LovemyLambo</span></a><div class="time">19:21</div></div></div><div class="msg-wrap"> <div class="sc-jKTccl bkGvjR"><div class="sc-kiIyQV cXaEwo msg-gif"><img src="https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif"></div></div> </div></div></div></div>
+                    <!-- ============================= Emoji ============================= -->
+                    <div class="flat-item" ><div class="sc-tAExr VfNib notranslate "><div class="head"><a class="head-link" href="/user/profile/4625"><img class="avatar " alt="" src="https://img2.nanogames.io/avatar/4625/s"><div class="sc-jQrDum jouJMO user-level type-2"><div class="level-wrap"><span>V</span><span>14</span></div></div><div class="sc-khQegj fPtvsS level levelnums_4"><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA5FBMVEUAAAC8vOO6uuJ0dLa3t+C/v+fExOy6uuJ4eLy1td93d7e2tuG5ueF2drrFxevAwOt5ebPNzep4eLx/f8J3d7jT0+/Bwex8fM93d7qFhcO+vuPi4v/S0vvn5//X1//Q0Pv///93d7ns7P/p6f/l5f+7u+LMzPLf3/7U1Px2drb9/f/g4P/Pz/bW1vXu7v/a2v3Gxupra7HX1/zOzvPk5P/d3f/R0fPLy+7Cwui/v+W4uOFxcbX5+f/x8f/09P/U1P7e3vra2vjY2PbIyO2zs92srNimptSbm82KisSAgL11dbdubrK3WIz2AAAAG3RSTlMA8fEvw49D+ezlyrqhl3dyamlkPTYsIyEaEw5ByqSEAAABTklEQVQoz1XQ15KCMBQGYOy9d0koSRARFikWin3tvv/77MFBxv0vUr4kkzmH+6RXqfS4/xnnFMtScuNva5WUFcYrpdRKKJ8NJjxljPKTIJt/U78aWAeKeQimByuo9jmuUfBOOCJdjRifvEKDU9aYLmCrEhLpguBfhUsfCQ9ZMknCS54xfWmkuPQPhms6nUnSjCz0OdpPYiQbIODtXBSFGFUwoI1pMhF9UGfR4y3GxEkQvtlJO8qoqYooQaYvTEwJJfMEKdOnDjEJMbcJHil8OeVVx1F5J0I3BRXN9wgh8R0EJkBFOcUzhCmKMxUMT8lFjfNdBPwm5Ppx8+qXtQF7ODHWl3rc5FF4811DEAzXv4WjGDOh/bhaq5V1fdhh5oOy/LLv5/PdfsnyF8pPW9Psp/yNmiaX2+0yzAl2tWKtEy06taLWjXHYHHBxBs0hjH8tVDpKVEqZSgAAAABJRU5ErkJggg=="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="><img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAn1BMVEUAAADl5f/q6v/U1Pz////g4P7X1/+8vOLR0fzu7v94eLqlpdbY2PfOzvXZ2f7BwefR0fV1dbm6uuB2drm8vOL29v+3t+F0dLjKyuzMzPBtbbS8vOLPz+93d7pubrSAgL7CwubOzuvQ0O+AgMXHx+psbLOsrNjU1PPZ2fadnc+1td3IyOmoqNWMjMZ3d7m4uOR+frvQ0OpwcLqDg7/U1OcQeSblAAAANXRSTlMAWVlZWVlZVFlZXQpfX1loWRBmY15ZR2lmY1xbWVlZWDMnGBVpZGBeXFxaWVlZST04KykjEG9tFKQAAAEXSURBVCjPVdGJjoMgEAZgGQqC7or1qre29r677fs/2w5Yrf1DAvnCBDJjDXklycv6jttG63XUulNb2moHsFP2cqRVEmQECK4sSFZ95S1IGaChAkuDm4uVkdobYszwXkVLq0iRtEmplUhIC8v+kcZgNgNUYOzXRgQkbaiEeZQOKOOZScyE4G9kcU9SEkFHJNokAHgf1FdjICCZoCMiS8BI74PAKJcSbYqeEBQ/4zEyYJR5FCNMKBrPIqsNlOCc6hgSKmh145RPe8XNV+/mPbYlsqFy+xhmkR+K0ufcL4tDPkxk7uTN+eT7p3OTO/MRnbq+HI+XunamWFWbMNxU1RTDRXh9Pq+4jdgtmntnDvdm0Q2v/7nW1/EfvNoVsMye0pwAAAAASUVORK5CYII="></div></a></div><div class="content"><div class="title"><div class="name"><a href="/user/profile/4625"><span>LovemyLambo</span></a><div class="time">19:21</div></div></div><div class="msg-wrap"> <div class="sc-jKTccl bkGvjR"><div class="sc-kiIyQV cXaEwo msg-gif"><img src="https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif"></div></div> </div></div></div></div>
 
                 </div>
             </div>
@@ -277,13 +304,14 @@ const handleSendMessage = (() => {
                 <div class="send-input">
                     <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
                         <div class="input-control">
-                            <textarea placeholder="Your Message" style="height: 44px;"></textarea>
+                            <textarea bind:value={messages} placeholder="Your Message" style="height: 44px;"></textarea>
                             <button class="sc-JkixQ cVsgdS emoji-r-wrap">
                                 <Icon src={RiSystemArrowRightSLine} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                             </button>
                         </div>
                     </div>
                 </div>
+
                 <div class="send-controls">
                     <div class="left-actions">
                         <a class="chat-icon" href="/user/rain">
