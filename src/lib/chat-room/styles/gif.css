@@ -1,0 +1,60 @@
+.gbjudO .gift-box-wrap {
+    width: 16rem;
+    height: 20.3125rem;
+    background-color: rgb(23, 24, 27);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px 0px;
+    padding: 10px 10px 25px;
+    border-radius: 0.3125rem;
+    position: absolute;
+    bottom: 2.5rem;
+    left: -14.5rem;
+}
+
+.jhjroN {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+.gbjudO .gift-box-wrap .giphy-copyright {
+    width: 130px;
+    height: 15px;
+    position: absolute;
+    left: 0.625rem;
+    bottom: 0.625rem;
+    background: url(https://static.nanogames.io/assets/copyrigt.24adedf8.png) 0% 0% / 100% no-repeat;
+}
+.gbjudO .gift-box-wrap::after {
+    content: "";
+    position: absolute;
+    bottom: -1.25rem;
+    right: 0.75rem;
+    width: 0px;
+    height: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgb(23, 24, 27) transparent transparent;
+    border-image: initial;
+}
+.gbjudO .gift-item {
+    width: 48%;
+    height: 80px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgb(46, 48, 54);
+    animation: 1.5s linear 0s infinite normal none running cplaceholderShimmer;
+}
+.gbjudO .gift-item .gift-img {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+}

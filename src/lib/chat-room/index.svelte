@@ -1,6 +1,7 @@
 <script>
 import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
 import "./styles/index.css"
+import "./styles/gif.css"
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
 import HiSolidEmojiHappy from "svelte-icons-pack/hi/HiSolidEmojiHappy";
 import Icon from 'svelte-icons-pack/Icon.svelte';
@@ -12,6 +13,9 @@ import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
+import {
+    GIFs
+} from "./data/index"
 import {
     emojis
 } from "./data/index"
@@ -69,30 +73,43 @@ let chatMessage = [{
     },
     {
         id: 34,
-        type: "emoji",
+        type: "gif",
         text: "",
         time: "2:23pm",
         image: "https://img2.nanogames.io/avatar/78805/s",
         name: "valiant",
+        gif: "https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif",
         level: 3
     },
-    {
-        id: 3,
-        type: "wol",
-        text: "",
-        time: "2:23pm",
-        image: "https://img2.nanogames.io/avatar/78805/s",
-        name: "valiant",
-        level: 3
-    },
+    // {
+    //     id: 3,
+    //     type: "wol",
+    //     text: "",
+    //     time: "2:23pm",
+    //     image: "https://img2.nanogames.io/avatar/78805/s",
+    //     name: "valiant",
+    //     level: 3
+    // },
 ]
+
+let isGif = false
+const handleGIF = (() => {
+    if (isGif) {
+        isGif = false
+    } else {
+        isGif = true
+    }
+})
+
+
 // $: console.log(profile && profile)
 let messages
-const handleSendMessage = ((e) => {
-    if (e.key === "Enter" && messages) {
-
+const handleSendMessage = ((e, name) => {
+    if (e.key === "Enter" && name.messages || e === "gifHit") {
+        if (e.key === "Enter") {
+            e.preventDefault();
+        }
         let date = new Date();
-
         let hours = date.getHours();
         let minutes = date.getMinutes();
 
@@ -109,33 +126,35 @@ const handleSendMessage = ((e) => {
         let time = (hours + ':' + minutes + ' ' + newformat);
         let data = {
             id: Math.floor(Math.random() * 100000) + 1,
-            type: "normal",
-            text: messages,
+            type: name.type,
+            text: name.messages ? name.messages : "",
             time: time,
             image: profile && profile.profile_image,
             name: profile && profile.username,
+            gif: name.gif ? name.gif : "",
             level: 2
         }
         chatMessage = [...chatMessage, data]
         messages = ''
+        isGif = false
     }
 })
 let isEmoji = false
-const handleEmoji = (()=>{
-    if(isEmoji){
+const handleEmoji = (() => {
+    if (isEmoji) {
         isEmoji = false
-    }else{
+    } else {
         isEmoji = true
     }
 })
 
-const handleMerge = ((e)=>{
+
+const handleMerge = ((e) => {
     messages += (e)
 })
-
 </script>
 
-<svelte:body on:keypress={handleSendMessage} />
+<svelte:body on:keypress={()=> handleSendMessage(event, {messages, type: "normal",})} />
 
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -273,7 +292,8 @@ const handleMerge = ((e)=>{
                                                         <div class="share">
                                                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                                                                 <use xlink:href="#icon_Share"></use>
-                                                            </svg>Share</div>
+                                                            </svg>Share
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -292,13 +312,12 @@ const handleMerge = ((e)=>{
                                         </div>
                                     </div>
                                 </div>
-                                {:else if (chat.type === "emoji")}
-
+                                {:else if (chat.type === "gif")}
                                 <!-- ============================= Emoji ============================= -->
                                 <div class="msg-wrap">
                                     <div class="sc-jKTccl bkGvjR">
                                         <div class="sc-kiIyQV cXaEwo msg-gif">
-                                            <img src="https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif" alt="">
+                                            <img src={chat.gif} alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -318,15 +337,14 @@ const handleMerge = ((e)=>{
                             <textarea bind:value={messages} placeholder="Your Message" style="height: 44px;"></textarea>
                             <button on:click={handleEmoji} class="sc-JkixQ cVsgdS emoji-r-wrap">
                                 {#if isEmoji}
-                                    <div class="emoji-box-wrap">
-                                        <div class="sc-dkPtRN jScFby scroll-view emoji-box">
-                                            {#each emojis as emoji }
-                                                <button on:click={()=> handleMerge(emoji)} class="emoji">{emoji}</button>
-                                            {/each}
-                                        </div>
+                                <div class="emoji-box-wrap">
+                                    <div class="sc-dkPtRN jScFby scroll-view emoji-box">
+                                        {#each emojis as emoji }
+                                        <button on:click={()=> handleMerge(emoji)} class="emoji">{emoji}</button>
+                                        {/each}
                                     </div>
+                                </div>
                                 {/if}
-
                                 <Icon src={BsEmojiSunglasses} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                             </button>
                         </div>
@@ -346,7 +364,21 @@ const handleMerge = ((e)=>{
                         </a>
                     </div>
                     <div class="sc-dkQkyq gbjudO gift-r-wrap hide-gift">
-                        <button class="gift-btn">
+
+                        {#if isGif}
+                        <div class="gift-box-wrap">
+                            <div class="sc-dkPtRN jScFby scroll-view sc-jivBlf jhjroN">
+                                {#each GIFs as gif}
+                                <button on:click={()=>handleSendMessage( "gifHit", {gif, type: "gif",})} class="gift-item">
+                                    <img class="gift-img" src={gif} alt="">
+                                </button>
+                                {/each}
+                            </div>
+                            <div class="giphy-copyright"></div>
+                        </div>
+                        {/if}
+
+                        <button on:click={handleGIF} class="gift-btn">
                             <Icon src={BsFiletypeGif}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </button>
                     </div>
@@ -488,6 +520,10 @@ const handleMerge = ((e)=>{
     flex-wrap: wrap;
 }
 
+.gbjudO {
+    position: relative;
+}
+
 .jScFby {
     box-sizing: border-box;
     height: 100%;
@@ -503,6 +539,7 @@ const handleMerge = ((e)=>{
 .Gdkwx {
     width: 100%;
 }
+
 .cVsgdS .emoji {
     width: 36px;
     height: 36px;
