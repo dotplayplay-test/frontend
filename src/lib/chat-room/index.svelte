@@ -14,6 +14,7 @@ import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
 import { usePublicMessages } from "./componets/index"
+
 const { sendMessage } = usePublicMessages()
 import {
     GIFs
@@ -32,7 +33,7 @@ import {
 import {
     db
 } from "$lib/firebaseAuth/index"
-import { doc,getDoc } from "firebase/firestore";
+import { doc,getDoc, collection, getDocs } from "firebase/firestore";
 
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
@@ -54,35 +55,51 @@ const handlecloseChat = (() => {
     dispatch("closeChat")
 })
 
-let chatMessage = [{
-        id: 1,
-        type: "normal",
-        text: "Hello ma'am",
-        time: "2:23pm",
-        image: "https://img2.nanogames.io/avatar/78805/s",
-        name: "valiant",
-        level: 3
-    },
-    {
-        id: 2,
-        type: "normal",
-        text: "Hel ma'am",
-        time: "2:23pm",
-        image: "https://img2.nanogames.io/avatar/78805/s",
-        name: "valiant",
-        level: 3
-    },
-    {
-        id: 34,
-        type: "gif",
-        text: "",
-        time: "2:23pm",
-        image: "https://img2.nanogames.io/avatar/78805/s",
-        name: "valiant",
-        gif: "https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif",
-        level: 3
-    },
-]
+let chatMessage = []
+$: {
+    onMount(async()=>{
+        const querySnapshot = await getDocs(collection(db, "chat"));
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        chatMessage.push(doc.data())
+        });
+    })
+}
+
+$: console.log(chatMessage)
+
+
+
+// let chatMessage = [{
+//         id: 1,
+//         type: "normal",
+//         text: "Hello ma'am",
+//         time: "2:23pm",
+//         image: "https://img2.nanogames.io/avatar/78805/s",
+//         name: "valiant",
+//         level: 3
+//     },
+//     {
+//         id: 2,
+//         type: "normal",
+//         text: "Hel ma'am",
+//         time: "2:23pm",
+//         image: "https://img2.nanogames.io/avatar/78805/s",
+//         name: "valiant",
+//         level: 3
+//     },
+//     {
+//         id: 34,
+//         type: "gif",
+//         text: "",
+//         time: "2:23pm",
+//         image: "https://img2.nanogames.io/avatar/78805/s",
+//         name: "valiant",
+//         gif: "https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif",
+//         level: 3
+//     },
+// ]
 
 let isGif = false
 const handleGIF = (() => {

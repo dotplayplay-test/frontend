@@ -16,17 +16,17 @@ export const usePublicMessages = () => {
         }
       );
       const json = await response.json();
-    //   if (!response.ok) {
-    //     isLoading = false;
-    //     error = json.error
-    //     console.log(error)
-    //   }
-    //   if (response.ok) {
-    //     // Save user to localStorage
-    //     console.log(json)
-    //     // Update the auth store
-    //     isLoading = false
-    //   }
+      if (!response.ok) {
+        isLoading = false;
+        error = json.error
+        console.log(error)
+      }
+      if (response.ok) {
+        // Save user to localStorage
+        console.log(json)
+        // Update the auth store
+        isLoading = false
+      }
     };
     return { sendMessage, isLoading, error };
   };
