@@ -25,7 +25,7 @@ export const updateUser = () => {
           console.log(error)
       }
       if(response.ok){
-       goto("/")
+        window.location.href = '/'
       }
     };
     return { useUpdate, isLoading, error };

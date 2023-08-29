@@ -13,6 +13,8 @@ import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
+import { usePublicMessages } from "./componets/index"
+const { sendMessage } = usePublicMessages()
 import {
     GIFs
 } from "./data/index"
@@ -30,22 +32,21 @@ import {
 import {
     db
 } from "$lib/firebaseAuth/index"
-import {
-    collection,
-    query,
-    where,
-    onSnapshot
-} from "firebase/firestore";
+import { doc,getDoc } from "firebase/firestore";
+
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
-onMount(async () => {
-    const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
-    onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            profile = (doc.data());
-        });
-    });
-})
+$:{
+    onMount(async()=>{
+        const docRef = doc(db, "profile", id.email);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            profile = docSnap.data()
+        } else {
+            console.log("No such document!");
+        }
+    })
+}
 
 const dispatch = createEventDispatcher()
 
@@ -81,15 +82,6 @@ let chatMessage = [{
         gif: "https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif",
         level: 3
     },
-    // {
-    //     id: 3,
-    //     type: "wol",
-    //     text: "",
-    //     time: "2:23pm",
-    //     image: "https://img2.nanogames.io/avatar/78805/s",
-    //     name: "valiant",
-    //     level: 3
-    // },
 ]
 
 let isGif = false
@@ -112,20 +104,17 @@ const handleSendMessage = ((e, name) => {
         let date = new Date();
         let hours = date.getHours();
         let minutes = date.getMinutes();
-
         // Check whether AM or PM
         let newformat = hours >= 12 ? 'PM' : 'AM';
-
         // Find current hour in AM-PM Format
         hours = hours % 12;
-
         // To display "0" as "12"
         hours = hours ? hours : 12;
         minutes = minutes < 10 ? '0' + minutes : minutes;
 
         let time = (hours + ':' + minutes + ' ' + newformat);
         let data = {
-            id: Math.floor(Math.random() * 100000) + 1,
+            email: id.email,
             type: name.type,
             text: name.messages ? name.messages : "",
             time: time,
@@ -134,11 +123,13 @@ const handleSendMessage = ((e, name) => {
             gif: name.gif ? name.gif : "",
             level: 2
         }
-        chatMessage = [...chatMessage, data]
+        sendMessage(data)
         messages = ''
         isGif = false
     }
 })
+
+
 let isEmoji = false
 const handleEmoji = (() => {
     if (isEmoji) {
@@ -164,7 +155,7 @@ const handleMerge = ((e) => {
                     <div class="select-trigger">
                         <div class="select-label">English</div>
                         <div class="arrow ">
-                            <Icon src={RiSystemArrowRightSLine} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </div>
                     </div>
                 </div>
@@ -345,7 +336,7 @@ const handleMerge = ((e) => {
                                     </div>
                                 </div>
                                 {/if}
-                                <Icon src={BsEmojiSunglasses} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                                <Icon src={BsEmojiSunglasses}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                             </button>
                         </div>
                     </div>
@@ -401,7 +392,7 @@ const handleMerge = ((e) => {
                             <div class="select-trigger">
                                 <div class="select-label">English</div>
                                 <div class="arrow ">
-                                    <Icon src={RiSystemArrowRightSLine} style='transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s; '  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
+                                    <Icon src={RiSystemArrowRightSLine}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                                 </div>
                             </div>
                         </div>

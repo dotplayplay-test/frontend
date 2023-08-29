@@ -7,7 +7,7 @@ import IoNotifications from "svelte-icons-pack/io/IoNotifications";
 import Navprofile from "./profilecomponent/main/navprofile.svelte";
 import Coins from "./profilecomponent/main/coins.svelte";
 import {app, db} from "$lib/firebaseAuth/index"
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { doc,getDoc } from "firebase/firestore";
 import {
     goto
 } from "$app/navigation"
@@ -46,17 +46,18 @@ const handleCoinsDrop = ((e)=>{
 
 let authUser
 let isLoading = true
-let profile
-const id = browser && JSON.parse(localStorage.getItem('user'))
-$: {
-    onMount(async()=>{
-        const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
-        onSnapshot(q, (querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                profile = (doc.data());
-            });
-        });
 
+const id = browser && JSON.parse(localStorage.getItem('user'))
+let profile
+$:{
+    onMount(async()=>{
+        const docRef = doc(db, "profile", id.email);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            profile = docSnap.data()
+        } else {
+            console.log("No such document!");
+        }
     })
 }
 
@@ -182,7 +183,7 @@ const handleMenu = (() => {
                             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                                 {#if userProfile}
-                                    <Navprofile />
+                                    <Navprofile profile={profile} />
                                 {/if}
                             </button>
                           

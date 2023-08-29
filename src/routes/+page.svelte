@@ -11,26 +11,29 @@ import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
 import {  onMount } from "svelte";
 import { browser } from '$app/environment'
-import {app, db} from "$lib/firebaseAuth/index"
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { db} from "$lib/firebaseAuth/index"
+import { doc, getDoc } from "firebase/firestore";
+
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
-
-onMount(async()=>{
-    const q = query(collection(db, "profile"), where("user_id", "==", id.user_id));
-    onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            profile = (doc.data());
-        });
-    });
-})
+$:{
+    onMount(async()=>{
+        const docRef = doc(db, "profile", id.email);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            profile = docSnap.data()
+        } else {
+            console.log("No such document!");
+        }
+    })
+}
 
 register();
 </script>
 
 
 <div id="main" class="sc-lhMiDA ePAxUv">
-    {#if profile && profile.lastname === ''}
+    {#if profile && profile.born === ''}
         <ProfileAuth />
     {/if}
     

@@ -2,22 +2,20 @@
 import { browser } from '$app/environment'
 import { updateUser } from "$lib/hook/updateUser"
 const {useUpdate} = updateUser()
-import { handleAllProfileUpdate } from "$lib/firebaseAuth/index"
   let last_name = ''
   let first_name = ''
   let day = 1
   let month = 1
   let year = 2000
-  const id = browser && JSON.parse(localStorage.getItem('profileID'))
+  const id = browser && JSON.parse(localStorage.getItem('user'))
 
 const handleSubmit = (()=>{
     if(!last_name || !first_name){
         console.log("feild can't be empty")
     }else{
         let date = day+"-"+month+"-"+year
-        let data = { firstname:first_name, lastname:last_name , dob:date , user_id : id}
+        let data = { firstname:first_name, lastname:last_name , dob:date , email : id.email}
         useUpdate(data)
-        handleAllProfileUpdate(data)
     }
 })
 
