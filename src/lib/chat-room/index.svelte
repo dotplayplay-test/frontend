@@ -34,6 +34,20 @@ import {
     db
 } from "$lib/firebaseAuth/index"
 import { doc,getDoc, collection, getDocs } from "firebase/firestore";
+import Pusher from "pusher-js"
+ let allmessage =[]
+let newMessages = ''
+
+var pusher = new Pusher('079fe293b89889569380', {
+    cluster: 'ap1'
+});
+
+    onMount(()=>{
+        var channel = pusher.subscribe('chat-room');
+            channel.bind('public-messages', function(data) {
+           allmessage = [...allmessage, data]
+        });
+    })
 
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
@@ -67,7 +81,7 @@ $: {
     })
 }
 
-$: console.log(chatMessage)
+$: console.log(allmessage)
 
 
 
@@ -113,8 +127,8 @@ const handleGIF = (() => {
 
 // $: console.log(profile && profile)
 let messages
-const handleSendMessage = ((e, name) => {
-    if (e.key === "Enter" && name.messages || e === "gifHit") {
+const handleSendMessage = (async(e, name) => {
+    if (e.key === "Enter" && name.newMessages || e === "gifHit") {
         if (e.key === "Enter") {
             e.preventDefault();
         }
@@ -131,18 +145,23 @@ const handleSendMessage = ((e, name) => {
 
         let time = (hours + ':' + minutes + ' ' + newformat);
         let data = {
+            id: Math.random()* 2000000,
             email: id.email,
             type: name.type,
-            text: name.messages ? name.messages : "",
+            text: name.newMessages ? name.newMessages : "",
             time: time,
             image: profile && profile.profile_image,
             name: profile && profile.username,
             gif: name.gif ? name.gif : "",
             level: 2
         }
+
         sendMessage(data)
-        messages = ''
-        isGif = false
+
+        // console.log(data)
+        // sendMessage(data)
+        newMessages = ''
+        // isGif = false
     }
 })
 
@@ -162,7 +181,7 @@ const handleMerge = ((e) => {
 })
 </script>
 
-<svelte:body on:keypress={()=> handleSendMessage(event, {messages, type: "normal",})} />
+<svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal",})} />
 
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -193,7 +212,7 @@ const handleMerge = ((e) => {
         <div class="sc-bSqaIl eA-dYOl">
             <div class="sc-dkPtRN jScFby scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
                 <div class="sc-AjmGg kgsidd">
-                    {#each chatMessage as chat (chat.id) }
+                    {#each allmessage as chat (chat.id) }
                     <div class="flat-item">
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
@@ -342,7 +361,7 @@ const handleMerge = ((e) => {
                 <div class="send-input">
                     <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
                         <div class="input-control">
-                            <textarea bind:value={messages} placeholder="Your Message" style="height: 44px;"></textarea>
+                            <textarea bind:value={newMessages} placeholder="Your Message" style="height: 44px;"></textarea>
                             <button on:click={handleEmoji} class="sc-JkixQ cVsgdS emoji-r-wrap">
                                 {#if isEmoji}
                                 <div class="emoji-box-wrap">
