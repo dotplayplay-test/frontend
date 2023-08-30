@@ -64,7 +64,6 @@ $:{
 }
 
 const dispatch = createEventDispatcher()
-
 const handlecloseChat = (() => {
     dispatch("closeChat")
 })
@@ -74,8 +73,6 @@ $: {
     onMount(async()=>{
         const querySnapshot = await getDocs(collection(db, "chat"));
         querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
         chatMessage.push(doc.data())
         });
     })
@@ -90,9 +87,6 @@ const handleGIF = (() => {
     }
 })
 
-
-// $: console.log(profile && profile)
-let messages
 const handleSendMessage = (async(e, name) => {
     if (e.key === "Enter" && name.newMessages || e === "gifHit") {
         if (e.key === "Enter") {
@@ -121,7 +115,6 @@ const handleSendMessage = (async(e, name) => {
             gif: name.gif ? name.gif : "",
             level: 2
         }
-
         sendMessage(data)
         newMessages = ''
         isGif = false
