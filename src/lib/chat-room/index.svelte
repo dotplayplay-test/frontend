@@ -81,7 +81,6 @@ $: {
     })
 }
 
-$: console.log(allmessage)
 let isGif = false
 const handleGIF = (() => {
     if (isGif) {
@@ -124,11 +123,8 @@ const handleSendMessage = (async(e, name) => {
         }
 
         sendMessage(data)
-
-        // console.log(data)
-        // sendMessage(data)
         newMessages = ''
-        // isGif = false
+        isGif = false
     }
 })
 
@@ -144,7 +140,7 @@ const handleEmoji = (() => {
 
 
 const handleMerge = ((e) => {
-    messages += (e)
+    newMessages += (e)
 })
 </script>
 
@@ -496,6 +492,16 @@ const handleMerge = ((e) => {
 </div>
 
 <style>
+
+
+.eA-dYOl {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    background: rgb(30, 32, 36);
+}
+
+
 .cVsgdS .emoji-box-wrap {
     width: 280px;
     height: 200px;

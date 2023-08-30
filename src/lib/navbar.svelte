@@ -177,7 +177,7 @@ const handleMenu = (() => {
                             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                                 {#if userProfile}
-                                    <Navprofile profile={profile} />
+                                    <Navprofile {profile} />
                                 {/if}
                             </button>
                           

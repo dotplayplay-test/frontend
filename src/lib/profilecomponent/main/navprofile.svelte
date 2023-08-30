@@ -12,7 +12,7 @@
    <div class="sc-cjrPHo emGYim">
        <div class="user-info">
            <a class="left" href="/user/profile/505090">
-               <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1692653544081">
+               <img class="avatar " alt="" src={profile && profile.profile_image}>
                <div class="name-level">
                    <p>{profile && profile.username}</p>
                    <div class="level">
