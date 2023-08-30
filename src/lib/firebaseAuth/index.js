@@ -32,7 +32,7 @@ export const handleSignIn = (async (email, password)=>{
         register(res)
     })
     .catch((err)=>{
-     console.log(err.message)
+     alert(err.code)
     })
  })
 
@@ -41,13 +41,12 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
    await signInWithEmailAndPassword(auth, email, password)
    .then((res)=>{
+     login(res)
     goto("/")
    })
    .catch((err)=>{
-    const errorCode = err.code;
-    let errorMessage = err.message;
+    alert(err.code)
    })
-   console.log(errorMessage)
  })
 
  export const handleGoogleAuth = (()=>{
@@ -57,7 +56,7 @@ export const handleSignIn = (async (email, password)=>{
         login(res)
        })
        .catch((err)=>{
-        console.log(err)
+        alert(err.code)
     })
  })
 
@@ -70,7 +69,7 @@ export const handleSignIn = (async (email, password)=>{
         createProfile(res)
        })
        .catch((err)=>{
-        console.log(err)
+        alert(err.code)
     })
  })
 
