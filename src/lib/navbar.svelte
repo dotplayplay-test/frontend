@@ -50,7 +50,7 @@ let isLoading = true
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
 $:{
-    onMount(async()=>{
+    id &&  onMount(async()=>{
         const docRef = doc(db, "profile", id.email);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -78,13 +78,7 @@ $: {
 })
 }
 
-const handleAuth = (e) => {
-    if (e === 1) {
-        goto("/register")
-    } else {
-        goto("/login")
-    }
-}
+
 let userProfile = false
 const handleUserProfile = (()=>{
     if(userProfile){
@@ -93,7 +87,7 @@ const handleUserProfile = (()=>{
         userProfile = true
     }
 })
-const user = browser && JSON.parse(localStorage.getItem('user'))
+
 let activeCoin = {
     id:1, coin_symbol: "USDT", 
     coin_name: "Tether",
@@ -169,7 +163,7 @@ const handleMenu = (() => {
                         <div class="user-wrap">
                             {#if profile}
                             <a href="/user/profile/505090">
-                             <img class="avatar" alt="" src={profile.profile_image}>
+                             <img class="avatar" alt="" src={profile &&  profile.profile_image}>
                             </a>
                             {:else}
                                 <div class="center">
@@ -206,10 +200,10 @@ const handleMenu = (() => {
                 </div>
                 {:else}
                 <div class="login-in">
-                    <button  on:click={()=>handleAuth(2)} >
+                    <button  on:click={()=> goto("/login")} >
                         <p >Sign in</p>
                     </button>
-                    <button on:click={()=>handleAuth(1)} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                    <button on:click={()=> goto("/register")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                         <div class="button-inner">Sign up</div>
                     </button>
                     <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">

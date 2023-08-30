@@ -17,7 +17,7 @@ import { doc, getDoc } from "firebase/firestore";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
 $:{
-    onMount(async()=>{
+  id &&  onMount(async()=>{
         const docRef = doc(db, "profile", id.email);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {

@@ -52,7 +52,7 @@ var pusher = new Pusher('079fe293b89889569380', {
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
 $:{
-    onMount(async()=>{
+    id && onMount(async()=>{
         const docRef = doc(db, "profile", id.email);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -82,39 +82,6 @@ $: {
 }
 
 $: console.log(allmessage)
-
-
-
-// let chatMessage = [{
-//         id: 1,
-//         type: "normal",
-//         text: "Hello ma'am",
-//         time: "2:23pm",
-//         image: "https://img2.nanogames.io/avatar/78805/s",
-//         name: "valiant",
-//         level: 3
-//     },
-//     {
-//         id: 2,
-//         type: "normal",
-//         text: "Hel ma'am",
-//         time: "2:23pm",
-//         image: "https://img2.nanogames.io/avatar/78805/s",
-//         name: "valiant",
-//         level: 3
-//     },
-//     {
-//         id: 34,
-//         type: "gif",
-//         text: "",
-//         time: "2:23pm",
-//         image: "https://img2.nanogames.io/avatar/78805/s",
-//         name: "valiant",
-//         gif: "https://media2.giphy.com/media/jnQYWZ0T4mkhCmkzcn/100.gif",
-//         level: 3
-//     },
-// ]
-
 let isGif = false
 const handleGIF = (() => {
     if (isGif) {

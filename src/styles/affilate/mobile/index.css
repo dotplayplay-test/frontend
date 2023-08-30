@@ -403,9 +403,7 @@
     margin: 0.5rem;
     height: 20rem;
 }
-.cdwmLq .rewards .graph {
-    background-image: url(https://static.nanogames.io/assets/graph.line.c9ea1201.png);
-}
+
 .cdwmLq .item {
     background: rgb(30, 32, 36);
     flex: 1 1 0%;

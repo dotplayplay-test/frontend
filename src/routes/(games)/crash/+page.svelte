@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
     import Active from "./active.svelte";
 import Main from "./main.svelte";
 
@@ -95,4 +95,4 @@ import Main from "./main.svelte";
         display: flex;
         flex-wrap: wrap;
     }
-</style>
+</style> -->

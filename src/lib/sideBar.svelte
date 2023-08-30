@@ -1,4 +1,5 @@
 <script>
+export let routes
 import {
     goto
 } from "$app/navigation"
@@ -8,12 +9,6 @@ import IoMoon from "svelte-icons-pack/io/IoMoon";
 import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
 import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
-import {
-    browser
-} from '$app/environment'
-import {
-    onMount
-} from "svelte";
 import Original from "./original.svelte";
 import '../styles/sidebar/sidebar.css'
 import '../styles/sidebar/sidebarmobile.css'
@@ -28,201 +23,14 @@ const openOriginal = ((e) => {
     }
 })
 
-let home;
-let lottery;
-let original
-let affiliate;
-let vipclub
-let recent
-let probablyFair
-let favourite
-let promotion
-let bonus 
-
-onMount(() => {
-    if (browser && window.location.pathname === "/") {
-        home = true
-    } else if (browser && window.location.pathname === "/crash" || browser && window.location.pathname === "/plinko" || 
-    browser && window.location.pathname === "/tower" || browser && window.location.pathname === "/diamond" || 
-    browser && window.location.pathname === "/classic-dice" || browser && window.location.pathname === "/mines" || browser && window.location.pathname === "/hilo") {
-        original = true
-    } else if (browser && window.location.pathname === "/lottery") {
-        lottery = true
-    } else if (browser && window.location.pathname === "/affiliate") {
-        affiliate = true
-    } else if (browser && window.location.pathname === "/help/provably-fair" ||
-                browser && window.location.pathname === "/help/agreement" ||
-                browser && window.location.pathname === "/help/coinlimit" ||
-                browser && window.location.pathname === "/help/contactus" ||
-                browser && window.location.pathname === "/help/fee" ||
-                browser && window.location.pathname === "/help/googlecheck" ||
-                browser && window.location.pathname === "/help/faq" ||
-                browser && window.location.pathname === "/help/passcurrency" ||
-                browser && window.location.pathname === "/help/privacy" ||
-                browser && window.location.pathname === "/help/reglog" ||
-                browser && window.location.pathname === "/help/swappolicy" ||
-                browser && window.location.pathname === "/help/terms-service"
-                ) 
-     {
-        probablyFair = true
-    }
-    else if (browser && window.location.pathname === "/vip-games") {
-        vipclub = true
-    }
-    else if (browser && window.location.pathname === "/bonus") {
-        bonus= true
-    }
-    else if (browser && window.location.pathname === "/recent-play") {
-        recent = true
-    }
-    else if (browser && window.location.pathname === "/favourite") {
-        favourite = true
-    }
-    else if (browser && window.location.pathname === "/promotion") {
-        promotion = true
-    }
-})
-
-const handleNavigation = ((e) => {
-    if (e === "/") {
-        goto(e)
-        home = true
-        lottery = false
-        vipclub = false
-        affiliate = false
-        recent = false
-        favourite = false
-        original = false
-        probablyFair = false
-        bonus = false
-    }
-    else if (e === "/bonus") {
-        bonus = true
-        lottery = false
-        home = false
-        affiliate = false
-        vipclub = false
-        recent = false
-        favourite = false
-        original = false
-        probablyFair = false
-        promotion = false
-        goto(e)
-    } 
-     else if (e === "/lottery") {
-        lottery = true
-        home = false
-        affiliate = false
-        vipclub = false
-        recent = false
-        favourite = false
-        original = false
-        probablyFair = false
-        promotion = false
-        bonus = false
-        goto(e)
-    } else if (e === "/affiliate") {
-        lottery = false
-        home = false
-        vipclub = false
-        affiliate = true
-        recent = false
-        favourite = false
-        original = false
-        probablyFair = false
-        promotion = false
-        bonus = false
-        goto(e)
-    }
-    else if (e === "/vip-games") {
-        lottery = false
-        home = false
-        vipclub = true
-        affiliate = false
-        recent = false
-        favourite = false
-        original = false
-        probablyFair = false
-        promotion = false
-        bonus = false
-        goto(e)
-    }
-    else if (e === "/help/provably-fair") {
-        lottery = false
-        home = false
-        vipclub = false
-        affiliate = false
-        recent = false
-        favourite = false
-        original = false
-        bonus = false
-        goto(e)
-        promotion = false
-        probablyFair = true
-    }
-    else if (e === "/recent-play") {
-        lottery = false
-        bonus = false
-        recent = true
-        home = false
-        vipclub = false
-        affiliate = false
-        favourite = false
-        original = false
-        probablyFair = false
-        promotion = false
-        goto(e)
-    }
-    else if (e === "/favourite") {
-        lottery = false
-        recent = false
-        home = false
-        vipclub = false
-        bonus = false
-        affiliate = false
-        favourite = true
-        original = false
-        probablyFair = false
-        goto(e)
-        promotion = false
-    }
-    else if (e === "/promotion") {
-        lottery = false
-        recent = false
-        home = false
-        vipclub = false
-        bonus = false
-        affiliate = false
-        favourite = false
-        original = false
-        goto(e)
-        promotion = true
-    }
-    else {
-        lottery = false
-        recent = false
-        home = false
-        vipclub = false
-        affiliate = false
-        favourite = false
-        bonus = false
-        original = true
-        probablyFair = false
-        promotion = false
-    }
-})
-
-
 let isLight = false
-const handeTheme = ((e)=>{
-    if(e === `light`){
-        isLight = true  
-    }else{
+const handeTheme = ((e) => {
+    if (e === `light`) {
+        isLight = true
+    } else {
         isLight = false
     }
 })
-
-
 </script>
 
 <div id="main" class="sc-jHkVzv eTxQfM unfold">
@@ -230,12 +38,13 @@ const handeTheme = ((e)=>{
         <div class="sc-uojGG hksQGj">
             <a aria-current="page" class="is-active active" href="/">Casino</a>
         </div>
-        <button on:click={()=> handleNavigation("/")} class={`sc-iNGGcK knLCVT menu-item ${home ? "select" : ""}`}>
+        <button on:click={()=> goto("/")} class={`sc-iNGGcK knLCVT menu-item ${routes.route === "/" ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/home.e1cf89b4.png"><span>Home</span>
             </div>
         </button>
-        <button on:mouseenter={()=> openOriginal(1)} on:mouseleave={()=> openOriginal(0)} class={`sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item ${original ? "select" : ""}`}>
+        <button on:mouseenter={()=> openOriginal(1)} on:mouseleave={()=> openOriginal(0)} class={`sc-iNGGcK sc-eJwWfJ knLCVT beCBEn menu-item ${ routes.route === "/(games)/crash" ||  routes.route === "/(games)/mines" ||
+            routes.route === "/(games)/classic-dice" || routes.route === "/(games)/plinko"|| routes.route === "/(games)/tower" || routes.route === "/(games)/hilo" || routes.route === "/(games)/diamonds"  ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
                 <span>DP Originals</span>
@@ -244,10 +53,10 @@ const handeTheme = ((e)=>{
                 <path xmlns="http://www.w3.org/2000/svg" d="M9.29289 18.7071C8.90237 18.3166 8.90237 17.6834 9.29289 17.2929L14.5858 12L9.29289 6.70711C8.90237 6.31658 8.90237 5.68342 9.29289 5.29289C9.68342 4.90237 10.3166 4.90237 10.7071 5.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L10.7071 18.7071C10.3166 19.0976 9.68342 19.0976 9.29289 18.7071Z" fill="rgba(153,164,176,.8)"></path>
             </svg>
             {#if (showOriginals)}
-            <Original on:bc={handleNavigation} styls={styls} />
+            <Original styls={styls} />
             {/if}
         </button>
-        <button on:click={()=> handleNavigation("/bonus")} class={`sc-iNGGcK knLCVT menu-item  ${bonus ? "select" : ""} `}>
+        <button on:click={()=> goto("/bonus")}  class={`sc-iNGGcK knLCVT menu-item  ${routes.route === "/bonus" ? "select" : ""} `}>
             <div class="menu-pc">
                 <span style="padding: 10px">
                     <Icon src={AiFillGift}  size="25"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
@@ -255,30 +64,33 @@ const handeTheme = ((e)=>{
                 <span>Bonus</span>
             </div>
         </button>
-        <button on:click={()=> handleNavigation("/promotion")} class={`sc-iNGGcK knLCVT menu-item special-nav  ${promotion ? "select" : ""} `}>
+        <button on:click={()=> goto("/promotion")}  class={`sc-iNGGcK knLCVT menu-item special-nav  ${routes.route === "/promotion" ? "select" : ""} `}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/promotion.316446ec.png"><span>Promotions</span>
             </div>
         </button>
-        <button  on:click={()=> handleNavigation("/lottery")} class={`sc-iNGGcK knLCVT menu-item ${lottery ? "select" : ""} `}>
+        <button  on:click={()=> goto("/lottery")}  class={`sc-iNGGcK knLCVT menu-item ${ routes.route === "/lottery" ? "select" : ""} `}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/lottery.bc95b607.png">
                 <span>Lottery</span>
             </div>
         </button>
-        <button on:click={()=> handleNavigation("/affiliate")} class={`sc-iNGGcK knLCVT menu-item ${affiliate ? "select" : ""}`}>
+        <button on:click={()=> goto("/affiliate")} class={`sc-iNGGcK knLCVT menu-item ${ routes.route ==="/affiliate" ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/affiliate.6f434c33.png">
                 <span>Affiliate</span>
             </div>
         </button>
-        <button  on:click={()=> handleNavigation("/vip-games")} class={`sc-iNGGcK knLCVT menu-item special-nav vip ${vipclub ? "select" : ""}`} >
+        <button  on:click={()=> goto("/vip-games")} class={`sc-iNGGcK knLCVT menu-item special-nav vip ${  routes.route === "/vip-games" ? "select" : ""}`} >
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/vipclub.3b37e72c.png">
                 <span>VIP Club</span>
             </div>
         </button>
-        <button on:click={()=> handleNavigation("/help/provably-fair")} class={`sc-iNGGcK knLCVT menu-item ${probablyFair ? "select" : ""}`}>
+        <button on:click={()=> goto("/help/provably-fair")} class={`sc-iNGGcK knLCVT menu-item ${ routes.route === `/help/agreement` || routes.route === `/help/provably-fair` ||
+            routes.route === `/help/coinlimit` || routes.route === `/help/contactus` || routes.route === `/help/fee`  || routes.route === `/help/googlecheck`  || routes.route === `/help/faq`  || routes.route === `/help/passcurrency` ||
+            routes.route === `/help/privacy` || routes.route === `/help/reglog` || routes.route === `/help/swappolicy` || routes.route === `/help/terms-service`
+            ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/fairness.12d49bfb.png">
                 <span>Provably Fair</span>
@@ -286,13 +98,13 @@ const handeTheme = ((e)=>{
         </button>
         <div class="sc-eGPXGI kCbnNh"></div>
 
-        <button on:click={()=> handleNavigation("/favourite")}  class={`sc-iNGGcK knLCVT menu-item ${favourite ? "select" : ""}`}>
+        <button on:click={()=> goto("/favourite")}  class={`sc-iNGGcK knLCVT menu-item ${ routes.route === "/favourite" ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/myfavorite.466f0741.png">
                 <span>Favorite Games</span>
             </div>
         </button>
-        <button on:click={()=> handleNavigation("/recent-play")} class={`sc-iNGGcK knLCVT menu-item  ${recent ? "select" : ""}`}>
+        <button on:click={()=> goto("/recent-play")} class={`sc-iNGGcK knLCVT menu-item  ${routes.route === "/recent-play" ? "select" : ""}`}>
             <div class="menu-pc">
                 <img alt="menu-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAARVBMVEUAAACNI+aTK++NJOWNI+eMI+aNJOaNJOacLOqOJ+uOJeeNJOaNJOWNJOaOI+aNJeeOJOaPJOePJ+WNJOiSJO2NI+aMI+Uq+huBAAAAFnRSTlMA2Q/5aee/uQsmUfPFopB9XEA7OBzSytsOlAAAASJJREFUWMPtlsmuwjAMRZM6Ywc6APf/P/XBAtynQOV4AQtytpGOZMe5sWk0Go2Gjm6Zgh0GG6alM3r6QHhCoVdqthGg6NacUl5dJGDcNJ4T4F23q9J54FTfnAiak/lHmgmxq/RY+LMpOHvYOlPE9WJecLki1vXHs8feYJOv6dMG2tWFG7vqCPK7GzGbdyIzYxTPIXx6L0oe0skMcKYQMQ5BePVEXSEqzgUsiOZIZCIWkWiCOxY5TMIWrceiVdgki1yI8p1HZzKsSDQgFaI7z4oThk+KuLRSxKWpmm0f9Nxs1fUzfP2qgWR4IMVPRHlePtrjyoIiRhhFjHCwMZpg46hlVFHL4c8owl/xHWk/yE9/2folQr/W6Bet769+jUaj8dP8AetcFXVRAZgCAAAAAElFTkSuQmCC">
                 <span>Recent Play</span>
@@ -353,4 +165,3 @@ const handeTheme = ((e)=>{
         </div>
     </div>
 </div>
-

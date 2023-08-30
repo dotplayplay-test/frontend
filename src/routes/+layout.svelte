@@ -1,4 +1,8 @@
 <script>
+
+ /** @type {import('./$types').PageLoad} */
+ export let data;
+
 import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
@@ -15,6 +19,8 @@ let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
 let page_load = true
+
+
 
 onMount(()=>{
     const auth = getAuth(app);
@@ -83,7 +89,7 @@ const handleMenu = () => {
 
     {#if (isOpenSide) }
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
-        <SideBar styls={isOpenSide} />
+        <SideBar routes={data} styls={isOpenSide} />
     </div>
     {:else}
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
