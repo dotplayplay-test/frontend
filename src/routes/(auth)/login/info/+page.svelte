@@ -7,7 +7,6 @@ import {
 } from '$app/environment'
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import { handleProfileUpdate } from "$lib/firebaseAuth/index"
 import { updateUser } from "$lib/hook/updateUser"
 const {useUpdate} = updateUser()
 import {
@@ -95,14 +94,15 @@ const handleImgeSelect = ((e)=>{
         profile_img = "https://img2.nanogames.io/avatar/head6.png"
     }
 })
-const id = browser && JSON.parse(localStorage.getItem('profileID'))
+
+
+const id = browser && JSON.parse(localStorage.getItem('user'))
 const handleSubmit = (() => {
     if (!username) {
         console.log("username can't be empty")
     } else {
-        let data = {username, profile_image:profile_img, user_id : id }
+        let data = {username, profile_image:profile_img, user_id : id.email }
         useUpdate(data)
-        handleProfileUpdate(data)
     }
 })
 </script>

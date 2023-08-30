@@ -5,6 +5,8 @@ import {  goto } from "$app/navigation"
 import { useLogin } from "../hook/useLogin";
 import { useProfile } from "../hook/useProfile";
 import { getFirestore } from "firebase/firestore";
+import { useRegister } from "./createUser";
+const { register } = useRegister()
 
 const { createProfile } = useProfile()
 const { login } = useLogin()
@@ -27,12 +29,10 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
     await createUserWithEmailAndPassword(auth, email, password)
     .then((res)=>{
-        createProfile(res)
-        goto("/login/info")
-        login(res)
-       })
-       .catch((err)=>{
-        console.log(err)
+        register(res)
+    })
+    .catch((err)=>{
+     console.log(err.message)
     })
  })
 
@@ -41,12 +41,11 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
    await signInWithEmailAndPassword(auth, email, password)
    .then((res)=>{
-    login(res)
     goto("/")
    })
    .catch((err)=>{
     const errorCode = err.code;
-     errorMessage = err.message;
+    let errorMessage = err.message;
    })
    console.log(errorMessage)
  })

@@ -1,6 +1,3 @@
-import {
-    goto
-} from "$app/navigation"
 
 export const updateUser = () => {
     let error;

@@ -1,7 +1,7 @@
 <script>
 import { browser } from '$app/environment'
-import { updateUser } from "$lib/hook/updateUser"
-const {useUpdate} = updateUser()
+import { updateProfile } from "$lib/hook/updateProfile"
+const {useUpdateProfile} = updateProfile()
   let last_name = ''
   let first_name = ''
   let day = 1
@@ -15,7 +15,7 @@ const handleSubmit = (()=>{
     }else{
         let date = day+"-"+month+"-"+year
         let data = { firstname:first_name, lastname:last_name , dob:date , email : id.email}
-        useUpdate(data)
+        useUpdateProfile(data)
     }
 })
 

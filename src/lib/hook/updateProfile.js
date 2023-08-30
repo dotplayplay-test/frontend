@@ -1,11 +1,9 @@
-import {
-    goto
-} from "$app/navigation"
 
-export const updateUser = () => {
+
+export const updateProfile = () => {
     let error;
     let isLoading;
-    const useUpdate = async (data) => {
+    const useUpdateProfile = async (data) => {
     const user = JSON.parse(localStorage.getItem('user'))
       isLoading = true
       error = null
@@ -26,8 +24,8 @@ export const updateUser = () => {
           console.log(error)
       }
       if(response.ok){
-       goto("/")
+        window.location.href = '/'
       }
     };
-    return { useUpdate, isLoading, error };
+    return { useUpdateProfile, isLoading, error };
   };
