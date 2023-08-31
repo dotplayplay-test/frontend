@@ -1,0 +1,300 @@
+.kBjSXI {
+    position: fixed;
+    z-index: 1000;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    filter: none !important;
+}
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+.dialog-head.has-close {
+    margin-right: 3.75rem;
+}
+.dialog-head {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 3.75rem;
+    margin-left: 1.125rem;
+    transition: all 0.5s ease 0s;
+}
+.dialog-head .dialog-title {
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: bold;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(245, 246, 247);
+}
+.fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+.no-style {
+    padding-top: 3.75rem;
+    background-color: rgb(23, 24, 27);
+}
+.dialog-body {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    overflow: hidden;
+}
+.dialog-body > div {
+    flex: 1 1 0%;
+}
+.lgnNLC {
+    padding: 0.875rem;
+    background: rgb(23, 24, 27);
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+.lgnNLC .head {
+    margin-bottom: 0.75rem;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.lgnNLC .fc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.lgnNLC .head .title {
+    font-size: 1rem;
+    color: rgb(245, 246, 247);
+    font-weight: 600;
+}
+.lgnNLC .head .select {
+    flex: 1 1 0%;
+    margin: 0px 1rem;
+    height: 2.25rem;
+}
+.gOHquD {
+    position: relative;
+    height: 2.5rem;
+    opacity: 1;
+}
+.lgnNLC .head .select-trigger {
+    text-transform: capitalize;
+    background-color: rgba(49, 52, 60, 0.25);
+}
+
+.gOHquD .select-trigger {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    padding: 0px 1.25rem;
+    user-select: none;
+    border-radius: 1.25rem;
+    background-color: rgb(23, 24, 27);
+}
+.gOHquD .select-trigger .arrow {
+    width: 2.5rem;
+    height: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lgnNLC .user-info .avatar {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    border-radius: 50%;
+    margin-right: 0.375rem;
+}
+.lgnNLC .user-info .flex-column {
+    align-items: flex-start;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.lgnNLC .user-info .user-name {
+    color: rgb(245, 246, 247);
+    max-width: 6.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
+.lgnNLC .user-info .level-box {
+    width: 3.75rem;
+}
+.fPtvsS {
+    text-align: left;
+    white-space: nowrap;
+    font-size: 0px;
+}
+.fPtvsS .img-star {
+    width: auto;
+    height: 1.0625rem;
+    margin-right: 2px;
+    object-fit: cover;
+}
+.bRYT {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    padding: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+.gvTPwc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.gvTPwc .item {
+    width: 32.5%;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgba(24, 25, 29, 0.6);
+    border-radius: 0.625rem;
+    min-height: 5.3125rem;
+}
+.gvTPwc .item-type {
+    font-size: 0.75rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.bRYT .darken {
+    color: rgba(153, 164, 176, 0.6);
+    background: none;
+}
+.gvTPwc .item {
+    width: 32.5%;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgba(24, 25, 29, 0.6);
+    border-radius: 0.625rem;
+    min-height: 5.3125rem;
+}
+.gvTPwc .item-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+    margin-top: 0.25rem;
+    max-width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.gvTPwc .icon {
+    margin-right: 0.25rem;
+}
+.lgnNLC .statistics__list {
+    padding: 1rem 1.25rem;
+}
+.bRYT {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    padding: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+.lgnNLC .thead {
+    font-size: 0.75rem;
+    margin: 0.75rem 0px;
+}
+.lgnNLC .thead, .lgnNLC .tr {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.bRYT .darken {
+    color: rgba(153, 164, 176, 0.6);
+    background: none;
+}
+.lgnNLC .td, .lgnNLC .th {
+    flex: 2 1 0%;
+    text-align: center;
+}
+.lgnNLC .td:nth-child(1), .lgnNLC .th:nth-child(1) {
+    text-align: left;
+    flex: 4 1 0%;
+}
+.lgnNLC .td:nth-child(4), .lgnNLC .th:nth-child(4) {
+    flex: 4 1 0%;
+    text-align: right;
+}
+.cuPxwd {
+    padding: 2.5rem 0px;
+    color: rgba(153, 164, 176, 0.6);
+    line-height: 1;
+    text-align: center;
+    height: 100%;
+    min-height: 16.25rem;
+    position: relative;
+}
+.cuPxwd img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -6.875rem 0px 0px -6.25rem;
+    width: 12.5rem;
+    height: 12.5rem;
+}
+.cuPxwd .msg {
+    position: absolute;
+    z-index: 1;
+    line-height: 1.25rem;
+    left: 50%;
+    width: 17.5rem;
+    top: 50%;
+    margin-top: 3.75rem;
+    margin-left: -8.75rem;
+}

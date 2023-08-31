@@ -1,5 +1,10 @@
 <script>
+     /** @type {import('./$types').PageLoad} */
+     export let data;
+
+   $: data.route
   import "../../styles/settings/index.css"
+  
 </script>
 
 <div class="sc-cAhXWc cMCBIc setting-wrap">
@@ -19,13 +24,13 @@
    <div class="sc-GEbAx hJFGXE pc">
       <div class="content-area">
          <div class="menue">
-            <a class="select" href="/setting/general">
+            <a class={ data.route === "/setting/general" ? "select": ""} href="/setting/general">
                General
             </a>
-            <a class="" href="/setting/privacy">Privacy</a>
-            <a class="" href="/setting/security">Security</a>
-            <a class="" href="/setting/session">Active Sessions</a>
-            <a class="" href="/setting/verify">Verify</a>
+            <a class={ data.route === "/setting/privacy" ? "select": ""} href="/setting/privacy">Privacy</a>
+            <a class={ data.route === "/setting/security" ? "select": ""} href="/setting/security">Security</a>
+            <a class={ data.route === "/setting/session" ? "select": ""} href="/setting/session">Active Sessions</a>
+            <a class={ data.route === "/setting/verify" ? "select": ""} href="/setting/verify">Verify</a>
          </div>
          <div class="right-info">
             <div style="transform: translate3d(0px, 0px, 0px); opacity: 1;">

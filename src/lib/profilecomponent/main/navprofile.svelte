@@ -4,7 +4,14 @@
   const handleSignOut = (()=>{
     handleLogout()
   })
+
+  import { statisticsEl } from "../../store/statistic"
+
   export let profile
+
+  const handleStatistics = (()=>{
+    statisticsEl.set(true)
+  })
 
 </script>
 
@@ -39,7 +46,8 @@
        </div>
        <div class="vip-info notranslate">
            <div class="num">
-               <p>vip 0</p><p><span>Need 1 xp</span>vip 1</p>
+               <p>vip 0</p>
+               <p><span>Need 1 xp</span>vip 1</p>
            </div>
            <div class="vip-bg">
                <div class="bg">
@@ -49,14 +57,14 @@
            </div>
        </div>
        <div class="link-info">
-           <div class="link-item">
+           <button on:click={()=> goto("/user/profile/23687")} class="link-item">
                <div class="hover">
                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                        <use xlink:href="#icon_UserProfile"></use>
                    </svg>
                    User Information
                </div>
-           </div>
+           </button>
                <button on:click={()=> goto("/wallet/deposit")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -65,14 +73,14 @@
                        Wallet
                    </div>
                </button>
-               <div class="link-item">
+               <button on:click={()=> handleStatistics()} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Statistics"></use>
                        </svg>
                        Statistics
                    </div>
-               </div>
+               </button>
                <button on:click={()=> goto("/wallet/swap")}  class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -113,14 +121,14 @@
                        Reward
                    </div>
                </div>
-               <div class="link-item">
+               <button on:click={()=> goto("/affiliate")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Affiliate"></use>
                        </svg>
                        Affiliate
                    </div>
-               </div>
+               </button>
                <button on:click={()=> goto("/vip-games")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -129,7 +137,6 @@
                        VIP Club
                    </div>
                </button>
-
            </div>
            <button on:click={handleSignOut} class="logout">
                <span>

@@ -2,7 +2,7 @@
 
  /** @type {import('./$types').PageLoad} */
  export let data;
-
+import Statistics from "../lib/statistics/main/index.svelte";
 import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
@@ -14,6 +14,10 @@ import {app} from "$lib/firebaseAuth/index"
 import { browser } from '$app/environment'
 import { onMount } from "svelte";
 import Closesidebar from "$lib/closesidebar.svelte";
+import { statisticsEl } from "../lib/store/statistic"
+
+
+
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
@@ -81,10 +85,18 @@ const handleMenu = () => {
         isMenu = true
     }
 }
+
+const handleStatistics = (()=>{
+    statisticsEl.set(false)
+})
+
 </script>
 
 <div class="app">
 
+    {#if $statisticsEl}
+        <Statistics on:discloseStatistics={handleStatistics} />
+    {/if}
 
 
     {#if (isOpenSide) }
@@ -93,7 +105,7 @@ const handleMenu = () => {
     </div>
     {:else}
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
-        <Closesidebar styls={isOpenSide} />
+        <Closesidebar routes={data} styls={isOpenSide} />
     </div>
     {/if}
     <div id="main">
