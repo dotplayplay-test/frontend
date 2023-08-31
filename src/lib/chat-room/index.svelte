@@ -14,7 +14,8 @@ import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
 import { usePublicMessages } from "./componets/index"
-
+import { afterUpdate, tick } from 'svelte';
+import axios from "axios"
 const { sendMessage } = usePublicMessages()
 import {
     GIFs
@@ -33,23 +34,14 @@ import {
 import {
     db
 } from "$lib/firebaseAuth/index"
-import { doc,getDoc, collection, getDocs } from "firebase/firestore";
+import { doc,getDoc } from "firebase/firestore";
 import Pusher from "pusher-js"
- let allmessage =[]
+ let element;
 let newMessages = ''
 
-var pusher = new Pusher('079fe293b89889569380', {
-    cluster: 'ap1'
-});
-
-    onMount(()=>{
-        var channel = pusher.subscribe('chat-room');
-            channel.bind('public-messages', function(data) {
-           allmessage = [...allmessage, data]
-        });
-    })
 
 const id = browser && JSON.parse(localStorage.getItem('user'))
+
 let profile
 $:{
     id && onMount(async()=>{
@@ -63,29 +55,32 @@ $:{
     })
 }
 
-const dispatch = createEventDispatcher()
-const handlecloseChat = (() => {
-    dispatch("closeChat")
-})
+var pusher = new Pusher('079fe293b89889569380', {
+    cluster: 'ap1'
+});
 
-let chatMessage = []
-$: {
-    onMount(async()=>{
-        const querySnapshot = await getDocs(collection(db, "chat"));
-        querySnapshot.forEach((doc) => {
-        chatMessage.push(doc.data())
-        });
+let chats = [];
+
+onMount(async()=>{
+    await axios.get("http://localhost:8000/api/users/previus-chats")
+    .then((res)=>{
+        // console.log(res.data)
+        chats = res.data
     })
-}
-
-let isGif = false
-const handleGIF = (() => {
-    if (isGif) {
-        isGif = false
-    } else {
-        isGif = true
-    }
 })
+
+$: console.log(chats)
+
+
+
+onMount(()=>{
+    var channel = pusher.subscribe('chat-room');
+        channel.bind('public-messages', function(data) {
+        chats = [...chats, data]
+    });
+})
+
+
 
 const handleSendMessage = (async(e, name) => {
     if (e.key === "Enter" && name.newMessages || e === "gifHit") {
@@ -95,29 +90,58 @@ const handleSendMessage = (async(e, name) => {
         let date = new Date();
         let hours = date.getHours();
         let minutes = date.getMinutes();
-        // Check whether AM or PM
         let newformat = hours >= 12 ? 'PM' : 'AM';
-        // Find current hour in AM-PM Format
         hours = hours % 12;
-        // To display "0" as "12"
         hours = hours ? hours : 12;
         minutes = minutes < 10 ? '0' + minutes : minutes;
 
         let time = (hours + ':' + minutes + ' ' + newformat);
-        let data = {
-            id: Math.random()* 2000000,
+
+    let data = {
+            id: Math.floor(Math.random()*230000000),
             email: id.email,
             type: name.type,
             text: name.newMessages ? name.newMessages : "",
-            time: time,
-            image: profile && profile.profile_image,
-            name: profile && profile.username,
+            sent_at: time,
+            profle_img: profile && profile.profile_image,
+            sender_username: profile && profile.username,
             gif: name.gif ? name.gif : "",
-            level: 2
+            vip_level: 0
         }
         sendMessage(data)
         newMessages = ''
         isGif = false
+    }
+})
+
+const scrollToBottom = async (node) => {
+    console.log(node)
+    // node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+}; 
+// Either afterUpdate()
+afterUpdate(() => {
+    console.log("afterUpdate");
+    if(chats) scrollToBottom(element);
+});
+
+$: if(chats && element) {
+    console.log("tick");
+    scrollToBottom(element);
+}
+
+
+const dispatch = createEventDispatcher()
+const handlecloseChat = (() => {
+    dispatch("closeChat")
+})
+
+// 
+let isGif = false
+const handleGIF = (() => {
+    if (isGif) {
+        isGif = false
+    } else {
+        isGif = true
     }
 })
 
@@ -137,8 +161,7 @@ const handleMerge = ((e) => {
 })
 </script>
 
-<svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal",})} />
-
+<svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal"})} />
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
         <div class="sc-hJZKUC dWgZek">
@@ -166,17 +189,17 @@ const handleMerge = ((e) => {
 
         </div>
         <div class="sc-bSqaIl eA-dYOl">
-            <div class="sc-dkPtRN jScFby scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
+            <div  class="sc-dkPtRN bind:this={element}  gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
                 <div class="sc-AjmGg kgsidd">
-                    {#each allmessage as chat (chat.id) }
+                    {#each chats as chat (chat.id) }
                     <div class="flat-item">
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
                                 <a class="head-link" href="/user/profile/78805">
-                                    <img class="avatar " alt="" src={chat.image}>
+                                    <img class="avatar " alt="" src={chat.profle_img}>
                                     <div class="sc-jQrDum jouJMO user-level type-1">
                                         <div class="level-wrap">
-                                            <span>V</span><span>{chat.level}</span>
+                                            <span>V</span><span>{chat.vip_level}</span>
                                         </div>
                                     </div>
                                     <div class="sc-khQegj fPtvsS level levelnums_2">
@@ -192,9 +215,9 @@ const handleMerge = ((e) => {
                                 <div class="title">
                                     <div class="name">
                                         <a href="/user/profile/78805">
-                                            <span>{chat.name}</span>
+                                            <span>{chat.sender_username}</span>
                                         </a>
-                                        <div class="time">{chat.time}</div>
+                                        <div class="time">{chat.sent_at}</div>
                                     </div>
                                 </div>
                                 {#if (chat.type === "normal")}
@@ -517,10 +540,11 @@ const handleMerge = ((e) => {
     position: relative;
 }
 
-.jScFby {
+.gtrd {
     box-sizing: border-box;
-    height: 100%;
+    height: 160px;
     overflow-y: auto;
+    /* background: red; */
     touch-action: pan-y;
     overscroll-behavior: contain;
 }
@@ -1493,5 +1517,11 @@ textarea {
     .VfNib .head .head-link .level {
         margin-top: 0.625rem;
     }
+}
+
+
+
+.fuYrTE {
+    flex: 1 1 auto;
 }
 </style>

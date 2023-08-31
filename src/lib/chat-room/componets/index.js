@@ -4,7 +4,6 @@ export const usePublicMessages = () => {
     const sendMessage = async (data) => {
       isLoading = true
       error = null
-
       const user = JSON.parse(localStorage.getItem('user'))
       const response = await fetch("http://localhost:8000/api/public-chat",{
           method: "POST",
@@ -23,7 +22,6 @@ export const usePublicMessages = () => {
       }
       if (response.ok) {
         // Save user to localStorage
-        console.log(json)
         // Update the auth store
         isLoading = false
       }
