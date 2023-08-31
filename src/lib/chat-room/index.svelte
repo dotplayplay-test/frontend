@@ -64,14 +64,9 @@ let chats = [];
 onMount(async()=>{
     await axios.get("http://localhost:8000/api/users/previus-chats")
     .then((res)=>{
-        // console.log(res.data)
         chats = res.data
     })
 })
-
-$: console.log(chats)
-
-
 
 onMount(()=>{
     var channel = pusher.subscribe('chat-room');
@@ -79,8 +74,6 @@ onMount(()=>{
         chats = [...chats, data]
     });
 })
-
-
 
 const handleSendMessage = (async(e, name) => {
     if (e.key === "Enter" && name.newMessages || e === "gifHit") {
@@ -115,17 +108,14 @@ const handleSendMessage = (async(e, name) => {
 })
 
 const scrollToBottom = async (node) => {
-    console.log(node)
-    // node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+    node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
 }; 
-// Either afterUpdate()
 afterUpdate(() => {
     console.log("afterUpdate");
     if(chats) scrollToBottom(element);
 });
 
 $: if(chats && element) {
-    console.log("tick");
     scrollToBottom(element);
 }
 
@@ -154,8 +144,6 @@ const handleEmoji = (() => {
         isEmoji = true
     }
 })
-
-
 const handleMerge = ((e) => {
     newMessages += (e)
 })
@@ -189,7 +177,7 @@ const handleMerge = ((e) => {
 
         </div>
         <div class="sc-bSqaIl eA-dYOl">
-            <div  class="sc-dkPtRN bind:this={element}  gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
+            <div bind:this={element} class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
                 <div class="sc-AjmGg kgsidd">
                     {#each chats as chat (chat.id) }
                     <div class="flat-item">
