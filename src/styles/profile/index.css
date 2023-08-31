@@ -1,0 +1,98 @@
+.kBjSXI {
+    position: fixed;
+    z-index: 1000;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    filter: none !important;
+}
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+    transition: all 0.5s ease;
+}
+.dialog-head {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 3.75rem;
+    margin-left: 1.125rem;
+    transition: all 0.5s ease 0s;
+}
+.dialog-head.has-close {
+    margin-right: 3.75rem;
+}
+.dialog-head .dialog-title {
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: bold;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(245, 246, 247);
+}
+.cGdWiX {
+    align-self: flex-start;
+}
+.cGdWiX .vip-box {
+    width: 3.8125rem;
+    height: 4.875rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding-top: 1.75rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+.fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+.dialog-body {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    overflow: hidden;
+}
+.no-style {
+    padding-top: 3.75rem;
+    background-color: rgb(23, 24, 27);
+}
+.gTGvhG.user__profile {
+    padding: 0.875rem;
+    background: rgb(23, 24, 27);
+}
+.dialog-body > div {
+    flex: 1 1 0%;
+}
+.jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}

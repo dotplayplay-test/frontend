@@ -111,7 +111,6 @@ const scrollToBottom = async (node) => {
     node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
 }; 
 afterUpdate(() => {
-    console.log("afterUpdate");
     if(chats) scrollToBottom(element);
 });
 
