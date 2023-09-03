@@ -93,7 +93,6 @@ const handleSelectCoin = ((e) => {
     handleSender()
 })
 
-
 let senderValue = 0
 let receiverVAlue = 0
 let swappingfee = 0.00001

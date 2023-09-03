@@ -3,7 +3,9 @@ import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
 import "./styles/index.css"
 import "./styles/coinrain.css"
 import "./styles/gif.css"
-import { goto } from "$app/navigation"
+import {
+    goto
+} from "$app/navigation"
 
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
 import HiSolidEmojiHappy from "svelte-icons-pack/hi/HiSolidEmojiHappy";
@@ -75,9 +77,9 @@ let chats = [];
 
 onMount(async () => {
     await axios.get("http://localhost:8000/api/users/previus-chats")
-    .then((res) => {
-        chats = res.data
-    })
+        .then((res) => {
+            chats = res.data
+        })
 })
 
 onMount(() => {
@@ -93,34 +95,34 @@ const handleSendMessage = (async (e, name) => {
             e.preventDefault();
         }
 
-    if(newMessages === "/rain "){
-        goto("/user/rain")
-    }else if(newMessages === "/coindrop "){
-        goto("/user/coindrop_send")
-    }else{
-        let date = new Date();
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let newformat = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
+        if (newMessages === "/rain ") {
+            goto("/user/rain")
+        } else if (newMessages === "/coindrop ") {
+            goto("/user/coindrop_send")
+        } else {
+            let date = new Date();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let newformat = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
 
-        let time = (hours + ':' + minutes + ' ' + newformat);
+            let time = (hours + ':' + minutes + ' ' + newformat);
 
-        let data = {
-            id: Math.floor(Math.random() * 230000000),
-            email: id.email,
-            type: name.type,
-            text: name.newMessages ? name.newMessages : "",
-            sent_at: time,
-            profle_img: profile && profile.profile_image,
-            sender_username: profile && profile.username,
-            gif: name.gif ? name.gif : "",
-            vip_level: 0
+            let data = {
+                id: Math.floor(Math.random() * 230000000),
+                email: id.email,
+                type: name.type,
+                text: name.newMessages ? name.newMessages : "",
+                sent_at: time,
+                profle_img: profile && profile.profile_image,
+                sender_username: profile && profile.username,
+                gif: name.gif ? name.gif : "",
+                vip_level: 0
+            }
+            sendMessage(data)
         }
-        sendMessage(data)
-    }
         newMessages = ''
         isGif = false
     }
@@ -169,42 +171,62 @@ const handleMerge = ((e) => {
 })
 
 let isTipsControl = false
-let tipsControl = [
-    {id:0, img: "https://static.nanogames.io/assets/user.22808cc8.svg", Itemfunction: "/User", text: "@User view user", isSelected: true },
-    {id:1, img: "https://static.nanogames.io/assets/tip.35667d2b.svg", Itemfunction: "/Tip", text: "@User tip user", isSelected: false },
-    {id:2, img: "https://static.nanogames.io/assets/rain.91c937f7.svg", Itemfunction: "/Rain", text: "Make it rain", isSelected: false },
-    {id:3, img: "https://static.nanogames.io/assets/coindrop.8fcb1038.svg", Itemfunction: "/Coindrop", text: "Tip group", isSelected: false  },
+let tipsControl = [{
+        id: 0,
+        img: "https://static.nanogames.io/assets/user.22808cc8.svg",
+        Itemfunction: "/User",
+        text: "@User view user",
+        isSelected: true
+    },
+    {
+        id: 1,
+        img: "https://static.nanogames.io/assets/tip.35667d2b.svg",
+        Itemfunction: "/Tip",
+        text: "@User tip user",
+        isSelected: false
+    },
+    {
+        id: 2,
+        img: "https://static.nanogames.io/assets/rain.91c937f7.svg",
+        Itemfunction: "/Rain",
+        text: "Make it rain",
+        isSelected: false
+    },
+    {
+        id: 3,
+        img: "https://static.nanogames.io/assets/coindrop.8fcb1038.svg",
+        Itemfunction: "/Coindrop",
+        text: "Tip group",
+        isSelected: false
+    },
 ]
 
-
-
-$: if(newMessages === "/"){
+$: if (newMessages === "/") {
     isTipsControl = true
-}else{
+} else {
     isTipsControl = false
 }
 
-const handleTipsControls = ((e)=>{
-    for(let i = 0; i < tipsControl.length; i++){
+const handleTipsControls = ((e) => {
+    for (let i = 0; i < tipsControl.length; i++) {
         tipsControl[i].isSelected = false
     }
     tipsControl[e].isSelected = true
-    if(e === 0){
+    if (e === 0) {
         newMessages = "/user @"
     }
-    if(e === 1){
+    if (e === 1) {
         newMessages = "/tip @"
     }
-    if(e === 2){
+    if (e === 2) {
         newMessages = "/rain "
     }
-    if(e === 3){
+    if (e === 3) {
         newMessages = "/coindrop "
     }
 })
-
 </script>
- 
+
 <svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal"})} />
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -371,38 +393,36 @@ const handleTipsControls = ((e)=>{
                                         </div>
                                     </div>
                                 </div>
+                                <!-- ======================= coin rain -->
+                                {:else if (chat.type === "coin_rain")}
+                                <div class="msg-wrap">
+                                    <div class="sc-PZsNp cciZxO">
+                                        <div class="sc-dGXBhE cfLlrJ">
+                                            <img alt="coindrop-more" src="https://static.nanogames.io/assets/parachute-fall.193a2437.png" class="right-open-img">
+                                            <div class="coindrop-status">Completed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {:else if (chat.type === "tips")}
+                                <!-- ===============================  coin tips ================================= -->
+
+                                <div class="msg-wrap">
+                                    <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
+                                        I tipped&nbsp;&nbsp;
+                                        <a class="cl-primary" href="/user/profile/336277">
+                                            @vvvvx
+                                        </a>
+                                        <div class="msg-cont">
+                                            <img class="coin-icon" alt="" src="/coin/USDT.black.png">
+                                            1 USDT
+                                        </div>
+                                    </div>
+                                </div>
                                 {/if}
                             </div>
                         </div>
                     </div>
                     {/each}
-
-                    <!-- ========================================================== coin drop ================================== -->
-
-                    <div class="msg-wrap">
-                        <div class="sc-PZsNp cciZxO">
-                            <div class="sc-dGXBhE cfLlrJ">
-                                <img alt="coindrop-more" src="https://static.nanogames.io/assets/parachute-fall.193a2437.png" class="right-open-img">
-                                <div class="coindrop-status">Completed</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ===============================  coin tips ================================= -->
-
-                    <div class="msg-wrap">
-                        <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
-                            I tipped&nbsp;&nbsp;
-                            <a class="cl-primary" href="/user/profile/336277">
-                                @vvvvx
-                            </a>
-                            <div class="msg-cont">
-                                <img class="coin-icon" alt="" src="/coin/USDT.black.png">
-                                1 USDT
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -463,19 +483,19 @@ const handleTipsControls = ((e)=>{
 
                 <!-- ===================================== tips pops ========================================= -->
                 {#if isTipsControl}
-                    <div class="sc-cHzqoD dWoTka">
-                        {#each tipsControl as tips (tips.id) }
-                            <button on:click={()=>handleTipsControls(tips.id)} class={`item ${tips.isSelected ? "is-selected" : "" }`} >
-                                <div class="sc-hZpJaK guGGGt chat-command-label">
-                                    <img src={tips.img} alt="" class="label-img">
-                                    <span class="label-txt">{tips.Itemfunction}</span>
-                                    <span class="label-desc">{tips.text}</span>
-                                </div>
-                            </button>
-                        {/each}
-                    </div>
+                <div class="sc-cHzqoD dWoTka">
+                    {#each tipsControl as tips (tips.id) }
+                    <button on:click={()=>handleTipsControls(tips.id)} class={`item ${tips.isSelected ? "is-selected" : "" }`} >
+                        <div class="sc-hZpJaK guGGGt chat-command-label">
+                            <img src={tips.img} alt="" class="label-img">
+                            <span class="label-txt">{tips.Itemfunction}</span>
+                            <span class="label-desc">{tips.text}</span>
+                        </div>
+                    </button>
+                    {/each}
+                </div>
                 {/if}
-               
+
             </div>
         </div>
 
