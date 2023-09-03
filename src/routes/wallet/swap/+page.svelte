@@ -2,6 +2,8 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+import { UseTransaction } from "$lib/hook/useTransaction"
+const { Swap } = UseTransaction()
 import {
     ppdWallet,
     ppeWallet,
@@ -19,6 +21,7 @@ import {
 storeSender.set($default_Wallet)
 storeReceiver.set($ppeWallet)
 
+$:{
 if ($storeSender.coin_name === "USDT") {
     storeReceiver.set($ppeWallet)
 } else if ($storeSender.coin_name === "PPL") {
@@ -28,6 +31,7 @@ if ($storeSender.coin_name === "USDT") {
 } else if ($storeSender.coin_name === "PPD") {
     storeReceiver.set($usdt_Wallet)
 }
+} 
 
 let coins = [{
         id: 1,
@@ -88,6 +92,57 @@ const handleSelectCoin = ((e) => {
     }
     handleSender()
 })
+
+
+let senderValue = 0
+let receiverVAlue = 0
+let swappingfee = 0.00001
+let SwapLogic
+
+$:{ if(senderValue && $storeSender.coin_name === "PPD" && $storeReceiver.coin_name === "USDT" && senderValue < $storeSender.balance){
+    SwapLogic = 1
+    receiverVAlue = (senderValue * SwapLogic - swappingfee).toFixed(4)
+}else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_name === "PPE"  && senderValue < $storeSender.balance){
+    SwapLogic = 1
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
+}
+else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_name === "PPD"  && senderValue < $storeSender.balance){
+    SwapLogic = 1
+    receiverVAlue = (senderValue * 1 - swappingfee).toFixed(4)
+}
+else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_name === "PPL"  && senderValue < $storeSender.balance){
+    SwapLogic = 10
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee.toFixed(4))
+}
+else if(senderValue && $storeSender.coin_name === "PPD" && $storeReceiver.coin_name === "PPL"  && senderValue < $storeSender.balance){
+    SwapLogic = 10
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
+}
+else if(senderValue && $storeSender.coin_name === "PPE" && $storeReceiver.coin_name === "USDT"  && senderValue < $storeSender.balance){
+    SwapLogic = 1
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
+}
+else if(senderValue && $storeSender.coin_name === "PPL" && $storeReceiver.coin_name === "USDT"  && senderValue < $storeSender.balance){
+    SwapLogic = 0.1
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
+}
+else if(senderValue && $storeSender.coin_name === "PPL" && $storeReceiver.coin_name === "PPD"  && senderValue < $storeSender.balance){
+    SwapLogic = 0.1
+    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
+}
+}
+
+const handleSubmit = (()=>{
+    let data = {sentAmount: senderValue, receivedAmount: receiverVAlue, 
+        senderCoin: $storeSender.coin_name, receivedCoin: $storeReceiver.coin_name}
+        if(senderValue < 10){
+            alert("OOPS!!! your input is below the minimum swapping amount")
+        }else{
+            Swap(data)
+        }
+})
+
+
 </script>
 
 <div id="swap" class="sc-kQoPux iSaUST">
@@ -103,8 +158,8 @@ const handleSelectCoin = ((e) => {
                     </div>
                 </div>
                 <div class="input-control">
-                    <input type="text" value="0">
-                    <button>Max</button>
+                    <input type="number" bind:value={senderValue} placeholder="0">
+                    <button on:click={()=> senderValue = $storeSender.balance } >Max</button>
                     <button on:click={()=>handleSender(1)} style="background: none; display:flex; margin:5px" class="sc-kHOZwM lkOmCH">
                         <img class="coin-icon" alt="" src={$storeSender.coin_image}>
                         <span style="padding:5px;" class="currency">{$storeSender.coin_name}</span>
@@ -127,7 +182,7 @@ const handleSelectCoin = ((e) => {
                     <a href="/transactions/bill/BCD/Swap">Record</a>
                 </div>
                 <div class="input-control">
-                    <input type="text" value="0">
+                    <input type="number" bind:value={receiverVAlue} placeholder="0" >
                     <button on:click={()=>handleSender(2)} style="background: none; display:flex; margin:5px" class="sc-kHOZwM lkOmCH">
                         <img class="coin-icon" alt="" src={$storeReceiver.coin_image}>
                         <span style="padding:5px;" class="currency">{$storeReceiver.coin_name}</span>
@@ -138,10 +193,10 @@ const handleSelectCoin = ((e) => {
                 </div>
             </div>
             <div class="tips">
-                <div class="item">Estimated Time* <span>Seconds</span></div>
-                <div class="item">Swap fee: <span>-</span> BTC</div>
+                <div class="item">Estimated Time* <span> 0.65554Seconds</span></div>
+                <div class="item">Swap fee: <span>{swappingfee}</span> USDT</div>
             </div>
-            <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn">
+            <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn">
                 <div class="button-inner">Swap Now</div>
             </button>
             {/if}
@@ -475,6 +530,7 @@ const handleSelectCoin = ((e) => {
     min-width: 1rem;
     padding: 0px;
     border: none;
+    outline: none;
     background-color: transparent;
     color: rgb(245, 246, 247);
 }
