@@ -1,5 +1,6 @@
 <script>
 import {ppdWallet, ppeWallet, pplWallet, ppfWallet, usdt_Wallet,default_Wallet } from "$lib/store/coins"
+import {userProfile} from "$lib/store/profile"
 /** @type {import('./$types').PageLoad} */
 export let data;
 
@@ -9,6 +10,8 @@ pplWallet.set(data.pplWallet)
 ppfWallet.set(data.ppfWallet)
 usdt_Wallet.set(data.usdtWallet)
 default_Wallet.set(data.defaultWallet)
+userProfile.set(data.userProfile)
+
 
 import Statistics from "../lib/statistics/main/index.svelte";
 import Navbar from "$lib/navbar.svelte";

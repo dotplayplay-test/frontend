@@ -109,7 +109,28 @@ const handlePPLwallet = async () => {
     };
   
 
+    const handleUserProfile = async () => {
+      const response = await fetch(
+          "http://localhost:8000/api/profile",{
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              "Authorization": `Bearer ${id.Token}`
+            },
+          }
+        );
+        const json = await response.json();
+  
+        if(!response.ok){
+          (json)
+        }
+  
+        if (response.ok) {
+          return json[0]
+        }
+      };
 
-    return {route : route.id, ppdWallet: id &&  handlePPDwallet(), ppeWallet: id &&  handlePPEwallet(), 
+
+    return {route : route.id, ppdWallet: id &&  handlePPDwallet(), ppeWallet: id &&  handlePPEwallet(), userProfile: handleUserProfile(),
        pplWallet: id &&  handlePPLwallet(), ppfWallet: id &&  handlePPFwallet(), usdtWallet: id &&  handleUSDTwallet(), defaultWallet: id &&  handleDefaultwallet() }
 }

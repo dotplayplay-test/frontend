@@ -13,6 +13,12 @@ import {
     default_Wallet
 } from "$lib/store/coins"
 
+import {
+    userProfile
+} from '$lib/store/profile';
+
+console.log($userProfile)
+
 let coins = [{
         id: 1,
         coin_name: $usdt_Wallet.coin_name,
@@ -51,12 +57,11 @@ let coins = [{
     }
 ]
 
-let usdtValue = 10
-let ppdValue = 10
-let ppeValue = 10
-let pplValue = 20
-
+let coinDropValue = 10
 let isSelectCoin = false
+let num = 10
+let displayComment = ""
+let isCommet = false
 const handleSelectCoins = (() => {
     if (isSelectCoin) {
         isSelectCoin = false
@@ -70,6 +75,24 @@ const handleSelectCoin = ((e) => {
     handleSelectCoins()
 })
 
+const handleSubmit = (() => {
+
+    let data = {
+        id: Math.floor(Math.random() * 230000000),
+        email: $userProfile.email,
+        type: "coin_drop",
+        text: "",
+        sent_at: time,
+        profle_img: profile && profile.profile_image,
+        sender_username: profile && profile.username,
+        gif: "",
+        coin_drop: "",
+        vip_level: 0
+    }
+    // let data = {coinDropValue, coin_name: $default_Wallet.coin_name, num, comment: displayComment }
+
+    console.log(data)
+})
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
@@ -93,15 +116,7 @@ const handleSelectCoin = ((e) => {
                         <p style="flex: 1 1 auto;">Amount</p><p>Balance: <span>{$default_Wallet.balance + " " +  $default_Wallet.coin_name}</span></p>
                     </div>
                     <div class="input-control">
-                        {#if $default_Wallet.balance === "USDT"}
-                            <input type="text" bind:value={usdtValue} >
-                            {:else if $default_Wallet.balance === "PPD"}
-                            <input type="text" bind:value={ppdValue} >
-                            {:else if $default_Wallet.balance === "PPL"}
-                            <input type="text" bind:value={pplValue} >
-                            {:else}
-                            <input type="text" bind:value={ppeValue} >
-                        {/if}
+                        <input type="text" bind:value={coinDropValue} >
                         <button on:click={()=> handleSelectCoins()} class="sc-kHOZwM lkOmCH">
                             <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                             <span class="currency">{$default_Wallet.coin_name}</span>
@@ -110,21 +125,21 @@ const handleSelectCoin = ((e) => {
                     </div>
                     <div class="input-after">Min: {#if $default_Wallet.coin_name === "PPL" }
                         2
-                    {:else}
-                    1
-                    {/if} {$default_Wallet.coin_name}</div>
+                        {:else}
+                        1
+                        {/if} {$default_Wallet.coin_name}</div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input people-input">
                     <div class="input-label">Number of people</div>
                     <div class="input-control">
-                        <input type="text" value="50">
+                        <input type="text" bind:value={num}>
                         <div class="min-number">1~100</div>
                     </div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset send-textarea">
                     <div class="input-label">Message (Optional)</div>
                     <div class="input-control">
-                        <textarea></textarea>
+                        <textarea bind:value={displayComment} disabled={isCommet} ></textarea>
                         <div class="send-len">0/32</div>
                     </div>
                 </div>
@@ -132,7 +147,7 @@ const handleSelectCoin = ((e) => {
                     <span class="amount-num">{$default_Wallet.coin_name === "PPL" ? 2 : 1}</span>
                     <span class="cl-primary">{$default_Wallet.coin_name}</span>
                 </div>
-                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Start Coindrop</div>
                 </button>
             </div>
@@ -307,6 +322,7 @@ const handleSelectCoin = ((e) => {
 .erPQzq .suffix {
     opacity: 0.5;
 }
+
 .kjMlDW.active {
     border-color: rgb(67, 179, 9);
 }

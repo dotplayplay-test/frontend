@@ -107,9 +107,7 @@ const handleSendMessage = (async (e, name) => {
             hours = hours % 12;
             hours = hours ? hours : 12;
             minutes = minutes < 10 ? '0' + minutes : minutes;
-
             let time = (hours + ':' + minutes + ' ' + newformat);
-
             let data = {
                 id: Math.floor(Math.random() * 230000000),
                 email: id.email,
@@ -393,8 +391,8 @@ const handleTipsControls = ((e) => {
                                         </div>
                                     </div>
                                 </div>
-                                <!-- ======================= coin rain -->
-                                {:else if (chat.type === "coin_rain")}
+                                <!-- ======================= coin drop============== -->
+                                {:else if (chat.type === "coin_drop")}
                                 <div class="msg-wrap">
                                     <div class="sc-PZsNp cciZxO">
                                         <div class="sc-dGXBhE cfLlrJ">
@@ -405,7 +403,6 @@ const handleTipsControls = ((e) => {
                                 </div>
                                 {:else if (chat.type === "tips")}
                                 <!-- ===============================  coin tips ================================= -->
-
                                 <div class="msg-wrap">
                                     <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
                                         I tipped&nbsp;&nbsp;

@@ -12,6 +12,7 @@ import {
     default_Wallet
 } from "$lib/store/coins"
 
+
 let coins = [{
         id: 1,
         coin_name: $usdt_Wallet.coin_name,
@@ -50,11 +51,8 @@ let coins = [{
     }
 ]
 
-let usdtValue = 10
-let ppdValue = 10
-let ppeValue = 10
-let pplValue = 20
-
+let rainValue = ""
+let num = ""
 let isSelectCoin = false
 const handleSelectCoins = (() => {
     if (isSelectCoin) {
@@ -63,11 +61,30 @@ const handleSelectCoins = (() => {
         isSelectCoin = true
     }
 })
+let count = 0
+let displayComment = ""
+const handleCommets = ((e)=>{
+    if(e.length <= 50){
+        count = e.length 
+        displayComment = e
+    }else{
+        displayComment += ""
+    }
+
+
+})
 
 const handleSelectCoin = ((e) => {
     default_Wallet.set(e)
     handleSelectCoins()
 })
+
+const handleSubmit = (()=>{
+    let data = {rainValue, coin_name: $default_Wallet.coin_name, num, comment: displayComment }
+
+    console.log(data)
+})
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
@@ -95,15 +112,7 @@ const handleSelectCoin = ((e) => {
                         </div>
                     </div>
                     <div class="input-control">
-                        {#if $default_Wallet.balance === "USDT"}
-                        <input type="text" bind:value={usdtValue} >
-                        {:else if $default_Wallet.balance === "PPD"}
-                        <input type="text" bind:value={ppdValue} >
-                        {:else if $default_Wallet.balance === "PPL"}
-                        <input type="text" bind:value={pplValue} >
-                        {:else}
-                        <input type="text" bind:value={ppeValue} >
-                        {/if}
+                        <input type="number" bind:value={rainValue} >
                         <button on:click={()=> handleSelectCoins()} class="sc-kHOZwM lkOmCH">
                             <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                             <span class="currency">{$default_Wallet.coin_name}</span>
@@ -119,18 +128,18 @@ const handleSelectCoin = ((e) => {
                 <div class="sc-ezbkAF kDuLvp input people-input">
                     <div class="input-label">Number of people</div>
                     <div class="input-control">
-                        <input type="text" value="50">
+                        <input type="number"  bind:value={num}>
                         <div class="dialog-gray">1~100</div>
                     </div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset rain-textarea">
                     <div class="input-label">Message (Optional)</div>
                     <div class="input-control">
-                        <textarea></textarea>
-                        <div class="rain-len">0/20</div>
+                        <textarea on:keyup={(e)=> handleCommets(e.target.value)} value={displayComment} ></textarea>
+                        <div class="rain-len">{count}/50</div>
                     </div>
                 </div>
-                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Pour rain </div>
                 </button>
             </div>
