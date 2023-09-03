@@ -30,16 +30,16 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
                         <input type="text" value="0">
                         <button>Max</button>
                         <div class="sc-kHOZwM lkOmCH">
-                            <img class="coin-icon" alt="" src="/coin/BTC.black.png">
-                            <span class="currency">BTC</span>
+                            <!-- <img class="coin-icon" alt="" src="/coin/BTC.black.png"> -->
+                            <!-- <span class="currency">BTC</span>
                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                                 <use xlink:href="#icon_Arrow"></use>
-                            </svg>
+                            </svg> -->
                         </div>
                     </div>
                 </div>
                 <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn" disabled="">
-                    <div class="button-inner">Transfer to Vault Pro</div>
+                    <div class="button-inner">Coming soon!</div>
                 </button>
             </div>
         </div>

@@ -2,15 +2,19 @@
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
 import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
-import BiSolidMessageAltDetail from "svelte-icons-pack/bi/BiSolidMessageAltDetail";
 import IoNotifications from "svelte-icons-pack/io/IoNotifications";
 import Navprofile from "./profilecomponent/main/navprofile.svelte";
 import Coins from "./profilecomponent/main/coins.svelte";
 import {app, db} from "$lib/firebaseAuth/index"
 import { doc,getDoc } from "firebase/firestore";
+import { default_Wallet } from "../lib/store/coins"
+
+// console.log($default_Wallet)
+
 import {
     goto
 } from "$app/navigation"
+import BsChatLeftDotsFill from "svelte-icons-pack/bs/BsChatLeftDotsFill";
 import {
     onMount
 } from "svelte";
@@ -21,18 +25,14 @@ import "../styles/navbar/mobileNavbar.css"
 import "../styles/navbar/navbar.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
+
 export let styles;
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 export let chatroom;
-
-import {
-    createEventDispatcher
-} from 'svelte'
-
+import { createEventDispatcher } from 'svelte'
 const dispatch = createEventDispatcher()
-
-const handleChat = (() => {
-    dispatch("handleChatRoom", "abek open")
+const handleChat = ((e) => {
+    dispatch("handleChatRoom", e)
 })
 
 let isCoinDrop = false
@@ -61,23 +61,21 @@ $:{
     })
 }
 
-
 $: {
     onMount(()=>{
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const uid = user.uid;
-        authUser =(user)
-        isLoading = false
-    }else{
-        authUser = null
-        isLoading = false
-    }
-    });
-})
+        if (user) {
+            const uid = user.uid;
+            authUser =(user)
+            isLoading = false
+        }else{
+            authUser = null
+            isLoading = false
+        }
+        });
+    })
 }
-
 
 let userProfile = false
 const handleUserProfile = (()=>{
@@ -88,17 +86,12 @@ const handleUserProfile = (()=>{
     }
 })
 
-let activeCoin = {
-    id:1, coin_symbol: "USDT", 
-    coin_name: "Tether",
-    coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-    amount: 0, 
-    suffix: "000000", select: true
-}
+
 const handleCoinSelect = ((e)=>{
-    activeCoin = (e.detail)
+    default_Wallet.set(e.detail)
     handleCoinsDrop()
 })
+
 
 
 const handleMenu = (() => {
@@ -138,13 +131,13 @@ const handleMenu = (() => {
                         <div class="sc-fmciRz LQlWw">
                             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                                 <div class="sc-eXlEPa boxpOO">
-                                    <img class="coin-icon" alt="" src={activeCoin.coin_image}>
-                                    <span class="currency">{activeCoin.coin_symbol}</span>
+                                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                                    <span class="currency">{$default_Wallet.coin_name}</span>
                                     <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                                 </div>
                                 <div class="sc-Galmp erPQzq coin notranslate balance">
                                     <div class="amount">
-                                        <span class="amount-str">{activeCoin.amount}.<span class="suffix">{activeCoin.suffix}</span></span>
+                                        <span class="amount-str">{$default_Wallet.balance}.<span class="suffix">{$default_Wallet.suffix}</span></span>
                                     </div>
                                 </div>
                             </button>
@@ -153,7 +146,9 @@ const handleMenu = (() => {
                             {/if}
                             <button on:click={()=> goto("/wallet/deposit")} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                                 <div class="button-inner">
-                                    <span class="wallet-icon"><Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" /> </span>
+                                    <span class="wallet-icon">
+                                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />
+                                    </span>
                                     <span>Wallet</span>
                                 </div>
                             </button>
@@ -180,18 +175,17 @@ const handleMenu = (() => {
                                     <Navprofile {profile} />
                                 {/if}
                             </button>
-                          
                         </div>
                     </div>
-                    <button class="sc-dcgwPl bbYXSv private-chat">
-                        <span class="nav-message"><Icon src={BiSolidMessageAltDetail}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                    <button on:click={()=> goto("/chat")} class="sc-dcgwPl bbYXSv private-chat">
+                        <span class="nav-message"><Icon src={BsChatLeftDotsFill}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                     </button>
-                    <button id="notice" class="sc-ksHpcM kultDa notice">
+                    <button on:click={()=>handleChat("notification")} id="notice" class="sc-ksHpcM kultDa notice">
                         <div class="notice-btn ">
                             <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                         </div>
                     </button>
-                    <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
+                    <button on:click={()=>handleChat("chat_room")} id="chat" class="sc-eicpiI PGOpB">
                         <div class="chat-btn ">
                             <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
                             <div class="sc-fotOHu gGSOuF badge ">26</div>
@@ -238,8 +232,8 @@ const handleMenu = (() => {
                 <div class="sc-fmciRz LQlWw">
                     <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                         <div class="sc-eXlEPa boxpOO">
-                            <img class="coin-icon" alt="" src={activeCoin.coin_image}>
-                            <span class="currency">{activeCoin.coin_symbol}</span>
+                            <!-- <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                            <span class="currency">{$default_Wallet.coin_name}</span> -->
                             <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                         </div>
                         <div class="sc-Galmp erPQzq coin notranslate balance">

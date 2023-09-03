@@ -1,7 +1,10 @@
 <script>
 import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
 import "./styles/index.css"
+import "./styles/coinrain.css"
 import "./styles/gif.css"
+import { goto } from "$app/navigation"
+
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
 import HiSolidEmojiHappy from "svelte-icons-pack/hi/HiSolidEmojiHappy";
 import Icon from 'svelte-icons-pack/Icon.svelte';
@@ -13,10 +16,17 @@ import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
-import { usePublicMessages } from "./componets/index"
-import { afterUpdate, tick } from 'svelte';
+import {
+    usePublicMessages
+} from "./componets/index"
+import {
+    afterUpdate,
+    tick
+} from 'svelte';
 import axios from "axios"
-const { sendMessage } = usePublicMessages()
+const {
+    sendMessage
+} = usePublicMessages()
 import {
     GIFs
 } from "./data/index"
@@ -34,17 +44,19 @@ import {
 import {
     db
 } from "$lib/firebaseAuth/index"
-import { doc,getDoc } from "firebase/firestore";
+import {
+    doc,
+    getDoc
+} from "firebase/firestore";
 import Pusher from "pusher-js"
- let element;
+let element;
 let newMessages = ''
-
 
 const id = browser && JSON.parse(localStorage.getItem('user'))
 
 let profile
-$:{
-    id && onMount(async()=>{
+$: {
+    id && onMount(async () => {
         const docRef = doc(db, "profile", id.email);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -61,25 +73,31 @@ var pusher = new Pusher('079fe293b89889569380', {
 
 let chats = [];
 
-onMount(async()=>{
+onMount(async () => {
     await axios.get("http://localhost:8000/api/users/previus-chats")
-    .then((res)=>{
+    .then((res) => {
         chats = res.data
     })
 })
 
-onMount(()=>{
+onMount(() => {
     var channel = pusher.subscribe('chat-room');
-        channel.bind('public-messages', function(data) {
+    channel.bind('public-messages', function(data) {
         chats = [...chats, data]
     });
 })
 
-const handleSendMessage = (async(e, name) => {
+const handleSendMessage = (async (e, name) => {
     if (e.key === "Enter" && name.newMessages || e === "gifHit") {
         if (e.key === "Enter") {
             e.preventDefault();
         }
+
+    if(newMessages === "/rain "){
+        goto("/user/rain")
+    }else if(newMessages === "/coindrop "){
+        goto("/user/coindrop_send")
+    }else{
         let date = new Date();
         let hours = date.getHours();
         let minutes = date.getMinutes();
@@ -90,8 +108,8 @@ const handleSendMessage = (async(e, name) => {
 
         let time = (hours + ':' + minutes + ' ' + newformat);
 
-    let data = {
-            id: Math.floor(Math.random()*230000000),
+        let data = {
+            id: Math.floor(Math.random() * 230000000),
             email: id.email,
             type: name.type,
             text: name.newMessages ? name.newMessages : "",
@@ -102,22 +120,25 @@ const handleSendMessage = (async(e, name) => {
             vip_level: 0
         }
         sendMessage(data)
+    }
         newMessages = ''
         isGif = false
     }
 })
 
 const scrollToBottom = async (node) => {
-    node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
-}; 
+    node.scroll({
+        top: node.scrollHeight,
+        behavior: 'smooth'
+    });
+};
 afterUpdate(() => {
-    if(chats) scrollToBottom(element);
+    if (chats) scrollToBottom(element);
 });
 
-$: if(chats && element) {
+$: if (chats && element) {
     scrollToBottom(element);
 }
-
 
 const dispatch = createEventDispatcher()
 const handlecloseChat = (() => {
@@ -134,7 +155,6 @@ const handleGIF = (() => {
     }
 })
 
-
 let isEmoji = false
 const handleEmoji = (() => {
     if (isEmoji) {
@@ -143,11 +163,48 @@ const handleEmoji = (() => {
         isEmoji = true
     }
 })
+
 const handleMerge = ((e) => {
     newMessages += (e)
 })
-</script>
 
+let isTipsControl = false
+let tipsControl = [
+    {id:0, img: "https://static.nanogames.io/assets/user.22808cc8.svg", Itemfunction: "/User", text: "@User view user", isSelected: true },
+    {id:1, img: "https://static.nanogames.io/assets/tip.35667d2b.svg", Itemfunction: "/Tip", text: "@User tip user", isSelected: false },
+    {id:2, img: "https://static.nanogames.io/assets/rain.91c937f7.svg", Itemfunction: "/Rain", text: "Make it rain", isSelected: false },
+    {id:3, img: "https://static.nanogames.io/assets/coindrop.8fcb1038.svg", Itemfunction: "/Coindrop", text: "Tip group", isSelected: false  },
+]
+
+
+
+$: if(newMessages === "/"){
+    isTipsControl = true
+}else{
+    isTipsControl = false
+}
+
+const handleTipsControls = ((e)=>{
+    for(let i = 0; i < tipsControl.length; i++){
+        tipsControl[i].isSelected = false
+    }
+    tipsControl[e].isSelected = true
+    if(e === 0){
+        newMessages = "/user @"
+    }
+    if(e === 1){
+        newMessages = "/tip @"
+    }
+    if(e === 2){
+        newMessages = "/rain "
+    }
+    if(e === 3){
+        newMessages = "/coindrop "
+    }
+})
+
+</script>
+ 
 <svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal"})} />
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
     <div class="sc-ewSTlh hHMWvP" id="public-chat">
@@ -319,6 +376,33 @@ const handleMerge = ((e) => {
                         </div>
                     </div>
                     {/each}
+
+                    <!-- ========================================================== coin drop ================================== -->
+
+                    <div class="msg-wrap">
+                        <div class="sc-PZsNp cciZxO">
+                            <div class="sc-dGXBhE cfLlrJ">
+                                <img alt="coindrop-more" src="https://static.nanogames.io/assets/parachute-fall.193a2437.png" class="right-open-img">
+                                <div class="coindrop-status">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===============================  coin tips ================================= -->
+
+                    <div class="msg-wrap">
+                        <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
+                            I tipped&nbsp;&nbsp;
+                            <a class="cl-primary" href="/user/profile/336277">
+                                @vvvvx
+                            </a>
+                            <div class="msg-cont">
+                                <img class="coin-icon" alt="" src="/coin/USDT.black.png">
+                                1 USDT
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -349,9 +433,9 @@ const handleMerge = ((e) => {
                         <a class="chat-icon" href="/user/rain">
                             <Icon src={WiRaindrop}   size="28"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </a>
-                        <div class="command-btn">
+                        <button on:click={()=> newMessages = "/"} class="command-btn">
                             <Icon src={IoLanguageOutline}   size="20"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                        </div>
+                        </button>
                         <a class="chat-icon" href="/user/coindrop_send">
                             <Icon src={RiFinanceCopperCoinLine}  size="20"  color="rgba(153, 164, 176, 0.8)" title="arror" />
                         </a>
@@ -376,6 +460,22 @@ const handleMerge = ((e) => {
                         </button>
                     </div>
                 </div>
+
+                <!-- ===================================== tips pops ========================================= -->
+                {#if isTipsControl}
+                    <div class="sc-cHzqoD dWoTka">
+                        {#each tipsControl as tips (tips.id) }
+                            <button on:click={()=>handleTipsControls(tips.id)} class={`item ${tips.isSelected ? "is-selected" : "" }`} >
+                                <div class="sc-hZpJaK guGGGt chat-command-label">
+                                    <img src={tips.img} alt="" class="label-img">
+                                    <span class="label-txt">{tips.Itemfunction}</span>
+                                    <span class="label-desc">{tips.text}</span>
+                                </div>
+                            </button>
+                        {/each}
+                    </div>
+                {/if}
+               
             </div>
         </div>
 
@@ -495,15 +595,12 @@ const handleMerge = ((e) => {
 </div>
 
 <style>
-
-
 .eA-dYOl {
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
     background: rgb(30, 32, 36);
 }
-
 
 .cVsgdS .emoji-box-wrap {
     width: 280px;
@@ -1505,8 +1602,6 @@ textarea {
         margin-top: 0.625rem;
     }
 }
-
-
 
 .fuYrTE {
     flex: 1 1 auto;

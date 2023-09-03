@@ -1,66 +1,28 @@
 <script>
+import "../../styles/transactions/deposit.css"
+
+/** @type {import('./$types').PageLoad} */
+export let data;
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import BiTransfer from "svelte-icons-pack/bi/BiTransfer";
 import FaSolidWallet from "svelte-icons-pack/fa/FaSolidWallet";
 import IoSwapVerticalOutline from "svelte-icons-pack/io/IoSwapVerticalOutline";
 import SiVault from "svelte-icons-pack/si/SiVault";
-import Selectcoin from '../../lib/wallet/selectcoin.svelte';
+import {
+    checkIsOpen
+} from "$lib/store/swaps/index"
 import BsCashCoin from "svelte-icons-pack/bs/BsCashCoin";
-import {
-    onMount
-} from 'svelte';
-import {
-    browser
-} from '$app/environment'
+import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+
 import {
     goto
 } from "$app/navigation"
-let deposit
-let withdraw
-let swap
-let Vault
 
 let count = 1
 
-onMount(() => {
-    if (browser && window.location.pathname === "/wallet/deposit") {
-        deposit = true
-    } else if (browser && window.location.pathname === "/wallet/withdraw") {
-        withdraw = true
-    } else if (browser && window.location.pathname === "/wallet/swap") {
-        swap = true
-    } else if (browser && window.location.pathname === "/wallet/vault") {
-        Vault = true
-    }
-})
-
 const handleNavigation = ((e) => {
-    if (e === "/wallet/deposit") {
-        goto(e)
-        deposit = true
-        withdraw = false
-        swap = false
-        Vault = false
-    } else if (e === "/wallet/withdraw") {
-        goto(e)
-        deposit = false
-        withdraw = true
-        swap = false
-        Vault = false
-    } else if (e === "/wallet/swap") {
-        goto(e)
-        deposit = false
-        swap = true
-        withdraw = false
-        Vault = false
-    } else if (e === "/wallet/vault") {
-        goto(e)
-        deposit = false
-        swap = false
-        withdraw = false
-        Vault = true
-    }
+    goto(e)
     count = count + 1
 })
 
@@ -68,14 +30,28 @@ const handleClose = (() => {
     history.go(-count)
     count = 1
 })
-</script>
 
+const handleOpenCoinSelect = (() => {
+    if ($checkIsOpen) {
+        checkIsOpen.set(false)
+    } else {
+        checkIsOpen.set(true)
+    }
+})
+</script>
 
 <div id="main">
     <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-        <div class="dialog" style="transform: scale(1) translateZ(0px); opacity: 1; width: 464px; height: 624px; margin-top: -310px; margin-left: -232px;">
-            <div class="dialog-head has-close">
+        <div class="dialog" style="transform: scale(1) translateZ(0px); opacity: 1; width: 464px; height: 580px; margin-top: -290px; margin-left: -232px;">
+            {#if $checkIsOpen}
+            <button on:click={()=> handleOpenCoinSelect()} class="dialog-back" style="opacity: 1; transform: none;">
+                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            </button>
+            {/if}
+
+            <div class={`dialog-head ${$checkIsOpen ? "has-back" : "has-close"}`}>
                 <div class="dialog-title">Wallet</div>
+                {#if !$checkIsOpen}
                 <div class="sc-fZzbTk sobNK">
                     <button>
                         <span class="icon">
@@ -84,6 +60,7 @@ const handleClose = (() => {
                         <span>Transactions</span>
                     </button>
                 </div>
+                {/if}
             </div>
             <button on:click={()=> handleClose() } class="sc-ieecCq fLASqZ close-icon dialog-close">
                 <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
@@ -92,20 +69,20 @@ const handleClose = (() => {
             <div class="dialog-body no-style" style="z-index: 2; transform: none;">
                 <div id="wallet" class="sc-kMyqmI hioXRL">
                     <div class="sc-cAUCVt fsVpnS">
-                        <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${deposit ? `active` : "" } `}>
-                            <Icon src={FaSolidWallet}  size="18"  color={`${deposit ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
+                        <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${ "/wallet/deposit" === data.route  ? `active` : "" } `}>
+                            <Icon src={FaSolidWallet}  size="18"  color={`${"/wallet/deposit" === data.route ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
                             <div class="title">Deposit</div>
                         </button>
-                        <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${withdraw ? `active` : "" } `}>
-                            <Icon src={BsCashCoin}  size="18"   color={`${withdraw ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                        <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${"/wallet/withdraw" === data.route  ? `active` : "" } `}>
+                            <Icon src={BsCashCoin}  size="18"   color={`${"/wallet/withdraw" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">Withdraw</div>
                         </button>
-                        <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${swap ? `active` : "" } `}>
-                            <Icon src={IoSwapVerticalOutline}  size="18"   color={`${swap ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                        <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${"/wallet/swap" === data.route  ? `active` : "" } `}>
+                            <Icon src={IoSwapVerticalOutline}  size="18"   color={`${"/wallet/swap" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">DPPSwap</div>
                         </button>
-                        <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${Vault ? `active` : "" } `}>
-                            <Icon src={SiVault}  size="18"   color={`${Vault ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                        <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${"/wallet/vault" === data.route  ? `active` : "" } `}>
+                            <Icon src={SiVault}  size="18"   color={`${"/wallet/vault" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">Vault Pro</div>
                         </button>
                     </div>
@@ -114,6 +91,8 @@ const handleClose = (() => {
                             <slot></slot>
                         </div>
                     </div>
+
+                    {#if !$checkIsOpen}
                     <div class="sc-hDzdEj exYdcu">
                         <div class="sc-lcdCCa iTVeFz">
                             <div class="cont">Your 2FA currently is Disabled</div>
@@ -122,12 +101,13 @@ const handleClose = (() => {
                             </button>
                         </div>
                     </div>
+                    {/if}
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- ==================== Mobile =============================== -->
 <div class="mobile">
@@ -149,20 +129,20 @@ const handleClose = (() => {
         <div class="dialog-body no-style" style="z-index: 2; transform: none;">
             <div id="wallet" class="sc-kMyqmI hioXRL">
                 <div class="sc-hctura jEHNdH">
-                    <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${deposit ? `active` : "" } `}>
-                        <Icon src={FaSolidWallet}  size="18"  color={`${deposit ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
+                    <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${ "/wallet/deposit" === data.route  ? `active` : "" } `}>
+                        <Icon src={FaSolidWallet}  size="18"  color={`${"/wallet/deposit" === data.route ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
                         <div class="title">Deposit</div>
                     </button>
-                    <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${withdraw ? `active` : "" } `}>
-                        <Icon src={BsCashCoin}  size="18"   color={`${withdraw ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                    <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${"/wallet/withdraw" === data.route  ? `active` : "" } `}>
+                        <Icon src={BsCashCoin}  size="18"   color={`${"/wallet/withdraw" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">Withdraw</div>
                     </button>
-                    <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${swap ? `active` : "" } `}>
-                        <Icon src={IoSwapVerticalOutline}  size="18"   color={`${swap ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                    <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${"/wallet/swap" === data.route  ? `active` : "" } `}>
+                        <Icon src={IoSwapVerticalOutline}  size="18"   color={`${"/wallet/swap" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">DPPSwap</div>
                     </button>
-                    <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${Vault ? `active` : "" } `}>
-                        <Icon src={SiVault}  size="18"   color={`${Vault ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
+                    <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${"/wallet/vault" === data.route  ? `active` : "" } `}>
+                        <Icon src={SiVault}  size="18"   color={`${"/wallet/vault" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">Vault Pro</div>
                     </button>
                 </div>
@@ -184,133 +164,159 @@ const handleClose = (() => {
     </div>
 </div>
 
-
 <style>
-
-
-
-
-
-@media screen and (min-width: 650px){
+@media screen and (min-width: 650px) {
     .kBjSXI {
-    position: fixed;
-    z-index: 1000;
-    inset: 0px;
-    background-color: rgba(0, 0, 0, 0.7);
-    filter: none !important;
-}
-.dialog {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    left: 50%;
-    top: 50%;
-    width: 464px;
-    height: 720px;
-    margin: -375px 0px 0px -280px;
-    transition-property: width, height, margin-left, margin-top;
-    transition-duration: 0.5s;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background-color: rgb(23, 24, 27);
-}
-.dialog-head.has-close {
-    margin-right: 3.75rem;
-}
-.dialog-head {
-    position: relative;
-    z-index: 10;
-    flex: 0 0 auto;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 3.75rem;
-    margin-left: 1.125rem;
-    transition: all 0.5s ease 0s;
-}
-.dialog-head .dialog-title {
-    font-size: 1rem;
-    margin: 0px;
-    font-weight: bold;
-    flex: 1 1 0%;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    color: rgb(245, 246, 247);
-}
-.sobNK {
-    display: flex;
-}
-.sobNK span {
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 0.875rem;
-}
-.sobNK .icon {
-    display: inline-block;
-    vertical-align: top;
-    width: 1.125rem;
-    height: 1.125rem;
-    margin: 0px 0.5rem 0px 0px;
-}
-.fLASqZ {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    z-index: 11;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    width: 3.75rem;
-    height: 3.75rem;
-}
-.default-style {
-    padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
-}
-.fsVpnS {
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    background-color: rgb(30, 32, 36);
-    border-radius: 1.25rem;
-    margin: 0.25rem 0.625rem 0.625rem;
-    order: 0;
-    flex: 0 0 auto;
-    font-size: 12px;
-}
-.default-style > div {
-    border-radius: 20px;
-    background-color: rgb(30, 32, 36);
-    padding: 1.25rem 1.25rem 0px;
-}
-.fsVpnS .tab {
-    position: relative;
-    z-index: 2;
-    height: 5rem;
-    width: 5rem;
-    padding: 0.625rem 0px;
-    text-align: center;
-    cursor: pointer;
-    line-height: 1;
-    border-radius: 1.25rem;
-}
+        position: fixed;
+        z-index: 1000;
+        inset: 0px;
+        background-color: rgba(0, 0, 0, 0.7);
+        filter: none !important;
+    }
 
-.fsVpnS .tab:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-.hMujFh {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    position: relative;
-    color: rgba(153, 164, 176, 0.6);
-}
-.fsVpnS .tab.active {
-    background-color: rgb(67, 179, 9);
-    color: rgb(255, 255, 255);
-}
+    .dialog-back {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 11;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        width: 3.75rem;
+        height: 3.75rem;
+    }
+
+    .dialog {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        left: 50%;
+        top: 50%;
+        width: 464px;
+        height: 720px;
+        margin: -375px 0px 0px -280px;
+        transition-property: width, height, margin-left, margin-top;
+        transition-duration: 0.5s;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        background-color: rgb(23, 24, 27);
+    }
+
+    .dialog-head.has-back {
+        margin-left: 3.125rem;
+    }
+
+    .dialog-head.has-close {
+        margin-right: 3.75rem;
+    }
+
+    .dialog-head {
+        position: relative;
+        z-index: 10;
+        flex: 0 0 auto;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 3.75rem;
+        margin-left: 1.125rem;
+        transition: all 0.5s ease 0s;
+    }
+
+    .dialog-head .dialog-title {
+        font-size: 1rem;
+        margin: 0px;
+        font-weight: bold;
+        flex: 1 1 0%;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        color: rgb(245, 246, 247);
+    }
+
+    .sobNK {
+        display: flex;
+    }
+
+    .sobNK span {
+        color: rgba(153, 164, 176, 0.6);
+        font-size: 0.875rem;
+    }
+
+    .sobNK .icon {
+        display: inline-block;
+        vertical-align: top;
+        width: 1.125rem;
+        height: 1.125rem;
+        margin: 0px 0.5rem 0px 0px;
+    }
+
+    .fLASqZ {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        z-index: 11;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        width: 3.75rem;
+        height: 3.75rem;
+    }
+
+    .default-style {
+        padding-top: 3.75rem;
+        background-color: rgb(23, 24, 27);
+    }
+
+    .fsVpnS {
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        background-color: rgb(30, 32, 36);
+        border-radius: 1.25rem;
+        margin: 0.25rem 0.625rem 0.625rem;
+        order: 0;
+        flex: 0 0 auto;
+        font-size: 12px;
+    }
+
+    .default-style>div {
+        border-radius: 20px;
+        background-color: rgb(30, 32, 36);
+        padding: 1.25rem 1.25rem 0px;
+    }
+
+    .fsVpnS .tab {
+        position: relative;
+        z-index: 2;
+        height: 5rem;
+        width: 5rem;
+        padding: 0.625rem 0px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 1;
+        border-radius: 1.25rem;
+    }
+
+    .fsVpnS .tab:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .hMujFh {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: relative;
+        color: rgba(153, 164, 176, 0.6);
+    }
+
+    .fsVpnS .tab.active {
+        background-color: rgb(67, 179, 9);
+        color: rgb(255, 255, 255);
+    }
 }
 
 @media screen and (max-width: 650px) {
@@ -412,8 +418,6 @@ const handleClose = (() => {
         color: rgba(153, 164, 176, 0.6);
     }
 
-
- 
     .eDKSkl {
         flex: 1 1 auto;
         padding: 0.625rem 0.625rem 1.875rem;
@@ -456,84 +460,84 @@ const handleClose = (() => {
         font-size: 12px;
     }
 
-}.jEHNdH .tab.active {
-        background-color: rgb(67, 179, 9);
-        color: rgb(255, 255, 255);
-    }
+}
 
-    .jEHNdH .title {
-        margin-top: 0.3125rem;
-    }
+.jEHNdH .tab.active {
+    background-color: rgb(67, 179, 9);
+    color: rgb(255, 255, 255);
+}
 
-    .jEHNdH .tab {
-        position: relative;
-        z-index: 2;
-        height: 5rem;
-        width: 5rem;
-        padding: 0.625rem 0px;
-        text-align: center;
-        cursor: pointer;
-        line-height: 1;
-        border-radius: 1.25rem;
-    }
+.jEHNdH .title {
+    margin-top: 0.3125rem;
+}
 
-    .exYdcu {
-        position: relative;
-        padding: 1.125rem 0px;
-        border-top: 1px solid rgba(128, 141, 152, 0.1);
-    }
+.jEHNdH .tab {
+    position: relative;
+    z-index: 2;
+    height: 5rem;
+    width: 5rem;
+    padding: 0.625rem 0px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 1.25rem;
+}
 
-    .iTVeFz {
-        margin: 0px auto;
-        display: flex;
-        flex: 0 0 auto;
-        -webkit-box-pack: justify;
-        justify-content: space-between;
-        background-color: rgb(30, 32, 36);
-        border-radius: 2.4375rem;
-        height: 3.5rem;
-    }
+.exYdcu {
+    position: relative;
+    padding: 1.125rem 0px;
+    border-top: 1px solid rgba(128, 141, 152, 0.1);
+}
 
-    .iTVeFz .cont {
-        display: flex;
-        padding: 0.625rem 0.625rem 0.625rem 2rem;
-        line-height: 1.125rem;
-        opacity: 0.8;
-        font-size: 12px;
-    }
+.iTVeFz {
+    margin: 0px auto;
+    display: flex;
+    flex: 0 0 auto;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    background-color: rgb(30, 32, 36);
+    border-radius: 2.4375rem;
+    height: 3.5rem;
+}
 
-    .eWZHfu.button {
-        color: rgb(245, 246, 247);
-        box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
-        background-color: rgb(88, 26, 196);
-        background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
-    }
+.iTVeFz .cont {
+    display: flex;
+    padding: 0.625rem 0.625rem 0.625rem 2rem;
+    line-height: 1.125rem;
+    opacity: 0.8;
+    font-size: 12px;
+}
 
-    .iTVeFz button {
-        width: 12.5rem;
-        height: 100%;
-        margin: 0px;
-    }
+.eWZHfu.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(88, 26, 196);
+    background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
+}
 
-    .cBmlor>.button-inner {
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
+.iTVeFz button {
+    width: 12.5rem;
+    height: 100%;
+    margin: 0px;
+}
 
-    .cBmlor {
-        display: block;
-        width: 100%;
-        border-radius: 6.25rem;
-        height: 3rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
-    }
+.cBmlor>.button-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
 
-
+.cBmlor {
+    display: block;
+    width: 100%;
+    border-radius: 6.25rem;
+    height: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+}
 </style>

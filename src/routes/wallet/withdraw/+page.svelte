@@ -3,6 +3,8 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
+import { default_Wallet } from "$lib/store/coins"
+
 
 
 let isSelectCoin = false
@@ -14,19 +16,9 @@ const handlecoinSelect = (()=>{
     }
 })
 
-let defaultCoin = {
-    id: 1,
-        coin_symbol: "USDT",
-        coin_name: "Tether",
-        coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-        amount: 0,
-        suffix: "000000",
-        select: true
-}
-
 
 const handleCoins = ((e)=>{
-    defaultCoin = e.detail
+    default_Wallet.set(e.detail)
     handlecoinSelect()
 })
 
@@ -44,8 +36,8 @@ const handleCoins = ((e)=>{
         <button on:click={handlecoinSelect} class="sc-kszsFN evIEvq input-control">
             <div class="sc-cBIieI wvKye">
                 <div class="wrap">
-                    <img class="coin-icon" alt="" src={defaultCoin.coin_image}>
-                    <span class="currency">{defaultCoin.coin_symbol}</span>
+                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                    <span class="currency">{$default_Wallet.coin_name}</span>
                     <span class="svg">
                      <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                  </span>
@@ -54,15 +46,18 @@ const handleCoins = ((e)=>{
             <div class="sc-kqnjJL kdWfvE">
                 <div class="wrap">
                     <div class="tit">Balance : </div>
-                    <div class="amount">{defaultCoin.amount}</div>
+                    <div class="amount">{$default_Wallet.balance}</div>
                 </div>
             </div>
         </button>
         <div class="sc-hRnpUl bUlDWK">
+          
+
+            {#if $default_Wallet.coin_name === "USDT"}
             <div class="sc-wkwDy blotCy">
                 <div class="label">
                     <div>Withdraw Address
-                        <span class="cl-primary">(Note: Only Doge Coin)</span>
+                        <span class="cl-primary">{`(Note: Only ${$default_Wallet.coin_name} Coin)`}</span>
                     </div>
                 </div>
                 <div class="box">
@@ -75,7 +70,7 @@ const handleCoins = ((e)=>{
                 <div class="input-label">
                     <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
                         <div>Withdraw amount</div>
-                        <div style="font-size: 12px;">Min: 95.023428</div>
+                        <div style="font-size: 12px;">Min: 6.5USDT</div>
                     </div>
                 </div>
                 <div class="input-control">
@@ -107,6 +102,28 @@ const handleCoins = ((e)=>{
                 </div>
                 <div class="sc-fpyFWH jksbXu">For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</div>
             </div>
+
+            {:else}
+        <div class="sc-gRtYjc fIolUb">
+            <div class="oval">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-left">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-center">
+                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-right">
+            </div>
+            <div class="bcd-usd">
+                <img alt="bcd-usd" src="https://static.nanogames.io/assets/bcd_usd.ae5190d3.png">
+            </div>
+            <p><span class="word">{$default_Wallet.coin_name}</span> (DPP Dollar) is a crypto launched by DOTPLAYPLAY. You can play games, tip, coindrop, rain with it.</p>
+            <p><span class="word">1 {$default_Wallet.coin_name} = 1 USD</span> , You can <a class="hover" href="/wallet/swap">DPPSwap</a> DPP into any other currencies at any time and withdraw it to your wallet.</p>
+            <p>Deposit {$default_Wallet.coin_name} into Vault, Enjoy up to <span class="word">10%</span> Annual Percentage Rate return.</p>
+            <p><span class="hover">Deposit</span> to claim your {$default_Wallet.coin_name} bonus now.</p>
+            <button class="more-about">
+                <span>More about {$default_Wallet.coin_name}</span>
+                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+            </button>
+        </div>
+        {/if}
+          
         </div>
         <div class="share-wrap">
             Share<div class="sc-epFoly ftnlFA">
@@ -127,7 +144,7 @@ const handleCoins = ((e)=>{
     #withdraw {
         border-radius: 20px;
         background-color: rgb(30, 32, 36);
-        padding: 1.25rem 1.25rem 0px;
+        padding: 0.75rem 0.75rem 0px;
         box-sizing: border-box;
         /* height: 380px; */
         overflow-y: auto;

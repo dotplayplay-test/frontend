@@ -1,1 +1,14 @@
-// place files you want to import through the `$lib` alias in this folder.
+
+// import axios from "axios"
+
+// $:{
+//     onMount(async()=>{
+//         await axios.get("http://localhost:8000/api/wallets/ppd-wallet")
+//         .then((res)=>{
+//             console.log(res.data)
+//         })
+//         .catch((error)=>{
+//             console.log(error)
+//         })
+//     })
+// }

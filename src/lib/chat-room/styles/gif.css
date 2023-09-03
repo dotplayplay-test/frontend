@@ -58,3 +58,72 @@
     width: 100%;
     height: 100%;
 }
+
+
+/*=========================== tips / coin rain / coin drop===================  */
+.dWoTka {
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+    right: 0px;
+    bottom: 100%;
+    max-height: 18.75rem;
+    overflow-y: scroll;
+    background-color: rgb(30, 32, 36);
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid transparent;
+    font-size: 13px;
+    border-bottom: 1px solid transparent;
+}
+.dWoTka .is-selected {
+    border: 1px solid rgb(67, 179, 9);
+}
+.dWoTka .item {
+    height: 2.25rem;
+    cursor: pointer;
+    border-radius: 1.125rem;
+    position: relative;
+    margin-top: 0.25rem;
+    display: flex;
+    width: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.guGGGt {
+    display: flex;
+    height: 2rem;
+    line-height: 2rem;
+}
+.dWoTka .is-selected::after {
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    top: 50%;
+    margin-top: -0.25rem;
+    right: 0.625rem;
+    background-color: rgb(91, 174, 28);
+    box-shadow: rgba(91, 174, 28, 0.15) 0px 0px 0px 0.3125rem;
+}
+.guGGGt .label-img {
+    width: 2rem;
+    height: 2rem;
+}
+.guGGGt .label-txt {
+    margin: 0px 5px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+.dWoTka .is-selected::after {
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    top: 50%;
+    margin-top: -0.25rem;
+    right: 0.625rem;
+    background-color: rgb(91, 174, 28);
+    box-shadow: rgba(91, 174, 28, 0.15) 0px 0px 0px 0.3125rem;
+}

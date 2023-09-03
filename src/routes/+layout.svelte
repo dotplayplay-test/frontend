@@ -1,22 +1,38 @@
 <script>
+import {ppdWallet, ppeWallet, pplWallet, ppfWallet, usdt_Wallet,default_Wallet } from "$lib/store/coins"
+/** @type {import('./$types').PageLoad} */
+export let data;
 
- /** @type {import('./$types').PageLoad} */
- export let data;
+ppdWallet.set(data.ppdWallet)
+ppeWallet.set(data.ppeWallet)
+pplWallet.set(data.pplWallet)
+ppfWallet.set(data.ppfWallet)
+usdt_Wallet.set(data.usdtWallet)
+default_Wallet.set(data.defaultWallet)
+
 import Statistics from "../lib/statistics/main/index.svelte";
 import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
+import Notification from "../lib/notification/index.svelte";
 import "../styles/errors/error.css"
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {app} from "$lib/firebaseAuth/index"
-import { browser } from '$app/environment'
-import { onMount } from "svelte";
+import {
+    getAuth,
+    onAuthStateChanged
+} from "firebase/auth";
+import {
+    app
+} from "$lib/firebaseAuth/index"
+import {
+    browser
+} from '$app/environment'
+import {
+    onMount
+} from "svelte";
 import Closesidebar from "$lib/closesidebar.svelte";
-import { statisticsEl } from "../lib/store/statistic"
-
-
+import { statisticsEl} from "../lib/store/statistic"
 
 let isOpenSide = true
 let isChatRoom = 0
@@ -24,17 +40,14 @@ let isMenu = false
 let sideDetection = 0
 let page_load = true
 
-
-
-onMount(()=>{
+onMount(() => {
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const uid = user.uid;
-        // console.log(user)
-        page_load = false
-    } else {
-        page_load = false
+        if (user) {
+            const uid = user.uid;
+            page_load = false
+        } else {
+            page_load = false
         }
     });
 })
@@ -45,11 +58,10 @@ onMount(() => {
     if (browser && window.innerWidth < 650) {
         isOpenSide = true
         sideDetection = 0
-    }
-    else if (browser && window.innerWidth > 1000) {
+    } else if (browser && window.innerWidth > 1000) {
         isOpenSide = true
         sideDetection = 240
-    }  else {
+    } else {
         isOpenSide = false
         sideDetection = 76
     }
@@ -65,16 +77,22 @@ const handleMainMenu = (() => {
     }
 })
 
-
 browser && addEventListener("resize", () => {
     ens = (window.innerWidth)
 })
-
-const handleChatroom = (() => {
+let isnotification = false
+const handleChatroom = ((e) => {
     if (isChatRoom) {
+        isnotification = false
         isChatRoom = 0
     } else {
         isChatRoom = 360
+        if (e === "notification") {
+            console.log(e)
+            isnotification = true
+        } else {
+            isnotification = false
+        }
     }
 })
 
@@ -86,18 +104,15 @@ const handleMenu = () => {
     }
 }
 
-const handleStatistics = (()=>{
+const handleStatistics = (() => {
     statisticsEl.set(false)
 })
-
 </script>
 
 <div class="app">
-
     {#if $statisticsEl}
-        <Statistics on:discloseStatistics={handleStatistics} />
+    <Statistics on:discloseStatistics={handleStatistics} />
     {/if}
-
 
     {#if (isOpenSide) }
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
@@ -122,38 +137,41 @@ const handleStatistics = (()=>{
         <Menubar  on:menu={handleMenu}   />
     </div>
     {/if}
-
     <div id="right-bar" style={`width: ${isChatRoom ? ((ens - sideDetection) - 360) : ens - sideDetection}px;`} >
         <header>
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
-        
-            {#if page_load}
-            <!-- Loading animation -->
-                <div class="center">
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                </div>
-             {:else}
-            <main class="sc-lhMiDA ePAxUv">
-                <slot></slot>
-            </main>
-            <footer>
-                <Footer />
-            </footer>
-            {/if}
-    
+
+        {#if page_load}
+        <!-- Loading animation -->
+        <div class="center">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        {:else}
+        <main class="sc-lhMiDA ePAxUv">
+            <slot></slot>
+        </main>
+        <footer>
+            <Footer />
+        </footer>
+        {/if}
 
     </div>
     {#if (isChatRoom)}
+    {#if isnotification}
+    <Notification />
+    {:else}
     <ChatSide on:closeChat={handleChatroom} />
+    {/if}
+
     {/if}
 </div>

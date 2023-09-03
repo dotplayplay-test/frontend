@@ -1,61 +1,63 @@
 <script>
 import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import {
-    createEventDispatcher
-} from 'svelte'
+import { createEventDispatcher } from 'svelte'
 const dispatch = createEventDispatcher()
+import { updateCoins } from "./updateCoin"
+const { useCoinUpdate } = updateCoins()
+import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 
-
-let coins = [{
+let coins = [
+    {
         id: 1,
-        coin_symbol: "USDT",
-        coin_name: "Tether",
-        coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-        amount: 0,
-        suffix: "000000",
-        select: true
+        coin_name: $usdt_Wallet.coin_name,
+        coin_fname: $usdt_Wallet.coin_fname,
+        coin_image: $usdt_Wallet.coin_image,
+        balance: $usdt_Wallet.balance,
+        suffix: $usdt_Wallet.suffix,
+        select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 2,
-        coin_symbol: "PPD",
-        coin_name: "Play play Dollar",
-        coin_image: "https://www.linkpicture.com/q/dpp_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false
+        coin_name: $ppdWallet.coin_name,
+        coin_fname:  $ppdWallet.coin_fname,
+        coin_image: $ppdWallet.coin_image,
+        balance: $ppdWallet.balance,
+        suffix: $ppdWallet.suffix,
+        select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 3,
-        coin_symbol: "PPE",
-        coin_name: "Play play Earn",
-        coin_image: "https://www.linkpicture.com/q/ppe_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false
+        coin_name:  $ppeWallet.coin_name,
+        coin_fname:  $ppeWallet.coin_fname,
+        coin_image: $ppeWallet.coin_image,
+        balance: $ppeWallet.balance,
+        suffix: $ppeWallet.suffix,
+        select: ($ppeWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 4,
-        coin_symbol: "PPL",
-        coin_name: "Play play Lottery",
-        coin_image: "https://www.linkpicture.com/q/ppl_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false
+        coin_name: $pplWallet.coin_name,
+        coin_fname:  $ppeWallet.coin_fname,
+        coin_image:  $pplWallet.coin_image,
+        balance:  $pplWallet.balance,
+        suffix: $pplWallet.suffix,
+        select: ($pplWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 5,
-        coin_symbol: "PPF",
-        coin_name: "Play play fun",
-        coin_image: "https://www.linkpicture.com/q/ppf_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false
+        coin_name: $ppfWallet.coin_name,
+        coin_fname:  $ppfWallet.coin_name,
+        coin_image: $ppfWallet.coin_image,
+        balance:  $ppfWallet.balance,
+        suffix: $ppfWallet.suffix,
+        select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
     },
 ]
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)
+    useCoinUpdate(e)
 })
 
 </script>
@@ -78,12 +80,12 @@ const handleSelectCoin = ((e) => {
                         <img class="coin-icon" alt="" src={coin.coin_image}>
                     </div>
                     <div class="name-wrap">
-                        <div class="currency-name">{coin.coin_symbol}</div>
+                        <div class="currency-name">{coin.coin_name}</div>
                     </div>
                     <div class="amount-wrap">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <div class="amount">
-                                <span class="amount-str">{coin.amount}.<span class="suffix">{coin.suffix}</span></span>
+                                <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
                             </div>
                         </div>
                     </div>
@@ -95,6 +97,9 @@ const handleSelectCoin = ((e) => {
 </div>
 
 <style>
+.kjMlDW.active {
+    border-color: rgb(67, 179, 9);
+}
 .eqDSYn {
     height: 24.75rem;
     width: 26.25rem;

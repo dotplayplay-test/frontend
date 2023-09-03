@@ -1,0 +1,72 @@
+.jgIKJt .content .msg-wrap {
+    display: flex;
+    position: relative;
+}
+.cciZxO {
+    width: 100%;
+    height: 7.5rem;
+    max-width: 14.875rem;
+}
+.cfLlrJ {
+    width: 100%;
+    height: 7.5rem;
+    max-width: 14.875rem;
+    position: relative;
+    cursor: pointer;
+    background: url(https://static.nanogames.io/assets/coindrop-bg.58d17104.png) 0% 0% / 100% 100% no-repeat;
+}
+.cfLlrJ .right-open-img {
+    position: absolute;
+    width: 7.5rem;
+    right: 0.75rem;
+    top: 1.25rem;
+}
+.cfLlrJ .coindrop-status {
+    min-width: 4.75rem;
+    height: 2rem;
+    background-color: rgb(255, 240, 7);
+    border-radius: 1rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-weight: bold;
+    position: absolute;
+    left: 1.625rem;
+    bottom: 1rem;
+    color: rgb(23, 24, 27);
+    padding: 0px 0.75rem;
+    opacity: 0.35;
+}
+.VfNib .content .msg-wrap {
+    display: flex;
+    position: relative;
+}
+.gkHCXh {
+    background-image: url(https://static.nanogames.io/assets/tip_glod.df7fc7f5.png), linear-gradient(30deg, rgb(98, 86, 49), rgb(58, 56, 45));
+    background-size: 90%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    border: 1px solid rgb(63, 58, 41);
+    overflow: hidden;
+}
+.cl-primary {
+    color: var(--primary-color);
+}
+.gkHCXh .msg-cont {
+    background-color: rgba(246, 199, 34, 0.3);
+    border-radius: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    margin-top: 0.5625rem;
+}
+.gkHCXh .msg-cont .coin-icon {
+    width: 1.125rem;
+    margin-right: 0.4375rem;
+}

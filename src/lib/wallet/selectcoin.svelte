@@ -1,89 +1,72 @@
 <script>
 import { createEventDispatcher } from "svelte";
 const dispatch = createEventDispatcher()
-
-
+import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 
 let coins = [{
     id: 1,
-    coin_symbol: "USDT",
-    coin_name: "Tether",
-    coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-    amount: 0,
-    suffix: "000000",
-    select: true,
+    coin_name: $usdt_Wallet.coin_name,
+    coin_fname: $usdt_Wallet.coin_fname,
+    coin_image: $usdt_Wallet.coin_image,
+    balance: $usdt_Wallet.balance,
+    suffix:  $usdt_Wallet.suffix,
+    select:  $usdt_Wallet.coin_name === $default_Wallet.coin_name,
     networks: {
         erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
+            qr_code:  $usdt_Wallet.qr_code,
+            address: $usdt_Wallet.erc,
         },
         bep: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "0x351455346d88ee6FE927c79f23395143662EC88e"
+            qr_code:  $usdt_Wallet.qr_code,
+            address: $usdt_Wallet.bep,
         },
         trc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "TEosAyZA7Kwv4q84es3uyLgXHDHQWyYrsq"
+            qr_code:  $usdt_Wallet.qr_code,
+            address: $usdt_Wallet.trc,
         }
-    }
     },
-    {
-
-        id: 2,
-        coin_symbol: "PPD",
-        coin_name: "Play play Dollar",
-        coin_image: "https://www.linkpicture.com/q/dpp_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false,
-        networks: {
-        erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
-        }
-    }
-    },
+},
+{
+    id: 2,
+    coin_name: $ppdWallet.coin_name,
+    coin_fname: $ppdWallet.coin_fname,
+    coin_image: $ppdWallet.coin_image,
+    balance: $ppdWallet.balance,
+    suffix: $ppdWallet.suffix,
+    select:  $ppdWallet.coin_name === $default_Wallet.coin_name,
+    address: $ppdWallet.address,
+},
     {
         id: 3,
-        coin_symbol: "PPE",
-        coin_name: "Play play Earn",
-        coin_image: "https://www.linkpicture.com/q/ppe_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false,
-        erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
-        }
+        coin_name: $ppeWallet.coin_name,
+        coin_fname: $ppeWallet.coin_fname,
+        coin_image: $ppeWallet.coin_image,
+        balance: $ppeWallet.balance,
+        suffix: $ppeWallet.suffix,
+        select:  $ppeWallet.coin_name === $default_Wallet.coin_name,
+        address: $ppeWallet.address,
     },
     {
         id: 4,
-        coin_symbol: "PPL",
-        coin_name: "Play play Lottery",
-        coin_image: "https://www.linkpicture.com/q/ppl_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false,
-        erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
-        }
+        coin_name: $pplWallet.coin_name,
+        coin_fname: $pplWallet.coin_fname,
+        coin_image: $pplWallet.coin_image,
+        balance: $pplWallet.balance,
+        suffix: $pplWallet.suffix,
+        select:  $pplWallet.coin_name === $default_Wallet.coin_name,
+        address: $pplWallet.address,
     },
     {
         id: 5,
-        coin_symbol: "PPF",
-        coin_name: "Play play fun",
-        coin_image: "https://www.linkpicture.com/q/ppf_logo.png",
-        amount: 0,
-        suffix: "000000",
-        select: false,
-        erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
-        },
+        coin_name: $ppfWallet.coin_name,
+        coin_fname: $ppfWallet.coin_fname,
+        coin_image: $ppfWallet.coin_image,
+        balance: $ppfWallet.balance,
+        suffix: $ppfWallet.suffix,
+        select: $ppfWallet.coin_name === $default_Wallet.coin_name,
+        address: $ppfWallet.address,
     },
 ]
-
 
 const handleCoinSelect = ((e)=>{
     dispatch("handleCoinSelect", e)
@@ -102,12 +85,12 @@ const handleCoinSelect = ((e)=>{
                                     <img alt="" class="coin-icon" src={coin.coin_image}>
                                 </div>
                                 <div class="name-wrap">
-                                    <div class="currency-name">{coin.coin_symbol}</div>
+                                    <div class="currency-name">{coin.coin_name}</div>
                                 </div>
                                 <div class="amount-wrap">
                                     <div class="sc-Galmp erPQzq coin notranslate monospace">
                                         <div class="amount">
-                                            <span class="amount-str">{coin.amount}<span class="suffix">{coin.suffix}</span>
+                                            <span class="amount-str">{coin.balance}<span class="suffix">{coin.suffix}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -121,6 +104,9 @@ const handleCoinSelect = ((e)=>{
 </div>
 
 <style>
+.kjMlDW.active {
+    border-color: rgb(67, 179, 9);
+}
 .ijNHle.balance-wrap {
     background-color: wheat;
     transition: all 0.5s ease;

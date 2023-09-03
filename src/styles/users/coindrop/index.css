@@ -118,6 +118,7 @@
     padding: 0.3125rem 0.625rem 0.3125rem 1.25rem;
     width: 9.0625rem;
     display: flex;
+    cursor: pointer;
     -webkit-box-align: center;
     align-items: center;
     border-left: 1px solid rgb(45, 48, 53);
