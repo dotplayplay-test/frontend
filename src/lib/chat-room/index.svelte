@@ -51,6 +51,10 @@ import {
     getDoc
 } from "firebase/firestore";
 import Pusher from "pusher-js"
+import {tipped_user } from "$lib/store/tipUser"
+import {
+    userProfile
+} from '$lib/store/profile';
 let element;
 let newMessages = ''
 
@@ -97,9 +101,15 @@ const handleSendMessage = (async (e, name) => {
 
         if (newMessages === "/rain ") {
             goto("/user/rain")
-        } else if (newMessages === "/coindrop ") {
+        } 
+        else if (newMessages === "/coindrop ") {
             goto("/user/coindrop_send")
-        } else {
+        }  
+        else if (newMessages == "/tip @ ") {
+            tipped_user.set(newMessages)
+            goto("/user/tip")
+        }
+        else {
             let date = new Date();
             let hours = date.getHours();
             let minutes = date.getMinutes();
@@ -109,15 +119,31 @@ const handleSendMessage = (async (e, name) => {
             minutes = minutes < 10 ? '0' + minutes : minutes;
             let time = (hours + ':' + minutes + ' ' + newformat);
             let data = {
-                id: Math.floor(Math.random() * 230000000),
-                email: id.email,
-                type: name.type,
-                text: name.newMessages ? name.newMessages : "",
-                sent_at: time,
-                profle_img: profile && profile.profile_image,
-                sender_username: profile && profile.username,
-                gif: name.gif ? name.gif : "",
-                vip_level: 0
+            id: Math.floor(Math.random() * 230000000),
+            email: id.email,
+            type: name.type,
+            text: name.newMessages ? name.newMessages : "",
+            sent_at: time,
+            profle_img: $userProfile.profile_image,
+            sender_username: $userProfile.username,
+            gif: name.gif ? name.gif : "",
+
+            coin_rain_amount: '' ,
+            coin_rain_comment: '',
+            coin_rain_num: '',
+            coin_rain_token:  '',
+
+            coin_drop_amount: '',
+            coin_drop_comment: '',
+            coin_drop_num:'',
+            coin_drop_token: '',
+
+            tipped_user: "",
+            tipped_amount: "",
+            tipped_comment: "",
+            tipped_coin_image: "",
+            tip_Token: "",
+            vip_level: $userProfile.vip_level
             }
             sendMessage(data)
         }
@@ -255,7 +281,7 @@ const handleTipsControls = ((e) => {
         <div class="sc-bSqaIl eA-dYOl">
             <div bind:this={element} class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
                 <div class="sc-AjmGg kgsidd">
-                    {#each chats as chat (chat.id) }
+                    {#each chats as chat , i}
                     <div class="flat-item">
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
@@ -370,15 +396,15 @@ const handleTipsControls = ((e) => {
                                         </div>
                                     </div>
                                 </div>
-                                {:else if (chat.type === "tips")}
+                                {:else if (chat.type === "tip")}
                                 <!-- ====================== tips ====================== -->
                                 <div class="msg-wrap">
                                     <div class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane">
                                         I tipped&nbsp;&nbsp;
-                                        <a class="cl-primary" href="/user/profile/285947">@MoonGambler😎</a>
+                                        <a class="cl-primary" href="/user/profile/285947">{chat.tipped_user}</a>
                                         <div class="msg-cont">
-                                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
-                                            10.304657 PPD\
+                                            <img class="coin-icon" alt="" src={chat.tipped_coin_image}>
+                                            {chat.tipped_amount , chat.tip_Token}\
                                         </div>
                                     </div>
                                 </div>

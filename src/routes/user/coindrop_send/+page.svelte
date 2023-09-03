@@ -2,9 +2,12 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import "../../../styles/users/coindrop/index.css"
+import "../../../styles/users/coindrop/index.css";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-
+import { usePublicMessages } from "$lib/chat-room/componets/index"
+const {
+    sendMessage
+} = usePublicMessages()
 import {
     ppdWallet,
     ppeWallet,
@@ -16,8 +19,6 @@ import {
 import {
     userProfile
 } from '$lib/store/profile';
-
-console.log($userProfile)
 
 let coins = [{
         id: 1,
@@ -60,6 +61,7 @@ let coins = [{
 let coinDropValue = 10
 let isSelectCoin = false
 let num = 10
+let eachCoinDrop = parseInt(coinDropValue) / parseInt(num)
 let displayComment = ""
 let isCommet = false
 const handleSelectCoins = (() => {
@@ -70,28 +72,53 @@ const handleSelectCoins = (() => {
     }
 })
 
+$:{
+    eachCoinDrop = parseInt(coinDropValue) / parseInt(num) 
+}
+
 const handleSelectCoin = ((e) => {
     default_Wallet.set(e)
     handleSelectCoins()
 })
 
 const handleSubmit = (() => {
-
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let newformat = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let time = (hours + ':' + minutes + ' ' + newformat);
     let data = {
-        id: Math.floor(Math.random() * 230000000),
         email: $userProfile.email,
         type: "coin_drop",
         text: "",
         sent_at: time,
-        profle_img: profile && profile.profile_image,
-        sender_username: profile && profile.username,
+        profle_img: $userProfile.profile_image,
+        sender_username: $userProfile.username,
         gif: "",
-        coin_drop: "",
-        vip_level: 0
-    }
-    // let data = {coinDropValue, coin_name: $default_Wallet.coin_name, num, comment: displayComment }
 
-    console.log(data)
+        tipped_user: "",
+        tipped_amount: "",
+        tipped_comment: "",
+        tipped_coin_image: "",
+        tip_Token: "",
+
+        coin_rain_amount: '' ,
+        coin_rain_comment: '',
+        coin_rain_num:num,
+        coin_rain_token:  '',
+
+        coin_drop_amount: eachCoinDrop,
+        coin_drop_comment: displayComment,
+        coin_drop_num: num,
+        coin_drop_token: $default_Wallet.coin_name,    
+
+        vip_level: $userProfile.vip_level
+    }
+    sendMessage(data)
+    history.back(-1)
 })
 </script>
 

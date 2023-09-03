@@ -11,9 +11,14 @@ import {
     usdt_Wallet,
     default_Wallet
 } from "$lib/store/coins"
+import {  usePublicMessages } from "$lib/chat-room/componets/index"
+const {
+    sendMessage
+} = usePublicMessages()
 import {
     userProfile
 } from '$lib/store/profile';
+import {tipped_user } from "$lib/store/tipUser"
 
 let coins = [{
         id: 1,
@@ -52,11 +57,9 @@ let coins = [{
         select: ($pplWallet.coin_name === $default_Wallet.coin_name)
     }
 ]
-let coinDropValue = 10
-let rainValue = ""
-let num = 10
-let eachCoinDrop = parseInt(coinDropValue) / parseInt(num)
-let displayComment = ""
+
+let tipValue = 10
+let tip_user = $tipped_user
 let isSelectCoin = false
 const handleSelectCoins = (() => {
     if (isSelectCoin) {
@@ -65,12 +68,8 @@ const handleSelectCoins = (() => {
         isSelectCoin = true
     }
 })
-
-$:{
-    eachCoinDrop = parseInt(coinDropValue) / parseInt(num) 
-}
-
 let count = 0
+let displayComment = ""
 const handleCommets = ((e)=>{
     if(e.length <= 50){
         count = e.length 
@@ -96,7 +95,7 @@ const handleSubmit = (()=>{
     let time = (hours + ':' + minutes + ' ' + newformat);
     let data = {
         email: $userProfile.email,
-        type: "coin_rain",
+        type: "tip",
         text: "",
         sent_at: time,
         profle_img: $userProfile.profile_image,
@@ -108,20 +107,20 @@ const handleSubmit = (()=>{
         coin_drop_num:"",
         coin_drop_token: "",
 
-        tipped_user: "",
-        tipped_amount: "",
-        tipped_comment: "",
-        tipped_coin_image: "",
-        tip_Token: "",
+        coin_rain_amount: '' ,
+        coin_rain_comment: '',
+        coin_rain_num:'',
+        coin_rain_token:  '',
 
-        coin_rain_amount: eachCoinDrop,
-        coin_rain_comment: displayComment,
-        coin_rain_num: num,
-        coin_rain_token: $default_Wallet.coin_name,        
+        tipped_user: $tipped_user,
+        tipped_amount: tipValue,
+        tipped_comment: displayComment,
+        tipped_coin_image:$default_Wallet.coin_image,
+        tip_Token: $default_Wallet.coin_name,
 
         vip_level: $userProfile.vip_level
     }
-    // sendMessage(data)
+    sendMessage(data)
     history.back(-1)
 })
 
@@ -135,7 +134,7 @@ const handleSubmit = (()=>{
         </button>
         {/if}
         <div class={`dialog-head ${isSelectCoin ? "has-back" : "has-close"}`}>
-            <div class="dialog-title">Rain</div>
+            <div class="dialog-title">Tip</div>
         </div>
         <button on:click={()=> history.back()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
@@ -152,7 +151,7 @@ const handleSubmit = (()=>{
                         </div>
                     </div>
                     <div class="input-control">
-                        <input type="number" bind:value={rainValue} >
+                        <input type="number" bind:value={tipValue} >
                         <button on:click={()=> handleSelectCoins()} class="sc-kHOZwM lkOmCH">
                             <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                             <span class="currency">{$default_Wallet.coin_name}</span>
@@ -166,10 +165,10 @@ const handleSubmit = (()=>{
                         {/if} {$default_Wallet.coin_name}</div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input people-input">
-                    <div class="input-label">Number of people</div>
+                    <div class="input-label"></div>
                     <div class="input-control">
-                        <input type="number"  bind:value={num}>
-                        <div class="dialog-gray">1~100</div>
+                        <input type="text" disabled value={tip_user}>
+                        <div class="dialog-gray">tipped</div>
                     </div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset rain-textarea">
