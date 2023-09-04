@@ -161,3 +161,116 @@
     height: 1.375rem;
     fill: rgba(153, 164, 176, 0.6);
 }
+
+
+
+.gAvMHL .right {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  gap: 20px;
+  justify-content: flex-end;
+}
+.euzHLF .wallet-enter {
+  margin-right: 24px;
+}
+.LQlWw {
+  background-color: rgb(30, 32, 36);
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  height: 3rem;
+  border-radius: 1.5rem;
+  padding-left: 0.875rem;
+  line-height: 1;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+}
+.icGouR {
+  position: relative;
+  margin: 0.4375rem 0.25rem 0.4375rem 0.4375rem;
+}
+.boxpOO {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 800;
+  min-width: 5.75rem;
+}
+.boxpOO .coin-icon {
+  width: 1rem;
+  height: 1rem;
+}
+.boxpOO .currency {
+  margin: 0px 0.625rem 0px 0.4375rem;
+}
+.erPQzq {
+  display: inline-flex;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+.icGouR .balance .amount {
+  color: rgb(245, 246, 247);
+  font-weight: 800;
+}
+.erPQzq .amount-str {
+  width: 7em;
+  display: inline-block;
+}
+.erPQzq .suffix {
+  opacity: 0.5;
+}
+.eWZHfu.button {
+  color: rgb(245, 246, 247);
+  box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+  background-color: rgb(88, 26, 196);
+  background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
+}
+
+.fGPfpD .svg {
+  margin-right: 0.3125rem;
+}
+.LQlWw .svg {
+  fill: rgb(255, 255, 255);
+}
+.fWkueO {
+  width: 5rem;
+  height: 2.5rem;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(30, 32, 36);
+  border-radius: 1.25rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 9;
+}
+.fWkueO .user-wrap {
+  display: flex;
+}
+.fWkueO .user-wrap > a {
+  font-size: 0px;
+}
+.fWkueO .svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.fWkueO .user-wrap > a .avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+.fGPfpD {
+  height: 100%;
+  width: 7.25rem;
+  border-radius: 30px;
+}

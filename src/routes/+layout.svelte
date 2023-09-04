@@ -9,6 +9,7 @@ import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
 import Notification from "../lib/notification/index.svelte";
+import { handleisLoggin, handleisLoading } from "$lib/store/profile"
 import "../styles/errors/error.css"
 import {
     getAuth,
@@ -30,19 +31,23 @@ let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
-let page_load = true
 
-onMount(() => {
+$:{
+    onMount(() => {
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
-            page_load = false
+            handleisLoggin.set(true)
+            handleisLoading.set(false)
         } else {
-            page_load = false
+            handleisLoggin.set(false)
+            handleisLoading.set(false)
         }
     });
 })
+
+}
 
 let ens = browser && window.innerWidth
 
@@ -134,7 +139,7 @@ const handleStatistics = (() => {
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
 
-        {#if page_load}
+        {#if $handleisLoading}
         <!-- Loading animation -->
         <div class="center">
             <div class="wave"></div>
