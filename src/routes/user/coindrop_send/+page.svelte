@@ -5,6 +5,10 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import "../../../styles/users/coindrop/index.css";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import { usePublicMessages } from "$lib/chat-room/componets/index"
+import { UserProfileEl } from "$lib/index";
+import { onMount } from 'svelte';
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
+    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
 const {
     sendMessage
 } = usePublicMessages()
@@ -15,10 +19,21 @@ import {
     usdt_Wallet,
     default_Wallet
 } from "$lib/store/coins"
-
 import {
-    userProfile
+    profileStore
 } from '$lib/store/profile';
+
+$:{
+    onMount(async()=>{
+        handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPFwallet()
+        handlePPLwallet()
+        handlePPEwallet()
+        handlePPDwallet()
+    })
+}
+
 
 let coins = [{
         id: 1,
@@ -91,12 +106,12 @@ const handleSubmit = (() => {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     let time = (hours + ':' + minutes + ' ' + newformat);
     let data = {
-        email: $userProfile.email,
+        email: $profileStore.email,
         type: "coin_drop",
         text: "",
         sent_at: time,
-        profle_img: $userProfile.profile_image,
-        sender_username: $userProfile.username,
+        profle_img: $profileStore.profile_image,
+        sender_username: $profileStore.username,
         gif: "",
 
         tipped_user: "",
@@ -115,7 +130,7 @@ const handleSubmit = (() => {
         coin_drop_num: num,
         coin_drop_token: $default_Wallet.coin_name,    
 
-        vip_level: $userProfile.vip_level
+        vip_level: $profileStore.vip_level
     }
     sendMessage(data)
     history.back(-1)

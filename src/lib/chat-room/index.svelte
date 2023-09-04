@@ -53,7 +53,7 @@ import {
 import Pusher from "pusher-js"
 import {tipped_user } from "$lib/store/tipUser"
 import {
-    userProfile
+    profileStore
 } from '$lib/store/profile';
 let element;
 let newMessages = ''
@@ -124,8 +124,8 @@ const handleSendMessage = (async (e, name) => {
             type: name.type,
             text: name.newMessages ? name.newMessages : "",
             sent_at: time,
-            profle_img: $userProfile.profile_image,
-            sender_username: $userProfile.username,
+            profle_img: $profileStore.profile_image,
+            sender_username: $profileStore.username,
             gif: name.gif ? name.gif : "",
 
             coin_rain_amount: '' ,
@@ -143,7 +143,7 @@ const handleSendMessage = (async (e, name) => {
             tipped_comment: "",
             tipped_coin_image: "",
             tip_Token: "",
-            vip_level: $userProfile.vip_level
+            vip_level: $profileStore.vip_level
             }
             sendMessage(data)
         }

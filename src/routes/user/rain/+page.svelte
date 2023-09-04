@@ -4,6 +4,10 @@ import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import "../../../styles/users/rain/index.css"
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+import { UserProfileEl } from "$lib/index";
+import { onMount } from 'svelte';
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
+    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
 import {
     ppdWallet,
     ppeWallet,
@@ -12,8 +16,20 @@ import {
     default_Wallet
 } from "$lib/store/coins"
 import {
-    userProfile
+    profileStore
 } from '$lib/store/profile';
+
+$:{
+    onMount(async()=>{
+        handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPFwallet()
+        handlePPLwallet()
+        handlePPEwallet()
+        handlePPDwallet()
+    })
+}
+
 
 let coins = [{
         id: 1,
@@ -22,7 +38,7 @@ let coins = [{
         coin_image: $usdt_Wallet.coin_image,
         balance: $usdt_Wallet.balance,
         suffix: $usdt_Wallet.suffix,
-        select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
+        select: ( $usdt_Wallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 2,
@@ -52,6 +68,7 @@ let coins = [{
         select: ($pplWallet.coin_name === $default_Wallet.coin_name)
     }
 ]
+
 let coinDropValue = 10
 let rainValue = ""
 let num = 10
@@ -95,12 +112,12 @@ const handleSubmit = (()=>{
     minutes = minutes < 10 ? '0' + minutes : minutes;
     let time = (hours + ':' + minutes + ' ' + newformat);
     let data = {
-        email: $userProfile.email,
+        email: $profileStore.email,
         type: "coin_rain",
         text: "",
         sent_at: time,
-        profle_img: $userProfile.profile_image,
-        sender_username: $userProfile.username,
+        profle_img: $profileStore.profile_image,
+        sender_username: $profileStore.username,
         gif: "",
 
         coin_drop_amount: "",
@@ -119,7 +136,7 @@ const handleSubmit = (()=>{
         coin_rain_num: num,
         coin_rain_token: $default_Wallet.coin_name,        
 
-        vip_level: $userProfile.vip_level
+        vip_level: $profileStore.vip_level
     }
     // sendMessage(data)
     history.back(-1)

@@ -3,6 +3,8 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { UseTransaction } from "$lib/hook/useTransaction"
+import {onMount} from "svelte"
+import { UserProfileEl } from "$lib/index";
 const { Swap } = UseTransaction()
 import {
     ppdWallet,
@@ -12,14 +14,31 @@ import {
     default_Wallet
 } from "$lib/store/coins"
 import {
+    profileStore
+} from '$lib/store/profile';
+import {
     checkIsOpen,
     storeReceiver,
     storeSender,
     IsSender
 } from "$lib/store/swaps/index"
 
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
+    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
+
 storeSender.set($default_Wallet)
 storeReceiver.set($ppeWallet)
+
+$:{
+    onMount(async()=>{
+        handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPFwallet()
+        handlePPLwallet()
+        handlePPEwallet()
+        handlePPDwallet()
+    })
+}
 
 $:{
 if ($storeSender.coin_name === "USDT") {

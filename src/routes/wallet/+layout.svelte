@@ -3,6 +3,8 @@ import "../../styles/transactions/deposit.css"
 
 /** @type {import('./$types').PageLoad} */
 export let data;
+
+
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import BiTransfer from "svelte-icons-pack/bi/BiTransfer";

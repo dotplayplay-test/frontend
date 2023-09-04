@@ -87,7 +87,7 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                         <tr>
                                             <td>
                                                 <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
-                                                    <img class="avatar " src="https://img2.nanogames.io/avatar/510968/s">
+                                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s">
                                                     <div class="name">Qlomhffnyb</div>
                                                 </a>
                                             </td>
@@ -124,7 +124,7 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                         <tr>
                                             <td>
                                                 <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
-                                                    <img class="avatar " src="https://img2.nanogames.io/avatar/510968/s">
+                                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s">
                                                     <div class="name">Qlomhffnyb</div>
                                                 </a>
                                             </td>
@@ -377,4 +377,16 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                             </td>
                                             <td class="res">3</td>
                                             <td class="el">
-                                                <span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img class="avatar " src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball active"><div>35</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>34</div></div><div class="ball active"><div>6</div></div><div class="ball"><div>23</div></div><div class="ball jackpot-ball">6</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img class="avatar " src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball"><div>4</div></div><div class="ball active"><div>32</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>14</div></div><div class="ball active"><div>7</div></div><div class="ball jackpot-ball">8</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr></tbody></table></div><div class="sc-hWBuOZ fXbWeJ"><button class="sc-iqseJM cBmlor button button-normal hide-show"><div class="button-inner">more</div></button></div></div></div></div></div>
+                                                <span class="green-word">$ 1</span>
+                                            </td>
+                                        </tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
+                                            <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s">
+                                            <div class="name">Qlomhffnyb</div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="nums-wrap">
+                                            <div class="nums-inner">
+                                                <div class="sc-iseIHH gHuzXM draw">
+                                                    <div class="ball active">
+                                                        <div>35</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>34</div></div><div class="ball active"><div>6</div></div><div class="ball"><div>23</div></div><div class="ball jackpot-ball">6</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img alt="" class="avatar " src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball"><div>4</div></div><div class="ball active"><div>32</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>14</div></div><div class="ball active"><div>7</div></div><div class="ball jackpot-ball">8</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr></tbody></table></div><div class="sc-hWBuOZ fXbWeJ"><button class="sc-iqseJM cBmlor button button-normal hide-show"><div class="button-inner">more</div></button></div></div></div></div></div>

@@ -2,8 +2,15 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCopy from "svelte-icons-pack/io/IoCopy";
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
+import { onMount } from 'svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import { UserProfileEl } from "$lib/index";
+const { handleDefaultwallet } = UserProfileEl()
+// import { updateCoins } from "$lib/profilecomponent/main/updateCoin"
+// const { useCoinUpdate } = updateCoins()
+
 import { default_Wallet, usdt_Wallet } from "$lib/store/coins"
+
 
 let isSelectCoin = false
 const handlecoinSelect = (() => {
@@ -14,30 +21,11 @@ const handlecoinSelect = (() => {
     }
 })
 
-let defaultCoin = {
-    id: 1,
-    coin_symbol: "USDT",
-    coin_name: "Tether",
-    coin_image: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-    amount: 0,
-    suffix: "000000",
-    select: true,
-    networks: {
-        erc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "DR1PTY13GjbsUSkrNVJNCqrfHpDWWPQxDS"
-        },
-        bep: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "0x351455346d88ee6FE927c79f23395143662EC88e"
-        },
-        trc: {
-            qr_code: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            address: "TEosAyZA7Kwv4q84es3uyLgXHDHQWyYrsq"
-        }
-    }
+$:{
+    onMount(()=>{
+        handleDefaultwallet()
+    })
 }
-
 let erc = true
 let trc = false
 let bep = false
@@ -193,12 +181,12 @@ const handleCoins = ((e) => {
             <div class="bcd-usd">
                 <img alt="bcd-usd" src="https://static.nanogames.io/assets/bcd_usd.ae5190d3.png">
             </div>
-            <p><span class="word">{defaultCoin.coin_symbol}</span> (DPP Dollar) is a crypto launched by DOTPLAYPLAY. You can play games, tip, coindrop, rain with it.</p>
-            <p><span class="word">1 {defaultCoin.coin_symbol} = 1 USD</span> , You can <a class="hover" href="/wallet/swap">DPPSwap</a> DPP into any other currencies at any time and withdraw it to your wallet.</p>
-            <p>Deposit {defaultCoin.coin_symbol} into Vault, Enjoy up to <span class="word">10%</span> Annual Percentage Rate return.</p>
-            <p><span class="hover">Deposit</span> to claim your {defaultCoin.coin_symbol} bonus now.</p>
+            <p><span class="word">{$default_Wallet.coin_name}</span> (DPP Dollar) is a crypto launched by DOTPLAYPLAY. You can play games, tip, coindrop, rain with it.</p>
+            <p><span class="word">1 {$default_Wallet.coin_name} = 1 USD</span> , You can <a class="hover" href="/wallet/swap">DPPSwap</a> DPP into any other currencies at any time and withdraw it to your wallet.</p>
+            <p>Deposit {$default_Wallet.coin_name} into Vault, Enjoy up to <span class="word">10%</span> Annual Percentage Rate return.</p>
+            <p><span class="hover">Deposit</span> to claim your {$default_Wallet.coin_name} bonus now.</p>
             <button class="more-about">
-                <span>More about {defaultCoin.coin_symbol}</span>
+                <span>More about {$default_Wallet.coin_name}</span>
                 <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
             </button>
         </div>

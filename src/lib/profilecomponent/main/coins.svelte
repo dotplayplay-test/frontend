@@ -1,13 +1,29 @@
 <script>
 import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import { createEventDispatcher } from 'svelte'
+import { createEventDispatcher , onMount} from 'svelte'
 const dispatch = createEventDispatcher()
 import { updateCoins } from "./updateCoin"
+import { UserProfileEl } from "../../index";
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
+    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
 import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 
-let coins = [
+$:{
+    onMount(async()=>{
+        handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPFwallet()
+        handlePPLwallet()
+        handlePPEwallet()
+        handlePPDwallet()
+    })
+}
+
+let coins
+$:{
+    coins = [
     {
         id: 1,
         coin_name: $usdt_Wallet.coin_name,
@@ -19,7 +35,7 @@ let coins = [
     },
     {
         id: 2,
-        coin_name: $ppdWallet.coin_name,
+        coin_name: $ppdWallet && $ppdWallet.coin_name,
         coin_fname:  $ppdWallet.coin_fname,
         coin_image: $ppdWallet.coin_image,
         balance: $ppdWallet.balance,
@@ -54,6 +70,8 @@ let coins = [
         select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
     },
 ]
+}
+
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)

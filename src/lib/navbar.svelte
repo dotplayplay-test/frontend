@@ -7,9 +7,10 @@ import Navprofile from "./profilecomponent/main/navprofile.svelte";
 import Coins from "./profilecomponent/main/coins.svelte";
 import {app, db} from "$lib/firebaseAuth/index"
 import { doc,getDoc } from "firebase/firestore";
-import { default_Wallet } from "../lib/store/coins"
-
-// console.log($default_Wallet)
+import { default_Wallet } from "../lib/store/coins";
+import { UserProfileEl } from "../lib/index";
+import { profileStore} from "../lib/store/profile";
+const { profileEl, handleDefaultwallet } = UserProfileEl()
 
 import {
     goto
@@ -86,12 +87,15 @@ const handleUserProfile = (()=>{
     }
 })
 
+onMount(async()=>{
+    profileEl()
+    handleDefaultwallet()
+})
 
 const handleCoinSelect = ((e)=>{
     default_Wallet.set(e.detail)
     handleCoinsDrop()
 })
-
 
 
 const handleMenu = (() => {
@@ -156,9 +160,9 @@ const handleMenu = (() => {
                     </div>
                     <div class="sc-gnnDb fWkueO">
                         <div class="user-wrap">
-                            {#if profile}
+                            {#if $profileStore}
                             <a href="/user/profile/505090">
-                             <img class="avatar" alt="" src={profile &&  profile.profile_image}>
+                             <img class="avatar" alt="" src={$profileStore.profile_image}>
                             </a>
                             {:else}
                                 <div class="center">
@@ -172,7 +176,7 @@ const handleMenu = (() => {
                             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
                                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                                 {#if userProfile}
-                                    <Navprofile {profile} />
+                                    <Navprofile />
                                 {/if}
                             </button>
                         </div>

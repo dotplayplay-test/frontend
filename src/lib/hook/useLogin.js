@@ -24,7 +24,6 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(json));
       // Update the auth store
       window.location.href = '/'
-      console.log("oga abek go home")
       isLoading = false
     }
   };

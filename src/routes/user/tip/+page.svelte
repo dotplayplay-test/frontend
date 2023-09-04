@@ -4,6 +4,9 @@ import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import "../../../styles/users/rain/index.css"
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+import {onMount} from "svelte"
+import { UserProfileEl } from "$lib/index";
+
 import {
     ppdWallet,
     ppeWallet,
@@ -16,9 +19,22 @@ const {
     sendMessage
 } = usePublicMessages()
 import {
-    userProfile
+    profileStore
 } from '$lib/store/profile';
 import {tipped_user } from "$lib/store/tipUser"
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
+    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
+
+$:{
+    onMount(async()=>{
+        handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPFwallet()
+        handlePPLwallet()
+        handlePPEwallet()
+        handlePPDwallet()
+    })
+}
 
 let coins = [{
         id: 1,
@@ -94,12 +110,12 @@ const handleSubmit = (()=>{
     minutes = minutes < 10 ? '0' + minutes : minutes;
     let time = (hours + ':' + minutes + ' ' + newformat);
     let data = {
-        email: $userProfile.email,
+        email: $profileStore.email,
         type: "tip",
         text: "",
         sent_at: time,
-        profle_img: $userProfile.profile_image,
-        sender_username: $userProfile.username,
+        profle_img: $profileStore.profile_image,
+        sender_username: $profileStore.username,
         gif: "",
 
         coin_drop_amount: "",
@@ -118,7 +134,7 @@ const handleSubmit = (()=>{
         tipped_coin_image:$default_Wallet.coin_image,
         tip_Token: $default_Wallet.coin_name,
 
-        vip_level: $userProfile.vip_level
+        vip_level: $profileStore.vip_level
     }
     sendMessage(data)
     history.back(-1)
