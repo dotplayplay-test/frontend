@@ -3,9 +3,9 @@
   import {handleLogout } from "$lib/firebaseAuth/index"
 import { profileStore} from "../../store/profile"
 
-  const handleSignOut = (()=>{
+const handleSignOut = (()=>{
     handleLogout()
-  })
+})
 
   import { statisticsEl } from "../../store/statistic"
   const handleStatistics = (()=>{

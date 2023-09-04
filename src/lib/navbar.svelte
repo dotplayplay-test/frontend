@@ -83,7 +83,6 @@ const handleMenu = (() => {
                 </div>
             </div>
 
-
             {#if !$handleisLoading}
             {#if $handleisLoggin}
                 <MainNavbar on:handleChatRoom={handleChat} />
