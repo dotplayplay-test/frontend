@@ -1,150 +1,71 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoDice from "svelte-icons-pack/io/IoDice";
+import IoRocket from "svelte-icons-pack/io/IoRocket";
 
+import {routes} from "../lib/store/routes"
 import {
     createEventDispatcher
 } from 'svelte';
 export let styls;
 let dispatch = createEventDispatcher()
-
 import {
     goto
 } from "$app/navigation"
-import {
-    onMount
-} from "svelte";
-
-let games = [{
+let games
+$: { games = [{
         id: 1,
         name: "Crash",
-        icon: IoDice,
+        icon: IoRocket,
         route: "crash",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/crash"
     },
     {
         id: 2,
         name: "Classic Dice",
         icon: IoDice,
         route: "classic-dice",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/classic-dice"
     },
     {
         id: 3,
         name: "Plinko",
         icon: IoDice,
         route: "plinko",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/plinko"
     },
     {
         id: 4,
         name: "Tower",
         icon: IoDice,
         route: "tower",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/tower"
     },
     {
         id: 5,
         name: "HiLo",
         icon: IoDice,
         route: "hilo",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/hilo"
     },
     {
         id: 6,
         name: "Diamonds",
         icon: IoDice,
         route: "diamonds",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/diamonds"
     },
     {
         id: 7,
         name: "Mines",
         icon: IoDice,
         route: "mines",
-        isAtive: false
+        isAtive: $routes.route === "/(games)/mines"
     },
-]
-
-let currentPath;
-onMount(() => {
-    currentPath = window.location.pathname;
-    if (currentPath === '/crash') {
-        games[0].isAtive = true
-    } else if (currentPath === "/classic-dice") {
-        games[1].isAtive = true
-    } else if (currentPath === "/plinko") {
-        games[2].isAtive = true
-    } else if (currentPath === "/tower") {
-        games[3].isAtive = true
-    } else if (currentPath === "/hilo") {
-        games[4].isAtive = true
-    } else if (currentPath === "/diamonds") {
-        games[5].isAtive = true
-    } else if (currentPath === "/mines") {
-        games[6].isAtive = true
-    }
-});
+]}
 
 const handleOriginalRoute = ((e, i) => {
     goto(e)
-    if (e === 'crash') {
-        games[0].isAtive = true
-        games[1].isAtive = false
-        games[2].isAtive = false
-        games[3].isAtive = false
-        games[4].isAtive = false
-        games[5].isAtive = false
-        games[6].isAtive = false
-    } else if (e === "classic-dice") {
-        games[0].isAtive = false
-        games[1].isAtive = true
-        games[2].isAtive = false
-        games[3].isAtive = false
-        games[4].isAtive = false
-        games[5].isAtive = false
-        games[6].isAtive = false
-    } else if (e === "plinko") {
-        games[0].isAtive = false
-        games[1].isAtive = false
-        games[2].isAtive = true
-        games[3].isAtive = false
-        games[4].isAtive = false
-        games[5].isAtive = false
-        games[6].isAtive = false
-    } else if (e === "tower") {
-        games[0].isAtive = false
-        games[1].isAtive = false
-        games[2].isAtive = false
-        games[3].isAtive = true
-        games[4].isAtive = false
-        games[5].isAtive = false
-        games[6].isAtive = false
-    } else if (e === "hilo") {
-        games[0].isAtive = false
-        games[1].isAtive = false
-        games[2].isAtive = false
-        games[3].isAtive = false
-        games[4].isAtive = true
-        games[5].isAtive = false
-        games[6].isAtive = false
-    } else if (e === "diamonds") {
-        games[0].isAtive = false
-        games[1].isAtive = false
-        games[2].isAtive = false
-        games[3].isAtive = false
-        games[4].isAtive = false
-        games[5].isAtive = true
-        games[6].isAtive = false
-    } else if (e === "mines") {
-        games[0].isAtive = false
-        games[1].isAtive = false
-        games[2].isAtive = false
-        games[3].isAtive = false
-        games[4].isAtive = false
-        games[5].isAtive = false
-        games[6].isAtive = true
-    }
     dispatch('bc', i)
 })
 </script>
@@ -166,6 +87,7 @@ const handleOriginalRoute = ((e, i) => {
     </div>
 </div>
 
+
 <style>
 .orginal-game-routes {
     transition: .5s ease;
@@ -173,6 +95,7 @@ const handleOriginalRoute = ((e, i) => {
     width: 200px;
     height: 100vh;
     top: 0;
+    z-index: 1000;
     background-color: rgb(45, 48, 53);
 }
 

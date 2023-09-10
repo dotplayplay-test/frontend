@@ -7,10 +7,10 @@ const handleSignOut = (()=>{
     handleLogout()
 })
 
-  import { statisticsEl } from "../../store/statistic"
+import { statisticsEl } from "../../store/statistic"
   const handleStatistics = (()=>{
     statisticsEl.set(true)
-  })
+})
 
 </script>
 

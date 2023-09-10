@@ -76,7 +76,6 @@ export const handleSignIn = (async (email, password)=>{
  export const handleLogout = (async()=>{
     const auth = getAuth(app);
     signOut(auth).then((res) => {
-        console.log(res)
         localStorage.removeItem("user");
       }).catch((error) => {
        console.log(error)

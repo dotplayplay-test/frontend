@@ -3,6 +3,8 @@ import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
 import "./styles/index.css"
 import "./styles/coinrain.css"
 import "./styles/gif.css"
+import Pusher from "pusher-js"
+
 import {
     goto
 } from "$app/navigation"
@@ -50,7 +52,7 @@ import {
     doc,
     getDoc
 } from "firebase/firestore";
-import Pusher from "pusher-js"
+
 import {tipped_user } from "$lib/store/tipUser"
 import {
     profileStore
@@ -73,8 +75,8 @@ $: {
     })
 }
 
-var pusher = new Pusher('079fe293b89889569380', {
-    cluster: 'ap1'
+var pusher = new Pusher('afa2ab8a9e167845720a', {
+    cluster: 'mt1'
 });
 
 let chats = [];
@@ -86,12 +88,14 @@ onMount(async () => {
         })
 })
 
-onMount(() => {
-    var channel = pusher.subscribe('chat-room');
-    channel.bind('public-messages', function(data) {
-        chats = [...chats, data]
-    });
-})
+$:{
+    onMount(() => {
+        var channel = pusher.subscribe('chat-room');
+        channel.bind('public-messages', function(data) {
+            chats = [...chats, data]
+        });
+    })
+}
 
 const handleSendMessage = (async (e, name) => {
     if (e.key === "Enter" && name.newMessages || e === "gifHit") {

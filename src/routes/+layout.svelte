@@ -1,7 +1,8 @@
 <script>
 /** @type {import('./$types').PageLoad} */
 export let data;
-
+import { routes } from "../lib/store/routes"
+$: routes.set(data)
 import Statistics from "../lib/statistics/main/index.svelte";
 import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
