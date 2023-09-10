@@ -1,3 +1,40 @@
+<script>
+    let sliderValue = 50;
+
+  const handleSliderInput = (event) => {
+    sliderValue = event.target.value;
+  }
+  console.log("the value", sliderValue)
+
+  import { onMount } from 'svelte';
+
+  const rollDice = () => {
+    const min = 2;
+    const max = 98;
+    const randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Move the slider to the random step
+    sliderValue = randomStep;
+
+    if (randomStep > sliderValue) {
+      document.querySelector('.slider-track').style.backgroundColor = 'orange';
+      // failure sound
+    } else if (randomStep < sliderValue) {
+      document.querySelector('.slider-track').style.backgroundColor = 'green';
+      // success sound
+    }
+
+    localStorage.setItem('currentStep', randomStep);
+  }
+
+  // Example: Play a sound on component mount
+  onMount(() => {
+    const sliderSound = new Audio('the_sound.mp3');
+    sliderSound.play();
+  });
+
+</script>
+
 <div class="classic-di">
   <div class="game-area" bis_skin_checked="1">
     <div class="game-main" bis_skin_checked="1">
@@ -83,6 +120,7 @@
             </div>
             <button
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
+              on:click={rollDice}
               ><div class="button-inner" bis_skin_checked="1">
                 Roll Now
               </div></button
@@ -129,7 +167,8 @@
                     max="98"
                     step="1"
                     class="drag-block"
-                    value="50"
+                    bind:value={sliderValue}
+                    on:input={handleSliderInput}
                   />
                   <div
                     class="slider-track"
@@ -1300,7 +1339,7 @@
     width: 100%;
     margin: 0px;
     height: 100%;
-    cursor: pointer;
+    cursor: grab;
   }
 
   .dVoJHT .game-slider .slider-wrapper .slider-handles .slider-track {
