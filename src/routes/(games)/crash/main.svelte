@@ -1,135 +1,381 @@
 <script>
-    import Crash from "./crash.svelte";
-    import Recent from "./recent.svelte";
+import { goto } from "$app/navigation";
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import FaSolidKeyboard from "svelte-icons-pack/fa/FaSolidKeyboard";
+import BiStats from "svelte-icons-pack/bi/BiStats";
+import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
+import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+import Layout from '$lib/crashgame/components/bankroll/layout.svelte';
+import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
+import Hotkeys from './hotkeys.svelte';
+import Livestat from './livestat.svelte';
+import Help from './help.svelte';
+import Crashview from './crashview.svelte';
+import Trend from '$lib/crashgame/components/trends/index.svelte';
+import { loadingCrash,handleHasbet,  crashIsAlive, hasCrashed } from "$lib/crashgame/store"
+import {default_Wallet } from "$lib/store/coins"
+import { useCrashBet } from "$lib/crashgame/crashHook";
+const { crashBet, isLoading, error } = useCrashBet()
+import {
+    browser
+} from '$app/environment'
+const id = browser && JSON.parse(localStorage.getItem('user'))
+
+let ishotKey = false
+const handleHotkeyEnable = (()=>{
+    if(ishotKey){
+        ishotKey = false
+    }else{
+        ishotKey = true
+    }
+})
+
+let isAdvance = false
+const handleAdvancebg = ((q)=>{
+    if(q === 1){
+        isAdvance = false
+    }else{
+        isAdvance = true
+    }
+})
+
+let isStat = false
+const handleStatistics = (()=>{
+    if(isStat){
+        isStat = false
+    }else{
+        isStat = true
+    }
+})
+
+let isHelp = false
+const handleHelp = ()=>{
+    if(isHelp){
+        isHelp = false
+    }else{
+        isHelp = true
+    }
+}
+
+let isBankroll = false
+const handleBankroll = (()=>{
+    if(isBankroll){
+        isBankroll = false
+    }else{
+        isBankroll = true
+    }
+})
+
+let isTrend = false
+const handleTrends = (()=>{
+    if(isTrend){
+        isTrend = false
+    }else{
+        isTrend = true
+    }
+})
+
+let bet_amount = 10
+
+const handleHalf = ((e)=>{
+    if(bet_amount > 0){
+        if(e === 1){
+        bet_amount = (bet_amount / 2).toFixed(2)
+        }else{
+            bet_amount = (bet_amount * 2).toFixed(2)
+        }
+    }
+})
+
+let isRange = false
+const ranging = (()=>{
+    if(isRange){
+        isRange = false
+    }else{
+        isRange = true
+    }
+})
+
+const handleCrashBet = (()=>{
+    const data = {
+        bet_amount, bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name }
+    crashBet(data)
+})
+
 
 </script>
 
 <div class="game-main">
-    <div class="game-view">
-        <Recent />
-        <Crash />
-    </div>
-    <div id="crash-control" class="bs-PnVtqtasy game-control style1">
-        <div class="game-control-switch baiiass">
-            <button class="is-active">
+    {#if ishotKey }
+        <Hotkeys on:close={handleHotkeyEnable} />
+    {/if}
+    {#if isStat}
+        <Livestat on:close={handleStatistics} />
+    {/if}
+    {#if isHelp}
+        <Help on:close={handleHelp} />
+    {/if}
+    {#if isBankroll}
+        <Layout on:close={handleBankroll} />   
+    {/if}
+    {#if isTrend}
+        <Trend on:close={handleTrends} />
+    {/if}
+
+    <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
+        <div class="sc-iwjdpV ikWSlH radio game-control-switch">
+            <button on:click={()=>handleAdvancebg(1)} class={`${!isAdvance &&  "is-active"}`} >
                 <div class="label">Manual</div>
             </button>
-            <button class="">
+            <button on:click={()=>handleAdvancebg(2)} class={`${isAdvance && "is-active"}`} >
                 <div class="label">Advanced</div>
             </button>
         </div>
         <div class="game-control-panel">
-            <div class="bwUVwbhv">
-                <button class="TcrcsJy hVw-wybvs kddubeeew button-big button Yvsajywv">
-                    <div class="button-inner">
-                        <div>Bet</div>
-                        <div class="sub-text">
-                            (Next round)
+            <div class="sc-lVTEl hjMJHh">
+                {#if $crashIsAlive && !$handleHasbet}
+                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                        <div class="button-inner">
+                            <div>Bet</div>
+                            <div class="sub-text">(Next round)</div>
                         </div>
+                    </button>
+                {/if}
+                {#if $crashIsAlive && $handleHasbet}
+                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                    <div class="button-inner">
+                        <!-- <div>Bet</div> -->
+                        <div class="sub-text">cashout</div>
                     </div>
                 </button>
+            {/if}
+                {#if $loadingCrash && !id}
+                <button on:click={goto("/login")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                    <div class="button-inner">
+                        <div>Bet</div>
+                    </div>
+                </button>
+            {/if}
+                {#if $loadingCrash}
+                    <button disabled={isLoading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                        {#if isLoading}
+                            <div class="button-inner">
+                                <div>Loading...</div>
+                            </div>
+                            {:else if $handleHasbet}
+                            <div class="button-inner">
+                                <div>Game Loading...</div>
+                            </div>
+                        {:else}
+                            <div class="button-inner">
+                                <div>Bet</div>
+                            </div>
+                        {/if}
+                    </button>
+                {/if}
+                {#if $hasCrashed}
+                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                        <div class="button-inner">
+                            <div>Bet</div>
+                            <div class="sub-text">(Next round)</div>
+                        </div>
+                    </button>
+                {/if}
+ 
+                <div class="forms">
+                    <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-eqUgKp hLcsYm game-coininput">
+                        <div class="input-label">
+                            <div class="sc-bhnkmi ICvMh label">
+                                <div>Amount</div>
+                                <div class="max-profit">
+                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                                        <use xlink:href="#icon_Inform"></use>
+                                    </svg>
+                                    <div class="tip">
+                                        <span class="tit">Max Profit:&nbsp;</span>
+                                        <div class="sc-Galmp erPQzq coin notranslate">
+                                            <div class="amount">
+                                                <span class="amount-str">0.20600898</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="label-amount">1 USD</div>
+                        </div>
+                        {#if !id}
+                            <div class="input-control">
+                                <input type="text" bind:value={bet_amount}>
+                                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                                <div class="sc-kDTinF bswIvI button-group">
+                                    <button  on:click={()=>handleHalf(1)}>/2</button>
+                                    <button  on:click={()=>handleHalf(2)}>x2</button>
+                                    <button class="sc-ywFzA dxoLcn">
+                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                    </button>
+                                </div>
+                            </div>
+                            {:else}
+                            <div class="input-control">
+                                <input type="text" bind:value={bet_amount} placeholder="10">
+                                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                                <div class="sc-kDTinF bswIvI button-group">
+                                    <button on:click={()=>handleHalf(1)}>/2</button>
+                                    <button  on:click={()=>handleHalf(2)}>x2</button>
+                                    {#if isRange}
+                                        <div class="fix-layer" style="opacity: 1; transform: none;">
+                                            <button class="">Min</button>
+                                            <div class="sc-kLwhqv eOA-dmL slider">
+                                                <div class="slider-after" style="transform: scaleX(0);"></div>
+                                                <div class="slider-handler-wrap" style="transform: translateX(0%);">
+                                                    <button class="slider-handler"></button>
+                                                </div>
+                                                <div class="slider-before" style="transform: scaleX(1);"></div>
+                                            </div>
+                                            <button class="active">Max</button>
+                                        </div>
+                                    {/if}
+                                    <button on:click={ranging} class="sc-ywFzA dxoLcn">
+                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                    </button>
+                                </div>
+                            </div>
+                        {/if}
+
+                    </div>
+                    <div class="sc-ezbkAF hzTJOu input sc-kMyqmI gcFpfw">
+                        <div class="input-label">
+                            <div class="chance-title">
+                                <div class="auto-title">Auto cash out</div>
+                                <div>Chance&nbsp;&nbsp;<span class="chance-num">0.99%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" value="100.00">
+                            <div class="payout-txt">×</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<style>
-    .game-main{
-        min-height: auto;
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 0%;
-        overflow: hidden;
 
-        position: relative;
-        border-radius: 1.25rem;
-        background-color: rgb(23, 24, 27);
-    }
-    .game-view{
-        flex: 1 1 0%;
-        display: flex;
-        flex-direction: column;
-    }
-   .bs-PnVtqtasy.style1{
-        order: 2;
-        min-height: 230px;
-        margin-top: 1px;
-   }
-   .bs-PnVtqtasy{
-        display: flex;
-   }
-   .bs-PnVtqtasy.style1 .game-control-switch{
-        width: 3rem;
-        flex-direction: column;
-        position: relative;
-   }
-   .bs-PnVtqtasy .game-control-switch{
-        display: flex;
-        flex: 0 0 auto;
-   }
-   .bs-PnVtqtasy.style1 .game-control-switch >  button.is-active{
-        border-right: 2px solid rgb(67, 179, 9);
-        background-image: linear-gradient(to left, rgba(91, 174, 28, 0.176), rgba(0, 0, 0, 0) 50%);
-   }
-   .bs-PnVtqtasy.style1 .game-control-switch > button{
-        position: relative;
-   }
-   .bs-PnVtqtasy.style1 .game-control-switch .label{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(-90deg);
-        white-space: nowrap;
-   }
-   .bs-PnVtqtasy .game-control-switch > button.is-active{
-        color: rgb(245, 246, 247);
-        font-weight: bold;
-   }
-   .bs-PnVtqtasy .game-control-switch > button{
-        flex: 1 1 0%;
-        cursor: pointer;
-        color: rgba(153, 164, 176, 0.6);
-   }
-   .bs-PnVtqtasy .game-control-switch button{
-        border: none;
-        padding: 0;
-        user-select: none;
-        cursor: pointer;
-        background-color: transparent;
-        color: var(--text-color);
-   }
-   .baiiass{
-        display: flex;
-        opacity: 1;
-   }
-   .bs-PnVtqtasy.style1 .game-control-panel{
-        padding: 1.25rem 1.375rem;
-   }
-   .bs-PnVtqtasy .game-control-panel{
-        flex: 1 1 0%;
-   }
-   .TcrcsJy.button{
-        color: rgb(245, 246, 247);
-        box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
-        background-color: rgb(67, 179, 9);
-        background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
-   }
-   .kddubeeew.button-big{
-        height: 3.625rem;
-   }
-   .hVw-wybvs{
-        width: 90%;
-        max-width: 19.75rem;
-        margin: 3.5rem auto;
-        border: none;
-   }
-   .Yvsajywv{
-        display: block;
-        width: 100%;
-        border-radius: 6.25rem;
-        height: 2rem;
-        font-size: 13px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
-   }
+    <Crashview on:closeTrend={handleTrends} on:close={handleBankroll} />
+
+    <div class="game-actions">
+        <button on:click={handleHotkeyEnable} class="action-item  ">
+            <Icon src={FaSolidKeyboard}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+        </button>
+        <button on:click={handleStatistics} class="action-item  ">
+            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+        </button>
+        <button on:click={handleHelp} class="action-item  ">
+            <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+        </button>
+    </div>
+</div>
+
+<style>
+ .fix-layer {
+    position: absolute;
+    right: 0px;
+    top: 2.875rem;
+    z-index: 2;
+    touch-action: pan-x;
+    width: 200px;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 0.625rem;
+    background-color: rgb(33, 35, 40);
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 7px 0px;
+}
+ .fix-layer > button {
+    height: 100%;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    background-color: rgba(60, 64, 74, 0.5);
+}
+.eOA-dmL .slider-after {
+    background-color: rgba(216, 222, 227, 0.4);
+    transform-origin: left center;
+}
+.fCSgTW .fix-layer .slider {
+    flex: 1 1 0%;
+    height: 100%;
+}
+.eOA-dmL {
+    position: relative;
+    display: flex;
+    height: 0.875rem;
+    overflow: hidden;
+    box-sizing: content-box;
+    padding: 0px 0.8125rem;
+    cursor: pointer;
+}
+.fix-layer > button.active {
+    color: rgb(245, 246, 247);
+    font-weight: 600;
+    background-color: rgb(60, 64, 74);
+}
+ .fix-layer > button {
+    height: 100%;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    background-color: rgba(60, 64, 74, 0.5);
+}
+.fCSgTW .fix-layer .slider-after {
+    width: 86%;
+    left: 7%;
+    height: 0.5rem;
+    margin-top: -0.25rem;
+    border-radius: 0.25rem;
+    background-color: rgb(23, 24, 27);
+    transform: scaleX(1) !important;
+}
+.eOA-dmL .slider-after {
+    height: 2px;
+    width: 98%;
+    position: absolute;
+    left: 1%;
+    top: 50%;
+    margin-top: -1px;
+}
+.eOA-dmL .slider-handler-wrap {
+    flex: 1 1 0%;
+    position: relative;
+    z-index: 2;
+}
+.fCSgTW .fix-layer .slider-handler {
+    height: 100%;
+    position: relative;
+    background: none;
+}
+.eOA-dmL .slider-handler {
+    display: block;
+    width: 1.5rem;
+    height: 100%;
+    border-radius: 0.4375rem;
+    transform: translate(-50%, 0px);
+    background-color: rgb(216, 216, 216);
+    touch-action: pan-y;
+}
+.fCSgTW .fix-layer .slider-handler::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    left: 0.3125rem;
+    width: 0.75rem;
+    border-radius: 0.375rem;
+    background-color: rgb(204, 207, 217);
+}
 </style>
