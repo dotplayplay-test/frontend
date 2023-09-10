@@ -2,6 +2,7 @@
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
 import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
+import HiSolidSearch from "svelte-icons-pack/hi/HiSolidSearch";
 import Navprofile from "./profilecomponent/main/navprofile.svelte";
 import Coins from "./profilecomponent/main/coins.svelte";
 import {
@@ -82,6 +83,21 @@ const handleMenu = (() => {
                     {/if}
                 </div>
             </div>
+            <!-- <div class="sc-kTLmzF dwaOxj search-input-bigwrap is-small" bis_skin_checked="1">
+                <Icon src={HiSolidSearch} title="search" />
+                <input placeholder="Game name | Provider | Category Tag" value="">
+                <button class="cancel-btn">Cancel</button>
+            </div> -->
+            <div class="sc-jtXEFf jsyNKG search-pc" bis_skin_checked="1">
+                <div class="search-input-wrap-pc" bis_skin_checked="1">
+                    <div class="sc-kTLmzF dwaOxj" bis_skin_checked="1">
+                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                            <Icon src={HiSolidSearch} title="search" />
+                        </svg>
+                        <input placeholder="Game name | Provider | Category Tag" value="">
+                    </div>
+                </div>
+            </div>
 
             {#if !$handleisLoading}
             {#if $handleisLoggin}
@@ -124,6 +140,11 @@ const handleMenu = (() => {
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
+            <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
+                <button>
+                    <Icon src={HiSolidSearch} title="search" />
+                </button>
+            </div>
             {#if (id)}
             "Log"
             {:else}
@@ -149,3 +170,34 @@ const handleMenu = (() => {
     </div>
 </div>
 
+<style>
+.ftyLxH .search-pc {
+    margin-left: 4%;
+    max-width: 32.5rem;
+}
+
+.jsyNKG {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow: hidden;
+    flex: 1 1 0%;
+}
+
+.ftyLxH .big-enter {
+    margin-left: 4%;
+    flex: 0 0 auto;
+}
+.elBGFt.big-enter {
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+.elBGFt {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 6px;
+}
+</style>
