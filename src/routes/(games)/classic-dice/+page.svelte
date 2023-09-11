@@ -1,38 +1,36 @@
 <script>
-    let sliderValue = 50;
+  import { onMount, afterUpdate } from "svelte";
 
+  let sliderValue = 50;
   const handleSliderInput = (event) => {
     sliderValue = event.target.value;
-  }
-  console.log("the value", sliderValue)
+  };
 
-  import { onMount } from 'svelte';
+  let randomStep = 50;
+  let randomSteps = JSON.parse(localStorage.getItem('randomSteps')) || [];
 
   const rollDice = () => {
     const min = 2;
     const max = 98;
-    const randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    // Move the slider to the random step
-    sliderValue = randomStep;
+    randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
 
     if (randomStep > sliderValue) {
-      document.querySelector('.slider-track').style.backgroundColor = 'orange';
+      document.querySelector(".dice_num").style.color = "orange";
       // failure sound
-    } else if (randomStep < sliderValue) {
-      document.querySelector('.slider-track').style.backgroundColor = 'green';
+    } else {
+      document.querySelector(".dice_num").style.color = "green";
       // success sound
     }
 
-    localStorage.setItem('currentStep', randomStep);
-  }
+    randomSteps = [...randomSteps, randomStep];
+    localStorage.setItem('randomSteps', JSON.stringify(randomSteps));
+  };
 
-  // Example: Play a sound on component mount
+  // Play a sound on component mount
   onMount(() => {
-    const sliderSound = new Audio('the_sound.mp3');
+    const sliderSound = new Audio("the_sound.mp3");
     sliderSound.play();
   });
-
 </script>
 
 <div class="classic-di">
@@ -146,9 +144,29 @@
               </div>
             </div>
             <div class="recent-list-wrap" bis_skin_checked="1">
-              <div class="empty-item" bis_skin_checked="1">
-                <p>Game results will be displayed here.</p>
-              </div>
+              {#if randomSteps.length > 0}
+              {#each randomSteps as step, index}
+                <div
+                  class="recent-list"
+                  style=" transform: translate(0%, 0px);"
+                  bis_skin_checked="1"
+                  key={index}
+                >
+                  <div
+                    class="recent-item"
+                    bis_skin_checked="1"
+                  >
+                    <div class="item-wrap is-win" bis_skin_checked="1">
+                      {step}.00
+                    </div>
+                  </div>
+                </div>
+                {/each}
+              {:else}
+                <div class="empty-item" bis_skin_checked="1">
+                  <p>Game results will be displayed here.</p>
+                </div>
+              {/if}
             </div>
           </div>
           <div
@@ -172,10 +190,12 @@
                   />
                   <div
                     class="slider-track"
-                    style="transform: translate(50%, 0px);"
+                    style="transform: translate({randomStep}%, 0px);"
                     bis_skin_checked="1"
                   >
-                    <div class="dice_num" bis_skin_checked="1">50.00</div>
+                    <div class="dice_num" bis_skin_checked="1">
+                      {randomStep}.00
+                    </div>
                     <div class="dice_png" bis_skin_checked="1">
                       <img
                         alt="dice.png"
@@ -224,8 +244,11 @@
                 >
                   <div class="input-label" bis_skin_checked="1">Roll Under</div>
                   <div class="input-control" bis_skin_checked="1">
-                    <input type="text" readonly="" value="50.00" /><span
-                      class="right-info"
+                    <input
+                      type="text"
+                      readonly=""
+                      bind:value={sliderValue}
+                    /><span class="right-info"
                       ><svg
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         class="sc-gsDKAQ hxODWG icon"
@@ -240,7 +263,7 @@
                 >
                   <div class="input-label" bis_skin_checked="1">Win Chance</div>
                   <div class="input-control" bis_skin_checked="1">
-                    <input type="text" value="50.00" />
+                    <input type="text" bind:value={sliderValue} />
                     <div class="right-info" bis_skin_checked="1">
                       <span class="right-percent">%</span><button
                         class="amount-scale">Min</button
@@ -1246,12 +1269,46 @@
   }
 
   .jmWHaJ .recent-list-wrap {
+    display: flex;
+    gap: 1rem;
     flex: 1 1 auto;
-    height: 100%;
     margin: 0px 1.5rem;
     overflow: hidden;
     position: relative;
     border-radius: 1.375rem;
+  }
+
+  .recent-list {
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+  }
+
+  .recent-item {
+    padding: 0px 0.25rem;
+    cursor: pointer;
+  }
+
+  .is-win {
+    color: rgb(245, 246, 247);
+    background-color: rgb(67, 179, 9);
+  }
+
+  .item-wrap {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    border-radius: 1.75rem;
+    padding: 8px;
+    font-weight: bold;
   }
 
   .jmWHaJ .empty-item {
