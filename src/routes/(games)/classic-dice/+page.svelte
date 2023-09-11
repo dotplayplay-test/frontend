@@ -1,13 +1,40 @@
 <script>
-  import { onMount, afterUpdate } from "svelte";
+  import { onMount } from "svelte";
 
   let sliderValue = 50;
+  let slideWinColor = "green";
+  let slideLoseColor = "orange";
+
   const handleSliderInput = (event) => {
-    sliderValue = event.target.value;
+    sliderValue = +event.target.value;
+    const maxSliderValue = 98;
+    const winColorStop = (sliderValue / maxSliderValue) * 100;
+    const loseColorStop = 100 - winColorStop;
+
+    slideWinColor = `linear-gradient(90deg, green ${winColorStop}%, transparent ${winColorStop}%)`;
+    slideLoseColor = `linear-gradient(90deg, transparent ${loseColorStop}%, orange ${loseColorStop}%)`;
   };
 
+  let isHovered = false;
+
+  const handleSliderMouseEnter = () => {
+    isHovered = true;
+  };
+
+  const handleSliderMouseLeave = () => {
+    isHovered = false;
+  };
+
+  $: stepDisplayStyle = `
+  position: absolute;
+  top: -43px;
+  background-color: #23262B;
+  border-radius: 6px;
+  padding: 6px 10px;
+  left: ${sliderValue}%`;
+
   let randomStep = 50;
-  let randomSteps = JSON.parse(localStorage.getItem('randomSteps')) || [];
+  let randomSteps = JSON.parse(localStorage.getItem("randomSteps")) || [];
 
   const rollDice = () => {
     const min = 2;
@@ -23,7 +50,7 @@
     }
 
     randomSteps = [...randomSteps, randomStep];
-    localStorage.setItem('randomSteps', JSON.stringify(randomSteps));
+    localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
   };
 
   // Play a sound on component mount
@@ -47,8 +74,6 @@
         >
           <button class="is-active"
             ><div class="label" bis_skin_checked="1">Manual</div></button
-          ><button class=""
-            ><div class="label" bis_skin_checked="1">Auto</div></button
           >
         </div>
         <div class="game-control-panel" bis_skin_checked="1">
@@ -145,22 +170,19 @@
             </div>
             <div class="recent-list-wrap" bis_skin_checked="1">
               {#if randomSteps.length > 0}
-              {#each randomSteps as step, index}
-                <div
-                  class="recent-list"
-                  style=" transform: translate(0%, 0px);"
-                  bis_skin_checked="1"
-                  key={index}
-                >
+                {#each randomSteps as step, index}
                   <div
-                    class="recent-item"
+                    class="recent-list"
+                    style=" transform: translate(0%, 0px);"
                     bis_skin_checked="1"
+                    key={index}
                   >
-                    <div class="item-wrap is-win" bis_skin_checked="1">
-                      {step}.00
+                    <div class="recent-item" bis_skin_checked="1">
+                      <div class="item-wrap is-win" bis_skin_checked="1">
+                        {step}.00
+                      </div>
                     </div>
                   </div>
-                </div>
                 {/each}
               {:else}
                 <div class="empty-item" bis_skin_checked="1">
@@ -187,7 +209,12 @@
                     class="drag-block"
                     bind:value={sliderValue}
                     on:input={handleSliderInput}
+                    on:mouseenter={handleSliderMouseEnter}
+                    on:mouseleave={handleSliderMouseLeave}
                   />
+                  {#if isHovered}
+                    <span class="step-display" style={stepDisplayStyle}>{sliderValue}</span>
+                  {/if}
                   <div
                     class="slider-track"
                     style="transform: translate({randomStep}%, 0px);"
@@ -206,17 +233,17 @@
                   <div class="slider-line" bis_skin_checked="1">
                     <div
                       class="slide-win"
-                      style="width: 50%;"
+                      style="background: {slideWinColor}"
                       bis_skin_checked="1"
                     />
                     <div
                       class="slide-lose"
-                      style="width: 50%;"
+                      style="background: {slideLoseColor}"
                       bis_skin_checked="1"
                     />
                     <div
                       class="slider-sign"
-                      style="transform: translate(50%, 0px);"
+                      style="transform: translate({randomStep}%, 0px);"
                       bis_skin_checked="1"
                     >
                       <div class="sign" bis_skin_checked="1" />
@@ -1471,7 +1498,7 @@
   .dVoJHT .game-slider .slider-wrapper .slider-handles .slider-line .slide-win {
     border-radius: 0.625rem 0px 0px 0.625rem;
     height: 100%;
-    background: rgb(67, 179, 9);
+    background: #43b309;
   }
 
   .dVoJHT
@@ -1482,7 +1509,7 @@
     .slide-lose {
     border-radius: 0px 0.625rem 0.625rem 0px;
     height: 100%;
-    background: rgb(237, 99, 0);
+    background: #ed6300;
   }
 
   .dVoJHT
