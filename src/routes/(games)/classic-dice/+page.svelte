@@ -132,7 +132,7 @@
               disabled=""
               bis_skin_checked="1"
             >
-              <div class="input-label" bis_skin_checked="1">
+              <div class="input-label win_amount" bis_skin_checked="1">
                 Win Amount
                 <div class="label-amount" bis_skin_checked="1">0 USD</div>
               </div>
@@ -786,160 +786,44 @@
   .game-area {
     display: flex;
     flex-wrap: wrap;
+    padding: 10px;
   }
 
   .game-main {
-    padding-left: 330px;
-    min-height: 47.5rem;
     display: flex;
-    flex-direction: column;
-    flex: 1 1 0%;
-    overflow: hidden;
-    position: relative;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 10px 20px;
+    width: 100%;
     border-radius: 1.25rem;
     background-color: rgb(23, 24, 27);
   }
 
   @media screen and (max-width: 900px) {
     .game-main {
-      /* position: relative; */
+      display: flex;
+      flex-direction: column-reverse;
       border-radius: 1.25rem;
-      background-color: rgb(23, 24, 27);
-    }
-
-    .game-view {
       width: 100%;
-      /* overflow: hidden; */
-      /* min-width: 100%; */
-      border-radius: 1.25rem 1.25rem 0px 0px;
-    }
-
-    .iDTkQI.style-mobile {
-      flex-direction: column;
-    }
-
-    .iDTkQI {
-      display: flex;
-    }
-
-    .game-control-switch {
-      order: 2;
-      margin-top: 1.25rem;
-      position: relative;
-    }
-
-    .iDTkQI .game-control-switch {
-      display: flex;
-      flex: 0 0 auto;
-    }
-
-    .ikWSlH {
-      display: flex;
-      opacity: 1;
-    }
-
-    .game-control-switch::before {
-      content: "";
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      right: 0px;
-      height: 1px;
-      opacity: 0.3;
-      background-color: rgb(49, 52, 60);
-    }
-
-    .game-control-switch > button.is-active {
-      border-bottom-color: rgb(67, 179, 9);
-      background-image: linear-gradient(
-        to top,
-        rgba(123, 197, 20, 0.3),
-        rgba(123, 197, 20, 0) 50%
-      );
-    }
-    .game-control-switch > button {
-      height: 3rem;
-      border-bottom: 2px solid transparent;
-    }
-
-    .iDTkQI .game-control-switch > button.is-active {
-      color: rgb(245, 246, 247);
-      font-weight: bold;
-    }
-    .iDTkQI .game-control-switch > button {
-      flex: 1 1 0%;
-      cursor: pointer;
-      color: rgba(153, 164, 176, 0.6);
-    }
-
-    .game-control-panel {
-      padding: 0px 1.125rem;
-    }
-
-    .iDTkQI .game-control-panel {
-      flex: 1 1 0%;
-    }
-
-    .gcQjQT {
-      margin-top: 1rem;
-    }
-
-    .gcQjQT .input-label {
-      display: flex;
-      -webkit-box-align: center;
-      align-items: center;
-      line-height: 1em;
-      height: 1.25rem;
-      margin: 0px 1.125rem 0.375rem;
-      color: rgba(153, 164, 176, 0.6);
+      background-color: rgb(23, 24, 27);
     }
   }
 
-  .iDTkQI.style0 {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
+  .game-control {
     width: 330px;
-    display: flex;
-    flex-direction: column;
     padding: 0.625rem;
     border-right: 1px solid rgba(49, 52, 60, 0.5);
   }
 
-  .iDTkQI .game-control-switch {
-    display: flex;
-    flex: 0 0 auto;
-  }
-
-  .iDTkQI.style0 .game-control-switch > button.is-active {
-    background-color: rgba(49, 52, 60, 0.4);
-  }
-
   .iDTkQI.style0 .game-control-switch > button {
-    height: 2.75rem;
-    line-height: 2.75rem;
     text-align: center;
     border-radius: 1.375rem;
-  }
-
-  .iDTkQI .game-control-switch > button.is-active {
+    cursor: pointer;
+    background-color: rgba(49, 52, 60, 0.4);
     color: rgb(245, 246, 247);
     font-weight: bold;
-  }
-
-  .iDTkQI .game-control-switch > button {
-    flex: 1 1 0%;
-    cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-  }
-
-  .game-control-panel {
-    height: 1%;
-  }
-
-  .iDTkQI .game-control-panel {
-    flex: 1 1 0%;
+    width: 100%;
+    padding: 10px;
   }
 
   .gcQjQT {
@@ -1099,16 +983,6 @@
 
   .gWrsXy {
     margin-top: 1rem;
-  }
-
-  .gWrsXy .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
   }
 
   .gOLODp .label-amount {
@@ -1300,9 +1174,15 @@
     gap: 1rem;
     flex: 1 1 auto;
     margin: 0px 1.5rem;
+    width: 300px;
     overflow: hidden;
-    position: relative;
     border-radius: 1.375rem;
+  }
+
+  .win_amount {
+    display: flex;
+    margin-bottom: 10px;
+    color: #47484d;
   }
 
   .recent-list {
@@ -1577,16 +1457,6 @@
     margin-right: 1.5rem;
   }
 
-  .gcQjQT .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
-
   .cLMexC .input-control {
     display: flex;
     background-color: rgba(49, 52, 60, 0.5);
@@ -1688,16 +1558,6 @@
     margin-top: 1rem;
   }
 
-  .gcQjQT .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
-
   .cLMexC .input-control {
     display: flex;
     background-color: rgba(49, 52, 60, 0.5);
@@ -1761,7 +1621,7 @@
   }
 
   .cLMexC .win-change .right-info button {
-    width: 2.75rem;
+    width: 100%;
     height: 2.25rem;
     line-height: 2.25rem;
     font-size: 0.75rem;
@@ -2220,5 +2080,5 @@
     width: 1.4em;
     height: 1.4em;
     fill: rgba(153, 164, 176, 0.6);
-  }
+  } 
 </style>
