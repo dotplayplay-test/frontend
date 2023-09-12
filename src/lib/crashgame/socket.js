@@ -1,7 +1,9 @@
 import { io } from "socket.io-client";
 const socket = io("http://localhost:8000");
 
-import { crashLoad,handleHasbet, Load_animation, loadingCrash, crashIsAlive, hasCrashed, crashPoint,crashDetails, crashRunning } from "./store"
+import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,
+     loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,
+      hasCrashed, crashPoint, crashRunning, crash_historyEl } from "./store"
 
 
 export const handleCountdown = (()=>{
@@ -19,6 +21,9 @@ export const handleCountdown = (()=>{
         crashRunning.set(data)
     })
 
+    socket.on("crash-game-history", data=>{
+        crash_historyEl.set(data)
+    })
 
     // ============= Manage the state of the game =======================
     socket.on("crash-state", data =>{
@@ -37,8 +42,22 @@ export const handleCountdown = (()=>{
             crashIsAlive.set(false)
             hasCrashed.set(true)
             handleHasbet.set(false)
+            handleHasbet_amount.set(null)
         }  
     })
 
+    // ============ current game id ===========
+    socket.on("game_id", data =>{
+        game_id.set(data)
+    })
 
+    //  ==================== active players ==============
+    socket.on("active_players", data =>{
+        active_playerEl.set(data)
+    })
+
+       //  ==================== crash animation ==============
+       socket.on("crash_curve", data =>{
+        crashCurve.set(data)
+    })
 })

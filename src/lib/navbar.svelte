@@ -88,16 +88,6 @@ const handleMenu = (() => {
                 <input placeholder="Game name | Provider | Category Tag" value="">
                 <button class="cancel-btn">Cancel</button>
             </div> -->
-            <div class="sc-jtXEFf jsyNKG search-pc" bis_skin_checked="1">
-                <div class="search-input-wrap-pc" bis_skin_checked="1">
-                    <div class="sc-kTLmzF dwaOxj" bis_skin_checked="1">
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                            <Icon src={HiSolidSearch} title="search" />
-                        </svg>
-                        <input placeholder="Game name | Provider | Category Tag" value="">
-                    </div>
-                </div>
-            </div>
 
             {#if !$handleisLoading}
             {#if $handleisLoggin}
@@ -171,23 +161,7 @@ const handleMenu = (() => {
 </div>
 
 <style>
-.ftyLxH .search-pc {
-    margin-left: 4%;
-    max-width: 32.5rem;
-}
 
-.jsyNKG {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    overflow: hidden;
-    flex: 1 1 0%;
-}
-
-.ftyLxH .big-enter {
-    margin-left: 4%;
-    flex: 0 0 auto;
-}
 .elBGFt.big-enter {
     -webkit-box-pack: end;
     justify-content: flex-end;

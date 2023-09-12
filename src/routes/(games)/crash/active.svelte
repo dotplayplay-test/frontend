@@ -1,3 +1,7 @@
+<script>
+ 
+</script>
+
 <div class="active-players">
     <div class="active-players-container">
         <table class="header">

@@ -2,6 +2,8 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import Trendball from './trendball.svelte';
+import { active_playerEl } from "$lib/crashgame/store";
+
 export let isClassic;
 
 const handleAllbet = (()=>{
@@ -14,7 +16,7 @@ const handleAllbet = (()=>{
 
 </script>
 
-<div class="sc-bcCSHH gAFwbx">
+<div class="sc-kqnjJL iLyFYQ">
     <div class="top">
         <div class="title">All Bets</div>
         <div class="flex-middle"><div>Trenball</div>
@@ -25,7 +27,7 @@ const handleAllbet = (()=>{
     </div>
 
     {#if isClassic}
-    <div class="sc-eSJyHI fdisPg need-scroll">
+    <div class="sc-eoHXOn vjsVz need-scroll">
         <table class="head">
             <tbody>
                 <tr>
@@ -40,54 +42,46 @@ const handleAllbet = (()=>{
             <div class="sc-gWXbKe iUeetX table is-hover">
                 <table class="sc-gWXbKe iUeetX table is-hover">
                     <tbody>
+                        {#each $active_playerEl as player }
                         <tr>
                             <td class="user">
-                                <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/376778">
-                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/376778/s">
-                                    <div class="name">Hhhhhhh</div>
+                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${player.user_id}`}>
+                                    <img class="avatar " alt="" src={player.profile_img}>
+                                    <div class="name">{player.username}</div>
                                 </a>
                             </td>
                             <td class="escape">
-                                <span class="ttl opacity">Betting</span>
-                            </td><td><div class="sc-Galmp erPQzq coin notranslate">
-                                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                                <span class="ttl opacity">{player.cashout}x</span>
+                            </td>
+                            <td>
+                                <div class="sc-Galmp erPQzq coin notranslate">
+                                <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-str">33.554432<span class="suffix">0</span>
+                                    <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span>
                                     </span>
                                 </div>
                             </div>
                             </td>
                             <td>
-                                <span class="ttl opacity">Betting</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="user">
-                                <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/376778">
-                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/376778/s">
-                                    <div class="name">Hhhhhhh</div>
-                                </a>
-                            </td>
-                            <td class="escape">
-                                <span class="ttl opacity">Betting</span>
-                            </td><td><div class="sc-Galmp erPQzq coin notranslate">
-                                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
-                                <div class="amount">
-                                    <span class="amount-str">33.554432<span class="suffix">0</span>
-                                    </span>
+                            {#if player.user_status === "false"}
+                                <div class="sc-Galmp erPQzq coin notranslate is-win">
+                                    <img class="coin-icon" alt="" src={player.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-st">{player.profit}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            </td>
-                            <td>
-                                <span class="ttl opacity">Betting</span>
+                                {:else}
+                                <span class="ttl opacity">{player.profit}</span>
+                            {/if}
                             </td>
                         </tr>
+                        {/each}
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="foot">
-            <div class="state">0/11 Player</div>
+            <div class="state">0/{$active_playerEl.length} Player</div>
             <button class="list-toggle show-more">
                 <div>Show more</div>
                 <Icon src={RiSystemArrowDownSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
@@ -101,7 +95,7 @@ const handleAllbet = (()=>{
 </div>
 
 <style>
-.gAFwbx {
+.iLyFYQ {
     background-color: rgb(30, 32, 36);
     margin-left: 0.625rem;
     border-radius: 1.25rem;
@@ -109,8 +103,7 @@ const handleAllbet = (()=>{
     max-width: 542px;
     position: relative;
 }
-
-.gAFwbx .top {
+.iLyFYQ .top {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -119,25 +112,22 @@ const handleAllbet = (()=>{
     position: absolute;
     top: -1.875rem;
     left: 0px;
+    font-size: 13px;
     right: 0px;
     padding: 0px 0.625rem;
     line-height: 1.25rem;
 }
-
-.gAFwbx .top .title {
+.iLyFYQ .top .title {
     font-weight: bold;
     color: rgb(245, 246, 247);
 }
-
 .flex-middle {
     display: flex;
     align-items: center;
 }
-
-.gAFwbx .top .switch {
+.iLyFYQ .top .switch {
     margin-left: 0.5rem;
 }
-
 .hRMjrF {
     width: 1.75rem;
     height: 1rem;
@@ -146,7 +136,6 @@ const handleAllbet = (()=>{
     position: relative;
     cursor: pointer;
 }
-
 .hRMjrF .dot {
     transition: all 0.2s ease 0s;
     position: absolute;
@@ -157,12 +146,17 @@ const handleAllbet = (()=>{
     border-radius: 0.5rem;
     background-color: rgba(153, 164, 176, 0.6);
 }
-
+.iLyFYQ .top .switch {
+    margin-left: 0.5rem;
+}
 .hRMjrF.open {
     background-color: rgba(93, 160, 0, 0.2);
 }
-
-.fdisPg {
+.hRMjrF.open .dot {
+    left: 0.75rem;
+    background-color: rgb(67, 179, 9);
+}
+.vjsVz {
     height: 100%;
     min-height: 37.5rem;
     display: flex;
@@ -171,90 +165,184 @@ const handleAllbet = (()=>{
     justify-content: space-between;
     padding: 0px 0.375rem;
 }
-
-.fdisPg .head {
+.vjsVz {
+    height: 100%;
+    min-height: 37.5rem;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 0.375rem;
+}
+.vjsVz .head {
     table-layout: fixed;
     height: 3.75rem;
+    font-size: 13px;
     color: rgba(153, 164, 176, 0.6);
 }
-
-.fdisPg .head td {
-    text-align: center;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-.fdisPg .head td:first-of-type {
+.vjsVz .head td {
+    text-align: center;
+}
+.vjsVz .head td:first-of-type {
     text-align: left;
 }
-
-.fdisPg .user {
+.vjsVz .user {
     max-width: 8.75rem;
 }
-
-.fdisPg td {
+.vjsVz td {
     padding: 0px 0.375rem;
     height: 3rem;
 }
-
-.fdisPg .escape {
+.vjsVz .escape {
     width: 5.625rem;
+    font-size: 13px;
 }
-
-.fdisPg .head td:last-of-type {
+.vjsVz .head td:last-of-type {
     text-align: right;
 }
-
-.fdisPg td {
-    padding: 0px 0.375rem;
-    height: 3rem;
-}
-
-.fdisPg .scroll-wrap {
+.vjsVz .scroll-wrap {
     flex: 1 1 auto;
     position: relative;
 }
-
-.fdisPg.need-scroll .table {
+.vjsVz.need-scroll .table {
     position: absolute;
     left: 0px;
     top: 0px;
 }
-
 .iUeetX {
     width: 100%;
     table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0px;
 }
-
 .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
 }
-
-.iUeetX td:first-child {
+ .iUeetX td:first-child {
     text-align: left;
 }
-
-.fdisPg .user {
+.vjsVz .user {
     max-width: 8.75rem;
 }
-
+.vjsVz td {
+    padding: 0px 0.375rem;
+    height: 3rem;
+}
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
-
-.fdisPg .escape {
+.iUeetX td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+}
+.vjsVz .user-info {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+.iTDswZ.user-info {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+    font-size: 13px;
+}
+.iTDswZ {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.iTDswZ .avatar {
+    width: 1.62em;
+    height: 1.62em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+.iTDswZ .name {
+    flex: 1 1 0%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.iTDswZ .name {
+    flex: 1 1 0%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.vjsVz .escape {
     width: 5.625rem;
 }
-
-.fdisPg .opacity {
+.vjsVz td {
+    padding: 0px 0.375rem;
+    height: 3rem;
+}
+.iUeetX td {
+    border: 1px solid transparent;
+    color: rgb(153, 164, 176);
+}
+.vjsVz .opacity {
     opacity: 0.5;
+}
+.table .sc-Galmp {
+    font-family: Monmono;
+}
+.erPQzq .coin-icon {
+    width: 1.4em;
+    height: 1.4em;
+    margin-right: 0.25em;
+}
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.vjsVz .coin .coin-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+.vjsVz .coin .amount {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+    font-size: 13px;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}
+.iUeetX td:last-child {
+    border-radius: 0px 0.625rem 0.625rem 0px;
+}
+.iUeetX td:last-child {
+    text-align: right;
+}
+.vjsVz td {
+    padding: 0px 0.375rem;
+    height: 3rem;
+}
+.vjsVz .opacity {
+    opacity: 0.5;
+}
+.ttl {
+    text-transform: lowercase;
+}
+
+.iUeetX td:last-child {
+    border-radius: 0px 0.625rem 0.625rem 0px;
+}
+.iUeetX td:last-child {
+    text-align: right;
+}
+.table .sc-Galmp {
+    font-family: Monmono;
 }
 
 .erPQzq {
@@ -264,80 +352,29 @@ table {
     align-items: center;
     white-space: nowrap;
 }
-
-.table .sc-Galmp {
-    font-family: Monmono;
-}
-
-.fdisPg .coin .coin-icon {
+.vjsVz .coin .coin-icon {
     width: 1.2em;
     height: 1.2em;
 }
-
 .erPQzq .coin-icon {
     width: 1.4em;
     height: 1.4em;
     margin-right: 0.25em;
 }
 
-.fdisPg .coin .amount {
+.vjsVz .coin.is-win .amount {
+    color: rgb(67, 179, 9);
+}
+.vjsVz .coin .amount {
     color: rgb(245, 246, 247);
     font-weight: bold;
-}
-
-.erPQzq .amount-str {
-    width: 7em;
-    display: inline-block;
 }
 
 .erPQzq .suffix {
     opacity: 0.5;
 }
 
-.iUeetX td:last-child {
-    border-radius: 0px 0.625rem 0.625rem 0px;
-}
-
-.iUeetX td:last-child {
-    text-align: right;
-}
-
-.fdisPg .opacity {
-    opacity: 0.5;
-}
-
-.iTDswZ {
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.iTDswZ.user-info {
-    color: rgb(245, 246, 247);
-    font-weight: bold;
-}
-
-.iTDswZ .avatar {
-    width: 1.62em;
-    height: 1.62em;
-    border-radius: 50%;
-    margin-right: 0.5em;
-}
-
-.iUeetX td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.75rem;
-}
-
-/* .iTDswZ.user-info .hidden-name {
-    color: rgb(153, 164, 176);
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-} */
-
-.fdisPg .foot {
+.vjsVz .foot {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -347,11 +384,7 @@ table {
     position: relative;
     z-index: 11;
 }
-.hRMjrF.open .dot {
-    left: 0.75rem;
-    background-color: rgb(67, 179, 9);
-}
-.fdisPg .state::before {
+.vjsVz .state::before {
     content: "";
     display: inline-block;
     background-color: rgb(67, 179, 9);
@@ -360,8 +393,7 @@ table {
     border-radius: 0.25rem;
     margin-right: 0.4375rem;
 }
-
-.fdisPg .list-toggle {
+.vjsVz .list-toggle {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -372,8 +404,7 @@ table {
     white-space: nowrap;
     background-color: rgb(35, 39, 44);
 }
-
-.fdisPg .list-toggle>div {
+.vjsVz .list-toggle > div {
     flex: 1 1 0%;
 }
 </style>

@@ -48,6 +48,26 @@ export let historyStore = writable(history)
 
 
 let hasbet = false
-let hasbet_amount = 0
+let hasbet_amount = null
 export let handleHasbet = writable(hasbet)
 export let handleHasbet_amount = writable(hasbet_amount)
+
+let game_idEl = null
+export let game_id = writable(game_idEl)
+
+let hasCashout = false
+export let cashOut = writable(hasCashout)
+
+let isWinning = false
+let winning_amont = 0
+export let winning = writable(isWinning)
+export let winningEl = writable(winning_amont)
+
+let active_players = []
+export let active_playerEl = writable(active_players)
+
+let curve = ""
+export let crashCurve = writable(curve)
+
+let crash_history = []
+export let crash_historyEl = writable(crash_history)

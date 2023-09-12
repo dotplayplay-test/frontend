@@ -4,11 +4,8 @@ import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill"
 import Crash from './crash.svelte';
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
-import { historyStore } from "$lib/crashgame/store"
-
-const handleBankroll = (()=>{
-    dispatch("close", 5)
-})
+import { crash_historyEl } from "$lib/crashgame/store"
+import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 
 const handleTrends = (()=>{
     dispatch("closeTrend", 5)
@@ -18,24 +15,12 @@ const handleTrends = (()=>{
 
 <div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
-        <button on:click={handleBankroll} class="sc-lheXJl lhEJig jackpot-enter">
-            <div class="title">
-                <span class="tit">Bankroll</span>
-                <span>PPF</span>
-            </div>
-            <div class="sc-Galmp erPQzq coin notranslate">
-                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
-                <div class="amount">
-                    <span class="amount-str">3410052.23</span>
-                </div>
-            </div>
-        </button>
         <div class="recent-list-wrap">
             <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
-                {#each $historyStore as his (his.id)}
-                    <button class={`game-item ${parseInt(his.crashpoint) >= 10 && "is-moon"} ${his.crashpoint > 2 && his.crashpoint < 10 && "is-doubble"} `} style="width: 25%;">
-                        <div class="issus">{his.id}</div>
-                        <div>{his.crashpoint}x</div>
+                {#each $crash_historyEl as his (his.id)}
+                    <button class={`game-item ${parseInt(his.crash_point) >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
+                        <div class="issus">{his.game_id}</div>
+                        <div>{his.crash_point}x</div>
                     </button>
                 {/each}
             </div>
@@ -49,7 +34,8 @@ const handleTrends = (()=>{
     <div class="sc-eqUgKp hjPxpf game-box sc-lnDqNf hbPvVG">
         <div class="sc-epFoly gBNWKS house-edge"><span>House Edge 1%</span></div>
         <div class="sc-feYDSs hgDXdf">
-            <Crash />
+            <!-- <Crash /> -->
+            <Crashlayout />
         </div>
         <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs><linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#31343C"></stop><stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop></linearGradient></defs><g opacity=".899"><path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path></g></svg>
     </div>
@@ -95,36 +81,7 @@ const handleTrends = (()=>{
     flex-direction: column;
     background-color: rgba(49, 52, 60, 0.4);
 }
-.lhEJig .title {
-    font-weight: bold;
-    height: 1.25rem;
-}
-.lhEJig .title .tit {
-    margin-right: 0.25rem;
-    color: rgb(67, 179, 9);
-}
-.lhEJig .coin {
-    vertical-align: top;
-    height: 1.25rem;
-    margin-top: -0.25rem;
-}
 
-.lhEJig .coin .coin-icon {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.25em;
-}
-.lhEJig .coin .amount {
-    color: rgb(245, 246, 247);
-    font-weight: bold;
-}
-.lhEJig .coin .amount .amount-str {
-    width: auto;
-}
-.erPQzq .amount-str {
-    width: 7em;
-    display: inline-block;
-}
 .kQtbd .recent-list-wrap {
     background-color: rgba(49, 52, 60, 0.4);
     border-radius: 1.375rem;

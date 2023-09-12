@@ -5,21 +5,32 @@ import FaSolidKeyboard from "svelte-icons-pack/fa/FaSolidKeyboard";
 import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import Layout from '$lib/crashgame/components/bankroll/layout.svelte';
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import Hotkeys from './hotkeys.svelte';
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
 import Trend from '$lib/crashgame/components/trends/index.svelte';
-import { loadingCrash,handleHasbet,  crashIsAlive, hasCrashed } from "$lib/crashgame/store"
+import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunning,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
 import {default_Wallet } from "$lib/store/coins"
-import { useCrashBet } from "$lib/crashgame/crashHook";
+import { useCrashBet,useCrashCashout } from "$lib/crashgame/crashHook";
+import { profileStore } from "$lib/store/profile"
 const { crashBet, isLoading, error } = useCrashBet()
+const { cashout, loadingCashout, cashoutError  } = useCrashCashout()
+
 import {
     browser
 } from '$app/environment'
 const id = browser && JSON.parse(localStorage.getItem('user'))
+let getBet_amount;
+
+$:{
+    getBet_amount = browser && JSON.parse(localStorage.getItem('user_bet_amount')) 
+    if(getBet_amount){
+        handleHasbet_amount.set(getBet_amount.bet_amount)
+        handleHasbet.set(true)
+    }
+}
 
 let ishotKey = false
 const handleHotkeyEnable = (()=>{
@@ -57,14 +68,6 @@ const handleHelp = ()=>{
     }
 }
 
-let isBankroll = false
-const handleBankroll = (()=>{
-    if(isBankroll){
-        isBankroll = false
-    }else{
-        isBankroll = true
-    }
-})
 
 let isTrend = false
 const handleTrends = (()=>{
@@ -97,12 +100,35 @@ const ranging = (()=>{
 })
 
 const handleCrashBet = (()=>{
-    const data = {
+    if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
+        alert("insufficient balance")
+    }else{
+        const data = {
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
         bet_amount, bet_token_img: $default_Wallet.coin_image, 
-        bet_token_name: $default_Wallet.coin_name }
-    crashBet(data)
+        bet_token_name: $default_Wallet.coin_name 
+        }
+        crashBet(data)
+    }
 })
 
+const handleCashout = (()=>{
+    let data = {
+        cashout_at:($crashRunning * $handleHasbet_amount).toFixed(2),
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        profit: (($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount).toFixed(2),
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        crash: $crashRunning
+    }
+    let win = ($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount
+    winningEl.set(win)
+    cashout(data)
+})
 
 </script>
 
@@ -116,9 +142,7 @@ const handleCrashBet = (()=>{
     {#if isHelp}
         <Help on:close={handleHelp} />
     {/if}
-    {#if isBankroll}
-        <Layout on:close={handleBankroll} />   
-    {/if}
+
     {#if isTrend}
         <Trend on:close={handleTrends} />
     {/if}
@@ -143,20 +167,20 @@ const handleCrashBet = (()=>{
                     </button>
                 {/if}
                 {#if $crashIsAlive && $handleHasbet}
-                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
-                        <!-- <div>Bet</div> -->
+                        <div>{($crashRunning * $handleHasbet_amount).toFixed(2)}</div>
                         <div class="sub-text">cashout</div>
                     </div>
                 </button>
             {/if}
-                {#if $loadingCrash && !id}
+            {#if $loadingCrash && !id}
                 <button on:click={goto("/login")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
                         <div>Bet</div>
                     </div>
                 </button>
-            {/if}
+                {/if}
                 {#if $loadingCrash}
                     <button disabled={isLoading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         {#if isLoading}
@@ -264,7 +288,7 @@ const handleCrashBet = (()=>{
         </div>
     </div>
 
-    <Crashview on:closeTrend={handleTrends} on:close={handleBankroll} />
+    <Crashview on:closeTrend={handleTrends}  />
 
     <div class="game-actions">
         <button on:click={handleHotkeyEnable} class="action-item  ">

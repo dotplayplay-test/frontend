@@ -1,4 +1,4 @@
-<div class="classic-di">
+<!-- <div class="classic-di">
   <div class="game-area" bis_skin_checked="1">
     <div class="game-main" bis_skin_checked="1">
       <div
@@ -2098,4 +2098,4 @@
     height: 1.4em;
     fill: rgba(153, 164, 176, 0.6);
   }
-</style>
+</style> -->
