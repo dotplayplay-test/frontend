@@ -1,14 +1,14 @@
 <script>
-  import Icon from 'svelte-icons-pack/Icon.svelte';
+import Icon from 'svelte-icons-pack/Icon.svelte';
 import { createEventDispatcher } from 'svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-    import About from './about.svelte';
-    import Fairness from './fairness.svelte';
-    import Backroll from './backroll.svelte';
-    import HelpTrendball from './helpTrendball.svelte';
-    import Helpautocashout from './helpautocashout.svelte';
+import About from '$lib/crashgame/components/help/about.svelte';
+import Fairness from '$lib/crashgame/components/help/fairness.svelte';
+import Backroll from '$lib/crashgame/components/help/backroll.svelte';
+import HelpTrendball from '$lib/crashgame/components/help/helpTrendball.svelte';
+import Helpautocashout from '$lib/crashgame/components/help/helpautocashout.svelte';
 const dispatch = createEventDispatcher()
 
 const handleCloseHelp = (()=>{

@@ -17,12 +17,16 @@ import { useCrashBet,useCrashCashout } from "$lib/crashgame/crashHook";
 import { profileStore } from "$lib/store/profile"
 const { crashBet, isLoading, error } = useCrashBet()
 const { cashout, loadingCashout, cashoutError  } = useCrashCashout()
+export let isClassic
+
 
 import {
     browser
 } from '$app/environment'
+    import Trendball from "../../../lib/crashgame/components/trendball/Trendball.svelte";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let getBet_amount;
+
 
 $:{
     getBet_amount = browser && JSON.parse(localStorage.getItem('user_bet_amount')) 
@@ -156,6 +160,8 @@ const handleCashout = (()=>{
                 <div class="label">Advanced</div>
             </button>
         </div>
+
+        {#if isClassic}
         <div class="game-control-panel">
             <div class="sc-lVTEl hjMJHh">
                 {#if $crashIsAlive && !$handleHasbet}
@@ -182,7 +188,7 @@ const handleCashout = (()=>{
                 </button>
                 {/if}
                 {#if $loadingCrash}
-                    <button disabled={isLoading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                    <button disabled={$handleHasbet} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         {#if isLoading}
                             <div class="button-inner">
                                 <div>Loading...</div>
@@ -286,6 +292,14 @@ const handleCashout = (()=>{
                 </div>
             </div>
         </div>
+
+        {:else}
+       <Trendball />
+        {/if}
+
+     
+
+
     </div>
 
     <Crashview on:closeTrend={handleTrends}  />
@@ -402,4 +416,5 @@ const handleCashout = (()=>{
     border-radius: 0.375rem;
     background-color: rgb(204, 207, 217);
 }
+
 </style>

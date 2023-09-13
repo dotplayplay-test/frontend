@@ -71,3 +71,17 @@ export let crashCurve = writable(curve)
 
 let crash_history = []
 export let crash_historyEl = writable(crash_history)
+
+let mybet = []
+export let mybetEl = writable(mybet)
+
+let mybetDetails = []
+export let mybetElDetails = writable(mybetDetails)
+
+
+let redTrendball = ''
+export let redTrendballEl = writable(redTrendball)
+
+let redtredballPlayers = ""
+export let handleRedtrendballPlayers = writable(redtredballPlayers)
+

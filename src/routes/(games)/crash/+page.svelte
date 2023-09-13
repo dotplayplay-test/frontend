@@ -1,13 +1,9 @@
 <script>
-    import { animateCrashCurve } from "$lib/crashgame/store"
-/** @type {import('./$types').PageLoad} */
-export let data;
-animateCrashCurve.set(data.animate)
+
 import "../.../../../../styles/crash/main.css"
-    import Active from "./active.svelte";
-    import Allbet from "./allbet.svelte";
-    import Main from "./main.svelte";
-    import Mybet from "./mybet.svelte";
+import Allbet from "./allbet.svelte";
+import Main from "./main.svelte";
+import Mybet from "./mybet.svelte";
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -32,7 +28,7 @@ const handleNavigation = ((w) => {
             </div>
         </div>
         <div class="game-area">
-            <Main />
+            <Main isClassic={isClassic} />
             <Allbet isClassic={isClassic} />
         </div>
         <Mybet />

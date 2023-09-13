@@ -42,6 +42,7 @@ const handleAllbet = (()=>{
             <div class="sc-gWXbKe iUeetX table is-hover">
                 <table class="sc-gWXbKe iUeetX table is-hover">
                     <tbody>
+                        {#if $active_playerEl.length !== 0}
                         {#each $active_playerEl as player }
                         <tr>
                             <td class="user">
@@ -51,13 +52,14 @@ const handleAllbet = (()=>{
                                 </a>
                             </td>
                             <td class="escape">
+
                                 <span class="ttl opacity">{player.cashout}x</span>
                             </td>
                             <td>
                                 <div class="sc-Galmp erPQzq coin notranslate">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span>
+                                    <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span>
                                     </span>
                                 </div>
                             </div>
@@ -67,6 +69,7 @@ const handleAllbet = (()=>{
                                 <div class="sc-Galmp erPQzq coin notranslate is-win">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
+                                     
                                         <span class="amount-st">{player.profit}</span>
                                     </div>
                                 </div>
@@ -76,6 +79,12 @@ const handleAllbet = (()=>{
                             </td>
                         </tr>
                         {/each}
+                        {:else}
+                            <div class="sc-eCImPb cuPxwd empty ">
+                                <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="">
+                                <div class="msg">Oops! There is no data yet!</div>
+                            </div>
+                        {/if}
                     </tbody>
                 </table>
             </div>
@@ -91,7 +100,6 @@ const handleAllbet = (()=>{
     {:else}
     <Trendball />
     {/if}
-
 </div>
 
 <style>

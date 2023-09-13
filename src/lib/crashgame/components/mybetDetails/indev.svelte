@@ -13,6 +13,9 @@ import {
     createEventDispatcher
 } from 'svelte';
 import Sharebet from './sharebet.svelte';
+import { mybetElDetails } from "../../store"
+
+
 const dispatch = createEventDispatcher()
 
 const handleClose = (() => {
@@ -27,6 +30,7 @@ let handleSharedBet = (() => {
         hasSharedBet = true
     }
 })
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
@@ -44,19 +48,23 @@ let handleSharedBet = (() => {
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
                 <div class="sc-dkPtRN jScFby scroll-view sc-aaqME bGvuvq">
                     <div class="sc-emDsmM Osnbt">
-                        <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
+                        {#if $mybetElDetails.profit === "betting" }
+                            <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
+                        {:else}
+                        <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">
+                        {/if}
                         <button on:click={handleSharedBet} class="sc-jibziO gZqspm game-share">
                             <Icon src={FaSolidShare}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                         </button>
                         <div class="rt_info">
-                            <img class="avatar avatar" alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1694096906450">
-                            <div class="name">Victor Otung</div>
+                            <img class="avatar avatar" alt="" src={$mybetElDetails.profile_img}>
+                            <div class="name">{$mybetElDetails.username}</div>
                             <div class="flex">
-                                <div class="betid">Betting ID: 728240291</div>
+                                <div class="betid">Betting ID: {$mybetElDetails.bet_id}</div>
                                 <div class="verified">Verified</div>
                             </div>
                         </div>
-                        <div class="rt_time">9/5/2023, 11:21:47 AM</div>
+                        <div class="rt_time">{$mybetElDetails.time}</div>
                         <div class="rt_items">
                             <div class="item-wrap">
                                 <div class="label flex-center">
@@ -64,23 +72,33 @@ let handleSharedBet = (() => {
                                         <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" />
                                     </span>
                                     Amount</div>
-                                <div class="number flex-center">2 CUB</div>
+                                <div class="number flex-center">{$mybetElDetails.bet_amount}{" "}{$mybetElDetails.token}</div>
                             </div>
                             <div class="item-wrap">
                                 <div class="label flex-center">
                                     <span style="padding-right: 3px;">
                                         <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" />
                                     </span>
-                                    Payout</div>
-                                <div class="number flex-center">0 x</div>
+                                    Payout
+                                </div>
+                                {#if $mybetElDetails.profit === "betting" }
+                                 <div class="number flex-center">0 x</div>
+                                  {:else}      
+                                    <div class="number flex-center">{$mybetElDetails.cashout} x</div>
+                                {/if}
                             </div>
                             <div class="item-wrap">
                                 <div class="label flex-center">
                                     <span style="padding-right: 3px;">
                                         <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" />
                                     </span>
-                                    Profit</div>
-                                <div class="number flex-center">-2 CUB</div>
+                                    Profit
+                                </div>
+                                {#if $mybetElDetails.profit === "betting" }
+                                <div class="number flex-center">0 x</div>
+                                 {:else}      
+                                   <div class="number flex-center">{$mybetElDetails.profit} x</div>
+                               {/if}
                             </div>
                         </div>
                     </div>
@@ -93,7 +111,7 @@ let handleSharedBet = (() => {
                                         <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                                     </span>
                                     Result</div>
-                                <div class="item-desc">1.20x</div>
+                                <div class="item-desc">{$mybetElDetails.payout}x</div>
                             </div>
                             <div class="item-wrap">
                                 <div class="item-num">
@@ -103,7 +121,7 @@ let handleSharedBet = (() => {
                                     Bet
                                 </div>
                                 <div class="item-desc">
-                                    <span class="mthan">Classic</span>
+                                    <span class="mthan">{$mybetElDetails.game_type}</span>
                                 </div>
                             </div>
                             <div class="item-wrap">
@@ -118,13 +136,13 @@ let handleSharedBet = (() => {
                         <div class="sc-ezbkAF kDuLvp input ">
                             <div class="input-label">Game ID</div>
                             <div class="input-control">
-                                <input type="text" readonly="" value="5608605">
+                                <input type="text" readonly={true} value={$mybetElDetails.game_id}>
                             </div>
                         </div>
                         <div class="sc-ezbkAF kDuLvp input ">
                             <div class="input-label">Hash</div>
                             <div class="input-control">
-                                <input type="text" readonly="" value="a34c4b279604a87277aab525ab0f51a8d1fca78ec5705676c05be6cf0f96e840">
+                                <input type="text" readonly value={$mybetElDetails.game_hash}>
                             </div>
                         </div>
                         <div class="flex btns">

@@ -1,7 +1,6 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import Crash from './crash.svelte';
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
 import { crash_historyEl } from "$lib/crashgame/store"
@@ -34,7 +33,6 @@ const handleTrends = (()=>{
     <div class="sc-eqUgKp hjPxpf game-box sc-lnDqNf hbPvVG">
         <div class="sc-epFoly gBNWKS house-edge"><span>House Edge 1%</span></div>
         <div class="sc-feYDSs hgDXdf">
-            <!-- <Crash /> -->
             <Crashlayout />
         </div>
         <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs><linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#31343C"></stop><stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop></linearGradient></defs><g opacity=".899"><path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path></g></svg>

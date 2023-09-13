@@ -2,9 +2,8 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
-import Sharebet from '../../../lib/crashgame/components/mybetDetails/sharebet.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
-
+import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
 let isBet = true
 let isHistory = false
 let isContent = false
@@ -27,13 +26,15 @@ const handleRoute = ((w)=>{
     }
 })
 let isBetHistory = false
-let handleBetHistory = (()=>{
+let handleBetHistory = ((e)=>{
     if(isBetHistory){
         isBetHistory = false
     }else{
+        mybetElDetails.set(e)
         isBetHistory = true
     }
 })
+
 
 </script>
 
@@ -68,31 +69,37 @@ let handleBetHistory = (()=>{
                 </tr>
             </thead>
             <tbody>
-                <tr on:click={()=>handleBetHistory()} class="values">
-                    <td>
-                        <p class="hash ellipsis">728240291</p>
-                    </td>
-                    <td>11:21:47 AM</td>
-                    <td class="bet">
-                        <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
-                            <div class="amount">
-                                <span class="amount-str">2.<span class="suffix">00000000</span>
-                                </span>
+                {#each $mybetEl as mybet (mybet.id)}
+                    <tr on:click={()=>handleBetHistory(mybet)} class="values">
+                        <td>
+                            <p class="hash ellipsis">{mybet.bet_id}</p>
+                        </td>
+                        <td>{mybet.time}</td>
+                        <td class="bet">
+                            <div class="sc-Galmp erPQzq coin notranslate monospace">
+                                <img class="coin-icon" alt="" src={mybet.token_img}>
+                                <div class="amount">
+                                    <span class="amount-str">{mybet.bet_amount}.<span class="suffix">00000000</span>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="payout">0.00×</td>
-                    <td class="profitline is-lose">
-                        <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
-                            <div class="amount">
-                                <span class="amount-str">2.<span class="suffix">00000000</span>
-                                </span>
+                        </td>
+                        <td class="payout">{mybet.cashout}×</td>
+                        <td class="profitline is-lose">
+                            <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
+                                <img class="coin-icon" alt="" src={mybet.token_img}>
+                                <div class="amount">
+                                    {#if mybet.profit !== "betting"}
+                                    <span class="amount-str" style="color:#43b309">{mybet.profit}.<span class="suffix">00000000</span> </span>
+                                    {:else}
+                                    <span class="amount-str" style="color: rgb(237, 99, 0);">{"-"+mybet.bet_amount}.<span class="suffix">00000000</span> </span>
+                                    {/if}
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                {/each}
+           
             </tbody>
         </table>
     </div>

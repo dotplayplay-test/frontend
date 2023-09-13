@@ -3,7 +3,7 @@ const socket = io("http://localhost:8000");
 
 import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,
      loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,
-      hasCrashed, crashPoint, crashRunning, crash_historyEl } from "./store"
+      hasCrashed, crashPoint, crashRunning, crash_historyEl ,handleRedtrendballPlayers, mybetEl} from "./store"
 
 
 export const handleCountdown = (()=>{
@@ -23,6 +23,10 @@ export const handleCountdown = (()=>{
 
     socket.on("crash-game-history", data=>{
         crash_historyEl.set(data)
+    })
+
+    socket.on("crash-game-redtrend", data=>{
+        handleRedtrendballPlayers.set(data)
     })
 
     // ============= Manage the state of the game =======================
@@ -60,4 +64,9 @@ export const handleCountdown = (()=>{
        socket.on("crash_curve", data =>{
         crashCurve.set(data)
     })
+
+         //  ==================== crash animation ==============
+           socket.on("my-bet", data =>{
+            mybetEl.set(data)
+        })
 })

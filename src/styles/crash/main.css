@@ -397,3 +397,11 @@
 .jDDdCf .action-item:hover{
     background: rgba(88, 88, 88, 0.185);
 }
+.cMPLfC {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
