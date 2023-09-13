@@ -1682,7 +1682,7 @@
     font-size: 1.875rem;
     font-weight: bold;
     pointer-events: none;
-    color: rgb(255, 255, 255);
+    /* color: rgb(255, 255, 255); */
     width: 9.25rem;
     height: 4.125rem;
     display: flex;
