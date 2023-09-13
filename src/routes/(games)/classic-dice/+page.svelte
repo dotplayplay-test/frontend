@@ -44,10 +44,14 @@
     document.querySelector(".dice_num").style.color = color;
   }
 
-  const rollDice = () => {
+  function generateRandomStep() {
     const min = 2;
     const max = 98;
-    randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function rollDice() {
+    randomStep = generateRandomStep();
 
     if (randomStep > sliderValue) {
       playSound("failureSound", "orange");
@@ -57,7 +61,7 @@
 
     randomSteps = [...randomSteps, randomStep];
     localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
-  };
+  }
 
   function toggleAutoBet() {
     isAutoBetting = !isAutoBetting;
@@ -71,9 +75,7 @@
 
   function startAutoBet() {
     autoBetInterval = setInterval(() => {
-      const min = 2;
-      const max = 98;
-      randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
+      randomStep = generateRandomStep();
 
       if (randomStep > sliderValue) {
         playSound("failureSound", "orange");
