@@ -116,8 +116,6 @@
 </script>
 
 <div class="classic-di">
-  <audio id="failureSound" src="wah_wah_failure_sound.wav" />
-  <audio id="successSound" src="dice_success_sound.wav" />
   <div class="game-area" bis_skin_checked="1">
     <div class="game-main" bis_skin_checked="1">
       <div
