@@ -6,6 +6,7 @@
   let slideLoseColor = "orange";
   let isAutoBetting = false;
   let autoBetInterval;
+  let isSliderDisabled = false;
 
   const handleSliderInput = (event) => {
     sliderValue = +event.target.value;
@@ -86,6 +87,8 @@
       randomSteps = [...randomSteps, randomStep];
       localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
     }, 1000);
+
+    isSliderDisabled = true;
   }
 
   function stopAutoBet() {
@@ -448,6 +451,7 @@
                     on:input={handleSliderInput}
                     on:mouseenter={handleSliderMouseEnter}
                     on:mouseleave={handleSliderMouseLeave}
+                    disabled={isAutoBetting}
                   />
                   {#if isHovered}
                     <span class="step-display" style={stepDisplayStyle}
