@@ -85,3 +85,8 @@ export let redTrendballEl = writable(redTrendball)
 let redtredballPlayers = ""
 export let handleRedtrendballPlayers = writable(redtredballPlayers)
 
+let crash_all_users_red_trendball = false
+export let crash_all_users_red_trendballEl = writable(crash_all_users_red_trendball)
+
+let trendball_has_win = false
+export let trendball_has_winEl = writable(trendball_has_win)

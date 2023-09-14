@@ -1,5 +1,5 @@
 <script>
-import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
+import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_has_winEl } from "$lib/crashgame/store"
 
 </script>
 
@@ -57,42 +57,51 @@ import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
             <table class="sc-gWXbKe iUeetX table is-hover">
                 <tbody>
                     {#each $handleRedtrendballPlayers as red }
-                        <tr>
-                            <td>
-                                <a class="sc-jUosCB iTDswZ user-info " href="/crash">
-                                    <img class="avatar " alt="" src={red.profile_img}>
-                                    <div class="name">
-                                        <span class="hidden-name">
-                                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                                <use xlink:href="#icon_Hidden"></use>
-                                            </svg>
-                                            {red.username}
-                                        </span>
-                                    </div>
-                                </a>
-                            </td>
-                            <td>
-                                <div class="sc-Galmp erPQzq coin notranslate monospace bold status-0">
-                                    <img class="coin-icon" alt="" src={red.token_img}>
-                                    <div class="amount">
-                                        <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
-                                    </div>
+                    {#if red.game_type === "Red"}
+                    <tr>
+                        <td>
+                            <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/525955">
+                            <img class="avatar " alt="" src={red.profile_img}>
+                            <div class="name">{red.username}</div>
+                        </a>
+                        </td>
+                        <td>
+                            {#if $trendball_has_winEl}
+                            <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-1 `}>
+                                <img class="coin-icon" alt="" src={red.token_img}>
+                                <div class="amount">
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                            {:else if $crash_all_users_red_trendballEl}
+                            <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-2 `}>
+                                <img class="coin-icon" alt="" src={red.token_img}>
+                                <div class="amount">
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
+                                </div>
+                            </div>
+                            {:else }
+                            <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-0`}>
+                                <img class="coin-icon" alt="" src={red.token_img}>
+                                <div class="amount">
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
+                                </div>
+                            </div>
+                            {/if}
+                        </td>
+                    </tr>
+                    {/if}
                     {/each}
                 </tbody>
             </table>
 
             <table class="sc-gWXbKe iUeetX table is-hover">
                 <tbody>
-
-
                     <tr>
                         <td>
                             <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/505838">
                                 <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/505838/s">
-                                <div class="name">۔۔۔۔۔۔۔۔۔۔</div>
+                                <div class="name">۔۔۔۔۔۔۔۔۔۔nss snn nknknm</div>
                             </a>
                             <div class="moon"></div>
                         </td>
@@ -110,12 +119,12 @@ import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
         </div>
     </div>
     <!-- <div class="sc-eCImPb cuPxwd empty ">
-        <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="">
-        <div class="msg">Oops! There is no data yet!</div>
+            <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="">
+            <div class="msg">Oops! There is no data yet!</div>
     </div> -->
 </div>
 
-<style>
+    <style>
 .engBBI {
     min-height: 28.125rem;
     height: 100%;
@@ -124,6 +133,13 @@ import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
     flex-direction: column;
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+}
+
+.iTDswZ .name {
+    flex: 1 1 0%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .engBBI .banner {
@@ -239,64 +255,76 @@ import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
     padding: 0.875rem 0.75rem;
 }
 
-
 .engBBI.need-scroll .list-wrap {
     position: relative;
 }
+
 .engBBI.need-scroll .list-wrap {
     height: 30rem;
     flex: 1 1 auto;
 }
+
 .engBBI.need-scroll .list-wrap .bet-list {
     position: absolute;
     inset: 0px;
 }
+
 .engBBI .bet-list {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
     flex: 1 1 auto;
 }
+
 .engBBI .table {
     width: 50%;
     align-self: flex-start;
 }
+
 .iUeetX {
     width: 100%;
     table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0px;
 }
+
 .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
 }
+
 .engBBI .user-info {
     position: relative;
     vertical-align: middle;
 }
+
 .iTDswZ .avatar {
     width: 1.62em;
     height: 1.62em;
     border-radius: 50%;
     margin-right: 0.5em;
 }
+
 .engBBI .user-info {
     position: relative;
     vertical-align: middle;
 }
+
 .iTDswZ.user-info {
     color: rgb(245, 246, 247);
     font-weight: bold;
 }
+
 .erPQzq .coin-icon {
     width: 1.4em;
     height: 1.4em;
     margin-right: 0.25em;
 }
+
 .engBBI .user-info {
     position: relative;
     vertical-align: middle;
 }
+
 .iTDswZ .name {
     flex: 1 1 0%;
     overflow: hidden;
@@ -308,5 +336,121 @@ import { handleRedtrendballPlayers } from "../../../lib/crashgame/store"
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
+}
+
+.engBBI .status-2 {
+    color: rgb(237, 99, 0);
+}
+
+.engBBI .status-1 {
+    color: rgb(67, 179, 9);
+}
+.iUeetX td:first-child {
+    border-radius: 0.625rem 0px 0px 0.625rem;
+}
+
+.iUeetX td:first-child {
+    text-align: left;
+}
+
+.engBBI td {
+    padding: 0.5rem;
+    position: relative;
+    height: 2.9375rem;
+}
+
+.iUeetX td {
+    border: 1px solid transparent;
+    color: rgb(153, 164, 176);
+}
+
+.iUeetX td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+}
+
+.engBBI .user-info {
+    position: relative;
+    vertical-align: middle;
+}
+
+.iTDswZ.user-info {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+
+.iTDswZ {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.iTDswZ .avatar {
+    width: 1.62em;
+    height: 1.62em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+
+.iTDswZ .name {
+    flex: 1 1 0%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.engBBI td:last-child {
+    width: 8.375rem;
+}
+
+.iUeetX td:last-child {
+    border-radius: 0px 0.625rem 0.625rem 0px;
+}
+
+.iUeetX td:last-child {
+    text-align: right;
+}
+
+.engBBI td {
+    padding: 0.5rem;
+    position: relative;
+    height: 2.9375rem;
+}
+
+.iUeetX td {
+    border: 1px solid transparent;
+    color: rgb(153, 164, 176);
+}
+
+.iUeetX td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+}
+
+.engBBI .bold {
+    font-weight: 600;
+}
+
+.engBBI .status-0 {
+    color: rgb(245, 246, 247);
+}
+
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+}
+
+.erPQzq .suffix {
+    opacity: 0.5;
 }
 </style>

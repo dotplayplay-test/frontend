@@ -44,6 +44,7 @@ const handleAllbet = (()=>{
                     <tbody>
                         {#if $active_playerEl.length !== 0}
                         {#each $active_playerEl as player }
+                        {#if player.game_type === "Classic"}
                         <tr>
                             <td class="user">
                                 <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${player.user_id}`}>
@@ -52,15 +53,13 @@ const handleAllbet = (()=>{
                                 </a>
                             </td>
                             <td class="escape">
-
                                 <span class="ttl opacity">{player.cashout}x</span>
                             </td>
                             <td>
                                 <div class="sc-Galmp erPQzq coin notranslate">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span>
-                                    </span>
+                                    <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span></span>
                                 </div>
                             </div>
                             </td>
@@ -78,6 +77,7 @@ const handleAllbet = (()=>{
                             {/if}
                             </td>
                         </tr>
+                        {/if}
                         {/each}
                         {:else}
                             <div class="sc-eCImPb cuPxwd empty ">

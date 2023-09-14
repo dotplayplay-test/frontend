@@ -4,6 +4,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
+import { profileStore } from "$lib/store/profile"
 let isBet = true
 let isHistory = false
 let isContent = false
@@ -70,34 +71,36 @@ let handleBetHistory = ((e)=>{
             </thead>
             <tbody>
                 {#each $mybetEl as mybet (mybet.id)}
-                    <tr on:click={()=>handleBetHistory(mybet)} class="values">
-                        <td>
-                            <p class="hash ellipsis">{mybet.bet_id}</p>
-                        </td>
-                        <td>{mybet.time}</td>
-                        <td class="bet">
-                            <div class="sc-Galmp erPQzq coin notranslate monospace">
-                                <img class="coin-icon" alt="" src={mybet.token_img}>
-                                <div class="amount">
-                                    <span class="amount-str">{mybet.bet_amount}.<span class="suffix">00000000</span>
-                                    </span>
-                                </div>
+                {#if (mybet.username === $profileStore.username)}
+                <tr on:click={()=>handleBetHistory(mybet)} class="values">
+                    <td>
+                        <p class="hash ellipsis">{mybet.bet_id}</p>
+                    </td>
+                    <td>{mybet.time}</td>
+                    <td class="bet">
+                        <div class="sc-Galmp erPQzq coin notranslate monospace">
+                            <img class="coin-icon" alt="" src={mybet.token_img}>
+                            <div class="amount">
+                                <span class="amount-str">{mybet.bet_amount}.<span class="suffix">00000000</span>
+                                </span>
                             </div>
-                        </td>
-                        <td class="payout">{mybet.cashout}×</td>
-                        <td class="profitline is-lose">
-                            <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                                <img class="coin-icon" alt="" src={mybet.token_img}>
-                                <div class="amount">
-                                    {#if mybet.profit !== "betting"}
-                                    <span class="amount-str" style="color:#43b309">{mybet.profit}.<span class="suffix">00000000</span> </span>
-                                    {:else}
-                                    <span class="amount-str" style="color: rgb(237, 99, 0);">{"-"+mybet.bet_amount}.<span class="suffix">00000000</span> </span>
-                                    {/if}
-                                </div>
+                        </div>
+                    </td>
+                    <td class="payout">{mybet.cashout}×</td>
+                    <td class="profitline is-lose">
+                        <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
+                            <img class="coin-icon" alt="" src={mybet.token_img}>
+                            <div class="amount">
+                                {#if mybet.profit !== "betting"}
+                                <span class="amount-str" style="color:#43b309">{mybet.profit}.<span class="suffix">00000000</span> </span>
+                                {:else}
+                                <span class="amount-str" style="color: rgb(237, 99, 0);">{"-"+mybet.bet_amount}.<span class="suffix">00000000</span> </span>
+                                {/if}
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
+                {/if}
                 {/each}
            
             </tbody>

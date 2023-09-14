@@ -5,7 +5,6 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import { profileStore } from "$lib/store/profile"
 import {default_Wallet } from "$lib/store/coins"
 import { game_id} from "$lib/crashgame/store"
-
 import {useRedTrendball} from "../../trendballHook"
 const { redTrendball } = useRedTrendball()
 
@@ -16,12 +15,13 @@ const handleRed = (()=>{
         alert("is up")
     }else{
         const data = {
-        username: $profileStore.username,
-        user_img: $profileStore.profile_image,
-        game_id: $game_id,
-        bet_amount: redballValue, 
-        bet_token_img: $default_Wallet.coin_image, 
-        bet_token_name: $default_Wallet.coin_name 
+            username: $profileStore.username,
+            user_img: $profileStore.profile_image,
+            game_id: $game_id,
+            bet_amount: redballValue, 
+            bet_token_img: $default_Wallet.coin_image, 
+            bet_token_name: $default_Wallet.coin_name,
+            chance: "50.51%"
         }
         redTrendball(data)
         isRed = true

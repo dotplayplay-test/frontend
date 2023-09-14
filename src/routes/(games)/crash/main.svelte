@@ -112,7 +112,8 @@ const handleCrashBet = (()=>{
         user_img: $profileStore.profile_image,
         game_id: $game_id,
         bet_amount, bet_token_img: $default_Wallet.coin_image, 
-        bet_token_name: $default_Wallet.coin_name 
+        bet_token_name: $default_Wallet.coin_name ,
+        chance: "-"
         }
         crashBet(data)
     }
@@ -127,7 +128,7 @@ const handleCashout = (()=>{
         profit: (($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount).toFixed(2),
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
-        crash: $crashRunning
+        crash: $crashRunning,
     }
     let win = ($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount
     winningEl.set(win)
