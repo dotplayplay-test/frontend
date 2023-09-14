@@ -1,3 +1,120 @@
+<script>
+  import { onMount } from "svelte";
+
+  let sliderValue = 50;
+  let slideWinColor = "green";
+  let slideLoseColor = "orange";
+  let isAutoBetting = false;
+  let autoBetInterval;
+  let isSliderDisabled = false;
+
+  const handleSliderInput = (event) => {
+    sliderValue = +event.target.value;
+    const maxSliderValue = 98;
+    const winColorStop = (sliderValue / maxSliderValue) * 100;
+    const loseColorStop = 100 - winColorStop;
+
+    slideWinColor = `linear-gradient(90deg, green ${winColorStop}%, transparent ${winColorStop}%)`;
+    slideLoseColor = `linear-gradient(90deg, transparent ${loseColorStop}%, orange ${loseColorStop}%)`;
+  };
+
+  let isHovered = false;
+
+  const handleSliderMouseEnter = () => {
+    isHovered = true;
+  };
+
+  const handleSliderMouseLeave = () => {
+    isHovered = false;
+  };
+
+  $: stepDisplayStyle = `
+  position: absolute;
+  top: -43px;
+  background-color: #23262B;
+  border-radius: 6px;
+  padding: 6px 10px;
+  left: ${sliderValue}%`;
+
+  let randomStep = 50;
+  let randomSteps = JSON.parse(localStorage.getItem("randomSteps")) || [];
+
+  function playSound(soundId, color) {
+    const sound = document.getElementById(soundId);
+    sound.play();
+    document.querySelector(".dice_num").style.color = color;
+  }
+
+  function generateRandomStep() {
+    const min = 2;
+    const max = 98;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function rollDice() {
+    randomStep = generateRandomStep();
+
+    if (randomStep > sliderValue) {
+      playSound("failureSound", "orange");
+    } else {
+      playSound("successSound", "green");
+    }
+
+    randomSteps = [...randomSteps, randomStep];
+    localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
+  }
+
+  function toggleAutoBet() {
+    isAutoBetting = !isAutoBetting;
+
+    if (isAutoBetting) {
+      startAutoBet();
+    } else {
+      stopAutoBet();
+    }
+  }
+
+  function startAutoBet() {
+    autoBetInterval = setInterval(() => {
+      randomStep = generateRandomStep();
+
+      if (randomStep > sliderValue) {
+        playSound("failureSound", "orange");
+      } else {
+        playSound("successSound", "green");
+      }
+
+      randomSteps = [...randomSteps, randomStep];
+      localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
+    }, 1000);
+
+    isSliderDisabled = true;
+  }
+
+  function stopAutoBet() {
+    clearInterval(autoBetInterval);
+  }
+
+  // sound on component mount
+  onMount(() => {
+    const sliderSound = new Audio("dice_rolling_sound.mp3");
+    sliderSound.play();
+  });
+
+  let showManual = true;
+  let showAuto = false;
+
+  function toggleManual() {
+    showManual = true;
+    showAuto = false;
+  }
+
+  function toggleAuto() {
+    showAuto = true;
+    showManual = false;
+  }
+</script>
+
 <div class="classic-di">
   <div class="game-area" bis_skin_checked="1">
     <div class="game-main" bis_skin_checked="1">
@@ -10,84 +127,266 @@
           class="sc-iwjdpV ikWSlH radio game-control-switch"
           bis_skin_checked="1"
         >
-          <button class="is-active"
+          <button on:click={toggleManual} class:active={showManual}
             ><div class="label" bis_skin_checked="1">Manual</div></button
-          ><button class=""
+          >
+          <button on:click={toggleAuto} class:active={showAuto}
             ><div class="label" bis_skin_checked="1">Auto</div></button
           >
         </div>
         <div class="game-control-panel" bis_skin_checked="1">
-          <div class="sc-lnDqNf kBNUDl" bis_skin_checked="1">
-            <div
-              class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gwNDlS icApxq game-coininput"
-              bis_skin_checked="1"
-            >
-              <div class="input-label" bis_skin_checked="1">
-                <div class="sc-gLEhor iYmVqV label" bis_skin_checked="1">
-                  <div bis_skin_checked="1">Amount</div>
-                  <div class="max-profit" bis_skin_checked="1">
-                    <svg
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      class="sc-gsDKAQ hxODWG icon"
-                      ><use xlink:href="#icon_Inform" /></svg
-                    >
-                    <div class="tip" bis_skin_checked="1">
-                      <span class="tit">Max Profit:&nbsp;</span>
-                      <div
-                        class="sc-Galmp erPQzq coin notranslate"
-                        bis_skin_checked="1"
+          {#if showManual}
+            <div class="sc-lnDqNf kBNUDl" bis_skin_checked="1">
+              <div
+                class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gwNDlS icApxq game-coininput"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">
+                  <div class="sc-gLEhor iYmVqV label" bis_skin_checked="1">
+                    <div bis_skin_checked="1">Amount</div>
+                    <div class="max-profit" bis_skin_checked="1">
+                      <svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Inform" /></svg
                       >
-                        <div class="amount" bis_skin_checked="1">
-                          <span class="amount-str"
-                            >5000.<span class="suffix">00000</span></span
-                          >
+                      <div class="tip" bis_skin_checked="1">
+                        <span class="tit">Max Profit:&nbsp;</span>
+                        <div
+                          class="sc-Galmp erPQzq coin notranslate"
+                          bis_skin_checked="1"
+                        >
+                          <div class="amount" bis_skin_checked="1">
+                            <span class="amount-str"
+                              >5000.<span class="suffix">00000</span></span
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <div class="label-amount" bis_skin_checked="1">0 USD</div>
                 </div>
-                <div class="label-amount" bis_skin_checked="1">0 USD</div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="15302.880859375" />
+                  <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+                  <div
+                    class="sc-kDTinF bswIvI button-group"
+                    bis_skin_checked="1"
+                  >
+                    <button>/2</button><button>x2</button><button
+                      class="sc-cOLXoO jmMcg"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Arrow" /></svg
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Arrow" /></svg
+                      ></button
+                    >
+                  </div>
+                </div>
               </div>
-              <div class="input-control" bis_skin_checked="1">
-                <input type="text" value="15302.880859375" />
-                <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
-                <div class="sc-kDTinF bswIvI button-group" bis_skin_checked="1">
-                  <button>/2</button><button>x2</button><button
-                    class="sc-cOLXoO jmMcg"
-                    ><svg
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      class="sc-gsDKAQ hxODWG icon"
-                      ><use xlink:href="#icon_Arrow" /></svg
-                    ><svg
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      class="sc-gsDKAQ hxODWG icon"
-                      ><use xlink:href="#icon_Arrow" /></svg
-                    ></button
+              <div
+                class="sc-ezbkAF gWrsXy input sc-fvxzrP gOLODp"
+                disabled=""
+                bis_skin_checked="1"
+              >
+                <div class="input-label win_amount" bis_skin_checked="1">
+                  Win Amount
+                  <div class="label-amount" bis_skin_checked="1">0 USD</div>
+                </div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" disabled="" value="30299.704101563" />
+                  <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+                </div>
+              </div>
+              <button
+                class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
+                on:click={rollDice}
+                ><div class="button-inner" bis_skin_checked="1">
+                  Roll Now
+                </div></button
+              >
+            </div>
+          {/if}
+
+          {#if showAuto}
+            <div class="sc-hDzdEj knbVrE" bis_skin_checked="1">
+              <div
+                class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-dWbSDx IUvXt game-coininput"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">
+                  <div class="sc-jnSlpE dJJJKk label" bis_skin_checked="1">
+                    <div bis_skin_checked="1">Amount</div>
+                    <div class="max-profit" bis_skin_checked="1">
+                      <svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Inform" /></svg
+                      >
+                      <div class="tip" bis_skin_checked="1">
+                        <span class="tit">Max Profit:&nbsp;</span>
+                        <div
+                          class="sc-Galmp erPQzq coin notranslate"
+                          bis_skin_checked="1"
+                        >
+                          <div class="amount" bis_skin_checked="1">
+                            <span class="amount-str"
+                              >5000.<span class="suffix">00000</span></span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="label-amount" bis_skin_checked="1">0 USD</div>
+                </div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="100.000000000" /><img
+                    alt="coin"
+                    class="coin-icon"
+                    src="/coin/CUB.black.png"
+                  />
+                  <div
+                    class="sc-kDTinF bswIvI button-group"
+                    bis_skin_checked="1"
+                  >
+                    <button>/2</button><button>x2</button><button
+                      class="sc-fpyFWH AZvYO"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Arrow" /></svg
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Arrow" /></svg
+                      ></button
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="sc-ezbkAF hzTJOu input" bis_skin_checked="1">
+                <div class="input-label" bis_skin_checked="1">
+                  Number of Bets
+                </div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="0" />
+                  <div
+                    class="sc-kDTinF bswIvI button-group"
+                    bis_skin_checked="1"
+                  >
+                    <button>∞</button><button>10</button><button>100</button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="sc-ezbkAF hzTJOu input sc-faIbUi bGuvOe"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">On win</div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="0" />
+                  <div
+                    class="sc-hRnpUl iQoJxX increase-switch"
+                    bis_skin_checked="1"
+                  >
+                    <div class="dot-wrap" bis_skin_checked="1">
+                      <div class="dot" bis_skin_checked="1" />
+                    </div>
+                    <div class="reset text" bis_skin_checked="1">Reset</div>
+                    <div class="increse text" bis_skin_checked="1">
+                      Increase by
+                    </div>
+                  </div>
+                  <div class="percent" bis_skin_checked="1">%</div>
+                </div>
+              </div>
+              <div
+                class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">
+                  Stop on win
+                  <div class="label-amount" bis_skin_checked="1">0 USD</div>
+                </div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="0.000000000" /><img
+                    alt="coin"
+                    class="coin-icon"
+                    src="/coin/CUB.black.png"
+                  />
+                </div>
+              </div>
+              <div
+                class="sc-ezbkAF hzTJOu input sc-faIbUi bGuvOe"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">On lose</div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="2" />
+                  <div
+                    class="sc-hRnpUl iQoJxX increase-switch"
+                    bis_skin_checked="1"
+                  >
+                    <div class="dot-wrap" bis_skin_checked="1">
+                      <div class="dot" bis_skin_checked="1" />
+                    </div>
+                    <div class="reset text" bis_skin_checked="1">Reset</div>
+                    <div class="increse text" bis_skin_checked="1">
+                      Increase by
+                    </div>
+                  </div>
+                  <div class="percent" bis_skin_checked="1">%</div>
+                </div>
+              </div>
+              <div
+                class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp"
+                bis_skin_checked="1"
+              >
+                <div class="input-label" bis_skin_checked="1">
+                  Stop on lose
+                  <div class="label-amount" bis_skin_checked="1">0 USD</div>
+                </div>
+                <div class="input-control" bis_skin_checked="1">
+                  <input type="text" value="0.000000000" /><img
+                    alt="coin"
+                    class="coin-icon"
+                    src="/coin/CUB.black.png"
+                  />
+                </div>
+              </div>
+              <div class="sc-bhnkmi dszfkG script-tips" bis_skin_checked="1">
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  class="sc-gsDKAQ hxODWG icon"
+                  ><use xlink:href="#icon_Help" /></svg
+                >
+                <div class="tip-msg" bis_skin_checked="1">
+                  <span
+                    >Use of script is optional and players must take full
+                    responsibility for any attendant risks. We will not be held
+                    liable in this regard.</span
                   >
                 </div>
               </div>
+              <button
+                class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
+                on:click={toggleAutoBet}
+                ><div class="button-inner" bis_skin_checked="1">
+                  {#if isAutoBetting}
+                    Stop Auto Bet
+                  {:else}
+                    Start Auto Bet
+                  {/if}
+                </div></button
+              >
             </div>
-            <div
-              class="sc-ezbkAF gWrsXy input sc-fvxzrP gOLODp"
-              disabled=""
-              bis_skin_checked="1"
-            >
-              <div class="input-label" bis_skin_checked="1">
-                Win Amount
-                <div class="label-amount" bis_skin_checked="1">0 USD</div>
-              </div>
-              <div class="input-control" bis_skin_checked="1">
-                <input type="text" disabled="" value="30299.704101563" />
-                <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
-              </div>
-            </div>
-            <button
-              class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-              ><div class="button-inner" bis_skin_checked="1">
-                Roll Now
-              </div></button
-            >
-          </div>
+          {/if}
         </div>
       </div>
       <div>
@@ -108,9 +407,26 @@
               </div>
             </div>
             <div class="recent-list-wrap" bis_skin_checked="1">
-              <div class="empty-item" bis_skin_checked="1">
-                <p>Game results will be displayed here.</p>
-              </div>
+              {#if randomSteps.length > 0}
+                {#each randomSteps as step, index}
+                  <div
+                    class="recent-list"
+                    style=" transform: translate(0%, 0px);"
+                    bis_skin_checked="1"
+                    key={index}
+                  >
+                    <div class="recent-item" bis_skin_checked="1">
+                      <div class="item-wrap is-win" bis_skin_checked="1">
+                        {step}.00
+                      </div>
+                    </div>
+                  </div>
+                {/each}
+              {:else}
+                <div class="empty-item" bis_skin_checked="1">
+                  <p>Game results will be displayed here.</p>
+                </div>
+              {/if}
             </div>
           </div>
           <div
@@ -129,14 +445,25 @@
                     max="98"
                     step="1"
                     class="drag-block"
-                    value="50"
+                    bind:value={sliderValue}
+                    on:input={handleSliderInput}
+                    on:mouseenter={handleSliderMouseEnter}
+                    on:mouseleave={handleSliderMouseLeave}
+                    disabled={isAutoBetting}
                   />
+                  {#if isHovered}
+                    <span class="step-display" style={stepDisplayStyle}
+                      >{sliderValue}</span
+                    >
+                  {/if}
                   <div
                     class="slider-track"
-                    style="transform: translate(50%, 0px);"
+                    style="transform: translate({randomStep}%, 0px);"
                     bis_skin_checked="1"
                   >
-                    <div class="dice_num" bis_skin_checked="1">50.00</div>
+                    <div class="dice_num" bis_skin_checked="1">
+                      {randomStep}.00
+                    </div>
                     <div class="dice_png" bis_skin_checked="1">
                       <img
                         alt="dice.png"
@@ -147,17 +474,17 @@
                   <div class="slider-line" bis_skin_checked="1">
                     <div
                       class="slide-win"
-                      style="width: 50%;"
+                      style="background: {slideWinColor}"
                       bis_skin_checked="1"
                     />
                     <div
                       class="slide-lose"
-                      style="width: 50%;"
+                      style="background: {slideLoseColor}"
                       bis_skin_checked="1"
                     />
                     <div
                       class="slider-sign"
-                      style="transform: translate(50%, 0px);"
+                      style="transform: translate({randomStep}%, 0px);"
                       bis_skin_checked="1"
                     >
                       <div class="sign" bis_skin_checked="1" />
@@ -185,8 +512,11 @@
                 >
                   <div class="input-label" bis_skin_checked="1">Roll Under</div>
                   <div class="input-control" bis_skin_checked="1">
-                    <input type="text" readonly="" value="50.00" /><span
-                      class="right-info"
+                    <input
+                      type="text"
+                      readonly=""
+                      bind:value={sliderValue}
+                    /><span class="right-info"
                       ><svg
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         class="sc-gsDKAQ hxODWG icon"
@@ -201,7 +531,7 @@
                 >
                   <div class="input-label" bis_skin_checked="1">Win Chance</div>
                   <div class="input-control" bis_skin_checked="1">
-                    <input type="text" value="50.00" />
+                    <input type="text" bind:value={sliderValue} />
                     <div class="right-info" bis_skin_checked="1">
                       <span class="right-percent">%</span><button
                         class="amount-scale">Min</button
@@ -697,167 +1027,57 @@
   .game-area {
     display: flex;
     flex-wrap: wrap;
+    padding: 10px;
   }
 
   .game-main {
-    padding-left: 330px;
-    min-height: 47.5rem;
     display: flex;
-    flex-direction: column;
-    flex: 1 1 0%;
-    overflow: hidden;
-    position: relative;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 10px 20px;
+    width: 100%;
     border-radius: 1.25rem;
     background-color: rgb(23, 24, 27);
   }
 
   @media screen and (max-width: 900px) {
     .game-main {
-      /* position: relative; */
+      display: flex;
+      flex-direction: column-reverse;
       border-radius: 1.25rem;
-      background-color: rgb(23, 24, 27);
-    }
-
-    .game-view {
       width: 100%;
-      /* overflow: hidden; */
-      /* min-width: 100%; */
-      border-radius: 1.25rem 1.25rem 0px 0px;
-    }
-
-    .iDTkQI.style-mobile {
-      flex-direction: column;
-    }
-
-    .iDTkQI {
-      display: flex;
-    }
-
-    .game-control-switch {
-      order: 2;
-      margin-top: 1.25rem;
-      position: relative;
-    }
-
-    .iDTkQI .game-control-switch {
-      display: flex;
-      flex: 0 0 auto;
-    }
-
-    .ikWSlH {
-      display: flex;
-      opacity: 1;
-    }
-
-    .game-control-switch::before {
-      content: "";
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      right: 0px;
-      height: 1px;
-      opacity: 0.3;
-      background-color: rgb(49, 52, 60);
-    }
-
-    .game-control-switch > button.is-active {
-      border-bottom-color: rgb(67, 179, 9);
-      background-image: linear-gradient(
-        to top,
-        rgba(123, 197, 20, 0.3),
-        rgba(123, 197, 20, 0) 50%
-      );
-    }
-    .game-control-switch > button {
-      height: 3rem;
-      border-bottom: 2px solid transparent;
-    }
-
-    .iDTkQI .game-control-switch > button.is-active {
-      color: rgb(245, 246, 247);
-      font-weight: bold;
-    }
-    .iDTkQI .game-control-switch > button {
-      flex: 1 1 0%;
-      cursor: pointer;
-      color: rgba(153, 164, 176, 0.6);
-    }
-
-    .game-control-panel {
-      padding: 0px 1.125rem;
-    }
-
-    .iDTkQI .game-control-panel {
-      flex: 1 1 0%;
-    }
-
-    .gcQjQT {
-      margin-top: 1rem;
-    }
-
-    .gcQjQT .input-label {
-      display: flex;
-      -webkit-box-align: center;
-      align-items: center;
-      line-height: 1em;
-      height: 1.25rem;
-      margin: 0px 1.125rem 0.375rem;
-      color: rgba(153, 164, 176, 0.6);
+      background-color: rgb(23, 24, 27);
     }
   }
 
-  .iDTkQI.style0 {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
+  .game-control {
     width: 330px;
-    display: flex;
-    flex-direction: column;
     padding: 0.625rem;
     border-right: 1px solid rgba(49, 52, 60, 0.5);
   }
 
-  .iDTkQI .game-control-switch {
+  .game-control-switch {
     display: flex;
-    flex: 0 0 auto;
-  }
-
-  .iDTkQI.style0 .game-control-switch > button.is-active {
-    background-color: rgba(49, 52, 60, 0.4);
+    gap: 1.5rem;
   }
 
   .iDTkQI.style0 .game-control-switch > button {
-    height: 2.75rem;
-    line-height: 2.75rem;
     text-align: center;
     border-radius: 1.375rem;
-  }
-
-  .iDTkQI .game-control-switch > button.is-active {
+    cursor: pointer;
     color: rgb(245, 246, 247);
     font-weight: bold;
-  }
-
-  .iDTkQI .game-control-switch > button {
-    flex: 1 1 0%;
-    cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-  }
-
-  .game-control-panel {
-    height: 1%;
-  }
-
-  .iDTkQI .game-control-panel {
-    flex: 1 1 0%;
+    width: 100%;
+    padding: 10px;
   }
 
   .gcQjQT {
     margin-top: 1rem;
   }
 
-  .gcQjQT .input-label {
+  .gcQjQT .input-label,
+  .hzTJOu .input-label,
+  .hzTJOu .input-label {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -867,6 +1087,13 @@
     color: rgba(153, 164, 176, 0.6);
   }
 
+  .dJJJKk {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 1rem;
+  }
+
   .iYmVqV {
     display: flex;
     -webkit-box-align: center;
@@ -874,7 +1101,8 @@
     height: 1rem;
   }
 
-  .iYmVqV .max-profit {
+  .iYmVqV .max-profit,
+  .dJJJKk .max-profit {
     position: relative;
     margin-left: 0.1875rem;
     width: 1rem;
@@ -890,7 +1118,8 @@
     cursor: pointer;
   }
 
-  .iYmVqV .tip {
+  .iYmVqV .tip,
+  .dJJJKk .tip {
     display: none;
     box-sizing: border-box;
     position: absolute;
@@ -917,7 +1146,8 @@
     transform: rotate(45deg);
   }
 
-  .iYmVqV .tit {
+  .iYmVqV .tit,
+  .dJJJKk .tit {
     color: rgb(128, 143, 158);
   }
 
@@ -946,11 +1176,15 @@
     border-color: transparent;
   }
 
-  .iDTkQI .input-control {
+  .iDTkQI .input-control,
+  .hzTJOu .input-control {
     background-color: rgba(49, 52, 60, 0.4);
   }
 
-  .gcQjQT .input-control {
+  .gcQjQT .input-control,
+  .hzTJOu .input-control,
+  .hzTJOu .input-control,
+  .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
@@ -963,6 +1197,91 @@
     padding: 0px 1.375rem;
   }
 
+  .IUvXt .input-control input {
+    font-weight: bold;
+  }
+
+  .kMAYer .input-control input {
+    color: rgb(245, 246, 247);
+  }
+
+  .gcQjQT .input-control,
+  .gcQjQT .input-control input,
+  .hzTJOu .input-control,
+  .hzTJOu .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+  }
+
+  .iQoJxX {
+    order: -1;
+    position: relative;
+    margin-left: -1rem;
+    padding-left: 2.25rem;
+    margin-right: 2rem;
+    width: 8.125rem;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    background: rgb(49, 52, 60);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
+
+  .iQoJxX .dot-wrap {
+    position: absolute;
+    width: 1rem;
+    height: 1.75rem;
+    border-radius: 0.46875rem;
+    background: rgb(67, 179, 9);
+    left: 0.875rem;
+    top: 0.25rem;
+  }
+
+  .iQoJxX .dot-wrap .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    left: 0px;
+    transition: top 0.1s ease-in-out 0s;
+    top: 0.875rem;
+  }
+
+  .iQoJxX .reset {
+    color: rgb(153, 164, 176);
+  }
+
+  .iQoJxX .increse {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+  }
+
+  .iQoJxX .text {
+    padding: 0px 0.25rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .bGuvOe .percent {
+    margin-right: -0.375rem;
+    color: rgb(67, 179, 9);
+  }
+
   .gOLODp .coin-icon {
     order: -1;
     margin-right: 0.3125rem;
@@ -971,17 +1290,26 @@
     height: 1.25rem;
   }
 
-  .iDTkQI .input-control .button-group {
+  .iDTkQI .input-control .button-group,
+  .kMAYer .input-control .button-group {
     margin-right: -1.125rem;
   }
 
-  .icApxq .button-group {
+  .icApxq .button-group,
+  .IUvXt .button-group {
     width: 8.375rem;
     position: relative;
   }
 
   .bswIvI {
     display: flex;
+  }
+
+  .bswIvI > button:first-child {
+    margin-left: 0px;
+    padding-left: 0.125rem;
+    border-top-left-radius: 1.125rem;
+    border-bottom-left-radius: 1.125rem;
   }
 
   .bswIvI > button:last-child {
@@ -1008,18 +1336,9 @@
     flex-direction: column;
   }
 
-  .gWrsXy {
+  .gWrsXy,
+  .hzTJOu {
     margin-top: 1rem;
-  }
-
-  .gWrsXy .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
   }
 
   .gOLODp .label-amount {
@@ -1052,7 +1371,8 @@
   }
 
   .gWrsXy,
-  .input-control textarea,
+  .input-control,
+  textarea,
   .gWrsXy .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -1083,7 +1403,8 @@
     content: "";
   }
 
-  .kBNUDl .bet-button {
+  .kBNUDl .bet-button,
+  .bet-button {
     margin-top: 1.875rem;
   }
 
@@ -1207,12 +1528,52 @@
   }
 
   .jmWHaJ .recent-list-wrap {
+    display: flex;
+    gap: 1rem;
     flex: 1 1 auto;
-    height: 100%;
     margin: 0px 1.5rem;
+    width: 300px;
     overflow: hidden;
-    position: relative;
     border-radius: 1.375rem;
+  }
+
+  .win_amount {
+    display: flex;
+    margin-bottom: 10px;
+    color: #47484d;
+  }
+
+  .recent-list {
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+  }
+
+  .recent-item {
+    padding: 0px 0.25rem;
+    cursor: pointer;
+  }
+
+  .is-win {
+    color: rgb(245, 246, 247);
+    background-color: rgb(67, 179, 9);
+  }
+
+  .item-wrap {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    border-radius: 1.75rem;
+    padding: 8px;
+    font-weight: bold;
   }
 
   .jmWHaJ .empty-item {
@@ -1300,7 +1661,7 @@
     width: 100%;
     margin: 0px;
     height: 100%;
-    cursor: pointer;
+    cursor: grab;
   }
 
   .dVoJHT .game-slider .slider-wrapper .slider-handles .slider-track {
@@ -1321,7 +1682,7 @@
     font-size: 1.875rem;
     font-weight: bold;
     pointer-events: none;
-    color: rgb(255, 255, 255);
+    /* color: rgb(255, 255, 255); */
     width: 9.25rem;
     height: 4.125rem;
     display: flex;
@@ -1375,7 +1736,7 @@
   .dVoJHT .game-slider .slider-wrapper .slider-handles .slider-line .slide-win {
     border-radius: 0.625rem 0px 0px 0.625rem;
     height: 100%;
-    background: rgb(67, 179, 9);
+    background: #43b309;
   }
 
   .dVoJHT
@@ -1386,7 +1747,7 @@
     .slide-lose {
     border-radius: 0px 0.625rem 0.625rem 0px;
     height: 100%;
-    background: rgb(237, 99, 0);
+    background: #ed6300;
   }
 
   .dVoJHT
@@ -1452,16 +1813,6 @@
     margin-top: 0px;
     min-width: 7.5rem;
     margin-right: 1.5rem;
-  }
-
-  .gcQjQT .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
   }
 
   .cLMexC .input-control {
@@ -1565,16 +1916,6 @@
     margin-top: 1rem;
   }
 
-  .gcQjQT .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
-
   .cLMexC .input-control {
     display: flex;
     background-color: rgba(49, 52, 60, 0.5);
@@ -1638,7 +1979,7 @@
   }
 
   .cLMexC .win-change .right-info button {
-    width: 2.75rem;
+    width: 100%;
     height: 2.25rem;
     line-height: 2.25rem;
     font-size: 0.75rem;
