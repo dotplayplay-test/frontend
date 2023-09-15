@@ -111,3 +111,9 @@ export let crash_all_users_Moon_trendballEl = writable(crash_all_users_Moon_tren
 
 let Moon_trendball_hasWin = false
 export let Moon_trendball_hasWinEl = writable(Moon_trendball_hasWin)
+
+let allPlayers = []
+export let handleAllPlayerStore = writable(allPlayers)
+
+let SinglePlayerDetails = []
+export let SinglePlayerDetailsEl = writable(SinglePlayerDetails)

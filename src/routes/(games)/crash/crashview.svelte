@@ -5,19 +5,36 @@ import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
 import { crash_historyEl } from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
-
+import Allplayers from '../../../lib/crashgame/components/allPlayers/allplayers.svelte';
+import { useAllplayer } from "../../../lib/crashgame/fetchallPlayers"
+const { getAllPlayers } = useAllplayer()
 const handleTrends = (()=>{
     dispatch("closeTrend", 5)
 })
 
+let allbet = false
+
+const handleAllbet = ((e)=>{
+    if(allbet){
+        allbet = false
+    }else{
+        allbet = true
+        getAllPlayers(e)
+    }
+})
+
 </script>
+
+{#if allbet}
+    <Allplayers  on:close={handleAllbet} />
+{/if}
 
 <div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
         <div class="recent-list-wrap">
             <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
                 {#each $crash_historyEl as his (his.id)}
-                    <button class={`game-item ${parseInt(his.crash_point) >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
+                    <button on:click={()=>handleAllbet(his)} class={`game-item ${parseInt(his.crash_point) >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
                         <div class="issus">{his.game_id}</div>
                         <div>{his.crash_point}x</div>
                     </button>
