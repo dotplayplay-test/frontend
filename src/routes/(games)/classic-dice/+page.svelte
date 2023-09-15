@@ -36,35 +36,46 @@
   padding: 6px 10px;
   left: ${sliderValue}%`;
 
-  let randomStep = 50;
-  let randomSteps = JSON.parse(localStorage.getItem("randomSteps")) || [];
+  let diceStep = 50;
+  let savedSteps = JSON.parse(localStorage.getItem("savedSteps")) || [];
 
-  function playSound(soundId, color) {
+  const playSound = (soundId, color) => {
     const sound = document.getElementById(soundId);
     sound.play();
     document.querySelector(".dice_num").style.color = color;
   }
 
-  function generateRandomStep() {
+  const generateRandomStep = () => {
     const min = 2;
     const max = 98;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  let filteredSteps;
+  let totalSum = Number(localStorage.getItem("totalSum")) || 0;
 
-  function rollDice() {
-    randomStep = generateRandomStep();
+  const totalBankroll = () => {
+    if (diceStep <= sliderValue) {
+      totalSum += diceStep;
+      localStorage.setItem("totalSum", totalSum);
+    }
+    filteredSteps = savedSteps.filter(step => step < sliderValue);
+  }
 
-    if (randomStep > sliderValue) {
+  const rollDice = () => {
+    diceStep = generateRandomStep();
+
+    if (diceStep > sliderValue) {
       playSound("failureSound", "orange");
     } else {
       playSound("successSound", "green");
     }
 
-    randomSteps = [...randomSteps, randomStep];
-    localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
+    savedSteps = [...savedSteps, diceStep];
+    localStorage.setItem("savedSteps", JSON.stringify(savedSteps));
+    totalBankroll()
   }
 
-  function toggleAutoBet() {
+  const toggleAutoBet = () => {
     isAutoBetting = !isAutoBetting;
 
     if (isAutoBetting) {
@@ -74,24 +85,25 @@
     }
   }
 
-  function startAutoBet() {
+  const startAutoBet = () => {
     autoBetInterval = setInterval(() => {
-      randomStep = generateRandomStep();
+      diceStep = generateRandomStep();
 
-      if (randomStep > sliderValue) {
+      if (diceStep > sliderValue) {
         playSound("failureSound", "orange");
       } else {
         playSound("successSound", "green");
       }
 
-      randomSteps = [...randomSteps, randomStep];
-      localStorage.setItem("randomSteps", JSON.stringify(randomSteps));
+      savedSteps = [...savedSteps, diceStep];
+      localStorage.setItem("savedSteps", JSON.stringify(savedSteps));
+      totalBankroll()
     }, 1000);
 
     isSliderDisabled = true;
   }
 
-  function stopAutoBet() {
+  const stopAutoBet = () => {
     clearInterval(autoBetInterval);
   }
 
@@ -104,18 +116,20 @@
   let showManual = true;
   let showAuto = false;
 
-  function toggleManual() {
+  const toggleManual = () => {
     showManual = true;
     showAuto = false;
   }
 
-  function toggleAuto() {
+  const toggleAuto = () => {
     showAuto = true;
     showManual = false;
   }
 </script>
 
 <div class="classic-di">
+  <audio id="successSound" src="dice_success_sound.wav"></audio>
+  <audio id="failureSound" src="wah_wah_failure_sound.wav"></audio>
   <div class="game-area" bis_skin_checked="1">
     <div class="game-main" bis_skin_checked="1">
       <div
@@ -402,13 +416,13 @@
               >
                 <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
                 <div class="amount" bis_skin_checked="1">
-                  <span class="amount-str">347359321</span>
+                  <span class="amount-str">{totalSum}</span>
                 </div>
               </div>
             </div>
             <div class="recent-list-wrap" bis_skin_checked="1">
-              {#if randomSteps.length > 0}
-                {#each randomSteps as step, index}
+              {#if savedSteps.length > 0}
+                {#each savedSteps as step, index}
                   <div
                     class="recent-list"
                     style=" transform: translate(0%, 0px);"
@@ -458,11 +472,11 @@
                   {/if}
                   <div
                     class="slider-track"
-                    style="transform: translate({randomStep}%, 0px);"
+                    style="transform: translate({diceStep}%, 0px);"
                     bis_skin_checked="1"
                   >
                     <div class="dice_num" bis_skin_checked="1">
-                      {randomStep}.00
+                      {diceStep}.00
                     </div>
                     <div class="dice_png" bis_skin_checked="1">
                       <img
@@ -484,7 +498,7 @@
                     />
                     <div
                       class="slider-sign"
-                      style="transform: translate({randomStep}%, 0px);"
+                      style="transform: translate({diceStep}%, 0px);"
                       bis_skin_checked="1"
                     >
                       <div class="sign" bis_skin_checked="1" />
@@ -1047,6 +1061,93 @@
       border-radius: 1.25rem;
       width: 100%;
       background-color: rgb(23, 24, 27);
+    }
+
+    .game-view {
+      width: 100%;
+      overflow: hidden;
+      min-width: 100%;
+      border-radius: 1.25rem 1.25rem 0px 0px;
+    }
+
+    .iDTkQI.style-mobile {
+      flex-direction: column;
+    }
+
+    .iDTkQI {
+      display: flex;
+    }
+
+    .game-control-switch {
+      order: 2;
+      margin-top: 1.25rem;
+      position: relative;
+    }
+
+    .iDTkQI .game-control-switch {
+      display: flex;
+      flex: 0 0 auto;
+    }
+
+    .ikWSlH {
+      display: flex;
+      opacity: 1;
+    }
+
+    .game-control-switch::before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      right: 0px;
+      height: 1px;
+      opacity: 0.3;
+      background-color: rgb(49, 52, 60);
+    }
+
+    .game-control-switch > button.is-active {
+      border-bottom-color: rgb(67, 179, 9);
+      background-image: linear-gradient(
+        to top,
+        rgba(123, 197, 20, 0.3),
+        rgba(123, 197, 20, 0) 50%
+      );
+    }
+    .game-control-switch > button {
+      height: 3rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .iDTkQI .game-control-switch > button.is-active {
+      color: rgb(245, 246, 247);
+      font-weight: bold;
+    }
+    .iDTkQI .game-control-switch > button {
+      flex: 1 1 0%;
+      cursor: pointer;
+      color: rgba(153, 164, 176, 0.6);
+    }
+
+    .game-control-panel {
+      padding: 0px 1.125rem;
+    }
+
+    .iDTkQI .game-control-panel {
+      flex: 1 1 0%;
+    }
+
+    .gcQjQT {
+      margin-top: 1rem;
+    }
+
+    .gcQjQT .input-label {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      line-height: 1em;
+      height: 1.25rem;
+      margin: 0px 1.125rem 0.375rem;
+      color: rgba(153, 164, 176, 0.6);
     }
   }
 
@@ -1682,7 +1783,7 @@
     font-size: 1.875rem;
     font-weight: bold;
     pointer-events: none;
-    /* color: rgb(255, 255, 255); */
+    color: rgb(255, 255, 255);
     width: 9.25rem;
     height: 4.125rem;
     display: flex;
