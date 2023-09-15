@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 const socket = io("http://localhost:8000");
 import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,
      loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,
-      hasCrashed, crashPoint, crashRunning, crash_historyEl,
+      hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,
       crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl} from "./store"
       import {default_Wallet} from "../store/coins"
 
@@ -68,6 +68,7 @@ export const handleCountdown = (()=>{
             loadingCrash.set(false)
             crashIsAlive.set(false)
             hasCrashed.set(true)
+            handle_IsRed.set(false)
             handleHasbet.set(false)
             handleHasbet_amount.set(null)
         }  

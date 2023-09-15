@@ -4,6 +4,11 @@ import { crash_historyEl } from "../../store"
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 
+
+$: {
+    $crash_historyEl.sort((a, b) => b.id - a.id);
+}
+
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -30,7 +35,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     </tr>
                 </thead>
                 <tbody>
-                    {#each $crash_historyEl as history (history.id)}
+                    {#each $crash_historyEl.slice(0, 20) as history (history.id)}
                     <tr>
                         <td>
                             <div class="game-link">

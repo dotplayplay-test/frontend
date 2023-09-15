@@ -90,3 +90,9 @@ export let crash_all_users_red_trendballEl = writable(crash_all_users_red_trendb
 
 let trendball_has_win = false
 export let trendball_has_winEl = writable(trendball_has_win)
+
+let isRed = false
+export let handle_IsRed = writable(isRed)
+
+let isGreen = false
+export let handle_IsGreen = writable(isGreen)

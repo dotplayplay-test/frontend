@@ -36,6 +36,10 @@ let handleBetHistory = ((e)=>{
     }
 })
 
+$: {
+    $mybetEl.sort((a, b) => b.id - a.id);
+}
+
 
 </script>
 
@@ -70,7 +74,7 @@ let handleBetHistory = ((e)=>{
                 </tr>
             </thead>
             <tbody>
-                {#each $mybetEl as mybet (mybet.id)}
+                {#each $mybetEl.slice(0, 20) as mybet (mybet.id)}
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>
@@ -91,8 +95,8 @@ let handleBetHistory = ((e)=>{
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                {#if mybet.profit !== "betting"}
-                                <span class="amount-str" style="color:#43b309">{mybet.profit}.<span class="suffix">00000000</span> </span>
+                                {#if mybet.win_lose === "win"}
+                                <span class="amount-str" style="color:#43b309">+{mybet.profit}.<span class="suffix">00000000</span> </span>
                                 {:else}
                                 <span class="amount-str" style="color: rgb(237, 99, 0);">{"-"+mybet.bet_amount}.<span class="suffix">00000000</span> </span>
                                 {/if}

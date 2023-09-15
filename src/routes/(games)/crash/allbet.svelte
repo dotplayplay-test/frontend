@@ -2,7 +2,7 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import Trendball from './trendball.svelte';
-import { active_playerEl } from "$lib/crashgame/store";
+import { active_playerEl , hasCrashed} from "$lib/crashgame/store";
 
 export let isClassic;
 
@@ -53,7 +53,15 @@ const handleAllbet = (()=>{
                                 </a>
                             </td>
                             <td class="escape">
+                                {#if player.cashout === "betting"}
+                                    {#if player.win_lose === "lose" || $hasCrashed}
+                                        <span class="ttl opacity">{"0.00"}x</span>
+                                        {:else}
+                                        <span class="ttl opacity">{player.cashout}</span>
+                                    {/if}
+                                {:else}
                                 <span class="ttl opacity">{player.cashout}x</span>
+                                {/if}
                             </td>
                             <td>
                                 <div class="sc-Galmp erPQzq coin notranslate">
@@ -64,12 +72,18 @@ const handleAllbet = (()=>{
                             </div>
                             </td>
                             <td>
-                            {#if player.user_status === "false"}
+                            {#if player.win_lose === "win"}
                                 <div class="sc-Galmp erPQzq coin notranslate is-win">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                     
                                         <span class="amount-st">{player.profit}</span>
+                                    </div>
+                                </div>
+                                {:else if player.win_lose === "lose" || $hasCrashed}
+                                <div class="sc-Galmp erPQzq coin notranslate has-lose">
+                                    <img class="coin-icon" alt="" src={player.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span></span>
                                     </div>
                                 </div>
                                 {:else}
@@ -208,7 +222,7 @@ table {
 }
 .vjsVz .escape {
     width: 5.625rem;
-    font-size: 13px;
+    font-size: 14.5px;
 }
 .vjsVz .head td:last-of-type {
     text-align: right;
@@ -372,6 +386,9 @@ table {
 
 .vjsVz .coin.is-win .amount {
     color: rgb(67, 179, 9);
+}
+.vjsVz .coin.has-lose .amount {
+    color: rgb(237, 99, 0);
 }
 .vjsVz .coin .amount {
     color: rgb(245, 246, 247);

@@ -48,7 +48,7 @@ let handleSharedBet = (() => {
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
                 <div class="sc-dkPtRN jScFby scroll-view sc-aaqME bGvuvq">
                     <div class="sc-emDsmM Osnbt">
-                        {#if $mybetElDetails.profit === "betting" }
+                        {#if $mybetElDetails.win_lose === "lose" }
                             <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
                         {:else}
                         <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">
@@ -81,7 +81,7 @@ let handleSharedBet = (() => {
                                     </span>
                                     Payout
                                 </div>
-                                {#if $mybetElDetails.profit === "betting" }
+                                {#if $mybetElDetails.win_lose === "lose" }
                                  <div class="number flex-center">0 x</div>
                                   {:else}      
                                     <div class="number flex-center">{$mybetElDetails.cashout} x</div>
@@ -94,7 +94,7 @@ let handleSharedBet = (() => {
                                     </span>
                                     Profit
                                 </div>
-                                {#if $mybetElDetails.profit === "betting" }
+                                {#if $mybetElDetails.win_lose === "lose" }
                                 <div class="number flex-center">0 x</div>
                                  {:else}      
                                    <div class="number flex-center">{$mybetElDetails.profit} x</div>
@@ -130,7 +130,7 @@ let handleSharedBet = (() => {
                                         <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
                                     </span>
                                     Chance</div>
-                                <div class="item-desc">-</div>
+                                <div class="item-desc">{$mybetElDetails.chance}</div>
                             </div>
                         </div>
                         <div class="sc-ezbkAF kDuLvp input ">

@@ -1,5 +1,5 @@
 <script>
-  import Icon from 'svelte-icons-pack/Icon.svelte';
+import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { profileStore } from "$lib/store/profile"
@@ -7,44 +7,63 @@ import {default_Wallet } from "$lib/store/coins"
 import { game_id} from "$lib/crashgame/store"
 import {useRedTrendball} from "../../trendballHook"
 const { redTrendball } = useRedTrendball()
+import { loadingCrash , handle_IsRed, handle_IsGreen } from "../../store"
 
-let redballValue = 1.0000001
-let isRed = false
+
+let redballValue = 10.00
+
 const handleRed = (()=>{
-    if(isGreen || isYellow){
-        alert("is up")
+    if(redballValue > $default_Wallet.balance ){
+        alert("Insuffient funds")
     }else{
         const data = {
-            username: $profileStore.username,
-            user_img: $profileStore.profile_image,
-            game_id: $game_id,
-            bet_amount: redballValue, 
-            bet_token_img: $default_Wallet.coin_image, 
-            bet_token_name: $default_Wallet.coin_name,
-            chance: "50.51%"
-        }
-        redTrendball(data)
-        isRed = true
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        bet_amount: redballValue, 
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        chance: "50.51%"
+    }
+    redTrendball(data)
+    handle_IsRed.set(true)
     }
 })
 
-let isGreen = false
 const handleGreen = ()=>{
-    if(isRed || isYellow){
-        alert("is up")
+    if(redballValue > $default_Wallet.balance ){
+        alert("Insuffient funds")
     }else{
-        isGreen = true
+        const data = {
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        bet_amount: redballValue, 
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        chance: "50.51%"
+    }
+    redTrendball(data)
+    handle_IsGreen.set(true)
     }
 }
 
 let isYellow = false
 const handleYellow = (()=>{
-    if(isGreen || isRed){
-        alert("is up")
-    }else{
-        isYellow = true
+
+})
+
+const handleHalf = ((e)=>{
+    if(redballValue > 0){
+        if(e === 1){
+        redballValue = (redballValue / 2).toFixed(2)
+        }else{
+            redballValue = (redballValue * 2).toFixed(2)
+        }
     }
 })
+
+
 
 </script>
 
@@ -61,8 +80,8 @@ const handleYellow = (()=>{
                 <input type="number" bind:value={redballValue}>
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button>/2</button>
-                    <button>x2</button>
+                    <button on:click={()=>handleHalf(1)}>/2</button>
+                    <button on:click={()=>handleHalf(2)}>x2</button>
                     <button class="sc-ywFzA dxoLcn">
                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
@@ -76,9 +95,12 @@ const handleYellow = (()=>{
                 <div>Payout</div>
                 <div class="bet-payout">1.96x</div>
             </div>
-            <button on:click={handleRed} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${isRed && "is-active"} `}>
+            <button disabled={$loadingCrash && !$handle_IsRed ? false : true} on:click={handleRed} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsRed && "is-active"} `}>
                 <div class="button-inner">
                     <div>Bet Red</div>
+                    {#if !$loadingCrash && !$handle_IsRed}
+                        <div class="sub-txt">(Next round)</div>   
+                    {/if}
                 </div>
             </button>
         </div>
@@ -88,10 +110,12 @@ const handleYellow = (()=>{
                 <div>Payout</div>
                 <div class="bet-payout">2x</div>
             </div>
-            <button on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type200 ${isGreen && "is-active"}`}>
+            <button disabled={$loadingCrash && !$handle_IsGreen ? false : true} on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type200 ${$handle_IsGreen && "is-active"}`}>
                 <div class="button-inner">
                     <div>Bet Green</div>
-                    <div class="sub-txt">(Next round)</div>
+                    {#if !$loadingCrash && !$handle_IsGreen}
+                    <div class="sub-txt">(Next round)</div>   
+                {/if}
                 </div>
             </button>
         </div>
