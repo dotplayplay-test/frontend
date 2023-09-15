@@ -118,7 +118,9 @@ import { SinglePlayerDetailsEl } from "../../store"
                     </div>
                 </button>
                 <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                    <div class="button-inner">Verify</div>
+                    <a style="color:#fff" href={`https://dppgames.netlify.app/verify/crash?hash=${$SinglePlayerDetailsEl.game_hash}`} target="_blank" >
+                        <div class="button-inner">Verify</div>
+                    </a>
                 </button>
             </div>
         </div>

@@ -9,6 +9,7 @@ import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
 import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
 import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
 import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
+
 import {
     createEventDispatcher
 } from 'svelte';
@@ -38,7 +39,7 @@ let handleSharedBet = (() => {
     <Sharebet on:close={handleSharedBet}/>
      {/if}
 
-        <div class="dialog " style="opacity: 1; width: 464px; height: 714px; margin-top: -357px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
             <div class="dialog-head has-close"><div class="dialog-title">Details</div></div>
 
             <button on:click={()=> handleClose()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
@@ -155,7 +156,9 @@ let handleSharedBet = (() => {
                                 </div>
                             </button>
                             <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                                <div class="button-inner">Verify</div>
+                                <a style="color:#fff" href={`https://dppgames.netlify.app/verify/crash?hash=${$mybetElDetails.game_hash}`} target="_blank" >
+                                    <div class="button-inner">Verify</div>
+                                </a>
                             </button>
                         </div>
                     </div>

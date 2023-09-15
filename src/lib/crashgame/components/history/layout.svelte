@@ -47,7 +47,7 @@ $: {
                         <td>
                             <div class="flex-center">
                                 <input type="text" readonly="" value={history.hash}>
-                                <a target="_blank" href={`https://nanogamesio.github.io/verify/crash.html?hash=${history.hash}`}>
+                                <a target="_blank" href={`https://dppgames.netlify.app/verify/crash?hash=${history.hash}`}>
                                     Verify
                                 </a>
                             </div>
