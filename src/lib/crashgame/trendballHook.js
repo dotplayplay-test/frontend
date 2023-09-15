@@ -41,3 +41,4 @@ export const useRedTrendball = () => {
     };
     return { redTrendball, isLoading, error };
   };
+

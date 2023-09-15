@@ -1,10 +1,10 @@
 import { io } from "socket.io-client";
 const socket = io("http://localhost:8000");
-import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,
-     loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,
-      hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,
-      crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl} from "./store"
-      import {default_Wallet} from "../store/coins"
+import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,
+     loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,green_trendball_hasWinEl,Moon_trendball_hasWinEl,
+      hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
+      crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon} from "./store"
+    import {default_Wallet} from "../store/coins"
 
 
 
@@ -32,6 +32,22 @@ export const handleCountdown = (()=>{
         }
     })
 
+    socket.on("crash-all-greenball-users", data =>{
+        if(data === "is-crash"){
+            crash_all_users_green_trendballEl.set(true)
+        }else if(data = "has_win"){
+            green_trendball_hasWinEl.set(true)
+        }
+    })
+
+    socket.on("crash-all-moonball-users", data =>{
+        if(data === "is-crash"){
+            crash_all_users_Moon_trendballEl.set(true)
+        }else if(data = "has_win"){
+            Moon_trendball_hasWinEl.set(true)
+        }
+    })
+
     socket.on("crash-game-history", data=>{
         crash_historyEl.set(data)
     })
@@ -56,7 +72,11 @@ export const handleCountdown = (()=>{
             loadingCrash.set(true)
             crashIsAlive.set(false)
             hasCrashed.set(false)
+            green_trendball_hasWinEl.set(false)
+            Moon_trendball_hasWinEl.set(false)
             trendball_has_winEl.set(false)
+            crash_all_users_Moon_trendballEl.set(false)
+            crash_all_users_green_trendballEl.set(false)
             crash_all_users_red_trendballEl.set(false)
         }
          if(data === "crash-isRunning"){
@@ -69,6 +89,8 @@ export const handleCountdown = (()=>{
             crashIsAlive.set(false)
             hasCrashed.set(true)
             handle_IsRed.set(false)
+            handle_IsGreen.set(false)
+            handle_IsMoon.set(false)
             handleHasbet.set(false)
             handleHasbet_amount.set(null)
         }  
@@ -84,13 +106,13 @@ export const handleCountdown = (()=>{
         active_playerEl.set(data)
     })
 
-       //  ==================== crash animation ==============
+    //  ==================== crash animation ==============
        socket.on("crash_curve", data =>{
         crashCurve.set(data)
     })
 
-         //  ==================== crash animation ==============
-           socket.on("my-bet", data =>{
-            mybetEl.set(data)
-        })
+    //  ==================== crash animation ==============
+    socket.on("my-bet", data =>{
+        mybetEl.set(data)
+    })
 })

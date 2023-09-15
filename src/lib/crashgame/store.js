@@ -78,7 +78,6 @@ export let mybetEl = writable(mybet)
 let mybetDetails = []
 export let mybetElDetails = writable(mybetDetails)
 
-
 let redTrendball = ''
 export let redTrendballEl = writable(redTrendball)
 
@@ -96,3 +95,19 @@ export let handle_IsRed = writable(isRed)
 
 let isGreen = false
 export let handle_IsGreen = writable(isGreen)
+
+let crash_all_users_green_trendball = false
+export let crash_all_users_green_trendballEl = writable(crash_all_users_green_trendball)
+
+let green_trendball_hasWin = false
+export let green_trendball_hasWinEl = writable(green_trendball_hasWin)
+
+
+let isMoon = false
+export let handle_IsMoon = writable(isMoon)
+
+let crash_all_users_Moon_trendball = false
+export let crash_all_users_Moon_trendballEl = writable(crash_all_users_Moon_trendball)
+
+let Moon_trendball_hasWin = false
+export let Moon_trendball_hasWinEl = writable(Moon_trendball_hasWin)

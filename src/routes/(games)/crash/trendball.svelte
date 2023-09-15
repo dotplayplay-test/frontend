@@ -1,5 +1,5 @@
 <script>
-import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_has_winEl } from "$lib/crashgame/store"
+import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_has_winEl, crash_all_users_Moon_trendballEl ,Moon_trendball_hasWinEl, crash_all_users_green_trendballEl, green_trendball_hasWinEl} from "$lib/crashgame/store"
 
 </script>
 
@@ -60,7 +60,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
                     {#if red.game_type === "Red"}
                     <tr>
                         <td>
-                            <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/525955">
+                            <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${red.user_id}`}>
                             <img class="avatar " alt="" src={red.profile_img}>
                             <div class="name">{red.username}</div>
                         </a>
@@ -97,23 +97,86 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 
             <table class="sc-gWXbKe iUeetX table is-hover">
                 <tbody>
-                    <tr>
-                        <td>
-                            <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/505838">
-                                <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/505838/s">
-                                <div class="name">۔۔۔۔۔۔۔۔۔۔nss snn nknknm</div>
-                            </a>
-                            <div class="moon"></div>
-                        </td>
-                        <td>
-                            <div class="sc-Galmp erPQzq coin notranslate monospace bold status-0">
-                                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppe_logo.png">
-                                <div class="amount">
-                                    <span class="amount-str">19.999845<span class="suffix">0</span></span>
+                    {#each $handleRedtrendballPlayers as green }
+                    {#if green.game_type === "Green" || green.game_type === "Moon"}
+                        {#if green.game_type === "Green"}
+                        <tr>
+                            <td>
+                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
+                                    <img class="avatar " alt="" src={green.profile_img}>
+                                    <div class="name">{green.username}</div>
+                                </a>
+                                {#if green.game_type === "Moon"}
+                                    <div class="moon"></div>
+                                {/if}
+                            </td>
+                            <td>
+                                {#if $green_trendball_hasWinEl}
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-1 `}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
+                                {:else if $crash_all_users_green_trendballEl}
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-2 `}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
+                                </div>
+                                {:else }
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-0`}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
+                                </div>
+                                {/if}
+    
+                            </td>
+                        </tr>
+                        {/if}
+                        
+                        {#if green.game_type === "Moon"}
+                        <tr>
+                            <td>
+                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
+                                    <img class="avatar " alt="" src={green.profile_img}>
+                                    <div class="name">{green.username}</div>
+                                </a>
+                                {#if green.game_type === "Moon"}
+                                    <div class="moon"></div>
+                                {/if}
+                            </td>
+                            <td>
+                                {#if $Moon_trendball_hasWinEl}
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-1 `}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
+                                </div>
+                                {:else if $crash_all_users_Moon_trendballEl}
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-2 `}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
+                                </div>
+                                {:else }
+                                <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-0`}>
+                                    <img class="coin-icon" alt="" src={green.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{green.bet_amount}.<span class="suffix">00000000</span></span>
+                                    </div>
+                                </div>
+                                {/if}
+                            </td>
+                        </tr>
+                        {/if}        
+                    {/if}
+                    {/each}
                 </tbody>
             </table>
         </div>
@@ -275,7 +338,15 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
     justify-content: center;
     flex: 1 1 auto;
 }
-
+.engBBI .moon {
+    position: absolute;
+    left: 0.25rem;
+    top: 0.25rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 0.25rem;
+    background-color: rgb(226, 180, 11);
+}
 .engBBI .table {
     width: 50%;
     align-self: flex-start;

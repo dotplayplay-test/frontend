@@ -7,7 +7,7 @@ import {default_Wallet } from "$lib/store/coins"
 import { game_id} from "$lib/crashgame/store"
 import {useRedTrendball} from "../../trendballHook"
 const { redTrendball } = useRedTrendball()
-import { loadingCrash , handle_IsRed, handle_IsGreen } from "../../store"
+import { loadingCrash , handle_IsRed, handle_IsGreen , handle_IsMoon} from "../../store"
 
 
 let redballValue = 10.00
@@ -23,7 +23,8 @@ const handleRed = (()=>{
         bet_amount: redballValue, 
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
-        chance: "50.51%"
+        chance: "50.51%",
+        game_type:"Red"
     }
     redTrendball(data)
     handle_IsRed.set(true)
@@ -41,16 +42,31 @@ const handleGreen = ()=>{
         bet_amount: redballValue, 
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
-        chance: "50.51%"
+        chance: "49.50%",
+        game_type:"Green"
     }
     redTrendball(data)
     handle_IsGreen.set(true)
     }
 }
 
-let isYellow = false
 const handleYellow = (()=>{
-
+    if(redballValue > $default_Wallet.balance ){
+        alert("Insuffient funds")
+    }else{
+        const data = {
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        bet_amount: redballValue, 
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        chance: "9.90%",
+        game_type:"Moon"
+    }
+    redTrendball(data)
+    handle_IsMoon.set(true)
+    }
 })
 
 const handleHalf = ((e)=>{
@@ -125,10 +141,12 @@ const handleHalf = ((e)=>{
                 <div>Payout</div>
                 <div class="bet-payout">10x</div>
             </div>
-            <button on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000 ${isYellow && "is-active"}`}> 
+            <button  disabled={$loadingCrash && !$handle_IsMoon ? false : true}  on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000 ${$handle_IsMoon && "is-active"}`}> 
                 <div class="button-inner">
                     <div>Bet Moon</div>
-                    <div class="sub-txt">(Next round)</div>
+                    {#if !$loadingCrash && !$handle_IsMoon}
+                    <div class="sub-txt">(Next round)</div>   
+                {/if}
                 </div>
             </button>
         </div>
