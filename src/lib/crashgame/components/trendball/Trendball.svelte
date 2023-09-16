@@ -1,8 +1,9 @@
 <script>
+    import { goto} from "$app/navigation"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import { profileStore } from "$lib/store/profile"
+import { profileStore, handleisLoggin } from "$lib/store/profile"
 import {default_Wallet } from "$lib/store/coins"
 import { game_id} from "$lib/crashgame/store"
 import {useRedTrendball} from "../../trendballHook"
@@ -13,7 +14,8 @@ import { loadingCrash , handle_IsRed, handle_IsGreen , handle_IsMoon} from "../.
 let redballValue = 10.00
 
 const handleRed = (()=>{
-    if(redballValue > $default_Wallet.balance ){
+    if($handleisLoggin){
+        if(redballValue > $default_Wallet.balance ){
         alert("Insuffient funds")
     }else{
         const data = {
@@ -29,10 +31,15 @@ const handleRed = (()=>{
     redTrendball(data)
     handle_IsRed.set(true)
     }
+    }else{
+        goto("/login")
+    }
+
 })
 
 const handleGreen = ()=>{
-    if(redballValue > $default_Wallet.balance ){
+    if($handleisLoggin){
+        if(redballValue > $default_Wallet.balance ){
         alert("Insuffient funds")
     }else{
         const data = {
@@ -48,10 +55,15 @@ const handleGreen = ()=>{
     redTrendball(data)
     handle_IsGreen.set(true)
     }
+    }else{
+        goto("/login")
+    }
+
 }
 
 const handleYellow = (()=>{
-    if(redballValue > $default_Wallet.balance ){
+    if($handleisLoggin){
+        if(redballValue > $default_Wallet.balance ){
         alert("Insuffient funds")
     }else{
         const data = {
@@ -66,6 +78,9 @@ const handleYellow = (()=>{
     }
     redTrendball(data)
     handle_IsMoon.set(true)
+    }
+    }else{
+        goto("/login")
     }
 })
 
