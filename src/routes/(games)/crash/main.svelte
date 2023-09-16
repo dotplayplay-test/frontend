@@ -14,7 +14,7 @@ import Trend from '$lib/crashgame/components/trends/index.svelte';
 import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunning,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
 import {default_Wallet } from "$lib/store/coins"
 import { useCrashBet,useCrashCashout } from "$lib/crashgame/crashHook";
-import { profileStore } from "$lib/store/profile"
+import { profileStore,handleisLoggin } from "$lib/store/profile"
 const { crashBet, isLoading, error } = useCrashBet()
 const { cashout, loadingCashout, cashoutError  } = useCrashCashout()
 export let isClassic
@@ -104,23 +104,29 @@ const ranging = (()=>{
 })
 
 const handleCrashBet = (()=>{
-    if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
+    if($handleisLoggin){
+        if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
         alert("insufficient balance")
-    }else{
-        const data = {
-        username: $profileStore.username,
-        user_img: $profileStore.profile_image,
-        game_id: $game_id,
-        bet_amount, bet_token_img: $default_Wallet.coin_image, 
-        bet_token_name: $default_Wallet.coin_name ,
-        chance: "-"
+        }else{
+            const data = {
+            username: $profileStore.username,
+            user_img: $profileStore.profile_image,
+            game_id: $game_id,
+            bet_amount, bet_token_img: $default_Wallet.coin_image, 
+            bet_token_name: $default_Wallet.coin_name ,
+            chance: "-"
+            }
+            crashBet(data)
         }
-        crashBet(data)
+    }else{
+        goto('/login')
     }
+
 })
 
 const handleCashout = (()=>{
-    let data = {
+    if($handleisLoggin){
+        let data = {
         cashout_at:($crashRunning * $handleHasbet_amount).toFixed(2),
         username: $profileStore.username,
         user_img: $profileStore.profile_image,
@@ -133,6 +139,9 @@ const handleCashout = (()=>{
     let win = ($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount
     winningEl.set(win)
     cashout(data)
+    }else{
+        goto('/login')
+    }
 })
 
 </script>
@@ -182,13 +191,13 @@ const handleCashout = (()=>{
                 </button>
             {/if}
             {#if $loadingCrash && !id}
-                <button on:click={goto("/login")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                <button on:click={()=>goto("/login")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
                         <div>Bet</div>
                     </div>
                 </button>
                 {/if}
-                {#if $loadingCrash}
+                {#if $loadingCrash && id}
                     <button disabled={$handleHasbet} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         {#if isLoading}
                             <div class="button-inner">

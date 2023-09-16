@@ -4,7 +4,9 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
-import { profileStore } from "$lib/store/profile"
+import { profileStore , handleisLoggin} from "$lib/store/profile"
+
+
 let isBet = true
 let isHistory = false
 let isContent = false
@@ -74,6 +76,7 @@ $: {
                 </tr>
             </thead>
             <tbody>
+                {#if $handleisLoggin}
                 {#each $mybetEl.slice(0, 20) as mybet (mybet.id)}
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
@@ -106,6 +109,13 @@ $: {
                 </tr>
                 {/if}
                 {/each}
+                {:else}
+                <div class="sc-eCImPb cuPxwd empty ">
+                    <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="">
+                    <div class="msg">Oops! There is no data yet!</div>
+                </div>
+                {/if} 
+               
            
             </tbody>
         </table>

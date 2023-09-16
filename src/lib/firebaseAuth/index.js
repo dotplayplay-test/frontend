@@ -6,6 +6,8 @@ import { useLogin } from "../hook/useLogin";
 import { useProfile } from "../hook/useProfile";
 import { getFirestore } from "firebase/firestore";
 import { useRegister } from "./createUser";
+import {handleisLoggin, profileStore} from "../store/profile"
+
 const { register } = useRegister()
 
 const { createProfile } = useProfile()
@@ -77,6 +79,9 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
     signOut(auth).then((res) => {
         localStorage.removeItem("user");
+        localStorage.removeItem("user_bet_amount");
+        handleisLoggin.set(false)
+        profileStore.set({})
       }).catch((error) => {
        console.log(error)
       });

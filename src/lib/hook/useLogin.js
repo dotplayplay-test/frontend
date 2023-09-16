@@ -1,3 +1,5 @@
+import { handleisLoggin} from "../store/profile"
+
 export const useLogin = () => {
   let error;
   let isLoading;
@@ -23,6 +25,7 @@ export const useLogin = () => {
       // Save user to localStorage
       localStorage.setItem("user", JSON.stringify(json));
       // Update the auth store
+
       window.location.href = '/'
       isLoading = false
     }

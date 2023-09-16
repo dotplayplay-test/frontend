@@ -4,119 +4,272 @@ import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import {
     createEventDispatcher
 } from 'svelte';
+    import Draggable from '../../draggable.svelte';
 const dispatch = createEventDispatcher()
 const handleClose = (() => {
     dispatch("close", 5)
 })
+
+
 </script>
 
-<div class="sc-dJjYzT JLcsN dragpop " style="transform: translate3d(468.633px, 191.146px, 0px);">
-    <div class="dragpop-title">Trends</div>
-    <button on:click={()=> handleClose()}  class="dragpop-close hover">
-        <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
-    </button>
-    <div class="dragpop-content">
-        <div class="sc-iJCbQK liaPil">
-            <div class="dots-wrap">
-                <div class="dots">
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-3"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-3"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-3"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-3"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-1"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-3"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-2"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
-                    <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+<Draggable >
+    <div class="sc-dJjYzT JLcsN dragpop " style="transform: translate3d(468.633px, 191.146px, 0px);">
+        <div class="dragpop-title">Trends</div>
+        <button on:click={()=> handleClose()}  class="dragpop-close hover">
+            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+        </button>
+        <div class="dragpop-content">
+            <div class="sc-iJCbQK liaPil">
+                <div class="dots-wrap">
+                    <div class="dots">
+
+                        <!-- ============ First floor ================= -->
+
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>  
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+
+
+                        <!-- ================ second floor ================= -->
+
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>  
+                        <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                        <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+
+
+
+                           <!-- ================ third floor ================= -->
+
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>  
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+
+
+                          <!-- ================ forth floor ================= -->
+
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>  
+                          <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                          <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+
+
+
+
+
+
+
+                           <!-- ================ fifth floor ================= -->
+
+                           <div class="sc-fSDTwv grKOWb dot type-3"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>  
+                           <div class="sc-fSDTwv grKOWb dot type-1"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+
+
+
+                           <!-- ================ last floor ================= -->
+
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-2"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>  
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                           <div class="sc-fSDTwv grKOWb dot type-0"></div>
+                    </div>
                 </div>
+                <button class="sc-gDGHff cEhaBs">
+                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon help-ico">
+                        <use xlink:href="#icon_Help"></use>
+                    </svg>
+                    <div>Understanding Trend Chart</div>
+                </button>
             </div>
-            <button class="sc-gDGHff cEhaBs">
-                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon help-ico">
-                    <use xlink:href="#icon_Help"></use>
-                </svg>
-                <div>Understanding Trend Chart</div>
-            </button>
         </div>
     </div>
-</div>
+</Draggable>
+
+
 
 <style>
 .JLcsN {
     position: fixed;
     z-index: 110;
-    left: 0px;
-    top: 0px;
+
     min-width: 12.5rem;
     min-height: 12.5rem;
     border-radius: 1.25rem;
@@ -191,8 +344,29 @@ const handleClose = (() => {
     height: 70%;
     border-radius: 50%;
 }
-
+.grKOWb.type-3::after {
+    background-color: rgb(246, 199, 34);
+}
 .grKOWb.type-2::after {
     background-color: rgb(67, 179, 9);
+}
+.grKOWb::after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+}
+.dots-wrap {
+    overflow: auto;
+}
+.dots {
+    width: 800px;
+    display: grid;
+    margin-bottom: 1rem;
+    gap: 1px;
+    grid-template-columns: repeat(32, 1fr);
 }
 </style>
