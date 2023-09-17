@@ -24,6 +24,7 @@ export const useRegister = () => {
       if (response.ok) {
         // Save user to localStorage
         localStorage.setItem("user", JSON.stringify(json));
+
         // Update the auth store
         window.location.href = '/login/info'
         isLoading = false

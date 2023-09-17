@@ -15,15 +15,15 @@ import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunn
 import {default_Wallet } from "$lib/store/coins"
 import { useCrashBet,useCrashCashout } from "$lib/crashgame/crashHook";
 import { profileStore,handleisLoggin } from "$lib/store/profile"
-const { crashBet, isLoading, error } = useCrashBet()
-const { cashout, loadingCashout, cashoutError  } = useCrashCashout()
+const { crashBet, isLoading } = useCrashBet()
+const { cashout } = useCrashCashout()
 export let isClassic
 
 
 import {
     browser
 } from '$app/environment'
-    import Trendball from "../../../lib/crashgame/components/trendball/Trendball.svelte";
+    import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let getBet_amount;
 
@@ -121,7 +121,6 @@ const handleCrashBet = (()=>{
     }else{
         goto('/login')
     }
-
 })
 
 const handleCashout = (()=>{

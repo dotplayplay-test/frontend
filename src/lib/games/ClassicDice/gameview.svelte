@@ -1,40 +1,58 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-    let range = 50
+import { HandleDicePoint, betPosition, dice_history} from "./store/index"
 
-    $: range
 
-    let ishover = false
-    const handleRangl = ((w)=>{
-        if(w === 1){
-            ishover = true
-        }else{
-            ishover = false
-        }
-    })
+let range = 50
 
-    let houseEgde = 1
-    let game__charges = 100 / houseEgde
-    let game_logic;
-    let total_charge;
+
+$:{
+    betPosition.set(range)
+}
+
+let ishover = false
+const handleRangl = ((w)=>{
+    if(w === 1){
+        ishover = true
+    }else{
+        ishover = false
+    }
+})
+
+let houseEgde = 1
+let game__charges = 100 / houseEgde
+let game_logic;
+let total_charge;
 
 
   $: {
-    game_logic = 100 / range
+    game_logic = 100 / $betPosition
     total_charge = game_logic / game__charges
     payout.set((game_logic - total_charge).toFixed(4))
   }
-
-   
 
 </script>
 
 <div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent ">
         <div class="recent-list-wrap">
+
+            {#if $dice_history.length !== 0}
+            <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
+            {#each $dice_history.slice(-6) as  dice (dice.id)}
+                <div class="recent-item" style="width: 20%;">
+                    <div class={`item-wrap ${dice.win_lose === "win" ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
+                </div>
+            {/each}
+            </div> 
+            {:else}
             <div class="empty-item">
                 <p>Game results will be displayed here.</p>
             </div>
+            {/if}
+
+       
+
         </div>
     </div>
 
@@ -47,19 +65,19 @@ import { payout } from "$lib/games/ClassicDice/store/index"
             <div class="slider-wrapper">
                 <div class="slider-handles">
                     {#if ishover}
-                        <div class="slider-tip" style={`left: ${range -5}%;`}>{range}</div>
+                        <div class="slider-tip" style={`left: ${$betPosition -5}%;`}>{$betPosition}</div>
                     {/if}
                     <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block " bind:value={range}>
-                    <div class="slider-track " style="transform: translate(50%, 0px);">
-                        <div class="dice_num ">50.00</div>
-                        <div class="dice_png">
+                    <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
+                        <div class="dice_num ">{$HandleDicePoint}</div>
+                        <div class={`dice_png ${$HandleDicePoint < range ? "dice-animate" : ""}`}>
                             <img alt="dice.png" src="https://static.nanogames.io/assets/dice.1007262a.png">
                         </div>
                     </div>
                     <div class="slider-line ">
-                        <div class="slide-win" style={`width: ${range}%;`}></div>
-                        <div class="slide-lose" style={`width: ${100 - range}%;`}></div>
-                        <div class="slider-sign" style={`transform: translate(50%, 0px);"`}>
+                        <div class="slide-win" style={`width: ${$betPosition}%;`}></div>
+                        <div class="slide-lose" style={`width: ${100 - $betPosition}%;`}></div>
+                        <div class="slider-sign" style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                             <div class="sign"></div>
                         </div>
                     </div>
@@ -84,7 +102,7 @@ import { payout } from "$lib/games/ClassicDice/store/index"
                 <div class="sc-ezbkAF gcQjQT input roll-switch">
                     <div class="input-label">Roll Under</div>
                     <div class="input-control">
-                        <input type="text" readonly value={range}>
+                        <input type="text" readonly value={$betPosition}>
                         <span class="right-info">
                             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                                 <use xlink:href="#icon_Exchange"></use>
@@ -138,7 +156,7 @@ import { payout } from "$lib/games/ClassicDice/store/index"
     border-radius: 0.425rem;
 }
 
-.fIoiVG .recent-list-wrap {
+ .recent-list-wrap {
     flex: 1 1 auto;
     height: 100%;
     margin: 0px 1.5rem;
@@ -165,6 +183,34 @@ import { payout } from "$lib/games/ClassicDice/store/index"
     color: rgba(153, 164, 176, 0.6);
     background-color: rgba(49, 52, 60, 0.4);
 }
+ .dice-animate::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    background: url(https://static.nanogames.io/assets/win.449738f6.png) center center / 100% 100% no-repeat;
+    animation: rotation 5s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.dice-animate img {
+    transition: all 0.3s ease 0s;
+    transform-origin: center bottom;
+    animation: 500ms ease 0s 1 normal none running transDice;
+}
+
+
 
 .fIoiVG .empty-item {
     display: flex;
@@ -188,12 +234,50 @@ import { payout } from "$lib/games/ClassicDice/store/index"
     text-overflow: ellipsis;
 }
 
+.fIoiVG .recent-list {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+
+.fIoiVG .recent-item {
+    padding: 0px 0.25rem;
+    cursor: pointer;
+    animation: pull 1s ;
+
+}
+
+.fIoiVG .is-lose {
+    color: rgba(153, 164, 176, 0.6);
+    background-color: rgba(122, 128, 140, 0.15);
+}
+.fIoiVG .is-win {
+    color: rgb(245, 246, 247);
+    background-color: rgb(67, 179, 9);
+}
+.fIoiVG .item-wrap {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    border-radius: 1.375rem;
+    font-weight: bold;
+}
+
 .dqwCNK {
     position: relative;
 }
 
 .fPOXr {
-    /* display: flex; */
     -webkit-box-flex: 1;
     flex-grow: 1;
     -webkit-box-align: center;
