@@ -22,7 +22,7 @@
 </div>
 
 <style>
-   .bhuSSkjs{
+.bhuSSkjs{
       position: absolute;
       width: 100%;
       height: 100%;
@@ -38,7 +38,7 @@
     color: #fff;
    }
 
-.circle-head{
+/* .circle-head{
     position: absolute;
     width: 17px;
     height: 17px;
@@ -67,7 +67,7 @@
     border-right: 3px solid transparent;
     bottom: 0;
     border-bottom: 280px solid rgba(20, 177, 20, 0.205);
-}
+} */
 
    /* .running.crash img{
     position: absolute;

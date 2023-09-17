@@ -1,5 +1,5 @@
 <script>
-    import { goto} from "$app/navigation"
+import { goto} from "$app/navigation"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
@@ -34,7 +34,6 @@ const handleRed = (()=>{
     }else{
         goto("/login")
     }
-
 })
 
 const handleGreen = ()=>{
