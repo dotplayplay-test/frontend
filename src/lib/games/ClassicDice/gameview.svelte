@@ -1,14 +1,21 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history} from "./store/index"
-
+import { DiceHistory } from "./hook/diceHistory"
+const { historyD } = DiceHistory()
+import { onMount } from "svelte";
 
 let range = 50
-
+$:{
+    onMount(async()=>{
+        historyD()
+    })
+}
 
 $:{
     betPosition.set(range)
 }
+
 
 let ishover = false
 const handleRangl = ((w)=>{
@@ -39,7 +46,7 @@ let total_charge;
 
             {#if $dice_history.length !== 0}
             <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-            {#each $dice_history.slice(-6) as  dice (dice.id)}
+            {#each $dice_history.slice(-6) as  dice (dice.id)} 
                 <div class="recent-item" style="width: 20%;">
                     <div class={`item-wrap ${dice.win_lose === "win" ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
                 </div>
@@ -50,9 +57,6 @@ let total_charge;
                 <p>Game results will be displayed here.</p>
             </div>
             {/if}
-
-       
-
         </div>
     </div>
 

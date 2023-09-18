@@ -14,3 +14,6 @@ export let betPosition = writable(betPositionEl)
 
 let dice_historyEl = []
 export let dice_history = writable(dice_historyEl)
+
+let Singledice_historyEl = []
+export let Singledice_history = writable(Singledice_historyEl)

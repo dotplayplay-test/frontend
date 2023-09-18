@@ -2,7 +2,6 @@
 import { HandleDicePoint, isbetLoadingBtn,dice_history } from "../store/index"
 import {default_Wallet} from "../../../store/coins"
 
-
 export const DiceHook = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const playdice = async (data) => {
@@ -23,9 +22,9 @@ export const DiceHook = () => {
       }
       if (response.ok) {
         isbetLoadingBtn.set(false)
-        default_Wallet.set(json.io)
-        dice_history.set(json.p_games[0])
-        HandleDicePoint.set(json.io.point)
+        dice_history.set(json.history)
+        default_Wallet.set(json.wallet)
+        HandleDicePoint.set(json.point)
       }
     };
     return { playdice};
