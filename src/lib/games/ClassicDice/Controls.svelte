@@ -1,5 +1,6 @@
 <script>
-    import ManualControllers from "./ManualControllers.svelte";
+    import AutoControllers from "./AutoControllers.svelte";
+import ManualControllers from "./ManualControllers.svelte";
 
     let is_manual = true
 
@@ -25,7 +26,9 @@
     </div>
     {#if is_manual}
         <ManualControllers />
-        
+    {/if}
+    {#if !is_manual}
+        <AutoControllers />
     {/if}
 
 </div>

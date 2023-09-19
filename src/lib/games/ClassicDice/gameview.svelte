@@ -1,10 +1,11 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history} from "./store/index"
-import { DiceHistory } from "./hook/diceHistory"
+import { DiceHistory } from "./hook/diceHistory";
 const { historyD } = DiceHistory()
 import { onMount } from "svelte";
-
+import HistoryDetails from "./componets/historyDetails.svelte";
+import click from "./audio/click.wav"
 let range = 50
 $:{
     onMount(async()=>{
@@ -32,24 +33,49 @@ let game_logic;
 let total_charge;
 
 
-  $: {
+$: {
     game_logic = 100 / $betPosition
     total_charge = game_logic / game__charges
     payout.set((game_logic - total_charge).toFixed(4))
+}
+let DgII = ''
+let hisQQ = false
+const handleDiceHistoryDetail = ((data)=>{
+    if(hisQQ){
+        hisQQ = false
+    }else{
+        DgII = data
+        hisQQ = true
+    }
+})
+
+// Function to toggle play/pause
+function togglePlayback() {
+  isPlaying = !isPlaying;
+  if (isPlaying) {
+    click.play();
+  } else {
+    click.pause();
   }
+}
+
+
 
 </script>
+
+{#if hisQQ}
+<HistoryDetails on:close={handleDiceHistoryDetail} DgII={DgII} />
+{/if}
 
 <div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent ">
         <div class="recent-list-wrap">
-
             {#if $dice_history.length !== 0}
             <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
             {#each $dice_history.slice(-6) as  dice (dice.id)} 
-                <div class="recent-item" style="width: 20%;">
+                <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
                     <div class={`item-wrap ${dice.win_lose === "win" ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
-                </div>
+                </button>
             {/each}
             </div> 
             {:else}
@@ -129,6 +155,7 @@ let total_charge;
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

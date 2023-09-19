@@ -95,7 +95,8 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="text" disabled bind:value={wining_amount}>
-                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}></div>
+                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+            </div>
         </div>
         <button disabled={$isbetLoadingBtn} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
             {#if $isbetLoadingBtn}

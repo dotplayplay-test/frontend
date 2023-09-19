@@ -16,7 +16,6 @@ import {
 import Sharebet from './sharebet.svelte';
 import { mybetElDetails } from "../../store"
 
-
 const dispatch = createEventDispatcher()
 
 const handleClose = (() => {
@@ -36,11 +35,13 @@ let handleSharedBet = (() => {
 
 <div class="sc-bkkeKt kBjSXI">
     {#if hasSharedBet}
-    <Sharebet on:close={handleSharedBet}/>
+        <Sharebet on:close={handleSharedBet}/>
      {/if}
 
      <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
-            <div class="dialog-head has-close"><div class="dialog-title">Details</div></div>
+            <div class="dialog-head has-close">
+                <div class="dialog-title">Details</div>
+            </div>
 
             <button on:click={()=> handleClose()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
                 <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
@@ -111,7 +112,8 @@ let handleSharedBet = (() => {
                                     <span style="padding-right: 3px;">
                                         <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                                     </span>
-                                    Result</div>
+                                    Result
+                                </div>
                                 <div class="item-desc">{$mybetElDetails.payout}x</div>
                             </div>
                             <div class="item-wrap">
