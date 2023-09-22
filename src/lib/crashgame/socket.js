@@ -5,11 +5,9 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
       hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
       crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon} from "./store"
     import {default_Wallet} from "../store/coins"
-
-
+import {dicegameplays} from "../games/ClassicDice/store/index"
 
 export const handleCountdown = (()=>{
-
     socket.on("countdown", data=>{
         crashLoad.set(data.toFixed(2))
     })
@@ -114,5 +112,9 @@ export const handleCountdown = (()=>{
     //  ==================== crash animation ==============
     socket.on("my-bet", data =>{
         mybetEl.set(data)
+    })
+
+    socket.on("dice-gamePLayers", data=>{
+        dicegameplays.set(data)
     })
 })

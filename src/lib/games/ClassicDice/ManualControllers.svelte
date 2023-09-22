@@ -20,7 +20,7 @@ let Handlemax_profit_tips = ((e)=>{
 })
 
 let wining_amount = '' ;
-let bet_amount = (10).toFixed(4)
+let bet_amount = 10
 
 $:{
     wining_amount = (bet_amount * $payout).toFixed(4)
@@ -77,7 +77,11 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="text" bind:value={bet_amount}>
-                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {#if $handleisLoggin}
+                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {:else}
+                    <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
+                {/if}
                 <div class="sc-kDTinF bswIvI button-group">
                     <button on:click={()=> bet_amount /= 2}>/2</button>
                     <button on:click={()=> bet_amount *= 2}>x2</button>
@@ -95,7 +99,11 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="text" disabled bind:value={wining_amount}>
-                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {#if $handleisLoggin}
+                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                    {:else}
+                    <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
+                {/if}
             </div>
         </div>
         <button disabled={$isbetLoadingBtn} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">

@@ -88,20 +88,24 @@ $: {
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{mybet.bet_amount}.<span class="suffix">00000000</span>
+                                <span class="amount-str">{mybet.bet_amount}<span class="suffix">00000000</span>
                                 </span>
                             </div>
                         </div>
                     </td>
+                    {#if mybet.win_lose === "win"}
                     <td class="payout">{mybet.cashout}×</td>
+                    {:else}
+                    <td class="payout">{mybet.cashout}</td>
+                    {/if}
                     <td class="profitline is-lose">
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
                                 {#if mybet.win_lose === "win"}
-                                <span class="amount-str" style="color:#43b309">+{mybet.profit}.<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color:#43b309">+{mybet.profit}<span class="suffix">00000000</span> </span>
                                 {:else}
-                                <span class="amount-str" style="color: rgb(237, 99, 0);">{"-"+mybet.bet_amount}.<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color: rgb(237, 99, 0);">{mybet.bet_amount}<span class="suffix">00000000</span> </span>
                                 {/if}
                             </div>
                         </div>

@@ -1,22 +1,22 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history } from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 const { historyD } = DiceHistory()
 import { onMount } from "svelte";
+import { handleisLoggin } from "../../store/profile"
 import HistoryDetails from "./componets/historyDetails.svelte";
 import click from "./audio/click.wav"
 let range = 50
 $:{
     onMount(async()=>{
-        historyD()
+        $handleisLoggin &&  historyD()
     })
 }
 
 $:{
     betPosition.set(range)
 }
-
 
 let ishover = false
 const handleRangl = ((w)=>{
@@ -31,7 +31,6 @@ let houseEgde = 1
 let game__charges = 100 / houseEgde
 let game_logic;
 let total_charge;
-
 
 $: {
     game_logic = 100 / $betPosition
@@ -70,18 +69,24 @@ function togglePlayback() {
 <div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent ">
         <div class="recent-list-wrap">
-            {#if $dice_history.length !== 0}
-            <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-            {#each $dice_history.slice(-6) as  dice (dice.id)} 
-                <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
-                    <div class={`item-wrap ${dice.win_lose === "win" ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
-                </button>
-            {/each}
-            </div> 
-            {:else}
-            <div class="empty-item">
-                <p>Game results will be displayed here.</p>
-            </div>
+            {#if $handleisLoggin}
+                {#if $dice_history.length !== 0}
+                <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
+                {#each $dice_history.slice(-6) as  dice (dice.id)} 
+                    <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
+                        <div class={`item-wrap ${dice.win_lose === "win" ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
+                    </button>
+                {/each}
+                </div> 
+                {:else}
+                <div class="empty-item">
+                    <p>Game results will be displayed here.</p>
+                </div>
+                {/if}
+                {:else}
+                <div class="empty-item">
+                    <p>Game results will be displayed here.</p>
+                </div>
             {/if}
         </div>
     </div>

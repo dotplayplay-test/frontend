@@ -1,8 +1,4 @@
 <script>
-import { io } from "socket.io-client";
-const socket = io("http://localhost:8000");
-import {handleCountdown } from "$lib/crashgame/socket"
-handleCountdown()
 import { default_Wallet } from "$lib/store/coins"
 import { crashPoint , crashRunning ,Load_animation,
      winning,crashCurve, crashLoad,

@@ -17,3 +17,6 @@ export let dice_history = writable(dice_historyEl)
 
 let Singledice_historyEl = []
 export let Singledice_history = writable(Singledice_historyEl)
+
+let dicePlayers = []
+export let dicegameplays = writable(dicePlayers)

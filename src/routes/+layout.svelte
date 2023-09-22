@@ -3,31 +3,32 @@
 export let data;
 import { routes } from "../lib/store/routes"
 $: routes.set(data)
-import Statistics from "../lib/statistics/main/index.svelte";
+
+import {handleCountdown} from "$lib/crashgame/socket"
+handleCountdown()
+
 import Navbar from "$lib/navbar.svelte";
 import SideBar from "$lib/sideBar.svelte";
 import Footer from "$lib/footer.svelte";
 import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
 import Notification from "../lib/notification/index.svelte";
-import { handleisLoggin, handleisLoading } from "$lib/store/profile"
-import "../styles/errors/error.css"
+import { handleisLoggin, handleisLoading, first_load } from "$lib/store/profile"
+import "../styles/errors/error.css";
 import {
     getAuth,
     onAuthStateChanged
 } from "firebase/auth";
 import {
     app
-} from "$lib/firebaseAuth/index"
+} from "$lib/firebaseAuth/index";
 import {
     browser
-} from '$app/environment'
+} from '$app/environment';
 import {
     onMount
 } from "svelte";
 import Closesidebar from "$lib/closesidebar.svelte";
-import { statisticsEl} from "../lib/store/statistic"
-
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
@@ -102,15 +103,10 @@ const handleMenu = () => {
     }
 }
 
-const handleStatistics = (() => {
-    statisticsEl.set(false)
-})
 </script>
 
 <div class="app">
-    {#if $statisticsEl}
-    <Statistics on:discloseStatistics={handleStatistics} />
-    {/if}
+
 
     {#if (isOpenSide) }
     <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>

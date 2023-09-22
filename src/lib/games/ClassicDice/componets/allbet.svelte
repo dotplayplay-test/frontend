@@ -1,5 +1,11 @@
 <script>
+import {
+    dicegameplays
+} from "../store/index"
 
+$: {
+    $dicegameplays.sort((a, b) => b.id - a.id);
+}
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -16,35 +22,45 @@
                 </tr>
             </thead>
             <tbody>
+                {#each $dicegameplays.slice(0, 15) as dice }
                 <tr>
                     <td>
-                        <button class="hash ellipsis">6928778681475580</button>
+                        <button class="hash ellipsis">{dice.bet_id}</button>
                     </td>
                     <td>
-                        <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/407998">
-                            <div class="name">Marcelo Massad</div>
+                        <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${dice.user_id}`}>
+                            <div class="name">{dice.username}</div>
                         </a>
                     </td>
-                    <td>8:36:36 PM</td>
+                    <td>{dice.time}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <img class="coin-icon" alt="" src="/coin/DOGE.black.png">
+                            <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
-                                <span class="amount-str">0.000001<span class="suffix">00</span>
+                                <span class="amount-str">{dice.bet_amount}.<span class="suffix">0000000</span>
                                 </span>
                             </div>
                         </div>
                     </td>
-                    <td class="payout">1.14×</td>
-                    <td class="profitline is-win">
+                    {#if dice.win_lose !== "win"}
+                    <td class="payout">0.00×</td>
+                    {:else}
+                    <td class="payout">{(dice.payout)}×</td>
+                    {/if}
+                    <td class={`profitline ${dice.win_lose === "win" ? "is-win": "is-lose"} `}>
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                            <img class="coin-icon" alt="" src="/coin/DOGE.black.png">
+                            <img class="coin-icon" alt=""  src={dice.token_img}>
                             <div class="amount">
-                                <span class="amount-str">+0.00000013</span>
+                                {#if dice.win_lose !== "win"}
+                                <span class="amount-str">{dice.bet_amount}<span class="suffix">0000000</span></span>
+                                {:else}
+                                <span class="amount-str">+{dice.profit}<span class="suffix">0000000</span></span>
+                                {/if}
                             </div>
                         </div>
                     </td>
                 </tr>
+                {/each}
             </tbody>
         </table>
     </div>
@@ -61,6 +77,9 @@
     padding: 1px 0px;
 }
 
+.erPQzq.has-sign .amount-str {
+    width: 7.2em;
+}
 .iycaRo {
     min-height: 30rem;
     padding: 0.5rem;
@@ -91,64 +110,82 @@
     font-weight: normal;
     color: rgba(153, 164, 176, 0.6);
 }
+
 .iycaRo tr {
     cursor: pointer;
 }
+
 .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
 }
-.iUeetX th:first-child, .iUeetX td:first-child {
+
+.iUeetX th:first-child,
+.iUeetX td:first-child {
     text-align: left;
 }
+
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
-.iUeetX th, .iUeetX td {
+
+.iUeetX th,
+.iUeetX td {
     overflow: hidden;
     text-align: center;
     padding: 0.875rem 0.75rem;
 }
+
 .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .iycaRo a {
     color: inherit;
 }
+
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
+
 .iTDswZ.user-info {
     color: rgb(245, 246, 247);
     font-weight: bold;
 }
+
 .iycaRo a {
     color: inherit;
 }
+
 .iTDswZ {
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
 }
+
 .iTDswZ .name {
     flex: 1 1 0%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
+
 .iycaRo .coin {
     font-weight: bold;
 }
+
 .table .sc-Galmp {
     font-family: Monmono;
 }
+
 .erPQzq {
     display: inline-flex;
     vertical-align: middle;
@@ -156,38 +193,49 @@
     align-items: center;
     white-space: nowrap;
 }
+
 .erPQzq .coin-icon {
     width: 1.4em;
     height: 1.4em;
     margin-right: 0.25em;
 }
-.iycaRo .coin .amount {
+
+ .coin .amount {
     color: rgb(245, 246, 247);
 }
+
 .erPQzq .amount-str {
     width: 7em;
     display: inline-block;
 }
+
 .erPQzq .suffix {
     opacity: 0.5;
 }
+
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
+
 .iUeetX td:last-child {
     border-radius: 0px 0.625rem 0.625rem 0px;
 }
-.iUeetX th:last-child, .iUeetX td:last-child {
+
+.iUeetX th:last-child,
+.iUeetX td:last-child {
     text-align: right;
 }
+
 .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
 }
+
 .iycaRo .coin {
     font-weight: bold;
 }
+
 .erPQzq {
     display: inline-flex;
     vertical-align: middle;
@@ -195,15 +243,24 @@
     align-items: center;
     white-space: nowrap;
 }
+
 .erPQzq .coin-icon {
     width: 1.4em;
     height: 1.4em;
     margin-right: 0.25em;
 }
+
+
+.erPQzq.has-sign .amount-str {
+    width: 7.2em;
+}
 .iycaRo .is-lose .amount {
     color: rgb(237, 99, 0);
 }
-.erPQzq.has-sign .amount-str {
-    width: 7.2em;
+.iycaRo .is-win .amount {
+    color: rgb(67, 179, 9);
+}
+.iycaRo .coin {
+    font-weight: bold;
 }
 </style>

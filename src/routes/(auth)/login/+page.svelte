@@ -1,13 +1,13 @@
 <script>
-import {  goto } from "$app/navigation"
+import {  goto } from "$app/navigation";
 import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import { handleLogin } from "$lib/firebaseAuth/index"
-import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
-let email = ''
-let password = ''
+import { handleLogin } from "$lib/firebaseAuth/index";
+import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index";
+let email = '';
+let password = '';
 const googleAuth = (()=>{
     handleGoogleAuth()
 })
@@ -30,7 +30,7 @@ const handleSubmit = (() => {
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
-    <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 585px; margin-top: -294px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
             <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
         </div>
@@ -77,7 +77,6 @@ const handleSubmit = (() => {
                         </div>
                     </div>
     
-     
                 <div id="other-login" class="sc-jFkwbb iajVfs">
                     <div class="box-title"> Log in directly with  </div>
                     <div class="other-group">
@@ -207,10 +206,10 @@ const handleSubmit = (() => {
     /* background-color: rgb(23, 24, 27); */
 }
 
-.ipnwmW .dialog-head {
+/* .ipnwmW .dialog-head {
     background-color: transparent;
     box-shadow: none;
-}
+} */
 
 .dialog-head.has-close {
     margin-right: 3.75rem;

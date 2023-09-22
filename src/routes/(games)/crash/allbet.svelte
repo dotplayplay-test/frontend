@@ -67,7 +67,7 @@ const handleAllbet = (()=>{
                                 <div class="sc-Galmp erPQzq coin notranslate">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span></span>
+                                    <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span></span>
                                 </div>
                             </div>
                             </td>
@@ -83,7 +83,7 @@ const handleAllbet = (()=>{
                                 <div class="sc-Galmp erPQzq coin notranslate has-lose">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-st">{player.bet_amount}.<span class="suffix">{player.suffix}</span></span>
+                                        <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span></span>
                                     </div>
                                 </div>
                                 {:else}

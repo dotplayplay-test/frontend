@@ -9,7 +9,9 @@ const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet,
     handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
 import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
-
+import {
+  browser
+} from '$app/environment'
 $:{
     onMount(async()=>{
         handleDefaultwallet()
@@ -19,6 +21,12 @@ $:{
         handlePPEwallet()
         handlePPDwallet()
     })
+}
+
+let show_currencyName
+
+$:{
+    show_currencyName = browser && JSON.parse(localStorage.getItem('show-full-curency'))
 }
 
 let coins
@@ -54,7 +62,7 @@ $:{
     {
         id: 4,
         coin_name: $pplWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
+        coin_fname:  $pplWallet.coin_fname,
         coin_image:  $pplWallet.coin_image,
         balance:  $pplWallet.balance,
         suffix: $pplWallet.suffix,
@@ -63,7 +71,7 @@ $:{
     {
         id: 5,
         coin_name: $ppfWallet.coin_name,
-        coin_fname:  $ppfWallet.coin_name,
+        coin_fname:  $ppfWallet.coin_fname,
         coin_image: $ppfWallet.coin_image,
         balance:  $ppfWallet.balance,
         suffix: $ppfWallet.suffix,
@@ -92,23 +100,42 @@ const handleSelectCoin = ((e) => {
         </div>
         <div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list">
             {#each coins as coin (coin.id)}
-            <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
-                <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
-                    <div class="coin-wrap">
-                        <img class="coin-icon" alt="" src={coin.coin_image}>
-                    </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">{coin.coin_name}</div>
-                    </div>
-                    <div class="amount-wrap">
-                        <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <div class="amount">
-                                <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
+            {#if coin.coin_image !== undefined}
+                <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
+                    <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
+                        <div class="coin-wrap">
+                            <img class="coin-icon" alt="" src={coin.coin_image}>
+                        </div>
+                        <div class="name-wrap">
+                            <div class="currency-name">{coin.coin_name}</div>
+                            {#if show_currencyName}
+                                <div class="full-name">{coin.coin_fname}</div>
+                            {/if}
+                        </div>
+                        <div class="amount-wrap">
+                            <div class="sc-Galmp erPQzq coin notranslate monospace">
+                                <div class="amount">
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </button>
+                </button>
+            {:else}
+            <div class="center">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+            {/if}
+       
             {/each}
         </div>
     </div>

@@ -37,7 +37,7 @@ const handleNavigation = ((w) => {
 
 <style>
 .ePAxUv {
-    margin-left: 3.5rem;
+    margin-left: 0rem;
     margin-top: 4rem;
 }
 

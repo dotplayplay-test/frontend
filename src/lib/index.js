@@ -1,15 +1,14 @@
 import {
     browser
 } from '$app/environment'
-import { profileStore} from "../lib/store/profile"
-import { default_Wallet, usdt_Wallet , ppfWallet,ppdWallet,ppeWallet, pplWallet} from "../lib/store/coins"
+import { profileStore, first_load} from "../lib/store/profile"
+import { default_Wallet, usdt_Wallet, ppfWallet,ppdWallet,ppeWallet, pplWallet } from "../lib/store/coins"
 
 
 export  const UserProfileEl = () => {
-    let isloading = true
+    first_load.set(true)
     let error = false
     const id = browser && JSON.parse(localStorage.getItem('user'))
-
 
   const profileEl = (async()=>{
     const response = await fetch(
@@ -24,11 +23,11 @@ export  const UserProfileEl = () => {
     const json = await response.json();
     if(!response.ok){
         error = json.error
-        isloading = false
+          first_load.set(false)
     }
     if (response.ok) {
         profileStore.set(json[0])
-        isloading = false
+          first_load.set(false)
     }
 })
 
@@ -132,6 +131,26 @@ const handlePPFwallet = async () => {
             usdt_Wallet.set(json[0]) 
         }
     };
+
+
+    // const Fetchprofile = async (data) => {
+    //     const response = await fetch(
+    //       "http://localhost:8000/api/user/profile:id",{
+    //         method: "POST",
+    //         body: JSON.stringify(data),
+    //         headers: {
+    //           "Content-type": "application/json",
+    //         },
+    //       }
+    //     );
+    //     const json = await response.json();
+    //     if (!response.ok) {
+    //         console.log(json)
+    //     }
+    //     if (response.ok) {
+    //         console.log(json)
+    //     }
+    //   };
         
 
 

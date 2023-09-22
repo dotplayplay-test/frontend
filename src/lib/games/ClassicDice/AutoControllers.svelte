@@ -1,13 +1,83 @@
 <script>
+import { goto } from "$app/navigation"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { default_Wallet } from '../../store/coins';
+import { profileStore,handleisLoggin } from "$lib/store/profile"
+import { payout, isbetLoadingBtn, betPosition } from "./store";
+import { DiceHook } from "../../games/ClassicDice/hook/index"
+const { playdice } = DiceHook()
 
 let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
+
+let bet_number = 0
+let bet_amount = 10
+
+let on_win = false
+let onWinEl = 0
+
+let on_lose = false
+let onLoseEl = 0
+
+let stopOnwin = 0
+let stopOnlose = 0
+
+let is_Looping = false
+let yu 
+let turbo = 1300
+
+let bet_num_count = 0
+const handleAutoStart = (()=>{
+    if(!is_Looping){
+        is_Looping = true
+        yu = setInterval(()=>{
+            if(bet_number !== 0){
+              
+                if(bet_num_count === bet_number){
+                    is_Looping = false
+                    clearInterval(yu)       
+                }else{
+                    handleRollSubmit()
+                    bet_num_count += 1
+                    console.log("bet number")
+                }
+            }else{
+                 handleRollSubmit()
+                 console.log("normal")
+            }
+        }, turbo)
+    }else{
+        is_Looping = false
+        clearInterval(yu)
+    }
+})
+
+const handleRollSubmit = (()=>{
+    if($handleisLoggin){
+        if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
+        alert("insufficient balance")
+        }else{
+            const data = {
+                username: $profileStore.username,
+                user_img: $profileStore.profile_image,
+                bet_amount,
+                bet_token_img: $default_Wallet.coin_image, 
+                bet_token_name: $default_Wallet.coin_name ,
+                chance: $betPosition,
+                payout: $payout,
+                wining_amount:parseInt(bet_amount * $payout) - parseInt(bet_amount)
+            }
+            playdice(data)
+        }
+    }else{
+        goto('/login')
+    }
+})
+
 
 </script>
 
@@ -36,15 +106,14 @@ const handleMinMax = (()=>{
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="text" value="200.000000000">
+                <input type="number" bind:value={bet_amount}>
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button>/2</button>
-                    <button>x2</button>
-
+                    <button on:click={()=> bet_amount /= 2 }>/2</button>
+                    <button on:click={()=> bet_amount *= 2 }>x2</button>
                     {#if is_min_max }
                      <div class="fix-layer" style="opacity: 1; transform: none;">
-                        <button class="">Min</button>
+                        <button  class="">Min</button>
                         <div class="sc-kLwhqv eOA-dmL slider">
                            <div class="slider-after" style="transform: scaleX(10.001001);"></div>
                            <div class="slider-handler-wrap" style="transform: translateX(0.1001%);">
@@ -67,11 +136,11 @@ const handleMinMax = (()=>{
         <div class="sc-ezbkAF hzTJOu input ">
             <div class="input-label">Number of Bets</div>
             <div class="input-control">
-                <input type="text" value="0">
-                <div class="sc-kDTinF bswIvI button-group">
-                    <button>∞</button>
-                    <button>10</button>
-                    <button>100</button>
+                <input type="number" bind:value={bet_number}>
+                <div class={`sc-kDTinF bswIvI button-group`}>
+                    <button on:click={()=> bet_number = 0}>∞</button>
+                    <button on:click={()=> bet_number = 10}>10</button>
+                    <button on:click={()=> bet_number = 100}>100</button>
                 </div>
             </div>
         </div>
@@ -79,11 +148,11 @@ const handleMinMax = (()=>{
         <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
             <div class="input-label">On win</div>
             <div class="input-control">
-                <input type="text" readonly="" value="0">
-                <div class="sc-cxVPaa eIHoct increase-switch">
-                    <div class="dot-wrap">
-                        <div class="dot"></div>
-                    </div>
+                <input type="number" readonly={!on_win} bind:value={onWinEl}>
+                <div class={`sc-cxVPaa ${on_win ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
+                    <button on:click={()=> on_win = !on_win} class="dot-wrap">
+                        <div  class="dot"></div>
+                    </button>
                     <div class="reset text">Reset</div>
                     <div class="increse text">Increase by</div>
                 </div>
@@ -95,7 +164,7 @@ const handleMinMax = (()=>{
             <div class="input-label">Stop on win<div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="text" value="0.000000">
+                <input type="number" bind:value={stopOnwin}>
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
             </div>
         </div>
@@ -103,11 +172,11 @@ const handleMinMax = (()=>{
         <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
             <div class="input-label">On lose</div>
             <div class="input-control">
-                <input type="text" readonly="" value="0">
-                <div class="sc-cxVPaa eIHoct increase-switch">
-                    <div class="dot-wrap">
+                <input type="number" readonly={!on_lose} bind:value={onLoseEl}>
+                <div class={`sc-cxVPaa ${on_lose ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
+                    <button on:click={()=> on_lose = !on_lose}  class="dot-wrap">
                         <div class="dot"></div>
-                    </div>
+                    </button>
                     <div class="reset text">Reset</div>
                     <div class="increse text">Increase by</div>
                 </div>
@@ -119,7 +188,7 @@ const handleMinMax = (()=>{
             <div class="input-label">Stop on lose<div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="text" value="0.000000000">
+                <input type="number" bind:value={stopOnlose}>
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
             </div>
         </div>
@@ -133,8 +202,8 @@ const handleMinMax = (()=>{
             </div>
         </div>
 
-        <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-            <div class="button-inner">Start Auto Bet</div>
+        <button on:click={handleAutoStart} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+            <div class="button-inner"> {is_Looping ? "Stop" : "Start"} Auto Bet</div>
         </button>
 
     </div>
@@ -606,5 +675,64 @@ const handleMinMax = (()=>{
 .hRGEiw .bet-button {
     margin-top: 1.5rem;
 }
-
+.kvRMBr {
+    order: -1;
+    position: relative;
+    margin-left: -1rem;
+    padding-left: 2.25rem;
+    margin-right: 2rem;
+    width: 8.125rem;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    background: rgb(49, 52, 60);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.kvRMBr .dot-wrap {
+    position: absolute;
+    width: 1rem;
+    height: 1.75rem;
+    border-radius: 0.46875rem;
+    background: rgb(67, 179, 9);
+    left: 0.875rem;
+    top: 0.25rem;
+}
+.kvRMBr .dot-wrap .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    left: 0px;
+    transition: top 0.1s ease-in-out 0s;
+    top: 0.875rem;
+}
+.kvRMBr .reset {
+    color: rgb(153, 164, 176);
+}
+.kvRMBr .text {
+    padding: 0px 0.25rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    height: 0.875rem;
+}
+.kvRMBr .text {
+    padding: 0px 0.25rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    height: 0.875rem;
+}
+.kvRMBr .increse {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
 </style>

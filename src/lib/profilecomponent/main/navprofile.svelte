@@ -1,14 +1,13 @@
 <script>
-    import {goto} from "$app/navigation"
-  import {handleLogout } from "$lib/firebaseAuth/index"
-import { profileStore} from "../../store/profile"
-
+import {goto} from "$app/navigation";
+import {handleLogout } from "$lib/firebaseAuth/index";
+import { profileStore} from "../../store/profile";
+import { statisticsEl } from "$lib/store/statistic";
 const handleSignOut = (()=>{
     handleLogout()
 })
 
-import { statisticsEl } from "../../store/statistic"
-  const handleStatistics = (()=>{
+const handleStatistics = (()=>{
     statisticsEl.set(true)
 })
 
@@ -17,7 +16,7 @@ import { statisticsEl } from "../../store/statistic"
 <div class="setting-wrap" style="opacity: 1; transform: none;">
    <div class="sc-cjrPHo emGYim">
        <div class="user-info">
-           <a class="left" href="/user/profile/505090">
+           <a class="left" href={`/user/profile/${$profileStore.user_id}`}>
                <img class="avatar " alt="" src={$profileStore.profile_image}>
                <div class="name-level">
                    <p>{$profileStore.username}</p>

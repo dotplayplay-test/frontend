@@ -1,6 +1,4 @@
 <script>
-import {handleCountdown} from "../socket"
-handleCountdown()
 import HasCrashed from "./HasCrashed.svelte";
 import Loading from "./loading.svelte";
 import {crashPoint , crashRunning ,Load_animation,
