@@ -1,6 +1,10 @@
 <script>
 import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_has_winEl, crash_all_users_Moon_trendballEl ,Moon_trendball_hasWinEl, crash_all_users_green_trendballEl, green_trendball_hasWinEl} from "$lib/crashgame/store"
 
+$:{
+    console.log($handleRedtrendballPlayers)
+}
+
 </script>
 
 <div class="sc-kszsFN engBBI need-scroll">
@@ -60,10 +64,18 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
                     {#if red.game_type === "Red"}
                     <tr>
                         <td>
-                            <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${red.user_id}`}>
-                            <img class="avatar " alt="" src={red.profile_img}>
-                            <div class="name">{red.username}</div>
-                        </a>
+                            {#if red.hidden_from_public }
+                            <div class="sc-jUosCB iTDswZ ">
+                                <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                                <div class="name">Hidden</div>
+                            </div>
+                            {:else}
+                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${red.user_id}`}>
+                                    <img class="avatar " alt="" src={red.profile_img}>
+                                    <div class="name">{red.username}</div>
+                                </a>
+                            {/if}
+                     
                         </td>
                         <td>
                             {#if $trendball_has_winEl}
@@ -102,10 +114,17 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
                         {#if green.game_type === "Green"}
                         <tr>
                             <td>
-                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
-                                    <img class="avatar " alt="" src={green.profile_img}>
-                                    <div class="name">{green.username}</div>
-                                </a>
+                                {#if green.hidden_from_public }
+                                <div class="sc-jUosCB iTDswZ ">
+                                    <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                                    <div class="name">Hidden</div>
+                                </div>
+                                {:else}
+                                    <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
+                                        <img class="avatar " alt="" src={green.profile_img}>
+                                        <div class="name">{green.username}</div>
+                                    </a>
+                                {/if}
                                 {#if green.game_type === "Moon"}
                                     <div class="moon"></div>
                                 {/if}
@@ -137,14 +156,20 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
                             </td>
                         </tr>
                         {/if}
-                        
                         {#if green.game_type === "Moon"}
                         <tr>
                             <td>
-                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
-                                    <img class="avatar " alt="" src={green.profile_img}>
-                                    <div class="name">{green.username}</div>
-                                </a>
+                                {#if green.hidden_from_public }
+                                <div class="sc-jUosCB iTDswZ ">
+                                    <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                                    <div class="name">Hidden</div>
+                                </div>
+                                {:else}
+                                    <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${green.user_id}`}>
+                                        <img class="avatar " alt="" src={green.profile_img}>
+                                        <div class="name">{green.username}</div>
+                                    </a>
+                                {/if}
                                 {#if green.game_type === "Moon"}
                                     <div class="moon"></div>
                                 {/if}

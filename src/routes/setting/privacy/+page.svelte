@@ -1,34 +1,151 @@
 <script>
+import axios from "axios";
+import { routes } from "$lib/store/routes"
+import {profileStore} from "$lib/store/profile"
+
 let Hide_gameing_profile = false
+
+$:{
+    if($profileStore.hide_profile){
+        Hide_gameing_profile = true
+    }else{
+        Hide_gameing_profile = false
+    }
+}
+
+
+const apiGamingProfile = (async(data)=>{
+    await axios.post("http://localhost:8000/api/profile/update-hidden",{
+        profile_state : data,
+    },{
+        headers:{
+            Authorization: `Bearer ${$routes.profile.Token}`
+        }
+    })
+    .then(res => {
+        (res.data)
+    })
+})
+
 const handleGamingProfile = (()=>{
+    if(!Hide_gameing_profile){
+        apiGamingProfile(1)
+    }
+    else{
+        apiGamingProfile(0)
+    }
     Hide_gameing_profile = !Hide_gameing_profile
 })
 
+
+const handleHideUserNam = (async(data)=>{
+    await axios.post("http://localhost:8000/api/profile/hide-public-username",{
+        profile_state : data,
+    },{
+        headers:{
+            Authorization: `Bearer ${$routes.profile.Token}`
+        }
+    })
+    .then(res => {
+        (res.data)
+    })
+})
+
+
 let hide_userName = false
+$:{
+    if($profileStore.hidden_from_public){
+        hide_userName = true
+    }else{
+        hide_userName = false
+    }
+}
+
 const handleHideUserName = (()=>{
+    if(!hide_userName){
+        handleHideUserNam(1)
+    }
+    else{
+        handleHideUserNam(0)
+    }
     hide_userName = !hide_userName
 })
+
 
 let hide_onlinePresence = false
 let handleonlinePresence = (()=>{
     hide_onlinePresence = !hide_onlinePresence
 })
 
+
 let allow_private_messages = false
 const handlePrivateMessages = (()=>{
     allow_private_messages = !allow_private_messages
 })
 
+const handleFriendRequestAPI = (async(data)=>{
+    await axios.post("http://localhost:8000/api/profile/refuse-friend-request",{
+        profile_state : data,
+    },{
+        headers:{
+            Authorization: `Bearer ${$routes.profile.Token}`
+        }
+    })
+    .then(res => {
+        (res.data)
+    })
+})
+
 let refuse_friend_request = false
+$:{
+    if($profileStore.refuse_friends_request){
+        refuse_friend_request = true
+    }else{
+        refuse_friend_request = false
+    }
+}
 const handleFriendRequest = ()=>{
+    if(!refuse_friend_request){
+        handleFriendRequestAPI(1)
+    }
+    else{
+        handleFriendRequestAPI(0)
+    }
     refuse_friend_request = !refuse_friend_request
 }
 
-let refuse_tip = false
-const handleTips = (()=>{
-    refuse_tip = !refuse_tip
+
+const handleTipsAPI = (async(data)=>{
+    await axios.post("http://localhost:8000/api/profile/refuse-tips",{
+        profile_state : data,
+    },{
+        headers:{
+            Authorization: `Bearer ${$routes.profile.Token}`
+        }
+    })
+    .then(res => {
+        (res.data)
+    })
 })
 
+let refuse_tip = false
+$:{
+    if($profileStore.refuse_tips){
+        refuse_tip = true
+    }else{
+        refuse_tip = false
+    }
+}
+
+const handleTips = (()=>{
+    if(!refuse_tip){
+        handleTipsAPI(1)
+    }
+    else{
+        handleTipsAPI(0)
+    }
+    refuse_tip = !refuse_tip
+})
 
 </script>
 

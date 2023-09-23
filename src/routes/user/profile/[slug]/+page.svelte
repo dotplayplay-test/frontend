@@ -18,6 +18,7 @@ import { onMount } from 'svelte';
 import {
     users_profile, profileStore
 } from "$lib/store/profile"
+
 import {
     page
 } from '$app/stores'
@@ -32,6 +33,7 @@ async function fetchData() {
     await axios.post(`http://localhost:8000/api/users/profile/${$page.params.slug}`)
         .then(res => {
             is_loadingel = false
+            // console.log(res.data)
             users_profile.set(res.data[0])
         })
         .catch((error) => {
@@ -68,9 +70,12 @@ onMount(async()=>{
     fetchData();
 })
 
+
 $: {
     is_loadingel
 }
+
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
@@ -130,22 +135,28 @@ $: {
                         </div>
                         {#if $profileStore.user_id !== $page.params.slug}
                         <div class="actions">
+                            {#if !$users_profile.refuse_tips}
                             <button class="tip button">
                                 <span style="margin-right: 0.5rem; margin-top: 4px">
                                     <Icon src={FaSolidMoneyBillWave}  size="15"  color="rgba(153, 164, 176, 0.6)" />
                                 </span>
                                  Tip
                             </button>
+                            {/if}
+                            {#if !$users_profile.refuse_friends_request}
                             <button class="button add">
                                 <span  style="margin-right: 0.5rem">
                                     <Icon src={IoPersonAddSharp}  size="15"  color="rgba(153, 164, 176, 0.6)" />
                                 </span>
                                     Add
                             </button>
+                            {/if}
                          </div>
                          {/if}
                     </div>
                 </div>
+
+                {#if $users_profile.hide_profile &&  $profileStore.user_id === $page.params.slug}
                 <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
@@ -282,6 +293,298 @@ $: {
                         <div class="msg">Oops! There is no data yet!</div>
                     </div>
                 </div>
+
+                {:else if  !$users_profile.hide_profile &&  $profileStore.user_id === $page.params.slug}
+                <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
+                    <div class="module-name">
+                        <span class="sc-gsDKAQ hxODWG icon icon-name">
+                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </span>
+                        Medals
+                        <div class="total">0</div>
+                        <button class="detail-button">
+                            Details
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div class="scroll">
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_1.c87ad7ad.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_2.f40a41f6.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_3.bf42dfa3.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_4.c845bc7e.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_5.7e08d516.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_6.b5ec5404.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_7.1e39e201.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_8.65991297.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_10.19cd9ddc.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_11.0ec85ddb.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_12.7f2dc23f.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_13.1cc45284.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_14.c072f644.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_15.53c0901a.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_16.65edd97c.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17_ETH.4684f7c4.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17_BTC.a5992a94.png" alt="" class="img locked">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
+                    <div class="module-name">
+                        <span class="sc-gsDKAQ hxODWG icon icon-name">
+                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                        </span>
+                        Statistics
+                        <button on:click={()=>  handleDiooosb(4)} class="hover">
+                            Details
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div class="sc-bGaVxB gvTPwc">
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                                    </span>
+                                    Total Wins</div>
+                                <div class="item-value">{$userStatistics.total_win}</div>
+                            </div>
+
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                    </span>
+                                    Total Bets</div>
+                                <div class="item-value">{$userStatistics.total_bet}</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                    </span>
+                                    Total Wagered
+                                </div>
+                                <div class="item-value">{$userStatistics.total_wagered} USD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-jnSlpE bRYT bUELx">
+                    <div class="module-name">Top 3 Favorite Games</div>
+                    <div class="sc-eCImPb cuPxwd empty ">
+                        <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="" >
+                        <div class="msg">Oops! There is no data yet!</div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-dWbSDx bRYT btOhTh">
+                    <div class="module-name">Contest</div>
+                    <div class="sc-eCImPb cuPxwd empty ">
+                        <img alt="" src="https://static.nanogames.io/assets/empty.acd1f5fe.png">
+                        <div class="msg">Oops! There is no data yet!</div>
+                    </div>
+                </div>
+
+                {:else if $users_profile.hide_profile &&  $profileStore.user_id !== $page.params.slug}
+                <div class="sc-gXRojI sc-jVslSq bRYT cgBQzA">
+                    <div class="module-name">Statistics</div>
+                    <div class="content">
+                        <div class="nothing">
+                            <div class="sc-eCImPb cuPxwd empty ">
+                                <img src="https://static.nanogames.io/assets/privacy.b56f76ed.png" alt="">
+                                <div class="msg">
+                                    <div class="darken">Statistics hidden</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {:else if  !$users_profile.hide_profile &&  $profileStore.user_id !== $page.params.slug}
+                <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
+                    <div class="module-name">
+                        <span class="sc-gsDKAQ hxODWG icon icon-name">
+                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </span>
+                        Medals
+                        <div class="total">0</div>
+                        <button class="detail-button">
+                            Details
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div class="scroll">
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_1.c87ad7ad.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_2.f40a41f6.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_3.bf42dfa3.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_4.c845bc7e.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_5.7e08d516.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_6.b5ec5404.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_7.1e39e201.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_8.65991297.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_10.19cd9ddc.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_11.0ec85ddb.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_12.7f2dc23f.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_13.1cc45284.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_14.c072f644.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_15.53c0901a.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_16.65edd97c.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17_ETH.4684f7c4.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17.bbbdfc92.png" alt="" class="img locked">
+                            </div>
+                            <div class="item ">
+                                <img src="https://static.nanogames.io/assets/achieve_17_BTC.a5992a94.png" alt="" class="img locked">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
+                    <div class="module-name">
+                        <span class="sc-gsDKAQ hxODWG icon icon-name">
+                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                        </span>
+                        Statistics
+                        <button on:click={()=>  handleDiooosb(4)} class="hover">
+                            Details
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div class="sc-bGaVxB gvTPwc">
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                                    </span>
+                                    Total Wins</div>
+                                <div class="item-value">{$userStatistics.total_win}</div>
+                            </div>
+
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                    </span>
+                                    Total Bets</div>
+                                <div class="item-value">{$userStatistics.total_bet}</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-type darken">
+                                    <span class="sc-gsDKAQ hxODWG icon wagered-icon">
+                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                    </span>
+                                    Total Wagered
+                                </div>
+                                <div class="item-value">{$userStatistics.total_wagered} USD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-jnSlpE bRYT bUELx">
+                    <div class="module-name">Top 3 Favorite Games</div>
+                    <div class="sc-eCImPb cuPxwd empty ">
+                        <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="" >
+                        <div class="msg">Oops! There is no data yet!</div>
+                    </div>
+                </div>
+
+                <div class="sc-gXRojI sc-dWbSDx bRYT btOhTh">
+                    <div class="module-name">Contest</div>
+                    <div class="sc-eCImPb cuPxwd empty ">
+                        <img alt="" src="https://static.nanogames.io/assets/empty.acd1f5fe.png">
+                        <div class="msg">Oops! There is no data yet!</div>
+                    </div>
+                </div>
+                {/if}
+
                 <div class="joined">Joined on&nbsp;{$users_profile.joined_at}</div>
             </div>
         </div>
@@ -362,5 +665,59 @@ $: {
     background: rgba(30, 32, 36, 0.7);
     border-radius: 1.6875rem;
 }
+.bRYT {
+    background: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    padding: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+.cgBQzA .module-name {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.bRYT .module-name {
+    color: rgb(245, 246, 247);
+    margin: 0.25rem 0px 0.75rem;
+}
+.cgBQzA .nothing {
+    height: 16.75rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+.cuPxwd {
+    padding: 2.5rem 0px;
+    color: rgba(153, 164, 176, 0.6);
+    line-height: 1;
+    text-align: center;
+    height: 100%;
+    min-height: 16.25rem;
+    position: relative;
+}
+.cuPxwd img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -6.875rem 0px 0px -6.25rem;
+    width: 12.5rem;
+    height: 12.5rem;
+}
 
+.cuPxwd .msg {
+    position: absolute;
+    z-index: 1;
+    line-height: 1.25rem;
+    left: 50%;
+    width: 17.5rem;
+    top: 50%;
+    margin-top: 3.75rem;
+    margin-left: -8.75rem;
+}
+.cgBQzA .nothing .darken {
+    margin-top: 0.625rem;
+}
+.bRYT .darken {
+    color: rgba(153, 164, 176, 0.6);
+    background: none;
+}
 </style>

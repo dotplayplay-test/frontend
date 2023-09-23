@@ -32,6 +32,7 @@
 		"svelte-icons-pack": "^2.1.0",
 		"svelte-kit-cookie-session": "^4.0.0",
 		"svelte-konva": "^0.3.1",
-		"swiper": "^10.1.0"
+		"swiper": "^10.1.0",
+		"tronweb": "^5.3.0"
 	}
 }

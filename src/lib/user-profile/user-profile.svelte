@@ -10,8 +10,7 @@ let username = $users_profile.username
 
 let edit_avatar = false
 const handleSubmit = (()=>{
-
-
+    
 })
 
 

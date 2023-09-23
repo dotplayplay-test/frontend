@@ -47,10 +47,18 @@ const handleAllbet = (()=>{
                         {#if player.game_type === "Classic"}
                         <tr>
                             <td class="user">
+                                {#if player.hidden_from_public}
+                                <div class="sc-jUosCB iTDswZ " >
+                                    <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                                    <div class="name">Hidden</div>
+                                </div>
+                                {:else}
                                 <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${player.user_id}`}>
                                     <img class="avatar " alt="" src={player.profile_img}>
                                     <div class="name">{player.username}</div>
                                 </a>
+                            {/if}
+
                             </td>
                             <td class="escape">
                                 {#if player.cashout === "betting"}

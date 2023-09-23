@@ -3,6 +3,7 @@ import {
     dicegameplays
 } from "../store/index"
 
+
 $: {
     $dicegameplays.sort((a, b) => b.id - a.id);
 }
@@ -28,9 +29,15 @@ $: {
                         <button class="hash ellipsis">{dice.bet_id}</button>
                     </td>
                     <td>
-                        <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${dice.user_id}`}>
-                            <div class="name">{dice.username}</div>
-                        </a>
+                        {#if dice.hidden_from_public }
+                            <div class="sc-jUosCB iTDswZ" >
+                                <div class="name">Hidden</div>
+                            </div>
+                            {:else}
+                            <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${dice.user_id}`}>
+                                <div class="name">{dice.username}</div>
+                            </a>
+                        {/if}
                     </td>
                     <td>{dice.time}</td>
                     <td class="bet">

@@ -14,6 +14,18 @@ import { browser } from '$app/environment'
 import { db} from "$lib/firebaseAuth/index"
 import { doc, getDoc } from "firebase/firestore";
 
+
+
+
+// const tronWeb = new tronWeb({
+// fullHost: 'https://api.shasta.trongrid.io',
+// headers: { 
+//     'TRON-PRO-API-KEY': 'b71a8513-ff79-43ba-a72b-be24f5918e76'
+//     },
+// privateKey: '462e61b827e9af2c5d28fcd09991bdca2ae75d1ff04f32273fa4b0d3bf0dfc5c'
+// });
+    
+
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let profile
 $:{
@@ -27,6 +39,7 @@ $:{
         }
     })
 }
+
 
 
 register();
