@@ -1,18 +1,18 @@
 
 export const updateUser = () => {
-    let error;
-    let isLoading;
     const useUpdate = async (data) => {
-    const user = JSON.parse(localStorage.getItem('user'))
-      isLoading = true
-      error = null
+      let request = {
+        username: data.username,
+         profile_image:data.profile_image,
+          email :data.user_id.email
+      }
       const response = await fetch(
         "http://localhost:8000/api/profile/update-user",{
           method: "POST",
-          body: JSON.stringify(data),
+          body: JSON.stringify(request),
           headers: {
             "Content-type": "application/json",
-            'Authorization': `Bearer ${user.Token}`
+            'Authorization': `Bearer ${data.user_id.Token}`
           },
         }
       );
@@ -25,5 +25,5 @@ export const updateUser = () => {
         window.location.href = '/'
       }
     };
-    return { useUpdate, isLoading, error };
+    return { useUpdate };
   };

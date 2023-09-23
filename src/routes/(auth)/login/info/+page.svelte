@@ -13,6 +13,9 @@ import {
     handleGoogleAuth,
     handleFacebookAuth
 } from "$lib/firebaseAuth/index"
+import { routes } from "$lib/store/routes"
+
+
 let img1 = true
 let img2 = false
 let img3 = false
@@ -101,8 +104,13 @@ const handleSubmit = (() => {
     if (!username) {
         console.log("username can't be empty")
     } else {
-        let data = {username, profile_image:profile_img, user_id : id.email }
-        useUpdate(data)
+        if($routes.profile){
+            let data = {username, profile_image:profile_img, user_id : $routes.profile }
+            useUpdate(data)
+        }else{
+            alert("something went wrong")
+        }
+
     }
 })
 </script>

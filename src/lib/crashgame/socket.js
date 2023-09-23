@@ -1,9 +1,11 @@
 import { io } from "socket.io-client";
 const socket = io("http://localhost:8000");
-import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,
+import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,v_default,
      loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,green_trendball_hasWinEl,Moon_trendball_hasWinEl,
-      hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
-      crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon} from "./store"
+     v_two, hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
+      crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
+      v_three, v_five, v_seven, v_nine, v_ten, v_twenty,v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
+    } from "./store"
     import {default_Wallet} from "../store/coins"
 import {dicegameplays} from "../games/ClassicDice/store/index"
 
@@ -105,7 +107,7 @@ export const handleCountdown = (()=>{
     })
 
     //  ==================== crash animation ==============
-       socket.on("crash_curve", data =>{
+       socket.on("nuppp-curve", data =>{
         crashCurve.set(data)
     })
 
@@ -116,5 +118,58 @@ export const handleCountdown = (()=>{
 
     socket.on("dice-gamePLayers", data=>{
         dicegameplays.set(data)
+    })
+
+
+
+    socket.on("v_default", data=>{
+        v_default.set(data)
+    })
+
+
+    socket.on("v_two", data=>{
+        v_two.set(data)
+    })
+
+    socket.on("v_three", data=>{
+        v_three.set(data)
+    })
+
+    socket.on("v_five", data=>{
+        v_five.set(data)
+    })
+
+    socket.on("v_seven", data=>{
+        v_seven.set(data)
+    })
+
+    socket.on("v_nine", data=>{
+        v_nine.set(data)
+    })
+
+    socket.on("v_ten", data=>{
+        v_ten.set(data)
+    })
+    socket.on("v_twenty", data=>{
+        v_twenty.set(data)
+    })
+    socket.on("v_fivety", data=>{
+        v_fivety.set(data)
+    })
+
+    socket.on("v_hundred", data=>{
+        v_hundred.set(data)
+    })
+
+    socket.on("v_Twohundred", data=>{
+        v_Twohundred.set(data)
+    })
+
+    socket.on("v_FiveHundred", data=>{
+        v_FiveHundred.set(data)
+    })
+
+    socket.on("v_thousand", data=>{
+        v_thousand.set(data)
     })
 })

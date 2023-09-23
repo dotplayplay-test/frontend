@@ -117,3 +117,43 @@ export let handleAllPlayerStore = writable(allPlayers)
 
 let SinglePlayerDetails = []
 export let SinglePlayerDetailsEl = writable(SinglePlayerDetails)
+
+
+let v_defaultEl = false
+export let v_default = writable(v_defaultEl)
+
+let v_twoEl = 0
+export let v_two = writable(v_twoEl)
+
+let v_threeEl = 0
+export let v_three = writable(v_threeEl)
+
+let v_fiveEl = 0
+export let v_five = writable(v_fiveEl)
+
+let v_sevenEl = 0
+export let v_seven = writable(v_sevenEl)
+
+let v_nineEl = 0
+export let v_nine = writable(v_nineEl)
+
+let v_tenEl = 0
+export let v_ten = writable(v_tenEl)
+
+let v_twentyEl = 0
+export let v_twenty = writable(v_twentyEl)
+
+let v_fivetyEl = 0
+export let v_fivety = writable(v_fivetyEl)
+
+let v_hundredEl = 0
+export let v_hundred = writable(v_hundredEl)
+
+let v_TwohundredEl = 0
+export let v_Twohundred = writable(v_TwohundredEl)
+
+let v_FiveHundredEl = 0
+export let v_FiveHundred = writable(v_FiveHundredEl) 
+
+let v_thousandEl = 0
+export let v_thousand = writable(v_thousandEl) 

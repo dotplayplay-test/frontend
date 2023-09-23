@@ -16,6 +16,7 @@ const handleFacebookAuthi = (()=>{
     handleFacebookAuth()
 })
 
+
 const handleSubmit = (() => {
     if (!email) {
         console.log("email can't be empty")

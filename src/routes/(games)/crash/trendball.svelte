@@ -1,10 +1,6 @@
 <script>
 import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_has_winEl, crash_all_users_Moon_trendballEl ,Moon_trendball_hasWinEl, crash_all_users_green_trendballEl, green_trendball_hasWinEl} from "$lib/crashgame/store"
 
-$:{
-    console.log($handleRedtrendballPlayers)
-}
-
 </script>
 
 <div class="sc-kszsFN engBBI need-scroll">
