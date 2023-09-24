@@ -157,3 +157,61 @@ export let v_FiveHundred = writable(v_FiveHundredEl)
 
 let v_thousandEl = 0
 export let v_thousand = writable(v_thousandEl) 
+
+
+
+
+
+let h_twoEl = 18
+export let h_two = writable(h_twoEl) 
+
+let h_fourEl = 38
+export let h_four = writable(h_fourEl) 
+
+let h_sixEl = 58
+export let h_six = writable(h_sixEl) 
+
+let h_eightEl = 78
+export let h_eight = writable(h_eightEl) 
+
+let h_TenEl = 0
+export let h_ten = writable(h_TenEl)
+
+let h_TwelveEl = 0
+export let h_twelve = writable(h_TwelveEl)
+
+let h_fourteenEl = 0
+export let h_fourteen = writable(h_fourteenEl)
+
+let h_sixteenEl = 0
+export let h_sixteen = writable(h_sixteenEl)
+
+let h_eighteenEl = 0
+export let h_eighteen = writable(h_eighteenEl)
+
+let h_twentyEl = 0
+export let h_twenty = writable(h_twentyEl)
+
+let h_thirthyEl = 0
+export let h_thirthy = writable(h_thirthyEl)
+
+let h_fourtyEl = 0
+export let h_fourty = writable(h_fourtyEl)
+
+let h_sixtyEl = 0
+export let h_sixty = writable(h_sixtyEl)
+
+let h_eightyEl = 0
+export let h_eighty = writable(h_eightyEl)
+
+let h_hundredEl = 0
+export let h_hundred = writable(h_hundredEl)
+
+let h_ThreehundredEl = 0
+export let h_Threehundred = writable(h_ThreehundredEl)
+
+let h_SevenhundredEl = 0
+export let h_Sevenhundred = writable(h_SevenhundredEl)
+
+let h_onethousandEl = 0
+export let h_onethousand = writable(h_onethousandEl)

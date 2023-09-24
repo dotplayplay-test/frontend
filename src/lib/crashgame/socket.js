@@ -5,6 +5,8 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
      v_two, hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
       crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
       v_three, v_five, v_seven, v_nine, v_ten, v_twenty,v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
+      h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
+      h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand
     } from "./store"
     import {default_Wallet} from "../store/coins"
 import {dicegameplays} from "../games/ClassicDice/store/index"
@@ -171,5 +173,80 @@ export const handleCountdown = (()=>{
 
     socket.on("v_thousand", data=>{
         v_thousand.set(data)
+    })
+
+
+
+    socket.on("h_two", data=>{
+            h_two.set(data)
+    })
+
+    
+    socket.on("h_four", data=>{
+        h_four.set(data)
+    })
+
+    socket.on("h_six", data=>{
+        h_six.set(data)
+    }) 
+
+    socket.on("h_eight", data=>{
+        h_eight.set(data)
+    })
+
+    socket.on("h_ten", data=>{
+        h_ten.set(data)
+    })
+
+    socket.on("h_twelve", data=>{
+        h_twelve.set(data)
+    })
+
+    socket.on("h_fourteen", data=>{
+        h_fourteen.set(data)
+    })
+
+    socket.on("h_sixteen", data=>{
+        h_sixteen.set(data)
+    })
+
+    socket.on("h_eighteen", data=>{
+        h_eighteen.set(data)
+    })
+
+    socket.on("h_twenty", data=>{
+        h_twenty.set(data)
+    })
+
+    socket.on("h_thirthy", data=>{
+        h_thirthy.set(data)
+    })
+
+    socket.on("h_fourty", data=>{
+        h_fourty.set(data)
+    })
+
+    socket.on("h_sixty", data=>{
+        h_sixty.set(data)
+    })
+
+    socket.on("h_eighty", data=>{
+        h_eighty.set(data)
+    })
+
+    socket.on("h_hundred", data=>{
+        h_hundred.set(data)
+    })
+
+    socket.on("h_Threehundred", data=>{
+        h_Threehundred.set(data)
+    })
+
+    socket.on("h_Sevenhundred", data=>{
+        h_Sevenhundred.set(data)
+    })
+    
+    socket.on("h_onethousand", data=>{
+        h_onethousand.set(data)
     })
 })
