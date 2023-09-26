@@ -190,22 +190,6 @@
                                     </div>
                                 </div>
                                 {/if}
-                                {#if  $userStatistics.ppe.ppe_bets !== 0}
-                                <div class="tr">
-                                    <div class="td fc bold">
-                                        <img class="coin-icon" alt="" src={$userStatistics.ppe.ppe_img}>PPE
-                                    </div>
-                                        <div class="td">{$userStatistics.ppe.ppd_win}</div>
-                                        <div class="td">{$userStatistics.ppe.ppd_bets}</div>
-                                        <div class="td bold">
-                                            <div class="sc-Galmp erPQzq coin notranslate monospace">
-                                                <div class="amount">
-                                                    <span class="amount-str">{$userStatistics.ppe.ppe_wagered.toFixed(4)}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/if}
                                 {#if  $userStatistics.usdt.usdt_bets !== 0}
                                 <div class="tr">
                                     <div class="td fc bold">

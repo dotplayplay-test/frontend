@@ -47,7 +47,7 @@ const handleFulldetails = ((data)=>{
                     </thead>
                     <tbody>
                         
-                        {#if $handleAllPlayerStore !== 0}
+                        {#if $handleAllPlayerStore.length !== 0}
                         {#each $handleAllPlayerStore as player }
                         <tr>
                             <td>
@@ -58,12 +58,13 @@ const handleFulldetails = ((data)=>{
                                     <div class="name">{player.username}</div>
                                 </a>
                             </td>
-                            <td class="payout">{player.cashout}×</td>
-                            <td class={`ellipsis ${player.win_lose === "win" ? "is-win" : "is-lose" } `}>
+
+                            <td class="payout">{player.cashout.toFixed(2)}×</td>
+                            <td class={`ellipsis ${player.has_won ? "is-win" : "is-lose" } `}>
                                 <div class="sc-Galmp erPQzq coin notranslate has-sign">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-str">{player.profit}.<span class="suffix">00000000</span></span>
+                                        <span class="amount-str">{player.profit.toFixed(2)}<span class="suffix">00</span></span>
                                     </div>
                                 </div>
                             </td>

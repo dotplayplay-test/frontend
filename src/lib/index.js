@@ -14,10 +14,7 @@ export  const UserProfileEl = () => {
     const response = await fetch(
     "http://localhost:8000/api/profile",{
         method: "GET",
-        headers: {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${id.Token}`
-        },
+
     }
     );
     const json = await response.json();
@@ -27,7 +24,7 @@ export  const UserProfileEl = () => {
     }
     if (response.ok) {
         profileStore.set(json[0])
-          first_load.set(false)
+          console.log(json[0])
     }
 })
 

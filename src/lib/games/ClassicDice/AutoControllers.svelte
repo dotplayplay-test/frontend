@@ -36,18 +36,16 @@ const handleAutoStart = (()=>{
         is_Looping = true
         yu = setInterval(()=>{
             if(bet_number !== 0){
-              
                 if(bet_num_count === bet_number){
                     is_Looping = false
                     clearInterval(yu)       
-                }else{
+                }
+                else{
                     handleRollSubmit()
                     bet_num_count += 1
-                    console.log("bet number")
                 }
             }else{
                  handleRollSubmit()
-                 console.log("normal")
             }
         }, turbo)
     }else{
@@ -69,8 +67,8 @@ const handleRollSubmit = (()=>{
                 bet_token_name: $default_Wallet.coin_name ,
                 chance: $betPosition,
                 payout: $payout,
-                wining_amount:parseInt(bet_amount * $payout) - parseInt(bet_amount)
-            }
+                wining_amount: parseInt(bet_amount * $payout) - parseInt(bet_amount)
+            }``
             playdice(data)
         }
     }else{

@@ -4,10 +4,10 @@ import { handleAuthToken } from "$lib/store/routes"
 import { profileStore } from "$lib/store/profile"
 import { default_Wallet } from "$lib/store/coins"
 
-export const useLogin = () => {
+export const fbUseLogin = () => {
   let error;
   let isLoading;
-  const login = async (data) => {
+  const fblogin = async (data) => {
     isLoading = true
     error = null
     const response = await fetch(
@@ -34,10 +34,10 @@ export const useLogin = () => {
       handleAuthToken.set(json.Token)
       profileStore.set(json.profile)
       browser &&  window.history.replaceState(null, '', '/')
-      handleNestedRoute.set('/')
+      window.location.href = "/"
       default_Wallet.set(json.wallet)
       isLoading = false
     }
   };
-  return { login, isLoading, error };
+  return { fblogin };
 };

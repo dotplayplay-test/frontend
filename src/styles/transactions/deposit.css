@@ -77,7 +77,7 @@
     #deposit {
         border-radius: 20px;
         background-color: rgb(30, 32, 36);
-        padding: 0.725rem 0.7725rem 0px;
+        padding: 0 0.7725rem 0px;
         box-sizing: border-box;
         height: 350px;
         overflow-y: auto;

@@ -3,11 +3,11 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
 import Original from "./original.svelte";
-import { goto } from "$app/navigation"
-import { browser } from '$app/environment'
+import { goto } from "$app/navigation";
+import { browser } from '$app/environment';
 import {onMount} from "svelte";
 export let styls;
-export let routes
+export let routes;
 
 let showOriginals = false
 

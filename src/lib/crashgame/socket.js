@@ -178,10 +178,9 @@ export const handleCountdown = (()=>{
 
 
     socket.on("h_two", data=>{
-            h_two.set(data)
+         h_two.set(data)
     })
 
-    
     socket.on("h_four", data=>{
         h_four.set(data)
     })

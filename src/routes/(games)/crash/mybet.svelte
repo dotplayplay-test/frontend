@@ -6,7 +6,6 @@ import Layout from '$lib/crashgame/components/history/layout.svelte';
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
 import { profileStore , handleisLoggin} from "$lib/store/profile"
 
-
 let isBet = true
 let isHistory = false
 let isContent = false
@@ -93,16 +92,16 @@ $: {
                             </div>
                         </div>
                     </td>
-                    {#if mybet.win_lose === "win"}
+                    {#if mybet.has_won}
                     <td class="payout">{mybet.cashout}×</td>
                     {:else}
-                    <td class="payout">{mybet.cashout}</td>
+                    <td class="payout">{"0.00"}x</td>
                     {/if}
                     <td class="profitline is-lose">
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                {#if mybet.win_lose === "win"}
+                                {#if mybet.has_won}
                                 <span class="amount-str" style="color:#43b309">+{mybet.profit}<span class="suffix">00000000</span> </span>
                                 {:else}
                                 <span class="amount-str" style="color: rgb(237, 99, 0);">{mybet.bet_amount}<span class="suffix">00000000</span> </span>
@@ -249,6 +248,7 @@ $: {
 
 .iycaRo tr {
     cursor: pointer;
+    font-size: 14px;
 }
 
 .lmWKWf .game-tabs .tabs-navs {

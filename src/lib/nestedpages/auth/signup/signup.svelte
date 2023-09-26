@@ -9,6 +9,9 @@ import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
 import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
 import {handleSignIn } from "$lib/firebaseAuth/index"
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
+import { createEventDispatcher } from "svelte";
+import { error_msgS, is_loadingS } from "./store"
+const dispatch = createEventDispatcher()
 let isREf = false
 let email = ''
 let password = ''
@@ -32,22 +35,42 @@ const handleFacebookAuthi = (()=>{
 
 const handleSubmit = (() => {
     if (!email) {
-        console.log("email can't be empty")
+        error_msgS.set("email field can't be empty")
+        setInterval(()=>{
+            error_msgS.set("")
+        }, 4000)
     } else if (!password) {
-        console.log("Password is required")
+        error_msgS.set("Password is required")
+        setInterval(()=>{
+            error_msgS.set("")
+        }, 4000)
     } else {
         handleSignIn(email, password)
     }
 })
 
+const handleCancel = (()=>{
+    dispatch("close", 3)
+})
+
+
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
-    <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 535px; margin-top: -264px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+
+    {#if $error_msgS}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msgS}</div>
+        </div>
+    </div>
+ {/if}   
+
+    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
             <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
         </div>
-        <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
+        <button on:click={()=> handleCancel()} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
@@ -97,8 +120,25 @@ const handleSubmit = (() => {
                                         <span>Sign in</span>
                                     </div>
                                 </button>
-                                <button on:click={handleSubmit}  type="submit" class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big" disabled={!aggreement} >
-                                    <div class="button-inner">Sign up</div>
+                                <button disabled={!aggreement} on:click={handleSubmit}  type="submit" class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big" >
+                                    <div class="button-inner">
+                                        {#if $is_loadingS}
+                                        <div class="center">
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                            <div class="wave"></div>
+                                        </div>
+                                        {:else}
+                                            Sign Up
+                                        {/if}
+                                    </div>
                                 </button>
                             </div>
                         </div>
@@ -259,11 +299,6 @@ input[type="checkbox"]{
     border-radius: 1.25rem;
     overflow: hidden;
     /* background-color: rgb(23, 24, 27); */
-}
-
-.ipnwmW .dialog-head {
-    background-color: transparent;
-    box-shadow: none;
 }
 
 .dialog-head.has-close {

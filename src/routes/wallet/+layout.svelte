@@ -40,11 +40,12 @@ const handleOpenCoinSelect = (() => {
         checkIsOpen.set(true)
     }
 })
+
 </script>
 
 <div id="main">
     <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-        <div class="dialog" style="transform: scale(1) translateZ(0px); opacity: 1; width: 464px; height: 580px; margin-top: -290px; margin-left: -232px;">
+        <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
             {#if $checkIsOpen}
             <button on:click={()=> handleOpenCoinSelect()} class="dialog-back" style="opacity: 1; transform: none;">
                 <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />

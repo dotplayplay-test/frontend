@@ -14,7 +14,7 @@ import { SinglePlayerDetailsEl } from "../../store"
 <div class="dialog-body default-style " style="z-index: 2; transform: none;">
     <div class="sc-dkPtRN jScFby scroll-view sc-aaqME bGvuvq">
         <div class="sc-emDsmM Osnbt">
-            {#if $SinglePlayerDetailsEl.win_lose === "lose" }
+            {#if !$SinglePlayerDetailsEl.has_won}
                 <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
             {:else}
             <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">

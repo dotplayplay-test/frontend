@@ -8,7 +8,6 @@ import { UserProfileEl } from "$lib/index";
 const { Swap } = UseTransaction()
 import {
     ppdWallet,
-    ppeWallet,
     pplWallet,
     usdt_Wallet,
     default_Wallet
@@ -24,41 +23,43 @@ import {
 } from "$lib/store/swaps/index"
 
 const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
+    handlePPLwallet, handlePPDwallet } = UserProfileEl()
 
-storeSender.set($default_Wallet)
-storeReceiver.set($ppeWallet)
+
 
 $:{
+    storeSender.set($default_Wallet)
+    storeReceiver.set($pplWallet)
     onMount(async()=>{
         handleDefaultwallet()
         handleUSDTwallet()
         handlePPFwallet()
         handlePPLwallet()
-        handlePPEwallet()
         handlePPDwallet()
     })
 }
 
 $:{
-if ($storeSender.coin_name === "USDT") {
-    storeReceiver.set($ppeWallet)
-} else if ($storeSender.coin_name === "PPL") {
-    storeReceiver.set($ppdWallet)
-} else if ($storeSender.coin_name === "PPE") {
-    storeReceiver.set($usdt_Wallet)
-} else if ($storeSender.coin_name === "PPD") {
-    storeReceiver.set($usdt_Wallet)
-}
+    if ($storeSender.coin_name === "USDT") {
+        storeReceiver.set($pplWallet)
+    } else if ($storeSender.coin_name === "PPL") {
+        storeReceiver.set($ppdWallet)
+    } else if ($storeSender.coin_name === "PPE") {
+        storeReceiver.set($usdt_Wallet)
+    } else if ($storeSender.coin_name === "PPD") {
+        storeReceiver.set($usdt_Wallet)
+    }
 } 
 
-let coins = [{
+let coins
+
+$:{
+    coins =[{
         id: 1,
         coin_name: $usdt_Wallet.coin_name,
         coin_fname: $usdt_Wallet.coin_fname,
         coin_image: $usdt_Wallet.coin_image,
         balance: $usdt_Wallet.balance,
-        suffix: $usdt_Wallet.suffix,
         select: $IsSender ? ($usdt_Wallet.coin_name === $storeSender.coin_name) : ($usdt_Wallet.coin_name === $storeReceiver.coin_name)
     },
     {
@@ -66,29 +67,20 @@ let coins = [{
         coin_name: $ppdWallet.coin_name,
         coin_fname: $ppdWallet.coin_fname,
         coin_image: $ppdWallet.coin_image,
-        balance: $ppdWallet.balance,
-        suffix: $ppdWallet.suffix,
-        select: $IsSender ? ($ppdWallet.coin_name === $storeSender.coin_name) : ($ppdWallet.coin_name === $storeReceiver.coin_name)
-    },
-    {
-        id: 3,
-        coin_name: $ppeWallet.coin_name,
-        coin_fname: $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select: $IsSender ? ($ppeWallet.coin_name === $storeSender.coin_name) : ($ppeWallet.coin_name === $storeReceiver.coin_name)
+        balance: $ppdWallet.balance,       
+         select: $IsSender ? ($ppdWallet.coin_name === $storeSender.coin_name) : ($ppdWallet.coin_name === $storeReceiver.coin_name)
     },
     {
         id: 4,
         coin_name: $pplWallet.coin_name,
         coin_fname: $pplWallet.coin_fname,
         coin_image: $pplWallet.coin_image,
-        balance: $pplWallet.balance,
-        suffix: $pplWallet.suffix,
+        balance: $pplWallet.balance,        
         select: $IsSender ? ($pplWallet.coin_name === $storeSender.coin_name) : ($pplWallet.coin_name === $storeReceiver.coin_name)
     }
 ]
+}
+
 
 const handleSender = ((e) => {
     if ($checkIsOpen) {
@@ -120,9 +112,6 @@ let SwapLogic
 $:{ if(senderValue && $storeSender.coin_name === "PPD" && $storeReceiver.coin_name === "USDT" && senderValue < $storeSender.balance){
     SwapLogic = 1
     receiverVAlue = (senderValue * SwapLogic - swappingfee).toFixed(4)
-}else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_name === "PPE"  && senderValue < $storeSender.balance){
-    SwapLogic = 1
-    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
 }
 else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_name === "PPD"  && senderValue < $storeSender.balance){
     SwapLogic = 1
@@ -134,10 +123,6 @@ else if(senderValue && $storeSender.coin_name === "USDT" && $storeReceiver.coin_
 }
 else if(senderValue && $storeSender.coin_name === "PPD" && $storeReceiver.coin_name === "PPL"  && senderValue < $storeSender.balance){
     SwapLogic = 10
-    receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
-}
-else if(senderValue && $storeSender.coin_name === "PPE" && $storeReceiver.coin_name === "USDT"  && senderValue < $storeSender.balance){
-    SwapLogic = 1
     receiverVAlue = (senderValue *  SwapLogic - swappingfee).toFixed(4)
 }
 else if(senderValue && $storeSender.coin_name === "PPL" && $storeReceiver.coin_name === "USDT"  && senderValue < $storeSender.balance){
@@ -218,7 +203,6 @@ const handleSubmit = (()=>{
                 <div class="button-inner">Swap Now</div>
             </button>
             {/if}
-
         </div>
         {:else}
         <div class="sc-eLwHnm eCfWZW">
@@ -235,7 +219,7 @@ const handleSubmit = (()=>{
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span>
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">0000</span>
                                     </span>
                                 </div>
                             </div>
@@ -253,14 +237,14 @@ const handleSubmit = (()=>{
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span>
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">0000</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </button>
-                {:else if (!$IsSender && $storeSender.coin_name === "PPL"  && coin.coin_name !== "PPE" && coin.coin_name !== "PPL")}
+                {:else if (!$IsSender && $storeSender.coin_name === "PPL" && coin.coin_name !== "PPL")}
                 <button on:click={()=> handleSelectCoin(coin)}  class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal" }  `}>
                     <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
                         <div class="coin-wrap">
@@ -271,7 +255,7 @@ const handleSubmit = (()=>{
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span>
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">0000</span>
                                     </span>
                                 </div>
                             </div>
@@ -289,14 +273,14 @@ const handleSubmit = (()=>{
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span>
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">0000</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </button>
-                {:else if (!$IsSender && $storeSender.coin_name === "PPE"  && coin.coin_name !== "PPL" && coin.coin_name !== "PPD" && coin.coin_name !== "PPE")}
+                {:else if (!$IsSender && $storeSender.coin_name === "PPE"  && coin.coin_name !== "PPL" && coin.coin_name !== "PPD" )}
                 <button on:click={()=> handleSelectCoin(coin)}  class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal" }  `}>
                     <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
                         <div class="coin-wrap">
@@ -307,7 +291,7 @@ const handleSubmit = (()=>{
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span>
+                                    <span class="amount-str">{coin.balance}.<span class="suffix">0000</span>
                                     </span>
                                 </div>
                             </div>

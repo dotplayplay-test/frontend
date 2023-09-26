@@ -14,6 +14,8 @@ const handleAllbet = (()=>{
     }
 })
 
+// $:console.log($active_playerEl)
+
 </script>
 
 <div class="sc-kqnjJL iLyFYQ">
@@ -42,9 +44,8 @@ const handleAllbet = (()=>{
             <div class="sc-gWXbKe iUeetX table is-hover">
                 <table class="sc-gWXbKe iUeetX table is-hover">
                     <tbody>
-                        {#if $active_playerEl.length !== 0}
+                        {#if $active_playerEl.length !== 0 && $active_playerEl[0].game_type === "Classic"}
                         {#each $active_playerEl as player }
-                        {#if player.game_type === "Classic"}
                         <tr>
                             <td class="user">
                                 {#if player.hidden_from_public}
@@ -58,48 +59,46 @@ const handleAllbet = (()=>{
                                     <div class="name">{player.username}</div>
                                 </a>
                             {/if}
-
                             </td>
                             <td class="escape">
-                                {#if player.cashout === "betting"}
-                                    {#if player.win_lose === "lose" || $hasCrashed}
-                                        <span class="ttl opacity">{"0.00"}x</span>
+                                {#if player.cashout < 1 && player.user_status}
+                                    {#if !player.has_win && player.game_status}
+                                        <span class="ttl opacity">{"betting"}</span>
                                         {:else}
-                                        <span class="ttl opacity">{player.cashout}</span>
+                                        <span class="ttl opacity">betting</span>
                                     {/if}
                                 {:else}
-                                <span class="ttl opacity">{player.cashout}x</span>
+                                    <span class="ttl opacity">{player.cashout.toFixed(4)}x</span>
                                 {/if}
                             </td>
                             <td>
                                 <div class="sc-Galmp erPQzq coin notranslate">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span></span>
+                                    <span class="amount-st">{player.bet_amount.toFixed(4)}<span class="suffix">000</span></span>
                                 </div>
                             </div>
                             </td>
                             <td>
-                            {#if player.win_lose === "win"}
+                            {#if player.has_won}
                                 <div class="sc-Galmp erPQzq coin notranslate is-win">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-st">{player.profit}</span>
+                                        <span class="amount-st">{player.profit.toFixed(4)}</span>
                                     </div>
                                 </div>
-                                {:else if player.win_lose === "lose" || $hasCrashed}
+                                {:else if !player.has_won && !player.user_status}
                                 <div class="sc-Galmp erPQzq coin notranslate has-lose">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-st">{player.bet_amount}<span class="suffix">{player.suffix}</span></span>
+                                        <span class="amount-st">{player.bet_amount.toFixed(4)}<span class="suffix">000</span></span>
                                     </div>
                                 </div>
                                 {:else}
-                                <span class="ttl opacity">{player.profit}</span>
+                                <span class="ttl opacity">betting</span>
                             {/if}
                             </td>
                         </tr>
-                        {/if}
                         {/each}
                         {:else}
                             <div class="sc-eCImPb cuPxwd empty ">

@@ -1,26 +1,71 @@
 <script>
-import { browser } from '$app/environment'
-import { updateProfile } from "$lib/hook/updateProfile"
-const {useUpdateProfile} = updateProfile()
-  let last_name = ''
-  let first_name = ''
-  let day = 1
-  let month = 1
-  let year = 2000
-  const id = browser && JSON.parse(localStorage.getItem('user'))
+import axios from "axios";
+import { profileStore } from "$lib/store/profile";
+import { routes} from "$lib/store/routes";
+import { handleAuthToken } from "$lib/store/routes";
+import { error_msg } from "./store";
+import { handleSepProfile } from "$lib/profleAuth/store"
+let last_name = ''
+let first_name = ''
+let day = 1
+let month = 1
+let year = 2000
 
-const handleSubmit = (()=>{
+let is_loading = false
+const handleSubmit = (async()=>{
+    is_loading = true
     if(!last_name || !first_name){
-        console.log("feild can't be empty")
+        error_msg.set("field can't be empty")
+        setTimeout(()=>{
+            error_msg.set("")
+        },4000)
+        is_loading = false
     }else{
-        let date = day+"-"+month+"-"+year
-        let data = { firstname:first_name, lastname:last_name , dob:date , email : id.email}
-        useUpdateProfile(data)
+        if($routes.profile){
+            let data = {
+                born: day+"-"+month+"-"+year,
+                email: $profileStore.email,
+                firstname: first_name,
+                hidden_from_public: $profileStore.hidden_from_public,
+                hide_profile: $profileStore.hide_profile,
+                joined_at: $profileStore.joined_at,
+                lastname: last_name,
+                profile_image: $profileStore.profile_image,
+                refuse_friends_request: $profileStore.refuse_friends_request,
+                refuse_tips:$profileStore.refuse_tips,
+                user_id: $profileStore.user_id,
+                username:  $profileStore.username,
+                vip_level: $profileStore.vip_level
+            }
+              await  axios.post("http://localhost:8000/api/profile/update-profile", {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          },
+          }).then((res)=>{
+            profileStore.set(data)
+            handleSepProfile.set(false)
+            is_loading = false
+          }).catch((err)=>{
+            is_loading = false
+            console.log(err)
+          })
+        }
     }
 })
 
 </script>
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
+    {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+            </div>
+        </div>
+    {/if}   
+
     <div class="sc-dlVxhl gvBCkE" style="transform: scale(1); opacity: 1;">
         <div class="pop sc-hKumaY hJhIys" id="">
             <div class="pop-title">One more step to get the FREE SPIN!</div>
@@ -59,8 +104,8 @@ const handleSubmit = (()=>{
                         </div>
                     </div>
                 </div>
-                <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal submit-btn">
-                    <div class="button-inner">Confirm</div>
+                <button disabled={is_loading} on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal submit-btn">
+                    <div class="button-inner">{!is_loading ? "Confirm" : "Loading...."}</div>
                 </button>
             </div>
     </div>

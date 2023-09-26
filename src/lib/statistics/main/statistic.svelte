@@ -193,22 +193,6 @@ const handleDropdown = ((e)=>{
                                 </div>
                             </div>
                             {/if}
-                            {#if  $default_statistics.ppe.ppe_bets !== 0}
-                            <div class="tr">
-                                <div class="td fc bold">
-                                    <img class="coin-icon" alt="" src={$default_statistics.ppe.ppe_img}>PPE
-                                </div>
-                                    <div class="td">{$default_statistics.ppe.ppd_win}</div>
-                                    <div class="td">{$default_statistics.ppe.ppd_bets}</div>
-                                    <div class="td bold">
-                                        <div class="sc-Galmp erPQzq coin notranslate monospace">
-                                            <div class="amount">
-                                                <span class="amount-str">{$default_statistics.ppe.ppe_wagered.toFixed(4)}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/if}
                             {#if  $default_statistics.usdt.usdt_bets !== 0}
                             <div class="tr">
                                 <div class="td fc bold">

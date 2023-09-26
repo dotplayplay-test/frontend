@@ -6,9 +6,9 @@ const dispatch = createEventDispatcher()
 import { updateCoins } from "./updateCoin"
 import { UserProfileEl } from "../../index";
 const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
+    handlePPLwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
-import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import { ppdWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 import {
   browser
 } from '$app/environment'
@@ -18,7 +18,6 @@ $:{
         handleUSDTwallet()
         handlePPFwallet()
         handlePPLwallet()
-        handlePPEwallet()
         handlePPDwallet()
     })
 }
@@ -38,7 +37,6 @@ $:{
         coin_fname: $usdt_Wallet.coin_fname,
         coin_image: $usdt_Wallet.coin_image,
         balance: $usdt_Wallet.balance,
-        suffix: $usdt_Wallet.suffix,
         select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
     },
     {
@@ -47,17 +45,7 @@ $:{
         coin_fname:  $ppdWallet.coin_fname,
         coin_image: $ppdWallet.coin_image,
         balance: $ppdWallet.balance,
-        suffix: $ppdWallet.suffix,
         select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 3,
-        coin_name:  $ppeWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select: ($ppeWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 4,
@@ -65,7 +53,6 @@ $:{
         coin_fname:  $pplWallet.coin_fname,
         coin_image:  $pplWallet.coin_image,
         balance:  $pplWallet.balance,
-        suffix: $pplWallet.suffix,
         select: ($pplWallet.coin_name === $default_Wallet.coin_name)
     },
     {
@@ -74,7 +61,6 @@ $:{
         coin_fname:  $ppfWallet.coin_fname,
         coin_image: $ppfWallet.coin_image,
         balance:  $ppfWallet.balance,
-        suffix: $ppfWallet.suffix,
         select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
     },
 ]
@@ -115,7 +101,7 @@ const handleSelectCoin = ((e) => {
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
+                                    <span class="amount-str">{coin.balance.toFixed(4)}<span class="suffix">00</span></span>
                                 </div>
                             </div>
                         </div>

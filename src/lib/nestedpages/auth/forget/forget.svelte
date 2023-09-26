@@ -2,17 +2,28 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+import { createEventDispatcher } from 'svelte';
+const dispatch = createEventDispatcher()
+
+const handleGoBack = (()=>{
+    dispatch("close", 9)
+})
+
+const handleCancel = (()=>{
+    dispatch("cancel", 9)
+})
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-    <div class="dialog" style="opacity: 1; width: 464px; height: 535px; margin-top: -264px; margin-left: -232px; transform: scale(1) translateZ(0px);">
-        <div class="dialog-back" style="opacity: 1; transform: none;">
+    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+        <button on:click={handleGoBack} class="dialog-back" style="opacity: 1; transform: none;">
             <Icon src={RiSystemArrowLeftSLine}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
-        </div>
+        </button>
         <div class="dialog-head has-back has-close">
             <div class="dialog-title">Reset Password</div>
         </div>
-        <button class="sc-ieecCq fLASqZ close-icon dialog-close">
+        <button on:click={()=> handleGoBack() } class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body default-style" style="z-index: 2; transform: none;">

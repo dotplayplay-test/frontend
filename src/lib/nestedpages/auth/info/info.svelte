@@ -1,20 +1,15 @@
 <script>
-import {
-    goto
-} from "$app/navigation"
-import {
-    browser
-} from '$app/environment'
+import { browser } from '$app/environment';
+import { handleNestedRoute } from "$lib/store/nested_routes";
+import { error_msg } from "./store";
+import { handleSepProfile } from "$lib/profleAuth/store"
+import axios from "axios";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import { updateUser } from "$lib/hook/updateUser"
-const {useUpdate} = updateUser()
-import {
-    handleGoogleAuth,
-    handleFacebookAuth
-} from "$lib/firebaseAuth/index"
-import { routes } from "$lib/store/routes"
-
+import { profileStore } from "$lib/store/profile";
+import { routes} from "$lib/store/routes";
+import { handleAuthToken } from "$lib/store/routes";
+import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
 
 let img1 = true
 let img2 = false
@@ -24,17 +19,6 @@ let img5 = false
 let img6 = false
 let profile_img = "https://img2.nanogames.io/avatar/head1.png"
 
-const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-function generateString(length) {
-    let result = ' ';
-    const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-let username = generateString(10)
-
 const googleAuth = (() => {
     handleGoogleAuth()
 })
@@ -42,6 +26,7 @@ const googleAuth = (() => {
 const handleFacebookAuthi = (() => {
     handleFacebookAuth()
 })
+
 const handleImgeSelect = ((e)=>{
     if(e === 1){
         img1 = true
@@ -98,29 +83,76 @@ const handleImgeSelect = ((e)=>{
     }
 })
 
-
-const id = browser && JSON.parse(localStorage.getItem('user'))
-const handleSubmit = (() => {
+let username = $profileStore.username
+let is_loading = false
+const handleSubmit = (async() => {
     if (!username) {
-        console.log("username can't be empty")
+        error_msg.set("username can't be empty")
+        setTimeout(()=>{
+            error_msg.set("")
+        },4000)
     } else {
         if($routes.profile){
-            let data = {username, profile_image:profile_img, user_id : $routes.profile }
-            useUpdate(data)
+            let data = {
+                born: $profileStore.born,
+                email: $profileStore.email,
+                firstname: $profileStore.firstname,
+                hidden_from_public: $profileStore.hidden_from_public,
+                hide_profile: $profileStore.hide_profile,
+                joined_at: $profileStore.joined_at,
+                lastname: $profileStore.lastname,
+                profile_image: profile_img,
+                refuse_friends_request: $profileStore.refuse_friends_request,
+                refuse_tips:$profileStore.refuse_tips,
+                user_id: $profileStore.user_id,
+                username: username,
+                vip_level: $profileStore.vip_level
+            }
+              await  axios.post("http://localhost:8000/api/profile/update-user", {
+            data
+          },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          },
+          }).then((res)=>{
+            profileStore.set(data)
+            browser &&   window.history.replaceState(null, '', $routes.route);
+            handleNestedRoute.set("")
+            window.location.href = $routes.route
+          })
         }else{
-            alert("something went wrong")
+            window.location.href = $routes.route
+            error_msg.set("something went wrong")
+            setTimeout(()=>{
+                error_msg.set("")
+            },4000)
         }
-
     }
 })
+
+const handleClose = (()=>{
+    window.location.href = $routes.route
+    browser &&   window.history.replaceState(null, '', $routes.route);
+    handleNestedRoute.set("")
+})
+
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
-    <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 585px; margin-top: -294px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+
+    {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+            </div>
+        </div>
+    {/if}   
+    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
             <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
         </div>
-        <button on:click={()=>goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
+        <button on:click={()=> handleClose()} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
@@ -161,8 +193,12 @@ const handleSubmit = (() => {
                                 </button>
                             </div>
                         </div>
-                        <button on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                        <button disabled={is_loading} on:click={handleSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                            {#if is_loading}
+                            <div class="button-inner">Loading....</div>
+                            {:else}
                             <div class="button-inner">Let’s Start</div>
+                            {/if}
                         </button>
                     </div>
                 </div>
@@ -306,11 +342,6 @@ h2 {
     border-radius: 1.25rem;
     overflow: hidden;
     /* background-color: rgb(23, 24, 27); */
-}
-
-.ipnwmW .dialog-head {
-    background-color: transparent;
-    box-shadow: none;
 }
 
 .dialog-head.has-close {

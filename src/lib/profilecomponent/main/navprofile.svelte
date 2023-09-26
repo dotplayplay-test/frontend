@@ -55,7 +55,7 @@ const handleStatistics = (()=>{
            </div>
        </div>
        <div class="link-info">
-           <button on:click={()=> goto("/user/profile/23687")} class="link-item">
+           <button on:click={()=> goto(`/user/profile/${$profileStore.user_id}`)} class="link-item">
                <div class="hover">
                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                        <use xlink:href="#icon_UserProfile"></use>

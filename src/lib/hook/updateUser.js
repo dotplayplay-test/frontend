@@ -1,15 +1,10 @@
 
 export const updateUser = () => {
     const useUpdate = async (data) => {
-      let request = {
-        username: data.username,
-         profile_image:data.profile_image,
-          email :data.user_id.email
-      }
       const response = await fetch(
         "http://localhost:8000/api/profile/update-user",{
           method: "POST",
-          body: JSON.stringify(request),
+          body: JSON.stringify(data),
           headers: {
             "Content-type": "application/json",
             'Authorization': `Bearer ${data.user_id.Token}`
@@ -18,11 +13,10 @@ export const updateUser = () => {
       );
       const json = await response.json();
       if (!response.ok) {
-          error = json.error
-          console.log(error)
+          console.log(response)
       }
       if(response.ok){
-        window.location.href = '/'
+        json
       }
     };
     return { useUpdate };

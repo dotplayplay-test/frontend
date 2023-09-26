@@ -3,43 +3,12 @@ import "../styles/home/index.css"
 import "../styles/home/indexmobile.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import Biggestwin from "$lib/homecomponents/biggestwin.svelte";
-import ProfileAuth from "../lib/profleAuth/index.svelte";
+
 import { register } from 'swiper/element/bundle';
 import BsQuestionCircle from "svelte-icons-pack/bs/BsQuestionCircle";
 import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';
 import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
-import {  onMount } from "svelte";
-import { browser } from '$app/environment'
-import { db} from "$lib/firebaseAuth/index"
-import { doc, getDoc } from "firebase/firestore";
-
-
-
-
-// const tronWeb = new tronWeb({
-// fullHost: 'https://api.shasta.trongrid.io',
-// headers: { 
-//     'TRON-PRO-API-KEY': 'b71a8513-ff79-43ba-a72b-be24f5918e76'
-//     },
-// privateKey: '462e61b827e9af2c5d28fcd09991bdca2ae75d1ff04f32273fa4b0d3bf0dfc5c'
-// });
-    
-
-const id = browser && JSON.parse(localStorage.getItem('user'))
-let profile
-$:{
-  id &&  onMount(async()=>{
-        const docRef = doc(db, "profile", id.email);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            profile = docSnap.data()
-        } else {
-            console.log("No such document!");
-        }
-    })
-}
-
 
 
 register();
@@ -47,9 +16,7 @@ register();
 
 
 <div id="main" class="sc-lhMiDA ePAxUv">
-    {#if profile && profile.born === ''}
-        <ProfileAuth />
-    {/if}
+ 
     
     <div id="home" class="sc-jwQYvw eRdxAb">
         <div class="sc-bLdqUH bPsBUR banner">

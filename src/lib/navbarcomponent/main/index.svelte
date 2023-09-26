@@ -5,34 +5,46 @@ import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDow
 import BsChatLeftDotsFill from "svelte-icons-pack/bs/BsChatLeftDotsFill";
 import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
 import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
-import Navprofile from "../../profilecomponent/main/navprofile.svelte"
-import Coins from "../../profilecomponent/main/coins.svelte"
-import {
-    createEventDispatcher
-} from 'svelte'
+import Navprofile from "../../profilecomponent/main/navprofile.svelte";
+import Coins from "../../profilecomponent/main/coins.svelte";
+import axios from "axios";
+import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
+import { handleAuthToken } from "$lib/store/routes";
+import { profileStore, handleisLoading, handleisLoggin } from "$lib/store/profile";
+import { onMount} from "svelte";
+import {  goto } from "$app/navigation";
+import { default_Wallet } from "$lib/store/coins";
 
-import {
-    UserProfileEl
-} from "$lib/index";
-import {
-    profileStore, handleisLoading, handleisLoggin
-} from "$lib/store/profile";
-import {
-    onMount
-} from "svelte";
-const {
-    profileEl,
-    handleDefaultwallet
-} = UserProfileEl()
 
-import {
-    goto
-} from "$app/navigation"
+$:{
+ onMount(async()=>{
+   await axios.get("http://localhost:8000/api/profile",{
+    headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        },
+   })
+   .then((res)=>{
+    profileStore.set(res.data[0])
+   })
+})
+}
 
-import {
-    default_Wallet
-} from "$lib/store/coins"
+
+$:{
+ onMount(async()=>{
+   await axios.get("http://localhost:8000/api/wallet/default-wallets",{
+    headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        },
+   })
+   .then((res)=>{
+    default_Wallet.set(res.data[0])
+   })
+})
+}
 
 let isCoinDrop = false
 const handleCoinsDrop = ((e) => {
@@ -43,17 +55,12 @@ const handleCoinsDrop = ((e) => {
     }
 })
 
-$: {
-    $handleisLoggin && onMount(async () => {
-        profileEl()
-        handleDefaultwallet()
-    })
-}
 
 let userProfile = false
 const handleUserProfile = (() => {
 userProfile = !userProfile
 })
+
 
 const handleCoinSelect = ((e) => {
     default_Wallet.set(e.detail)
@@ -76,7 +83,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{$default_Wallet.balance}.<span class="suffix">{$default_Wallet.suffix}</span></span>
+                        <span class="amount-str">{$default_Wallet.balance.toLocaleString()}.<span class="suffix">0000</span></span>
                     </div>
                 </div>
             </button>
