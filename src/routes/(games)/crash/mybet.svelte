@@ -5,7 +5,7 @@ import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
 import { profileStore , handleisLoggin} from "$lib/store/profile"
-
+// import {  } from "date-fns"
 let isBet = true
 let isHistory = false
 let isContent = false

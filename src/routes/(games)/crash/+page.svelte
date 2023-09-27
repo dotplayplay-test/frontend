@@ -41,6 +41,7 @@ const handleNavigation = ((w) => {
     margin-top: 4rem;
 }
 
+
 .jDDdCf.game-style0, .jDDdCf.game-style1, .jDDdCf.game-style-iframe {
     max-width: 1368px;
     margin: 0px auto;

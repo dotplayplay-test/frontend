@@ -45,7 +45,7 @@ const handleAutoStart = (()=>{
                     bet_num_count += 1
                 }
             }else{
-                 handleRollSubmit()
+                handleRollSubmit()
             }
         }, turbo)
     }else{
@@ -53,11 +53,11 @@ const handleAutoStart = (()=>{
         clearInterval(yu)
     }
 })
-
+let error_msg = ''
 const handleRollSubmit = (()=>{
     if($handleisLoggin){
         if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
-        alert("insufficient balance")
+            error_msg = ("insufficient balance")
         }else{
             const data = {
                 username: $profileStore.username,
@@ -68,11 +68,11 @@ const handleRollSubmit = (()=>{
                 chance: $betPosition,
                 payout: $payout,
                 wining_amount: parseInt(bet_amount * $payout) - parseInt(bet_amount)
-            }``
+            }
             playdice(data)
         }
     }else{
-        goto('/login')
+        error_msg = "You are not Logged in"
     }
 })
 
@@ -80,6 +80,16 @@ const handleRollSubmit = (()=>{
 </script>
 
 <div class="game-control-panel">
+
+    {#if error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{error_msg}</div>
+        </div>
+    </div>
+ {/if}   
+
+
     <div class="sc-gFSQbh hRGEiw">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">

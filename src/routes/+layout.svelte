@@ -7,6 +7,7 @@ $: routes.set(data)
 import { handleSepProfile } from "$lib/profleAuth/store"
 import {handleCountdown} from "$lib/crashgame/socket"
 handleCountdown()
+import { error_msg} from "$lib/crashgame/store"
 import Navbar from "$lib/navbar.svelte";
 import ProfileAuth from "$lib/profleAuth/index.svelte";
 import { profileStore } from "$lib/store/profile"
@@ -171,4 +172,3 @@ const handleMenu = () => {
 
     {/if}
 </div>
-

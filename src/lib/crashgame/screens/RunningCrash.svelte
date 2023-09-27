@@ -46,8 +46,13 @@
    .bhuSSkjs div{
     font-size: 45px;
     margin-bottom: 100px;
+    word-wrap: normal;
+    letter-spacing: 0.5rem;
     font-weight: bold;
     color: #fff;
+    width: 120px;
+    white-space: 2;
+    font-stretch: expanded;
    }
 
 

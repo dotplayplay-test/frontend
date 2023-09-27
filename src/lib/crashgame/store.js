@@ -215,3 +215,7 @@ export let h_Sevenhundred = writable(h_SevenhundredEl)
 
 let h_onethousandEl = 0
 export let h_onethousand = writable(h_onethousandEl)
+
+
+let error_msgEl = ''
+export let error_msg = writable(error_msgEl)

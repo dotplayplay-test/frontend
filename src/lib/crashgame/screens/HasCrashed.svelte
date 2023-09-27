@@ -25,6 +25,16 @@
     margin-bottom: 100px;
     font-weight: bold;
 }
+.word.crash-point{
+    font-size: 45px;
+    margin-bottom: 100px;
+    word-wrap: normal;
+    letter-spacing: 0.5rem;
+    font-weight: bold;
+    width: 120px;
+    white-space: 2;
+    font-stretch: expanded;
+}
 .word.hascrashed{
     position: absolute;
     font-size: 12px;

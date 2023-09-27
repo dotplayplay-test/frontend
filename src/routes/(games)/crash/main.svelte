@@ -18,7 +18,7 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 const { crashBet, isLoading } = useCrashBet()
 const { cashout } = useCrashCashout()
 export let isClassic
-
+import { error_msg  } from "$lib/crashgame/store"
 
 import {
     browser
@@ -106,7 +106,10 @@ const ranging = (()=>{
 const handleCrashBet = (()=>{
     if($handleisLoggin){
         if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
-        alert("insufficient balance")
+            error_msg.set("insufficient balance")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
         }else{
             const data = {
             username: $profileStore.username,
@@ -114,12 +117,15 @@ const handleCrashBet = (()=>{
             game_id: $game_id,
             bet_amount, bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
-            chance: "-"
-            }
+            chance: 0
+        }
             crashBet(data)
         }
     }else{
-        goto('/login')
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },4000)
     }
 })
 
@@ -139,7 +145,10 @@ const handleCashout = (()=>{
     winningEl.set(win)
     cashout(data)
     }else{
-        goto('/login')
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },4000)
     }
 })
 
@@ -160,7 +169,18 @@ const handleCashout = (()=>{
         <Trend on:close={handleTrends} />
     {/if}
 
+
+ {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+        </div>
+    </div>
+ {/if}   
+
+
     <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
+
         <div class="sc-iwjdpV ikWSlH radio game-control-switch">
             <button on:click={()=>handleAdvancebg(1)} class={`${!isAdvance &&  "is-active"}`} >
                 <div class="label">Manual</div>
@@ -190,7 +210,7 @@ const handleCashout = (()=>{
                 </button>
             {/if}
             {#if $loadingCrash && !id}
-                <button on:click={()=>goto("/login")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                <button on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
                         <div>Bet</div>
                     </div>
@@ -306,9 +326,6 @@ const handleCashout = (()=>{
        <Trendball />
         {/if}
 
-     
-
-
     </div>
 
     <Crashview on:closeTrend={handleTrends}  />
@@ -327,6 +344,7 @@ const handleCashout = (()=>{
 </div>
 
 <style>
+ 
  .fix-layer {
     position: absolute;
     right: 0px;

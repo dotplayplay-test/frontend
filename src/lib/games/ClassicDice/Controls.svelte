@@ -3,7 +3,6 @@
 import ManualControllers from "./ManualControllers.svelte";
 
     let is_manual = true
-
     const hanleManualControls = ((e)=>{
         if(e === 1){
             is_manual = true
@@ -11,8 +10,6 @@ import ManualControllers from "./ManualControllers.svelte";
             is_manual = false
         }
     })
-
-  
 </script>
 
 <div id="ClassicDice-control-0" class="sc-hLVXRe cYiOHZ game-control style0">
