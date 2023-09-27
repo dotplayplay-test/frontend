@@ -8,6 +8,7 @@ import { payout, isbetLoadingBtn, betPosition } from "./store";
 import { DiceHook } from "../../games/ClassicDice/hook/index"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { goto } from "$app/navigation";
+import { error_msg } from "./store/index"
 const { playdice } = DiceHook()
 
 let max_profit_tips = false
@@ -29,7 +30,10 @@ $:{
 const handleRollSubmit = (()=>{
     if($handleisLoggin){
         if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
-        alert("insufficient balance")
+        error_msg.set("insufficient balance")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
         }else{
             const data = {
                 username: $profileStore.username,
@@ -44,13 +48,24 @@ const handleRollSubmit = (()=>{
             playdice(data)
         }
     }else{
-        goto('/login')
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },4000)
     }
 })
 
 </script>
 
 <div class="game-control-panel">
+    {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+        </div>
+    </div>
+ {/if}   
+
     <div class="sc-juEPzu lgTgT">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">

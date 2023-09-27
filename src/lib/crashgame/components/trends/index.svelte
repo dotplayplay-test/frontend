@@ -344,9 +344,9 @@ const handleClose = (() => {
     height: 70%;
     border-radius: 50%;
 }
-.grKOWb.type-3::after {
+/* .grKOWb.type-3::after {
     background-color: rgb(246, 199, 34);
-}
+} */
 .grKOWb.type-2::after {
     background-color: rgb(67, 179, 9);
 }

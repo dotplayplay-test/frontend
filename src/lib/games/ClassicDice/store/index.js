@@ -20,3 +20,6 @@ export let Singledice_history = writable(Singledice_historyEl)
 
 let dicePlayers = []
 export let dicegameplays = writable(dicePlayers)
+
+let error = ''
+export let error_msg = writable(error) 

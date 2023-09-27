@@ -6,6 +6,7 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
+import { error_msg } from "../ClassicDice/store/index"
 import { DiceHook } from "../../games/ClassicDice/hook/index"
 const { playdice } = DiceHook()
 
@@ -53,11 +54,16 @@ const handleAutoStart = (()=>{
         clearInterval(yu)
     }
 })
-let error_msg = ''
+
 const handleRollSubmit = (()=>{
     if($handleisLoggin){
         if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
-            error_msg = ("insufficient balance")
+            error_msg.set("insufficient balance")
+            is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set("")
+            },4000)
         }else{
             const data = {
                 username: $profileStore.username,
@@ -72,7 +78,12 @@ const handleRollSubmit = (()=>{
             playdice(data)
         }
     }else{
-        error_msg = "You are not Logged in"
+        error_msg.set("You are not Logged in")
+        clearInterval(yu)
+        is_Looping = false
+        setTimeout(()=>{
+            error_msg.set("")
+        },4000)
     }
 })
 
@@ -81,10 +92,10 @@ const handleRollSubmit = (()=>{
 
 <div class="game-control-panel">
 
-    {#if error_msg}
+    {#if $error_msg}
     <div class="error-message">
         <div class="hTTvsjh"> 
-            <div>{error_msg}</div>
+            <div>{$error_msg}</div>
         </div>
     </div>
  {/if}   
@@ -115,7 +126,9 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="number" bind:value={bet_amount}>
-                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {#if $handleisLoggin}
+                   <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {/if}
                 <div class="sc-kDTinF bswIvI button-group">
                     <button on:click={()=> bet_amount /= 2 }>/2</button>
                     <button on:click={()=> bet_amount *= 2 }>x2</button>
@@ -173,7 +186,9 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="number" bind:value={stopOnwin}>
+                {#if $handleisLoggin}
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+             {/if}
             </div>
         </div>
 
@@ -197,7 +212,9 @@ const handleRollSubmit = (()=>{
             </div>
             <div class="input-control">
                 <input type="number" bind:value={stopOnlose}>
-                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {#if $handleisLoggin}
+                   <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {/if}
             </div>
         </div>
 

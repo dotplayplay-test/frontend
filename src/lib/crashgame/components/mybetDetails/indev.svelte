@@ -50,7 +50,7 @@ let handleSharedBet = (() => {
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
                 <div class="sc-dkPtRN jScFby scroll-view sc-aaqME bGvuvq">
                     <div class="sc-emDsmM Osnbt">
-                        {#if $mybetElDetails.win_lose === "lose" }
+                        {#if !$mybetElDetails.has_won}
                             <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
                         {:else}
                         <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">
@@ -83,7 +83,7 @@ let handleSharedBet = (() => {
                                     </span>
                                     Payout
                                 </div>
-                                {#if $mybetElDetails.win_lose === "lose" }
+                                {#if !$mybetElDetails.has_won}
                                  <div class="number flex-center">0 x</div>
                                   {:else}      
                                     <div class="number flex-center">{$mybetElDetails.cashout} x</div>
@@ -96,7 +96,7 @@ let handleSharedBet = (() => {
                                     </span>
                                     Profit
                                 </div>
-                                {#if $mybetElDetails.win_lose === "lose" }
+                                {#if !$mybetElDetails.has_won}
                                 <div class="number flex-center">0 x</div>
                                  {:else}      
                                    <div class="number flex-center">{$mybetElDetails.profit} x</div>

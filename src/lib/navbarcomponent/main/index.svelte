@@ -83,7 +83,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{$default_Wallet.balance.toLocaleString()}.<span class="suffix">0000</span></span>
+                        <span class="amount-str">{$default_Wallet.balance.toFixed(2)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>
