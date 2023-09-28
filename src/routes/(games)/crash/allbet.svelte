@@ -66,14 +66,14 @@ const handleAllbet = (()=>{
                                         <span class="ttl opacity">betting</span>
                                     {/if}
                                 {:else}
-                                    <span class="ttl opacity">{player.cashout.toFixed(4)}x</span>
+                                    <span class="ttl opacity">{player.cashout}x</span>
                                 {/if}
                             </td>
                             <td>
                                 <div class="sc-Galmp erPQzq coin notranslate">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount.toFixed(4)}<span class="suffix">000</span></span>
+                                    <span class="amount-st">{player.bet_amount}<span class="suffix">000</span></span>
                                 </div>
                             </div>
                             </td>
@@ -82,14 +82,14 @@ const handleAllbet = (()=>{
                                 <div class="sc-Galmp erPQzq coin notranslate is-win">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-st">{player.profit.toFixed(4)}</span>
+                                        <span class="amount-st">{player.profit}</span>
                                     </div>
                                 </div>
                                 {:else if !player.has_won && !player.user_status}
                                 <div class="sc-Galmp erPQzq coin notranslate has-lose">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-st">{player.bet_amount.toFixed(4)}<span class="suffix">000</span></span>
+                                        <span class="amount-st">{player.bet_amount}<span class="suffix">000</span></span>
                                     </div>
                                 </div>
                                 {:else}
