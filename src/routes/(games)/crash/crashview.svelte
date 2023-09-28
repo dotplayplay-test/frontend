@@ -35,7 +35,7 @@ const handleAllbet = ((e)=>{
             <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
                 {#if $crash_historyEl.length !== 0}
                 {#each $crash_historyEl as his (his.id)}
-                    <button on:click={()=>handleAllbet(his)} class={`game-item ${parseInt(his.crash_point) >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
+                    <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
                         <div class="issus">{his.game_id}</div>
                         <div>{his.crash_point}x</div>
                     </button>

@@ -101,7 +101,7 @@ const handleSelectCoin = ((e) => {
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance.toFixed(4)}<span class="suffix">00</span></span>
+                                    <span class="amount-str">{coin.balance}<span class="suffix">00</span></span>
                                 </div>
                             </div>
                         </div>
