@@ -4,42 +4,78 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { profileStore, handleisLoggin } from "$lib/store/profile"
-import {default_Wallet } from "$lib/store/coins"
-import { game_id} from "$lib/crashgame/store"
+import axios from "axios"
+import {default_Wallet } from "$lib/store/coins";
+import { handleAuthToken } from "$lib/store/routes";
+import { game_id } from "$lib/crashgame/store"
 import {useRedTrendball} from "../../trendballHook"
 const { redTrendball } = useRedTrendball()
-import { loadingCrash , handle_IsRed, handle_IsGreen , handle_IsMoon} from "../../store"
-
-
+import { loadingCrash , handle_IsRed, handle_IsGreen, handle_IsMoon, handle_IsRedwinners} from "../../store"
+import { error_msg  } from "$lib/crashgame/store";
 let redballValue = 10.00
 
+let  is_loading = false
 const handleRed = (()=>{
+    is_loading = true
+    let bet_amount = redballValue
     if($handleisLoggin){
-        if(redballValue > $default_Wallet.balance ){
-        alert("Insuffient funds")
+        if(bet_amount > $default_Wallet.balance ){
+            error_msg.set("insufficient balance")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        is_loading = false
     }else{
         const data = {
-        username: $profileStore.username,
-        user_img: $profileStore.profile_image,
-        game_id: $game_id,
-        bet_amount: redballValue, 
-        bet_token_img: $default_Wallet.coin_image, 
-        bet_token_name: $default_Wallet.coin_name,
-        chance: "50.51%",
-        game_type:"Red"
-    }
-    redTrendball(data)
-    handle_IsRed.set(true)
+            username: $profileStore.username,
+            user_img: $profileStore.profile_image,
+            game_id: $game_id,
+            bet_amount: redballValue, 
+            bet_token_img: $default_Wallet.coin_image, 
+            bet_token_name: $default_Wallet.coin_name,
+            chance: "50.51%",
+            game_type:"Red"
+        }
+        axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
+        .then((response)=>{
+        let result = response.data
+         let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
+        }
+        is_loading = false
+        handle_IsRed.set(true)
+        default_Wallet.set(wllet)
+    })
     }
     }else{
-        goto("/login")
+        error_msg.set("You are not logged in")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        is_loading = false
     }
 })
 
+
+let load_green = false
 const handleGreen = ()=>{
+    load_green = true
     if($handleisLoggin){
         if(redballValue > $default_Wallet.balance ){
-        alert("Insuffient funds")
+            error_msg.set("insufficient balance")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        load_green = false
     }else{
         const data = {
         username: $profileStore.username,
@@ -51,14 +87,35 @@ const handleGreen = ()=>{
         chance: "49.50%",
         game_type:"Green"
     }
-    redTrendball(data)
-    handle_IsGreen.set(true)
+    axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
+        .then((response)=>{
+        let result = response.data
+        let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
+        }
+        default_Wallet.set(wllet)
+        load_green = false
+        handle_IsGreen.set(true)
+    })
     }
     }else{
-        goto("/login")
+        error_msg.set("You are not logged in")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        load_green = false
     }
-
 }
+
 
 const handleYellow = (()=>{
     if($handleisLoggin){
@@ -83,6 +140,7 @@ const handleYellow = (()=>{
     }
 })
 
+
 const handleHalf = ((e)=>{
     if(redballValue > 0){
         if(e === 1){
@@ -94,10 +152,61 @@ const handleHalf = ((e)=>{
 })
 
 
+let isLoadBet = false
+let loop;
+const handleLoadBet = (()=>{
+    if(!isLoadBet){
+        loop = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleRed()
+            },500)
+            clearInterval(loop)
+            isLoadBet = false
+        }else{
+            isLoadBet = true
+        }
+    },10)
+    }else if (isLoadBet){
+        isLoadBet = false
+        clearInterval(loop)
+    }
+})
+
+let isLoadBetGreen = false
+let loopGreen;
+const handleLoadBetGreen = (()=>{
+    if(!isLoadBetGreen){
+        loopGreen = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleGreen()
+            },500)
+            clearInterval(loopGreen)
+            isLoadBetGreen = false
+        }else{
+            isLoadBetGreen = true
+        }
+    },10)
+    }else if (isLoadBetGreen){
+        isLoadBetGreen = false
+        clearInterval(loopGreen)
+    }
+})
+
 
 </script>
 
 <div class="game-control-panel">
+
+    {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+        </div>
+        </div>
+    {/if}   
+
     <div class="sc-dpAhYB cAWNwp manual-control">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">
@@ -125,7 +234,15 @@ const handleHalf = ((e)=>{
                 <div>Payout</div>
                 <div class="bet-payout">1.96x</div>
             </div>
-            <button disabled={$loadingCrash && !$handle_IsRed ? false : true} on:click={handleRed} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsRed && "is-active"} `}>
+            {#if !$loadingCrash && !$handle_IsRed }
+                <button on:click={handleLoadBet} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsRed && "is-active"} `}>
+                    <div class="button-inner">
+                        <div>{isLoadBet ? "Loading..." : "Bet Red"}</div>
+                         <div class="sub-txt">({isLoadBet ? "Cancel": "Next round"})</div>   
+                    </div>
+                </button>
+            {:else}
+            <button disabled={$loadingCrash && !is_loading && !$handle_IsRed ? false : true} on:click={handleRed} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsRed && "is-active"} `}>
                 <div class="button-inner">
                     <div>Bet Red</div>
                     {#if !$loadingCrash && !$handle_IsRed}
@@ -133,6 +250,8 @@ const handleHalf = ((e)=>{
                     {/if}
                 </div>
             </button>
+            {/if}
+
         </div>
 
         <div class="sc-ezbkAF kDuLvp input sc-wkwDy ifiUVY bet-item">
@@ -140,14 +259,23 @@ const handleHalf = ((e)=>{
                 <div>Payout</div>
                 <div class="bet-payout">2x</div>
             </div>
-            <button disabled={$loadingCrash && !$handle_IsGreen ? false : true} on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type200 ${$handle_IsGreen && "is-active"}`}>
+            {#if !$loadingCrash && !$handle_IsGreen }
+            <button on:click={handleLoadBetGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsGreen && "is-active"} `}>
                 <div class="button-inner">
-                    <div>Bet Green</div>
-                    {#if !$loadingCrash && !$handle_IsGreen}
-                    <div class="sub-txt">(Next round)</div>   
-                {/if}
+                    <div>{isLoadBetGreen ? "Loading..." : "Bet Green"}</div>
+                     <div class="sub-txt">({isLoadBetGreen ? "Cancel": "Next round"})</div>   
                 </div>
             </button>
+        {:else}
+        <button disabled={$loadingCrash && !load_green && !$handle_IsGreen ? false : true} on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsGreen && "is-active"} `}>
+            <div class="button-inner">
+                <div>Bet Green</div>
+                {#if !$loadingCrash && !$handle_IsGreen}
+                    <div class="sub-txt">(Next round)</div>   
+                {/if}
+            </div>
+        </button>
+        {/if}
         </div>
 
         <div class="sc-ezbkAF kDuLvp input sc-wkwDy ifiUVY bet-item ">

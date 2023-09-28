@@ -20,7 +20,6 @@ export const useAllplayer = () => {
       if (!response.ok) {
         loadingCashout = false;
         cashoutError = json.error
-        console.log(cashoutError)
       }
       if (response.ok) {
         result = json

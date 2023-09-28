@@ -48,6 +48,7 @@ const handleSubmit = (async()=>{
             profileStore.set(data)
             handleSepProfile.set(false)
             is_loading = false
+            window.location.href = "/"
           }).catch((err)=>{
             is_loading = false
             console.log(err)

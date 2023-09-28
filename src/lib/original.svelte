@@ -2,7 +2,6 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoDice from "svelte-icons-pack/io/IoDice";
 import IoRocket from "svelte-icons-pack/io/IoRocket";
-
 import {routes} from "../lib/store/routes"
 import {
     createEventDispatcher

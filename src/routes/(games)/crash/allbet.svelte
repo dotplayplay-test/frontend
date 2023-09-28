@@ -14,8 +14,6 @@ const handleAllbet = (()=>{
     }
 })
 
-// $:console.log($active_playerEl)
-
 </script>
 
 <div class="sc-kqnjJL iLyFYQ">

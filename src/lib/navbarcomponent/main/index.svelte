@@ -16,7 +16,6 @@ import { onMount} from "svelte";
 import {  goto } from "$app/navigation";
 import { default_Wallet } from "$lib/store/coins";
 
-
 $:{
  onMount(async()=>{
    await axios.get("http://localhost:8000/api/profile",{
@@ -83,7 +82,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{$default_Wallet.balance.toFixed(2)}<span class="suffix">00</span></span>
+                        <span class="amount-str">{$default_Wallet.balance.toFixed(4)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>

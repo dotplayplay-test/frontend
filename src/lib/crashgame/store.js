@@ -93,6 +93,9 @@ export let trendball_has_winEl = writable(trendball_has_win)
 let isRed = false
 export let handle_IsRed = writable(isRed)
 
+let isRedWinners = []
+export let handle_IsRedwinners = writable(isRedWinners)
+
 let isGreen = false
 export let handle_IsGreen = writable(isGreen)
 

@@ -23,11 +23,27 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "$lib/firebaseAuth/index";
 import { browser } from '$app/environment';
 import { onMount } from "svelte";
+import { default_Wallet } from "../lib/store/coins"
+import { handle_IsRedwinners} from "../lib/crashgame/store"
 import Closesidebar from "$lib/closesidebar.svelte";
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
+
+$:{
+        for(let i = 0; i < $handle_IsRedwinners.length; i++){
+            let wllet = {
+                coin_name: $handle_IsRedwinners[i].token,
+                coin_image:  $handle_IsRedwinners[i].token_img,
+                balance:  $handle_IsRedwinners[i].update_bal
+            }
+            if($profileStore.user_id === $handle_IsRedwinners[i].user_id){
+                default_Wallet.set(wllet)
+            }
+        }
+} 
+
 
 $:{
     onMount(async()=>{
@@ -87,7 +103,6 @@ const handleChatroom = ((e) => {
     } else {
         isChatRoom = 360
         if (e === "notification") {
-            console.log(e)
             isnotification = true
         } else {
             isnotification = false

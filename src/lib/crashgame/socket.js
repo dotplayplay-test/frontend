@@ -6,10 +6,10 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
       crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
       v_three, v_five, v_seven, v_nine, v_ten, v_twenty,v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
       h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
-      h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand
+      h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
     } from "./store"
     import {default_Wallet} from "../store/coins"
-import {dicegameplays} from "../games/ClassicDice/store/index"
+import { dicegameplays } from "../games/ClassicDice/store/index"
 
 export const handleCountdown = (()=>{
     socket.on("countdown", data=>{
@@ -54,15 +54,14 @@ export const handleCountdown = (()=>{
         crash_historyEl.set(data)
     })
 
+    let winners = []
     socket.on("redball_update_wallet", data=>{
-        let dataEl = {
-            coin_name: data.token,
-            coin_image: data.token_img,
-            balance:  data.update_bal,
-            suffix: "0000",
-        }
-        default_Wallet.set(dataEl)
+        winners.push(data)
+        setTimeout(()=>{
+            handle_IsRedwinners.set(winners)
+        },1000)
     })
+
 
     socket.on("crash-game-redtrend", data=>{
         handleRedtrendballPlayers.set(data)

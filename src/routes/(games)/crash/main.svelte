@@ -1,5 +1,4 @@
 <script>
-import { goto } from "$app/navigation";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import FaSolidKeyboard from "svelte-icons-pack/fa/FaSolidKeyboard";
 import BiStats from "svelte-icons-pack/bi/BiStats";
@@ -7,34 +6,26 @@ import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import Hotkeys from './hotkeys.svelte';
+import axios from "axios"
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
 import Trend from '$lib/crashgame/components/trends/index.svelte';
 import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunning,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
-import {default_Wallet } from "$lib/store/coins"
-import { useCrashBet,useCrashCashout } from "$lib/crashgame/crashHook";
-import { profileStore,handleisLoggin } from "$lib/store/profile"
-const { crashBet, isLoading } = useCrashBet()
-const { cashout } = useCrashCashout()
+import {default_Wallet } from "$lib/store/coins";
+import { handleAuthToken } from "$lib/store/routes";
+import { profileStore,handleisLoggin } from "$lib/store/profile";
+
 export let isClassic
-import { error_msg  } from "$lib/crashgame/store"
+import { error_msg  } from "$lib/crashgame/store";
 
 import {
     browser
 } from '$app/environment'
-    import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
+import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let getBet_amount;
 
-
-$:{
-    getBet_amount = browser && JSON.parse(localStorage.getItem('user_bet_amount')) 
-    if(getBet_amount){
-        handleHasbet_amount.set(getBet_amount.bet_amount)
-        handleHasbet.set(true)
-    }
-}
 
 let ishotKey = false
 const handleHotkeyEnable = (()=>{
@@ -72,7 +63,6 @@ const handleHelp = ()=>{
     }
 }
 
-
 let isTrend = false
 const handleTrends = (()=>{
     if(isTrend){
@@ -103,47 +93,127 @@ const ranging = (()=>{
     }
 })
 
-const handleCrashBet = (()=>{
+let is_loading = false
+$:{
+    if(!$handleHasbet){
+        is_loading = false
+    }
+}
+
+
+let bet_amountEl =  0
+let bet_price;
+$: bet_price = ($crashRunning * bet_amountEl).toFixed(2)
+const handleCrashBet = (async()=>{
+    bet_amountEl = bet_amount 
+    is_loading = true
     if($handleisLoggin){
-        if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
+        if(bet_amountEl > $default_Wallet.balance){
             error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
         },4000)
+        is_loading = false
         }else{
             const data = {
             username: $profileStore.username,
             user_img: $profileStore.profile_image,
             game_id: $game_id,
-            bet_amount, bet_token_img: $default_Wallet.coin_image, 
+            bet_amount : bet_amountEl,
+             bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
             chance: 0
         }
-            crashBet(data)
+        axios.post("http://localhost:8000/api/user/crash-game/bet", {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
+        .then((response)=>{
+        let result = response.data
+         let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
         }
+        default_Wallet.set(wllet)
+         handleHasbet.set(true)
+        })
+        .catch((error)=>{
+            is_loading = false
+        })
+    }
     }else{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
             error_msg.set('')
         },4000)
+        is_loading = false
+    }
+})
+
+
+
+let isLoadBet = false
+let loop;
+const handleLoadBet = (()=>{
+    if(!isLoadBet){
+        loop = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleCrashBet()
+            },500)
+            clearInterval(loop)
+            isLoadBet = false
+        }else{
+            isLoadBet = true
+        }
+    },10)
+    }else if (isLoadBet){
+        isLoadBet = false
+        clearInterval(loop)
     }
 })
 
 const handleCashout = (()=>{
     if($handleisLoggin){
-        let data = {
-        cashout_at:($crashRunning * $handleHasbet_amount).toFixed(2),
+    let houseEgde =  (1 / 100) * ( bet_price  / 1)
+    let winning_amount = bet_price - houseEgde
+    let data = {
+        cashout_at : winning_amount,
         username: $profileStore.username,
         user_img: $profileStore.profile_image,
         game_id: $game_id,
-        profit: (($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount).toFixed(2),
+        profit:  winning_amount - bet_amountEl,
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
-        crash: $crashRunning,
+        crash: $crashRunning
     }
-    let win = ($crashRunning * $handleHasbet_amount).toFixed(2) - bet_amount
-    winningEl.set(win)
-    cashout(data)
+    axios.post("http://localhost:8000/api/user/crash-game/cashout", {
+        data
+    },{
+        headers: {
+        "Content-type": "application/json",
+        'Authorization': `Bearer ${$handleAuthToken}`
+    }
+    })
+    .then((response)=>{
+    let result = response.data
+     let wllet = {
+        coin_name: result.bet_token_name,
+        coin_image:  result.bet_token_img,
+        balance:  result.cash
+    }
+    default_Wallet.set(wllet)
+     handleHasbet.set(false)
+})
+
+    // let win = $crashRunning * $handleHasbet_amount - bet_amount
+    // winningEl.set(win)
+
     }else{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
@@ -178,9 +248,7 @@ const handleCashout = (()=>{
     </div>
  {/if}   
 
-
     <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
-
         <div class="sc-iwjdpV ikWSlH radio game-control-switch">
             <button on:click={()=>handleAdvancebg(1)} class={`${!isAdvance &&  "is-active"}`} >
                 <div class="label">Manual</div>
@@ -194,41 +262,37 @@ const handleCashout = (()=>{
         <div class="game-control-panel">
             <div class="sc-lVTEl hjMJHh">
                 {#if $crashIsAlive && !$handleHasbet}
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                    <button on:click={handleLoadBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
-                            <div>Bet</div>
-                            <div class="sub-text">(Next round)</div>
+                            <div>{isLoadBet ? "Loading..." : "Bet" }</div>
+                            <div class="sub-text">{isLoadBet ? "Cancel" : "(Next round)"}</div>
                         </div>
                     </button>
                 {/if}
                 {#if $crashIsAlive && $handleHasbet}
                 <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
-                        <div>{($crashRunning * $handleHasbet_amount).toFixed(2)}</div>
+                        <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
                         <div class="sub-text">cashout</div>
                     </div>
                 </button>
             {/if}
-            {#if $loadingCrash && !id}
-                <button on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+            {#if $loadingCrash && !$handleisLoggin}
+                <button  on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
                         <div>Bet</div>
                     </div>
                 </button>
                 {/if}
-                {#if $loadingCrash && id}
-                    <button disabled={$handleHasbet} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
-                        {#if isLoading}
+                {#if $loadingCrash && $handleisLoggin}
+                    <button disabled={is_loading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                         {#if $handleHasbet}
                             <div class="button-inner">
-                                <div>Loading...</div>
-                            </div>
-                            {:else if $handleHasbet}
-                            <div class="button-inner">
-                                <div>Game Loading...</div>
+                                <div>Betting...</div>
                             </div>
                         {:else}
                             <div class="button-inner">
-                                <div>Bet</div>
+                                <div>{is_loading ? "Loading..." : "Bet"}</div>
                             </div>
                         {/if}
                     </button>
@@ -265,7 +329,7 @@ const handleCashout = (()=>{
                         </div>
                         {#if !id}
                             <div class="input-control">
-                                <input type="text" bind:value={bet_amount}>
+                                <input type="number" bind:value={bet_amount}>
                                 <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button  on:click={()=>handleHalf(1)}>/2</button>
@@ -278,7 +342,7 @@ const handleCashout = (()=>{
                             </div>
                             {:else}
                             <div class="input-control">
-                                <input type="text" bind:value={bet_amount} placeholder="10">
+                                <input type="number" bind:value={bet_amount} placeholder="10">
                                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button on:click={()=>handleHalf(1)}>/2</button>
@@ -303,7 +367,6 @@ const handleCashout = (()=>{
                                 </div>
                             </div>
                         {/if}
-
                     </div>
                     <div class="sc-ezbkAF hzTJOu input sc-kMyqmI gcFpfw">
                         <div class="input-label">

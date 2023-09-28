@@ -130,7 +130,7 @@ function togglePlayback() {
                 <div class="sc-ezbkAF gcQjQT input ">
                     <div class="input-label">Payout</div>
                     <div class="input-control">
-                        <input type="text" bind:value={$payout}>
+                        <input type="number" bind:value={$payout}>
                         <span class="right-info">x</span>
                     </div>
                 </div>

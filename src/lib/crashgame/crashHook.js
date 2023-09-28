@@ -23,7 +23,7 @@ export const useCrashBet = () => {
       if (!response.ok) {
         isLoading = false;
         error = json.error
-        console.log(error)
+
       }
       if (response.ok) {
         result = json
@@ -31,7 +31,6 @@ export const useCrashBet = () => {
           coin_name: result.bet_token_name,
           coin_image:  result.bet_token_img,
           balance:  result.current_amount,
-          suffix: "0000",
       }
         localStorage.setItem("user_bet_amount", JSON.stringify(json));
         default_Wallet.set(data)
@@ -72,7 +71,6 @@ export const useCrashCashout = () => {
       if (!response.ok) {
         loadingCashout = false;
         cashoutError = json.error
-        console.log(cashoutError)
       }
       if (response.ok) {
         result = json

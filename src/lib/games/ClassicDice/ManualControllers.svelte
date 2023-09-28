@@ -7,7 +7,6 @@ import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import { DiceHook } from "../../games/ClassicDice/hook/index"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
-import { goto } from "$app/navigation";
 import { error_msg } from "./store/index"
 const { playdice } = DiceHook()
 
@@ -29,7 +28,7 @@ $:{
 
 const handleRollSubmit = (()=>{
     if($handleisLoggin){
-        if(parseInt(bet_amount) > parseInt($default_Wallet.balance)){
+        if( bet_amount > $default_Wallet.balance){
         error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
@@ -43,7 +42,7 @@ const handleRollSubmit = (()=>{
                 bet_token_name: $default_Wallet.coin_name ,
                 chance: $betPosition,
                 payout: $payout,
-                wining_amount:parseInt(wining_amount) - parseInt(bet_amount)
+                wining_amount:wining_amount -bet_amount
             }
             playdice(data)
         }
