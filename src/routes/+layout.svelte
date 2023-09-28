@@ -95,6 +95,7 @@ const handleMainMenu = (() => {
 browser && addEventListener("resize", () => {
     ens = (window.innerWidth)
 })
+
 let isnotification = false
 const handleChatroom = ((e) => {
     if (isChatRoom) {

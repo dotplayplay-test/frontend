@@ -15,7 +15,7 @@ import { error_msg  } from "$lib/crashgame/store";
 let redballValue = 10.00
 
 let  is_loading = false
-const handleRed = (()=>{
+const handleRed = (async()=>{
     is_loading = true
     let bet_amount = redballValue
     if($handleisLoggin){
@@ -36,7 +36,7 @@ const handleRed = (()=>{
             chance: "50.51%",
             game_type:"Red"
         }
-        axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+       await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
             data
         },{
             headers: {
@@ -67,7 +67,7 @@ const handleRed = (()=>{
 
 
 let load_green = false
-const handleGreen = ()=>{
+const handleGreen = async()=>{
     load_green = true
     if($handleisLoggin){
         if(redballValue > $default_Wallet.balance ){
@@ -87,7 +87,7 @@ const handleGreen = ()=>{
         chance: "49.50%",
         game_type:"Green"
     }
-    axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+   await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
             data
         },{
             headers: {
@@ -116,11 +116,16 @@ const handleGreen = ()=>{
     }
 }
 
-
-const handleYellow = (()=>{
+let load_greenMoon = false
+const handleYellow = (async()=>{
+    load_greenMoon = true
     if($handleisLoggin){
         if(redballValue > $default_Wallet.balance ){
-        alert("Insuffient funds")
+            error_msg.set("insufficient balance")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        load_greenMoon = false
     }else{
         const data = {
         username: $profileStore.username,
@@ -132,11 +137,32 @@ const handleYellow = (()=>{
         chance: "9.90%",
         game_type:"Moon"
     }
-    redTrendball(data)
-    handle_IsMoon.set(true)
+    await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
+        .then((response)=>{
+        let result = response.data
+        let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
+        }
+        default_Wallet.set(wllet)
+        load_greenMoon = false
+        handle_IsMoon.set(true)
+    })
     }
     }else{
-        goto("/login")
+        error_msg.set("You are not logged in")
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        load_greenMoon = false
     }
 })
 
@@ -193,6 +219,28 @@ const handleLoadBetGreen = (()=>{
         clearInterval(loopGreen)
     }
 })
+
+let isLoadBetMoon = false
+let loopmoon;
+const handleLoadBetMoon = (()=>{
+    if(!isLoadBetMoon){
+        loopmoon = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleYellow()
+            },500)
+            clearInterval(loopmoon)
+            isLoadBetMoon = false
+        }else{
+            isLoadBetMoon = true
+        }
+    },10)
+    }else if (isLoadBetMoon){
+        isLoadBetMoon = false
+        clearInterval(loopmoon)
+    }
+})
+
 
 
 </script>
@@ -283,14 +331,24 @@ const handleLoadBetGreen = (()=>{
                 <div>Payout</div>
                 <div class="bet-payout">10x</div>
             </div>
-            <button  disabled={$loadingCrash && !$handle_IsMoon ? false : true}  on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000 ${$handle_IsMoon && "is-active"}`}> 
+
+            {#if !$loadingCrash && !$handle_IsMoon }
+            <button on:click={handleLoadBetMoon} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsMoon && "is-active"} `}>
                 <div class="button-inner">
-                    <div>Bet Moon</div>
-                    {#if !$loadingCrash && !$handle_IsMoon}
-                    <div class="sub-txt">(Next round)</div>   
-                {/if}
+                    <div>{isLoadBetMoon ? "Loading..." : "Bet Moon"}</div>
+                     <div class="sub-txt">({isLoadBetMoon ? "Cancel": "Next round"})</div>   
                 </div>
             </button>
+        {:else}
+        <button disabled={$loadingCrash && !isLoadBetMoon && !$handle_IsMoon ? false : true} on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsMoon && "is-active"} `}>
+            <div class="button-inner">
+                <div>Bet Moon</div>
+                {#if !$loadingCrash && !$handle_IsMoon}
+                    <div class="sub-txt">(Next round)</div>   
+                {/if}
+            </div>
+        </button>
+        {/if}
         </div>
     </div>
 </div>
