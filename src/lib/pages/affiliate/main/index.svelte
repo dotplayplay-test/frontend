@@ -3,6 +3,14 @@
     import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
     import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
     import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher()
+
+    let is_rules = false
+    const handleRules = (()=>{
+        dispatch("open", 2)
+    })
+
 </script>
 
 
@@ -10,10 +18,10 @@
         <div class="sc-cxVPaa fnthVB casino-header">
             <div class="header-sub flex-center">
                 <div class="left flex-center">
-                    <div class="m-item rules">
+                    <button on:click={handleRules} class="m-item rules">
                         <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
                         <span>Commission Rules</span>
-                    </div>
+                    </button>
                     <div class="m-item terms">
                         <Icon src={BsCircleSquare} size="18" className="custom-icon" title="Custom icon params" />
                         <span>Affiliate Terms</span>
