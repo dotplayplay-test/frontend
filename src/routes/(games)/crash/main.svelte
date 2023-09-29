@@ -100,8 +100,20 @@ $:{
     }
 }
 
-
+let auto_bet = (100).toFixed(2)
 let bet_amountEl =  0
+let chance;
+
+$:{
+    if(auto_bet < 1){
+        auto_bet = 1.01
+    }
+    chance =(  100 / auto_bet - 0.01).toFixed(2)
+    if(chance < 0){
+       chance = (0.01).toFixed(2)
+    }
+}
+
 let bet_price;
 $: bet_price = ($crashRunning * bet_amountEl).toFixed(2)
 const handleCrashBet = (async()=>{
@@ -120,6 +132,7 @@ const handleCrashBet = (async()=>{
             user_img: $profileStore.profile_image,
             game_id: $game_id,
             bet_amount : bet_amountEl,
+            auto_cashout: auto_bet,
              bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
             chance: 0
@@ -372,12 +385,12 @@ const handleCashout = (()=>{
                         <div class="input-label">
                             <div class="chance-title">
                                 <div class="auto-title">Auto cash out</div>
-                                <div>Chance&nbsp;&nbsp;<span class="chance-num">0.99%</span>
+                                <div>Chance&nbsp;&nbsp;<span class="chance-num">{chance}%</span>
                                 </div>
                             </div>
                         </div>
                         <div class="input-control">
-                            <input type="text" value="100.00">
+                            <input type="text" bind:value={auto_bet}>
                             <div class="payout-txt">×</div>
                         </div>
                     </div>

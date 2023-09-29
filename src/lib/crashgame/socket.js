@@ -67,6 +67,10 @@ export const handleCountdown = (()=>{
         handleRedtrendballPlayers.set(data)
     })
 
+    socket.on("crash-autobet-users", data=>{
+        handleHasbet.set(false)
+    })
+
     // ============= Manage the state of the game =======================
     socket.on("crash-state", data =>{
         if(data === "load-crash"){

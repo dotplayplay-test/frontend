@@ -78,21 +78,21 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
                             <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-1 `}>
                                 <img class="coin-icon" alt="" src={red.token_img}>
                                 <div class="amount">
-                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00</span></span>
                                 </div>
                             </div>
                             {:else if $crash_all_users_red_trendballEl}
                             <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-2 `}>
                                 <img class="coin-icon" alt="" src={red.token_img}>
                                 <div class="amount">
-                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00</span></span>
                                 </div>
                             </div>
                             {:else }
                             <div class={`sc-Galmp erPQzq coin notranslate monospace bold status-0`}>
                                 <img class="coin-icon" alt="" src={red.token_img}>
                                 <div class="amount">
-                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00000000</span></span>
+                                    <span class="amount-str">{red.bet_amount}.<span class="suffix">00</span></span>
                                 </div>
                             </div>
                             {/if}
