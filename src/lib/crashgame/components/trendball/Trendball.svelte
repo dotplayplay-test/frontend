@@ -71,7 +71,7 @@ let load_green = false
 const handleGreen = async()=>{
     load_green = true
     if($handleisLoggin){
-        if(redballValue > $default_Wallet.balance ){
+        if(parseFloat(redballValue) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
@@ -82,7 +82,7 @@ const handleGreen = async()=>{
         username: $profileStore.username,
         user_img: $profileStore.profile_image,
         game_id: $game_id,
-        bet_amount: redballValue,
+        bet_amount: parseFloat(redballValue),
         auto_cashout: 0, 
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
@@ -122,7 +122,7 @@ let load_greenMoon = false
 const handleYellow = (async()=>{
     load_greenMoon = true
     if($handleisLoggin){
-        if(redballValue > $default_Wallet.balance ){
+        if(parseFloat(redballValue) > $default_Wallet.balance ){
             error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
@@ -133,7 +133,7 @@ const handleYellow = (async()=>{
         username: $profileStore.username,
         user_img: $profileStore.profile_image,
         game_id: $game_id,
-        bet_amount: redballValue, 
+        bet_amount: parseFloat(redballValue), 
         auto_cashout: 0,
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
@@ -171,11 +171,11 @@ const handleYellow = (async()=>{
 
 
 const handleHalf = ((e)=>{
-    if(redballValue > 0){
+    if(parseFloat(redballValue) > 0){
         if(e === 1){
-        redballValue = (redballValue / 2).toFixed(2)
+        redballValue = (parseFloat(redballValue) / 2).toFixed(2)
         }else{
-            redballValue = (redballValue * 2).toFixed(2)
+            redballValue = (parseFloat(redballValue) * 2).toFixed(2)
         }
     }
 })
