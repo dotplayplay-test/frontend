@@ -115,12 +115,12 @@ $:{
 }
 
 let bet_price;
-$: bet_price = ($crashRunning * bet_amountEl).toFixed(2)
+$: bet_price = ($crashRunning * parseFloat(bet_amountEl)).toFixed(2)
 const handleCrashBet = (async()=>{
-    bet_amountEl = bet_amount 
+    bet_amountEl = parseFloat(bet_amount) 
     is_loading = true
     if($handleisLoggin){
-        if(bet_amountEl > $default_Wallet.balance){
+        if(parseFloat(bet_amountEl) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
@@ -131,7 +131,7 @@ const handleCrashBet = (async()=>{
             username: $profileStore.username,
             user_img: $profileStore.profile_image,
             game_id: $game_id,
-            bet_amount : bet_amountEl,
+            bet_amount : parseFloat(parseFloat(bet_amountEl)),
             auto_cashout: auto_bet,
              bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
@@ -193,14 +193,14 @@ const handleLoadBet = (()=>{
 
 const handleCashout = (()=>{
     if($handleisLoggin){
-    let houseEgde =  (1 / 100) * ( bet_price  / 1)
-    let winning_amount = bet_price - houseEgde
+    let houseEgde =  (1 / 100) * (  parseFloat(bet_price)  / 1)
+    let winning_amount = parseFloat(bet_price) - houseEgde
     let data = {
         cashout_at : winning_amount,
         username: $profileStore.username,
         user_img: $profileStore.profile_image,
         game_id: $game_id,
-        profit:  winning_amount - bet_amountEl,
+        profit:  parseFloat(winning_amount) - parseFloat(bet_amountEl),
         bet_token_img: $default_Wallet.coin_image, 
         bet_token_name: $default_Wallet.coin_name,
         crash: $crashRunning

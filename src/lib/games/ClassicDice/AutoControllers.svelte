@@ -16,6 +16,10 @@ let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
+let uiocd;
+$:{
+    uiocd = $handlediceAutoInput
+}
 
 let bet_number = 0
 let on_win = false
@@ -42,6 +46,17 @@ function playSound(e) {
         audio.play();
     }
 }
+
+const dive = (()=>{
+    uiocd = (uiocd / 2).toFixed(4)
+    handlediceAutoInput.set(uiocd)
+})
+
+const mult = (()=>{
+    uiocd = (uiocd * 2).toFixed(4)
+    handlediceAutoInput.set(uiocd)
+})
+
 
 let winning_track = 0
 let lose_track = 0
@@ -92,7 +107,7 @@ const handleAutoStart = (()=>{
 
 const handleRollSubmit = (async()=>{
     if($handleisLoggin){
-        if(parseFloat($handlediceAutoInput) > parseFloat($default_Wallet.balance)){
+        if(parseFloat(uiocd) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
             is_Looping = false
             clearInterval(yu)
@@ -103,12 +118,12 @@ const handleRollSubmit = (async()=>{
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,
-                bet_amount: parseFloat($handlediceAutoInput),
+                bet_amount: parseFloat(uiocd),
                 bet_token_img: $default_Wallet.coin_image, 
                 bet_token_name: $default_Wallet.coin_name ,
                 chance: $betPosition,
                 payout: $payout,
-                wining_amount: parseFloat($handlediceAutoInput * $payout) - parseFloat($handlediceAutoInput)
+                wining_amount: parseFloat(uiocd * $payout) - parseFloat(uiocd)
             }
             await axios.post('http://localhost:8000/api/user/dice-game/bet', {
                 sent_data: data
@@ -125,21 +140,21 @@ const handleRollSubmit = (async()=>{
                 let prev = res.data.history[res.data.history.length - 1]
 
                 if(prev.has_won){
-                  winning_track += parseFloat($handlediceAutoInput * $payout) - parseFloat($handlediceAutoInput)
+                  winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
                   $soundHandler &&  playSound(2)
                   HandleHas_won.set(true)
                   if(onWinEl){
-                        let to = ((onWinEl/100) * parseFloat($handlediceAutoInput)/1)
-                        let from = (to + parseFloat($handlediceAutoInput)).toFixed(4)
+                        let to = ((onWinEl/100) * parseFloat(uiocd)/1)
+                        let from = (to + parseFloat(uiocd)).toFixed(4)
                         handlediceAutoInput.set(from)
                     }
                 }
                 else{
-                    lose_track += parseFloat($handlediceAutoInput)
+                    lose_track += parseFloat(uiocd)
                     HandleHas_won.set(false)
                     if(onLoseEl){
-                        let to = ((onLoseEl/100) * parseFloat($handlediceAutoInput)/1)
-                        let from = (to + parseFloat($handlediceAutoInput)).toFixed(4)
+                        let to = ((onLoseEl/100) * parseFloat(uiocd)/1)
+                        let from = (to + parseFloat(uiocd)).toFixed(4)
                         handlediceAutoInput.set(from)
                     }
                 }
@@ -197,13 +212,13 @@ const handleRollSubmit = (async()=>{
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="number" bind:value={$handlediceAutoInput}>
+                <input type="number" bind:value={uiocd}>
                 {#if $handleisLoggin}
                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {/if}
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button on:click={()=> handlediceAutoInput.set($handlediceAutoInput /= 2) }>/2</button>
-                    <button on:click={()=> handlediceAutoInput.set($handlediceAutoInput *= 2) }>x2</button>
+                    <button on:click={()=> dive() }>/2</button>
+                    <button on:click={()=> mult() }>x2</button>
                     {#if is_min_max }
                      <div class="fix-layer" style="opacity: 1; transform: none;">
                         <button  class="">Min</button>

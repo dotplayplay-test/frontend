@@ -30,6 +30,14 @@ $:{
     wining_amount = (bet_amount * $payout).toFixed(4)
 }
 
+const dive = (()=>{
+    bet_amount = (bet_amount / 2).toFixed(4)
+})
+
+const mult = (()=>{
+    bet_amount = (bet_amount * 2).toFixed(4)
+})
+
 
 function playSound(e) {
     if(e === 1){
@@ -46,7 +54,7 @@ function playSound(e) {
 const handleRollSubmit = (async()=>{
    $soundHandler && playSound(1)
     if($handleisLoggin){
-        if( bet_amount > $default_Wallet.balance){
+        if( parseFloat(bet_amount)> parseFloat($default_Wallet.balance)){
         error_msg.set("insufficient balance")
          setTimeout(()=>{
             error_msg.set('')
@@ -55,12 +63,12 @@ const handleRollSubmit = (async()=>{
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,
-                bet_amount,
+                bet_amount:  parseFloat(bet_amount),
                 bet_token_img: $default_Wallet.coin_image, 
                 bet_token_name: $default_Wallet.coin_name ,
                 chance: $betPosition,
                 payout: $payout,
-                wining_amount:wining_amount -bet_amount
+                wining_amount: parseFloat(wining_amount) -  parseFloat(bet_amount)
             }
             await axios.post('http://localhost:8000/api/user/dice-game/bet', {
                 sent_data: data
@@ -78,7 +86,6 @@ const handleRollSubmit = (async()=>{
                     $soundHandler &&  playSound(2)
                     HandleHas_won.set(true)
                 }else{
-                    
                     HandleHas_won.set(false)
                 }
             })
@@ -119,7 +126,7 @@ const handleRollSubmit = (async()=>{
                             <span class="tit">Max Profit:&nbsp;</span>
                             <div class="sc-Galmp erPQzq coin notranslate">
                                 <div class="amount">
-                                    <span class="amount-str">5000.<span class="suffix">00000</span>
+                                    <span class="amount-str">5000.<span class="suffix">00</span>
                                     </span>
                                 </div>
                             </div>
@@ -137,8 +144,8 @@ const handleRollSubmit = (async()=>{
                     <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
                 {/if}
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button on:click={()=> bet_amount /= 2}>/2</button>
-                    <button on:click={()=> bet_amount *= 2}>x2</button>
+                    <button on:click={()=> dive()}>/2</button>
+                    <button on:click={()=> mult()}>x2</button>
                     <button class="sc-cAhXWc cMPLfC">
                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />
                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="max" />
