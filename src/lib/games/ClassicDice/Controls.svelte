@@ -1,8 +1,8 @@
 <script>
-    import AutoControllers from "./AutoControllers.svelte";
+import AutoControllers from "./AutoControllers.svelte";
 import ManualControllers from "./ManualControllers.svelte";
 
-    let is_manual = true
+let is_manual = true
     const hanleManualControls = ((e)=>{
         if(e === 1){
             is_manual = true

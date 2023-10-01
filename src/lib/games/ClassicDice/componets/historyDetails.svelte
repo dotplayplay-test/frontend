@@ -1,4 +1,5 @@
 <script>
+import { error_msg } from "../store/index"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
 import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
@@ -9,16 +10,14 @@ import BiChart from "svelte-icons-pack/bi/BiChart";
 import FaSolidDice from "svelte-icons-pack/fa/FaSolidDice";
 import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-
 export let DgII
-
 $: (DgII)
 
 import {
     createEventDispatcher
 } from 'svelte';
-    import Share from './share/share.svelte';
-    import Seedsettings from './share/seedsettings.svelte';
+import Share from './share/share.svelte';
+import Seedsettings from './share/seedsettings.svelte';
 
 const dispatch = createEventDispatcher()
 
@@ -38,10 +37,18 @@ const handleSeedSettings = (()=>{
 })
 
 
+
 </script>
 
 
 <div class="sc-bkkeKt kBjSXI">
+    {#if $error_msg}
+    <div class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+            </div>
+        </div>
+    {/if}   
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         
         {#if is_seeed_settigs}
@@ -151,14 +158,14 @@ const handleSeedSettings = (()=>{
                     <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">Server Seed</div>
                         <div class="input-control">
-                            <input type="text" placeholder="The seed hasn't been revealed yet." readonly="" value="">
+                            <input type="text" placeholder="The seed hasn't been revealed yet." readonly value="">
                         </div>
                     </div>
                     <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">
                             <div class="seed-col">
                                 <div>Server Seed (hash)</div>
-                                <button on:click={handleSeedSettings} class="cl-primary">Seed Settings</button>
+                                <button on:click={()=>handleSeedSettings()} class="cl-primary">Seed Settings</button>
                             </div>
                         </div>
                         <div class="input-control">
@@ -169,7 +176,7 @@ const handleSeedSettings = (()=>{
                         <div class="sc-ezbkAF kDuLvp input ">
                             <div class="input-label">Client Seed</div>
                             <div class="input-control">
-                                <input type="text" readonly="" value={DgII.client_seed}>
+                                <input type="text" readonly value={DgII.client_seed}>
                             </div>
                         </div>
                         <div class="sc-ezbkAF kDuLvp input ">
@@ -182,14 +189,16 @@ const handleSeedSettings = (()=>{
                 </div>
 
                 <div class="verify-wrap">
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal verify-btn">
-                        <div class="button-inner">Verify</div>
-                    </button>
+                    <a href={`https://dppgames.netlify.app/verify/classic-dice/?s=${DgII.server_seed}&c=${DgII.client_seed}&n=${DgII.game_nonce}`} target="_blank"> 
+                        <button  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal verify-btn">
+                            <div class="button-inner">Verify</div>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
         {:else}
-        <Seedsettings />
+        <Seedsettings on:close={handleSeedSettings} settin={DgII} />
         {/if}
     
     </div>

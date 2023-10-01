@@ -7,11 +7,11 @@
     <div class="footer-general-contaner">
         <div class="footer-logo">
             <div class="logo">
-                <img src='https://static.nanogames.io/assets/logo.cebcfe09.png' alt="footer1" />
+                <img src='https://www.linkpicture.com/q/dpp-logowhite.png' alt="footer1" />
             </div>
             <div class="footer-text1">
                 <h4>
-                    BORCELLE is built by gamblers for gamblers.
+                    DOTPLAYPLAY is built by gamblers for gamblers.
 
                     With our unique community and a huge selection of games like Crash, HashDice,
                     Plinko, Slots, and many more. Your greatest casino adventure is waiting for you!

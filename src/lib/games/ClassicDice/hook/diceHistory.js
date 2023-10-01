@@ -22,4 +22,4 @@ export const DiceHistory = () => {
       }
     };
     return { historyD};
-  };
+};

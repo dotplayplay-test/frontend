@@ -23,3 +23,18 @@ export let dicegameplays = writable(dicePlayers)
 
 let error = ''
 export let error_msg = writable(error) 
+
+let has_won = false
+export let HandleHas_won = writable(has_won)
+
+let diceAutoInput = (10).toFixed(2)
+export let handlediceAutoInput = writable(diceAutoInput)
+
+let winIncrement = 0
+export let onWin = writable(winIncrement)
+
+let settings = {}
+export let settingEl = writable(settings)
+
+let sounds = 1
+export let soundHandler = writable(sounds)

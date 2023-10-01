@@ -5,11 +5,31 @@ import {
 import {
     dicegameplays
 } from "../../ClassicDice/store/index"
+    import HistoryDetails from "./historyDetails.svelte";
 
 $: {
     $dicegameplays.sort((a, b) => b.id - a.id);
 }
+
+let DgII = ''
+let hisQQ = false
+const handleDiceHistoryDetail = ((data)=>{
+    if(hisQQ){
+        hisQQ = false
+    }else{
+        DgII = data
+        hisQQ = true
+    }
+})
+
+
 </script>
+
+
+{#if hisQQ}
+    <HistoryDetails on:close={handleDiceHistoryDetail} DgII={DgII}/> 
+{/if}
+
 
 <div class="tabs-view" style="transform: none;">
     <div class="sc-eZhRLC iycaRo">
@@ -26,7 +46,7 @@ $: {
             <tbody>
                 {#each $dicegameplays.slice(0, 15) as dice (dice.id) }
                 {#if $profileStore.user_id === dice.user_id}
-                <tr>
+                <tr on:click={()=> handleDiceHistoryDetail(dice)}>
                     <td>
                         <button  class="hash ellipsis">{dice.bet_id}</button>
                     </td>
@@ -35,25 +55,25 @@ $: {
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{dice.bet_amount}.<span class="suffix">000000</span>
+                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
                     </td>
-                    {#if dice.win_lose === "win"}
+                    {#if dice.has_won}
                     <td class="payout">{dice.payout}×</td>
                     {:else}
                     <td class="payout">0.00×</td>
                     {/if}
-                    <td class={`profitline ${dice.win_lose === "win" ? "is-win" : "is-lose" } `}>
+                    <td class={`profitline ${dice.has_won ? "is-win" : "is-lose" } `}>
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                             <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
-                                {#if dice.win_lose === "win"}
-                                <span class="amount-str">+{dice.profit}.<span class="suffix">000000</span>
+                                {#if dice.has_won}
+                                <span class="amount-str">+{(dice.profit)}<span class="suffix">00</span>
                                 </span>
                                 {:else}
-                                <span class="amount-str">{dice.bet_amount}.<span class="suffix">000000</span>
+                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                                 {/if}
                             </div>
@@ -88,7 +108,14 @@ $: {
 
 .iycaRo tr {
     cursor: pointer;
+    font-size: 14px;
 }
+
+.iycaRo tr:hover {
+
+    background: #ccc9c912;
+}
+
 
 .iUeetX th:first-child,
 .iUeetX td:first-child {

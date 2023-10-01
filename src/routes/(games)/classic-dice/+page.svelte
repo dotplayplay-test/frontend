@@ -16,7 +16,7 @@ import Hotkey from "$lib/games/ClassicDice/componets/hotkey.svelte";
 import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
 import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 import Help from "$lib/games/ClassicDice/componets/help.svelte";
-
+import { soundHandler } from "$lib/games/ClassicDice/store/index"
  DicegameSocket()
   
 
@@ -59,6 +59,15 @@ const handleIsHelp = (()=>{
   isHelp = !isHelp
 })
 
+
+const handleSoundState = (()=>{
+    if($soundHandler){
+        soundHandler.set(0)
+    }else{
+        soundHandler.set(1)
+    }
+})
+
 </script>
 
 {#if is_hotkey}
@@ -78,6 +87,9 @@ const handleIsHelp = (()=>{
 {/if}
 
 
+
+
+
 <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
     <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
         <div class="game-area">
@@ -86,8 +98,8 @@ const handleIsHelp = (()=>{
                 <Gameview />
 
                 <div class="game-actions">
-                    <button  class="action-item  active">
-                        <Icon src={AiFillSound}  size="23"  color="rgb(67, 179, 9)" />
+                    <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
+                        <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
                     </button>
                     <button on:click={handleHotKey} class="action-item ">
                         <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />

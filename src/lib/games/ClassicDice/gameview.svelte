@@ -1,12 +1,13 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history } from "./store/index"
+import { HandleDicePoint, betPosition, dice_history, HandleHas_won} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 const { historyD } = DiceHistory()
 import { onMount } from "svelte";
 import { handleisLoggin } from "../../store/profile"
 import HistoryDetails from "./componets/historyDetails.svelte";
 import click from "./audio/click.wav"
+import cr from "./audio/click.wav"
 let range = 50
 $:{
     onMount(async()=>{
@@ -48,6 +49,12 @@ const handleDiceHistoryDetail = ((data)=>{
     }
 })
 
+function playSound() {
+    const audio = new Audio(cr);
+    audio.volume = 0.5;
+    audio.play();
+}
+
 // Function to toggle play/pause
 function togglePlayback() {
   isPlaying = !isPlaying;
@@ -58,7 +65,10 @@ function togglePlayback() {
   }
 }
 
-
+const handleChange = ((e)=>{
+    playSound()
+    range = e
+})
 
 </script>
 
@@ -102,10 +112,10 @@ function togglePlayback() {
                     {#if ishover}
                         <div class="slider-tip" style={`left: ${$betPosition -5}%;`}>{$betPosition}</div>
                     {/if}
-                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block " bind:value={range}>
+                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={range}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                         <div class="dice_num ">{$HandleDicePoint}</div>
-                        <div class={`dice_png ${$HandleDicePoint < range ? "dice-animate" : ""}`}>
+                        <div class={`dice_png ${$HandleHas_won ? "dice-animate" : ""}`}>
                             <img alt="dice.png" src="https://static.nanogames.io/assets/dice.1007262a.png">
                         </div>
                     </div>

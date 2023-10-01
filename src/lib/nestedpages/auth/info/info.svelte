@@ -150,7 +150,7 @@ const handleClose = (()=>{
     {/if}   
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
-            <img src="https://static.nanogames.io/assets/logo2.cc188584.png" alt="" class="sc-bOtlzW QccSQ">
+            <img src="https://www.linkpicture.com/q/dpp-logowhite.pngg" alt="" class="sc-bOtlzW QccSQ">
         </div>
         <button on:click={()=> handleClose()} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />

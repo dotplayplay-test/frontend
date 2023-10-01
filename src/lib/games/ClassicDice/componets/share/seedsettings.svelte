@@ -1,4 +1,71 @@
+<script>
+import { handleAuthToken } from "$lib/store/routes"
+import { error_msg } from "../../store/index"
+export let settin;
+import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher()
+import axios from "axios";
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function generateString(length) {
+    let result = '';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+let client = generateString(10)
+
+const handleCancle = (()=>{
+    dispatch("close", 9)
+})
+
+let is_loading = false
+const handleSeedSettings = (async()=>{
+    const regex = /^[a-zA-Z0-9]+$/;
+    is_loading = true
+    if(!client || client.length < 10){
+        setTimeout(()=>{
+            error_msg.set("Field must have at least 10 characters")
+            is_loading = false
+        },800)
+    }else if(!regex.test(client)){
+        setTimeout(()=>{
+            error_msg.set("Field must have at least 10 characters")
+            is_loading = false
+        },800)
+    }
+    else{
+    await axios.post("http://localhost:8000/api/user/dice-game/seed-settings",{
+        data: client
+    },{
+    headers: {
+        "Content-type": "application/json",
+        'Authorization': `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        error_msg.set(res.data)
+        is_loading = false
+        handleCancle()
+    })
+    .catch((error)=>{
+        is_loading = false
+    })
+}
+
+setTimeout(()=>{
+    error_msg.set("")
+},4000)
+})
+
+
+
+</script>
+
 <div class="dialog-body default-style " style="z-index: 2; transform: none;">
+
     <div class="sc-dkPtRN jScFby scroll-view sc-hxaKAp iGYNgq dialog-box">
         <div class="warn">You may use this function to set a new server seed + a new client seed, they can be randomly generated or customized (at least 10 characters), 
             and the number of bets will be reset to zero.
@@ -8,20 +75,20 @@
             <div class="sc-ezbkAF kDuLvp input ">
                 <div class="input-label">Server Seed (hash)</div>
                 <div class="input-control">
-                    <input type="text" readonly="" value="a356ee6b9467299864e7ccf63233740a386556e2aff3cd2caef0d8f394d35ac3">
+                    <input type="text" readonly value={settin.server_seed}>
                 </div>
             </div>
             <div class="formFlex">
                 <div class="sc-ezbkAF kDuLvp input ">
                     <div class="input-label">Client Seed</div>
                     <div class="input-control">
-                        <input type="text" readonly="" value="H6d3PGnNRBc3">
+                        <input type="text" readonly value={settin.client_seed}>
                     </div>
                 </div>
                 <div class="sc-ezbkAF kDuLvp input ">
                     <div class="input-label">Nonce</div>
                     <div class="input-control">
-                        <input type="text" readonly="" value="50">
+                        <input type="text" readonly value={settin.game_nonce}>
                     </div>
                 </div>
             </div>
@@ -32,14 +99,14 @@
             <div class="sc-ezbkAF kDuLvp input ">
                 <div class="input-label">Server Seed (hash)</div>
                 <div class="input-control">
-                    <input type="text" placeholder="The seed hasn't been revealed yet" readonly="" value="381b36a01d9040987744f0889c9636c3b8ec04bdd8e8c52f5a4eea3536c019f6">
+                    <input type="text" placeholder="The seed hasn't been revealed yet" readonly value={settin.server_seed}>
                 </div>
             </div>
             <div class="formFlex">
                 <div class="sc-ezbkAF kDuLvp input ">
                     <div class="input-label">Client Seed</div>
                     <div class="input-control">
-                        <input type="text" value="PxFenAFjwPaAfbD6p2x">
+                        <input type="text" maxlength="32" minlength="10" bind:value={client}>
                         <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon rotate-icon">
                             <use xlink:href="#icon_Refresh"></use>
                         </svg>
@@ -48,14 +115,32 @@
                 <div class="sc-ezbkAF kDuLvp input ">
                     <div class="input-label">Nonce</div>
                     <div class="input-control">
-                        <input type="text" readonly="" value="0">
+                        <input type="text" readonly value="0">
                     </div>
                 </div>
             </div>
         </div>
         <div class="submit">
-            <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                <div class="button-inner">Use New Seeds</div>
+            <button disabled={is_loading} on:click={handleSeedSettings} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <div class="button-inner">
+                    {#if is_loading}
+                    <div class="center">
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                    </div>
+                        {:else}
+                        Use New Seeds
+                    {/if}
+                  
+                </div>
             </button>
         </div>
     </div>

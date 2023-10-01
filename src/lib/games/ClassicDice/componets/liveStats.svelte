@@ -1,17 +1,16 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
-import {
-    createEventDispatcher
-} from 'svelte';
+import { createEventDispatcher } from 'svelte';
 import { default_Wallet } from '../../../store/coins';
-    import Draggable from '../Draggable.svelte';
+import Draggable from '../Draggable.svelte';
 
 const dispatch = createEventDispatcher()
 
 const handleCloseHelp = (() => {
     dispatch("close", 5)
 })
+
 </script>
 
 <Draggable>

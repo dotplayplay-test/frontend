@@ -5,10 +5,14 @@ import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
 import { payout, isbetLoadingBtn, betPosition } from "./store";
-import { DiceHook } from "../../games/ClassicDice/hook/index"
+import { handleAuthToken } from "$lib/store/routes"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
+import {  HandleDicePoint ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
-const { playdice } = DiceHook()
+import {  soundHandler } from "../../games/ClassicDice/store/index"
+import axios from "axios";
+import cr from "./audio/click.wav"
+import win from "./audio/mixkit-achievement-bell-600.wav"
 
 let max_profit_tips = false
 let Handlemax_profit_tips = ((e)=>{
@@ -26,7 +30,21 @@ $:{
     wining_amount = (bet_amount * $payout).toFixed(4)
 }
 
-const handleRollSubmit = (()=>{
+
+function playSound(e) {
+    if(e === 1){
+        const audio = new Audio(cr);
+        audio.volume = 0.05;
+        audio.play();
+    }else{
+        const audio = new Audio(win);
+        audio.volume = 0.05;
+        audio.play();
+    }
+}
+
+const handleRollSubmit = (async()=>{
+   $soundHandler && playSound(1)
     if($handleisLoggin){
         if( bet_amount > $default_Wallet.balance){
         error_msg.set("insufficient balance")
@@ -44,7 +62,29 @@ const handleRollSubmit = (()=>{
                 payout: $payout,
                 wining_amount:wining_amount -bet_amount
             }
-            playdice(data)
+            await axios.post('http://localhost:8000/api/user/dice-game/bet', {
+                sent_data: data
+            },{
+                headers:{
+                    Authorization: `Bearer ${$handleAuthToken}`
+                }
+            }).then(res =>{
+                isbetLoadingBtn.set(false)
+                dice_history.set(res.data.history)
+                default_Wallet.set(res.data.wallet)
+                HandleDicePoint.set(res.data.point)
+                let prev = res.data.history[res.data.history.length - 1]
+                if(prev.has_won){
+                    $soundHandler &&  playSound(2)
+                    HandleHas_won.set(true)
+                }else{
+                    
+                    HandleHas_won.set(false)
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         }
     }else{
         error_msg.set('You are not Logged in')
@@ -90,7 +130,7 @@ const handleRollSubmit = (()=>{
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="text" bind:value={bet_amount}>
+                <input type="number" bind:value={bet_amount}>
                 {#if $handleisLoggin}
                     <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {:else}
@@ -112,7 +152,7 @@ const handleRollSubmit = (()=>{
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="text" disabled bind:value={wining_amount}>
+                <input type="number" disabled bind:value={wining_amount}>
                 {#if $handleisLoggin}
                     <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                     {:else}
