@@ -7,7 +7,7 @@ import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
 import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
 import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
-import {handleSignIn } from "$lib/firebaseAuth/index"
+import { handleSignIn } from "$lib/firebaseAuth/index"
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
 import { createEventDispatcher } from "svelte";
 import { error_msgS, is_loadingS } from "./store"
@@ -15,6 +15,7 @@ const dispatch = createEventDispatcher()
 let isREf = false
 let email = ''
 let password = ''
+let referral_code = ""
 let aggreement = false
 
 const handleAgreement = (() => {
@@ -45,7 +46,7 @@ const handleSubmit = (() => {
             error_msgS.set("")
         }, 4000)
     } else {
-        handleSignIn(email, password)
+        handleSignIn(email, password, referral_code)
     }
 })
 
@@ -97,13 +98,13 @@ const handleCancel = (()=>{
                             <div class="sc-ezbkAF kDuLvp input ">
                                 <div class="input-label">Referral/Promo Code (Optional)</div>
                                 <div class="input-control">
-                                    <input type="text" autocomplete="off" placeholder="Referral/Promo Code" value="">
+                                    <input type="text" bind:value={referral_code}  autocomplete="off" placeholder="Referral/Promo Code" >
                                 </div>
                             </div>
                             {:else}
-                            <div class="casino-code hover">Referral/Promo Code (Optional)
+                            <button on:click={()=> isREf = true} class="casino-code hover">Referral/Promo Code (Optional)
                                  <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                            </div>
+                            </button>
                             {/if}
                         </div>
                         <hr>

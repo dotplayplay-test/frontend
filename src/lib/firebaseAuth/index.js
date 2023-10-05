@@ -29,12 +29,12 @@ export const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-export const handleSignIn = (async (email, password)=>{
+export const handleSignIn = (async (email, password, reff)=>{
     is_loadingS.set(true)
     const auth = getAuth(app);
     await createUserWithEmailAndPassword(auth, email, password)
     .then((res)=>{
-        register(res)
+        register({...res, reff})
     })
     .catch((err)=>{
         error_msgS.set(err.code.slice(5))
