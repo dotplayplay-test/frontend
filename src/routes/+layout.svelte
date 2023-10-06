@@ -6,6 +6,9 @@ import { handleAuthToken } from "$lib/store/routes"
 $: routes.set(data)
 import { handleSepProfile } from "$lib/profleAuth/store"
 import {handleCountdown} from "$lib/crashgame/socket"
+import {
+    page
+} from '$app/stores'
 handleCountdown()
 import { error_msg} from "$lib/crashgame/store"
 import Navbar from "$lib/navbar.svelte";

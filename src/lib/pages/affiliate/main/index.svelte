@@ -4,59 +4,126 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import TiClipboard from "svelte-icons-pack/ti/TiClipboard";
 import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
 import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
-import { profileStore } from "$lib/store/profile";
-import { error } from "./store/index";
+import { handleisLoggin } from "$lib/store/profile";
+import { error, Handleis_activated , affilliate_info} from "./store/index";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-// $: console.log($profileStore)
 import { createEventDispatcher } from 'svelte';
 import Terms from '../component/terms.svelte';
+import Rules from '../component/rules.svelte';
+import UsdRules from '../component/usd_rules.svelte';
+import Home from './home.svelte';
+import { handleAuthToken } from "$lib/store/routes"
+import axios from "axios";
+
 
 const dispatch = createEventDispatcher()
 
-let is_rules = false
-const handleRules = (() => {
-    dispatch("open", 2)
-})
-
-
-let code = "oeu71ki"
-let affiilate_link = "https://nanogames.io/i-oeu71ki-n/"
+let code ;
+let affiilate_link ;
 function handleCopyCode() {
     navigator.clipboard.writeText(code)
     .then(() => {
     error.set('Text copied to clipboard');
     setTimeout(()=>{
         error.set("")
-    },4000)
-    })
-    .catch((error) => {
-    error.set('Unable to copy text: ', error);
+},4000)
+})
+.catch((err) => {
+    error.set('Unable to copy text: ', err);
     setTimeout(()=>{
         error.set("")
     },4000)
-    });
+});
+}
+
+$:{
+    code = $affilliate_info.affiliate_code
+    affiilate_link = `http://localhost:5173/i-${$affilliate_info.affiliate_code}-n/`
 }
 
 function handleCopyLink() {
     navigator.clipboard.writeText(affiilate_link)
         .then(() => {
         error.set('Text copied to clipboard');
+        setTimeout(()=>{
+            error.set("")
+        },4000)
         })
-        .catch((error) => {
-        error.set('Unable to copy text: ', error);
+        .catch((err) => {
+            setTimeout(()=>{
+                error.set("")
+            },4000)
+        error.set('Unable to copy text: ', err);
     });
 }
 
 let terms = false
 let is_display = false
+let usd_rule = false
 const handlePopRule = ((event)=>{
     if(event === 1){
         terms = true
-    }else{
+        usd_rule = false
+    }
+    else if(event === 3){
+        terms = false
+        usd_rule = true
+    }
+    else{
+        usd_rule = false
         terms = false
     }
     is_display = !is_display
 })
+
+const handleFetchAffilateProfile = (async()=>{
+    await axios.get("http://localhost:8000/api/affiliate", {
+        headers:{
+            Authorization: `bearer ${$handleAuthToken}`
+        }
+    })
+    .then((response)=>{
+        affilliate_info.set(response.data[0])
+        Handleis_activated.set(response.data[0].is_activated)
+    })
+    .catch((err)=>{
+        setTimeout(()=>{
+        error.set("")
+    },4000)
+        console.log(err.response.data.error)
+    }
+    )
+})
+
+
+$handleisLoggin && handleFetchAffilateProfile()
+
+
+const handleCreateReferral = (async()=>{
+    if(!$handleisLoggin){
+        error.set('You need to loggin first');
+        setTimeout(()=>{
+            error.set("")
+        },4000)
+    }else{
+        await axios.post("http://localhost:8000/api/affiliate/activate", {
+            data : 1
+        },{
+        headers:{
+            Authorization: `bearer ${$handleAuthToken}`
+        }
+    })
+    .then((response)=>{
+        Handleis_activated.set(true)
+    })
+    .catch((err)=>[
+        console.log(err)
+    ])
+    }
+})
+
+
+
 
 </script>
 
@@ -74,19 +141,25 @@ const handlePopRule = ((event)=>{
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
     <div class="dialog casino-affiliate-terms" style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
-            {#if terms}
+            {#if terms && !usd_rule}
                 <div class="dialog-title">Affiliate Program Rules</div>
-                {:else}
+                {:else if !terms && !usd_rule}
                 <div class="dialog-title">Commissions Rules</div>
+                {:else}
+                <div class="dialog-title">USD Rewards Rule</div>
             {/if}
-
         </div>
         <button on:click={handlePopRule} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
-
         <div class="dialog-body default-style casino-affiliate-terms" style="z-index: 2; transform: none;">
-            <Terms />
+            {#if terms && !usd_rule}
+                <Terms />
+            {:else if !terms && !usd_rule}
+                <Rules />
+                {:else}
+                <UsdRules />
+            {/if}
         </div>
     </div>
 </div>
@@ -112,10 +185,8 @@ const handlePopRule = ((event)=>{
     </div>
 
     <div class="banner">
-
-
         <div class="bokeh banner-layer"></div>
-        {#if $profileStore}
+        {#if !$handleisLoggin || !$Handleis_activated}
         <div class="sc-cnHmbd fSEGpF my-casino ">
             <div class="m-casino">
                 <div class="tip ttu">Commission ready everyday<br>
@@ -156,13 +227,18 @@ const handlePopRule = ((event)=>{
         </button>
     </div>
 
-    <div class="button-create">
-        <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal button">
-            <div class="button-inner">Create Referral Code Now</div>
-        </button>
-    </div>
+    {#if !$handleisLoggin || !$Handleis_activated}
+        <div class="button-create">
+            <button on:click={handleCreateReferral} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal button">
+                <div class="button-inner">Create Referral Code Now</div>
+            </button>
+        </div>
+    {/if}
+
 
     <div class="container">
+
+        {#if !$handleisLoggin}
         <div class="section why">
             <div class="title ttu">Start Earning Today</div>
             <div class="content">
@@ -185,12 +261,19 @@ const handlePopRule = ((event)=>{
                 </div>
             </div>
         </div>
+        
+
+       
+
         <div class="section rewards-system">
             <div class="title ttu">
                 <span class="theme">Affiliate</span> Reward System</div>
             <div class="tip">DOTPLAYPLAY sets up a reward of 100 USD for each referral you invite in addition to commission. Click
                 <span>"Create Referral Code Now"</span> and set sail on a new chapter on your journey of wealth immediately!</div>
         </div>
+       
+
+
         <div class="section">
             <div class="title pc-spec">Affiliate Rewards</div>
             <div class="content">
@@ -199,9 +282,10 @@ const handlePopRule = ((event)=>{
                         <div class="system" style="background-image: url(&quot;https://static.nanogames.io/assets/rewards.dadef713.png&quot;);">
                             <div class="title theme ttu">USD Rewards</div>
                             <div class="desc">Every friend you invite will get you</div>
-                            <div class="flex"><div class="amount">100 USD</div>
-                                <a class="hover theme" href="/" >USD Rewards Rules</a>
-                                <Icon src={ RiSystemArrowRightSLine} size="18" className="custom-icon" title="Custom icon params" />
+                            <div class="flex">
+                                <div class="amount">100 USD</div>
+                                <button on:click={()=>handlePopRule(3)} class="hover theme" >USD Rewards Rules</button>
+                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                             </div>
                         </div>
                         <div class="graph" id="system-rewards">
@@ -227,6 +311,20 @@ const handlePopRule = ((event)=>{
                 </div>
             </div>
         </div>
+
+        {/if}
+
+        {#if $handleisLoggin}
+        <div class="container">
+            <Home on:open={()=>handlePopRule(3)}/>
+        </div>
+        {/if}
+
+      
+
+
+
+
         <div class="section">
             <div class="sc-kjOQFR fLdMfS platform-rewards">
                 <div class="is-pc">
@@ -250,6 +348,8 @@ const handlePopRule = ((event)=>{
                 </div>
             </div>
         </div>
+
+
         <div class="section">
             <div class="title ttu">Platform real-time rewards</div>
             <div class="content">
@@ -362,16 +462,35 @@ const handlePopRule = ((event)=>{
             </div>
         </div>
 
+        {#if !$handleisLoggin}
         <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal button">
             <div class="button-inner">Create Referral Code Now</div>
         </button>
+        {/if}
     </div>
+
+
+
 </div>
 
 <style>
 .kguWsM {
     overflow: auto;
     padding: 0px 20px;
+}
+.container{
+    max-width: 1328px;
+    margin: 0px auto;
+    padding-bottom: 120px;
+    background: rgb(36, 38, 43);
+}
+
+.kguWsM > .container  {
+    margin-top: 60px;
+}
+
+.kguWsM > .container  {
+    margin-bottom: 70px;
 }
 
 .kguWsM>.banner {

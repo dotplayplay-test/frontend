@@ -11,6 +11,8 @@ import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
 
 
+
+
 register();
 </script>
 
