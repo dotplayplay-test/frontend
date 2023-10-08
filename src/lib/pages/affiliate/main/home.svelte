@@ -2,9 +2,13 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { createEventDispatcher } from 'svelte';
-import { error, Handleis_activated , affilliate_info } from "./store/index";
+import { handleAuthToken } from "$lib/store/routes"
+import { handleisLoggin } from "$lib/store/profile";
+
+import { error, affiliate_info ,affiliate_list, affilliate_info } from "./store/index";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 const dispatch = createEventDispatcher()
+import axios from "axios"
 
 let reward_modal = false
 const handleOpenModal = ((we)=>{
@@ -15,7 +19,27 @@ const handleOpenModal = ((we)=>{
     }
 })
 
-// $: console.log($affilliate_info)
+let is_loading = true
+const fetchFriendsInfo = (async()=>{
+    is_loading = true
+    await axios.get("http://localhost:8000/api/affiliate/friends-info",{
+        headers:{
+            Authorization: `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        is_loading = false
+        affiliate_info.set(res.data)
+    })
+    .catch((err)=>{
+        is_loading = false
+        console.log(err)
+    })
+})
+$:{
+    $handleisLoggin && fetchFriendsInfo()
+}
+
 
 </script>
 
@@ -51,14 +75,14 @@ const handleOpenModal = ((we)=>{
                         <div class="desc">Newly Available USD Rewards</div></div>
                     <div class="tips">
                         <div class="tips_flex">
-                            <div>Received:&nbsp;<span class="theme">0</span>
+                            <div>Received:&nbsp;<span class="theme">{$affilliate_info.available_usd_reward}</span>
                                 <span class="unit gapx"> USD</span>
                             </div>
                             <div class="question-box">
                                 <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                             </div>
                             <div>Locked:&nbsp;
-                                <span class="theme">300</span>
+                                <span class="theme">{$affiliate_info.total_usd_reward}</span>
                                 <span class="unit"> USD</span>
                             </div>
                         </div>
@@ -79,54 +103,29 @@ const handleOpenModal = ((we)=>{
                             <div class="th">VIP level</div>
                             <div class="th">Earned Me</div>
                         </div>
-                        <div class="tr fc">
-                            <div class="td fc">
-                                <img class="avatar user-avatar" alt="" src="https://img2.nanogames.io/avatar/531399/s">
-                                <div class="nickanme">Hgwnsfioyb</div>
-                            </div>
-                            <div class="td fc">
-                                <div class="bar">
-                                    <div class="bar-cover" style="width: 0%;"></div>
+                        {#if is_loading}
+                            <div>laoding...</div>
+                        {:else}
+                            {#each $affiliate_info.friends_list as friends}
+                            <div class="tr fc">
+                                <div class="td fc">
+                                    <img class="avatar user-avatar" alt="" src={friends.profile_image}>
+                                    <div class="nickanme">{friends.username}</div>
                                 </div>
-                                <div class="level">V0</div>
-                            </div>
-                            <div class="td fc yellow">
-                                <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="tr fc">
-                            <div class="td fc">
-                                <img class="avatar user-avatar" alt="" src="https://img2.nanogames.io/avatar/531400/s">
-                                <div class="nickanme">Igwnsfioyb</div>
-                            </div>
-                            <div class="td fc">
-                                <div class="bar">
-                                    <div class="bar-cover" style="width: 0%;"></div>
+                                <div class="td fc">
+                                    <div class="bar">
+                                        <div class="bar-cover" style={`width: ${friends.vip_progress}%;`}></div>
+                                    </div>
+                                    <div class="level">V{friends.vip_level}</div>
                                 </div>
-                                <div class="level">V0</div>
-                            </div>
-                            <div class="td fc yellow">
-                                <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="tr fc">
-                            <div class="td fc">
-                                <img class="avatar user-avatar" alt="" src="https://img2.nanogames.io/avatar/531429/s">
-                                <div class="nickanme">Ihwnufioyb</div>
-                            </div>
-                            <div class="td fc">
-                                <div class="bar">
-                                    <div class="bar-cover" style="width: 0%;"></div>
+                                <div class="td fc yellow">
+                                    <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
+                                    <span>0</span>
                                 </div>
-                                <div class="level">V0</div>
                             </div>
-                            <div class="td fc yellow">
-                                <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
-                                <span>0</span>
-                            </div>
-                        </div>
+                            {/each}
+                        {/if}
+               
                     </div>
                     <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
                         <span>View More</span>
