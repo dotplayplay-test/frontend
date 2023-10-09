@@ -9,15 +9,12 @@
     color: rgba(153, 164, 176, 0.8);
     background-color: rgb(30, 32, 36);
     transition: all 0.2s linear 0s;
-    
-    /* transform: translateX(-100%); */
 }
 
 .eTxQfM .large-sidebar {
     overflow: hidden auto;
     width: 240px;
     height: 100%;
-    /* transition: transform 0.3s ease; */
 }
 .eTxQfM .large-sidebar::-webkit-scrollbar {
     display: none;
