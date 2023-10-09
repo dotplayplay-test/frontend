@@ -366,13 +366,13 @@ const handleLoadBetMoon = (()=>{
     flex: 1 1 0%;
 }
 
-/* .cAWNwp {
+.cAWNwp {
     display: flex;
     flex-wrap: wrap;
     -webkit-box-pack: justify;
     justify-content: space-between;
     padding: 2.5rem 0px 3.5rem;
-} */
+}
 
 .cAWNwp > div:first-child {
     width: 100%;
