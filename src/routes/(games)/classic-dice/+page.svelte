@@ -87,206 +87,160 @@ const handleSoundState = (()=>{
 {/if}
 
 
-
-
-
 <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
-    <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
-        <div class="game-area">
-            <div class="game-main">
-                <Controls />
-                <Gameview />
-
-                <div class="game-actions">
-                    <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                        <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
-                    </button>
-                    <button on:click={handleHotKey} class="action-item ">
-                        <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />
-                    </button>
-                    <button on:click={stats} class="action-item ">
-                        <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" />
-                    </button>
-                    <button on:click={hanhisSeed} class="action-item " id="set_seed">
-                        <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
-                    </button>
-                    <button on:click={handleIsHelp} class="action-item ">
-                        <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+  <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
+      <div class="game-area">
+          <div class="game-main">
+              <Controls />
+              <Gameview />
+              <div class="game-actions">
+                <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
+                    <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
+                </button>
+                <button on:click={handleHotKey} class="action-item ">
+                    <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+                </button>
+                <button on:click={stats} class="action-item ">
+                    <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" />
+                </button>
+                <button on:click={hanhisSeed} class="action-item " id="set_seed">
+                    <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
+                </button>
+                <button on:click={handleIsHelp} class="action-item ">
+                    <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
+                </button>
             </div>
-            <div
-              class="sc-gfqkcP epfPPG bot-view game-Mines"
-              bis_skin_checked="1"
-            >
-              <a class="sc-hKTqa dbJiKC game-item-wrap" href="/mines">
-                <div class="lazy-img img" bis_skin_checked="1">
-                  <img
-                    src="https://img2.nanogames.io/game/image/0aa3d807-0380-4f8e-b65e-3179d4af2234.png"
-                    alt=""
-                  />
-                </div>
-                <div class="hover-mask" bis_skin_checked="1">
-                  <div class="house-edge" bis_skin_checked="1">
-                    House Edge 1%
-                  </div>
-                  <svg
-                    class="play-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 63 63"
-                  >
-                    <defs /><g fill="none" fill-rule="evenodd">
-                      <circle
-                        cx="31.3"
-                        cy="31.3"
-                        r="30.3"
-                        fill="#000"
-                        fill-opacity=".2"
-                        stroke="#E5E7EE"
-                        stroke-width="2"
-                      />
-                      <path
-                        fill="#F5F6F7"
-                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              </a>
-              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
-                <div class="wrap" bis_skin_checked="1">
-                  <a class="item" href="/mines">Mines</a>
-                  <div class="help-btn-wrap" bis_skin_checked="1">
-                    <button>
-                      <svg
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        class="sc-gsDKAQ hxODWG icon"
-                      >
-                        <use xlink:href="#icon_Help" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="sc-gfqkcP epfPPG bot-view game-SlotsOrientalBeauties"
-              bis_skin_checked="1"
-            >
-              <a
-                class="sc-hKTqa dbJiKC game-item-wrap"
-                href="/oriental-beauties"
-              >
-                <div class="lazy-img img" bis_skin_checked="1">
-                  <img
-                    src="https://img2.nanogames.io/game/image/7f1f471d-0768-42f1-9d92-e70ce0e10235.png"
-                    alt=""
-                  />
-                </div>
-                <div class="hover-mask" bis_skin_checked="1">
-                  <div class="house-edge" bis_skin_checked="1">
-                    House Edge 2.1%
-                  </div>
-                  <svg
-                    class="play-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 63 63"
-                    ><defs />
-                    <g fill="none" fill-rule="evenodd">
-                      <circle
-                        cx="31.3"
-                        cy="31.3"
-                        r="30.3"
-                        fill="#000"
-                        fill-opacity=".2"
-                        stroke="#E5E7EE"
-                        stroke-width="2"
-                      />
-                      <path
-                        fill="#F5F6F7"
-                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              </a>
-              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
-                <div class="wrap" bis_skin_checked="1">
-                  <a class="item" href="/oriental-beauties">Beauties</a>
-                  <div class="help-btn-wrap" bis_skin_checked="1">
-                    <button>
-                      <svg
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        class="sc-gsDKAQ hxODWG icon"
-                      >
-                        <use xlink:href="#icon_Help" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="sc-gfqkcP epfPPG bot-view game-HashDice"
-              bis_skin_checked="1"
-            >
-              <a class="sc-hKTqa dbJiKC game-item-wrap" href="/hash-dice">
-                <div class="lazy-img img" bis_skin_checked="1" />
-                <div class="hover-mask" bis_skin_checked="1">
-                  <div class="house-edge" bis_skin_checked="1">
-                    House Edge 1%
-                  </div>
-                  <svg
-                    class="play-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 63 63"
-                  >
-                    <defs /><g fill="none" fill-rule="evenodd">
-                      <circle
-                        cx="31.3"
-                        cy="31.3"
-                        r="30.3"
-                        fill="#000"
-                        fill-opacity=".2"
-                        stroke="#E5E7EE"
-                        stroke-width="2"
-                      />
-                      <path
-                        fill="#F5F6F7"
-                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              </a>
-              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
-                <div class="wrap" bis_skin_checked="1">
-                  <a class="item" href="/hash-dice">Hash Dice</a>
-                  <div class="help-btn-wrap" bis_skin_checked="1">
-                    <button>
-                      <svg
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        class="sc-gsDKAQ hxODWG icon"
-                      >
-                        <use xlink:href="#icon_Help" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="description">Classic Dice, a probability game established by blockchain hash value calculation and algorithm, provides more fun with bet and prediction, in which the closer the number rolled by players to the random number, the higher the probability winning.</div>
-          <button class="intro-detail">
-            Details
-            <span style="margin-left: 1.125rem;">
-              <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
-            </span>
-          </button>
         </div>
     </div>
+    <div class="sc-gfqkcP epfPPG bot-view game-Mines" bis_skin_checked="1">
+        <a class="sc-hKTqa dbJiKC game-item-wrap" href="/mines">
+            <div class="lazy-img img" bis_skin_checked="1">
+                <img src="https://img2.nanogames.io/game/image/0aa3d807-0380-4f8e-b65e-3179d4af2234.png" alt="" />
+            </div>
+            <div class="hover-mask" bis_skin_checked="1">
+                <div class="house-edge" bis_skin_checked="1">
+                    House Edge 1%
+                </div>
+                <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63">
+                    <defs /><g fill="none" fill-rule="evenodd">
+                        <circle
+                            cx="31.3"
+                            cy="31.3"
+                            r="30.3"
+                            fill="#000"
+                            fill-opacity=".2"
+                            stroke="#E5E7EE"
+                            stroke-width="2"
+                        />
+                        <path
+                            fill="#F5F6F7"
+                            d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                        />
+                    </g>
+                </svg>
+            </div>
+        </a>
+        <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+            <div class="wrap" bis_skin_checked="1">
+                <a class="item" href="/mines">Mines</a>
+                <div class="help-btn-wrap" bis_skin_checked="1">
+                    <button>
+                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                            <use xlink:href="#icon_Help" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sc-gfqkcP epfPPG bot-view game-SlotsOrientalBeauties" bis_skin_checked="1">
+        <a class="sc-hKTqa dbJiKC game-item-wrap" href="/oriental-beauties">
+            <div class="lazy-img img" bis_skin_checked="1">
+                <img src="https://img2.nanogames.io/game/image/7f1f471d-0768-42f1-9d92-e70ce0e10235.png" alt="" />
+            </div>
+            <div class="hover-mask" bis_skin_checked="1">
+                <div class="house-edge" bis_skin_checked="1">
+                    House Edge 2.1%
+                </div>
+                <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63">
+                    <defs /><g fill="none" fill-rule="evenodd">
+                        <circle
+                            cx="31.3"
+                            cy="31.3"
+                            r="30.3"
+                                fill="#000"
+                                fill-opacity=".2"
+                                stroke="#E5E7EE"
+                                stroke-width="2"
+                            />
+                            <path
+                                fill="#F5F6F7"
+                                d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                            />
+                        </g>
+                    </svg>
+                </div>
+            </a>
+            <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+                <div class="wrap" bis_skin_checked="1">
+                    <a class="item" href="/oriental-beauties">Beauties</a>
+                    <div class="help-btn-wrap" bis_skin_checked="1">
+                        <button>
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                                <use xlink:href="#icon_Help" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sc-gfqkcP epfPPG bot-view game-HashDice" bis_skin_checked="1">
+            <a class="sc-hKTqa dbJiKC game-item-wrap" href="/hash-dice">
+                <div class="lazy-img img" bis_skin_checked="1" />
+                <div class="hover-mask" bis_skin_checked="1">
+                    <div class="house-edge" bis_skin_checked="1">
+                        House Edge 1%
+                    </div>
+                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63">
+                        <defs /><g fill="none" fill-rule="evenodd">
+                            <circle
+                                cx="31.3"
+                                cy="31.3"
+                                r="30.3"
+                                fill="#000"
+                                fill-opacity=".2"
+                                stroke="#E5E7EE"
+                                stroke-width="2"
+                            />
+                            <path
+                                fill="#F5F6F7"
+                                d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                            />
+                        </g>
+                    </svg>
+                </div>
+            </a>
+            <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+                <div class="wrap" bis_skin_checked="1">
+                    <a class="item" href="/hash-dice">Hash Dice</a>
+                    <div class="help-btn-wrap" bis_skin_checked="1">
+                        <button>
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                                <use xlink:href="#icon_Help" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="description">Classic Dice, a probability game established by blockchain hash value calculation and algorithm, provides more fun with bet and prediction, in which the closer the number rolled by players to the random number, the higher the probability of winning.</div>
+    <button class="intro-detail">
+        Details
+        <span style="margin-left: 1.125rem;">
+            <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
+        </span>
+    </button>
 </div>
 
 
@@ -296,7 +250,7 @@ const handleSoundState = (()=>{
     margin-top: 4rem;
 }
 
-.kQfmQV .tabs-navs {
+.kQfmQV, .tabs-navs {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -376,12 +330,12 @@ const handleSoundState = (()=>{
     width: 5.625rem;
 }
 
-.kQfmQV .tabs-nav.is-active {
+.kQfmQV, .tabs-nav.is-active {
     color: rgb(245, 246, 247);
     font-weight: bold;
 }
 
-.kQfmQV .tabs-nav {
+.kQfmQV, .tabs-nav {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -395,7 +349,7 @@ const handleSoundState = (()=>{
     z-index: 1;
 }
 
-.kQfmQV .tabs-navs .bg {
+.kQfmQV, .tabs-navs, .bg {
     border-radius: 1.125rem;
     background-image: linear-gradient(to left, rgb(85, 89, 102), rgb(85, 89, 102), rgb(88, 174, 20));
     opacity: 0.4;
@@ -414,35 +368,35 @@ const handleSoundState = (()=>{
     padding: 1.5rem 1.5rem 2rem;
     margin-top: 2rem;
 }
-.cFxmZX .intro-title {
+.cFxmZX, .intro-title {
     min-height: 5rem;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
 }
-.cFxmZX .intro-title > p {
+.cFxmZX, .intro-title > p {
     font-size: 1rem;
     color: rgb(245, 246, 247);
     font-weight: 600;
     margin: 0px;
     white-space: nowrap;
 }
-.cFxmZX .intro-title .intro-tags {
+.cFxmZX, .intro-title, .intro-tags {
     margin-left: 2.5rem;
     display: flex;
     flex-wrap: wrap;
 }
-.cFxmZX .intro-title .intro-tags > p {
+.cFxmZX, .intro-title, .intro-tags > p {
     margin: 0px 1.125rem 0.3125rem 0px;
     padding: 0.5rem 1.25rem;
     border-radius: 1.125rem;
     background-color: rgb(43, 47, 54);
 }
-.cFxmZX .description {
+.cFxmZX, .description {
     margin-top: 0.75rem;
     line-height: 1.25rem;
 }
-.cFxmZX .intro-detail {
+.cFxmZX, .intro-detail {
     width: 6.75rem;
     height: 2.5rem;
     margin-top: 2rem;
