@@ -525,4 +525,20 @@ register();
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
 }
+
+.game-name {
+    /* font-weight: 800; */
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.name {
+    font-size: 0.75rem;
+}
+
+.lose {
+    padding: 0 30px;
+}
 </style>

@@ -169,13 +169,13 @@ const handleOpenCoinSelect = (() => {
 
 <style>
 @media screen and (min-width: 650px) {
-    .kBjSXI {
+    /* .kBjSXI {
         position: fixed;
         z-index: 1000;
         inset: 0px;
         background-color: rgba(0, 0, 0, 0.7);
         filter: none !important;
-    }
+    } */
 
     .dialog-back {
         position: absolute;
@@ -323,6 +323,9 @@ const handleOpenCoinSelect = (() => {
 }
 
 @media screen and (max-width: 650px) {
+    #main {
+        width: 50%;
+    }
     .kBjSXI {
         position: fixed;
         z-index: 1000;
@@ -334,6 +337,7 @@ const handleOpenCoinSelect = (() => {
     .dialog {
         position: absolute;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
         left: 50%;
         top: 50%;
@@ -356,6 +360,7 @@ const handleOpenCoinSelect = (() => {
         z-index: 10;
         flex: 0 0 auto;
         display: flex;
+        flex-wrap: wrap;
         -webkit-box-align: center;
         align-items: center;
         height: 3.75rem;
@@ -440,6 +445,7 @@ const handleOpenCoinSelect = (() => {
         background-color: rgb(30, 32, 36);
         position: relative;
         padding: 0.625rem;
+        flex-wrap: wrap;
     }
 
     .dialog {
@@ -461,7 +467,55 @@ const handleOpenCoinSelect = (() => {
         order: 1;
         flex: 0 0 auto;
         font-size: 12px;
+        flex-wrap: wrap;
     }
+
+    /* .sc-bkkeKt {
+        display: flex;
+        flex-wrap: wrap;
+    } */
+
+}
+
+@media screen and (max-width: 850px){
+    .dialog {
+        display: flex;
+        font-size: x-small;
+        height: 100%;
+        
+       
+    }
+
+    .dialog-body {
+        margin-right: 10px;
+        font-size: x-small;
+  
+    }
+
+    .dialog-head {
+        font-size: x-small;
+
+    }
+
+    .dialog-head.has-back {
+        font-size: smaller;
+    }
+
+    .dialog-title {
+        font-size: smaller;
+    }
+
+    .cBmlor>.button-inner {
+   font-size: small;
+   
+   
+}
+
+/* .eWZHfu.button {
+    width: 40%;
+    height: 80%;
+    margin-right: 90px;
+} */
 
 }
 

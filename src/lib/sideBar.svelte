@@ -13,6 +13,7 @@ import Original from "./original.svelte";
 import '../styles/sidebar/sidebar.css'
 import '../styles/sidebar/sidebarmobile.css'
 export let styls;
+// export let dark;
 let showOriginals = false
 
 const openOriginal = ((e) => {
@@ -134,6 +135,15 @@ const handeTheme = ((e) => {
                     <p>Currently</p>
                 </div>
             </div>
+
+            <!-- <div class="flex-0">
+                <a
+                  href="/"
+                  on:click|preventDefault={() => {
+                    dark = !dark;
+                  }}>{dark ? 'dark' : 'light'}</a
+                >
+              </div> -->
 
             <div class="border_bottom">
                 <div class="live">
