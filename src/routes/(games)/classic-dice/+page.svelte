@@ -113,38 +113,169 @@ const handleSoundState = (()=>{
                     <button on:click={handleIsHelp} class="action-item ">
                         <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
                     </button>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-
-        <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
-            <div class="tabs-navs">
-                <button on:click={()=>handleAllbet(1)} class={`tabs-nav ${is_allbet && "is-active"}`}>All Bets</button>
-                <button on:click={()=>handleAllbet(2)} class={`tabs-nav ${is_mybet && "is-active"}`}>My Bets</button>
-                <button on:click={()=>handleAllbet(3)} class={`tabs-nav ${is_contest && "is-active"}`}>Contest</button>
-                {#if is_allbet}
-                <div class="bg" style={`left: 0%; right: 66.6667%;`}></div>
-                {:else if is_mybet}
-                <div class="bg" style="left: 33.3333%; right: 33.3333%;"></div>
-                {:else if is_contest}
-                <div class="bg" style="left: 66.6667%; right: 0%;"></div>
-               {/if}
+            <div
+              class="sc-gfqkcP epfPPG bot-view game-Mines"
+              bis_skin_checked="1"
+            >
+              <a class="sc-hKTqa dbJiKC game-item-wrap" href="/mines">
+                <div class="lazy-img img" bis_skin_checked="1">
+                  <img
+                    src="https://img2.nanogames.io/game/image/0aa3d807-0380-4f8e-b65e-3179d4af2234.png"
+                    alt=""
+                  />
+                </div>
+                <div class="hover-mask" bis_skin_checked="1">
+                  <div class="house-edge" bis_skin_checked="1">
+                    House Edge 1%
+                  </div>
+                  <svg
+                    class="play-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 63 63"
+                  >
+                    <defs /><g fill="none" fill-rule="evenodd">
+                      <circle
+                        cx="31.3"
+                        cy="31.3"
+                        r="30.3"
+                        fill="#000"
+                        fill-opacity=".2"
+                        stroke="#E5E7EE"
+                        stroke-width="2"
+                      />
+                      <path
+                        fill="#F5F6F7"
+                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </a>
+              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+                <div class="wrap" bis_skin_checked="1">
+                  <a class="item" href="/mines">Mines</a>
+                  <div class="help-btn-wrap" bis_skin_checked="1">
+                    <button>
+                      <svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                      >
+                        <use xlink:href="#icon_Help" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            {#if is_allbet}
-            <Allbet />
-            {:else if is_mybet}
-            <Mybet />
-            {/if}
-        </div>
-
-        <div class="sc-knKHOI cFxmZX">
-          <div class="intro-title">
-            <p>Classic Dice</p>
-            <div class="intro-tags">
-              <p>Our Best Games</p>
-              <p>BC Originals</p>
-              <p>Recommended Games</p>
-              <p>Dice</p>
+            <div
+              class="sc-gfqkcP epfPPG bot-view game-SlotsOrientalBeauties"
+              bis_skin_checked="1"
+            >
+              <a
+                class="sc-hKTqa dbJiKC game-item-wrap"
+                href="/oriental-beauties"
+              >
+                <div class="lazy-img img" bis_skin_checked="1">
+                  <img
+                    src="https://img2.nanogames.io/game/image/7f1f471d-0768-42f1-9d92-e70ce0e10235.png"
+                    alt=""
+                  />
+                </div>
+                <div class="hover-mask" bis_skin_checked="1">
+                  <div class="house-edge" bis_skin_checked="1">
+                    House Edge 2.1%
+                  </div>
+                  <svg
+                    class="play-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 63 63"
+                    ><defs />
+                    <g fill="none" fill-rule="evenodd">
+                      <circle
+                        cx="31.3"
+                        cy="31.3"
+                        r="30.3"
+                        fill="#000"
+                        fill-opacity=".2"
+                        stroke="#E5E7EE"
+                        stroke-width="2"
+                      />
+                      <path
+                        fill="#F5F6F7"
+                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </a>
+              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+                <div class="wrap" bis_skin_checked="1">
+                  <a class="item" href="/oriental-beauties">Beauties</a>
+                  <div class="help-btn-wrap" bis_skin_checked="1">
+                    <button>
+                      <svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                      >
+                        <use xlink:href="#icon_Help" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="sc-gfqkcP epfPPG bot-view game-HashDice"
+              bis_skin_checked="1"
+            >
+              <a class="sc-hKTqa dbJiKC game-item-wrap" href="/hash-dice">
+                <div class="lazy-img img" bis_skin_checked="1" />
+                <div class="hover-mask" bis_skin_checked="1">
+                  <div class="house-edge" bis_skin_checked="1">
+                    House Edge 1%
+                  </div>
+                  <svg
+                    class="play-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 63 63"
+                  >
+                    <defs /><g fill="none" fill-rule="evenodd">
+                      <circle
+                        cx="31.3"
+                        cy="31.3"
+                        r="30.3"
+                        fill="#000"
+                        fill-opacity=".2"
+                        stroke="#E5E7EE"
+                        stroke-width="2"
+                      />
+                      <path
+                        fill="#F5F6F7"
+                        d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </a>
+              <div class="sc-fivaXQ gVplre bot-view" bis_skin_checked="1">
+                <div class="wrap" bis_skin_checked="1">
+                  <a class="item" href="/hash-dice">Hash Dice</a>
+                  <div class="help-btn-wrap" bis_skin_checked="1">
+                    <button>
+                      <svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                      >
+                        <use xlink:href="#icon_Help" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="description">Classic Dice, a probability game established by blockchain hash value calculation and algorithm, provides more fun with bet and prediction, in which the closer the number rolled by players to the random number, the higher the probability winning.</div>
