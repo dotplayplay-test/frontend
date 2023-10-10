@@ -144,7 +144,7 @@
 </div>
 
 <style>
-    /* .dfySWj {
+    .dfySWj {
     margin: 20px 0px 0.5rem 0.625rem;
     font-size: 18px;
     line-height: 18px;
@@ -386,9 +386,9 @@
             padding: 0;
             overflow: hidden;
         }
-    } */
+    }
 
-    .dfySWj {
+    /* .dfySWj {
     margin: 20px 0px 0.5rem 0.625rem;
     font-size: 18px;
     line-height: 18px;
@@ -573,5 +573,5 @@
 .llygwG .user-number > img {
     margin-right: 10%;
 }
-   
+    */
 </style>
