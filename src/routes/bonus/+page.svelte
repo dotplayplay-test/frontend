@@ -1,9 +1,14 @@
 <script>
-   import { goto } from "$app/navigation"
-   import "../../styles/bonus/index.css"
-   import Bonus from "$lib/mobile/pages/bonus.svelte";
+import { goto } from "$app/navigation"
+import "../../styles/bonus/index.css"
+import Bonus from "$lib/mobile/pages/bonus.svelte";
+import Mainbonus from "$lib/pages/bonus/Mainbonus.svelte";
+import { handleisLoggin } from "$lib/store/profile";
+
 </script>
 
+
+{#if !$handleisLoggin}
 <div id="main" class="b1rxc92l page-max-width-wrap width-stage-2">
     <div class="tsxsoob top-page-wrap">
         <div class="left-text-wrap">
@@ -220,6 +225,10 @@
         </div>
     </div>
 </div>
+{:else}
+    <Mainbonus />
+{/if}
+
 
 
 <div class="mobile">

@@ -6,9 +6,6 @@ import { onMount } from 'svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { UserProfileEl } from "$lib/index";
 const { handleDefaultwallet, handleUSDTwallet, handlePPLwallet,handlePPFwallet, handlePPDwallet } = UserProfileEl()
-// import { updateCoins } from "$lib/profilecomponent/main/updateCoin"
-// const { useCoinUpdate } = updateCoins()
-
 import { default_Wallet, usdt_Wallet } from "$lib/store/coins"
 
 
@@ -30,6 +27,7 @@ $:{
         handlePPDwallet()
     })
 }
+
 let erc = true
 let trc = false
 let bep = false
@@ -55,6 +53,8 @@ const handleCoins = ((e) => {
     default_Wallet.set(e.detail)
     handlecoinSelect()
 })
+
+
 </script>
 
 <div class="sc-gLEhor lhZODp" id="deposit">
@@ -195,9 +195,7 @@ const handleCoins = ((e) => {
             </button>
         </div>
         {/if}
-
-    
-        </div>
+    </div>
 
 <style>
  

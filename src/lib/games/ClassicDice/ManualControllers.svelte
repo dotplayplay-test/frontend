@@ -51,15 +51,50 @@ function playSound(e) {
     }
 }
 
+
+let is_loading = false
 const handleRollSubmit = (async()=>{
    $soundHandler && playSound(1)
+   is_loading = true
     if($handleisLoggin){
         if( parseFloat(bet_amount)> parseFloat($default_Wallet.balance)){
-        error_msg.set("insufficient balance")
+        error_msg.set("Insufficient balance")
+        is_loading = false
          setTimeout(()=>{
             error_msg.set('')
         },4000)
-        }else{
+        }
+        else if( parseFloat(bet_amount) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) < 0.20 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        
+        
+        else{
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,
@@ -82,6 +117,7 @@ const handleRollSubmit = (async()=>{
                 default_Wallet.set(res.data.wallet)
                 HandleDicePoint.set(res.data.point)
                 let prev = res.data.history[res.data.history.length - 1]
+                is_loading = false
                 if(prev.has_won){
                     $soundHandler &&  playSound(2)
                     HandleHas_won.set(true)
@@ -91,10 +127,12 @@ const handleRollSubmit = (async()=>{
             })
             .catch((err)=>{
                 console.log(err)
+                is_loading = false
             })
         }
     }else{
         error_msg.set('You are not Logged in')
+        is_loading = false
         setTimeout(()=>{
             error_msg.set('')
         },4000)
@@ -167,8 +205,8 @@ const handleRollSubmit = (async()=>{
                 {/if}
             </div>
         </div>
-        <button disabled={$isbetLoadingBtn} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-            {#if $isbetLoadingBtn}
+        <button disabled={is_loading} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+            {#if is_loading}
             <div class="button-inner">Loading....</div>
             {:else}
             <div class="button-inner">Roll Now</div>

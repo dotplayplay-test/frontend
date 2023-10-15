@@ -2,7 +2,7 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import VipLevel from '../components/vipLevel.svelte'; 
-    import Vipcards from '../components/Vipcards.svelte';
+import Vipcards from '../components/Vipcards.svelte';
 
 let is_about = false
 const handleIsAbout = (()=>{

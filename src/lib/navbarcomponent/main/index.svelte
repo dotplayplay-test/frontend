@@ -45,6 +45,22 @@ $:{
 })
 }
 
+const handleDailyPPFbonus = (async()=>{
+    await axios.get("http://localhost:8000/api/profile/ppf-daily-bonus",{
+    headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        },
+   })
+})
+
+onMount(async()=>{
+    setTimeout(()=>{
+        handleDailyPPFbonus()
+    },6000)
+})
+
+
 let isCoinDrop = false
 const handleCoinsDrop = ((e) => {
     if (isCoinDrop) {

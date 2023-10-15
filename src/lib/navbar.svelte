@@ -19,7 +19,6 @@ import Signup from "./nestedpages/auth/signup/signup.svelte";
 import Info from "./nestedpages/auth/info/info.svelte";
 import { handleNestedRoute } from "$lib/store/nested_routes"
 
-
 const dispatch = createEventDispatcher()
 const handleChat = ((e) => {
     dispatch("handleChatRoom", e)

@@ -94,46 +94,7 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
                 </div>
             </div>
         </div>
-        <div class="sc-bQFuvY catznl">
-            <div class="sc-jFkwbb jPCHTR bcd nologin">
-                <div class="left">
-                    <div class="title ttu bold">NG DOLLAR: NND</div>
-                    <div class="desc">
-                        <div>1 NND = 1 USD</div>
-                        <div>Claim NND Right Now</div>
-                    </div>
-                    <div class="detail">
-                        <span>Details</span>
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                            <use xlink:href="#icon_Arrow"></use>
-                        </svg>
-                    </div>
-                </div>
-                <div class="right bg"></div>
-            </div>
-            <div class="sc-bOtlzW dIGSON shitcode">
-                <div class="flex flex-center">
-                    <div class="title ttu bold">Shitcode</div>
-                    <div class="detail">
-                        <span>Details</span>
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                            <use xlink:href="#icon_Arrow"></use>
-                        </svg>
-                    </div>
-                </div>
-                <div class="desc">Redeem shitcodes to unlock crypto rewards</div>
-                <div class="flex-center wrap">
-                    <div class="sc-ezbkAF kDuLvp input ">
-                        <div class="input-control">
-                            <input type="text" value="">
-                        </div>
-                    </div>
-                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal" disabled="">
-                        <div class="button-inner">Redeem Now</div>
-                    </button>
-                </div>
-            </div>
-        </div>
+
         <div class="sc-iJCbQK hdBLxm">
             <div class="left">
                 <div class="title ttu bold">Master medals</div>
@@ -849,48 +810,12 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
     background-size: 100%;
 }
 
-.catznl {
-    display: flex;
-    margin: 1rem 0px;
-}
-
-.p-small .sc-jFkwbb.nologin {
-    position: relative;
-    z-index: 1;
-}
-
-.p-small .sc-bQFuvY .bcd {
-    flex: 1 1 33%;
-}
-
-.p-small .sc-jFkwbb {
-    height: auto;
-    display: block;
-}
-
 .p-small .sc-jFkwbb .left {
     position: relative;
     z-index: 3;
 }
 
-.jPCHTR {
-    height: 13rem;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    display: flex;
-    padding: 1.5rem 1.25rem;
-    background-image: linear-gradient(to right, rgba(147, 42, 195, 0.76) 27%, rgb(139, 43, 184) 57%, rgb(48, 52, 60) 121%);
-    color: rgb(255, 255, 255);
-    font-size: 0.875rem;
-}
 
-.jPCHTR .left {
-    flex: 0 1 50%;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
 
 .jPCHTR .left .title {
     /* font-size: 1.5rem; */
@@ -917,90 +842,6 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
     cursor: pointer;
 }
 
-.p-small .sc-jFkwbb.nologin::after {
-    content: "";
-    position: absolute;
-    inset: 0px;
-    background: url(https://static.nanogames.io/assets/bcd-bg.534a2500.png) 90% 90% / auto 70% no-repeat, url(https://static.nanogames.io/assets/bcd-bg-bottom.da3dadff.png) center center / cover no-repeat;
-}
-
-.p-small .sc-jFkwbb .right {
-    min-height: 11.25rem;
-}
-
-.jPCHTR .right.bg {
-    margin: -1.5rem 0px;
-    position: relative;
-}
-
-.p-small .sc-jFkwbb {
-    height: auto;
-    display: block;
-}
-
-.catznl .bcd {
-    flex: 1 1 66%;
-}
-
-.p-small .sc-bQFuvY .bcd {
-    flex: 1 1 33%;
-}
-
-.p-small .sc-jFkwbb.nologin {
-    position: relative;
-    z-index: 1;
-}
-
-.dIGSON {
-    height: 13rem;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    padding: 1.5rem 1.25rem;
-    background: rgb(23, 24, 27);
-    color: rgb(255, 255, 255);
-    font-size: 0.875rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.catznl .shitcode {
-    flex: 1 1 33%;
-    margin-left: 1rem;
-}
-
-.p-small .sc-bOtlzW {
-    height: auto;
-}
-
-.flex {
-    display: flex;
-}
-
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dIGSON .flex {
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
-
-.dIGSON .desc {
-    margin-top: 0.625rem;
-    line-height: 1.43;
-    flex: 1 1 0%;
-    max-width: 60%;
-}
-
-.p-small .sc-bOtlzW .wrap {
-    display: block;
-}
-
-.p-small .sc-bOtlzW .input {
-    margin: 1.5rem 0px;
-}
 
 .cBmlor:disabled.sc-iqseJM:not(.is-loading) {
     opacity: 0.5;
@@ -1012,42 +853,6 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
     margin: 0px auto;
 }
 
-.dIGSON .button {
-    width: auto;
-    height: 3rem;
-    padding: 0px 1.25rem;
-    color: rgb(34, 35, 41);
-    background-image: conic-gradient(from 1turn, rgb(246, 199, 34), rgb(226, 180, 11), rgb(246, 199, 34));
-}
-
-.dIGSON .input .input-control {
-    height: 3rem;
-}
-
-.kDuLvp .input-control {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    height: 3.5rem;
-    padding: 0px 1.25rem;
-    opacity: 1;
-}
-
-.kDuLvp .input-control input {
-    flex: 1 1 0%;
-    width: 100%;
-    height: 100%;
-    min-width: 1rem;
-    padding: 0px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: rgb(245, 246, 247);
-}
 
 .p-small .sc-iJCbQK {
     height: auto;

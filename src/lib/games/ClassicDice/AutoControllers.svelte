@@ -38,11 +38,11 @@ let turbo = 1300
 function playSound(e) {
     if(e === 1){
         const audio = new Audio(cr);
-        audio.volume = 0.05;
+        audio.volume = 0.5;
         audio.play();
     }else{
         const audio = new Audio(win);
-        audio.volume = 0.05;
+        audio.volume = 0.5;
         audio.play();
     }
 }
@@ -114,7 +114,41 @@ const handleRollSubmit = (async()=>{
             setTimeout(()=>{
                 error_msg.set("")
             },4000)
-        }else{
+        }
+
+        else if( parseFloat(bet_amount) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+              is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+              is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+             is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amount) < 0.20 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+             is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else{
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,

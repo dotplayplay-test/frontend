@@ -38,3 +38,7 @@ export let settingEl = writable(settings)
 
 let sounds = 1
 export let soundHandler = writable(sounds)
+
+
+let btn_constrolEl = false
+export let btn_constrol = writable(btn_constrolEl)

@@ -8,8 +8,8 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
       h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
       h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
     } from "./store"
-    import {default_Wallet} from "../store/coins"
 import { dicegameplays } from "../games/ClassicDice/store/index"
+import { week_cashback , month_cashback} from "../store/cashbacks";
 
 export const handleCountdown = (()=>{
     socket.on("countdown", data=>{
@@ -250,5 +250,13 @@ export const handleCountdown = (()=>{
     
     socket.on("h_onethousand", data=>{
         h_onethousand.set(data)
+    })
+
+    socket.on("weekly-count-down", data=>{
+        week_cashback.set(data)
+    })
+
+    socket.on("monthly-count-down", data=>{
+        month_cashback.set(data)
     })
 })
