@@ -524,6 +524,7 @@ register();
     max-width: 1368px;
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
+   
 }
 
 .game-name {
@@ -541,4 +542,12 @@ register();
 .lose {
     padding: 0 30px;
 }
+
+@media screen and (max-width: 1000px) {
+    .gyJkwe .screen-wrap {
+        width: 100vw;
+        /* background-color: orange; */
+    }
+}
+
 </style>
