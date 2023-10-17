@@ -196,10 +196,12 @@ let games = [
 </div>
 </div>
 
+
 <style>
 .hmXLyn {
     position: relative;
     margin-top: 72px;
+    /* background-color: red; */
 }
 .ijbeXh .nav-tit {
     bottom: 0px;
@@ -231,6 +233,7 @@ let games = [
     color: rgb(231, 11, 108);
     font-style: italic;
 }
+
 .dJteWA::after {
     content: "";
     position: absolute;
@@ -243,6 +246,7 @@ let games = [
 *, *:before, *:after {
     box-sizing: border-box;
 }
+
 .blJYGp .grid-list {
     background-color: rgb(28, 30, 34);
     padding: 12px 0.75rem 1.4375rem;
@@ -255,6 +259,7 @@ let games = [
     grid-template-columns: repeat(5, 1fr);
     grid-auto-flow: dense;
     gap: 1.5rem 0.9375rem;
+    /* background-color: aqua; */
 }
 .epfPPG.super-block {
     grid-column: 1 / 3;
@@ -358,4 +363,17 @@ let games = [
     background-position: center center;
     background-size: 32%;
 }
+
+@media screen and (max-width: 1000px) {
+    .blJYGp .grid-list{
+        width: 100vw;
+    }
+
+    .hmXLyn {
+        /* background-color: aqua; */
+        width: 100vw;
+    }
+}
+
+
 </style>

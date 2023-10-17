@@ -1,5 +1,4 @@
 <script>
-
 </script>
 
 <div id="home-bigwin" class="sc-leSONj eFUdWS">
@@ -7,30 +6,54 @@
     <div class="sc-cRKLkh hupcRr">
         <div class="sc-lheXJl flAnOy">
             <div class="info">
-                <div class="tit">WINNER WINNER<br>CHICKEN DINNER</div>
-                <button class="sc-iqseJM sc-hBUSln cBmlor blefOg button button-normal">
+                <div class="tit">WINNER WINNER<br />CHICKEN DINNER</div>
+                <button
+                    class="sc-iqseJM sc-hBUSln cBmlor blefOg button button-normal"
+                >
                     <div class="button-inner">Play Now</div>
                 </button>
             </div>
-            <img class="bg" alt="bg" src="https://static.nanogames.io/assets/biggest.f6e07fab.png">
+            <img
+                class="bg"
+                alt="bg"
+                src="https://static.nanogames.io/assets/biggest.f6e07fab.png"
+            />
         </div>
         <div class="sc-hWBuOZ civZmU sc-hoHwyw llygwG">
-            <img class="winner-img" src="https://static.nanogames.io/assets/topwin.a65b35ca.png" alt="">
+            <img
+                class="winner-img"
+                src="https://static.nanogames.io/assets/topwin.a65b35ca.png"
+                alt=""
+            />
             <div class="sc-bttaWv dUHqwx rich-item sc-kLnunm kOrkSG">
                 <div class="user-number">
-                    <img src="https://static.nanogames.io/assets/gold.92faf9c1.svg" alt="" class="winner-trophy">
-                    <a class="sc-jUosCB iTDswZ user-info rich-user" href="/user/profile/372845">
-                        <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/372845/s">
+                    <img
+                        src="https://static.nanogames.io/assets/gold.92faf9c1.svg"
+                        alt=""
+                        class="winner-trophy"
+                    />
+                    <a
+                        class="sc-jUosCB iTDswZ user-info rich-user"
+                        href="/user/profile/372845"
+                    >
+                        <img
+                            class="avatar"
+                            alt=""
+                            src="https://img2.nanogames.io/avatar/372845/s"
+                        />
                         <div class="name">ᴳᴼᴼᴰ ᴳᴵᴿᴸ</div>
                     </a>
                 </div>
                 <div class="top-winner">Top Winner</div>
-                <div class="sc-jJoQJp gOHquD select  rich_select">
+                <div class="sc-jJoQJp gOHquD select rich_select">
                     <div class="select-trigger">
                         <div class="win">+24783.59<span>USDT</span></div>
-                        <div class="arrow ">
-                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                <use xlink:href="#icon_Arrow"></use>
+                        <div class="arrow">
+                            <svg
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                class="sc-gsDKAQ hxODWG icon"
+                            >
+                                <use xlink:href="#icon_Arrow" />
                             </svg>
                         </div>
                     </div>
@@ -38,24 +61,39 @@
             </div>
             <div class="sc-bttaWv dUHqwx rich-item sc-kLnunm kOrkSG">
                 <div class="user-number">
-                    <img src="https://static.nanogames.io/assets/silver.9f31a5f7.svg" alt="" class="winner-trophy">
+                    <img
+                        src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                        alt=""
+                        class="winner-trophy"
+                    />
                     <a class="sc-jUosCB iTDswZ user-info rich-user" href="/">
-                        <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                        <img
+                            class="avatar"
+                            alt=""
+                            src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                        />
                         <div class="name">
                             <span class="hidden-name">
-                                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                    <use xlink:href="#icon_Hidden"></use>
-                                </svg>Hidden</span>
+                                <svg
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    class="sc-gsDKAQ hxODWG icon"
+                                >
+                                    <use xlink:href="#icon_Hidden" />
+                                </svg>Hidden</span
+                            >
                         </div>
                     </a>
                 </div>
                 <div class="top-winner">Top Winner</div>
-                <div class="sc-jJoQJp gOHquD select  rich_select">
+                <div class="sc-jJoQJp gOHquD select rich_select">
                     <div class="select-trigger">
                         <div class="win">+897.4337<span>USDT</span></div>
-                        <div class="arrow ">
-                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                <use xlink:href="#icon_Arrow"></use>
+                        <div class="arrow">
+                            <svg
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                class="sc-gsDKAQ hxODWG icon"
+                            >
+                                <use xlink:href="#icon_Arrow" />
                             </svg>
                         </div>
                     </div>
@@ -63,24 +101,39 @@
             </div>
             <div class="sc-bttaWv dUHqwx rich-item sc-kLnunm kOrkSG">
                 <div class="user-number">
-                    <img src="https://static.nanogames.io/assets/copper.39898678.svg" alt="" class="winner-trophy">
+                    <img
+                        src="https://static.nanogames.io/assets/copper.39898678.svg"
+                        alt=""
+                        class="winner-trophy"
+                    />
                     <a class="sc-jUosCB iTDswZ user-info rich-user" href="/">
-                        <img class="avatar " alt="" src="https://static.nanogames.io/assets/avatar.a1ff78fe.png">
+                        <img
+                            class="avatar"
+                            alt=""
+                            src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                        />
                         <div class="name">
                             <span class="hidden-name">
-                                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                    <use xlink:href="#icon_Hidden"></use>
-                                </svg>Hidden</span>
+                                <svg
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    class="sc-gsDKAQ hxODWG icon"
+                                >
+                                    <use xlink:href="#icon_Hidden" />
+                                </svg>Hidden</span
+                            >
                         </div>
                     </a>
                 </div>
                 <div class="top-winner">Top Winner</div>
-                <div class="sc-jJoQJp gOHquD select  rich_select">
+                <div class="sc-jJoQJp gOHquD select rich_select">
                     <div class="select-trigger">
                         <div class="win">+0.444117<span>ETH</span></div>
-                        <div class="arrow ">
-                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                <use xlink:href="#icon_Arrow"></use>
+                        <div class="arrow">
+                            <svg
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                class="sc-gsDKAQ hxODWG icon"
+                            >
+                                <use xlink:href="#icon_Arrow" />
                             </svg>
                         </div>
                     </div>
@@ -90,9 +143,8 @@
     </div>
 </div>
 
-
 <style>
-.dfySWj {
+    .dfySWj {
     margin: 20px 0px 0.5rem 0.625rem;
     font-size: 18px;
     line-height: 18px;
@@ -116,7 +168,7 @@
 .flAnOy {
     position: relative;
     flex: 1 1 0%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .flAnOy .info {
     position: relative;
@@ -170,6 +222,7 @@
     width: 5rem;
     height: 5rem;
 }
+
 .llygwG {
     flex: 1 1 0%;
     background-color: rgb(36, 38, 43);
@@ -177,6 +230,7 @@
     padding: 0.625rem;
     margin: 0px;
 }
+
 .civZmU {
     padding: 0.625rem;
     position: relative;
@@ -192,16 +246,23 @@
     color: rgb(250, 250, 249);
     font-size: 0.75rem;
     width: 4.5rem;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-align: center;
 }
 @media screen and (max-width: 1400px){
    .llygwG .user-number {
       width: 50%;
    }
+
    .llygwG .top-winner {
       display: none;
    }
+
+   .hupcRr {
+    flex-grow: 1;
+    flex-basis: 200;
+   }
+
 }
 .llygwG .user-number {
     width: 50%;
@@ -218,7 +279,7 @@
 }
 .llygwG .user-number .user-info {
     flex: 1 1 auto;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .iTDswZ .avatar {
     width: 1.62em;
@@ -270,5 +331,71 @@
 }
 .llygwG .user-number > img {
     margin-right: 10%;
-}
+} 
+
+@media screen and (max-width: 768px) {
+        .flAnOy .info .tit {
+            font-size: 1.1rem;
+        }
+
+        .kOrkSG {
+            overflow: hidden;
+        }
+
+        .cBmlor {
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .button-inner {
+            padding: 7px 7px;
+        }
+
+        .flAnOy .info button {
+            width: 23%;
+            margin-top: 50px;
+        }
+
+        .flAnOy .info {
+            padding: 1rem 0px 2.25rem 1rem;
+        }
+
+        .flAnOy .bg {
+            right: 15%;
+            position: absolute;
+            z-index: 0;
+            height: 100%;
+            width: auto;
+            bottom: -0.2rem;
+           
+        }
+
+        /* .llygwG .select-trigger {
+            padding: 0px 1.86rem 0px 0.5rem;
+        } */
+
+
+        .select-trigger {
+            margin-right: 70px;
+            overflow: hidden;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .select-trigger {
+            margin-right: 80px;
+            overflow: hidden;
+        }
+
+        .llygwG {
+            padding: 0;
+            overflow: hidden;
+        }
+    }
+
 </style>

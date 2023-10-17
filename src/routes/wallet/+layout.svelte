@@ -40,11 +40,12 @@ const handleOpenCoinSelect = (() => {
         checkIsOpen.set(true)
     }
 })
+
 </script>
 
 <div id="main">
     <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-        <div class="dialog" style="transform: scale(1) translateZ(0px); opacity: 1; width: 464px; height: 580px; margin-top: -290px; margin-left: -232px;">
+        <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
             {#if $checkIsOpen}
             <button on:click={()=> handleOpenCoinSelect()} class="dialog-back" style="opacity: 1; transform: none;">
                 <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
@@ -168,13 +169,13 @@ const handleOpenCoinSelect = (() => {
 
 <style>
 @media screen and (min-width: 650px) {
-    .kBjSXI {
+    /* .kBjSXI {
         position: fixed;
         z-index: 1000;
         inset: 0px;
         background-color: rgba(0, 0, 0, 0.7);
         filter: none !important;
-    }
+    } */
 
     .dialog-back {
         position: absolute;
@@ -322,6 +323,9 @@ const handleOpenCoinSelect = (() => {
 }
 
 @media screen and (max-width: 650px) {
+    #main {
+        width: 50%;
+    }
     .kBjSXI {
         position: fixed;
         z-index: 1000;
@@ -333,6 +337,7 @@ const handleOpenCoinSelect = (() => {
     .dialog {
         position: absolute;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
         left: 50%;
         top: 50%;
@@ -355,6 +360,7 @@ const handleOpenCoinSelect = (() => {
         z-index: 10;
         flex: 0 0 auto;
         display: flex;
+        flex-wrap: wrap;
         -webkit-box-align: center;
         align-items: center;
         height: 3.75rem;
@@ -439,6 +445,7 @@ const handleOpenCoinSelect = (() => {
         background-color: rgb(30, 32, 36);
         position: relative;
         padding: 0.625rem;
+        flex-wrap: wrap;
     }
 
     .dialog {
@@ -460,7 +467,55 @@ const handleOpenCoinSelect = (() => {
         order: 1;
         flex: 0 0 auto;
         font-size: 12px;
+        flex-wrap: wrap;
     }
+
+    /* .sc-bkkeKt {
+        display: flex;
+        flex-wrap: wrap;
+    } */
+
+}
+
+@media screen and (max-width: 850px){
+    .dialog {
+        display: flex;
+        font-size: x-small;
+        height: 100%;
+        
+       
+    }
+
+    .dialog-body {
+        margin-right: 10px;
+        font-size: x-small;
+  
+    }
+
+    .dialog-head {
+        font-size: x-small;
+
+    }
+
+    .dialog-head.has-back {
+        font-size: smaller;
+    }
+
+    .dialog-title {
+        font-size: smaller;
+    }
+
+    .cBmlor>.button-inner {
+   font-size: small;
+   
+   
+}
+
+/* .eWZHfu.button {
+    width: 40%;
+    height: 80%;
+    margin-right: 90px;
+} */
 
 }
 

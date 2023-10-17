@@ -3,30 +3,12 @@ import "../styles/home/index.css"
 import "../styles/home/indexmobile.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import Biggestwin from "$lib/homecomponents/biggestwin.svelte";
-import ProfileAuth from "../lib/profleAuth/index.svelte";
+
 import { register } from 'swiper/element/bundle';
 import BsQuestionCircle from "svelte-icons-pack/bs/BsQuestionCircle";
 import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';
 import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
-import {  onMount } from "svelte";
-import { browser } from '$app/environment'
-import { db} from "$lib/firebaseAuth/index"
-import { doc, getDoc } from "firebase/firestore";
-
-const id = browser && JSON.parse(localStorage.getItem('user'))
-let profile
-$:{
-  id &&  onMount(async()=>{
-        const docRef = doc(db, "profile", id.email);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            profile = docSnap.data()
-        } else {
-            console.log("No such document!");
-        }
-    })
-}
 
 
 register();
@@ -34,9 +16,7 @@ register();
 
 
 <div id="main" class="sc-lhMiDA ePAxUv">
-    {#if profile && profile.born === ''}
-        <ProfileAuth />
-    {/if}
+ 
     
     <div id="home" class="sc-jwQYvw eRdxAb">
         <div class="sc-bLdqUH bPsBUR banner">
@@ -544,5 +524,30 @@ register();
     max-width: 1368px;
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
+   
 }
+
+.game-name {
+    /* font-weight: 800; */
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.name {
+    font-size: 0.75rem;
+}
+
+.lose {
+    padding: 0 30px;
+}
+
+@media screen and (max-width: 1000px) {
+    .gyJkwe .screen-wrap {
+        width: 100vw;
+        /* background-color: orange; */
+    }
+}
+
 </style>

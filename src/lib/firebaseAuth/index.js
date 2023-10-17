@@ -6,10 +6,14 @@ import { useLogin } from "../hook/useLogin";
 import { useProfile } from "../hook/useProfile";
 import { getFirestore } from "firebase/firestore";
 import { useRegister } from "./createUser";
+import { fbUseLogin } from "./fbSignup";
+import {handleisLoggin, profileStore} from "../store/profile"
+import { error_msg, is_loading} from "../../lib/nestedpages/auth/login/store"
+import {  error_msgS, is_loadingS } from "../../lib/nestedpages/auth/signup/store"
 const { register } = useRegister()
-
 const { createProfile } = useProfile()
 const { login } = useLogin()
+const { fblogin } = fbUseLogin()
 
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider,
     signInWithEmailAndPassword, signOut } from "firebase/auth";
@@ -26,26 +30,37 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 export const handleSignIn = (async (email, password)=>{
+    is_loadingS.set(true)
     const auth = getAuth(app);
     await createUserWithEmailAndPassword(auth, email, password)
     .then((res)=>{
         register(res)
     })
     .catch((err)=>{
-     alert(err.code)
+        error_msgS.set(err.code.slice(5))
+        setInterval(()=>{
+            error_msgS.set('')
+        },4000)
+        is_loadingS.set(false)
     })
  })
 
+
+
  export const handleLogin = (async (email, password)=>{
-    let errorMessage;
+    is_loading.set(true)
     const auth = getAuth(app);
    await signInWithEmailAndPassword(auth, email, password)
    .then((res)=>{
      login(res)
-    goto("/")
+     is_loading.set(false)
    })
    .catch((err)=>{
-    alert(err.code)
+    error_msg.set(err.code.slice(5))
+    setInterval(()=>{
+        error_msg.set('')
+    },4000)
+    is_loading.set(false)
    })
  })
 
@@ -53,7 +68,7 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
     signInWithPopup(auth, new GoogleAuthProvider())
     .then((res)=>{
-        login(res)
+        fblogin(res)
        })
        .catch((err)=>{
         alert(err.code)
@@ -77,6 +92,9 @@ export const handleSignIn = (async (email, password)=>{
     const auth = getAuth(app);
     signOut(auth).then((res) => {
         localStorage.removeItem("user");
+        localStorage.removeItem("user_bet_amount");
+        handleisLoggin.set(false)
+        profileStore.set({})
       }).catch((error) => {
        console.log(error)
       });

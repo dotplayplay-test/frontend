@@ -5,17 +5,39 @@ import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import BiSolidBadgeDollar from "svelte-icons-pack/bi/BiSolidBadgeDollar";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 
+
+let fullCurencyName = false
+const handleFullcurrencyName = (()=>{
+    if(!fullCurencyName){
+        localStorage.setItem("show-full-curency", true);
+    }else{
+        localStorage.removeItem("show-full-curency");
+    }
+    fullCurencyName = !fullCurencyName
+})
+
+let currencySetting = false
+const handleCurrencySettings = (()=>{
+    currencySetting = !currencySetting
+})
+
+let is_light_mode = false
+const handleLightMode = ()=>{
+    is_light_mode = !is_light_mode
+}
+
 </script>
 
 <div class="sc-oXPCX iyNvkI">
     <div class="fullname-item">
         <p>Show full name of currency in crypto list</p>
-        <div class="sc-giYglK hRMjrF switch open ">
+        <button on:click={handleFullcurrencyName} class={`sc-giYglK hRMjrF switch ${fullCurencyName && "open"} `}>
             <div class="dot"></div>
-        </div>
+        </button>
     </div>
     <div class="fullname-item">
-        <div><p>Currency Setting</p>
+        <div>
+            <p>Currency Setting</p>
             <div class="local-currency">
                <span class="coin-icon">
                   <Icon src={BiSolidBadgeDollar}  size="23"  color="rgba(153, 164, 176, 0.6)"  title="rror" />
@@ -23,21 +45,21 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                USD
                </div>
         </div>
-        <div class="sc-giYglK hRMjrF switch  ">
+        <button on:click={handleCurrencySettings} class={`sc-giYglK hRMjrF switch ${currencySetting && "open"} `}>
             <div class="dot"></div>
-        </div>
+        </button>
     </div>
     <div>
         <p>Display mode</p>
         <div class="sc-gSQFLo dprxuS theme">
-            <div class="theme-check">
+            <button on:click={handleLightMode} class="theme-check">
                 <div class="item is-active">
                   <Icon src={IoMoon}  size="23"  color="rgba(153, 164, 176, 0.6)"  title="rror" />
                 </div>
                 <div class="item">
                   <Icon src={HiSolidLightBulb}  size="23"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
                 </div>
-            </div>
+            </button>
             <div class="theme-word">
                 <p>Darkmode</p>
                 <p>Currently</p>
@@ -56,7 +78,9 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
         </div>
     </div>
 </div>
-
+<!-- Main: English
+Option 2: Bahasa Melayu
+Option 3: Simplified Chinese -->
 <style>
 .iyNvkI > div:first-child {
     padding-top: 0px;

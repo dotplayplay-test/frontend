@@ -6,19 +6,26 @@ const dispatch = createEventDispatcher()
 import { updateCoins } from "./updateCoin"
 import { UserProfileEl } from "../../index";
 const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
+    handlePPLwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
-import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
-
+import { ppdWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import {
+  browser
+} from '$app/environment'
 $:{
     onMount(async()=>{
         handleDefaultwallet()
         handleUSDTwallet()
         handlePPFwallet()
         handlePPLwallet()
-        handlePPEwallet()
         handlePPDwallet()
     })
+}
+
+let show_currencyName
+
+$:{
+    show_currencyName = browser && JSON.parse(localStorage.getItem('show-full-curency'))
 }
 
 let coins
@@ -30,7 +37,6 @@ $:{
         coin_fname: $usdt_Wallet.coin_fname,
         coin_image: $usdt_Wallet.coin_image,
         balance: $usdt_Wallet.balance,
-        suffix: $usdt_Wallet.suffix,
         select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
     },
     {
@@ -39,34 +45,22 @@ $:{
         coin_fname:  $ppdWallet.coin_fname,
         coin_image: $ppdWallet.coin_image,
         balance: $ppdWallet.balance,
-        suffix: $ppdWallet.suffix,
         select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 3,
-        coin_name:  $ppeWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select: ($ppeWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 4,
         coin_name: $pplWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
+        coin_fname:  $pplWallet.coin_fname,
         coin_image:  $pplWallet.coin_image,
         balance:  $pplWallet.balance,
-        suffix: $pplWallet.suffix,
         select: ($pplWallet.coin_name === $default_Wallet.coin_name)
     },
     {
         id: 5,
         coin_name: $ppfWallet.coin_name,
-        coin_fname:  $ppfWallet.coin_name,
+        coin_fname:  $ppfWallet.coin_fname,
         coin_image: $ppfWallet.coin_image,
         balance:  $ppfWallet.balance,
-        suffix: $ppfWallet.suffix,
         select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
     },
 ]
@@ -92,23 +86,42 @@ const handleSelectCoin = ((e) => {
         </div>
         <div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list">
             {#each coins as coin (coin.id)}
-            <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
-                <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
-                    <div class="coin-wrap">
-                        <img class="coin-icon" alt="" src={coin.coin_image}>
-                    </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">{coin.coin_name}</div>
-                    </div>
-                    <div class="amount-wrap">
-                        <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <div class="amount">
-                                <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
+            {#if coin.coin_image !== undefined}
+                <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
+                    <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
+                        <div class="coin-wrap">
+                            <img class="coin-icon" alt="" src={coin.coin_image}>
+                        </div>
+                        <div class="name-wrap">
+                            <div class="currency-name">{coin.coin_name}</div>
+                            {#if show_currencyName}
+                                <div class="full-name">{coin.coin_fname}</div>
+                            {/if}
+                        </div>
+                        <div class="amount-wrap">
+                            <div class="sc-Galmp erPQzq coin notranslate monospace">
+                                <div class="amount">
+                                    <span class="amount-str">{coin.balance}<span class="suffix">00</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </button>
+                </button>
+            {:else}
+            <div class="center">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+            {/if}
+       
             {/each}
         </div>
     </div>

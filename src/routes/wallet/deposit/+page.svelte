@@ -5,7 +5,7 @@ import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import { onMount } from 'svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { UserProfileEl } from "$lib/index";
-const { handleDefaultwallet } = UserProfileEl()
+const { handleDefaultwallet, handleUSDTwallet, handlePPLwallet,handlePPFwallet, handlePPDwallet } = UserProfileEl()
 // import { updateCoins } from "$lib/profilecomponent/main/updateCoin"
 // const { useCoinUpdate } = updateCoins()
 
@@ -24,6 +24,10 @@ const handlecoinSelect = (() => {
 $:{
     onMount(()=>{
         handleDefaultwallet()
+        handleUSDTwallet()
+        handlePPLwallet()
+        handlePPFwallet()
+        handlePPDwallet()
     })
 }
 let erc = true
@@ -56,7 +60,7 @@ const handleCoins = ((e) => {
 <div class="sc-gLEhor lhZODp" id="deposit">
     {#if isSelectCoin}
     <Selectcoin on:handleCoinSelect={handleCoins}/>
-        {/if}
+    {/if}
         <div class="sc-ezbkAF kDuLvp input ">
             <div class="input-label">
                 <div style="flex: 1 1 0%;">Deposit Currency</div>

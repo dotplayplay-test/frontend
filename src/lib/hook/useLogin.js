@@ -1,3 +1,9 @@
+import { browser } from '$app/environment';
+import { handleNestedRoute } from "$lib/store/nested_routes"
+import { handleAuthToken } from "$lib/store/routes"
+import { profileStore } from "$lib/store/profile"
+import { default_Wallet } from "$lib/store/coins"
+
 export const useLogin = () => {
   let error;
   let isLoading;
@@ -20,10 +26,16 @@ export const useLogin = () => {
       console.log(error)
     }
     if (response.ok) {
-      // Save user to localStorage
-      localStorage.setItem("user", JSON.stringify(json));
-      // Update the auth store
-      window.location.href = '/'
+      let db = {
+        email: json.profile.email,
+        Token: json.Token
+      }
+      localStorage.setItem("user", JSON.stringify(db));
+      handleAuthToken.set(json.Token)
+      profileStore.set(json.profile)
+      browser &&  window.history.replaceState(null, '', '/')
+      handleNestedRoute.set('/')
+      default_Wallet.set(json.wallet)
       isLoading = false
     }
   };

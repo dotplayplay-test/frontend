@@ -1,77 +1,100 @@
 <script>
-import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
-import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
-import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
 import HiSolidSearch from "svelte-icons-pack/hi/HiSolidSearch";
-import Navprofile from "./profilecomponent/main/navprofile.svelte";
-import Coins from "./profilecomponent/main/coins.svelte";
-import {
-    default_Wallet
-} from "../lib/store/coins";
 import MainNavbar from "../lib/navbarcomponent/main/index.svelte"
-import {
-    goto
-} from "$app/navigation"
-import {
-    onMount
-} from "svelte";
-import {
-    browser
-} from '$app/environment'
-import "../styles/navbar/mobileNavbar.css"
-import "../styles/navbar/navbar.css"
+import { goto } from "$app/navigation";
+import "../styles/navbar/mobileNavbar.css";
+import "../styles/navbar/navbar.css";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 export let styles;
 export let chatroom;
-import { handleisLoggin, handleisLoading } from "$lib/store/profile"
+import { browser } from '$app/environment';
+import { current_route, routes } from "./store/routes"
+import { handleisLoggin, handleisLoading } from "$lib/store/profile";
+import { createEventDispatcher } from 'svelte';
+import Statistic from "./statistics/main/statistic.svelte";
+import { statisticsEl } from "$lib/store/statistic"
+import Login from "./nestedpages/auth/login/login.svelte";
+import Signup from "./nestedpages/auth/signup/signup.svelte";
+import Info from "./nestedpages/auth/info/info.svelte";
+import { handleNestedRoute } from "$lib/store/nested_routes"
 
-import {
-    createEventDispatcher
-} from 'svelte'
+
 const dispatch = createEventDispatcher()
 const handleChat = ((e) => {
     dispatch("handleChatRoom", e)
 })
-
-let isProfile = false
-let id 
-$:{
-     id = browser && JSON.parse(localStorage.getItem('user'))
-    if(id){
-        isProfile = true
-    }else{
-        isProfile = false
-    }
-}
-
-let userProfile = false
-const handleUserProfile = (() => {
-    if (userProfile) {
-        userProfile = false
-    } else {
-        userProfile = true
-    }
-})
-
-const handleCoinSelect = ((e) => {
-    default_Wallet.set(e.detail)
-    handleCoinsDrop()
-})
-let isCoinDrop = false
-const handleCoinsDrop = ((e) => {
-    if (isCoinDrop) {
-        isCoinDrop = false
-    } else {
-        isCoinDrop = true
-    }
-})
 const handleMenu = (() => {
     dispatch("handleMenuMobile")
 })
+
+const handleStatistic = (()=>{
+    statisticsEl.set(true)
+})
+
+let login_info = false
+let currentPath
+$:{
+    currentPath = browser && window.location.pathname;
+    if(currentPath === "/login"){
+        is_login = true
+    }else if (currentPath === "/login/regist"){
+        is_reg = true
+    }else if(currentPath === "/login/info"){
+        login_info = true
+        is_reg = false
+        browser &&  window.history.replaceState(null, 'info', '/login/info')
+    }
+}
+
+let is_login = false
+const handleLogin = (()=>{
+    const currentPath = browser && window.location.pathname;
+    if (currentPath === '/login') {
+        browser &&   window.history.replaceState(null, '', $routes.route);
+        handleNestedRoute.set("")
+    }else{
+        current_route.set(currentPath)
+        handleNestedRoute.set("/login")
+        is_login = true
+        browser &&  window.history.replaceState(null, 'login', '/login')
+    }
+})
+
+
+let is_reg = false
+const handleRegister = (()=>{
+    const currentPath = browser && window.location.pathname;
+    if (currentPath === '/login/regist') {
+        window.history.replaceState(null, '', $routes.route);
+        handleNestedRoute.set("")
+    }else{
+        current_route.set(currentPath)
+        handleNestedRoute.set("'/login/regist'")
+        is_reg = true
+        window.history.replaceState(null, 'register', '/login/regist')
+    }
+})
+
 </script>
 
+    {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
+         <Login on:close={handleLogin} />
+    {/if}
+
+    {#if $handleNestedRoute === "/login/regist" || browser && window.location.pathname === "/login/regist"}
+        <Signup on:close={handleRegister}/>
+    {/if}
+
+    {#if  $handleNestedRoute === "/login/info" || browser && window.location.pathname === "/login/info"  }
+        <Info />
+    {/if}
+
+
 <div id="main" class="sc-gVkuDy gAvMHL" style={` margin-right: ${chatroom}px; `} >
+    {#if $statisticsEl}
+        <Statistic on:close={handleStatistic} />       
+    {/if}
     <div class="header-wrap">
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
@@ -83,31 +106,15 @@ const handleMenu = (() => {
                     {/if}
                 </div>
             </div>
-            <!-- <div class="sc-kTLmzF dwaOxj search-input-bigwrap is-small" bis_skin_checked="1">
-                <Icon src={HiSolidSearch} title="search" />
-                <input placeholder="Game name | Provider | Category Tag" value="">
-                <button class="cancel-btn">Cancel</button>
-            </div> -->
-            <div class="sc-jtXEFf jsyNKG search-pc" bis_skin_checked="1">
-                <div class="search-input-wrap-pc" bis_skin_checked="1">
-                    <div class="sc-kTLmzF dwaOxj" bis_skin_checked="1">
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                            <Icon src={HiSolidSearch} title="search" />
-                        </svg>
-                        <input placeholder="Game name | Provider | Category Tag" value="">
-                    </div>
-                </div>
-            </div>
-
             {#if !$handleisLoading}
             {#if $handleisLoggin}
                 <MainNavbar on:handleChatRoom={handleChat} />
-                {:else}
+            {:else}
             <div class="login-in">
-                <button  on:click={()=> goto("/login")} >
+                <button  on:click={()=> handleLogin()} >
                     <p >Sign in</p>
                 </button>
-                <button on:click={()=> goto("/register")} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <button on:click={handleRegister} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Sign up</div>
                 </button>
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
@@ -118,10 +125,7 @@ const handleMenu = (() => {
                 </button>
             </div>
             {/if}
-
             {/if}
-
-
         </div>
     </div>
 </div>
@@ -145,8 +149,8 @@ const handleMenu = (() => {
                     <Icon src={HiSolidSearch} title="search" />
                 </button>
             </div>
-            {#if (id)}
-            "Log"
+            {#if $handleisLoggin}
+            <h3>Logged in </h3>
             {:else}
             <div class="header-login">
                 <button on:click={()=> goto("/login")} >
@@ -171,23 +175,7 @@ const handleMenu = (() => {
 </div>
 
 <style>
-.ftyLxH .search-pc {
-    margin-left: 4%;
-    max-width: 32.5rem;
-}
 
-.jsyNKG {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    overflow: hidden;
-    flex: 1 1 0%;
-}
-
-.ftyLxH .big-enter {
-    margin-left: 4%;
-    flex: 0 0 auto;
-}
 .elBGFt.big-enter {
     -webkit-box-pack: end;
     justify-content: flex-end;

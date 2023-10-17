@@ -1,8 +1,8 @@
 <script>
-
-import {handleCountdown } from "$lib/crashgame/socket"
-handleCountdown()
-import { crashPoint , crashRunning ,Load_animation, TrackTwo,animateCrashCurve, crashLoad, loadingCrash, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
+import { default_Wallet } from "$lib/store/coins"
+import { crashPoint , crashRunning ,Load_animation,
+     winning,crashCurve, crashLoad,
+      loadingCrash,winningEl, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
 import {
     Stage,
     Layer,
@@ -11,7 +11,10 @@ import {
     Line,
     Image
 } from "svelte-konva";
-
+import {
+    browser
+} from '$app/environment'
+import { onMount, tick } from "svelte";
 let v2 = 10
 let v3 = -10
 
@@ -29,16 +32,72 @@ let handleVerticalLoop = setInterval(()=>{
     }
 }, 10)
 
+
+let image = null;
+onMount(() => {
+    const img = document.createElement("img");
+    img.src = "https://www.linkpicture.com/q/images-removebg-preview_35.png";
+    img.onload = () => {
+        image = img;
+    };
+});
+
+let animate = null;
+$:{
+    onMount(async() => {
+        const img = new window.Image;
+ 
+        img.onload = () => {
+            animate = img;
+        };
+    });
+}
+
 let width = 690
 let height = 310
 let objWidth = 220
 
 </script>
 
-
 <div class="chart-crash">
 <Stage config={{ width: width, height:height }}>
     <Layer>
+        {#if $winning}
+            <Text config={{
+                text: `${($winningEl).toFixed(2)} ${$default_Wallet.coin_name} `,
+                fontSize: 25,
+                fill: '#ffff',
+                shadowBlur: 1,
+                x: 357,
+                y: 50.5,
+                fontStyle: '600',
+                fontFamily: 'Helvetica',
+            }}/> 
+            <Text config={{
+                text: 'You won',
+                fontSize:28,
+                fill: '#43b309',
+                shadowBlur: 1,
+                x: 230,
+                y: 50.5,
+                fontStyle: '600',
+                fontFamily: 'Helvetica',
+            }}/> 
+            <Image config={{
+                x:213,
+                y:70,
+                width: 272,
+                height: 160,
+                image
+            }} />
+        {/if}
+
+        <Image config={{
+            x:23,
+            y:70,
+          
+            image:animate
+        }} />
 
         {#if $hasCrashed}
             <Text config={{
@@ -323,7 +382,7 @@ let objWidth = 220
             closed: true,
             stroke: '#ffffff0e',
         }}/>
-
+   
     </Layer>
 </Stage>
 </div>

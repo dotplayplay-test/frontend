@@ -117,6 +117,40 @@
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 1.25rem;
 }
+
+@media screen and (max-width:1000px) {
+    .GNbnV {
+        width: 100vw;
+        /* background-color: greenyellow; */
+    }
+
+    .bPsBUR .gradient-wrap  {
+        /* background-color: rgb(10, 10, 190); */
+       
+        
+    }
+
+    .bPsBUR {
+        width: 100vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .GNbnV {
+        width: 100vw;
+        /* background-color: greenyellow; */
+    }
+
+    .bPsBUR .gradient-wrap  {
+        /* background-color: rgb(10, 10, 190); */
+        width: 100vw;
+    }
+
+    .bPsBUR {
+        width: 100vw;
+    }
+}
+
 .GNbnV .list-one, .GNbnV .list-two {
     width: 249px;
     margin-right: 12px;

@@ -1,7 +1,7 @@
 <script>
 import { createEventDispatcher } from "svelte";
 const dispatch = createEventDispatcher()
-import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import { ppdWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 
 let coins = [{
     id: 1,
@@ -9,7 +9,6 @@ let coins = [{
     coin_fname: $usdt_Wallet.coin_fname,
     coin_image: $usdt_Wallet.coin_image,
     balance: $usdt_Wallet.balance,
-    suffix:  $usdt_Wallet.suffix,
     select:  $usdt_Wallet.coin_name === $default_Wallet.coin_name,
     networks: {
         erc: {
@@ -31,29 +30,17 @@ let coins = [{
     coin_name: $ppdWallet.coin_name,
     coin_fname: $ppdWallet.coin_fname,
     coin_image: $ppdWallet.coin_image,
-    balance: $ppdWallet.balance,
-    suffix: $ppdWallet.suffix,
-    select:  $ppdWallet.coin_name === $default_Wallet.coin_name,
+    balance: $ppdWallet.balance, 
+     select:  $ppdWallet.coin_name === $default_Wallet.coin_name,
     address: $ppdWallet.address,
 },
-    {
-        id: 3,
-        coin_name: $ppeWallet.coin_name,
-        coin_fname: $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select:  $ppeWallet.coin_name === $default_Wallet.coin_name,
-        address: $ppeWallet.address,
-    },
     {
         id: 4,
         coin_name: $pplWallet.coin_name,
         coin_fname: $pplWallet.coin_fname,
         coin_image: $pplWallet.coin_image,
         balance: $pplWallet.balance,
-        suffix: $pplWallet.suffix,
-        select:  $pplWallet.coin_name === $default_Wallet.coin_name,
+      select:  $pplWallet.coin_name === $default_Wallet.coin_name,
         address: $pplWallet.address,
     },
     {
@@ -62,11 +49,11 @@ let coins = [{
         coin_fname: $ppfWallet.coin_fname,
         coin_image: $ppfWallet.coin_image,
         balance: $ppfWallet.balance,
-        suffix: $ppfWallet.suffix,
-        select: $ppfWallet.coin_name === $default_Wallet.coin_name,
+      select: $ppfWallet.coin_name === $default_Wallet.coin_name,
         address: $ppfWallet.address,
     },
 ]
+
 
 const handleCoinSelect = ((e)=>{
     dispatch("handleCoinSelect", e)
@@ -90,7 +77,7 @@ const handleCoinSelect = ((e)=>{
                                 <div class="amount-wrap">
                                     <div class="sc-Galmp erPQzq coin notranslate monospace">
                                         <div class="amount">
-                                            <span class="amount-str">{coin.balance}<span class="suffix">{coin.suffix}</span>
+                                            <span class="amount-str">{coin.balance}<span class="suffix">00</span>
                                             </span>
                                         </div>
                                     </div>
