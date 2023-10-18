@@ -1,9 +1,7 @@
 <script>
 import "../../styles/transactions/deposit.css"
-
 /** @type {import('./$types').PageLoad} */
 export let data;
-
 
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
@@ -14,6 +12,7 @@ import SiVault from "svelte-icons-pack/si/SiVault";
 import {
     checkIsOpen
 } from "$lib/store/swaps/index"
+import { showcoins } from "$lib/store/deposit"
 import BsCashCoin from "svelte-icons-pack/bs/BsCashCoin";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 
@@ -36,6 +35,7 @@ const handleClose = (() => {
 const handleOpenCoinSelect = (() => {
     if ($checkIsOpen) {
         checkIsOpen.set(false)
+        showcoins.set(false)
     } else {
         checkIsOpen.set(true)
     }
@@ -53,7 +53,7 @@ const handleOpenCoinSelect = (() => {
             {/if}
 
             <div class={`dialog-head ${$checkIsOpen ? "has-back" : "has-close"}`}>
-                <div class="dialog-title">Wallet</div>
+                <div class="dialog-title">{ $showcoins ? "Choose Coin" : "Wallet"}</div>
                 {#if !$checkIsOpen}
                 <div class="sc-fZzbTk sobNK">
                     <button>
@@ -320,6 +320,14 @@ const handleOpenCoinSelect = (() => {
         background-color: rgb(67, 179, 9);
         color: rgb(255, 255, 255);
     }
+    .exYdcu {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(23, 24, 27);
+    padding: 1.125rem 0px;
+    border-top: 1px solid rgba(128, 141, 152, 0.1);
+}
 }
 
 @media screen and (max-width: 650px) {
@@ -463,6 +471,12 @@ const handleOpenCoinSelect = (() => {
         font-size: 12px;
     }
 
+.exYdcu {
+    position: relative;
+    padding: 1.125rem 0px;
+    border-top: 1px solid rgba(128, 141, 152, 0.1);
+}
+
 }
 
 .jEHNdH .tab.active {
@@ -486,11 +500,7 @@ const handleOpenCoinSelect = (() => {
     border-radius: 1.25rem;
 }
 
-.exYdcu {
-    position: relative;
-    padding: 1.125rem 0px;
-    border-top: 1px solid rgba(128, 141, 152, 0.1);
-}
+
 
 .iTVeFz {
     margin: 0px auto;

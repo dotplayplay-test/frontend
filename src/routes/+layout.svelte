@@ -35,16 +35,16 @@ let isMenu = false
 let sideDetection = 0
 
 $:{
-        for(let i = 0; i < $handle_IsRedwinners.length; i++){
-            let wllet = {
-                coin_name: $handle_IsRedwinners[i].token,
-                coin_image:  $handle_IsRedwinners[i].token_img,
-                balance:  $handle_IsRedwinners[i].update_bal
-            }
-            if($profileStore.user_id === $handle_IsRedwinners[i].user_id){
-                default_Wallet.set(wllet)
-            }
+    for(let i = 0; i < $handle_IsRedwinners.length; i++){
+        let wllet = {
+            coin_name: $handle_IsRedwinners[i].token,
+            coin_image:  $handle_IsRedwinners[i].token_img,
+            balance:  $handle_IsRedwinners[i].update_bal
         }
+        if($profileStore.user_id === $handle_IsRedwinners[i].user_id){
+            default_Wallet.set(wllet)
+        }
+    }
 } 
 
 

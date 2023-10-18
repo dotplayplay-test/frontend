@@ -4,8 +4,8 @@
 
 <div class="sc-hrJsxi jdKyKT bcd ">
     <div class="left">
-        <div class="title ttu bold">NND Unlock</div>
-        <div class="desc">Enjoy the game while unlocking NND to your wallet</div>
+        <div class="title ttu bold">PPD Unlock</div>
+        <div class="desc">Enjoy the game while unlocking PPD to your wallet</div>
         <div class="detail">
             <span>Details</span>
             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -17,11 +17,11 @@
         <div class="preview">
             <div class="released">
                 <div class="type">Unlocked  </div>
-                <div class="value bold">0.00 NND</div>
+                <div class="value bold">0.00 PPD</div>
             </div>
             <div class="lucked">
                 <div class="type">Locked</div>
-                <div class="value bold">0.00 NND</div>
+                <div class="value bold">0.00 PPD</div>
             </div>
         </div>
         <div class="percent">
@@ -53,17 +53,18 @@
     border-radius: 1.25rem;
     overflow: hidden;
     /* display: flex; */
-    padding: 1.5rem 1.25rem;
+    margin-top: 15px;
+    padding: .7rem 1.25rem;
     background-image: linear-gradient(to right, rgba(147, 42, 195, 0.76) 27%, rgb(139, 43, 184) 57%, rgb(48, 52, 60) 121%);
     color: rgb(255, 255, 255);
-    font-size: 0.875rem;
+    font-size: 0.775rem;
 }
 .left {
     position: relative;
     z-index: 3;
 }
 .left .title {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
 }
 .jdKyKT .left {
     flex: 0 1 50%;
@@ -85,7 +86,7 @@
 .jdKyKT .left .desc {
     line-height: 1.43;
     flex: 1 1 0%;
-    margin-top: 0.625rem;
+    margin-top: 0.325rem;
     max-width: 13.75rem;
 }
 .left .detail {
@@ -110,7 +111,7 @@
     justify-content: space-between;
 }
 .sc-hrJsxi .right .preview {
-    margin-top: 2.25rem;
+    margin-top: .5rem;
 }
 .jdKyKT .right .preview {
     display: flex;
@@ -137,13 +138,14 @@
     content: "";
     position: absolute;
     top: 0px;
-    bottom: 0.875rem;
+    bottom: 0.175rem;
     left: 50%;
     border-right: 1px solid rgba(250, 255, 247, 0.14);
     z-index: 1;
 }
 .right .percent {
     line-height: 1.43;
+    margin-bottom: 42px;
 }
 .jdKyKT .right .bar-wrap {
     height: 0.5rem;
@@ -151,7 +153,7 @@
     border-radius: 0.25rem;
     background: rgba(23, 24, 27, 0.3);
     position: relative;
-    margin: 0.5rem 0px;
+    margin: .5rem 0px;
 }
 .jdKyKT .right .bar-wrap .pointer {
     position: absolute;

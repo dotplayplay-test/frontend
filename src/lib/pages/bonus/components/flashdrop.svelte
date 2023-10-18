@@ -43,7 +43,7 @@ const handleCancel = (()=>{
     margin-right: 1.3rem;
 }
 .dIGSON {
-    height: 15rem;
+    height: 16rem;
     border-radius: 1.25rem;
     overflow: hidden;
     padding: 0.91rem 1.25rem;

@@ -6,6 +6,13 @@ import { allcashback } from "./store/index"
 import Levelup from "./components/level_up.svelte";
     import Flashdrop from "./components/flashdrop.svelte";
     import Unlockppd from "./components/unlockppd.svelte";
+    import SpinBar from "./components/spin-bar.svelte";
+    import RollCompetition from "./components/roll-competition.svelte";
+    import MasterMedal from "./components/master-medal.svelte";
+    import Rain from "./components/rain.svelte";
+    import Coindrop from "./components/coindrop.svelte";
+    import CoinTip from "./components/Coin-tip.svelte";
+    import HitBingo from "./components/hit-bingo.svelte";
 
 // $: console.log($allcashback)
 
@@ -80,9 +87,26 @@ import Levelup from "./components/level_up.svelte";
     </div>
     <div class="page-bonus-list midden">
         <Flashdrop />
-        <Unlockppd />
-        <Weekly />
-        <Monthly />
+        <Rain />
+        <CoinTip />
+        <Coindrop />
+        <HitBingo />
+    </div>
+
+
+    <div style="padding: 70px 0">
+        <div class="bonus-num-title" >
+            <p class="g-t last">
+                <span>General Bonus</span>
+                Bonus
+            </p>
+        </div>
+        <div class="page-bonus-list midden">
+            <MasterMedal />
+            <SpinBar />
+            <RollCompetition />
+            <Unlockppd />
+        </div>
     </div>
 
 </div>

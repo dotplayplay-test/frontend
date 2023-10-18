@@ -1,20 +1,30 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCopy from "svelte-icons-pack/io/IoCopy";
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import { onMount } from 'svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { UserProfileEl } from "$lib/index";
 const { handleDefaultwallet, handleUSDTwallet, handlePPLwallet,handlePPFwallet, handlePPDwallet } = UserProfileEl()
-import { default_Wallet, usdt_Wallet } from "$lib/store/coins"
+import { default_Wallet } from "$lib/store/coins";
+import { checkIsOpen } from "$lib/store/swaps/index";
+import { showcoins } from "$lib/store/deposit"
+import RequestAddress from './request-address.svelte';
+import AddressDisplay from './address-display.svelte';
 
+import { handleAuthToken } from "$lib/store/routes";
+import { is_loading, deposit_info } from "$lib/store/deposit"
+import axios from "axios"
+import {ServerURl} from "$lib/backendUrl"
+const url = ServerURl()
 
-let isSelectCoin = false
-const handlecoinSelect = (() => {
-    if (isSelectCoin) {
-        isSelectCoin = false
+const handlecoinSelec = ((e) => {
+    if ($showcoins) {
+        default_Wallet.set(e.detail)
+        showcoins.set(false)
+        checkIsOpen.set(false)
     } else {
-        isSelectCoin = true
+        showcoins.set(true)
+    checkIsOpen.set(true)
     }
 })
 
@@ -28,45 +38,45 @@ $:{
     })
 }
 
-let erc = true
-let trc = false
-let bep = false
-
-const handleNetwork = ((e)=>{
-    if(e === 1){
-        erc = true
-        trc = false
-        bep = false
-    }else if(e === 2){
-        erc = false
-        trc = false
-        bep = true
-    }else{
-        erc = false
-        trc = true
-        bep = false
-    }
+const handlecoinSelectEl = (()=>{
+    checkIsOpen.set(true)
+    handlecoinSelec()
+})
+ 
+let is_requested = false
+const handleSubmit = (async(e)=>{
+    is_requested = true
 })
 
-
-const handleCoins = ((e) => {
-    default_Wallet.set(e.detail)
-    handlecoinSelect()
+const handleFetchPendingOrder = (async()=>{
+    await axios.get(`${url}/api/deposit/pending-order`, {
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        deposit_info.set(res.data[0])
+    })
+    .catch((err)=>{
+        is_loading.set(false)
+    })
 })
 
+handleFetchPendingOrder()
 
 </script>
 
 <div class="sc-gLEhor lhZODp" id="deposit">
-    {#if isSelectCoin}
-    <Selectcoin on:handleCoinSelect={handleCoins}/>
+    {#if $showcoins}
+    <Selectcoin on:handleCoinSelect={handlecoinSelec}/>
     {/if}
         <div class="sc-ezbkAF kDuLvp input ">
             <div class="input-label">
                 <div style="flex: 1 1 0%;">Deposit Currency</div>
                 <a href="/transactions/deposit/DOGE">Record</a>
             </div>
-            <button on:click={handlecoinSelect} class="sc-kszsFN evIEvq input-control">
+            <button on:click={handlecoinSelectEl} class="sc-kszsFN evIEvq input-control">
                 <div class="sc-cBIieI wvKye">
                     <div class="wrap">
                         <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
@@ -86,95 +96,12 @@ const handleCoins = ((e) => {
         </div>
 
         {#if $default_Wallet.coin_name === "USDT"}
-        <div class="sc-zjkyB cpVBtC">
-            <div class="sc-czvZiG exgnid bcd-label">
-                <p>First Deposit Bonus</p>
-                <span>More</span>
-            </div>
-            <div class="sc-dXNJws kyYKJa">
-                <div class="bg-light light-ani">
-                    <div class="sc-jFkwbb bNDdwa bcd-left">
-                        <p class="one">$30<span>(or above to get bonus)</span>
-                        </p>
-                        <p class="two">≈ 30 USDT</p>
-                    </div>
-                    <div class="sc-bOtlzW gCfefU bcd-right">
-                        <div class="wrap">
-                            <div class="sc-bQFuvY dftgop sun-flower">
-                                <img class="img-bg" src="https://static.nanogames.io/assets/sf_w.adddd7aa.png" alt="sf">
-                                <img class="img-bonus" src="https://static.nanogames.io/assets/bonus.8a408dd9.png" alt="bonus">
-                            </div>
-                            <div class="info">
-                                <p class="one">
-                                    <b>+80%</b>
-                                    <span>Bonus</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sc-dpAhYB emReoO">
-            <div class="sc-fSDTwv hgHrvG">
-                <div class="label">Choose Network</div>
-                <div class="btn-wrap">
-                    <div class="scroll-box">
-                        <div class="btn-space">
-                            <button on:click={()=>handleNetwork(1)} class={erc ? `active` : ""} disabled={erc}>ERC20</button>
-                        </div>
-                        <div class="btn-space">
-                            <button on:click={()=>handleNetwork(2)} class={bep ? `active` : ""} disabled={bep}>BEP20</button>
-                        </div>
-                        <div class="btn-space">
-                            <button on:click={()=>handleNetwork(3)} class={trc ? `active` : ""} disabled={trc}>TRC20</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sc-wkwDy blotCy">
-                <div class="label">
-                    <div>Deposit Address&nbsp;( Note: Only <span class="cl-primary"> {$usdt_Wallet.coin_name} Coin </span> )</div>
-                    {#if erc}
-                        <div class="notranslate">{$usdt_Wallet.erc.substring(0, 7).concat('.......')}</div> 
-                        {:else if trc}
-                        <div class="notranslate">{$usdt_Wallet.trc.substring(0, 7).concat('.......')}</div> 
-                        {:else if bep}
-                        <div class="notranslate">{$usdt_Wallet.bep.substring(0, 7).concat('.......')}</div> 
-                    {/if}
-                </div>
-                <div class="box">
-                    <div class="cont">
-                        {#if erc}
-                        <input class="address" readonly="" value={$usdt_Wallet.erc}>
-                        {:else if trc}
-                        <input class="address" readonly="" value={$usdt_Wallet.trc}>
-                        {:else if bep}
-                        <input class="address" readonly="" value={$usdt_Wallet.bep}>
-                    {/if}
-
-                        <button class="sc-iqseJM cBmlor button button-normal copy-button">
-                            <div class="button-inner">
-                                <Icon src={IoCopy}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="sc-gDGHff jeroAP">
-                {#if erc}
-                 <img src={$usdt_Wallet.qr_code} alt="qr.png">
-                 {:else if trc}
-                 <img src={$usdt_Wallet.qr_code} alt="qr.png">
-                 {:else if bep}
-                 <img src={$usdt_Wallet.qr_code} alt="qr.png">
-                {/if}
-            </div>
-            <div class="sc-ywFzA egWBux">
-                <p><span class="cl-primary">NOTICE:</span> Send only USDT to this address. Coins will be deposited after 6 network confirmations.</p>
-            </div>
-        </div>
+            {#if $deposit_info && $deposit_info.status === "pending"}
+                <AddressDisplay />   
+            {:else}
+            <RequestAddress on:display={handleSubmit} />
+        {/if}
+          
         {:else}
         <div class="sc-gRtYjc fIolUb">
             <div class="oval">

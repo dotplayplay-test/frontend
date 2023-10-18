@@ -94,18 +94,18 @@ const handleCancel = (()=>{
                                     <input type="password"  autocomplete="off" placeholder="Login Password" bind:value={password} >
                                 </div>
                             </div>
-                            {#if  isREf}
+                            <!-- {#if  isREf} -->
                             <div class="sc-ezbkAF kDuLvp input ">
                                 <div class="input-label">Referral/Promo Code (Optional)</div>
                                 <div class="input-control">
                                     <input type="text" bind:value={referral_code}  autocomplete="off" placeholder="Referral/Promo Code" >
                                 </div>
                             </div>
-                            {:else}
+                            <!-- {:else}
                             <button on:click={()=> isREf = true} class="casino-code hover">Referral/Promo Code (Optional)
                                  <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
                             </button>
-                            {/if}
+                            {/if} -->
                         </div>
                         <hr>
                         <div class="box">
