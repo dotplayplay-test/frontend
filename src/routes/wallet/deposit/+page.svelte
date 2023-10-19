@@ -96,12 +96,11 @@ handleFetchPendingOrder()
         </div>
 
         {#if $default_Wallet.coin_name === "USDT"}
-            {#if $deposit_info && $deposit_info.status === "pending"}
+            {#if $deposit_info && $deposit_info.status === "Pending"}
                 <AddressDisplay />   
             {:else}
             <RequestAddress on:display={handleSubmit} />
         {/if}
-          
         {:else}
         <div class="sc-gRtYjc fIolUb">
             <div class="oval">

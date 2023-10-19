@@ -1,7 +1,7 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
-
+import { handleisLoggin } from "$lib/store/profile";
 </script>
 
 <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
@@ -10,8 +10,8 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
             <div class="left">
                 <div class="title ttu bold">Great bonus for<div class="theme1">Every deposit</div>
                 </div><div class="desc">
-                    <div class="speed ttu bold">NND unlock speed<span class="theme1 up">+5%</span>
-                    </div>Available for all players<br><span class="date bold ttc">before 10/24/2023</span></div>
+                    <div class="speed ttu bold">PPD unlock speed<span class="theme1 up">+5%</span>
+                    </div>Available for all players<br><span class="date bold ttc"></span></div>
                 <div class="detail">
                     <span>Details</span>
                 </div>
@@ -23,7 +23,7 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
                         <div class="front"></div>
                         <div class="text ttu bold">
                             <div class="small">Up to</div>
-                            <div class="large">200% BONUS</div>
+                            <div class="large">180% BONUS</div>
                         </div>
                         <div class="effect">
                             <div class="effect-item"></div>
@@ -33,47 +33,42 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
                             <Icon src={AiOutlineDoubleRight}  size="18"  color="rgb(255, 212, 68)" className="custom-icon" title="arror" />
                         </div>
                     </div>
+                    {#if $handleisLoggin}
+                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                            <div class="button-inner">Deposit Now</div>
+                        </button>
+                        {:else}
+                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                            <div class="button-inner">Sign up</div>
+                        </button>
+                    {/if}
+              
+                </div>
+                <div class="item ">
+                    <div class="stage">
+                        <div class="mask"></div>
+                        <div class="front"></div>
+                        <div class="text ttu bold">
+                            <div class="small">Up to</div>
+                            <div class="large">240% BONUS</div>
+                        </div>
+                        <div class="effect">
+                            <div class="effect-item"></div>
+                            <div class="effect-item"></div>
+                        </div>
+                        <div class="stage__arrow flex-center">
+                            <Icon src={AiOutlineDoubleRight}  size="18"  color="rgb(255, 212, 68)" className="custom-icon" title="arror" />
+                        </div>
+                    </div>
+                    {#if $handleisLoggin}
+                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                        <div class="button-inner">Deposit Now</div>
+                    </button>
+                    {:else}
                     <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
                         <div class="button-inner">Sign up</div>
                     </button>
-                </div>
-                <div class="item  ">
-                    <div class="stage">
-                        <div class="mask"></div>
-                        <div class="front"></div>
-                        <div class="text ttu bold">
-                            <div class="small">Up to</div>
-                            <div class="large">220% BONUS</div>
-                        </div>
-                        <div class="effect">
-                            <div class="effect-item"></div>
-                            <div class="effect-item"></div>
-                        </div>
-                        <div class="stage__arrow flex-center">
-                            <Icon src={AiOutlineDoubleRight}  size="18"  color="rgb(255, 212, 68)" className="custom-icon" title="arror" />
-                        </div>
-                    </div>
-                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal" disabled="">
-                        <div class="button-inner">Sign up</div>
-                    </button>
-                </div>
-                <div class="item  ">
-                    <div class="stage">
-                        <div class="mask"></div>
-                        <div class="front"></div>
-                        <div class="text ttu bold">
-                            <div class="small">Up to</div>
-                            <div class="large">250% BONUS</div>
-                        </div><div class="effect">
-                            <div class="effect-item"></div>
-                            <div class="effect-item"></div>
-                        </div><div class="stage__arrow flex-center">
-                            <Icon src={AiOutlineDoubleRight}  size="18"  color="rgb(255, 212, 68)" className="custom-icon" title="arror" />
-                        </div>
-                    </div>
-                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal" disabled="">
-                        <div class="button-inner">Sign up</div>
-                    </button>
+                {/if}
                 </div>
                 <div class="item  ">
                     <div class="stage">
@@ -82,15 +77,45 @@ import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
                         <div class="text ttu bold">
                             <div class="small">Up to</div>
                             <div class="large">300% BONUS</div>
+                        </div><div class="effect">
+                            <div class="effect-item"></div>
+                            <div class="effect-item"></div>
+                        </div><div class="stage__arrow flex-center">
+                            <Icon src={AiOutlineDoubleRight}  size="18"  color="rgb(255, 212, 68)" className="custom-icon" title="arror" />
+                        </div>
+                    </div>
+                    {#if $handleisLoggin}
+                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                        <div class="button-inner">Deposit Now</div>
+                    </button>
+                    {:else}
+                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                        <div class="button-inner">Sign up</div>
+                    </button>
+                {/if}
+                </div>
+                <div class="item  ">
+                    <div class="stage">
+                        <div class="mask"></div>
+                        <div class="front"></div>
+                        <div class="text ttu bold">
+                            <div class="small">Up to</div>
+                            <div class="large">360% BONUS</div>
                         </div>
                         <div class="effect">
                             <div class="effect-item"></div>
                             <div class="effect-item"></div>
                         </div>
                     </div>
-                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal" disabled="">
+                    {#if $handleisLoggin}
+                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
+                        <div class="button-inner">Deposit Now</div>
+                    </button>
+                    {:else}
+                    <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal">
                         <div class="button-inner">Sign up</div>
                     </button>
+                {/if}
                 </div>
             </div>
         </div>

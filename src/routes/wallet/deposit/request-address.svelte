@@ -61,7 +61,6 @@ const handleSubmit = (async()=>{
                 err_msg = res.data.message
             }else{
                 deposit_info.set(res.data.data)
-                console.log(res.data.data)
                 dispatch("display", data )
             }
         })

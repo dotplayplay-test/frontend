@@ -5,7 +5,7 @@ import { createEventDispatcher } from 'svelte';
 import { handleAuthToken } from "$lib/store/routes"
 import { handleisLoggin } from "$lib/store/profile";
 
-import { error, affiliate_info ,affiliate_list, affilliate_info } from "$lib/pages/affiliate/main/store/index";
+import { affiliate_info, affilliate_info } from "$lib/pages/affiliate/main/store/index";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 const dispatch = createEventDispatcher()
 import axios from "axios"
