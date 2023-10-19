@@ -14,7 +14,9 @@ import UsdRules from '../component/usd_rules.svelte';
 import Home from './home.svelte';
 import { handleAuthToken } from "$lib/store/routes"
 import axios from "axios";
-
+import {
+    goto
+} from "$app/navigation"
 
 const dispatch = createEventDispatcher()
 
@@ -219,7 +221,7 @@ const handleCreateReferral = (async()=>{
         {/if}
 
         <div class="character banner-layer welcome"></div>
-        <button class="management">
+        <button on:click={()=> goto("/my-affiliate/dashboard")} class="management">
             <span style="margin: 0px 5px; display:flex;">
                 <Icon src={TiClipboard} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
             </span>
@@ -237,7 +239,6 @@ const handleCreateReferral = (async()=>{
 
 
     <div class="container">
-
         {#if !$handleisLoggin}
         <div class="section why">
             <div class="title ttu">Start Earning Today</div>

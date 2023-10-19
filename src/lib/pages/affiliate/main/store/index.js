@@ -3,6 +3,9 @@ import { writable } from "svelte/store";
 let err = ''
 export let error = writable(err)
 
+let is_loadingEl = false
+export let is_loading = writable(is_loadingEl)
+
 let affilliate_infoEl = ''
 export let affilliate_info = writable(affilliate_infoEl)
 

@@ -5,7 +5,7 @@ import { createEventDispatcher } from 'svelte';
 import { handleAuthToken } from "$lib/store/routes"
 import { handleisLoggin } from "$lib/store/profile";
 
-import { error, affiliate_info ,affiliate_list, affilliate_info } from "./store/index";
+import { error, affiliate_info ,affiliate_list, affilliate_info } from "$lib/pages/affiliate/main/store/index";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 const dispatch = createEventDispatcher()
 import axios from "axios"
@@ -75,7 +75,7 @@ $:{
                         <div class="desc">Newly Available USD Rewards</div></div>
                     <div class="tips">
                         <div class="tips_flex">
-                            <div>Received:&nbsp;<span class="theme">{$affilliate_info.available_usd_reward}</span>
+                            <div>Received:&nbsp;<span class="theme">{$affiliate_info.total_earn_me}</span>
                                 <span class="unit gapx"> USD</span>
                             </div>
                             <div class="question-box">
@@ -120,7 +120,7 @@ $:{
                                 </div>
                                 <div class="td fc yellow">
                                     <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
-                                    <span>0</span>
+                                    <span>{friends.earn_me}</span>
                                 </div>
                             </div>
                             {/each}
@@ -149,7 +149,7 @@ $:{
                     <div class="total-commission">
                         <div class="commission-desc">
                             <span class="theme">Commission</span> You've Received in Total:</div>
-                        <div class="commission-amount">0<span class="unit">USD</span></div>
+                        <div class="commission-amount">{$affiliate_info.total_commission_reward}<span class="unit">USD</span></div>
                     </div>
                     <a class="withdraw" href="//mycasino.nanogames.io/mycasino/commissions">Withdraw</a>
                 </div>
