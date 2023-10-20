@@ -10,7 +10,7 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
     } from "./store"
 import { dicegameplays } from "../games/ClassicDice/store/index"
 import { week_cashback , month_cashback} from "../store/cashbacks";
-
+import { chats } from "$lib/chat-room/store/index"
 export const handleCountdown = (()=>{
     socket.on("countdown", data=>{
         crashLoad.set(data.toFixed(2))
@@ -258,5 +258,9 @@ export const handleCountdown = (()=>{
 
     socket.on("monthly-count-down", data=>{
         month_cashback.set(data)
+    })
+
+    socket.on("public-chat", data=>{
+        chats.set(data)
     })
 })

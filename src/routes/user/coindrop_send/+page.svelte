@@ -7,21 +7,10 @@ import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine"
 import { usePublicMessages } from "$lib/chat-room/componets/index"
 import { UserProfileEl } from "$lib/index";
 import { onMount } from 'svelte';
-const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
-const {
-    sendMessage
-} = usePublicMessages()
-import {
-    ppdWallet,
-    ppeWallet,
-    pplWallet,
-    usdt_Wallet,
-    default_Wallet
-} from "$lib/store/coins"
-import {
-    profileStore
-} from '$lib/store/profile';
+const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet,  handlePPLwallet, handlePPDwallet } = UserProfileEl()
+const { sendMessage } = usePublicMessages()
+import { ppdWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import { profileStore } from '$lib/store/profile';
 
 $:{
     onMount(async()=>{
@@ -29,7 +18,6 @@ $:{
         handleUSDTwallet()
         handlePPFwallet()
         handlePPLwallet()
-        handlePPEwallet()
         handlePPDwallet()
     })
 }
@@ -41,7 +29,6 @@ let coins = [{
         coin_fname: $usdt_Wallet.coin_fname,
         coin_image: $usdt_Wallet.coin_image,
         balance: $usdt_Wallet.balance,
-        suffix: $usdt_Wallet.suffix,
         select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
     },
     {
@@ -54,18 +41,9 @@ let coins = [{
         select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
     },
     {
-        id: 3,
-        coin_name: $ppeWallet.coin_name,
-        coin_fname: $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select: ($ppeWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
         id: 4,
         coin_name: $pplWallet.coin_name,
-        coin_fname: $ppeWallet.coin_fname,
+        coin_fname: $pplWallet.coin_fname,
         coin_image: $pplWallet.coin_image,
         balance: $pplWallet.balance,
         suffix: $pplWallet.suffix,
