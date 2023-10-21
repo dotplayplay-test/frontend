@@ -136,6 +136,7 @@ const handleRegister = (()=>{
 <!-- ============================================ Mobile view =========================================== -->
 <div class="mobile">
     <div class="sc-hJhJFJ jVgBRe" style="transform: translate3d(0px, 0%, 0px);">
+        {#if !$handleisLoading}
         <div class="login-top">
             <div class="logo-wrap">
                 <img alt="logo" style="border-radius: 12px;" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
@@ -150,7 +151,7 @@ const handleRegister = (()=>{
                     <Icon src={HiSolidSearch} title="search" />
                 </button>
             </div> -->
-            {#if !$handleisLoading}
+          
             {#if $handleisLoggin}
             <!-- <MainNavbar on:handleChatRoom={handleChat} /> -->
             {:else}
@@ -162,9 +163,9 @@ const handleRegister = (()=>{
                     <div class="button-inner">Sign up</div>
                 </button>
             </div>
-            {/if}
-        {/if}
+            {/if}        
         </div>
+     
         <div class="bottom">
             <div class="left"></div>
             <div class="right">
@@ -174,6 +175,7 @@ const handleRegister = (()=>{
                 </button>
             </div>
         </div>
+        {/if}
         
     </div>
 </div>
