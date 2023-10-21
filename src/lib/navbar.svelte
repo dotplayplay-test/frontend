@@ -18,6 +18,7 @@ import Login from "./nestedpages/auth/login/login.svelte";
 import Signup from "./nestedpages/auth/signup/signup.svelte";
 import Info from "./nestedpages/auth/info/info.svelte";
 import { handleNestedRoute } from "$lib/store/nested_routes"
+import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
 
 const dispatch = createEventDispatcher()
 const handleChat = ((e) => {
@@ -99,9 +100,9 @@ const handleRegister = (()=>{
             <div class="sc-hGnimi ftyLxH left">
                 <div class="sc-iukxot jivBdD logo-pc">
                     {#if styles }
-                    <img alt="logo" class="logo-com" src="https://www.linkpicture.com/q/dpp-logowhite.png">
+                    <img alt="logo" class="logo-com" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
                     {:else}
-                    <img style="border-radius: 12px;" class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
+                    <img style="border-radius: 12px;" class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
                     {/if}
                 </div>
             </div>
@@ -118,7 +119,7 @@ const handleRegister = (()=>{
                 </button>
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
                     <div class="chat-btn ">
-                        <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+                        <Icon src={BsDroplet}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                         <div class="sc-fotOHu gGSOuF badge ">26</div>
                     </div>
                 </button>
@@ -136,20 +137,21 @@ const handleRegister = (()=>{
     <div class="sc-hJhJFJ jVgBRe" style="transform: translate3d(0px, 0%, 0px);">
         <div class="login-top">
             <div class="logo-wrap">
-                <img alt="logo" style="border-radius: 12px;" src="https://www.linkpicture.com/q/dpp-favicon-logo.jpg">
+                <img alt="logo" style="border-radius: 12px;" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
             </div>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
-            <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
+            <!-- <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
                 <button>
                     <Icon src={HiSolidSearch} title="search" />
                 </button>
-            </div>
+            </div> -->
+            {#if !$handleisLoading}
             {#if $handleisLoggin}
-            <h3>Logged in </h3>
+            <!-- <MainNavbar on:handleChatRoom={handleChat} /> -->
             {:else}
             <div class="header-login">
                 <button on:click={()=> goto("/login")} >
@@ -160,22 +162,24 @@ const handleRegister = (()=>{
                 </button>
             </div>
             {/if}
+        {/if}
         </div>
         <div class="bottom">
             <div class="left"></div>
             <div class="right">
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB chat-btn">
-                    <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+                    <Icon src={BsDroplet}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                     <div class="sc-fotOHu gGSOuF badge ">99</div>
                 </button>
             </div>
         </div>
+        
     </div>
 </div>
 
 <style>
 
-.elBGFt.big-enter {
+/* .elBGFt.big-enter {
     -webkit-box-pack: end;
     justify-content: flex-end;
 }
@@ -186,5 +190,5 @@ const handleRegister = (()=>{
     align-items: center;
     overflow: hidden;
     margin-left: 6px;
-}
+} */
 </style>

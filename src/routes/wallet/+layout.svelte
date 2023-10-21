@@ -53,8 +53,8 @@ const handleOpenCoinSelect = (() => {
             </button>
             {/if}
 
-            <div class={`dialog-head ${$checkIsOpen || !$handleSecurity ? "has-back" : "has-close"}`}>
-                {#if $handleSecurity}
+            <div class={`dialog-head ${$checkIsOpen || $handleSecurity ? "has-back" : "has-close"}`}>
+                {#if !$handleSecurity}
                 <div class="dialog-title">{ $showcoins ? "Choose Coin" : "Wallet"}</div>
                 {:else}
                 <div class="dialog-title">{"Security-2FA"}</div>
@@ -77,7 +77,7 @@ const handleOpenCoinSelect = (() => {
 
            
             <div class="dialog-body no-style" style="z-index: 2; transform: none;">
-                {#if $handleSecurity}
+                {#if !$handleSecurity}
                 <div id="wallet" class="sc-kMyqmI hioXRL">
                     <div class="sc-cAUCVt fsVpnS">
                         <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${ "/wallet/deposit" === data.route  ? `active` : "" } `}>

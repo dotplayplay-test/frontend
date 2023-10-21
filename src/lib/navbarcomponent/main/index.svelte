@@ -86,6 +86,7 @@ const handleChat = ((e) => {
 })
 </script>
 
+<div id="main">
 {#if !$handleisLoading && $default_Wallet.coin_image != undefined}
 <div class="sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
@@ -130,7 +131,7 @@ const handleChat = ((e) => {
                     <div class="wave"></div>
                 </div>
             {/if}
-            <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
+            <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class ="svg">
                 <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
                 {#if userProfile}
                     <Navprofile />
@@ -223,7 +224,35 @@ const handleChat = ((e) => {
 </div>
 {/if}
 
+</div>
 
+
+<div class="mobile">
+    <!-- <div class="sc-gjNHFA jlttqa wallet-enter">
+        <div class="sc-fmciRz LQlWw">
+            <div class="sc-iFMAIt icGouR">
+                <div class="sc-eXlEPa boxpOO">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                    <span class="currency">CUB</span>
+                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
+                </div>
+                <div class="sc-Galmp erPQzq coin notranslate balance">
+                    <div class="amount">
+                        <span class="amount-str">96985.6009</span>
+                    </div>
+                </div>
+            </div>
+            <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
+                <div class="button-inner">
+                    <span class="wallet-icon">
+                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />
+                    </span>
+                    <span>Wallet</span>
+                </div>
+            </button>
+        </div>
+    </div> -->
+</div>
 
 <style>
 .bhYvJJ{
@@ -232,4 +261,22 @@ const handleChat = ((e) => {
     height: 50px;
     border-radius: 50%;
 }
+
+@media only screen and (max-width: 650px){
+    .LQlWw {
+    background-color: rgb(30, 32, 36);
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: 3rem;
+    margin-left: 25px;
+    border-radius: 1.5rem;
+    padding-left: 0.875rem;
+    line-height: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+}
+}
+
 </style>

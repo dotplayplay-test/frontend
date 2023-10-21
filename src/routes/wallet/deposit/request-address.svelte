@@ -57,6 +57,7 @@ const handleSubmit = (async()=>{
         })
         .then((res)=>{
             is_loading.set(false)
+            console.log(res.data)
             if(res.data.message !== "success"){
                 err_msg = res.data.message
             }else{

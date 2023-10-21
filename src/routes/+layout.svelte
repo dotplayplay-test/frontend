@@ -90,8 +90,13 @@ const handleMainMenu = (() => {
         isOpenSide = false
         sideDetection = 76
     } else {
+        if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
+        isOpenSide = true
+        sideDetection = 76
+    }else{
         isOpenSide = true
         sideDetection = 240
+    }
     }
 })
 
