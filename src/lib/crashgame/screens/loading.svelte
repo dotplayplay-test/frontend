@@ -30,7 +30,7 @@
       font-size: 13px;
       color: #ffff;
       font-weight: 700;
-      margin-bottom: 50px;
+      margin-bottom: 40px;
    }
    .bhuSSkjs .nJbsiaks .content{
       display: flex;

@@ -132,7 +132,7 @@ import RunningCrash from "./RunningCrash.svelte";
         <span class="reixxT" style="top: 36.5%;">1.6x</span>
         <span class="reixxT" style="top: 56.5%;">1.4x</span>
         <span class="reixxT" style="top: 76.5%;">1.2x</span>
-        <span class="resshbja" style="top: 99.5%;">0</span>
+        <!-- <span class="resshbja" style="top: 99.5%;">0</span> -->
         {/if}
 
 
@@ -211,12 +211,61 @@ import RunningCrash from "./RunningCrash.svelte";
 </div>
 
 <style>
+@media only screen and (max-width : 650px){
+.crash-board {
+    position: relative;
+    width: 100%;
+    height: 170px; 
+}
+.crash-board.dvgwiw {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.crash-chart {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    border-bottom: 2px solid #ffffff0e;
+    border-left: 2px solid #ffffff0e;
+}
+.strock {
+    width: 4px;
+    height: 1.4px;
+    background: #ffffff0e;
+    position: absolute;
+}
+.reixxT {
+    position: absolute;
+    font-size: 9px;
+    color: #ffffff31;
+    margin-left: -20px;
+}
+/* .resshbja {
+    font-size: 9px;
+    position: absolute;
+    color: #ffffff31;
+    margin-left: -7px;
+} */
+.ehoIwNks {
+    font-size: 9px;
+    position: absolute;
+    color: #ffffff31;
+    bottom: -17.89px;
+}
+.cntsnsnQn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+}
+
+@media only screen and (min-width : 650px){
 .crash-board {
     position: relative;
     width: 100%;
     height: 300px;
 }
-
 .crash-board.dvgwiw {
     display: flex;
     justify-content: center;
@@ -245,23 +294,29 @@ import RunningCrash from "./RunningCrash.svelte";
     margin-left: -25px;
 }
 
-.resshbja {
+/* .resshbja {
     font-size: 12px;
     position: absolute;
     color: #ffffff31;
     margin-left: -7px;
-}
-
+} */
 .ehoIwNks {
     font-size: 12px;
     position: absolute;
     color: #ffffff31;
     bottom: -17.89px;
 }
-
 .cntsnsnQn {
     position: absolute;
     width: 100%;
     height: 100%;
 }
+}
+
+
+
+
+
+
+
 </style>

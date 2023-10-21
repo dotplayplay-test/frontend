@@ -34,7 +34,37 @@
 
 
 <style>
-.bhuSSkjs{
+
+@media only screen and (max-width : 650px){
+  .bhuSSkjs{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+   }
+   .container{
+    position: absolute;
+    bottom: -6%;
+    left: -1%;
+}
+.bhuSSkjs div{
+    font-size: 29px;
+    margin-bottom: 30px;
+    word-wrap: normal;
+    letter-spacing: 0.5rem;
+    font-weight: bold;
+    color: #fff;
+    width: 120px;
+    white-space: 2;
+    font-stretch: expanded;
+   }
+}
+
+@media only screen and (min-width : 650px){
+  .bhuSSkjs{
       position: absolute;
       width: 100%;
       height: 100%;
@@ -54,7 +84,13 @@
     white-space: 2;
     font-stretch: expanded;
    }
+   .container{
+    position: absolute;
+    bottom: -6%;
+    left: -1%;
+}
 
+}
 
 /* .circle-head{
     position: absolute;
@@ -64,11 +100,7 @@
     border-radius: 50%;
     z-index: 10;
 } */
-.container{
-    position: absolute;
-    bottom: -6%;
-    left: -1%;
-}
+
    
 /* .crossline{
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.356);

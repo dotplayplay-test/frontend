@@ -2,7 +2,9 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-    import Crashview from './crashview.svelte';
+import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
+import BiStats from "svelte-icons-pack/bi/BiStats";
+import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 
     let isAdvance = false
 const handleAdvancebg = ((q)=>{
@@ -10,6 +12,25 @@ const handleAdvancebg = ((q)=>{
         isAdvance = false
     }else{
         isAdvance = true
+    }
+})
+
+let isHelp = false
+const handleHelp = ()=>{
+    if(isHelp){
+        isHelp = false
+    }else{
+        isHelp = true
+    }
+}
+
+
+let isStat = false
+const handleStatistics = (()=>{
+    if(isStat){
+        isStat = false
+    }else{
+        isStat = true
     }
 })
 
@@ -48,15 +69,16 @@ const handleAdvancebg = ((q)=>{
                     <span>House Edge 1%</span>
                 </div>
                 <div class="sc-jNHgKk deLgbW">
-                    
+                    <Crashlayout />
                 </div>
                 <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs>
-                    <linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#31343C"></stop>
-                        <stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop></linearGradient>
-                </defs>
-                <g opacity=".899"><path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path>
+                    <linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#31343C"></stop><stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop>
+                    </linearGradient>
+                </defs><g opacity=".899">
+                    <path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path>
                 </g>
-                </svg>
+            </svg>
             </div>
         </div>
         <div id="crash-control-0" class="sc-hCwLRM jcwJKv game-control style-mobile">
@@ -97,7 +119,7 @@ const handleAdvancebg = ((q)=>{
                                 <div class="label-amount">0 USD</div>
                             </div>
                             <div class="input-control">
-                                <input type="text" value="1.000000000">
+                                <input type="text" value="1.00">
                                 <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button>/2</button>
@@ -128,15 +150,11 @@ const handleAdvancebg = ((q)=>{
             </div>
         </div>
         <div class="game-actions">
-            <button class="action-item  ">
-                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                    <use xlink:href="#icon_LiveStats"></use>
-                </svg>
+            <button on:click={handleStatistics} class="action-item  ">
+                <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
             </button>
-            <button class="action-item  ">
-                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                    <use xlink:href="#icon_Help"></use>
-                </svg>
+            <button on:click={handleHelp} class="action-item  ">
+                <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
             </button>
         </div>
     </div>
@@ -312,11 +330,6 @@ const handleAdvancebg = ((q)=>{
     position: relative;
     margin-top: 1.875rem;
     margin-bottom: 1.25rem;
-}
-.deLgbW::after {
-    content: "";
-    display: block;
-    padding-top: 40%;
 }
 .faJsUu .box-bg {
     position: absolute;
@@ -578,5 +591,29 @@ const handleAdvancebg = ((q)=>{
     -webkit-box-pack: center;
     justify-content: center;
     flex-direction: column;
+}
+.game-actions {
+    display: flex;
+    order: 10;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 4rem;
+    position: relative;
+}
+.game-actions::before {
+    content: "";
+    flex: 1 1 0%;
+}
+.action-item {
+    cursor: pointer;
+    margin-right: 0.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
 }
 </style>
