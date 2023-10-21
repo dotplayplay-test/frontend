@@ -34,18 +34,14 @@ const handleNavigation = ((e) => {
 </script>
 
 <div class="sc-fXEqDS hZgDyO">
-    <button on:click={handleMenu}>
-        <span  class="close-wrap">
-            <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="20" className="custom-icon" title="Custom icon params" />
-        </span>
-    </button>
-
-
     <div id="sidebar" class="sc-xiLah beBixG">
         <div class="mobile-sidebar-top-tab">
             <div class="sc-uojGG hksQGj">
-                <a class="is-active" href="/">Menu</a>
-                <div></div>
+                <button on:click={handleMenu}>
+                    <span  class="close-wrap">
+                        <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="35" className="custom-icon" title="Custom icon params" />
+                    </span>
+                </button>
             </div>
         </div>
         <button on:click={()=>handleNavigation("/")} class="nav-item"> 
@@ -56,9 +52,8 @@ const handleNavigation = ((e) => {
         <button class="nav-item" on:click={handleOriginals}>
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
                 <div class="nav-right">NG Originals</div>
-                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="17" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
+                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="27" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
         </button>
-
 
         <!-- =================== Games ============================ -->
         {#if (isGames)}
@@ -151,3 +146,18 @@ const handleNavigation = ((e) => {
         </div>
     </div>
 </div>
+
+
+<style>
+.sc-uojGG.hksQGj{
+    width: 100%;
+    position: fixed;
+}
+/* .mobile-sidebar-top-tab{
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    background-color: rgb(36, 38, 43);
+    z-index: 56;
+} */
+</style>

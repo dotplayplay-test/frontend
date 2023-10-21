@@ -153,7 +153,7 @@ const handleRegister = (()=>{
             </div> -->
           
             {#if $handleisLoggin}
-            <!-- <MainNavbar on:handleChatRoom={handleChat} /> -->
+            <MainNavbar on:handleChatRoom={handleChat} />
             {:else}
             <div class="header-login">
                 <button on:click={()=> goto("/login")} >
@@ -170,7 +170,7 @@ const handleRegister = (()=>{
             <div class="left"></div>
             <div class="right">
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB chat-btn">
-                    <Icon src={BsDroplet}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                    <Icon src={BsDroplet}  size="28"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                     <div class="sc-fotOHu gGSOuF badge ">99</div>
                 </button>
             </div>

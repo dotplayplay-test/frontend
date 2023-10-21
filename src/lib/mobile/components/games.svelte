@@ -7,7 +7,7 @@ import IoDice from "svelte-icons-pack/io/IoDice";
 <div class="sc-hKwDye fclMSM" style="height: auto;">
     <div class="sc-lbhJGD dzUbMz">
         <div class="item-wrap">
-            <div  class="game-item select">
+            <div  class="game-item ">
                 <div class="game-area">
                     <Icon src={IoDice} color="rgba(153, 164, 176, 0.6)" size="17" className="crash-icon" title="Custom icon params" />
                     <div class="sc-jrQzAO iodxXo p">
@@ -15,7 +15,7 @@ import IoDice from "svelte-icons-pack/io/IoDice";
                     </div>
                 </div>
             </div>
-            <div class="game-item ">
+            <div class="game-item select">
                 <div class="game-area">
                     <Icon src={IoDice} color="rgba(153, 164, 176, 0.6)" size="17" className="custom-icon" title="Custom icon params" />
                     <div class="sc-jrQzAO iodxXo p">

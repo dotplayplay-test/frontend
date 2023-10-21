@@ -57,22 +57,7 @@
         text-align: center;
         flex: 1 1 0%;
     }
-    .hksQGj a.is-active, .hksQGj div.is-active {
-        color: rgb(245, 246, 247);
-        box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
-        background: rgb(49, 52, 60);
-        border-radius: 1.25rem;
-    }
-    .hksQGj::after {
-        content: "";
-        position: absolute;
-        left: 0px;
-        bottom: -0.75rem;
-        width: 100%;
-        height: 0.75rem;
-        background-image: linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
-        opacity: 0.25;
-    }
+
     .beBixG .nav-item {
         margin-top: 2rem;
         display: flex;
@@ -89,7 +74,7 @@
     }
     .beBixG .nav-item .nav-right {
         margin-left: 0rem;
-        font-size: 1rem;
+        font-size: 19px;
     }
     .beBixG .nav-item .open-icon {
         position: absolute;
