@@ -237,6 +237,7 @@ const handleCashout = (()=>{
 
 </script>
 
+
 <div class="game-main">
     {#if ishotKey }
         <Hotkeys on:close={handleHotkeyEnable} />
@@ -261,7 +262,7 @@ const handleCashout = (()=>{
     </div>
  {/if}   
 
-    <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
+<div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
         <div class="sc-iwjdpV ikWSlH radio game-control-switch">
             <button on:click={()=>handleAdvancebg(1)} class={`${!isAdvance &&  "is-active"}`} >
                 <div class="label">Manual</div>
@@ -418,6 +419,7 @@ const handleCashout = (()=>{
         </button>
     </div>
 </div>
+
 
 <style>
  

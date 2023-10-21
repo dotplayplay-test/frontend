@@ -3,7 +3,6 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoDice from "svelte-icons-pack/io/IoDice";
 import { createEventDispatcher } from 'svelte';
 import { routes } from "$lib/store/routes"
-$: console.log($routes)
 const dispatch = createEventDispatcher()
 
 const handleDispatch = ((e)=>{
