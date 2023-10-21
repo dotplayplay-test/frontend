@@ -12,7 +12,7 @@ import {
     browser
 } from '$app/environment';
 import { current_route} from "$lib/store/routes"
-    import Forget from "../forget/forget.svelte";
+    import Forget from "../forget/+page.svelte";
 const dispatch = createEventDispatcher()
 let email = '';
 let password = '';
@@ -811,13 +811,7 @@ input:-webkit-autofill {
         margin: 0px;
         border-radius: 0px;
     }
-    .jScFby {
-        box-sizing: border-box;
-        height: 100%;
-        overflow-y: auto;
-        touch-action: pan-y;
-        overscroll-behavior: contain;
-    }
+
     *, *:before, *:after {
         box-sizing: border-box;
     }

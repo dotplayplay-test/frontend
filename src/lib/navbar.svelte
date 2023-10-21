@@ -138,9 +138,11 @@ const handleRegister = (()=>{
     <div class="sc-hJhJFJ jVgBRe" style="transform: translate3d(0px, 0%, 0px);">
         {#if !$handleisLoading}
         <div class="login-top">
-            <div class="logo-wrap">
-                <img alt="logo" style="border-radius: 12px;" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
-            </div>
+            <a href="/">
+                <div class="logo-wrap">
+                    <img alt="logo" style="border-radius: 12px;" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
+                </div>
+            </a>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
