@@ -228,7 +228,7 @@ const handleChat = ((e) => {
 
 
 <div class="mobile">
-    <!-- <div class="sc-gjNHFA jlttqa wallet-enter">
+    <div class="sc-gjNHFA jlttqa wallet-enter">
         <div class="sc-fmciRz LQlWw">
             <div class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
@@ -251,7 +251,7 @@ const handleChat = ((e) => {
                 </div>
             </button>
         </div>
-    </div> -->
+    </div>
 </div>
 
 <style>

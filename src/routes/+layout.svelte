@@ -4,8 +4,10 @@ export let data;
 import { routes } from "$lib/store/routes"
 import { handleAuthToken } from "$lib/store/routes"
 $: routes.set(data)
+import Icon from 'svelte-icons-pack/Icon.svelte';
 import { handleSepProfile } from "$lib/profleAuth/store"
 import {handleCountdown} from "$lib/crashgame/socket"
+import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 import {
     page
 } from '$app/stores'
@@ -147,7 +149,7 @@ const handleMenu = () => {
     <div id="main">
         <div id="menu">
             <button style={`left:${isOpenSide ? 224 : 60}px`} on:click={handleMainMenu}  class="menu">
-                <img src='https://www.linkpicture.com/q/menu_2.svg' alt="" />
+                <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
             </button>
         </div>
     </div>

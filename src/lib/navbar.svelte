@@ -1,6 +1,7 @@
 <script>
 import HiSolidSearch from "svelte-icons-pack/hi/HiSolidSearch";
 import MainNavbar from "../lib/navbarcomponent/main/index.svelte"
+
 import { goto } from "$app/navigation";
 import "../styles/navbar/mobileNavbar.css";
 import "../styles/navbar/navbar.css";
@@ -141,7 +142,7 @@ const handleRegister = (()=>{
             </div>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
-                    <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                    <Icon src={HiSolidMenu}  size="28"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
             <!-- <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
@@ -178,6 +179,51 @@ const handleRegister = (()=>{
 </div>
 
 <style>
+
+
+@media only screen and (max-width: 650px){
+ .jVgBRe .login-top {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 5rem;
+    padding: 0px 0.75rem;
+    position: relative;
+}
+.jVgBRe .login-top .logo-wrap img {
+    width: 2.75rem;
+}
+.jVgBRe .login-top .logo-wrap {
+    margin-right: 20px;
+    margin-top: 0.25rem;
+    margin-left: 10px;
+    position: relative;
+}
+.jVgBRe .login-top .header-login .fnKcEH.button {
+    width: 6.95rem;
+    height: 3rem;
+}
+.jVgBRe .login-top .header-login button p {
+    width: 6.25rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    text-align: center;
+    font-size: 18px;
+    color: rgb(116, 201, 23);
+    font-weight: bold;
+}
+.cUTdQJ .open-wrap {
+    width: 2.6rem;
+    height: 2.6rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgba(23, 22, 22, 0.52);
+    border-radius: 50%;
+}
+}
 
 /* .elBGFt.big-enter {
     -webkit-box-pack: end;
