@@ -125,14 +125,6 @@ register();
         </div>
 
         <div class="sc-gFSQbh blNkCs">
-            <div class="sc-eldieg elBGFt">
-                <button class="mobile-input-enter">
-                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                        <use xlink:href="#icon_Search"></use>
-                    </svg>
-                    <p>Game name | Provider | Category Tag</p>
-                </button>
-            </div>
 
             <div class="sc-iRFsWr dGbYFZ" style="height: auto;">
                 <div class="sc-aaqME jiYpQl">
@@ -467,7 +459,7 @@ register();
             </div>
 
             <div class="screen-wrap">
-                <Biggestwin />
+                <!-- <Biggestwin /> -->
 
                 <div style="margin-top: 0.875rem;" class="sc-gsFzgR fjPUUh">
                     <div class="sc-cxpSdN kQfmQV tabs sc-cAhXWc fufAIq">

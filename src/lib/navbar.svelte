@@ -143,7 +143,7 @@ const handleRegister = (()=>{
             </div>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
-                    <Icon src={HiSolidMenu}  size="28"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                    <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button>
             <!-- <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
@@ -193,10 +193,10 @@ const handleRegister = (()=>{
     position: relative;
 }
 .jVgBRe .login-top .logo-wrap img {
-    width: 2.75rem;
+    width: 2rem;
 }
 .jVgBRe .login-top .logo-wrap {
-    margin-right: 20px;
+    margin-right: 10px;
     margin-top: 0.25rem;
     margin-left: 10px;
     position: relative;
@@ -210,13 +210,13 @@ const handleRegister = (()=>{
     height: 2.5rem;
     line-height: 2.5rem;
     text-align: center;
-    font-size: 18px;
+    font-size: 15px;
     color: rgb(116, 201, 23);
     font-weight: bold;
 }
 .cUTdQJ .open-wrap {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2.2rem;
+    height: 2.2rem;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
