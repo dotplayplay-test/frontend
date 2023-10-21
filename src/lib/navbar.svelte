@@ -79,7 +79,7 @@ const handleRegister = (()=>{
 
 </script>
 
-    {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
+    <!-- {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
          <Login on:close={handleLogin} />
     {/if}
 
@@ -89,7 +89,7 @@ const handleRegister = (()=>{
 
     {#if  $handleNestedRoute === "/login/info" || browser && window.location.pathname === "/login/info"  }
         <Info />
-    {/if}
+    {/if} -->
 
 
 <div id="main" class="sc-gVkuDy gAvMHL" style={` margin-right: ${chatroom}px; `} >
