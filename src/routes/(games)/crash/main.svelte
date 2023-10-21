@@ -344,7 +344,7 @@ const handleCashout = (()=>{
                         {#if !id}
                             <div class="input-control">
                                 <input type="number" bind:value={bet_amount}>
-                                <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                                <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button  on:click={()=>handleHalf(1)}>/2</button>
                                     <button  on:click={()=>handleHalf(2)}>x2</button>

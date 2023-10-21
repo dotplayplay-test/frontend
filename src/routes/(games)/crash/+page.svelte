@@ -5,6 +5,7 @@ import "../.../../../../styles/crash/main.css"
 import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
+    import MobileMain from './mobileMain.svelte';
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -68,7 +69,7 @@ setTimeout(()=>{
                         <div>Trends</div>
                     </button>
                 </div>
-                
+                <MobileMain />
             </div>
         </div>
     </div>
@@ -197,6 +198,36 @@ setTimeout(()=>{
     100% {
         transform: translate3d(100px, 0%, 0px);
     }
+}
+
+@media only screen and ( min-width : 1000px){
+    .shWnixNNx img{
+    width: 100px;
+    margin: 0px;
+    justify-self: center;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    animation: dice 4s infinite;
+}
+@keyframes dice {
+    0% {
+        transform: translate3d(100px, 0%, 0px);
+    }
+    30% {
+        transform: translate3d(30px, 0%, 0px);
+    }
+    50% {
+        transform: translate3d(0px, 0%, 0px);
+    }
+    70% {
+        transform: translate3d(30px, 0%, 0px);
+    }
+    100% {
+        transform: translate3d(100px, 0%, 0px);
+    }
+}
+
 }
 
 @media only screen and ( max-width : 650px) {
