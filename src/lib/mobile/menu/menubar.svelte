@@ -26,6 +26,11 @@ const handleOriginals = (()=>{
     }
 })
 
+const handleGames = ((e)=>{
+    goto(e.detail)
+    dispatch("menu")
+})
+
 const handleNavigation = ((e) => {
     goto(e)
     dispatch("menu")
@@ -57,7 +62,7 @@ const handleNavigation = ((e) => {
 
         <!-- =================== Games ============================ -->
         {#if (isGames)}
-            <Games />
+            <Games on:dipla={handleGames} />
         {/if}
 
         <button on:click={()=>handleNavigation("/bonus")}  class="nav-item">
