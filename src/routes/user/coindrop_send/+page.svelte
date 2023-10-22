@@ -93,12 +93,12 @@ const handleSubmit = (() => {
         gif: "",
 
         tipped_user: "",
-        tipped_amount: "",
+        tipped_amount: 0,
         tipped_comment: "",
         tipped_coin_image: "",
         tip_Token: "",
 
-        coin_rain_amount: '' ,
+        coin_rain_amount: 0 ,
         coin_rain_comment: '',
         coin_rain_num:num,
         coin_rain_token:  '',

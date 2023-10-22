@@ -2,11 +2,21 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import BiStats from "svelte-icons-pack/bi/BiStats";
+import Layout from '$lib/crashgame/components/history/layout.svelte';
+import { crash_historyEl } from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
-
-    let isAdvance = false
+import Trend from '$lib/crashgame/components/trends/index.svelte';
+import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
+import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
+import MobileAllbet from './mobile-allbet.svelte';
+import MobileMybet from './mobile-mybet.svelte';
+ export let isClassic
+const { getAllPlayers } = useAllplayer()
+export let hide_trends 
+let isAdvance = false
 const handleAdvancebg = ((q)=>{
     if(q === 1){
         isAdvance = false
@@ -27,14 +37,60 @@ const handleHelp = ()=>{
 
 let isStat = false
 const handleStatistics = (()=>{
-    if(isStat){
-        isStat = false
+    isStat = !isStat
+})
+
+let allbet = false
+
+const handleAllbet = ((e)=>{
+    if(allbet){
+        allbet = false
     }else{
-        isStat = true
+        allbet = true
+        getAllPlayers(e)
     }
 })
 
+
+let isBet = false
+let isHistory = false
+let isContent = false
+let is_all_bet = true
+const handleRoute = ((w)=>{
+    if(w === 1){
+        isBet = true
+        isHistory = false
+        isContent = false
+        is_all_bet = false
+    }
+    else if(w === 2){
+        isBet = false
+        isHistory = true
+        isContent = false
+        is_all_bet = false
+    }
+    else if(w === 3){
+        isBet = false
+        isHistory = false
+        isContent = true 
+        is_all_bet = false
+    }
+    else{
+        isBet = false
+        isHistory = false
+        isContent = false 
+        is_all_bet = true
+    }
+})
+
+let classic = false
+
 </script>
+
+{#if allbet}
+    <Allplayers  on:close={handleAllbet} />
+{/if}
+
 
 <div class="game-area">
     <div class="game-main">
@@ -42,28 +98,25 @@ const handleStatistics = (()=>{
             <div class="sc-eBhrFy jrzKwG game-recent sc-jLuXOi gfnnAw">
                 <div class="recent-list-wrap">
                     <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
-                        <div class="game-item is-moon" style="width: 25%;">
-                            <div class="issus">5757274</div>
-                            <div>17.56x</div>
-                        </div><div class="game-item " style="width: 25%;">
-                            <div class="issus">5757275</div>
-                            <div>1.03x</div>
-                        </div>
-                        <div class="game-item " style="width: 25%;">
-                            <div class="issus">5757276</div>
-                            <div>1.12x</div>
-                        </div>
-                        <div class="game-item is-doubble" style="width: 25%;">
-                            <div class="issus">5757277</div>
-                            <div>8.61x</div>
-                        </div>
-                        <div class="game-item is-doubble" style="width: 25%;">
-                            <div class="issus">5757277</div>
-                            <div>8.61x</div>
-                        </div>
+                        {#if $crash_historyEl.length !== 0}
+                        {#each $crash_historyEl as his (his.id)}
+                            <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
+                                <div class="issus">{his.game_id}</div>
+                                <div>{his.crash_point}x</div>
+                            </button>
+                        {/each}
+                        {:else}
+                            <div class="empty-item">
+                                <p>Game results will be displayed here.</p>
+                            </div>
+                        {/if}
                     </div>
                 </div>
             </div>
+            {#if hide_trends}
+                <Trend />
+            {/if}
+          
             <div class="sc-faIbUi faJsUu game-box sc-fDZUdJ jvaryA">
                 <div class="sc-kexyCK gUytcA house-edge">
                     <span>House Edge 1%</span>
@@ -90,6 +143,8 @@ const handleStatistics = (()=>{
                     <div class="label">Advanced</div>
                 </button>
             </div>
+
+        {#if isClassic}
             <div class="game-control-panel">
                 <div class="sc-jcEtbA eRjsxw">
                     <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
@@ -148,6 +203,69 @@ const handleStatistics = (()=>{
                     </div>
                 </div>
             </div>
+        {:else}
+        <div class="game-control-panel">
+            <div class="sc-bOtlzW hNwTbf manual-control">
+                <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput">
+                    <div class="input-label">
+                        <div class="sc-gsFzgR bxrMFn label">
+                            <div>Amount</div>
+                        </div>
+                        <div class="label-amount">0 USD</div>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" value="1.000000000">
+                        <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                        <div class="sc-kDTinF bswIvI button-group">
+                            <button>/2</button>
+                            <button>x2</button>
+                                <button class="sc-gqtqkP gfnHxc">
+                                    <Icon src={RiSystemArrowUpSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                    <Icon src={RiSystemArrowDownSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
+                        <div class="input-label">
+                            <div>Payout</div>
+                            <div class="bet-payout">1.96x</div>
+                        </div>
+                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200">
+                            <div class="button-inner">
+                                <div>Bet Red</div>
+                                <div class="sub-txt">(Next round)</div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
+                        <div class="input-label">
+                            <div>Payout</div>
+                            <div class="bet-payout">2x</div>
+                        </div>
+                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type200">
+                            <div class="button-inner">
+                                <div>Bet Green</div>
+                                <div class="sub-txt">(Next round)</div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
+                        <div class="input-label">
+                            <div>Payout</div>
+                            <div class="bet-payout">10x</div>
+                        </div>
+                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000">
+                            <div class="button-inner">
+                                <div>Bet Moon</div>
+                                <div class="sub-txt">(Next round)</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {/if}
+ 
         </div>
         <div class="game-actions">
             <button on:click={handleStatistics} class="action-item  ">
@@ -159,8 +277,261 @@ const handleStatistics = (()=>{
         </div>
     </div>
 </div>
+<div class="sc-cxpSdN kQfmQV tabs game-tabs len-4">
+    <div class="tabs-navs">
+        <button on:click={()=>handleRoute(5)} class={`tabs-nav ${is_all_bet ? "is-active" : ""} `}>All Bets</button>
+        <button on:click={()=>handleRoute(1)} class={`tabs-nav ${isBet ? "is-active" : ""} `}>My Bets</button>
+        <button on:click={()=>handleRoute(2)} class={`tabs-nav ${isHistory ? "is-active" : ""} `}>History</button>
+        <button on:click={()=>handleRoute(3)} class={`tabs-nav ${isContent ? "is-active" : ""} `}>Contest</button>
+        {#if is_all_bet}
+            <div class="bg is-reverse" style={`${"left: 0%; right: 75%;"}`}></div>
+            {:else if isBet}
+            <div class="bg is-reverse" style={`${"left: 25%; right: 50%;"}`}></div>
+            {:else if isHistory}
+            <div class="bg is-reverse" style={`${"left: 50%; right: 25%;"}`}></div>
+            {:else if isContent}
+            <div class="bg is-reverse" style={`${"left: 75%; right: 0%;"}`}></div>
+        {/if}
+    </div>
+{#if is_all_bet}
+<MobileAllbet />
+{:else if isBet}
+<MobileMybet />
+{:else if isHistory}
+<Layout />
+{/if}
+
+<div class="sc-knKHOI cFxmZX">
+    <div class="intro-title">
+        <p>Crash</p>
+        <div class="intro-tags">
+            <p>Multiplayer</p>
+            <p>Our Best Games</p>
+            <p>BC Originals</p>
+        </div>
+    </div>
+    <div class="description">CRASH is an online multiplayer blockchain guessing game that made as an increasing curve that may crash at any time.</div>
+    <button class="intro-detail">
+        Details
+        <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+    </button>
+</div>
+
+</div>
 
 <style>
+ .gAiddS {
+    flex-basis: 30%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    margin-top: 1.5rem;
+    margin-right: 0.625rem;
+    position: relative;
+}
+.gAiddS {
+    flex-basis: 100%;
+    margin-top: 1rem;
+    margin-right: 0px;
+}
+.kDuLvp .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0px 0.75rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+.gAiddS .bet-payout {
+    margin-left: 0.625rem;
+    color: rgb(245, 246, 247);
+}
+.gAiddS .bet-button.type-200::before {
+    background-color: rgb(237, 99, 0);
+}
+.gAiddS .bet-button::before {
+    content: "";
+    position: absolute;
+    left: 0.9375rem;
+    top: 0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid rgba(50, 57, 63, 0.5);
+    transition: all 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    background-color: rgb(67, 179, 9);
+}
+.gAiddS .bet-button.type1000::before {
+    background-color: rgb(226, 180, 11);
+}
+.gAiddS {
+    flex-basis: 30%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    margin-top: 1.5rem;
+    margin-right: 0.625rem;
+    position: relative;
+}
+.gAiddS .bet-button .button-inner {
+    flex-direction: column;
+}
+.gAiddS .bet-button > div {
+    position: relative;
+    z-index: 2;
+}
+.gAiddS .bet-button {
+    height: 3rem;
+    overflow: hidden;
+    position: relative;
+}
+.cFxmZX {
+    width: 100%;
+    border-radius: 1.25rem;
+    background-color: rgb(30, 32, 36);
+    padding: 1.5rem 1.5rem 2rem;
+    margin-top: 2rem;
+}
+.gAiddS .bet-button::before {
+    content: "";
+    position: absolute;
+    left: 0.9375rem;
+    top: 0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid rgba(50, 57, 63, 0.5);
+    transition: all 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    background-color: rgb(67, 179, 9);
+}
+.cFxmZX {
+    margin: 1.25rem 0px 0px;
+    width: auto;
+    padding: 1rem 0.75rem 1.5rem;
+}
+.cFxmZX .intro-title {
+    flex-wrap: wrap;
+    height: auto;
+}
+.cFxmZX .intro-title {
+    min-height: 5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.cFxmZX .intro-title > p {
+    width: 100%;
+    margin: 0px 0px 1rem;
+    line-height: 1.25rem;
+    padding: 0px 0.625rem;
+}
+.cFxmZX .intro-title > p {
+    font-size: 1rem;
+    color: rgb(245, 246, 247);
+    font-weight: 600;
+    margin: 0px;
+    white-space: nowrap;
+}
+.cFxmZX .intro-title .intro-tags {
+    margin-left: 0px;
+    flex-wrap: wrap;
+}
+.cFxmZX .intro-title .intro-tags > p {
+    margin: 0px 0.3125rem 0.3125rem 0px;
+    white-space: nowrap;
+    padding: 0.375rem 0.875rem;
+    line-height: 1.25rem;
+    height: 2rem;
+}
+.cFxmZX .intro-title .intro-tags > p {
+    margin:  0px 3px;
+    padding: 5px 10px;
+    border-radius: 1.125rem;
+    background-color: rgb(43, 47, 54);
+}
+.cFxmZX .intro-title .intro-tags {
+    margin-left: 0px;
+    flex-wrap: wrap;
+}
+.cFxmZX .intro-title .intro-tags {
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cFxmZX .description {
+    margin-top: 0.625rem;
+    line-height: 1.25rem;
+    font-size: 13px;
+    padding-left: 0.25rem;
+}
+
+.cFxmZX .intro-detail {
+    height: 2rem;
+    margin-top: 1.125rem;
+    color: rgb(208, 208, 208);
+}
+.cFxmZX .intro-detail {
+    width: 6.75rem;
+    height: 2.5rem;
+    margin-top: 2rem;
+    border-radius: 1.25rem;
+    background-color: rgba(49, 52, 60, 0.6);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.kQfmQV .tabs-navs {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 2.25rem;
+    position: relative;
+    border-radius: 1.125rem;
+    background-color: rgba(49, 52, 60, 0.7);
+}
+.game-tabs .tabs-navs {
+    margin-bottom: 0.75rem;
+    margin-left: 0.625rem;
+    display: inline-flex;
+}
+.game-tabs {
+    margin-top: 2.5rem;
+}
+.game-tabs {
+    position: relative;
+    padding-top: 3rem;
+}
+.game-tabs .tabs-navs {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    transform: translateX(-50%);
+    margin: 0px;
+}
+.game-tabs .tabs-navs .tabs-nav {
+    width: 5.625rem;
+}
+.kQfmQV .tabs-nav.is-active {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+.kQfmQV .tabs-nav {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 1 1 0%;
+    height: 100%;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 1;
+}
+
 .game-main.game-main {
     min-height: auto;
 }
@@ -615,5 +986,17 @@ const handleStatistics = (()=>{
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+}
+.kQfmQV .tabs-navs .bg {
+    border-radius: 1.125rem;
+    background-image: linear-gradient(to left, rgb(85, 89, 102), rgb(85, 89, 102), rgb(88, 174, 20));
+    opacity: 0.4;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: right 0.2s ease-out 0s, left 0.3s ease-out 0s;
+    transform: translateZ(0px);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
 }
 </style>

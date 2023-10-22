@@ -4,6 +4,7 @@ import { handleNestedRoute } from "$lib/store/nested_routes";
 import { error_msg } from "./store";
 import { handleSepProfile } from "$lib/profleAuth/store"
 import axios from "axios";
+import {  goto } from "$app/navigation";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { profileStore } from "$lib/store/profile";
@@ -117,9 +118,10 @@ const handleSubmit = (async() => {
           },
           }).then((res)=>{
             profileStore.set(data)
-            browser &&   window.history.replaceState(null, '', $routes.route);
-            handleNestedRoute.set("")
-            window.location.href = $routes.route
+            goto("/")
+            // browser &&   window.history.replaceState(null, '', $routes.route);
+            // handleNestedRoute.set("")
+            // window.location.href = $routes.route
           })
         }else{
             window.location.href = $routes.route
@@ -131,6 +133,7 @@ const handleSubmit = (async() => {
     }
 })
 
+
 const handleClose = (()=>{
     window.location.href = $routes.route
     browser &&   window.history.replaceState(null, '', $routes.route);
@@ -140,14 +143,13 @@ const handleClose = (()=>{
 </script>
 
 <div id="main" class="sc-bkkeKt kBjSXI">
-
     {#if $error_msg}
     <div class="error-message">
         <div class="hTTvsjh"> 
             <div>{$error_msg}</div>
             </div>
         </div>
-    {/if}   
+    {/if} 
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <div class="dialog-head has-close">
             <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">

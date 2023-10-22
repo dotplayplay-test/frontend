@@ -3,6 +3,8 @@ import { handleNestedRoute } from "$lib/store/nested_routes"
 import { handleAuthToken } from "$lib/store/routes"
 import { profileStore } from "$lib/store/profile"
 import { default_Wallet } from "$lib/store/coins"
+import {  goto } from "$app/navigation";
+
 
 export const useRegister = () => {
     let error;
@@ -33,8 +35,9 @@ export const useRegister = () => {
         localStorage.setItem("user", JSON.stringify(db));
         handleAuthToken.set(json.Token)
         profileStore.set(json.profile)
-        browser &&  window.history.replaceState(null, 'info', '/login/info')
-        handleNestedRoute.set('/login/info')
+        window.location.href = "/info"
+        // browser &&  window.history.replaceState(null, 'info', '/login/info')
+        // handleNestedRoute.set('/login/info')
         default_Wallet.set(json.wallet)
         isLoading = false
       }

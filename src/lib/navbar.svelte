@@ -112,10 +112,10 @@ const handleRegister = (()=>{
                 <MainNavbar on:handleChatRoom={handleChat} />
             {:else}
             <div class="login-in">
-                <button  on:click={()=> handleLogin()} >
+                <button  on:click={()=> goto("/login")} >
                     <p >Sign in</p>
                 </button>
-                <button on:click={handleRegister} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <button on:click={()=> goto("/register")}  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                     <div class="button-inner">Sign up</div>
                 </button>
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">

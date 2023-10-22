@@ -5,7 +5,7 @@ import "../.../../../../styles/crash/main.css"
 import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
-    import MobileMain from './mobileMain.svelte';
+import MobileMain from './mobileMain.svelte';
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -20,6 +20,11 @@ let is_loading = true
 setTimeout(()=>{
     is_loading = false
 },3000)
+
+let hide_trends = false
+const handleTrends = (()=>{
+    hide_trends = !hide_trends
+})
 
 </script>
 
@@ -62,14 +67,14 @@ setTimeout(()=>{
                             <div class="bg" style={` ${isClassic ?  "left: 0%; right: 50%;" :  "left: 50%; right: 0%;" }`}></div>
                         </div>
                     </div>
-                    <button class="sc-cQYgkQ fNKiky flex-center ">
+                    <button on:click={handleTrends} class="sc-cQYgkQ fNKiky flex-center ">
                         <span style="margin-right: 0.375rem; padding:1px 0">
                             <Icon src={RiSystemMenuUnfoldFill}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                         </span>
                         <div>Trends</div>
                     </button>
                 </div>
-                <MobileMain />
+                <MobileMain hide_trends={hide_trends} isClassic={isClassic}/>
             </div>
         </div>
     </div>

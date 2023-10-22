@@ -3,10 +3,11 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { createEventDispatcher } from 'svelte';
 import { handleAllPlayerStore } from "../../store"
-    import Fulldetails from './fulldetails.svelte';
-    import { SinglePlayerDetailsEl } from "../../store"
+import Fulldetails from './fulldetails.svelte';
+import { SinglePlayerDetailsEl } from "../../store"
+import { onMount } from "svelte";
+import { browser } from '$app/environment';
 const dispatch = createEventDispatcher()
-
 
 const handleCloseHelp = (()=>{
     dispatch("close", 5)
@@ -22,10 +23,20 @@ const handleFulldetails = ((data)=>{
     }
 })
 
+let is_mobile = false
+onMount(() => {
+    if (browser && window.innerWidth <= 650) {
+        is_mobile = true
+    } else {
+        is_mobile = false
+    }
+})
+
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog " style={` ${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         <div class="dialog-head has-close">
             <div class="dialog-title">All Players</div>
         </div> 
@@ -332,5 +343,15 @@ table {
     top: 50%;
     margin-top: 3.75rem;
     margin-left: -8.75rem;
+}
+@media only screen and (max-width : 650px){
+.dialog {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
 }
 </style>

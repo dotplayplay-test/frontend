@@ -77,6 +77,13 @@ $: {
 </div>
 
 <style>
+
+@media only screen and (max-width: 650px){
+.table{
+    font-size: 13px;
+}
+}
+
 .tabs-view {
     background-color: rgb(30, 32, 36);
     border-radius: 1.25rem;

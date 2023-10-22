@@ -41,7 +41,8 @@ const handleSubmit = (() => {
 })
 
 const handleCancel = (()=>{
-    dispatch("close", 3)
+    // dispatch("close", 3)
+    goto("/")
 })
 
 
@@ -266,7 +267,7 @@ const handleForgetPassword = (()=>{
     position: fixed;
     z-index: 1000;
     inset: 0px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgb(0, 0, 0);
     filter: none !important;
 }
 
@@ -606,7 +607,7 @@ input:-webkit-autofill {
     position: fixed;
     z-index: 1000;
     inset: 0px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgb(0, 0, 0);
     filter: none !important;
 }
 .dA-dCPD {

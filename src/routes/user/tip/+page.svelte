@@ -94,15 +94,15 @@ const handleSubmit = (()=>{
         sender_username: $profileStore.username,
         gif: "",
 
-        coin_drop_amount: "",
+        coin_drop_amount: 0,
         coin_drop_comment: "",
-        coin_drop_num:"",
+        coin_drop_num:0,
         coin_drop_token: "",
 
-        coin_rain_amount: '' ,
+        coin_rain_amount: 0 ,
         coin_rain_comment: '',
-        coin_rain_num:'',
-        coin_rain_token:  '',
+        coin_rain_num:0,
+        coin_rain_token:  0,
 
         tipped_user: $tipped_user,
         tipped_amount: tipValue,
