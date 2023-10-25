@@ -75,7 +75,7 @@ $: {
             </thead>
             <tbody>
                 {#if $handleisLoggin}
-                {#each $mybetEl.slice(0, 20) as mybet (mybet.id)}
+                {#each $mybetEl.slice(0, 20) as mybet (mybet._id)}
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>

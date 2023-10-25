@@ -367,6 +367,7 @@ const handleStatistics = (()=>{
         position: absolute;
         right: 0px;
         top: 100%;
+        width: 130%;
         padding-top: 0.75rem;
     }
     .setting-wrap {
@@ -377,6 +378,15 @@ const handleStatistics = (()=>{
         left: 0px;
         border-radius: 0px 0px 1.25rem 1.25rem;
         box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px 0px;
+    }
+    .emGYim {
+        cursor: auto;
+        height: 25.625rem;
+        width: 105%;
+        background-color: rgb(23, 24, 27);
+        border-radius: 1.25rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 8px 0px;
+        padding: 1rem 0px;
     }
     .emGYim .user-info {
         width: 100%;

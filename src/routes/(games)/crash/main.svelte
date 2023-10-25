@@ -15,7 +15,8 @@ import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunn
 import {default_Wallet } from "$lib/store/coins";
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore,handleisLoggin } from "$lib/store/profile";
-
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 export let isClassic
 import { error_msg  } from "$lib/crashgame/store";
 
@@ -137,7 +138,7 @@ const handleCrashBet = (async()=>{
             bet_token_name: $default_Wallet.coin_name ,
             chance: 0
         }
-        axios.post("http://localhost:8000/api/user/crash-game/bet", {
+        axios.post(`${URL}/api/user/crash-game/bet`, {
             data
         },{
             headers: {
@@ -157,6 +158,7 @@ const handleCrashBet = (async()=>{
         })
         .catch((error)=>{
             is_loading = false
+            console.log(error)
         })
     }
     }else{
@@ -205,7 +207,7 @@ const handleCashout = (()=>{
         bet_token_name: $default_Wallet.coin_name,
         crash: $crashRunning
     }
-    axios.post("http://localhost:8000/api/user/crash-game/cashout", {
+    axios.post(`${URL}/api/user/crash-game/cashout`, {
         data
     },{
         headers: {

@@ -9,7 +9,7 @@ import { useRegister } from "./createUser";
 import { fbUseLogin } from "./fbSignup";
 import {handleisLoggin, profileStore} from "../store/profile"
 import { error_msg, is_loading} from "../../lib/nestedpages/auth/login/store"
-import {  error_msgS, is_loadingS } from "../../lib/nestedpages/auth/signup/store"
+import {  error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store"
 const { register } = useRegister()
 const { createProfile } = useProfile()
 const { login } = useLogin()
@@ -26,6 +26,7 @@ export const firebaseConfig = {
     appId: "1:934101502841:web:7c618c3beffda794a3bda8"
 };
 
+
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
@@ -38,6 +39,7 @@ export const handleSignIn = (async (email, password, reff)=>{
     })
     .catch((err)=>{
         error_msgS.set(err.code.slice(5))
+            console.log(err.code.slice(5))
         setInterval(()=>{
             error_msgS.set('')
         },4000)
@@ -48,19 +50,19 @@ export const handleSignIn = (async (email, password, reff)=>{
 
 
  export const handleLogin = (async (email, password)=>{
-    is_loading.set(true)
+    is_loadingS.set(true)
     const auth = getAuth(app);
    await signInWithEmailAndPassword(auth, email, password)
    .then((res)=>{
      login(res)
-     is_loading.set(false)
+     is_loadingS.set(false)
    })
    .catch((err)=>{
-    error_msg.set(err.code.slice(5))
+    error_msgS.set(err.code.slice(5))
     setInterval(()=>{
-        error_msg.set('')
+        error_msgS.set('')
     },4000)
-    is_loading.set(false)
+    is_loadingS.set(false)
    })
  })
 

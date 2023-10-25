@@ -8,7 +8,7 @@ import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLin
     <div class="footer-general-contaner">
         <div class="footer-logo">
             <div class="logo">
-                <img src='https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png' alt="footer1" />
+                <img src='https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png' alt="footer1" />
             </div>
             <div class="footer-text1">
                 <h4>
@@ -65,8 +65,8 @@ import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLin
 
 <div id="footer" class="sc-gfXuXe rIdoP">
     <div class="footer-wrap">
-        <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png" alt="" class="logo">
-        <div class="footer__desc">DOTPLAYPLAY.COM is built by gamblers for gamblers. With our unique community and a huge selection of games like Crash, HashDice, Plinko, Slots, and many more. Your greatest casino adventure is waiting for you!</div>
+        <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png" alt="" class="logo">
+        <div class="footer__desc">WAGER.COM is built by gamblers for gamblers. With our unique community and a huge selection of games like Crash, HashDice, Plinko, Slots, and many more. Your greatest casino adventure is waiting for you!</div>
         <div class="footer__entries">
             <a href="/help/provably-fair">HELP CENTER</a>
             <a href="/help/agreement">User Agreement</a>
@@ -79,7 +79,7 @@ import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLin
                 <div class="flex-group">
                     <div class="item">
                         <span class="name">Email</span>
-                        <a href="mailto:support@nanogames.io">Support@dotplayplay.com</a>
+                        <a href="mailto:support@nanogames.io">Support@wager.com</a>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@ import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLin
         </div>
         <div class="footer__copyright">
             <div class="ttu">
-                <div>©2023 dotplayplay.io ALL RIGHTS RESERVED</div>
+                <div>©2023 wager.com ALL RIGHTS RESERVED</div>
             </div>
             <div class="to-top">
                 <Icon src={RiSystemArrowDropUpLine}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />

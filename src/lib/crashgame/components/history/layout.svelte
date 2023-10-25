@@ -35,7 +35,7 @@ $: {
                     </tr>
                 </thead>
                 <tbody>
-                    {#each $crash_historyEl.slice(0, 20) as history (history.id)}
+                    {#each $crash_historyEl.slice(0, 20) as history (history._id)}
                     <tr>
                         <td>
                             <div class="game-link">

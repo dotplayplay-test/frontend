@@ -8,9 +8,11 @@ import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDow
 import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
 import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
 import { handleSignIn } from "$lib/firebaseAuth/index"
+import { browser } from '$app/environment';
+import { onMount } from "svelte";
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
 import { createEventDispatcher } from "svelte";
-import { error_msgS, is_loadingS } from "./store"
+import {  error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store"
 const dispatch = createEventDispatcher()
 let isREf = false
 let email = ''
@@ -55,10 +57,21 @@ const handleCancel = (()=>{
     goto("/")
 })
 
+let is_mobile = false
+onMount(() => {
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+})
+
+
 
 </script>
 
-<div id="main" class="sc-bkkeKt kBjSXI">
+<div class="sc-bkkeKt kBjSXI">
 
     {#if $error_msgS}
     <div class="error-message">
@@ -68,9 +81,9 @@ const handleCancel = (()=>{
     </div>
  {/if}   
 
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog "  style={`${is_mobile ? "transform: scale(1) translateZ(5px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         <div class="dialog-head has-close">
-            <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
+            <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png">
         </div>
         <button on:click={()=> handleCancel()} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
@@ -102,16 +115,17 @@ const handleCancel = (()=>{
                                     <input type="text" bind:value={referral_code}  autocomplete="off" placeholder="Referral/Promo Code" >
                                 </div>
                             </div>
-                            <!-- {:else}
-                            <button on:click={()=> isREf = true} class="casino-code hover">Referral/Promo Code (Optional)
-                                 <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                            </button>
-                            {/if} -->
                         </div>
                         <hr>
                         <div class="box">
                             <div class="argument-check">
-                                <input bind:checked={aggreement} class="sc-iJKOTD kdCtGQ checkbox" type="checkbox">
+                                <button on:click={handleAgreement}  class="sc-iJKOTD kdCtGQ checkbox ">
+                                    {#if (aggreement)}
+                                    <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
+                                    {:else}
+                                    ""
+                                    {/if}
+                                </button>
                                 <div class="label">I agree with <a href="/help/agreement" class="argument">user agreement</a>,
                                     and confirm that I am at least 18 years old!</div>
                             </div>
@@ -172,105 +186,7 @@ const handleCancel = (()=>{
     </div>
 </div>
 
-<!-- ============================================ mobile ========================================= -->
 
-<div class="mobile">
-    <div class="sc-bkkeKt kBjSXI" style="background-color: transparent;">
-        <div class="dialog sc-kITQLZ dA-dCPD">
-            <div class="dialog-head has-close">
-                <img src="https://www.linkpicture.com/q/dpp-logowhite-transparent-final_1.png" alt="" class="sc-fBgqEL gKVaPL">
-            </div>
-            <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-            </button>
-            <div class="dialog-body no-style sc-kITQLZ dA-dCPD">
-                <div class="welcome">
-                    <div class="msg1">BUILD THE BEST CRYPTO CASINO TOGETHER</div>
-                    <img alt="" src="https://static.nanogames.io/assets/login_coco.1855b11e.png">
-                </div>
-                <div class="sc-dkPtRN jScFby scroll-view hide-bar sc-kudmJA biIEWz" style="transform: none;">
-                    <div id="regist" class="sc-bNoLzS Vvcdr">
-                        <div class="box">
-                            <div class="sc-ezbkAF kDuLvp input ">
-                                <div class="input-label">Email Address</div>
-                                <div class="input-control">
-                                    <input type="text"  autocomplete="off" placeholder="Registered Email Address." value="">
-                                </div>
-                            </div>
-                            <div class="sc-ezbkAF kDuLvp input ">
-                                <div class="input-label">Login Password</div>
-                                <div class="input-control">
-                                    <input type="password" autocomplete="off" placeholder="Login Password" value="">
-                                </div>
-                            </div>
-
-                            {#if  isREf}
-                            <div class="sc-ezbkAF kDuLvp input ">
-                                <div class="input-label">Referral/Promo Code (Optional)</div>
-                                <div class="input-control">
-                                    <input type="text" autocomplete="off" placeholder="Referral/Promo Code" value="">
-                                </div>
-                            </div>
-                            {:else}
-                            <div class="casino-code hover">Referral/Promo Code (Optional)
-                                 <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                            </div>
-                            {/if}
-                        </div>
-                        <hr>
-                        <div class="box">
-                            <div class="argument-check">
-                                <button on:click={handleAgreement}  class="sc-iJKOTD kdCtGQ checkbox ">
-                                    {#if (!aggreement)}
-                                    <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
-                                    {:else}
-                                    ""
-                                    {/if}
-                                </button>
-                                <div class="label">
-                                    I agree with
-                                    <a href="/help/agreement" class="argument">user agreement</a>,
-                                    and confirm that I am at least 18 years old!
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin">
-                                    <div class="button-inner">
-                                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                            <use xlink:href="#icon_Arrow"></use>
-                                        </svg>
-                                        <span>Sign in</span>
-                                    </div>
-                                </button>
-                                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big">
-                                    <div class="button-inner">Sign up</div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="other-login" class="sc-kSWJqS gIMEzD">
-                        <div class="box-title"> Log in directly with  </div>
-                        <div class="other-group">
-                            <button id="gg_login" type="button" title="google">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fa455e" d="M16 0a16 16 0 110 32 16 16 0 010-32z"></path>
-                                    <path fill="#fff" d="M19.5 12.3c-.5-.5-1.1-.9-1.8-1a4.8 4.8 0 00-2-.2c-.9 0-1.7.4-2.3 1a5 5 0 00-2 4 5 5 0 004 4.8 5 5 0 001.6 0c.8 0 1.6-.3 2.2-.7.5-.4 1-.9 1.2-1.4l.3-.9v-.2h-4.4v-3.2h7.5l.2.1.1 1v1.2c0 .5 0 1-.2 1.6v-.1a7.4 7.4 0 01-1.4 3 7 7 0 01-3 2.4h-.1c-.6.2-1.2.4-1.9.4a8.8 8.8 0 01-1.9 0c-.8 0-1.5-.1-2.2-.4-.9-.4-1.6-.8-2.3-1.4-1-.8-1.9-2-2.4-3.2l-.5-1.9v-1.4-.1c0-.9.2-1.7.4-2.5.3-.7.7-1.4 1.2-2 1-1.4 2.5-2.5 4.3-3l1.5-.3a11.1 11.1 0 011.3 0 7.7 7.7 0 014.8 2l-.1.3-2 2h-.1z"></path>
-                                </svg>
-                            </button>
-                            <button id="fb_login" type="button" title="facebook">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fff" d="M31.7 16.3a15.7 15.7 0 11-31.4 0 15.7 15.7 0 0131.4 0z"></path>
-                                    <path fill="#227aee" d="M0 16a16 16 0 0013.4 15.8V20.6h-4v-4.7h4v-4.4c0-2.7 2.3-5.7 6.5-5.6 1.5 0 3.4.5 3.4.5v4s-1.9-.2-3 0c-1.6.2-2 1.4-2 2v3.3h4.9l-1 4.9h-3.8v11.2A16 16 0 100 16z"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 <style>
 .kBjSXI {
@@ -280,11 +196,8 @@ const handleCancel = (()=>{
     background-color: rgb(0, 0, 0);
     filter: none !important;
 }
-input[type="checkbox"]{
-    color: aqua;
-}
 .ipnwmW {
-    background-color: rgb(67, 179, 9);
+    background-color: var(--primary-color);
 }
 
 .dialog {
@@ -656,7 +569,7 @@ input:-webkit-autofill {
 .fnKcEH.button {
     color: rgb(245, 246, 247);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
-    background-color: rgb(67, 179, 9);
+    background-color: var(--primary-color);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
 }
 
@@ -694,10 +607,6 @@ input:-webkit-autofill {
     filter: none !important;
 }
 
-.dA-dCPD {
-    background-color: rgb(67, 179, 9);
-}
-
 .dialog {
     position: absolute;
     display: flex;
@@ -712,11 +621,6 @@ input:-webkit-autofill {
     border-radius: 1.25rem;
     overflow: hidden;
     background-color: rgb(23, 24, 27);
-}
-
-.dA-dCPD .dialog-head {
-    background-color: transparent;
-    box-shadow: none;
 }
 
 .dialog-head.has-close {
@@ -750,25 +654,6 @@ input:-webkit-autofill {
     cursor: pointer;
 }
 
-.gKVaPL {
-    height: 1.075rem;
-    margin: 1rem 0px;
-}
-
-.dA-dCPD.dialog-body {
-    padding: 0px;
-}
-
-.dA-dCPD .welcome {
-    height: 11.875rem;
-    position: absolute;
-    top: 3.75rem;
-    left: 1.25rem;
-    right: 0.3125rem;
-    z-index: 1;
-    color: rgb(245, 246, 247);
-}
-
 .dialog-body>div {
     flex: 1 1 0%;
 }
@@ -792,15 +677,6 @@ input:-webkit-autofill {
     flex: 1 1 0%;
 }
 
-.biIEWz {
-    position: absolute;
-    inset: 16.25rem 0px 0px;
-    height: auto;
-    border-top-left-radius: 1.25rem;
-    border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
-    overflow-y: scroll;
-}
 
 .kDuLvp .input-label {
     display: flex;
@@ -868,19 +744,6 @@ input:-webkit-autofill {
     height: 100%;
 }
 
-.Vvcdr {
-    background-color: rgb(30, 32, 36);
-    width: 29rem;
-}
-
-.Vvcdr .box {
-    padding: 1.25rem;
-}
-
-.Vvcdr .box>.input:first-of-type {
-    margin-top: 0.25rem;
-}
-
 .kDuLvp .input-label {
     display: flex;
     -webkit-box-align: center;
@@ -915,28 +778,6 @@ input:-webkit-autofill {
     color: rgb(245, 246, 247);
 }
 
-.Vvcdr .casino-code {
-    margin-top: 1rem;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.Vvcdr hr {
-    margin: 0px;
-    height: 1px;
-    border: none;
-    background-color: rgba(62, 72, 79, 0.3);
-}
-
-.Vvcdr .argument-check {
-    display: flex;
-    margin-bottom: 1.25rem;
-}
 
 .gEBngo.button {
     color: rgb(245, 246, 247);
@@ -949,19 +790,6 @@ input:-webkit-autofill {
     margin-right: 0.375rem;
 }
 
-.Vvcdr .buttons {
-    display: flex;
-    margin: 0px 1.25rem;
-}
-
-.Vvcdr .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
-}
-
-.Vvcdr .button {
-    flex: 1 1 0%;
-}
 
 .Vvcdr .buttons .button:last-of-type {
     width: 11rem;
@@ -977,6 +805,11 @@ input:-webkit-autofill {
         top: 0px;
         margin: 0px;
         border-radius: 0px;
+    }
+    .cfNMkN .buttons .button:last-of-type {
+    width: 12rem;
+    flex: 0 0 auto;
+    margin-left: 0.625rem;
     }
 
     .jScFby {
@@ -998,33 +831,6 @@ input:-webkit-autofill {
         overflow: clip;
     }
 
-    .Vvcdr {
-        width: 100%;
-    }
-}
-
-.gIMEzD {
-    padding: 1rem 2.5rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.gIMEzD .box-title {
-    text-align: center;
-    width: 100%;
-    line-height: 1;
-    margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
-
-.gIMEzD .other-group {
-    border-radius: 1.75rem;
-    background-color: rgba(49, 52, 60, 0.5);
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
 }
 
 .gIMEzD .other-group button {

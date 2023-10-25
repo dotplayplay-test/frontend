@@ -1,16 +1,17 @@
 <script>
 import { browser } from '$app/environment';
-import { handleNestedRoute } from "$lib/store/nested_routes";
 import { error_msg } from "./store";
-import { handleSepProfile } from "$lib/profleAuth/store"
 import axios from "axios";
+import { onMount } from "svelte";
 import {  goto } from "$app/navigation";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { profileStore } from "$lib/store/profile";
-import { routes} from "$lib/store/routes";
 import { handleAuthToken } from "$lib/store/routes";
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+
 
 let img1 = true
 let img2 = false
@@ -86,14 +87,16 @@ const handleImgeSelect = ((e)=>{
 
 let username = $profileStore.username
 let is_loading = false
+
 const handleSubmit = (async() => {
+    // is_loading = true
     if (!username) {
         error_msg.set("username can't be empty")
         setTimeout(()=>{
             error_msg.set("")
+            is_loading = false
         },4000)
     } else {
-        if($routes.profile){
             let data = {
                 born: $profileStore.born,
                 email: $profileStore.email,
@@ -109,9 +112,8 @@ const handleSubmit = (async() => {
                 username: username,
                 vip_level: $profileStore.vip_level
             }
-              await  axios.post("http://localhost:8000/api/profile/update-user", {
-            data
-          },{
+         await  axios.post(`${URL}/api/profile/update-user`, {data},
+         {
             headers: {
             "Content-type": "application/json",
             'Authorization': `Bearer ${$handleAuthToken}`
@@ -119,30 +121,39 @@ const handleSubmit = (async() => {
           }).then((res)=>{
             profileStore.set(data)
             goto("/")
+            is_loading = false
             // browser &&   window.history.replaceState(null, '', $routes.route);
             // handleNestedRoute.set("")
             // window.location.href = $routes.route
           })
-        }else{
-            window.location.href = $routes.route
-            error_msg.set("something went wrong")
-            setTimeout(()=>{
-                error_msg.set("")
-            },4000)
-        }
+          .catch((err)=>{
+            console.log(err)
+            is_loading = false
+          })
     }
 })
 
 
 const handleClose = (()=>{
-    window.location.href = $routes.route
-    browser &&   window.history.replaceState(null, '', $routes.route);
-    handleNestedRoute.set("")
+    goto("/")
 })
+
+
+let is_mobile = false
+onMount(() => {
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+})
+
 
 </script>
 
-<div id="main" class="sc-bkkeKt kBjSXI">
+<div  class="sc-bkkeKt kBjSXI">
+
     {#if $error_msg}
     <div class="error-message">
         <div class="hTTvsjh"> 
@@ -150,9 +161,10 @@ const handleClose = (()=>{
             </div>
         </div>
     {/if} 
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+
+    <div class="dialog "  style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         <div class="dialog-head has-close">
-            <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
+            <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png">
         </div>
         <button on:click={()=> handleClose()} class="sc-ieecCq fLASqZ close-icon dialog-close">
             <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
@@ -327,7 +339,7 @@ h2 {
 }
 
 .ipnwmW {
-    background-color: rgb(67, 179, 9);
+    background-color: var(--primary-color);
 }
 
 .dialog {

@@ -120,7 +120,7 @@ const handleRegister = (()=>{
                 </button>
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
                     <div class="chat-btn ">
-                        <Icon src={BsDroplet}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                        <Icon src={BsDroplet}  size="18"   color="#fff" className="custom-icon" title="arror" />
                         <div class="sc-fotOHu gGSOuF badge ">26</div>
                     </div>
                 </button>
@@ -139,21 +139,15 @@ const handleRegister = (()=>{
         {#if !$handleisLoading}
         <div class="login-top">
             <a href="/">
-                <div class="logo-wrap">
-                    <img alt="logo" style="border-radius: 12px;" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
+                <div class="logowrap">
+                    <img alt="logo" style="border-radius: 12px; width: 34px" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
                 </div>
             </a>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
                     <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
-            </button>
-            <!-- <div class="sc-eldieg elBGFt big-enter" bis_skin_checked="1">
-                <button>
-                    <Icon src={HiSolidSearch} title="search" />
-                </button>
-            </div> -->
-          
+            </button> 
             {#if $handleisLoggin}
             <MainNavbar on:handleChatRoom={handleChat} />
             {:else}
@@ -172,7 +166,7 @@ const handleRegister = (()=>{
             <div class="left"></div>
             <div class="right">
                 <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB chat-btn">
-                    <Icon src={BsDroplet}  size="28"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                    <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon" title="arror" />
                     <div class="sc-fotOHu gGSOuF badge ">99</div>
                 </button>
             </div>
@@ -197,10 +191,9 @@ const handleRegister = (()=>{
 .jVgBRe .login-top .logo-wrap img {
     width: 2rem;
 }
-.jVgBRe .login-top .logo-wrap {
-    margin-right: 10px;
+.jVgBRe .login-top .logowrap {
     margin-top: 0.25rem;
-    margin-left: 10px;
+    margin-right: 2px;
     position: relative;
 }
 .jVgBRe .login-top .header-login .fnKcEH.button {
@@ -213,12 +206,11 @@ const handleRegister = (()=>{
     line-height: 2.5rem;
     text-align: center;
     font-size: 15px;
-    color: rgb(116, 201, 23);
     font-weight: bold;
 }
 .cUTdQJ .open-wrap {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 1.6rem;
+    height: 1.6rem;
     display: flex;
     -webkit-box-align: center;
     align-items: center;

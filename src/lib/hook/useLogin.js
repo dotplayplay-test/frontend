@@ -1,17 +1,19 @@
-import { browser } from '$app/environment';
-import { handleNestedRoute } from "$lib/store/nested_routes"
 import { handleAuthToken } from "$lib/store/routes"
 import { profileStore } from "$lib/store/profile"
 import { default_Wallet } from "$lib/store/coins"
+import {  goto } from "$app/navigation";
+import { error_msg, is_loading} from "../../lib/nestedpages/auth/login/store"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const useLogin = () => {
   let error;
   let isLoading;
   const login = async (data) => {
-    isLoading = true
+    is_loading.set(true)
     error = null
     const response = await fetch(
-      "http://localhost:8000/api/users/signup",{
+      `${URL}/api/users/signup`,{
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -21,22 +23,17 @@ export const useLogin = () => {
     );
     const json = await response.json();
     if (!response.ok) {
-      isLoading = false;
+      is_loading.set(false)
       error = json.error
       console.log(error)
     }
     if (response.ok) {
-      let db = {
-        email: json.profile.email,
-        Token: json.Token
-      }
-      localStorage.setItem("user", JSON.stringify(db));
+      localStorage.setItem("user", JSON.stringify(json.Token));
       handleAuthToken.set(json.Token)
-      profileStore.set(json.profile)
-      browser &&  window.history.replaceState(null, '', '/')
-      handleNestedRoute.set('/')
-      default_Wallet.set(json.wallet)
-      isLoading = false
+      profileStore.set(json.result)
+      goto("/")
+      default_Wallet.set(json.default_wallet)
+      is_loading.set(false)
     }
   };
   return { login, isLoading, error };

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import {
     profileStore
 } from "../../../store/profile"
@@ -44,7 +44,7 @@ const handleDiceHistoryDetail = ((data)=>{
                 </tr>
             </thead>
             <tbody>
-                {#each $dicegameplays.slice(0, 15) as dice (dice.id) }
+                {#each $dicegameplays.slice(0, 15) as dice (dice._id) }
                 {#if $profileStore.user_id === dice.user_id}
                 <tr on:click={()=> handleDiceHistoryDetail(dice)}>
                     <td>
@@ -185,4 +185,4 @@ const handleDiceHistoryDetail = ((data)=>{
 .iycaRo .coin {
     font-weight: bold;
 }
-</style>
+</style> -->

@@ -1,8 +1,9 @@
-import { browser } from '$app/environment';
-import { handleNestedRoute } from "$lib/store/nested_routes"
+import {  goto } from "$app/navigation";
 import { handleAuthToken } from "$lib/store/routes"
 import { profileStore } from "$lib/store/profile"
 import { default_Wallet } from "$lib/store/coins"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const fbUseLogin = () => {
   let error;
@@ -11,7 +12,7 @@ export const fbUseLogin = () => {
     isLoading = true
     error = null
     const response = await fetch(
-      "http://localhost:8000/api/users/signup",{
+      `${URL}/api/users/signup`,{
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -26,16 +27,11 @@ export const fbUseLogin = () => {
       console.log(error)
     }
     if (response.ok) {
-      let db = {
-        email: json.profile.email,
-        Token: json.Token
-      }
-      localStorage.setItem("user", JSON.stringify(db));
+      localStorage.setItem("user", JSON.stringify(json.Token));
       handleAuthToken.set(json.Token)
-      profileStore.set(json.profile)
-      browser &&  window.history.replaceState(null, '', '/')
-      window.location.href = "/"
-      default_Wallet.set(json.wallet)
+      profileStore.set(json.result)
+      goto("/")
+      default_Wallet.set(json.default_wallet)
       isLoading = false
     }
   };

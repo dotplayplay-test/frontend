@@ -10,6 +10,8 @@ import { profileStore } from "$lib/store/profile";
 import { routes} from "$lib/store/routes";
 import { handleAuthToken } from "$lib/store/routes";
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
 let img1 = true
 let img2 = false
@@ -108,7 +110,7 @@ const handleSubmit = (async() => {
                 username: username,
                 vip_level: $profileStore.vip_level
             }
-              await  axios.post("http://localhost:8000/api/profile/update-user", {
+              await  axios.post(`${URL}/api/profile/update-user`, {
             data
           },{
             headers: {

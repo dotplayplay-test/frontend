@@ -5,22 +5,17 @@ import { createEventDispatcher , onMount} from 'svelte'
 const dispatch = createEventDispatcher()
 import { updateCoins } from "./updateCoin"
 import { UserProfileEl } from "../../index";
-const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet, handlePPDwallet } = UserProfileEl()
+const { handleUSDTwallet, handlePPFwallet,  handlePPLwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
 import { ppdWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
-import {
-  browser
-} from '$app/environment'
-$:{
-    onMount(async()=>{
-        handleDefaultwallet()
-        handleUSDTwallet()
-        handlePPFwallet()
-        handlePPLwallet()
-        handlePPDwallet()
-    })
-}
+import { browser } from '$app/environment'
+
+onMount(async()=>{
+    handleUSDTwallet()
+    handlePPFwallet()
+    handlePPLwallet()
+    handlePPDwallet()
+})
 
 let show_currencyName
 
@@ -65,7 +60,6 @@ $:{
     },
 ]
 }
-
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)
@@ -293,25 +287,25 @@ const handleSelectCoin = ((e) => {
 
 @media screen and (max-width: 650px) {
     .eqDSYn {
-        height: 38.75rem;
-        /* width: 26.25rem; */
-        position: absolute;
-        right: 0px;
-        top: 100%;
-        /* padding-top: 0.5rem; */
-        /* z-index: 99; */
-    }
+    height: 21.75rem;
+    width: 26.2rem;
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    padding-top: 0.5rem;
+    z-index: 99;
+}
 
-    .eqDSYn {
-        width: 100%;
-        left: 0px;
-        z-index: 10;
-        padding-top: 0px;
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px 0px;
-    }
+.eqDSYn {
+    width: 137%;
+    left: -80px;
+    z-index: 10;
+    padding-top: 0px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px 0px;
+}
 
-    .eqDSYn .balance-select {
-        border-radius: 0px 0px 1.25rem 1.25rem;
-    }
+.eqDSYn .balance-select {
+    border-radius: 0px 0px 1.25rem 1.25rem;
+}
 }
 </style>

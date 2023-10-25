@@ -112,15 +112,15 @@ const handeTheme = ((e) => {
         </button>
         <div class="line"></div>
         <div class="sc-fHeRUh hhNgUw border_bottom">
-            <span>Language Options</span>
+            <!-- <span>Language Options</span>
             <div class="sc-jJoQJp gOHquD select  sc-dtDOqo lfiNFq">
                 <div class="select-trigger">English
                     <div class="arrow top">
                         <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                     </div>
                 </div>
-            </div>
-            <div class="sc-gSQFLo dprxuS theme">
+            </div> -->
+            <!-- <div class="sc-gSQFLo dprxuS theme">
                 <div class="theme-check">
                     <button on:click={()=>handeTheme("dark")} class={ `item ${isLight ? "" : "is-active"} `}>
                         <Icon src={IoMoon}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="moon" />
@@ -133,12 +133,12 @@ const handeTheme = ((e) => {
                     <p>{ isLight ? `Lightmode` : `Darkmode` }</p>
                     <p>Currently</p>
                 </div>
-            </div>
+            </div> -->
 
             <div class="border_bottom">
                 <div class="live">
                     <div class="support-icon">
-                        <Icon src={FaSolidHeadphones}  size="18"  color="#ffff" className="custom-icon" title="moon" />
+                        <Icon src={FaSolidHeadphones}  size="18"  color="#ffff" />
                     </div>
                     <span>Live Support</span>
                 </div>

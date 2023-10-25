@@ -52,7 +52,7 @@ $:{
 
 $:{
     onMount(async()=>{
-        data.profile &&  handleAuthToken.set(data.profile.Token)
+        data.token &&  handleAuthToken.set(data.token)
     })
 }
 
@@ -149,7 +149,7 @@ const handleMenu = () => {
     <div id="main">
         <div id="menu">
             <button style={`left:${isOpenSide ? 224 : 60}px`} on:click={handleMainMenu}  class="menu">
-                <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                <Icon src={HiSolidMenu}  size="18"   color="#fff"  />
             </button>
         </div>
     </div>

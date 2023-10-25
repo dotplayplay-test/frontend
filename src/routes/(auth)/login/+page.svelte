@@ -7,12 +7,11 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import { handleLogin } from "$lib/firebaseAuth/index";
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index";
 import { createEventDispatcher } from "svelte";
-import { error_msg, is_loading } from "./store"
-import {
-    browser
-} from '$app/environment';
+import { browser } from '$app/environment';
+import { onMount } from "svelte";
 import { current_route} from "$lib/store/routes"
-    import Forget from "../forget/+page.svelte";
+import {  error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store"
+ import Forget from "../forget/+page.svelte";
 const dispatch = createEventDispatcher()
 let email = '';
 let password = '';
@@ -26,14 +25,14 @@ const handleFacebookAuthi = (()=>{
 
 const handleSubmit = (() => {
     if (!email) {
-        error_msg.set("email field can't be empty")
+        error_msgS.set("email field can't be empty")
         setTimeout(()=>{
-            error_msg.set(false)
+            error_msgS.set(false)
         },4000)
     } else if (!password) {
-        error_msg.set("Password is required")
+        error_msgS.set("Password is required")
         setTimeout(()=>{
-            error_msg.set(false)
+            error_msgS.set(false)
         },4000)
     } else {
         handleLogin(email, password)
@@ -43,6 +42,16 @@ const handleSubmit = (() => {
 const handleCancel = (()=>{
     // dispatch("close", 3)
     goto("/")
+})
+
+let is_mobile = false
+onMount(() => {
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
 })
 
 
@@ -72,23 +81,23 @@ const handleForgetPassword = (()=>{
 </script>
 
 
-<div id="main" class="sc-bkkeKt kBjSXI">
+<div class="sc-bkkeKt kBjSXI">
     
- {#if $error_msg}
+ {#if $error_msgS}
     <div class="error-message">
         <div class="hTTvsjh"> 
-            <div>{$error_msg}</div>
+            <div>{$error_msgS}</div>
         </div>
     </div>
  {/if}   
 
 
 
-<div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+<div class="dialog " style={`${is_mobile ? "transform: scale(1) translateZ(5px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
   
 
     <div class="dialog-head has-close">
-        <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
+        <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png">
     </div>
 
     <button on:click={()=> handleCancel()} class="sc-ieecCq fLASqZ close-icon dialog-close">
@@ -126,9 +135,9 @@ const handleForgetPassword = (()=>{
                     </div>
                     <hr>
                     <div class="buttons">
-                        <button disabled={$is_loading} type="submit" on:click={handleSubmit} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-big">
+                        <button disabled={$is_loadingS} type="submit" on:click={handleSubmit} class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-big">
                             <div class="button-inner">
-                                {#if $is_loading}
+                                {#if $is_loadingS}
                                 <div class="center">
                                     <div class="wave"></div>
                                     <div class="wave"></div>
@@ -146,7 +155,7 @@ const handleForgetPassword = (()=>{
                                 {/if}
                             </div>
                         </button>
-                        <button  on:click={()=> 3 } class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
+                        <button  on:click={()=> goto("/register") } class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
                             <div class="button-inner">
                                 <span>Sign up</span>
                                 <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
@@ -183,84 +192,9 @@ const handleForgetPassword = (()=>{
 </div>
 
 
-
-
 </div>
 
-<!-- ====================================== mobile =========================================== -->
 
-<div class="mobile">
-    <div class="sc-bkkeKt kBjSXI" style="background-color: transparent;">
-        <div class="dialog sc-kITQLZ dA-dCPD">
-            <div class="dialog-head has-close">
-                <img src="https://www.linkpicture.com/q/dpp-logowhite-transparent-final_1.png" alt="" class="sc-fBgqEL gKVaPL">
-            </div>
-            <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-            </button>
-            <div class="dialog-body no-style sc-kITQLZ dA-dCPD">
-                <div class="welcome">
-                    <div class="msg1">BUILD THE BEST CRYPTO CASINO TOGETHER</div>
-                    <img alt="" src="https://static.nanogames.io/assets/login_coco.1855b11e.png">
-                </div>
-                <div class="sc-dkPtRN jScFby scroll-view hide-bar sc-kudmJA biIEWz" style="transform: none;">
-                    <div id="login" class="sc-hKUcmH jBwyNM">
-                        <div class="box">
-                            <div class="sc-ezbkAF kDuLvp input ">
-                                <div class="input-label">Email Address</div>
-                                <div class="input-control">
-                                    <input type="text"  autocomplete="off" placeholder="Email" value="">
-                                </div>
-                            </div>
-                            <div class="sc-ezbkAF kDuLvp input sc-bYoBSM ixxYMF">
-                                <div class="input-label">
-                                    <div style="flex: 1 1 0%;">Login Password</div>
-                                    <a class="forget" href="/forget">Forgot password?</a>
-                                </div>
-                                <div class="input-control">
-                                    <input type="password" autocomplete="off"  placeholder="Login Password" value="">
-                                    <Icon src={AiFillEye}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="buttons">
-                            <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-big">
-                                <div class="button-inner">Sign in</div>
-                            </button>
-                            <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
-                                <div class="button-inner">
-                                    <span>Sign up</span>
-                                    <span class="sc-gsDKAQ hxODWG icon">
-                                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
-                                    </span>
-
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="other-login" class="sc-kSWJqS gIMEzD">
-                        <div class="box-title"> Log in directly with  </div>
-                        <div class="other-group">
-                            <button id="gg_login" type="button" title="google">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fa455e" d="M16 0a16 16 0 110 32 16 16 0 010-32z"></path>
-                                    <path fill="#fff" d="M19.5 12.3c-.5-.5-1.1-.9-1.8-1a4.8 4.8 0 00-2-.2c-.9 0-1.7.4-2.3 1a5 5 0 00-2 4 5 5 0 004 4.8 5 5 0 001.6 0c.8 0 1.6-.3 2.2-.7.5-.4 1-.9 1.2-1.4l.3-.9v-.2h-4.4v-3.2h7.5l.2.1.1 1v1.2c0 .5 0 1-.2 1.6v-.1a7.4 7.4 0 01-1.4 3 7 7 0 01-3 2.4h-.1c-.6.2-1.2.4-1.9.4a8.8 8.8 0 01-1.9 0c-.8 0-1.5-.1-2.2-.4-.9-.4-1.6-.8-2.3-1.4-1-.8-1.9-2-2.4-3.2l-.5-1.9v-1.4-.1c0-.9.2-1.7.4-2.5.3-.7.7-1.4 1.2-2 1-1.4 2.5-2.5 4.3-3l1.5-.3a11.1 11.1 0 011.3 0 7.7 7.7 0 014.8 2l-.1.3-2 2h-.1z"></path>
-                                </svg>
-                            </button>
-                            <button id="fb_login" type="button" title="facebook">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                    <path fill="#fff" d="M31.7 16.3a15.7 15.7 0 11-31.4 0 15.7 15.7 0 0131.4 0z"></path>
-                                    <path fill="#227aee" d="M0 16a16 16 0 0013.4 15.8V20.6h-4v-4.7h4v-4.4c0-2.7 2.3-5.7 6.5-5.6 1.5 0 3.4.5 3.4.5v4s-1.9-.2-3 0c-1.6.2-2 1.4-2 2v3.3h4.9l-1 4.9h-3.8v11.2A16 16 0 100 16z"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
 .kBjSXI {
@@ -272,7 +206,7 @@ const handleForgetPassword = (()=>{
 }
 
 .ipnwmW {
-    background-color: rgb(67, 179, 9);
+    background-color: var(--primary-color);
 }
 
 .dialog {
@@ -511,7 +445,6 @@ img {
 }
 
 .lnrkkr .buttons .button:first-of-type {
-    width: 15rem;
     flex: 0 0 auto;
     margin-right: 0.625rem;
 }
@@ -610,9 +543,7 @@ input:-webkit-autofill {
     background-color: rgb(0, 0, 0);
     filter: none !important;
 }
-.dA-dCPD {
-    background-color: rgb(67, 179, 9);
-}
+
 .dialog {
     position: absolute;
     display: flex;
@@ -629,10 +560,6 @@ input:-webkit-autofill {
     background-color: rgb(23, 24, 27);
 }
 
-.dA-dCPD .dialog-head {
-    background-color: transparent;
-    box-shadow: none;
-}
 .dialog-head.has-close {
     margin-right: 3.75rem;
 }
@@ -661,23 +588,7 @@ input:-webkit-autofill {
     height: 3.75rem;
     cursor: pointer;
 }
-.gKVaPL {
-    height: 1.075rem;
-    margin: 1rem 0px;
-}
 
-.dA-dCPD.dialog-body {
-    padding: 0px;
-}
-.dA-dCPD .welcome {
-    height: 11.875rem;
-    position: absolute;
-    top: 3.75rem;
-    left: 1.25rem;
-    right: 0.3125rem;
-    z-index: 1;
-    color: rgb(245, 246, 247);
-}
 .dialog-body > div {
     flex: 1 1 0%;
 }
@@ -697,26 +608,7 @@ input:-webkit-autofill {
 .dialog-body > div {
     flex: 1 1 0%;
 }
-.biIEWz {
-    position: absolute;
-    inset: 16.25rem 0px 0px;
-    height: auto;
-    border-top-left-radius: 1.25rem;
-    border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
-}
-.dA-dCPD #login {
-    padding-top: 0px;
-}
-.jBwyNM {
-    background-color: rgb(30, 32, 36);
-}
-.jBwyNM .box {
-    padding: 1.5rem 1.25rem;
-}
-.jBwyNM .box > .input:first-of-type {
-    margin-top: 0.25rem;
-}
+
 .kDuLvp .input-label {
     display: flex;
     -webkit-box-align: center;
@@ -727,9 +619,7 @@ input:-webkit-autofill {
     color: rgba(153, 164, 176, 0.6);
     font-size: 12px;
 }
-.kDuLvp .input-label .forget{
-    font-size: 12px;
-}
+
 .kDuLvp .input-control {
     position: relative;
     display: flex;
@@ -753,9 +643,7 @@ input:-webkit-autofill {
     color: rgb(245, 246, 247);
     outline: none;
 }
-.jBwyNM .button {
-    flex: 1 1 0%;
-}
+
 .cBmlor {
     display: block;
     width: 100%;
@@ -779,10 +667,7 @@ input:-webkit-autofill {
     flex: 0 0 auto;
     margin-right: 0.625rem;
 }
-.jBwyNM .signup {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
-}
+
 .cBmlor > .button-inner {
     display: flex;
     -webkit-box-align: center;
@@ -792,18 +677,14 @@ input:-webkit-autofill {
     width: 100%;
     height: 100%;
 }
-.jBwyNM .signup {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+
+@media screen and (min-width: 650px){
+    .lnrkkr .buttons .button-big{
+    width: 15rem;
+    }
 }
-.jBwyNM .signup .icon {
-    width: 1rem;
-    height: 1rem;
-    margin-left: 0.375rem;
-    opacity: 0.6;
-    color: rgb(245, 246, 247);
-}
-@media screen and (max-width: 621px){
+
+@media screen and (max-width: 650px){
     .dialog {
         width: 100%;
         height: 100%;
@@ -812,6 +693,9 @@ input:-webkit-autofill {
         margin: 0px;
         border-radius: 0px;
     }
+ .lnrkkr .buttons .button-big{
+    width: 12rem;
+}
 
     *, *:before, *:after {
         box-sizing: border-box;
@@ -820,38 +704,8 @@ input:-webkit-autofill {
         overflow-clip-margin: content-box;
         overflow: clip;
     }
-    .jBwyNM .buttons {
-        padding: 1.25rem 2.5rem;
-        display: flex;
-    }
 }
-.jBwyNM hr {
-    height: 1px;
-    margin: 0px;
-    border: none;
-    background-color: rgba(62, 72, 79, 0.3);
-}
-.gIMEzD {
-    padding: 1rem 2.5rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-align: center;
-    align-items: center;
-}
-.gIMEzD .box-title {
-    text-align: center;
-    width: 100%;
-    line-height: 1;
-    margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
-.gIMEzD .other-group {
-    border-radius: 1.75rem;
-    background-color: rgba(49, 52, 60, 0.5);
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
+
 .gIMEzD .other-group button {
     display: flex;
     height: 3.5rem;

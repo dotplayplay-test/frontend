@@ -1,3 +1,6 @@
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+
 export const updateCoins = () => {
     let error;
     let isLoading;
@@ -5,12 +8,12 @@ export const updateCoins = () => {
     const user = JSON.parse(localStorage.getItem('user'))
       isLoading = true
       error = null
-      const response = await fetch("http://localhost:8000/api/wallet/update-default-wallets",{
+      const response = await fetch(`${URL}/api/wallet/update-default-wallets`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
             "Content-type": "application/json",
-            'Authorization': `Bearer ${user.Token}`
+            'Authorization': `Bearer ${user}`
           },
         }
       );

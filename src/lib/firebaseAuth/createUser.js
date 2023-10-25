@@ -1,10 +1,9 @@
-import { browser } from '$app/environment';
-import { handleNestedRoute } from "$lib/store/nested_routes"
 import { handleAuthToken } from "$lib/store/routes"
 import { profileStore } from "$lib/store/profile"
 import { default_Wallet } from "$lib/store/coins"
 import {  goto } from "$app/navigation";
-
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const useRegister = () => {
     let error;
@@ -13,7 +12,7 @@ export const useRegister = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/users/register",{
+        `${URL}/api/users/register`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -28,17 +27,11 @@ export const useRegister = () => {
         console.log(error)
       }
       if (response.ok) {
-        let db = {
-          email: json.profile.email,
-          Token: json.Token
-        }
-        localStorage.setItem("user", JSON.stringify(db));
+        localStorage.setItem("user", JSON.stringify(json.Token));
         handleAuthToken.set(json.Token)
-        profileStore.set(json.profile)
-        window.location.href = "/info"
-        // browser &&  window.history.replaceState(null, 'info', '/login/info')
-        // handleNestedRoute.set('/login/info')
-        default_Wallet.set(json.wallet)
+        profileStore.set(json.result)
+        goto("/info")
+        default_Wallet.set(json.default_wallet)
         isLoading = false
       }
     };

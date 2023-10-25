@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import {
     dicegameplays
 } from "../store/index"
@@ -42,7 +42,7 @@ const handleDiceHistoryDetail = ((data)=>{
                 </tr>
             </thead>
             <tbody>
-                {#each $dicegameplays.slice(0, 15) as dice  (dice.id) }
+                {#each $dicegameplays.slice(0, 15) as dice  }
                 <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
                     <td>
                         <button class="hash ellipsis">{dice.bet_id}</button>
@@ -290,4 +290,4 @@ const handleDiceHistoryDetail = ((data)=>{
 .iycaRo .coin {
     font-weight: bold;
 }
-</style>
+</style> -->

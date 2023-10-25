@@ -9,6 +9,7 @@ import HistoryDetails from "./componets/historyDetails.svelte";
 import click from "./audio/click.wav"
 import cr from "./audio/click.wav"
 let range = 50
+
 $:{
     onMount(async()=>{
         $handleisLoggin &&  historyD()
@@ -82,7 +83,7 @@ const handleChange = ((e)=>{
             {#if $handleisLoggin}
                 {#if $dice_history.length !== 0}
                 <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-                {#each $dice_history.slice(-6) as  dice (dice.id)} 
+                {#each $dice_history.slice(-6) as  dice (dice._id)} 
                     <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
                         <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{dice.cashout}</div>
                     </button>

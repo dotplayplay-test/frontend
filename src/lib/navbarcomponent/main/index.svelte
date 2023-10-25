@@ -7,46 +7,65 @@ import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
 import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
 import Navprofile from "../../profilecomponent/main/navprofile.svelte";
 import Coins from "../../profilecomponent/main/coins.svelte";
+import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
 import axios from "axios";
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore, handleisLoading, handleisLoggin } from "$lib/store/profile";
-import { onMount} from "svelte";
+import { onMount } from "svelte";
 import {  goto } from "$app/navigation";
 import { default_Wallet } from "$lib/store/coins";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
-$:{
- onMount(async()=>{
-   await axios.get("http://localhost:8000/api/profile",{
-    headers: {
+
+const handleProfile = (async()=>{
+    try{
+        await axios.get(`${URL}/api/profile`,{
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+            },
+    })
+    .then((res)=>{
+        profileStore.set(res.data[0])
+    })
+    .catch((err)=>{
+         console.log(err)
+    })
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
+const handleDefaultWallet = (async()=>{
+    try{
+     await axios.get(`${URL}/api/wallet/default-wallets`,{
+        headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${$handleAuthToken}`
         },
-   })
-   .then((res)=>{
-    profileStore.set(res.data[0])
-   })
+    })
+    .then((res)=>{
+        default_Wallet.set(res.data[0])
+    })
+    .catch((err)=>{
+            console.log(err)
+    })
+    }
+    catch(err){
+        console.log(err)
+    }
 })
-}
 
+handleProfile()
+handleDefaultWallet()
 
-$:{
- onMount(async()=>{
-   await axios.get("http://localhost:8000/api/wallet/default-wallets",{
-    headers: {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${$handleAuthToken}`
-        },
-   })
-   .then((res)=>{
-    default_Wallet.set(res.data[0])
-   })
-})
-}
 
 const handleDailyPPFbonus = (async()=>{
-    await axios.get("http://localhost:8000/api/profile/ppf-daily-bonus",{
+    await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
     headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${$handleAuthToken}`
@@ -57,7 +76,7 @@ const handleDailyPPFbonus = (async()=>{
 onMount(async()=>{
     setTimeout(()=>{
         handleDailyPPFbonus()
-    },6000)
+    },3000)
 })
 
 
@@ -99,7 +118,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{$default_Wallet.balance}<span class="suffix">00</span></span>
+                        <span class="amount-str">{($default_Wallet.balance)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>
@@ -149,7 +168,7 @@ const handleChat = ((e) => {
     </button>
     <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn ">
-            <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon" title="arror" />
             <div class="sc-fotOHu gGSOuF badge ">6</div>
         </div>
     </button>
@@ -217,7 +236,7 @@ const handleChat = ((e) => {
     </button>
     <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn ">
-            <img class="sc-gsDKAQ hxODWG icon" src="https://www.linkpicture.com/q/play_2.png" alt="" />
+             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon" title="arror" />
             <div class="sc-fotOHu gGSOuF badge ">6</div>
         </div>
     </button>
@@ -230,26 +249,44 @@ const handleChat = ((e) => {
 <div class="mobile">
     <div class="sc-gjNHFA jlttqa wallet-enter">
         <div class="sc-fmciRz LQlWw">
-            <div class="sc-iFMAIt icGouR">
+            <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                    <span class="currency">CUB</span>
+                    <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
+                    <span class="currency">{$handleisLoggin && $default_Wallet.coin_name}</span>
                     <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">96985.6009</span>
+                        <span class="amount-str">{($default_Wallet.balance)}<span class="suffix">00</span></span>
                     </div>
                 </div>
-            </div>
+            </button>
+            {#if isCoinDrop}
+            <Coins on:coinDefault={handleCoinSelect} />
+            {/if}
             <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
-                    <span class="wallet-icon">
-                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />
+                    <span style="margin-right: 4px;">
+                        <Icon src={BiSolidWallet}  size="15"  color="rgb(255, 255, 255)"  title="arror" />
                     </span>
                     <span>Wallet</span>
                 </div>
             </button>
+
+            <div class="sc-gnnDb fhlUmF">
+                <div class="user-wrap">
+                    <a  href={`/user/profile/${$profileStore.user_id}`}>
+                        <img class="avatar " alt="" src={$profileStore.profile_image}></a>
+                        <button on:click={handleUserProfile} class="svg">
+                            <span class="na-menu">
+                                <Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                            </span>
+                        </button>
+                        {#if userProfile}
+                            <Navprofile />
+                        {/if}
+                    </div>
+                </div>
         </div>
     </div>
 </div>
@@ -268,14 +305,45 @@ const handleChat = ((e) => {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    height: 3rem;
-    margin-left: 25px;
+    height: 2.6rem;
+    margin-left: 10px;
     border-radius: 1.5rem;
     padding-left: 0.875rem;
     line-height: 1;
     -webkit-box-align: center;
     align-items: center;
     position: relative;
+}
+.fhlUmF {
+    width: 5rem;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
+    cursor: pointer;
+    z-index: 9;
+}
+.fhlUmF .user-wrap {
+    display: flex;
+}
+.fhlUmF .user-wrap > a {
+    font-size: 0px;
+}
+.fhlUmF .user-wrap > a .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+.fhlUmF .svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
 }
 }
 

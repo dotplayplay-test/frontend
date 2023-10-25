@@ -32,7 +32,6 @@ onMount(() => {
     }
 })
 
-
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">

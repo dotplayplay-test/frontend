@@ -67,7 +67,7 @@ const handleNavigation = ((e) => {
 
         <button on:click={()=>handleNavigation("/bonus")}  class="nav-item">
             <span style="padding: 10px">
-                <Icon src={AiFillGift}  size="25"  color="rgb(67, 179, 9)" className="custom-icon" title="bonus" />
+                <Icon src={AiFillGift}  size="25"  color="#9900CC" className="custom-icon" title="bonus" />
             </span>
             <div class="nav-right">Bonus</div>
         </button>
@@ -100,7 +100,7 @@ const handleNavigation = ((e) => {
             <div class="nav-right">Recent Play</div>
         </button>
 
-        <div class="theme-live border_top">
+        <!-- <div class="theme-live border_top">
             <div class="sc-gSQFLo dprxuS theme">
                 <div class="theme-check">
                     <div class="item is-active">
@@ -121,9 +121,9 @@ const handleNavigation = ((e) => {
                 </div>
                 <span>Live Support</span>
             </div>
-        </div>
+        </div> -->
 
-        <div class="language border_top">
+        <!-- <div class="language border_top">
             <span>Language Options</span>
             <div class="sc-jJoQJp gOHquD select  sc-dVNjXY bfVniQ">
                 <div class="select-trigger">
@@ -133,7 +133,7 @@ const handleNavigation = ((e) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="network border_top">
             <span>Social Media</span>
