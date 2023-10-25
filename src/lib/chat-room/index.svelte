@@ -22,7 +22,9 @@ import { emojis } from "./data/index"
 import {  createEventDispatcher,  onMount } from "svelte";
 import {tipped_user } from "$lib/store/tipUser"
 import { profileStore } from '$lib/store/profile';
-import { handleAuthToken} from "$lib/store/routes"
+import { handleAuthToken} from "$lib/store/routes";
+import {handleCountdown} from "../../lib/crashgame/socket"
+const { handleChattingMessages } = handleCountdown()
 let element;
 let newMessages = ''
 import { chats } from "$lib/chat-room/store/index"
@@ -44,12 +46,9 @@ const handleSendMessages = async(data)=>{
             Authorization: `bearer ${$handleAuthToken}`
         }
     }
-    )
+)
 }
 
-if ($chats && element) {
-    scrollToBottom(element);
-}
 
 afterUpdate(() => {
     if ($chats) scrollToBottom(element);
@@ -60,6 +59,11 @@ const handleSendMessage = (async (e, name) => {
         if (e.key === "Enter") {
             e.preventDefault();
         }
+
+        if ($chats && element) {
+            scrollToBottom(element);
+        }
+
         if (newMessages === "/rain ") {
             goto("/user/rain")
         }  
@@ -81,34 +85,25 @@ const handleSendMessage = (async (e, name) => {
             let time = (hours + ':' + minutes + ' ' + newformat);
            
         let data = {
-            id: Math.floor(Math.random() * 230000000),
+            msg_id: Math.floor(Math.random() * 230000000),
+            user_id: $profileStore.user_id,
             type: name.type,
-            text: name.newMessages ? name.newMessages : "",
+            text: name.newMessages ? name.newMessages : ".",
             sent_at: time,
             profle_img: $profileStore.profile_image,
-            sender_username: $profileStore.username,
-            gif: name.gif ? name.gif : "",
-            coin_rain_amount: 0 ,
-            coin_rain_comment: '',
-            coin_rain_num: 0,
-            coin_rain_token:  '',
-            coin_drop_amount: 0,
-            coin_drop_comment: '',
-            coin_drop_num:0,
-            coin_drop_token: '',
-            tipped_user: "",
-            tipped_amount: 0,
-            tipped_comment: "",
-            tipped_coin_image: "",
-            tip_Token: "",
-            vip_level: $profileStore.vip_level
+            username: $profileStore.username,
+            gif: name.gif ? name.gif : ".",
+            hide_profile:$profileStore.hide_profile,
+            vip_level: $profileStore.vip_level,
+            time: new Date()
         }
-        handleSendMessages(data)
+        handleChattingMessages(data)
     }
         newMessages = ''
         isGif = false
     }
 })
+
 
 const scrollToBottom = async (node) => {
     node.scroll({

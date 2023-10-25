@@ -260,7 +260,13 @@ export const handleCountdown = (()=>{
         month_cashback.set(data)
     })
 
-    socket.on("public-chat", data=>{
+    socket.on("new-messages", data=>{
         chats.set(data)
     })
+
+    const handleChattingMessages = ((data)=>{
+        socket.emit("message", data)
+    })
+
+    return { handleChattingMessages }
 })

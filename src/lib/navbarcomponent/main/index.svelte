@@ -60,24 +60,28 @@ const handleDefaultWallet = (async()=>{
     }
 })
 
-handleProfile()
-handleDefaultWallet()
-
-
-const handleDailyPPFbonus = (async()=>{
-    await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
-    headers: {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${$handleAuthToken}`
-        },
-   })
-})
-
-onMount(async()=>{
+onMount(()=>{
     setTimeout(()=>{
-        handleDailyPPFbonus()
-    },3000)
+        $handleAuthToken && handleProfile()
+        $handleAuthToken && handleDefaultWallet()
+    },100)
 })
+
+
+// const handleDailyPPFbonus = (async()=>{
+//     await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
+//     headers: {
+//         "Content-type": "application/json",
+//         "Authorization": `Bearer ${$handleAuthToken}`
+//         },
+//    })
+// })
+
+// onMount(async()=>{
+//     setTimeout(()=>{
+//         handleDailyPPFbonus()
+//     },3000)
+// })
 
 
 let isCoinDrop = false

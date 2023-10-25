@@ -66,7 +66,7 @@ import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLin
 <div id="footer" class="sc-gfXuXe rIdoP">
     <div class="footer-wrap">
         <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png" alt="" class="logo">
-        <div class="footer__desc">WAGER.COM is built by gamblers for gamblers. With our unique community and a huge selection of games like Crash, HashDice, Plinko, Slots, and many more. Your greatest casino adventure is waiting for you!</div>
+        <div class="footer__desc">Dotplayplay.COM is built by gamblers for gamblers. With our unique community and a huge selection of games like Crash, HashDice, Plinko, Slots, and many more. Your greatest casino adventure is waiting for you!</div>
         <div class="footer__entries">
             <a href="/help/provably-fair">HELP CENTER</a>
             <a href="/help/agreement">User Agreement</a>
