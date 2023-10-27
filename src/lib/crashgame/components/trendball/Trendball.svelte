@@ -13,6 +13,8 @@ const { redTrendball } = useRedTrendball()
 import { loadingCrash , handle_IsRed, handle_IsGreen, handle_IsMoon, handle_IsRedwinners} from "../../store"
 import { error_msg  } from "$lib/crashgame/store";
 let redballValue = 10.00
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 
 let  is_loading = false
 const handleRed = (async()=>{
@@ -37,7 +39,7 @@ const handleRed = (async()=>{
             chance: "50.51%",
             game_type:"Red"
         }
-       await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+       await axios.post(`${URL}/api/user/crash-game/red-trendball`, {
             data
         },{
             headers: {
@@ -89,7 +91,7 @@ const handleGreen = async()=>{
         chance: "49.50%",
         game_type:"Green"
     }
-   await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+   await axios.post(`${URL}/api/user/crash-game/red-trendball`, {
             data
         },{
             headers: {
@@ -140,7 +142,7 @@ const handleYellow = (async()=>{
         chance: "9.90%",
         game_type:"Moon"
     }
-    await axios.post("http://localhost:8000/api/user/crash-game/red-trendball", {
+    await axios.post(`${URL}/api/user/crash-game/red-trendball`, {
             data
         },{
             headers: {

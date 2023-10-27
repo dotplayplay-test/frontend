@@ -5,12 +5,8 @@ import { routes } from "$lib/store/routes"
 import { handleAuthToken } from "$lib/store/routes"
 $: routes.set(data)
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import { handleSepProfile } from "$lib/profleAuth/store"
 import {handleCountdown} from "$lib/crashgame/socket"
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
-import {
-    page
-} from '$app/stores'
 handleCountdown()
 import { error_msg} from "$lib/crashgame/store"
 import Navbar from "$lib/navbar.svelte";
@@ -39,11 +35,11 @@ let sideDetection = 0
 $:{
     for(let i = 0; i < $handle_IsRedwinners.length; i++){
         let wllet = {
-            coin_name: $handle_IsRedwinners[i].token,
-            coin_image:  $handle_IsRedwinners[i].token_img,
+            coin_name: $handle_IsRedwinners[i]._doc.token,
+            coin_image:  $handle_IsRedwinners[i]._doc.token_img,
             balance:  $handle_IsRedwinners[i].update_bal
         }
-        if($profileStore.user_id === $handle_IsRedwinners[i].user_id){
+        if($profileStore.user_id === $handle_IsRedwinners[i]._doc.user_id){
             default_Wallet.set(wllet)
         }
     }

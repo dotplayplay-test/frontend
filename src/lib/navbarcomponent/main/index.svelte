@@ -24,9 +24,9 @@ const handleProfile = (async()=>{
     try{
         await axios.get(`${URL}/api/profile`,{
         headers: {
-            "Content-type": "application/json",
-            "Authorization": `Bearer ${$handleAuthToken}`
-            },
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        }
     })
     .then((res)=>{
         profileStore.set(res.data[0])
@@ -64,24 +64,24 @@ onMount(()=>{
     setTimeout(()=>{
         $handleAuthToken && handleProfile()
         $handleAuthToken && handleDefaultWallet()
-    },100)
+    },1000)
 })
 
 
-// const handleDailyPPFbonus = (async()=>{
-//     await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
-//     headers: {
-//         "Content-type": "application/json",
-//         "Authorization": `Bearer ${$handleAuthToken}`
-//         },
-//    })
-// })
+const handleDailyPPFbonus = (async()=>{
+    await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
+    headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        },
+   })
+})
 
-// onMount(async()=>{
-//     setTimeout(()=>{
-//         handleDailyPPFbonus()
-//     },3000)
-// })
+onMount(async()=>{
+    setTimeout(()=>{
+        handleDailyPPFbonus()
+    },3000)
+})
 
 
 let isCoinDrop = false
@@ -122,7 +122,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{($default_Wallet.balance)}<span class="suffix">00</span></span>
+                        <span class="amount-str">{($default_Wallet.balance).toFixed(4)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>

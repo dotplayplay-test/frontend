@@ -79,7 +79,7 @@ const handleSelectCoin = ((e) => {
             </div>
         </div>
         <div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list">
-            {#each coins as coin (coin.id)}
+            {#each coins as coin}
             {#if coin.coin_image !== undefined}
                 <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
                     <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
@@ -95,7 +95,7 @@ const handleSelectCoin = ((e) => {
                         <div class="amount-wrap">
                             <div class="sc-Galmp erPQzq coin notranslate monospace">
                                 <div class="amount">
-                                    <span class="amount-str">{coin.balance}<span class="suffix">00</span></span>
+                                    <span class="amount-str">{(coin.balance).toFixed(4)}<span class="suffix">00</span></span>
                                 </div>
                             </div>
                         </div>

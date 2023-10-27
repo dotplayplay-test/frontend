@@ -21,6 +21,7 @@ const handleAllcashbacks = (async()=>{
    })
 })
 
+
 let is_loading = false
 let content = ""
 const handleClaimcashbacks = (async()=>{
@@ -43,7 +44,6 @@ const handleClaimcashbacks = (async()=>{
 
 
 $:{
-    // console.log($allcashback)
     handleAllcashbacks()
 }
 

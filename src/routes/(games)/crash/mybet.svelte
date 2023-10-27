@@ -8,6 +8,7 @@ import { profileStore , handleisLoggin} from "$lib/store/profile"
 let isBet = true
 let isHistory = false
 let isContent = false
+let now = new Date()
 
 const handleRoute = ((w)=>{
     if(w === 1){
@@ -36,9 +37,13 @@ let handleBetHistory = ((e)=>{
     }
 })
 
+let newItem;
+
 $: {
-    $mybetEl.sort((a, b) => b.id - a.id);
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$mybetEl].reverse()
 }
+
 
 
 </script>
@@ -75,18 +80,18 @@ $: {
             </thead>
             <tbody>
                 {#if $handleisLoggin}
-                {#each $mybetEl.slice(0, 20) as mybet (mybet._id)}
+                {#each newItem.slice(0, 20) as mybet (mybet._id)}
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>
                         <p class="hash ellipsis">{mybet.bet_id}</p>
                     </td>
-                    <td>{mybet.time}</td>
+                    <td>{new Date(mybet.time).getFullYear()}-{new Date(mybet.time).getMonth()}-{new Date(mybet.time).getDate()}  {new Date(mybet.time).getHours()}:{new Date(mybet.time).getMinutes()}:{new Date(mybet.time).getSeconds()}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{mybet.bet_amount}<span class="suffix">00000000</span>
+                                <span class="amount-str">{(mybet.bet_amount).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
@@ -101,9 +106,9 @@ $: {
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
                                 {#if mybet.has_won}
-                                <span class="amount-str" style="color:#43b309">+{mybet.profit}<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color:#43b309">+{(mybet.profit).toFixed(4)}<span class="suffix">00</span> </span>
                                 {:else}
-                                <span class="amount-str" style="color: rgb(237, 99, 0);">{mybet.bet_amount}<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color: rgb(237, 99, 0);">{(mybet.bet_amount).toFixed(4)}<span class="suffix">00</span> </span>
                                 {/if}
                             </div>
                         </div>

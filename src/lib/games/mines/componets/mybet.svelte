@@ -1,11 +1,14 @@
 <!-- <script>
-import { profileStore } from "$lib/store/profile"
-import { dicegameplays } from "../../ClassicDice/store/index"
-import HistoryDetails from "./historyDetails.svelte";
-let newItem;
+import {
+    profileStore
+} from "../../../store/profile"
+import {
+    dicegameplays
+} from "../../ClassicDice/store/index"
+    import HistoryDetails from "./historyDetails.svelte";
 
 $: {
-    newItem =  [...$dicegameplays].reverse()
+    $dicegameplays.sort((a, b) => b.id - a.id);
 }
 
 let DgII = ''
@@ -41,7 +44,7 @@ const handleDiceHistoryDetail = ((data)=>{
                 </tr>
             </thead>
             <tbody>
-                {#each newItem.slice(0, 15) as dice }
+                {#each $dicegameplays.slice(0, 15) as dice (dice._id) }
                 {#if $profileStore.user_id === dice.user_id}
                 <tr on:click={()=> handleDiceHistoryDetail(dice)}>
                     <td>

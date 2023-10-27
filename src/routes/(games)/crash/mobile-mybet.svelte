@@ -2,7 +2,6 @@
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
 import { profileStore , handleisLoggin} from "$lib/store/profile"
 
-
 let isBetHistory = false
 let handleBetHistory = ((e)=>{
     if(isBetHistory){
@@ -12,7 +11,6 @@ let handleBetHistory = ((e)=>{
         isBetHistory = true
     }
 })
-
 
 </script>
 

@@ -69,7 +69,7 @@ handleFetchPendingOrder()
 
 <div class="sc-gLEhor lhZODp" id="deposit">
     {#if $showcoins}
-    <Selectcoin on:handleCoinSelect={handlecoinSelec}/>
+        <Selectcoin on:handleCoinSelect={handlecoinSelec}/>
     {/if}
         <div class="sc-ezbkAF kDuLvp input ">
             <div class="input-label">

@@ -9,8 +9,6 @@ import { handleAuthToken } from "$lib/store/routes"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import {  HandleDicePoint ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
-import {ServerURl } from "$lib/backendUrl"
-const URL = ServerURl()
 import {  soundHandler } from "../../games/ClassicDice/store/index"
 import axios from "axios";
 import cr from "./audio/click.wav"
@@ -94,6 +92,8 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
+        
+        
         else{
             const data = {
                 username: $profileStore.username,
@@ -105,7 +105,7 @@ const handleRollSubmit = (async()=>{
                 payout: $payout,
                 wining_amount: parseFloat(wining_amount) -  parseFloat(bet_amount)
             }
-            await axios.post(`${URL}/api/user/dice-game/bet`, {
+            await axios.post('http://localhost:8000/api/user/dice-game/bet', {
                 sent_data: data
             },{
                 headers:{
@@ -179,7 +179,7 @@ const handleRollSubmit = (async()=>{
                 {#if $handleisLoggin}
                     <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {:else}
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                    <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
                 {/if}
                 <div class="sc-kDTinF bswIvI button-group">
                     <button on:click={()=> dive()}>/2</button>
@@ -201,7 +201,7 @@ const handleRollSubmit = (async()=>{
                 {#if $handleisLoggin}
                     <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                     {:else}
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                    <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/dpp_logo.png">
                 {/if}
             </div>
         </div>

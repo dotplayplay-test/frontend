@@ -37,7 +37,7 @@ const handleAllbet = ((e)=>{
                 {#each $crash_historyEl as his (his._id)}
                     <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
                         <div class="issus">{his.game_id}</div>
-                        <div>{his.crash_point}x</div>
+                        <div>{(his.crash_point).toFixed(2)}x</div>
                     </button>
                 {/each}
                 {:else}

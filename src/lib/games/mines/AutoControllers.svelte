@@ -1,5 +1,4 @@
 <script>
-import { goto } from "$app/navigation";    
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
@@ -8,8 +7,7 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
-import {ServerURl} from "$lib/backendUrl"
-const URL = ServerURl()
+
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"
 import axios from "axios"
@@ -117,7 +115,8 @@ const handleRollSubmit = (async()=>{
                 error_msg.set("")
             },4000)
         }
-        else if( parseFloat(uiocd) > 5000 && $default_Wallet.coin_name === "USDT"){
+
+        else if( parseFloat(bet_amount) > 5000 && $default_Wallet.coin_name === "USDT"){
             error_msg.set("Maximum bet amount for USDT is 5,000")
               is_Looping = false
             clearInterval(yu)
@@ -125,7 +124,7 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
-        else if( parseFloat(uiocd) > 10000 && $default_Wallet.coin_name === "PPF"){
+        else if( parseFloat(bet_amount) > 10000 && $default_Wallet.coin_name === "PPF"){
             error_msg.set("Maximum bet amount for PPF is 10,000")
               is_Looping = false
             clearInterval(yu)
@@ -133,7 +132,7 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
-        else if( parseFloat(uiocd) < 100 && $default_Wallet.coin_name === "PPF"){
+        else if( parseFloat(bet_amount) < 100 && $default_Wallet.coin_name === "PPF"){
             error_msg.set("Minimum bet amount for PPF is 100")
              is_Looping = false
             clearInterval(yu)
@@ -141,7 +140,7 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
-        else if( parseFloat(uiocd) < 0.20 && $default_Wallet.coin_name === "USDT"){
+        else if( parseFloat(bet_amount) < 0.20 && $default_Wallet.coin_name === "USDT"){
             error_msg.set("Minimum bet amount for USDT is 0.20")
              is_Looping = false
             clearInterval(yu)
@@ -160,7 +159,7 @@ const handleRollSubmit = (async()=>{
                 payout: $payout,
                 wining_amount: parseFloat(uiocd * $payout) - parseFloat(uiocd)
             }
-            await axios.post(`${URL}/api/user/dice-game/bet`, {
+            await axios.post('http://localhost:8000/api/user/dice-game/bet', {
                 sent_data: data
             },{
                 headers:{
@@ -204,7 +203,6 @@ const handleRollSubmit = (async()=>{
         clearInterval(yu)
         is_Looping = false
         setTimeout(()=>{
-            goto("/login")
             error_msg.set("")
         },4000)
     }

@@ -7,6 +7,7 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import Hotkeys from './hotkeys.svelte';
 import axios from "axios"
+import { goto } from "$app/navigation";
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
@@ -19,14 +20,10 @@ import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 export let isClassic
 import { error_msg  } from "$lib/crashgame/store";
-
-import {
-    browser
-} from '$app/environment'
+import { browser } from '$app/environment'
 import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
 const id = browser && JSON.parse(localStorage.getItem('user'))
 let getBet_amount;
-
 
 let ishotKey = false
 const handleHotkeyEnable = (()=>{
@@ -136,7 +133,7 @@ const handleCrashBet = (async()=>{
             auto_cashout: auto_bet,
              bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
-            chance: 0
+            chance: "0"
         }
         axios.post(`${URL}/api/user/crash-game/bet`, {
             data
@@ -165,12 +162,11 @@ const handleCrashBet = (async()=>{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
             error_msg.set('')
+            goto("/login")
         },4000)
         is_loading = false
     }
 })
-
-
 
 let isLoadBet = false
 let loop;
@@ -180,7 +176,7 @@ const handleLoadBet = (()=>{
         if($loadingCrash){
             setTimeout(()=>{
                 handleCrashBet()
-            },500)
+            },100)
             clearInterval(loop)
             isLoadBet = false
         }else{
@@ -225,15 +221,13 @@ const handleCashout = (()=>{
     default_Wallet.set(wllet)
      handleHasbet.set(false)
 })
-
     // let win = $crashRunning * $handleHasbet_amount - bet_amount
     // winningEl.set(win)
-
     }else{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
             error_msg.set('')
-        },4000)
+        },2000)
     }
 })
 

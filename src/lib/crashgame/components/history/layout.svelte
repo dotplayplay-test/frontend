@@ -3,10 +3,11 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import { crash_historyEl } from "../../store"
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-
+let newItem;
 
 $: {
-    $crash_historyEl.sort((a, b) => b.id - a.id);
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$crash_historyEl].reverse()
 }
 
 </script>
@@ -35,7 +36,7 @@ $: {
                     </tr>
                 </thead>
                 <tbody>
-                    {#each $crash_historyEl.slice(0, 20) as history (history._id)}
+                    {#each newItem.slice(0, 20) as history (history._id)}
                     <tr>
                         <td>
                             <div class="game-link">
@@ -43,10 +44,10 @@ $: {
                                 {history.game_id}
                             </div>
                         </td>
-                        <td>{history.crash_point}x</td>
+                        <td>{(history.crash_point).toFixed(2)}x</td>
                         <td>
                             <div class="flex-center">
-                                <input type="text" readonly="" value={history.hash}>
+                                <input type="text" readonly value={history.hash}>
                                 <a target="_blank" href={`https://dppgames.netlify.app/verify/crash?hash=${history.hash}`}>
                                     Verify
                                 </a>

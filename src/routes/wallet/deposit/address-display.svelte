@@ -26,6 +26,19 @@ function handleCopyAmomut() {
 },4000)
 })
 }
+let hours
+let minutes 
+let seconds
+setInterval(()=>{
+    let countDownDate = new Date($deposit_info.expire_in).getTime();
+    let now = new Date().getTime();
+    let distance = countDownDate - now;
+     hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((distance % (1000 * 60)) / 1000);
+}, 1000)
+
+
 
 </script>
     
@@ -33,7 +46,7 @@ function handleCopyAmomut() {
         <div class="sc-wkwDy blotCy">
             <div class="label">
                 <div>Deposit Address</div>
-                <div>Expire in: <span style="color: yellow; letter-spacing:1px"> 16h 30m 3s</span> </div>
+                <div>Expire in: <span style="color: yellow; letter-spacing:1px"> {`${hours}hr : ${minutes}m : ${seconds}s`}</span> </div>
             </div>
             <div class="box">
                 <div class="cont">
