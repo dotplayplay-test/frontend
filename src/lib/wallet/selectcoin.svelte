@@ -77,7 +77,7 @@ const handleCoinSelect = ((e)=>{
                                 <div class="amount-wrap">
                                     <div class="sc-Galmp erPQzq coin notranslate monospace">
                                         <div class="amount">
-                                            <span class="amount-str">{(coin.balance).toFixed(6)}<span class="suffix"></span>
+                                            <span class="amount-str">{coin.balance}<span class="suffix"></span>
                                             </span>
                                         </div>
                                     </div>

@@ -4,7 +4,8 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 import { createEventDispatcher } from 'svelte';
 import { handleAuthToken } from "$lib/store/routes"
 import { handleisLoggin } from "$lib/store/profile";
-
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 import { affiliate_info, affilliate_info } from "$lib/pages/affiliate/main/store/index";
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 const dispatch = createEventDispatcher()
@@ -22,7 +23,7 @@ const handleOpenModal = ((we)=>{
 let is_loading = true
 const fetchFriendsInfo = (async()=>{
     is_loading = true
-    await axios.get("http://localhost:8000/api/affiliate/friends-info",{
+    await axios.get(`${URL}/api/affiliate/friends-info`,{
         headers:{
             Authorization: `Bearer ${$handleAuthToken}`
         }

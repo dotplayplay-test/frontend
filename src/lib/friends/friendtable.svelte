@@ -98,7 +98,7 @@ import { is_loading, affiliate_list } from "$lib/pages/affiliate/main/store/inde
                                     </tr>
                                     {:else}
                                     {#if $affiliate_list.length !== 0}
-                                    {#each $affiliate_list as friend (friend.id)}
+                                    {#each $affiliate_list as friend}
                                     <tr class="ant-table-row ant-table-row-level-0">
                                         <td class="ant-table-cell">{friend.username}</td>
                                         <td class="ant-table-cell">{friend.total_wagered}</td>

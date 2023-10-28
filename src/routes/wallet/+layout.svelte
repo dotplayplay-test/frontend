@@ -71,7 +71,7 @@ const handleOpenCoinSelect = (() => {
                 </div>
                 {/if}
             </div>
-            <button on:click={()=> handleClose() } class="sc-ieecCq fLASqZ close-icon dialog-close">
+            <button on:click={()=> goto("/") } class="sc-ieecCq fLASqZ close-icon dialog-close">
                 <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
 

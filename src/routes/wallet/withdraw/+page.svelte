@@ -4,8 +4,33 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import { default_Wallet } from "$lib/store/coins"
+import { handleAuthToken } from "$lib/store/routes";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+import axios from "axios"
 
-
+let erc = true
+let trc = false
+let bep = false
+let network = "erc"
+  const handleNetwork = ((e)=>{
+    if(e === 1){
+        network= 'erc'
+        erc = true
+        trc = false
+        bep = false
+    }else if(e === 2){
+        erc = false
+        trc = false
+        network= 'bep'
+        bep = true
+    }else{
+        erc = false
+        trc = true
+        bep = false
+        network= 'trc'
+    }
+})
 
 let isSelectCoin = false
 const handlecoinSelect = (()=>{
@@ -15,7 +40,51 @@ const handlecoinSelect = (()=>{
         isSelectCoin = true
     }
 })
-
+let address = ''
+let amount = ''
+let error_msg = ''
+let is_loading = false
+const handleSubmit = (async()=>{
+    is_loading = true
+    if(!address || !amount){
+        error_msg = "Field can not be empty"
+        setTimeout(()=>{
+            error_msg = ""
+        },3000)
+        is_loading = false
+    }
+    else if(amount > $default_Wallet.balance){
+        error_msg = "Insufficient funds"
+        is_loading = false
+        setTimeout(()=>{
+            error_msg = ""
+        },3000)
+    }
+    else if(amount < 6.5){
+        error_msg = "Minimum is 6.5usdt"
+        is_loading = false
+        setTimeout(()=>{
+            error_msg = ""
+        },3000)
+    }
+    else{
+        let data = {address,amount, network}
+        await axios.post(`${URL}/api/withdraw/initiate`,{
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+            }
+        })
+        .then(response =>{
+            console.log(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.response.data.message)
+        })
+    }
+})
 
 const handleCoins = ((e)=>{
     default_Wallet.set(e.detail)
@@ -54,15 +123,36 @@ const handleCoins = ((e)=>{
           
 
             {#if $default_Wallet.coin_name === "USDT"}
+
+            <div class="sc-fSDTwv hgHrvG">
+                <div class="label">Choose Network</div>
+                <div class="btn-wrap">
+                    <div class="scroll-box">
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(1)} class={erc ? `active` : ""} disabled={erc}>ERC20</button>
+                        </div>
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(2)} class={bep ? `active` : ""} disabled={bep}>BEP20</button>
+                        </div>
+                        <div class="btn-space">
+                            <button on:click={()=>handleNetwork(3)} class={trc ? `active` : ""} disabled={trc}>TRC20</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="sc-wkwDy blotCy">
                 <div class="label">
                     <div>Withdraw Address
                         <span class="cl-primary">{`(Note: Only ${$default_Wallet.coin_name} Coin)`}</span>
                     </div>
+                    {#if error_msg}
+                        <div style="color: red;">{error_msg}</div>
+                    {/if}
                 </div>
                 <div class="box">
                     <div class="cont">
-                        <input class="address" placeholder="Fill in carefully according to the specific currency" value="">
+                        <input class="address" placeholder="Fill in carefully according to the specific currency" bind:value={address}>
                     </div>
                 </div>
             </div>
@@ -74,7 +164,7 @@ const handleCoins = ((e)=>{
                     </div>
                 </div>
                 <div class="input-control">
-                    <input type="text" value="0.00000000">
+                    <input type="number" placeholder="0.00000" bind:value={amount}>
                     <div class="btn-wrap">
                         <button>Min</button>
                         <button>25%</button>
@@ -94,10 +184,22 @@ const handleCoins = ((e)=>{
                     </div>
                 </div>
                 <div class="sc-eZKLwX jJQdnO">
-                    <div class="sc-faIbUi bGuvOe">Fee&nbsp;<b> 0.023428 DOGE</b>
+                    <div class="sc-faIbUi bGuvOe">Fee&nbsp;<b>{erc ? 5 : 1}.00USDT</b>
                     </div>
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn">
+                    <button on:click={handleSubmit} disabled={is_loading} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn">
+                        {#if is_loading}
+                        <div class="center">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                        </div>
+                        {:else}
                         <div class="button-inner">Confirm</div>
+                        {/if}
                     </button>
                 </div>
                 <div class="sc-fpyFWH jksbXu">For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</div>

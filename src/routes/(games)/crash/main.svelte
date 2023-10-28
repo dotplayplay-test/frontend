@@ -216,7 +216,7 @@ const handleCashout = (()=>{
      let wllet = {
         coin_name: result.bet_token_name,
         coin_image:  result.bet_token_img,
-        balance:  result.cash
+        balance:  parseFloat(result.balance).toFixed(4)
     }
     default_Wallet.set(wllet)
      handleHasbet.set(false)

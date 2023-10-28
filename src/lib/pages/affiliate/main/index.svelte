@@ -13,10 +13,10 @@ import Rules from '../component/rules.svelte';
 import UsdRules from '../component/usd_rules.svelte';
 import Home from './home.svelte';
 import { handleAuthToken } from "$lib/store/routes"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 import axios from "axios";
-import {
-    goto
-} from "$app/navigation"
+import { goto } from "$app/navigation"
 
 const dispatch = createEventDispatcher()
 
@@ -40,7 +40,7 @@ function handleCopyCode() {
 
 $:{
     code = $affilliate_info.affiliate_code
-    affiilate_link = `http://localhost:5173/i-${$affilliate_info.affiliate_code}-n/`
+    affiilate_link = `${URL}/i-${$affilliate_info.affiliate_code}-n/`
 }
 
 function handleCopyLink() {
@@ -79,7 +79,7 @@ const handlePopRule = ((event)=>{
 })
 
 const handleFetchAffilateProfile = (async()=>{
-    await axios.get("http://localhost:8000/api/affiliate", {
+    await axios.get(`${URL}/api/affiliate`, {
         headers:{
             Authorization: `bearer ${$handleAuthToken}`
         }
@@ -108,7 +108,7 @@ const handleCreateReferral = (async()=>{
             error.set("")
         },4000)
     }else{
-        await axios.post("http://localhost:8000/api/affiliate/activate", {
+        await axios.post(`${URL}/api/affiliate/activate`, {
             data : 1
         },{
         headers:{
