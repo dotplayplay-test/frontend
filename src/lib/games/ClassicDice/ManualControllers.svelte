@@ -141,15 +141,14 @@ const handleRollSubmit = (async()=>{
 
 </script>
 
-<div class="game-control-panel">
-    {#if $error_msg}
-    <div class="error-message">
-        <div class="hTTvsjh"> 
-            <div>{$error_msg}</div>
-        </div>
-    </div>
- {/if}   
-
+<div class="game-control-panel"> 
+ {#if $error_msg}
+ <div style="background-color:crimson;" class="error-message">
+     <div class="hTTvsjh"> 
+         <div>{$error_msg}</div>
+     </div>
+ </div>
+{/if}
     <div class="sc-juEPzu lgTgT">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">

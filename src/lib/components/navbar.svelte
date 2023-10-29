@@ -3,11 +3,13 @@ import { profileStore } from "$lib/store/profile";
 import { is_loading, affiliate_info ,affiliate_list, affilliate_info } from "$lib/pages/affiliate/main/store/index";
 import { handleAuthToken} from "$lib/store/routes"
 import axios from "axios"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 
 
 const fetchFriendsInfo = (async()=>{
     is_loading.set(true)
-    await axios.get("http://localhost:8000/api/affiliate/friends-info",{
+    await axios.get(`${URL}/api/affiliate/friends-info`,{
         headers:{
             Authorization: `Bearer ${$handleAuthToken}`
         }
@@ -24,7 +26,7 @@ const fetchFriendsInfo = (async()=>{
 
 
 const handleFetchAffilateProfile = (async()=>{
-    await axios.get("http://localhost:8000/api/affiliate", {
+    await axios.get(`${URL}/api/affiliate`, {
         headers:{
             Authorization: `bearer ${$handleAuthToken}`
         }
@@ -46,10 +48,11 @@ fetchFriendsInfo()
 
 </script>
 
+
 <div class="sc-bkkeKt dDfoVi">
     <div class="left">
         <a class="logo-name" href="/">
-            <img alt="logo" class="logo" src="https://www.linkpicture.com/q/dpp-logowhite.png">
+            <img alt="logo" class="logo" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
         </a>
         <a class="casino" href="/my-affiliate/dashboard">Affiliate</a>
     </div>

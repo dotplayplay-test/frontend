@@ -1,12 +1,13 @@
-<!-- <script>
+<script>
 import {
     dicegameplays
 } from "../store/index"
     import HistoryDetails from "./historyDetails.svelte";
 
-
-$: {
-    $dicegameplays.sort((a, b) => b.id - a.id);
+let newItem;
+ $: {
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$dicegameplays].reverse()
 }
 
 let DgII = ''
@@ -42,7 +43,7 @@ const handleDiceHistoryDetail = ((data)=>{
                 </tr>
             </thead>
             <tbody>
-                {#each $dicegameplays.slice(0, 15) as dice  }
+                {#each newItem.slice(0, 15) as dice  }
                 <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
                     <td>
                         <button class="hash ellipsis">{dice.bet_id}</button>
@@ -290,4 +291,4 @@ const handleDiceHistoryDetail = ((data)=>{
 .iycaRo .coin {
     font-weight: bold;
 }
-</style> -->
+</style>

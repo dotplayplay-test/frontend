@@ -64,7 +64,7 @@ onMount(()=>{
     setTimeout(()=>{
         $handleAuthToken && handleProfile()
         $handleAuthToken && handleDefaultWallet()
-    },1000)
+    },500)
 })
 
 

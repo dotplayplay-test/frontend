@@ -1,4 +1,4 @@
-<!-- <script>
+<script>
 import { profileStore } from "$lib/store/profile"
 import { dicegameplays } from "../../ClassicDice/store/index"
 import HistoryDetails from "./historyDetails.svelte";
@@ -182,4 +182,4 @@ const handleDiceHistoryDetail = ((data)=>{
 .iycaRo .coin {
     font-weight: bold;
 }
-</style> -->
+</style>

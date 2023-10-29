@@ -4,6 +4,8 @@ import {default_Wallet} from "../../../store/coins"
 import cr from "../audio/mixkit-achievement-bell-600.wav"
 import { HandleHas_won } from "../store/index";
 import { browser } from '$app/environment';
+import { ServerURl } from "$lib/backendUrl"
+const URl = ServerURl()
 
 function playSound() {
   const audio = new Audio(cr);
@@ -15,13 +17,12 @@ export const DiceHook = () => {
     const user = browser && JSON.parse(localStorage.getItem('user'))
     const playdice = async (data) => {
       isbetLoadingBtn.set(true)
-      const response = await fetch(
-        "http://localhost:8000/api/user/dice-game/bet",{
+      const response = await fetch(`${URl}/api/user/dice-game/bet`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
             "Content-type": "application/json",
-            'Authorization': `Bearer ${user.Token}`
+            'Authorization': `Bearer ${user}`
           },
         }
       );

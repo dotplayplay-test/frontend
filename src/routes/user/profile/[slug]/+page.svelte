@@ -42,14 +42,14 @@ async function fetchData() {
             console.log(error)
         })
 
-    // is_loading = true
-    // await axios.post(`${URL}/admin/stat/global`,{
-    //    user_id: $page.params.slug
-    // })
-    // .then(res =>{
-    //     is_loading = false
-    //     userStatistics.set(res.data)
-    // })
+    is_loading = true
+    await axios.post(`${URL}/api/stats/global`,{
+       user_id: $page.params.slug
+    })
+    .then(res =>{
+        is_loading = false
+        userStatistics.set(res.data)
+    })
 }
 let is_edit = false
 let is_stats = false

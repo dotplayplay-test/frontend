@@ -44,7 +44,7 @@ function playSound(e) {
         audio.play();
     }else{
         const audio = new Audio(win);
-        audio.volume = 0.5;
+        audio.volume = 0.1;
         audio.play();
     }
 }
@@ -216,13 +216,13 @@ const handleRollSubmit = (async()=>{
 
 <div class="game-control-panel">
 
-{#if $error_msg}
-    <div class="error-message">
+    {#if $error_msg}
+    <div style="background-color:crimson;" class="error-message">
         <div class="hTTvsjh"> 
             <div>{$error_msg}</div>
         </div>
     </div>
-{/if}
+   {/if}
 
     <div class="sc-gFSQbh hRGEiw">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
