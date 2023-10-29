@@ -7,7 +7,6 @@ import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
 import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
 import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
-import { DicegameSocket } from "$lib/games/ClassicDice/socket/Socket"
 import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
 import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
@@ -17,8 +16,7 @@ import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
 import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 import Help from "$lib/games/ClassicDice/componets/help.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
- DicegameSocket()
-  
+
 
 
 let is_allbet = true
