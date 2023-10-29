@@ -1,6 +1,7 @@
 import { redTrendballEl} from "./store"
 import {default_Wallet} from "../store/coins"
-
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const useRedTrendball = () => {
     let error = ''
@@ -11,7 +12,7 @@ export const useRedTrendball = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/user/crash-game/red-trendball",{
+        `${URL}/api/user/crash-game/red-trendball`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

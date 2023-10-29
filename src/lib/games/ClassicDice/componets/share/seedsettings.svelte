@@ -2,6 +2,8 @@
 import { handleAuthToken } from "$lib/store/routes"
 import { error_msg } from "../../store/index"
 export let settin;
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 import { createEventDispatcher } from "svelte";
 const dispatch = createEventDispatcher()
 import axios from "axios";
@@ -37,7 +39,7 @@ const handleSeedSettings = (async()=>{
         },800)
     }
     else{
-    await axios.post("http://localhost:8000/api/user/dice-game/seed-settings",{
+    await axios.post(`${URL}/api/user/dice-game/seed-settings`,{
         data: client
     },{
     headers: {

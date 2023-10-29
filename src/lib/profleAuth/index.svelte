@@ -5,6 +5,8 @@ import { routes} from "$lib/store/routes";
 import { handleAuthToken } from "$lib/store/routes";
 import { error_msg } from "./store";
 import { handleSepProfile } from "$lib/profleAuth/store"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 let last_name = ''
 let first_name = ''
 let day = 1
@@ -37,7 +39,7 @@ const handleSubmit = (async()=>{
                 username:  $profileStore.username,
                 vip_level: $profileStore.vip_level
             }
-              await  axios.post("http://localhost:8000/api/profile/update-profile", {
+              await  axios.post(`${URL}/api/profile/update-profile`, {
             data
         },{
             headers: {

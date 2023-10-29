@@ -2,6 +2,8 @@
 import axios from "axios";
 import { routes } from "$lib/store/routes"
 import {profileStore} from "$lib/store/profile"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 
 let Hide_gameing_profile = false
 
@@ -15,7 +17,7 @@ $:{
 
 
 const apiGamingProfile = (async(data)=>{
-    await axios.post("http://localhost:8000/api/profile/update-hidden",{
+    await axios.post(`${URL}/api/profile/update-hidden`,{
         profile_state : data,
     },{
         headers:{
@@ -39,7 +41,7 @@ const handleGamingProfile = (()=>{
 
 
 const handleHideUserNam = (async(data)=>{
-    await axios.post("http://localhost:8000/api/profile/hide-public-username",{
+    await axios.post(`${URL}/api/profile/hide-public-username`,{
         profile_state : data,
     },{
         headers:{
@@ -84,7 +86,7 @@ const handlePrivateMessages = (()=>{
 })
 
 const handleFriendRequestAPI = (async(data)=>{
-    await axios.post("http://localhost:8000/api/profile/refuse-friend-request",{
+    await axios.post(`${URL}/api/profile/refuse-friend-request`,{
         profile_state : data,
     },{
         headers:{
@@ -116,7 +118,7 @@ const handleFriendRequest = ()=>{
 
 
 const handleTipsAPI = (async(data)=>{
-    await axios.post("http://localhost:8000/api/profile/refuse-tips",{
+    await axios.post(`${URL}/api/profile/refuse-tips`,{
         profile_state : data,
     },{
         headers:{

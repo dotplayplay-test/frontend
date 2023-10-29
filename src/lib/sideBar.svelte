@@ -1,8 +1,6 @@
 <script>
 export let routes
-import {
-    goto
-} from "$app/navigation"
+import { goto } from "$app/navigation"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import IoMoon from "svelte-icons-pack/io/IoMoon";

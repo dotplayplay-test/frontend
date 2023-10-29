@@ -11,6 +11,8 @@ import SiChakraui from "svelte-icons-pack/si/SiChakraui";
 import { statisticsEl, default_statistics } from "$lib/store/statistic";
 import { routes } from "../../store/routes"
 import { profileStore } from '../../store/profile';
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 const handleStatistics = (()=>{
     statisticsEl.set(false)
 })
@@ -23,7 +25,7 @@ let gamesStats = [
 let is_loading;
 const handleDisplayRoute = (async(url)=>{
     is_loading = true
-    await axios.get(`http://localhost:8000/api/stats/${url}`,{
+    await axios.get(`${URL}/api/stats/${url}`,{
         headers:{
             Authorization: `Bearer ${$routes.profile.Token}`
         }

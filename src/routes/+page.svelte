@@ -10,9 +10,6 @@ import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';
 import Latestbet from '$lib/homecomponents/latestbet.svelte';
 import Homeanimaton from "../lib/homecomponents/homeanimaton.svelte";
 
-
-
-
 register();
 </script>
 

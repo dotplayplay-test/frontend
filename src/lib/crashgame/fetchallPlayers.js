@@ -1,5 +1,6 @@
 import { handleAllPlayerStore } from "./store"
-
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 export const useAllplayer = () => {
     let cashoutError = ''
     let loadingCashout = false
@@ -8,7 +9,7 @@ export const useAllplayer = () => {
       loadingCashout = true
       cashoutError = null
       const response = await fetch(
-        "http://localhost:8000/admin/all-players/crash",{
+        `${URL}/admin/all-players/crash`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

@@ -1,5 +1,7 @@
 import { handleHasbet,handleHasbet_amount , winning} from "./store"
 import {default_Wallet} from "../store/coins"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const useCrashBet = () => {
     let error = ''
@@ -10,7 +12,7 @@ export const useCrashBet = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/user/crash-game/bet",{
+        `${URL}/api/user/crash-game/bet`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -58,7 +60,7 @@ export const useCrashCashout = () => {
       loadingCashout = true
       cashoutError = null
       const response = await fetch(
-        "http://localhost:8000/api/user/crash-game/cashout",{
+        `${URL}/api/user/crash-game/cashout`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

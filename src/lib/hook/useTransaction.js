@@ -1,3 +1,5 @@
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 export const UseTransaction = () => {
     let error;
     let isLoading;
@@ -6,7 +8,7 @@ export const UseTransaction = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/trans/swap",{
+        `${URL}/api/trans/swap`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

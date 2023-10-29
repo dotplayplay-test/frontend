@@ -12,9 +12,6 @@ import {
     usdt_Wallet,
     default_Wallet
 } from "$lib/store/coins"
-// import {
-//     profileStore
-// } from '$lib/store/profile';
 import {
     checkIsOpen,
     storeReceiver,

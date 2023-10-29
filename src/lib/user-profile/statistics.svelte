@@ -1,7 +1,9 @@
 <script>
-    import Icon from 'svelte-icons-pack/Icon.svelte';
-    import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-    import axios from "axios"
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import axios from "axios"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
     import {
     page
 } from '$app/stores'
@@ -21,7 +23,7 @@
     let is_loadingel
     const handleDisplayRoute = (async(url)=>{
         is_loadingel = true
-    await axios.post(`http://localhost:8000/api/users/profile/${$page.params.slug}`)
+    await axios.post(`${URL}/api/users/profile/${$page.params.slug}`)
         .then(res => {
             is_loadingel = false
             users_profile.set(res.data[0])
@@ -31,7 +33,7 @@
         })
 
         is_loading = true
-        await axios.post(`http://localhost:8000/admin/stat/${url}`,{
+        await axios.post(`${URL}/admin/stat/${url}`,{
             user_id: $page.params.slug
         })
         .then(res =>{

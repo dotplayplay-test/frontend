@@ -2,7 +2,7 @@
 export const updateUser = () => {
     const useUpdate = async (data) => {
       const response = await fetch(
-        "http://localhost:8000/api/profile/update-user",{
+        `${URL}/api/profile/update-user`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
