@@ -18,7 +18,6 @@ import Help from "$lib/games/ClassicDice/componets/help.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
 
 
-
 let is_allbet = true
 let is_mybet = false
 let is_contest = false
