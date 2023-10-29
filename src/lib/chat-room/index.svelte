@@ -5,7 +5,7 @@ import "./styles/coinrain.css"
 import "./styles/gif.css"
 import {  goto } from "$app/navigation"
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
-import HiSolidEmojiHappy from "svelte-icons-pack/hi/HiSolidEmojiHappy";
+
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import CgInfo from "svelte-icons-pack/cg/CgInfo";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -22,6 +22,7 @@ import { emojis } from "./data/index"
 import {  createEventDispatcher,  onMount } from "svelte";
 import {tipped_user } from "$lib/store/tipUser"
 import { profileStore } from '$lib/store/profile';
+import { handleisLoggin } from "$lib/store/profile";
 import { handleAuthToken} from "$lib/store/routes";
 import {handleCountdown} from "../../lib/crashgame/socket"
 const { handleChattingMessages } = handleCountdown()
@@ -55,7 +56,8 @@ afterUpdate(() => {
 })
 
 const handleSendMessage = (async (e, name) => {
-    if (e.key === "Enter" && name.newMessages || e === "gifHit") {
+    if($handleisLoggin){
+        if (e.key === "Enter" && name.newMessages || e === "gifHit") {
         if (e.key === "Enter") {
             e.preventDefault();
         }
@@ -101,6 +103,10 @@ const handleSendMessage = (async (e, name) => {
     }
         newMessages = ''
         isGif = false
+    }
+    }else{
+        goto("/login")
+        handlecloseChat()
     }
 })
 
