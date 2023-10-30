@@ -140,12 +140,12 @@ const handleRegister = (()=>{
         <div class="login-top">
             <a href="/">
                 <div class="logowrap">
-                    <img alt="logo" style="border-radius: 12px; width: 34px" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
+                    <img alt="logo" style="border-radius: 12px; width: 25px; margin-right:10px" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg">
                 </div>
             </a>
             <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
                 <span class="open-wrap">
-                    <Icon src={HiSolidMenu}  size="18"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                    <Icon src={HiSolidMenu}  size="15"   color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                 </span>
             </button> 
             {#if $handleisLoggin}

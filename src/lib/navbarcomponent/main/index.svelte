@@ -271,7 +271,7 @@ const handleChat = ((e) => {
             <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span style="margin-right: 4px;">
-                        <Icon src={BiSolidWallet}  size="15"  color="rgb(255, 255, 255)"  title="arror" />
+                        <Icon src={BiSolidWallet}  size="13"  color="rgb(255, 255, 255)"  title="arror" />
                     </span>
                     <span>Wallet</span>
                 </div>
@@ -324,6 +324,7 @@ const handleChat = ((e) => {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
+    margin-left: 15px;
     background-color: rgb(30, 32, 36);
     border-radius: 1.25rem;
     cursor: pointer;
