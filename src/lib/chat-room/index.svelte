@@ -40,9 +40,7 @@ onMount(async () => {
 })
 
 
-afterUpdate(() => {
-    if ($chats) scrollToBottom(element);
-})
+
 
 const handleSendMessage = (async (e, name) => {
     if($handleisLoggin){
@@ -106,7 +104,12 @@ const scrollToBottom = async (node) => {
         behavior: 'smooth'
     });
 }
+$:{
+ afterUpdate(() => {
+    if ($chats) scrollToBottom(element);
+})
 
+}
 
 const dispatch = createEventDispatcher()
 const handlecloseChat = (() => {

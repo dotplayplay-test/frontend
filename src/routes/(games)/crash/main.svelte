@@ -221,8 +221,6 @@ const handleCashout = (()=>{
     default_Wallet.set(wllet)
      handleHasbet.set(false)
 })
-    // let win = $crashRunning * $handleHasbet_amount - bet_amount
-    // winningEl.set(win)
     }else{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
