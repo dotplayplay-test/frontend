@@ -46,7 +46,7 @@ afterUpdate(() => {
 
 const handleSendMessage = (async (e, name) => {
     if($handleisLoggin){
-        if (e.key === "Enter" && name.newMessages || e === "gifHit") {
+        if (e.key === "Enter" && name.newMessages || e.type === "click" || e === "gifHit") {
         if (e.key === "Enter") {
             e.preventDefault();
         }
@@ -511,7 +511,7 @@ const handleTipsControls = ((e) => {
                         </div>
                     </div>
                     {#if newMessages}
-                    <button  on:click={handleSendMessage} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                    <button  on:click={()=>handleSendMessage(event, {newMessages, type: "normal"})} class="sc-JkixQ cVsgdS emoji-r-wrap">
                         <Icon src={BsTelegram}  size="34"  color="#fff" title="arror" />
                     </button>
                 {/if}
@@ -895,7 +895,7 @@ const handleTipsControls = ((e) => {
                                 </div>
                             </div>
                             {#if newMessages}
-                                <button  on:click={handleSendMessage} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                                <button  on:click={()=>handleSendMessage(event, {newMessages, type: "normal"})} class="sc-JkixQ cVsgdS emoji-r-wrap">
                                     <Icon src={BsTelegram}  size="34"  color="#fff" title="arror" />
                                 </button>
                             {/if}
