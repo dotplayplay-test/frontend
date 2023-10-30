@@ -5,7 +5,7 @@ import "./styles/coinrain.css"
 import "./styles/gif.css"
 import {  goto } from "$app/navigation"
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
-
+import BsTelegram from "svelte-icons-pack/bs/BsTelegram";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import CgInfo from "svelte-icons-pack/cg/CgInfo";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -38,17 +38,6 @@ onMount(async () => {
         chats.set(res.data)
     })
 })
-
-const handleSendMessages = async(data)=>{
-    await axios.post(`${URL}/api/public-chat`, {
-        data
-    },{
-        headers:{
-            Authorization: `bearer ${$handleAuthToken}`
-        }
-    }
-)
-}
 
 
 afterUpdate(() => {
@@ -521,6 +510,11 @@ const handleTipsControls = ((e) => {
                             </button>
                         </div>
                     </div>
+                    {#if newMessages}
+                    <button  on:click={handleSendMessage} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                        <Icon src={BsTelegram}  size="34"  color="#fff" title="arror" />
+                    </button>
+                {/if}
                 </div>
 
                 <div class="send-controls">
@@ -882,7 +876,7 @@ const handleTipsControls = ((e) => {
 
                     <div class="chat-infos "></div>
                     <div class="sc-hkgtus ddROGz">
-                        <div class="send-input">
+                        <div style="transition: all 0.5s ease; gap:10px" class="send-input">
                             <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
                                 <div class="input-control">
                                     <textarea bind:value={newMessages} placeholder="Your Message" style="height: 44px;"></textarea>
@@ -900,6 +894,12 @@ const handleTipsControls = ((e) => {
                                     </button>
                                 </div>
                             </div>
+                            {#if newMessages}
+                                <button  on:click={handleSendMessage} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                                    <Icon src={BsTelegram}  size="34"  color="#fff" title="arror" />
+                                </button>
+                            {/if}
+                         
                         </div>
                         <div class="send-controls">
                             <div class="left-actions">
