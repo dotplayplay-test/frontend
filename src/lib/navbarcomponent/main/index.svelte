@@ -184,13 +184,13 @@ const handleChat = ((e) => {
         <div class="sc-fmciRz LQlWw">
             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
-                    <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                     <span class="currency">PPF</span>
                     <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">0.<span class="suffix">00000</span></span>
+                        <span class="amount-str">0.0000<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>

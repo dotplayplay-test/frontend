@@ -29,10 +29,6 @@ function formatTime(timestamp) {
     const formattedMinutes = minutes.toString().padStart(2, '0');
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
 }
-
-$: console.log(newItem)
-
-
 </script>
 
 {#if hisQQ}

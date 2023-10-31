@@ -229,7 +229,7 @@ function formatTime(timestamp) {
                     <div class="flat-item">
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
-                                <a class="head-link" href="/user/profile/78805">
+                                <a class="head-link" href={`/user/profile/${chat.user_id}`}>
                                     <img class="avatar " alt="" src={chat.profle_img}>
                                     <div class="sc-jQrDum jouJMO user-level type-1">
                                         <div class="level-wrap">

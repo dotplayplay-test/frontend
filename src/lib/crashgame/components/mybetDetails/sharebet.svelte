@@ -48,7 +48,7 @@ const handleClose = (() => {
                     </div>
                     <div class="right">
                         <div class="top">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                            <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                             <p>Profit</p>
                         </div>
                         <div class="sc-bOTDDd hGhwYS animation-card-wrap right-lose">
