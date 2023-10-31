@@ -342,7 +342,6 @@ function formatTime(timestamp) {
                                         <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
                                     </div>
                                  {/if}
-
                                 </a>
                             </div>
                             <div class="content">
