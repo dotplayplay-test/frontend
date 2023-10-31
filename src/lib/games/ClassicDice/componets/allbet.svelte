@@ -30,6 +30,8 @@ function formatTime(timestamp) {
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
 }
 
+$: console.log(newItem)
+
 
 </script>
 

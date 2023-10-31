@@ -34,6 +34,7 @@ const handleHotkeyEnable = (()=>{
     }
 })
 
+
 let isAdvance = false
 const handleAdvancebg = ((q)=>{
     if(q === 1){
