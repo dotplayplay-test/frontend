@@ -44,6 +44,15 @@ $: {
     newItem =  [...$mybetEl].reverse()
 }
 
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  }
 
 
 </script>
@@ -86,7 +95,8 @@ $: {
                     <td>
                         <p class="hash ellipsis">{mybet.bet_id}</p>
                     </td>
-                    <td>{new Date(mybet.time).getFullYear()}-{new Date(mybet.time).getMonth()}-{new Date(mybet.time).getDate()}  {new Date(mybet.time).getHours()}:{new Date(mybet.time).getMinutes()}:{new Date(mybet.time).getSeconds()}</td>
+                    <!-- <td>{new Date(mybet.time).getFullYear()}-{new Date(mybet.time).getMonth()}-{new Date(mybet.time).getDate()}  {new Date(mybet.time).getHours()}:{new Date(mybet.time).getMinutes()}:{new Date(mybet.time).getSeconds()}</td> -->
+                    <td>{formatTime(mybet.time)}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={mybet.token_img}>

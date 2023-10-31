@@ -40,7 +40,8 @@ $: {
                     <tr>
                         <td>
                             <div class="game-link">
-                                <div class="dot type-2"></div>
+
+                                <div class={`dot ${history.crash_point > 2 ? "type-2" : "type-1" } `}></div>
                                 {history.game_id}
                             </div>
                         </td>
@@ -181,6 +182,9 @@ table {
 }
 .iovqrr .dot.type-2 {
     background-color: rgb(67, 179, 9);
+}
+.iovqrr .dot.type-1 {
+    background-color: rgb(237, 99, 0);
 }
 .iovqrr .dot {
     width: 0.625rem;

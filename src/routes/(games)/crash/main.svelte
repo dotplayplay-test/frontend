@@ -101,12 +101,15 @@ $:{
 let auto_bet = (100).toFixed(2)
 let bet_amountEl =  0
 let chance;
-
+let x;
+let l;
 $:{
     if(auto_bet < 1){
         auto_bet = 1.01
     }
-    chance =(  100 / auto_bet - 0.01).toFixed(2)
+    x = 100 / auto_bet
+    l = x / 100
+    chance =(x - l).toFixed(2)
     if(chance < 0){
        chance = (0.01).toFixed(2)
     }
@@ -396,7 +399,6 @@ const handleCashout = (()=>{
         {:else}
        <Trendball />
         {/if}
-
     </div>
 
     <Crashview on:closeTrend={handleTrends}  />

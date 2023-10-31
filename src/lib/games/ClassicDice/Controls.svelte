@@ -3,13 +3,13 @@ import AutoControllers from "./AutoControllers.svelte";
 import ManualControllers from "./ManualControllers.svelte";
 
 let is_manual = true
-    const hanleManualControls = ((e)=>{
-        if(e === 1){
-            is_manual = true
-        }else{
-            is_manual = false
-        }
-    })
+const hanleManualControls = ((e)=>{
+    if(e === 1){
+        is_manual = true
+    }else{
+        is_manual = false
+    }
+})
 </script>
 
 <div id="ClassicDice-control-0" class="sc-hLVXRe cYiOHZ game-control style0">

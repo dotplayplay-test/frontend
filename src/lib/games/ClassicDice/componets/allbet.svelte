@@ -20,7 +20,15 @@ const handleDiceHistoryDetail = ((data)=>{
         hisQQ = true
     }
 })
-
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
 
 
 </script>
@@ -59,7 +67,7 @@ const handleDiceHistoryDetail = ((data)=>{
                             </a>
                         {/if}
                     </td>
-                    <td>{dice.time}</td>
+                    <td>{formatTime(dice.time)}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={dice.token_img}>

@@ -13,7 +13,7 @@ const handleCancel = ()=>{
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
-    <div class="dialog sc-fUQcsx gSPVXH vip_xidalog_about" style="opacity: 1; width: 782px; height: 631px; margin-top: -315.5px; margin-left: -391px; transform: scale(1) translateZ(0px);">
+    <div class="dialog sc-fUQcsx gSPVXH vip_xidalog_about" style="opacity: 1; width: 782px; height: 631px; margin-top: -315.5px; margin-left: -391px;">
         <div class="dialog-head has-close">
             <div class="dialog-title">About VIP Level</div>
         </div>

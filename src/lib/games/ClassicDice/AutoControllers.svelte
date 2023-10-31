@@ -18,10 +18,18 @@ let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
-let uiocd;
-$:{
-    uiocd = $handlediceAutoInput
+let uiocd = 4
+
+if($default_Wallet.coin_name === "USDT"){
+    uiocd = (0.20).toFixed(4)
+}else{
+    uiocd = (100).toFixed(4)
 }
+
+
+// $:{
+//     uiocd = $handlediceAutoInput
+// }
 
 let bet_number = 0
 let on_win = false
@@ -150,6 +158,14 @@ const handleRollSubmit = (async()=>{
             },4000)
         }
         else{
+            let date = new Date();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let newformat = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            let time = (hours + ':' + minutes + ' ' + newformat);
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,
@@ -158,6 +174,7 @@ const handleRollSubmit = (async()=>{
                 bet_token_name: $default_Wallet.coin_name ,
                 chance: $betPosition,
                 payout: $payout,
+                time: new Date(),
                 wining_amount: parseFloat(uiocd * $payout) - parseFloat(uiocd)
             }
             await axios.post(`${URL}/api/user/dice-game/bet`, {
@@ -566,6 +583,7 @@ const handleRollSubmit = (async()=>{
 .input-control {
     background-color: rgba(49, 52, 60, 0.4);
 }
+
 .gcQjQT .input-control {
     position: relative;
     display: flex;
@@ -578,6 +596,7 @@ const handleRollSubmit = (async()=>{
     border-radius: 1.5rem;
     padding: 0px 1.375rem;
 }
+
 .fCSgTW .input-control input {
     font-weight: bold;
 }
@@ -882,5 +901,8 @@ const handleRollSubmit = (async()=>{
 .kvRMBr .increse {
     font-weight: bold;
     color: rgb(255, 255, 255);
+}
+.input-control:focus-within {
+    border: 1px solid var(--primary-color);
 }
 </style>

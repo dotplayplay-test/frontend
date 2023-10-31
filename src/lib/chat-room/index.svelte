@@ -64,21 +64,12 @@ const handleSendMessage = (async (e, name) => {
             goto("/user/tip")
         }
         else {
-            let date = new Date();
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let newformat = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let time = (hours + ':' + minutes + ' ' + newformat);
            
         let data = {
             msg_id: Math.floor(Math.random() * 230000000),
             user_id: $profileStore.user_id,
             type: name.type,
             text: name.newMessages ? name.newMessages : ".",
-            sent_at: time,
             profle_img: $profileStore.profile_image,
             username: $profileStore.username,
             gif: name.gif ? name.gif : ".",
@@ -193,6 +184,15 @@ const handleTipsControls = ((e) => {
         newMessages = "/coindrop "
     }
 })
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
 
 </script>
 
@@ -348,10 +348,10 @@ const handleTipsControls = ((e) => {
                             <div class="content">
                                 <div class="title">
                                     <div class="name">
-                                        <a href="/user/profile/78805">
+                                        <a href={`/user/profile/${chat.user_id}`}>
                                             <span>{chat.username}</span>
                                         </a>
-                                        <div class="time">{chat.sent_at}</div>
+                                        <div class="time">{formatTime(chat.time)}</div>
                                     </div>
                                 </div>
                                 {#if (chat.type === "normal")}
