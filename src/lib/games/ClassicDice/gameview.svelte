@@ -79,6 +79,18 @@ const handleChange = ((e)=>{
     range = e
 })
 
+$:{
+    if($betPosition < 0){
+        $betPosition = 0.01
+    }
+    if($payout > 9900){
+        $payout = 9900
+    }
+    if($payout < 1.0102){
+        $payout = 1.0102
+    }
+}
+
 </script>
 
 {#if hisQQ}
@@ -123,7 +135,7 @@ const handleChange = ((e)=>{
                     {/if}
                     <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$betPosition}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
-                        <div class="dice_num ">{$HandleDicePoint}</div>
+                        <div class="dice_num ">{($HandleDicePoint).toFixed(2)}</div>
                         <div class={`dice_png ${$HandleHas_won ? "dice-animate" : ""}`}>
                             <img alt="dice.png" src="https://static.nanogames.io/assets/dice.1007262a.png">
                         </div>

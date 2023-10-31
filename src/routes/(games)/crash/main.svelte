@@ -135,7 +135,8 @@ const handleCrashBet = (async()=>{
             game_id: $game_id,
             bet_amount : parseFloat(parseFloat(bet_amountEl)),
             auto_cashout: auto_bet,
-             bet_token_img: $default_Wallet.coin_image, 
+            time: new Date(),
+            bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
             chance: "0"
         }

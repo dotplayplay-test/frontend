@@ -44,6 +44,7 @@ $: {
     newItem =  [...$mybetEl].reverse()
 }
 
+
 function formatTime(timestamp) {
     const date = new Date(timestamp);
     const hours = date.getHours();
