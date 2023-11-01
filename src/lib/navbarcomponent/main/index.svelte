@@ -67,7 +67,6 @@ onMount(()=>{
     },500)
 })
 
-
 const handleDailyPPFbonus = (async()=>{
     await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
     headers: {
@@ -261,7 +260,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{($default_Wallet.balance)}<span class="suffix">00</span></span>
+                        <span class="amount-str">{ $default_Wallet.balance && ($default_Wallet.balance).toFixed(5)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>

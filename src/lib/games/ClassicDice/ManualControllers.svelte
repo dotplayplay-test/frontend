@@ -10,6 +10,7 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import {  HandleDicePoint ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
 import {ServerURl } from "$lib/backendUrl"
+import { onMount  } from "svelte";
 const URL = ServerURl()
 import {  soundHandler } from "../../games/ClassicDice/store/index"
 import axios from "axios";
@@ -27,11 +28,14 @@ let Handlemax_profit_tips = ((e)=>{
 
 let wining_amount = '' ;
 let bet_amount
-if($default_Wallet.coin_name === "USDT"){
+onMount(()=>{
+    if($default_Wallet.coin_name === "USDT"){
     bet_amount = (0.20).toFixed(4)
 }else{
     bet_amount = (100).toFixed(4)
 }
+})
+
 
 
 $:{
@@ -101,14 +105,6 @@ const handleRollSubmit = (async()=>{
             },4000)
         }
         else{
-            let date = new Date();
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let newformat = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let time = (hours + ':' + minutes + ' ' + newformat);
             const data = {
                 username: $profileStore.username,
                 user_img: $profileStore.profile_image,

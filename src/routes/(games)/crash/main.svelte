@@ -72,6 +72,13 @@ const handleTrends = (()=>{
 })
 
 let bet_amount = 10
+if($default_Wallet.coin_name === "USDT"){
+    bet_amount = (0.10).toFixed(4)
+}else{
+    bet_amount = (100).toFixed(4)
+}
+
+
 
 const handleHalf = ((e)=>{
     if(bet_amount > 0){
@@ -101,6 +108,7 @@ $:{
 
 let auto_bet = (100).toFixed(2)
 let bet_amountEl =  0
+
 let chance;
 let x;
 let l;
@@ -124,11 +132,40 @@ const handleCrashBet = (async()=>{
     if($handleisLoggin){
         if(parseFloat(bet_amountEl) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
+            is_loading = false
          setTimeout(()=>{
             error_msg.set('')
         },4000)
-        is_loading = false
-        }else{
+        }
+        else if( parseFloat(bet_amountEl) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 0.10 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else{
             const data = {
             username: $profileStore.username,
             user_img: $profileStore.profile_image,
@@ -253,13 +290,14 @@ const handleCashout = (()=>{
     {/if}
 
 
- {#if $error_msg}
-    <div class="error-message">
+    {#if $error_msg}
+    <div style="background-color:crimson;" class="error-message">
         <div class="hTTvsjh"> 
             <div>{$error_msg}</div>
         </div>
     </div>
- {/if}   
+   {/if}
+  
 
 <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
         <div class="sc-iwjdpV ikWSlH radio game-control-switch">

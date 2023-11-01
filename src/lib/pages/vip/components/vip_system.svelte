@@ -1,6 +1,34 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
+let first = false
+const handleFirst = (()=>{
+    first = !first
+})
+
+let Second = false
+const handleSecond = (()=>{
+    Second = !Second
+})
+
+let Third = false
+const handleThird = (()=>{
+    Third = !Third
+})
+
+let Fourth = false
+const handleFourth = (()=>{
+    Fourth = !Fourth
+})
+
+let Fiveth = false
+const handleFiveth = (()=>{
+    Fiveth = !Fiveth
+})
+
+
+
 </script>
 
 <div class="vip-system">
@@ -12,9 +40,12 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <img class="level-icon" alt="level" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAcCAMAAAAKjix2AAAAQlBMVEUAAACRl6mSl6mSl6mSl6mUmaySm62iorqRlqiRlqmSl6iRl6iRl6mSmKmUl6qTl6uVnrCZmbOSlqiSlqiTmKqRlqgutlzcAAAAFXRSTlMA5vfupi0cBdHDvrOVg1FAHRTUcG8w9x3IAAAAbUlEQVQ4y73VNw4AMQhE0e913Bx9/6tuST+WoH+SZWCAkkKXaoESu1gPJNVOGYKKP0C1KzoO9wA+0fGOjueq43ih4wMdb+i4VR1PGXdsz/b/MGuV/5DYePovhq2kfxhYDAVVvwxGrx76jaFz8wPmT3yQuvIhVwAAAABJRU5ErkJggg==">
                 <div class="bar-tit">Bronze Card</div>
             </div>
+            <button on:click={handleFirst}>
             <Icon src={RiSystemArrowRightSLine}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            </button>
         </div>
 
+    {#if first}
         <div class="sc-hKwDye fclMSM v-toggle-view">
             <div class="v-table-wrap">
                 <div class=" Bronze-list v-table">
@@ -27,6 +58,8 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                             <div class="v-th width_1 width_m_1 m-align-center align-right">Bonus</div>
                         </div>
                     </div>
+
+
                     <div class="v-tbody">
                         <div class="  v-tr-wrap">
                             <div class="v-tr-item v-tr">
@@ -210,21 +243,25 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                         </div>
 
                     </div>
+
                 </div>
             </div>
         </div>
+    {/if}
     </div>
-
+ 
     <div class="sc-iLOkMM bHtipE vip-system-list">
         <div class="vip-system-bar">
             <div class="bar-cont">
                 <img class="level-icon" alt="level" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAcCAMAAAAKjix2AAAARVBMVEUAAADp2v/p2//p2v/s3v/t2///6P/p2v/o2v/o2//p2v/p2//o2//p2//q2//p3P/r2//t3P/y5v/o2//o2//o2v/o2v/TCpFOAAAAFnRSTlMA5u6mLRwF0fn1w76zlYNRQB0U1HBvsjt2LAAAAG1JREFUOMu91TkOwDAIRNHveMu+x/c/akr6sQT9kywDA+QYmlQL5KGJ9UBU7ZggqPgDVLui43B34BMd7+h4LjoeLnR8oOMNHdei4ynhju3Z/h9mrfIfEhtP/8WwlfQPA4uhoOqXzujVQ7/SdW5+za2CgnTqU6wAAAAASUVORK5CYII=">
                 <div class="bar-tit">Silver Card</div>
             </div>
-            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon bar-arrow show-arrow">
-                <use xlink:href="#icon_Arrow"></use>
-            </svg>
+            <button on:click={handleSecond}>
+                <Icon src={RiSystemArrowRightSLine}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            </button>
         </div>
+        
+    {#if Second}
         <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
             <div class="v-table-wrap">
                 <div class="show Silver-list v-table">
@@ -587,18 +624,21 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 </div>
             </div>
         </div>
+        {/if}
     </div>
 
+   
     <div class="sc-iLOkMM bHtipE vip-system-list">
         <div class="vip-system-bar">
             <div class="bar-cont">
                 <img class="level-icon" alt="level" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAcCAMAAAAKjix2AAAAQlBMVEUAAAD2yCL8ySP3yCL2xyL3yCP/6Eb2yCL3yCL3yCP2xyL2yCL3yCP5ySP3xyT6zCT5xyX/zCb3yCP4yCL4yCL2xyLHt9P4AAAAFXRSTlMA5hz37qYF0cO+s5WDUUAxKRTUcG+mdP/DAAAAbElEQVQ4y73VNw4AMQhE0e+8Ofv+V92SfixB/yTLwACxhC7VDDF3sR4oqk0nBBV/gGoXdBzuAXyg4w0dT1XHOaLjHR2v6LhVHacLd2zP9v8wa5X/kNh4+i+GraR/GFgMBVW/DEavHvqNoXPzA8N3fIX8NYkoAAAAAElFTkSuQmCC">
                 <div class="bar-tit">Gold Card</div>
             </div>
-            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon bar-arrow ">
-                <use xlink:href="#icon_Arrow"></use>
-            </svg>
+            <button on:click={handleThird}>
+                <Icon src={RiSystemArrowRightSLine}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            </button>
         </div>
+    {#if Third}
         <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
             <div class="v-table-wrap">
                 <div class=" Gold-list v-table">
@@ -1014,6 +1054,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 </div>
             </div>
         </div>
+        {/if}
     </div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
@@ -1022,10 +1063,13 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <img class="level-icon" alt="level" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAcCAMAAAAKjix2AAAARVBMVEUAAAB4PP53PP54Pf16Pf+AQP+MRv94Pf54PP54PP53PP53PP54Pf54Pv14PP14P/94QP97Pv+AQP93PP55Pf93Pv93PP2cgJ0HAAAAFnRSTlMA5u6mLRwF0fn1w76zlYNRQB0U1HBvsjt2LAAAAG1JREFUOMu91TkOwDAIRNHveMu+x/c/akr6sQT9kywDA+QYmlQL5KGJ9UBU7ZggqPgDVLui43B34BMd7+h4LjoeLnR8oOMNHdei4ynhju3Z/h9mrfIfEhtP/8WwlfQPA4uhoOqXzujVQ7/SdW5+za2CgnTqU6wAAAAASUVORK5CYII=">
                 <div class="bar-tit">Platinum Card</div>
             </div>
-            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon bar-arrow ">
-                <use xlink:href="#icon_Arrow"></use>
-            </svg>
+            <button on:click={handleFourth}>
+                <Icon src={RiSystemArrowRightSLine}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            </button>
         </div>
+
+        {#if Fourth}
+
         <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
             <div class="v-table-wrap">
                 <div class=" Platinum-list v-table">
@@ -1822,6 +1866,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     </div>
                 </div>
             </div>
+            {/if}
         </div>
 
         <div class="sc-iLOkMM bHtipE vip-system-list">
@@ -1832,10 +1877,12 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     <div class="bar-svip">
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAjVBMVEUAAAD5yyb3yCP3yCP/zyz//0f3xyP3yCP2yCP4yCL2xyL3yCL5ySP5yiX/2Dv2yCP2yCL3yCL3yCL2xyP3ySP4yCP4yiP/zCn3yCL3yCP2yCP2yCL3yCP3ySL3yCP2ySP5yCX3ySP6yCT6yST4yif/zCv3xyP2yCP3xyP3yCL3yCL4ySP4ySP3yCT2xyISu/UtAAAALnRSTlMAH/qZEQPbt5CJ7sJPKAbs6Lyjk3RIQxbz48ysqJZkVlM9NzEmC9OtoH54bWddMDsW9AAAAaRJREFUOMuNktdygzAQRZciEKIaG+zENS7puf//eZGtaLRYhPF5WY04s2gLjbDb0UMcw/D4iLd8Ap6WE8K2E6QROTS5OXdb34uBOuoFzXFjTqKPaiD2xBJXmjX+WDe3UHpij1F6T/wZF3888XNc/PTE+bg4vyu5kM242MjCFn7psmc4Mhscz1l30WIQgvOyhWb7Ak4YkCYCZ1/lQF7twYmIvJQLPWw96sV9Qi9lRnQ6EWVeQpeylps8WbV0o10l+UbWLiFPObs2oiKNCfHMJrRIGJKSGGUCgyQDe7jqnNcpVuCNHRxqab2lgmNHmgMcSTn8syU8EPWmZFsNI54xsyfJNkVQFZyNdQ4qEmyjJNHRrkSdvirg3YjvgHpNa7sWR9KIbzWcTFEMJ1N/C/saNsQvKlerkr7YANnLA3d9iBMgiVkvAnIUbB9TaFK2jwUTP9z1hgXDBxPfMMEbE5MpMXHeBZNcyHLO03UbyfbeaGXUrtP8THdUzdBrKvqHbChm5MP7rvZ7Ney0T3rdNf09mF2bTv9TIPxb+0WIYkIU6ckeT6kgzi9NoI4GmV+a8wAAAABJRU5ErkJggg==" alt="">SVIP</div>
                 </div>
-                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon bar-arrow ">
-                    <use xlink:href="#icon_Arrow"></use>
-                </svg>
+                <button on:click={handleFiveth}>
+                    <Icon src={RiSystemArrowRightSLine}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                </button>
             </div>
+
+            {#if Fiveth}
             <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
                 <div class="v-table-wrap">
                     <div class=" Diamond-list v-table">
@@ -2580,6 +2627,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                                 </div>
                             </div>
                         </div>
+                        {/if}
                     </div>
 
                     <div class="vip-reward">
