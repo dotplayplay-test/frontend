@@ -89,7 +89,7 @@ let username = $profileStore.username
 let is_loading = false
 
 const handleSubmit = (async() => {
-    // is_loading = true
+    is_loading = true
     if (!username) {
         error_msg.set("username can't be empty")
         setTimeout(()=>{

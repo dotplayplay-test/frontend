@@ -1,7 +1,7 @@
 <script>
 import HiSolidSearch from "svelte-icons-pack/hi/HiSolidSearch";
 import MainNavbar from "../lib/navbarcomponent/main/index.svelte"
-
+import { handleAuthToken } from "$lib/store/routes"
 import { goto } from "$app/navigation";
 import "../styles/navbar/mobileNavbar.css";
 import "../styles/navbar/navbar.css";

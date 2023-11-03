@@ -64,7 +64,7 @@ onMount(()=>{
     setTimeout(()=>{
         $handleAuthToken && handleProfile()
         $handleAuthToken && handleDefaultWallet()
-    },500)
+    },50)
 })
 
 const handleDailyPPFbonus = (async()=>{
@@ -78,7 +78,7 @@ const handleDailyPPFbonus = (async()=>{
 
 onMount(async()=>{
     setTimeout(()=>{
-        handleDailyPPFbonus()
+ $handleAuthToken &&   handleDailyPPFbonus()
     },3000)
 })
 
@@ -121,7 +121,7 @@ const handleChat = ((e) => {
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{$default_Wallet.balance}<span class="suffix">00</span></span>
+                        <span class="amount-str">{(parseFloat($default_Wallet.balance)).toFixed(6)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>

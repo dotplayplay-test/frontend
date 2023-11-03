@@ -1,16 +1,39 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
-  import {
-    createEventDispatcher
-} from 'svelte';
-
-
+import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+import {createEventDispatcher } from 'svelte';
+import axios from 'axios';
+import { ServerURl} from "../../../backendUrl";
+const URL = ServerURl()
 const dispatch = createEventDispatcher()
 
 const handleCloseHelp = (() => {
     dispatch("close", 5)
 })
+
+let client = ''
+let server = ''
+const handleSeedSettings = (async()=>{
+    if(!client){
+        console.log("Can't be empty")
+    }else{
+        let data = {
+            client,
+            server
+        }
+        await axios.post(`${URL}/api/user/dice-game/seed-settings`,{
+            data
+        })
+        .then((res)=>{
+            console.log(res)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+})
+
+
 
 </script>
 
@@ -27,7 +50,7 @@ const handleCloseHelp = (() => {
         <div class="dialog-body default-style " style="z-index: 2; transform: none;">
             <div class="sc-dkPtRN jScFby scroll-view sc-hxaKAp iGYNgq dialog-box">
                 <div class="warn">You may use this function to set a new server seed + a new client seed, they can be randomly generated or customized (at least 10 characters), 
-                    and the number of bets will be reset to zero.
+                    and the number of bets will be reset to .
                 </div>
                 <div class="detailForm">
                     <div class="title">Current seeds</div>
@@ -80,7 +103,7 @@ const handleCloseHelp = (() => {
                     </div>
                 </div>
                 <div class="submit">
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                    <button on:click={handleSeedSettings} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
                         <div class="button-inner">Use New Seeds</div>
                     </button>
                 </div>

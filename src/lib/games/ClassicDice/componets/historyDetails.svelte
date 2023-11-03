@@ -37,6 +37,15 @@ const handleSeedSettings = (()=>{
 })
 
 
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
 
 </script>
 
@@ -82,11 +91,11 @@ const handleSeedSettings = (()=>{
                         <img class="avatar avatar" alt="" src={DgII.profile_img}>
                         <div class="name">{DgII.username}</div>
                         <div class="flex">
-                            <div class="betid">Betting ID: {DgII.bet_id}</div>
+                            <div class="betid">{`${DgII.bet_id ? `Betting ID: ${DgII.bet_id}` : "" }`}</div>
                             <div class="verified">Verified</div>
                         </div>
                     </div>
-                    <div class="rt_time">{DgII.time}</div>
+                    <div class="rt_time"> {new Date(DgII.time).getFullYear()}:{new Date(DgII.time).getMonth()}:{new Date(DgII.time).getDate()} {formatTime(DgII.time)} </div>
                     <div class="rt_items">
                         <div class="item-wrap">
                             <div class="label flex-center">
@@ -95,7 +104,7 @@ const handleSeedSettings = (()=>{
                                 </span>
                                 Amount
                             </div>
-                            <div class="number flex-center">{DgII.bet_amount} {DgII.token}</div>
+                            <div class="number flex-center">{(parseFloat(DgII.bet_amount)).toFixed(2)} {DgII.token}</div>
                         </div>
                         <div class="item-wrap">
                             <div class="label flex-center">
@@ -104,7 +113,7 @@ const handleSeedSettings = (()=>{
                                 </span>
                                 Payout
                             </div>
-                            <div class="number flex-center">{DgII.payout} x</div>
+                            <div class="number flex-center">{(parseFloat(DgII.payout)).toFixed(2)} x</div>
                         </div>
                         <div class="item-wrap">
                             <div class="label flex-center">
@@ -113,7 +122,7 @@ const handleSeedSettings = (()=>{
                                 </span>
                                 Profit
                             </div>
-                            <div class="number flex-center">{DgII.profit} {DgII.token}</div>
+                            <div class="number flex-center">{(parseFloat(DgII.profit)).toFixed(6)} {DgII.token}</div>
                         </div>
                     </div>
                 </div>

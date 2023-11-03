@@ -1,7 +1,9 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, HandleHas_won} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 const { historyD } = DiceHistory()
 import { onMount } from "svelte";
 import { handleisLoggin } from "../../store/profile"
@@ -91,6 +93,15 @@ $:{
     }
 }
 
+const handleRollUnder = ()=>{
+    if($rollunder){
+        rollunder.set(false)
+    }else{
+        rollunder.set(true)
+    }
+}
+
+
 </script>
 
 {#if hisQQ}
@@ -103,9 +114,9 @@ $:{
             {#if $handleisLoggin}
                 {#if $dice_history.length !== 0}
                 <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-                {#each $dice_history.slice(-6) as  dice (dice._id)} 
+                {#each $dice_history.slice(-6) as  dice} 
                     <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
-                        <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{(dice.cashout).toFixed(2)}</div>
+                        <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{(parseFloat(dice.cashout)).toFixed(2)}</div>
                     </button>
                 {/each}
                 </div> 
@@ -135,14 +146,14 @@ $:{
                     {/if}
                     <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$betPosition}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
-                        <div class="dice_num ">{($HandleDicePoint).toFixed(2)}</div>
+                        <div class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>
                         <div class={`dice_png ${$HandleHas_won ? "dice-animate" : ""}`}>
                             <img alt="dice.png" src="https://static.nanogames.io/assets/dice.1007262a.png">
                         </div>
                     </div>
                     <div class="slider-line ">
-                        <div class="slide-win" style={`width: ${$betPosition}%;`}></div>
-                        <div class="slide-lose" style={`width: ${100 - $betPosition}%;`}></div>
+                        <div class={ $rollunder ? "slide-win" : "slide-lose"} style={`width: ${$betPosition}%;`}></div>
+                        <div class={$rollunder ? "slide-lose" : "slide-win"} style={`width: ${100 - $betPosition}%;`}></div>
                         <div class="slider-sign" style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                             <div class="sign"></div>
                         </div>
@@ -166,15 +177,13 @@ $:{
                     </div>
                 </div>
                 <div class="sc-ezbkAF gcQjQT input roll-switch">
-                    <div class="input-label">Roll Under</div>
-                    <div class="input-control">
+                    <div class="input-label">{ $rollunder ? "Roll Under" : "Roll Over"}</div>
+                    <button on:click={handleRollUnder} class="input-control">
                         <input type="text" readonly value={$betPosition}>
                         <span class="right-info">
-                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                                <use xlink:href="#icon_Exchange"></use>
-                            </svg>
+                            <Icon src={AiOutlineSwap}  size="18"  color="rgb(67, 179, 9)"/>
                         </span>
-                    </div>
+                    </button>
                 </div>
                 <div class="sc-ezbkAF gcQjQT input win-change">
                     <div class="input-label">Win Chance</div>
@@ -229,6 +238,7 @@ $:{
     margin: 0px 1.5rem;
     overflow: hidden;
     position: relative;
+    transition: all 0.5s ease-in;
     border-radius: 1.375rem;
 }
 
@@ -310,6 +320,7 @@ $:{
     display: flex;
     -webkit-box-pack: end;
     justify-content: flex-end;
+    transition: all 0.5s ease-in;
 }
 
 
@@ -317,7 +328,7 @@ $:{
     padding: 0px 0.25rem;
     cursor: pointer;
     animation: pull 1s ;
-
+    transition: all 0.5s ease;
 }
 
 .fIoiVG .is-lose {

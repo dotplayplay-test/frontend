@@ -41,11 +41,11 @@ $: {
                         <td>
                             <div class="game-link">
 
-                                <div class={`dot ${history.crash_point > 2 ? "type-2" : "type-1" } `}></div>
+                                <div class={`dot ${parseFloat(history.crash_point) > 2 ? "type-2" : "type-1" } `}></div>
                                 {history.game_id}
                             </div>
                         </td>
-                        <td>{(history.crash_point).toFixed(2)}x</td>
+                        <td>{(parseFloat(history.crash_point)).toFixed(2)}x</td>
                         <td>
                             <div class="flex-center">
                                 <input type="text" readonly value={history.hash}>

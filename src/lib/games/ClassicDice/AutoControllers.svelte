@@ -7,6 +7,7 @@ import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
+import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 const URL = ServerURl()
@@ -19,11 +20,16 @@ const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
 let uiocd = 4
-
+let wining_amount = '' ;
 if($default_Wallet.coin_name === "USDT"){
     uiocd = (0.20).toFixed(4)
 }else{
     uiocd = (100).toFixed(4)
+}
+
+
+$:{
+    wining_amount = (uiocd * $payout).toFixed(4)
 }
 
 
@@ -43,7 +49,7 @@ let stopOnlose = 0
 
 let is_Looping = false
 let yu 
-let turbo = 1300
+let turbo = 1000
 
 function playSound(e) {
     if(e === 1){
@@ -66,7 +72,6 @@ const mult = (()=>{
     uiocd = (uiocd * 2).toFixed(4)
     handlediceAutoInput.set(uiocd)
 })
-
 
 let winning_track = 0
 let lose_track = 0
@@ -114,6 +119,10 @@ const handleAutoStart = (()=>{
     }
 })
 
+let history 
+$:{
+    history  = [...$dice_history]
+}
 
 const handleRollSubmit = (async()=>{
     if($handleisLoggin){
@@ -157,65 +166,75 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
+
         else{
-            let date = new Date();
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let newformat = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let time = (hours + ':' + minutes + ' ' + newformat);
-            const data = {
+            let data = {
+                server_seed: $DiceEncription.server_seed,
+                client_seed: $DiceEncription.client_seed,
+                hash_seed: $DiceEncription.hash_seed,
+                nonce:$DiceEncription.nonce,
                 username: $profileStore.username,
-                user_img: $profileStore.profile_image,
-                bet_amount: parseFloat(uiocd),
+                profile_img: $profileStore.profile_image,
+                bet_amount:  parseFloat(uiocd),
                 bet_token_img: $default_Wallet.coin_image, 
                 bet_token_name: $default_Wallet.coin_name ,
-                chance: $betPosition,
-                payout: $payout,
+                chance: parseFloat($betPosition).toFixed(2),
+                payout: parseFloat($payout),
                 time: new Date(),
-                wining_amount: parseFloat(uiocd * $payout) - parseFloat(uiocd)
+                wining_amount: parseFloat(wining_amount) -  parseFloat(uiocd)
             }
             await axios.post(`${URL}/api/user/dice-game/bet`, {
-                sent_data: data
+                data
             },{
                 headers:{
                     Authorization: `Bearer ${$handleAuthToken}`
                 }
-            })
-            .then(res =>{
+            }).then(res =>{
+                let r = {
+                    client_seed: res.data.client_seed,
+                    server_seed:res.data.client_seed,
+                    hash_seed:res.data.hash,
+                    nonce:res.data.nonce + 1,
+                }
+                dice_history.set(history)
+                DiceEncription.set(r)
+                HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
                 isbetLoadingBtn.set(false)
-                dice_history.set(res.data.history)
-                default_Wallet.set(res.data.wallet)
-                HandleDicePoint.set(res.data.point)
-                let prev = res.data.history[res.data.history.length - 1]
-
-                if(prev.has_won){
-                  winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
-                  $soundHandler &&  playSound(2)
-                  HandleHas_won.set(true)
-                  if(onWinEl){
+                if(parseFloat($betPosition) > parseFloat($HandleDicePoint)){
+                    let wallet = {
+                        coin_name: $default_Wallet.coin_name ,
+                        coin_image: $default_Wallet.coin_image,
+                        balance:  (parseFloat(data.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
+                    }
+                    default_Wallet.set(wallet)
+                    $soundHandler &&  playSound(2)
+                    HandleHas_won.set(true)
+                    if(onWinEl){
                         let to = ((onWinEl/100) * parseFloat(uiocd)/1)
                         let from = (to + parseFloat(uiocd)).toFixed(4)
                         handlediceAutoInput.set(from)
                     }
-                }
-                else{
-                    lose_track += parseFloat(uiocd)
+                    winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
+                    history.push({ ...data,has_won:true, cashout:res.data.point, profit:parseFloat(data.wining_amount), token:$default_Wallet.coin_name})
+                }else{
+                    let wallet = {
+                        coin_name: $default_Wallet.coin_name ,
+                        coin_image: $default_Wallet.coin_image,
+                        balance: (parseFloat($default_Wallet.balance) - parseFloat(data.bet_amount)).toFixed(4)
+                    }
+                    default_Wallet.set(wallet)
                     HandleHas_won.set(false)
                     if(onLoseEl){
                         let to = ((onLoseEl/100) * parseFloat(uiocd)/1)
                         let from = (to + parseFloat(uiocd)).toFixed(4)
                         handlediceAutoInput.set(from)
                     }
+                    lose_track += parseFloat(uiocd)
+                    history.push({...data,has_won:false, cashout:res.data.point, profit:0, token:$default_Wallet.coin_name})
                 }
             })
-            .catch((err)=>{
-                console.log(err)
-            })
-            onWin.set(onWinEl)
         }
+     onWin.set(onWinEl)
     }else{
         error_msg.set("You are not Logged in")
         clearInterval(yu)

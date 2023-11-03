@@ -9,6 +9,9 @@ import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
 import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
+import axios from "axios"
+import {onMount} from "svelte"
+import { handleAuthToken } from "$lib/store/routes"
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
 import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
 import Hotkey from "$lib/games/ClassicDice/componets/hotkey.svelte";
@@ -16,7 +19,28 @@ import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
 import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 import Help from "$lib/games/ClassicDice/componets/help.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
+import {DiceEncription} from '$lib/games/ClassicDice/store/index'
+import { ServerURl } from "$lib/backendUrl"
+const URl = ServerURl()
 
+const handleDiceGameEncrypt = (async()=>{
+    await axios.get(`${URl}/api/user/dice-game/encrypt`,{
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        DiceEncription.set(res.data[0])
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
+
+onMount(()=>{
+  $handleAuthToken && handleDiceGameEncrypt()
+})
 
 let is_allbet = true
 let is_mybet = false
@@ -65,6 +89,8 @@ const handleSoundState = (()=>{
     }
 })
 
+
+
 </script>
 
 {#if is_hotkey}
@@ -82,8 +108,6 @@ const handleSoundState = (()=>{
 {#if isHelp}
 <Help on:close={handleIsHelp} />
 {/if}
-
-
 
 
 

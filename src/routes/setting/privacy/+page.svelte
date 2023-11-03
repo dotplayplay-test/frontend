@@ -2,10 +2,13 @@
 import axios from "axios";
 import { routes } from "$lib/store/routes"
 import {profileStore} from "$lib/store/profile"
+import { handleAuthToken } from "$lib/store/routes";
 import {ServerURl} from "$lib/backendUrl"
 const URL = ServerURl()
 
 let Hide_gameing_profile = false
+
+
 
 $:{
     if($profileStore.hide_profile){
@@ -21,7 +24,7 @@ const apiGamingProfile = (async(data)=>{
         profile_state : data,
     },{
         headers:{
-            Authorization: `Bearer ${$routes.profile.Token}`
+            Authorization: `Bearer ${$handleAuthToken}`
         }
     })
     .then(res => {
@@ -45,7 +48,7 @@ const handleHideUserNam = (async(data)=>{
         profile_state : data,
     },{
         headers:{
-            Authorization: `Bearer ${$routes.profile.Token}`
+            Authorization: `Bearer ${$handleAuthToken}`
         }
     })
     .then(res => {
@@ -90,7 +93,7 @@ const handleFriendRequestAPI = (async(data)=>{
         profile_state : data,
     },{
         headers:{
-            Authorization: `Bearer ${$routes.profile.Token}`
+            Authorization: `Bearer ${$handleAuthToken}`
         }
     })
     .then(res => {
@@ -122,7 +125,7 @@ const handleTipsAPI = (async(data)=>{
         profile_state : data,
     },{
         headers:{
-            Authorization: `Bearer ${$routes.profile.Token}`
+            Authorization: `Bearer ${$handleAuthToken}`
         }
     })
     .then(res => {

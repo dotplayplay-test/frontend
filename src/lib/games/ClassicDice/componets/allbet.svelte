@@ -70,7 +70,7 @@ function formatTime(timestamp) {
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
+                                <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
@@ -78,16 +78,16 @@ function formatTime(timestamp) {
                     {#if !dice.has_won}
                     <td class="payout">0.00×</td>
                     {:else}
-                    <td class="payout">{(dice.payout)}×</td>
+                    <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
                     {/if}
                     <td class={`profitline ${dice.has_won ? "is-win": "is-lose"} `}>
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                             <img class="coin-icon" alt=""  src={dice.token_img}>
                             <div class="amount">
                                 {#if !dice.has_won}
-                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span></span>
+                                <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span></span>
                                 {:else}
-                                <span class="amount-str">+{(dice.profit)}<span class="suffix">00</span></span>
+                                <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(6)}<span class="suffix">00</span></span>
                                 {/if}
                             </div>
                         </div>

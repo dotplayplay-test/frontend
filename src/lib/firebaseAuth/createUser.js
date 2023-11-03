@@ -30,7 +30,8 @@ export const useRegister = () => {
         localStorage.setItem("user", JSON.stringify(json.Token));
         handleAuthToken.set(json.Token)
         profileStore.set(json.result)
-        window.location.href = ("/info")
+        // window.location.href = ("/info")
+        goto("/info")
         default_Wallet.set(json.default_wallet)
         isLoading = false
       }

@@ -60,7 +60,7 @@ function formatTime(timestamp) {
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
+                                <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
@@ -75,10 +75,10 @@ function formatTime(timestamp) {
                             <img class="coin-icon" alt="" src={dice.token_img}>
                             <div class="amount">
                                 {#if dice.has_won}
-                                <span class="amount-str">+{(dice.profit)}<span class="suffix">00</span>
+                                <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(6)}<span class="suffix">00</span>
                                 </span>
                                 {:else}
-                                <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
+                                <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span>
                                 </span>
                                 {/if}
                             </div>
