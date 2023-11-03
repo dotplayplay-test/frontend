@@ -17,6 +17,7 @@ import { onMount } from "svelte";
 import {  goto } from "$app/navigation";
 import { default_Wallet } from "$lib/store/coins";
 import { ServerURl } from "$lib/backendUrl"
+import Layout from '../../deposit/layout.svelte';
 const URL = ServerURl()
 
 
@@ -106,9 +107,21 @@ const handleCoinSelect = ((e) => {
 const handleChat = ((e) => {
     dispatch("handleChatRoom", e)
 })
+
+let is_deposit = false 
+const handleDeposit = (()=>{
+    is_deposit = !is_deposit
+})
+
 </script>
 
 <div id="main">
+
+{#if is_deposit}
+    <Layout on:close={handleDeposit} />
+{/if}
+
+
 {#if !$handleisLoading && $default_Wallet.coin_image != undefined}
 <div class="sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
@@ -128,7 +141,7 @@ const handleChat = ((e) => {
             {#if isCoinDrop}
                 <Coins on:coinDefault={handleCoinSelect} />
             {/if}
-            <button on:click={()=> goto("/wallet/deposit")} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
+            <button on:click={()=> handleDeposit()} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span class="wallet-icon">
                         <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />

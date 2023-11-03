@@ -99,10 +99,10 @@ let classic = false
                 <div class="recent-list-wrap">
                     <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
                         {#if $crash_historyEl.length !== 0}
-                        {#each $crash_historyEl as his (his._id)}
+                        {#each $crash_historyEl as his}
                             <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
                                 <div class="issus">{his.game_id}</div>
-                                <div>{his.crash_point}x</div>
+                                <div>{(parseFloat(his.crash_point)).toFixed(2)}x</div>
                             </button>
                         {/each}
                         {:else}

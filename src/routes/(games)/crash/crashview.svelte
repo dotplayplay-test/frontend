@@ -45,7 +45,6 @@ const handleAllbet = ((e)=>{
                         <p>Game results will be displayed here.</p>
                     </div>
                 {/if}
-
             </div>
         </div>
         <button on:click={handleTrends} class="sc-fZzbTk frfwnj flex-center ">
