@@ -321,20 +321,20 @@ const handleCashout = (()=>{
                     </button>
                 {/if}
                 {#if $crashIsAlive && $handleHasbet}
-                <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
-                    <div class="button-inner">
-                        <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
-                        <div class="sub-text">cashout</div>
-                    </div>
-                </button>
-            {/if}
+                    <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
+                        <div class="button-inner">
+                            <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
+                            <div class="sub-text">cashout</div>
+                        </div>
+                    </button>
+                {/if}
             {#if $loadingCrash && !$handleisLoggin}
                 <button  on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                     <div class="button-inner">
                         <div>Bet</div>
                     </div>
                 </button>
-                {/if}
+            {/if}
                 {#if $loadingCrash && $handleisLoggin}
                     <button disabled={is_loading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                          {#if $handleHasbet}
@@ -386,8 +386,8 @@ const handleCashout = (()=>{
                                     <button  on:click={()=>handleHalf(1)}>/2</button>
                                     <button  on:click={()=>handleHalf(2)}>x2</button>
                                     <button class="sc-ywFzA dxoLcn">
-                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
+                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                                     </button>
                                 </div>
                             </div>
@@ -435,7 +435,6 @@ const handleCashout = (()=>{
                 </div>
             </div>
         </div>
-
         {:else}
        <Trendball />
         {/if}
@@ -557,5 +556,6 @@ const handleCashout = (()=>{
     border-radius: 0.375rem;
     background-color: rgb(204, 207, 217);
 }
+
 
 </style>

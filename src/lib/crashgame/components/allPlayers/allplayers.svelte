@@ -74,7 +74,7 @@ onMount(() => {
                                 <div class="sc-Galmp erPQzq coin notranslate has-sign">
                                     <img class="coin-icon" alt="" src={player.token_img}>
                                     <div class="amount">
-                                        <span class="amount-str">{player.profit.toFixed(2)}<span class="suffix">00</span></span>
+                                        <span class="amount-str">{(parseFloat(player.profit)).toFixed(5)}<span class="suffix">00</span></span>
                                     </div>
                                 </div>
                             </td>

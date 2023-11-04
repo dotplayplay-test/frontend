@@ -8,6 +8,7 @@ import About from '$lib/crashgame/components/help/about.svelte';
 import Fairness from '$lib/crashgame/components/help/fairness.svelte';
 import Backroll from '$lib/crashgame/components/help/backroll.svelte';
 import HelpTrendball from '$lib/crashgame/components/help/helpTrendball.svelte';
+import { browser } from '$app/environment'
 import Helpautocashout from '$lib/crashgame/components/help/helpautocashout.svelte';
 const dispatch = createEventDispatcher()
 
@@ -73,10 +74,21 @@ const handleGoBack = (()=>{
     isTrendball = false
 })
 
+let is_mobile = true
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
+
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
-   <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+   <div class="dialog " style={is_mobile ? "" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}>
     
     {#if !isDefault}
         <button on:click={handleGoBack} class="dialog-back" style="opacity: 1; transform: none;">
@@ -156,6 +168,25 @@ const handleGoBack = (()=>{
 .dialog-head.has-close {
     margin-right: 3.75rem;
 }
+
+@media only screen and (max-width:650px){
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    margin:0px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+}
+
 .fLASqZ {
     position: absolute;
     right: 0px;

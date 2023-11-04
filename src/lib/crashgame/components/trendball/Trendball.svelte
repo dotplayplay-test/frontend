@@ -278,8 +278,8 @@ const handleLoadBetMoon = (()=>{
                     <button on:click={()=>handleHalf(1)}>/2</button>
                     <button on:click={()=>handleHalf(2)}>x2</button>
                     <button class="sc-ywFzA dxoLcn">
-                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)" />
+                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)" />
                     </button>
                 </div>
             </div>
@@ -316,14 +316,14 @@ const handleLoadBetMoon = (()=>{
                 <div class="bet-payout">2x</div>
             </div>
             {#if !$loadingCrash && !$handle_IsGreen }
-            <button on:click={handleLoadBetGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsGreen && "is-active"} `}>
+            <button on:click={handleLoadBetGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button  ${$handle_IsGreen && "is-active"} `}>
                 <div class="button-inner">
                     <div>{isLoadBetGreen ? "Loading..." : "Bet Green"}</div>
                      <div class="sub-txt">({isLoadBetGreen ? "Cancel": "Next round"})</div>   
                 </div>
             </button>
         {:else}
-        <button disabled={$loadingCrash && !load_green && !$handle_IsGreen ? false : true} on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsGreen && "is-active"} `}>
+        <button disabled={$loadingCrash && !load_green && !$handle_IsGreen ? false : true} on:click={handleGreen} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button  ${$handle_IsGreen && "is-active"} `}>
             <div class="button-inner">
                 <div>Bet Green</div>
                 {#if !$loadingCrash && !$handle_IsGreen}
@@ -341,14 +341,14 @@ const handleLoadBetMoon = (()=>{
             </div>
 
             {#if !$loadingCrash && !$handle_IsMoon }
-            <button on:click={handleLoadBetMoon} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsMoon && "is-active"} `}>
+            <button on:click={handleLoadBetMoon} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000 ${$handle_IsMoon && "is-active"} `}>
                 <div class="button-inner">
                     <div>{isLoadBetMoon ? "Loading..." : "Bet Moon"}</div>
                      <div class="sub-txt">({isLoadBetMoon ? "Cancel": "Next round"})</div>   
                 </div>
             </button>
         {:else}
-        <button disabled={$loadingCrash && !isLoadBetMoon && !$handle_IsMoon ? false : true} on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200 ${$handle_IsMoon && "is-active"} `}>
+        <button disabled={$loadingCrash && !isLoadBetMoon && !$handle_IsMoon ? false : true} on:click={handleYellow} class={`sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000 ${$handle_IsMoon && "is-active"} `}>
             <div class="button-inner">
                 <div>Bet Moon</div>
                 {#if !$loadingCrash && !$handle_IsMoon}
@@ -489,7 +489,6 @@ const handleLoadBetMoon = (()=>{
     color: rgb(245, 246, 247);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
-
 }
 .cBmlor {
     display: block;
@@ -522,7 +521,7 @@ const handleLoadBetMoon = (()=>{
 .ifiUVY .bet-button.type1000::before {
     background-color: rgb(226, 180, 11);
 }
-
+/* background-color: rgb(226, 180, 11) */
 .ifiUVY .bet-button::before {
     content: "";
     position: absolute;

@@ -6,29 +6,32 @@
     <div class="bhuSSkjs">
         <div>{$crashRunning}x</div>
     </div>
-    <div class="container">
-          <svg xmlns="http://www.w3.org/2000/svg" width="623" height="309" viewBox="0 0 623 309" fill="none">
-            <g filter="url(#filter0_d_160_5)">
-              <path d="M5 297C272 270.5 519 133 615 3" stroke="url(#paint0_linear_160_5)" stroke-width="4"/>
-            </g>
-            <defs>
-              <filter id="filter0_d_160_5" x="0.60498" y="0.623779" width={$crashCurve} height="308.357" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset dy="4"/>
-                <feGaussianBlur stdDeviation="2"/>
-                <feComposite in2="hardAlpha" operator="out"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_160_5"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_160_5" result="shape"/>
-              </filter>
-              <linearGradient id="paint0_linear_160_5" x1="252.742" y1="284.714" x2="523.573" y2="150.893" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#E2E2E2"/>
-                <stop offset="0.9933" stop-color="#508B56"/>
-              </linearGradient>
-            </defs>
-        </svg>
+    <div id="main">
+      <div class="container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="623" height="309" viewBox="0 0 623 309" fill="none">
+          <g filter="url(#filter0_d_160_5)">
+            <path d="M5 297C272 270.5 519 133 615 3" stroke="url(#paint0_linear_160_5)" stroke-width="4"/>
+          </g>
+          <defs>
+            <filter id="filter0_d_160_5" x="0.60498" y="0.623779" width={$crashCurve} height="308.357" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dy="4"/>
+              <feGaussianBlur stdDeviation="2"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_160_5"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_160_5" result="shape"/>
+            </filter>
+            <linearGradient id="paint0_linear_160_5" x1="252.742" y1="284.714" x2="523.573" y2="150.893" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#E2E2E2"/>
+              <stop offset="0.9933" stop-color="#508B56"/>
+            </linearGradient>
+          </defs>
+      </svg>
+  </div>
     </div>
+  
 </div>
 
 

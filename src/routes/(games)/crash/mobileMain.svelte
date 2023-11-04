@@ -13,7 +13,23 @@ import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
 import MobileAllbet from './mobile-allbet.svelte';
 import MobileMybet from './mobile-mybet.svelte';
- export let isClassic
+import axios from "axios"
+import { goto } from "$app/navigation";
+import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunning,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
+import {default_Wallet } from "$lib/store/coins";
+import { handleAuthToken } from "$lib/store/routes";
+import { error_msg  } from "$lib/crashgame/store";
+import { browser } from '$app/environment'
+import { profileStore,handleisLoggin } from "$lib/store/profile";
+const id = browser && JSON.parse(localStorage.getItem('user'))
+import { ServerURl } from "$lib/backendUrl"
+import MobileTrenballs from '$lib/crashgame/components/trendball/mobileTrenballs.svelte';
+const URL = ServerURl()
+
+import Livestat from './livestat.svelte';
+import Help from './help.svelte';
+
+export let isClassic
 const { getAllPlayers } = useAllplayer()
 export let hide_trends 
 let isAdvance = false
@@ -84,6 +100,250 @@ const handleRoute = ((w)=>{
 })
 
 let classic = false
+let ishotKey = false
+const handleHotkeyEnable = (()=>{
+    if(ishotKey){
+        ishotKey = false
+    }else{
+        ishotKey = true
+    }
+})
+
+
+let isAdvancer = false
+const handleAdvancebgr = ((q)=>{
+    if(q === 1){
+        isAdvance = false
+    }else{
+        isAdvance = true
+    }
+})
+
+let isStaet = false
+const handleStatistices = (()=>{
+    if(isStat){
+        isStat = false
+    }else{
+        isStat = true
+    }
+})
+
+let isHelpe = false
+const handleHelep = ()=>{
+    if(isHelp){
+        isHelp = false
+    }else{
+        isHelp = true
+    }
+}
+
+let isTrend = false
+const handleTrends = (()=>{
+    if(isTrend){
+        isTrend = false
+    }else{
+        isTrend = true
+    }
+})
+
+let bet_amount = 10
+if($default_Wallet.coin_name === "USDT"){
+    bet_amount = (0.10).toFixed(4)
+}else{
+    bet_amount = (100).toFixed(4)
+}
+
+const handleHalf = ((e)=>{
+    if(bet_amount > 0){
+        if(e === 1){
+        bet_amount = (bet_amount / 2).toFixed(2)
+        }else{
+            bet_amount = (bet_amount * 2).toFixed(2)
+        }
+    }
+})
+
+let isRange = false
+const ranging = (()=>{
+    if(isRange){
+        isRange = false
+    }else{
+        isRange = true
+    }
+})
+
+let is_loading = false
+$:{
+    if(!$handleHasbet){
+        is_loading = false
+    }
+}
+
+let auto_bet = (100).toFixed(2)
+let bet_amountEl =  0
+
+let chance;
+let x;
+let l;
+$:{
+    if(auto_bet < 1){
+        auto_bet = 1.01
+    }
+    x = 100 / auto_bet
+    l = x / 100
+    chance =(x - l).toFixed(2)
+    if(chance < 0){
+       chance = (0.01).toFixed(2)
+    }
+}
+
+let bet_price;
+$: bet_price = ($crashRunning * parseFloat(bet_amountEl)).toFixed(2)
+const handleCrashBet = (async()=>{
+    bet_amountEl = parseFloat(bet_amount) 
+    is_loading = true
+    if($handleisLoggin){
+        if(parseFloat(bet_amountEl) > parseFloat($default_Wallet.balance)){
+            error_msg.set("insufficient balance")
+            is_loading = false
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        }
+        else if( parseFloat(bet_amountEl) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 0.10 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else{
+            const data = {
+            username: $profileStore.username,
+            user_img: $profileStore.profile_image,
+            game_id: $game_id,
+            bet_amount : parseFloat(parseFloat(bet_amountEl)),
+            auto_cashout: auto_bet,
+            time: new Date(),
+            bet_token_img: $default_Wallet.coin_image, 
+            bet_token_name: $default_Wallet.coin_name ,
+            chance: "0"
+        }
+        axios.post(`${URL}/api/user/crash-game/bet`, {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
+        .then((response)=>{
+        let result = response.data
+         let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
+        }
+        default_Wallet.set(wllet)
+         handleHasbet.set(true)
+        })
+        .catch((error)=>{
+            is_loading = false
+            console.log(error)
+        })
+    }
+    }else{
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+            goto("/login")
+        },4000)
+        is_loading = false
+    }
+})
+
+let isLoadBet = false
+let loop;
+const handleLoadBet = (()=>{
+    if(!isLoadBet){
+        loop = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleCrashBet()
+            },100)
+            clearInterval(loop)
+            isLoadBet = false
+        }else{
+            isLoadBet = true
+        }
+    },10)
+    }else if (isLoadBet){
+        isLoadBet = false
+        clearInterval(loop)
+    }
+})
+
+const handleCashout = (()=>{
+    if($handleisLoggin){
+    let houseEgde =  (1 / 100) * (  parseFloat(bet_price)  / 1)
+    let winning_amount = parseFloat(bet_price) - houseEgde
+    let data = {
+        cashout_at : winning_amount,
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        profit:  parseFloat(winning_amount) - parseFloat(bet_amountEl),
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        crash: $crashRunning
+    }
+    axios.post(`${URL}/api/user/crash-game/cashout`, {
+        data
+    },{
+        headers: {
+        "Content-type": "application/json",
+        'Authorization': `Bearer ${$handleAuthToken}`
+    }
+    })
+    .then((response)=>{
+    let result = response.data
+     let wllet = {
+        coin_name: result.bet_token_name,
+        coin_image:  result.bet_token_img,
+        balance:  parseFloat(result.balance).toFixed(4)
+    }
+    default_Wallet.set(wllet)
+     handleHasbet.set(false)
+})
+    }else{
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },2000)
+    }
+})
+
 
 </script>
 
@@ -91,6 +351,21 @@ let classic = false
     <Allplayers  on:close={handleAllbet} />
 {/if}
 
+{#if isStat}
+    <Livestat on:close={handleStatistics} />
+{/if}
+{#if isHelp}
+    <Help on:close={handleHelp} />
+{/if}
+
+
+{#if $error_msg}
+<div style="background-color:crimson;" class="error-message">
+    <div class="hTTvsjh"> 
+        <div>{$error_msg}</div>
+    </div>
+</div>
+{/if}
 
 <div class="game-area">
     <div class="game-main">
@@ -100,7 +375,7 @@ let classic = false
                     <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
                         {#if $crash_historyEl.length !== 0}
                         {#each $crash_historyEl as his}
-                            <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
+                            <button on:click={()=> handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 30%;">
                                 <div class="issus">{his.game_id}</div>
                                 <div>{(parseFloat(his.crash_point)).toFixed(2)}x</div>
                             </button>
@@ -147,11 +422,50 @@ let classic = false
         {#if isClassic}
             <div class="game-control-panel">
                 <div class="sc-jcEtbA eRjsxw">
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
+                    {#if $crashIsAlive && !$handleHasbet}
+                    <button on:click={handleLoadBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
+                        <div class="button-inner">
+                            <div>{isLoadBet ? "Loading..." : "Bet" }</div>
+                            <div class="sub-text">{isLoadBet ? "Cancel" : "(Next round)"}</div>
+                        </div>
+                    </button>
+                    {/if}
+                    {#if $crashIsAlive && $handleHasbet}
+                    <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
+                        <div class="button-inner">
+                            <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
+                            <div class="sub-text">cashout</div>
+                        </div>
+                    </button>
+                    {/if}
+                {#if $loadingCrash && !$handleisLoggin}
+                    <button  on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
                         <div class="button-inner">
                             <div>Bet</div>
                         </div>
                     </button>
+                {/if}
+                {#if $loadingCrash && $handleisLoggin}
+                <button disabled={is_loading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
+                     {#if $handleHasbet}
+                        <div class="button-inner">
+                            <div>Betting...</div>
+                        </div>
+                    {:else}
+                        <div class="button-inner">
+                            <div>{is_loading ? "Loading..." : "Bet"}</div>
+                        </div>
+                    {/if}
+                </button>
+            {/if}
+            {#if $hasCrashed}
+                <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-fBNLhH dtXZTz">
+                    <div class="button-inner">
+                        <div>Bet</div>
+                        <div class="sub-text">(Next round)</div>
+                    </div>
+                </button>
+            {/if}
                     <div class="forms">
                         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-hDzdEj dcPZTa game-coininput">
                             <div class="input-label">
@@ -174,96 +488,52 @@ let classic = false
                                 <div class="label-amount">0 USD</div>
                             </div>
                             <div class="input-control">
-                                <input type="text" value="1.00">
+                                <input type="number" bind:value={bet_amount}>
                                 <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                                 <div class="sc-kDTinF bswIvI button-group">
-                                    <button>/2</button>
-                                    <button>x2</button>
+                                    <button on:click={()=>handleHalf(1)}>/2</button>
+                                    <button on:click={()=>handleHalf(2)}>x2</button>
                                     <button class="sc-lcdCCa xtnse">
-                                        <Icon src={RiSystemArrowUpSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                        <Icon src={RiSystemArrowDownSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                        <Icon src={RiSystemArrowUpSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  />
+                                        <Icon src={RiSystemArrowDownSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  />
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    {#if !id}
+                        <div class="input-control">
+                            <input type="number" bind:value={bet_amount}>
+                            <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                            <div class="sc-kDTinF bswIvI button-group">
+                                <button  on:click={()=>handleHalf(1)}>/2</button>
+                                <button  on:click={()=>handleHalf(2)}>x2</button>
+                                <button class="sc-ywFzA dxoLcn">
+                                    <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
+                                    <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
+                                </button>
+                            </div>
+                        </div>
+                    {:else}
                         <div class="sc-ezbkAF hzTJOu input sc-eBHJIF MycAI">
                             <div class="input-label">
                                 <div class="chance-title">
                                     <div class="auto-title">Auto cash out</div>
                                     <div>Chance&nbsp;&nbsp;
-                                        <span class="chance-num">0.99%</span>
+                                        <span class="chance-num">{chance}%</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="input-control">
-                                <input type="text" value="100.00">
+                                <input type="text"  bind:value={auto_bet}>
                                 <div class="payout-txt">×</div>
                             </div>
                         </div>
+                    {/if}
                     </div>
                 </div>
             </div>
         {:else}
-        <div class="game-control-panel">
-            <div class="sc-bOtlzW hNwTbf manual-control">
-                <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput">
-                    <div class="input-label">
-                        <div class="sc-gsFzgR bxrMFn label">
-                            <div>Amount</div>
-                        </div>
-                        <div class="label-amount">0 USD</div>
-                    </div>
-                    <div class="input-control">
-                        <input type="text" value="1.000000000">
-                        <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                        <div class="sc-kDTinF bswIvI button-group">
-                            <button>/2</button>
-                            <button>x2</button>
-                                <button class="sc-gqtqkP gfnHxc">
-                                    <Icon src={RiSystemArrowUpSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                    <Icon src={RiSystemArrowDownSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
-                        <div class="input-label">
-                            <div>Payout</div>
-                            <div class="bet-payout">1.96x</div>
-                        </div>
-                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type-200">
-                            <div class="button-inner">
-                                <div>Bet Red</div>
-                                <div class="sub-txt">(Next round)</div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
-                        <div class="input-label">
-                            <div>Payout</div>
-                            <div class="bet-payout">2x</div>
-                        </div>
-                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type200">
-                            <div class="button-inner">
-                                <div>Bet Green</div>
-                                <div class="sub-txt">(Next round)</div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="sc-ezbkAF kDuLvp input sc-jFkwbb gAiddS bet-item">
-                        <div class="input-label">
-                            <div>Payout</div>
-                            <div class="bet-payout">10x</div>
-                        </div>
-                        <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal bet-button type1000">
-                            <div class="button-inner">
-                                <div>Bet Moon</div>
-                                <div class="sub-txt">(Next round)</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <MobileTrenballs />
         {/if}
  
         </div>
@@ -333,37 +603,7 @@ let classic = false
     margin-top: 1rem;
     margin-right: 0px;
 }
-.kDuLvp .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
-.gAiddS .bet-payout {
-    margin-left: 0.625rem;
-    color: rgb(245, 246, 247);
-}
-.gAiddS .bet-button.type-200::before {
-    background-color: rgb(237, 99, 0);
-}
-.gAiddS .bet-button::before {
-    content: "";
-    position: absolute;
-    left: 0.9375rem;
-    top: 0.75rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 0.75rem;
-    border: 2px solid rgba(50, 57, 63, 0.5);
-    transition: all 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
-    background-color: rgb(67, 179, 9);
-}
-.gAiddS .bet-button.type1000::before {
-    background-color: rgb(226, 180, 11);
-}
+
 .gAiddS {
     flex-basis: 30%;
     -webkit-box-flex: 1;
@@ -371,19 +611,9 @@ let classic = false
     margin-top: 1.5rem;
     margin-right: 0.625rem;
     position: relative;
+    font-size: 13px;
 }
-.gAiddS .bet-button .button-inner {
-    flex-direction: column;
-}
-.gAiddS .bet-button > div {
-    position: relative;
-    z-index: 2;
-}
-.gAiddS .bet-button {
-    height: 3rem;
-    overflow: hidden;
-    position: relative;
-}
+
 .cFxmZX {
     width: 100%;
     border-radius: 1.25rem;
@@ -391,18 +621,7 @@ let classic = false
     padding: 1.5rem 1.5rem 2rem;
     margin-top: 2rem;
 }
-.gAiddS .bet-button::before {
-    content: "";
-    position: absolute;
-    left: 0.9375rem;
-    top: 0.75rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 0.75rem;
-    border: 2px solid rgba(50, 57, 63, 0.5);
-    transition: all 0.2s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
-    background-color: rgb(67, 179, 9);
-}
+
 .cFxmZX {
     margin: 1.25rem 0px 0px;
     width: auto;
@@ -603,9 +822,7 @@ let classic = false
     align-items: flex-start;
     height: 100%;
 }
-.gfnnAw .game-item {
-    padding-left: 1.125rem;
-}
+
 .gfnnAw .game-item {
     display: flex;
     -webkit-box-align: center;
@@ -627,9 +844,7 @@ let classic = false
 .gfnnAw .game-item.is-moon {
     color: rgb(246, 199, 34);
 }
-.gfnnAw .game-item {
-    padding-left: 1.125rem;
-}
+
 .gfnnAw .game-item::before {
     content: "";
     position: absolute;
@@ -644,9 +859,7 @@ let classic = false
 .gfnnAw .game-item.is-doubble {
     color: rgb(67, 179, 9);
 }
-.gfnnAw .game-item {
-    padding-left: 1.125rem;
-}
+
 .gfnnAw .game-item.is-doubble::before {
     background-color: rgb(67, 179, 9) !important;
 }
@@ -927,18 +1140,11 @@ let classic = false
     background: rgb(49, 52, 60);
     margin-left: 1px;
 }
-.bswIvI > button {
-    height: 2.25rem;
-    width: 2.75rem;
-    padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
-    margin-left: 1px;
-}
+
 .dtXZTz {
     width: 90%;
     max-width: 19.75rem;
-    margin: 3.5rem auto;
+    margin: 1rem auto;
 }
 .gcQjQT .input-label {
     display: flex;
@@ -998,5 +1204,11 @@ let classic = false
     transition: right 0.2s ease-out 0s, left 0.3s ease-out 0s;
     transform: translateZ(0px);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
+}
+@media only screen and (max-width: 650px){
+    .button-inner{
+        display: flex;
+        flex-direction: column;
+    }
 }
 </style>

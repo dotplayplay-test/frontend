@@ -1,7 +1,7 @@
 <script>
 import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
 import { profileStore , handleisLoggin} from "$lib/store/profile"
-
+import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
 let isBetHistory = false
 let handleBetHistory = ((e)=>{
     if(isBetHistory){
@@ -12,40 +12,50 @@ let handleBetHistory = ((e)=>{
     }
 })
 
-</script>
+let newItem;
 
+$: {
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$mybetEl].reverse()
+}
+
+</script>
+{#if isBetHistory}
+<Indev on:close={handleBetHistory} />
+{/if}
 <div class="tabs-view" style="transform: none;">
     <div class="sc-eZhRLC iycaRo">
         <table class="sc-gWXbKe iUeetX table is-hover">
             <thead>
                 <tr>
+
                     <th class="num">Bet ID</th>
-                    <th class="time">Time</th>
-                    <th class="bet">Bet</th>
+                    <!-- <th class="time">Time</th> -->
+                    <!-- <th class="bet">Bet</th> -->
                     <th class="payout">Payout</th>
                     <th class="profit">Profit</th>
                 </tr>
             </thead>
             <tbody>
                 {#if $handleisLoggin}
-                {#each $mybetEl.slice(0, 20) as mybet (mybet._id)}
+                {#each newItem.slice(0, 20) as mybet }
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>
                         <p class="hash ellipsis">{mybet.bet_id}</p>
                     </td>
-                    <td>{mybet.time}</td>
-                    <td class="bet">
+                    <!-- <td>{mybet.time}</td> -->
+                    <!-- <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                <span class="amount-str">{mybet.bet_amount}<span class="suffix">00000000</span>
+                                <span class="amount-str">{mybet.bet_amount}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
-                    </td>
+                    </td> -->
                     {#if mybet.has_won}
-                    <td class="payout">{mybet.cashout}×</td>
+                    <td class="payout">{(parseFloat(mybet.cashout)).toFixed(2)}×</td>
                     {:else}
                     <td class="payout">{"0.00"}x</td>
                     {/if}
@@ -54,9 +64,9 @@ let handleBetHistory = ((e)=>{
                             <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
                                 {#if mybet.has_won}
-                                <span class="amount-str" style="color:#43b309">+{mybet.profit}<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color:#43b309">+{(parseFloat(mybet.profit)).toFixed(5)}<span class="suffix">00</span> </span>
                                 {:else}
-                                <span class="amount-str" style="color: rgb(237, 99, 0);">{mybet.bet_amount}<span class="suffix">00000000</span> </span>
+                                <span class="amount-str" style="color: rgb(237, 99, 0);">{(parseFloat(mybet.bet_amount)).toFixed(5)}<span class="suffix">00</span> </span>
                                 {/if}
                             </div>
                         </div>
@@ -113,6 +123,7 @@ let handleBetHistory = ((e)=>{
 }
 .iycaRo tr {
     cursor: pointer;
+    font-size: 13px;
 }
 .iUeetX th:first-child, .iUeetX td:first-child {
     text-align: left;

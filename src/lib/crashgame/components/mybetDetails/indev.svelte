@@ -9,7 +9,7 @@ import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
 import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
 import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
 import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
-
+import { browser } from '$app/environment';
 import {
     createEventDispatcher
 } from 'svelte';
@@ -31,6 +31,16 @@ let handleSharedBet = (() => {
     }
 })
 
+let is_mobile = true
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
@@ -38,7 +48,8 @@ let handleSharedBet = (() => {
         <Sharebet on:close={handleSharedBet}/>
      {/if}
 
-     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+
+     <div class="dialog " style={is_mobile ? "" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}>
             <div class="dialog-head has-close">
                 <div class="dialog-title">Details</div>
             </div>
@@ -172,5 +183,21 @@ let handleSharedBet = (() => {
         </div>
 
 <style>
-
+@media only screen and (max-width:650px){
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    margin:0px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+}
 </style>

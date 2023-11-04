@@ -51,7 +51,7 @@ import { active_playerEl} from "$lib/crashgame/store";
                             <div class="sc-Galmp erPQzq coin notranslate">
                             <img class="coin-icon" alt="" src={player.token_img}>
                             <div class="amount">
-                                <span class="amount-st">{player.bet_amount}<span class="suffix">000</span></span>
+                                <span class="amount-st">{(parseFloat(player.bet_amount)).toFixed(4)}<span class="suffix">00</span></span>
                             </div>
                         </div>
                         </td>
@@ -67,7 +67,7 @@ import { active_playerEl} from "$lib/crashgame/store";
                             <div class="sc-Galmp erPQzq coin notranslate has-lose">
                                 <img class="coin-icon" alt="" src={player.token_img}>
                                 <div class="amount">
-                                    <span class="amount-st">{player.bet_amount}<span class="suffix">000</span></span>
+                                    <span class="amount-st">{(parseFloat(player.bet_amount)).toFixed(4)}<span class="suffix">00</span></span>
                                 </div>
                             </div>
                             {:else}
@@ -170,6 +170,17 @@ table {
 .vjsVz td {
     padding: 0px 0.375rem;
     height: 3rem;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.iUeetX {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
 }
 .iUeetX td {
     padding: 0.875rem 0.3125rem;
