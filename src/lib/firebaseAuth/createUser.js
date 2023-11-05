@@ -35,6 +35,7 @@ export const useRegister = () => {
         default_Wallet.set(json.default_wallet)
         isLoading = false
       }
+      
     };
     return { register };
 }

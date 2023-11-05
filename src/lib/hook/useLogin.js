@@ -28,12 +28,14 @@ export const useLogin = () => {
       console.log(error)
     }
     if (response.ok) {
+ 
       localStorage.setItem("user", JSON.stringify(json.Token));
       handleAuthToken.set(json.Token)
       profileStore.set(json.result)
-      goto("/")
+      window.location.href = ("/")
+      // goto("/")
       default_Wallet.set(json.default_wallet)
-      is_loading.set(false)
+      isLoading = false
     }
   };
   return { login, isLoading, error };

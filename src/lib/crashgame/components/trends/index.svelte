@@ -660,9 +660,9 @@ const handleClose = (() => {
     border-radius: 50%;
 }
 
-.itetCR.type-3::after {
+/* .itetCR.type-3::after {
     background-color: rgb(246, 199, 34);
-}
+} */
 .itetCR.type-1::after {
     background-color: rgb(237, 99, 0);
 }
