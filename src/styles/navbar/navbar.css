@@ -298,6 +298,9 @@
   }
   .icGouR {
     position: relative;
-    margin: 0 0.2375rem;
-  }
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    width: 28%;
+}
 }

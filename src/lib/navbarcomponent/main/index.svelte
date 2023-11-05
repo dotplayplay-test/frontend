@@ -336,7 +336,7 @@ const handleDeposit = (()=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    margin-left: 15px;
+    margin-left: 7px;
     background-color: rgb(30, 32, 36);
     border-radius: 1.25rem;
     cursor: pointer;
