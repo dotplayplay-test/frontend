@@ -135,7 +135,6 @@ const handleStatistics = (()=>{
                        </div>
                    </div>
                </div>
-
            </a>
            <button on:click={()=> goto("/setting/general")} class="right">
                <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -400,10 +399,11 @@ const handleStatistics = (()=>{
 .emGYim .vip-info .vip-bg .bg_status {
     width: 4%;
     height: auto;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
+    font-weight: 900;
     text-align: center;
     white-space: nowrap;
-    margin-left: 4%;
+    margin-left: 1%;
     margin-top: -0.125rem;
 }
 .emGYim .vip-info .vip-bg .bg .status {

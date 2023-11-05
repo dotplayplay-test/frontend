@@ -103,7 +103,8 @@ $:{
             {#if !is_edit && !is_stats}
                 <div class="dialog-title">User Information</div>
                 <div class="sc-hgJWpk cGdWiX vip-level">
-                    <div class="vip-box" style="background-image: url(&quot;https://static.nanogames.io/assets/vip_type1.9697d4e3.svg&quot;);">V{$users_profile.vip_level}</div>
+                    <div class="vip-box" style="background-image: url(&quot;https://static.nanogames.io/assets/vip_type1.9697d4e3.svg&quot;);">
+                       {!is_loadingel && !is_loading && $users_profile.vip_level ? `V ${$users_profile.vip_level} `: ""}</div>
                 </div>
             {:else if is_edit}
                 <div class="dialog-title">Nickname</div>
@@ -112,7 +113,7 @@ $:{
             {/if}
         </div>
         <button on:click={()=> history.back()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
         </button>
 
         {#if !is_loadingel && !is_loading}
@@ -123,13 +124,13 @@ $:{
                     <div class="user-info">
                         <button class="like button">
                             <span class="sc-gsDKAQ hxODWG icon">
-                                <Icon src={AiFillHeart}  size="16"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
+                                <Icon src={AiFillHeart}  size="16"  color="rgb(237, 99, 0)" className="custom-icon" />
                             </span>
                             0
                         </button>
                         {#if $profileStore.user_id === $page.params.slug}
                             <button on:click={()=>  handleDiooosb(2)} class="button edit">
-                                <Icon src={RiDesignPencilFill}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                                <Icon src={RiDesignPencilFill}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
                             </button>
                         {/if}
          
@@ -273,13 +274,13 @@ $:{
                 <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </span>
                         Medals
                         <div class="total">0</div>
                         <button class="detail-button">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -351,12 +352,12 @@ $:{
                 <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
                         </span>
                         Statistics
                         <button on:click={()=>  handleDiooosb(4)} class="hover">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -364,7 +365,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                                     </span>
                                     Total Wins</div>
                                 <div class="item-value">{$userStatistics.total_win}</div>
@@ -373,7 +374,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Bets</div>
                                 <div class="item-value">{$userStatistics.total_bet}</div>
@@ -381,7 +382,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Wagered
                                 </div>
@@ -411,13 +412,13 @@ $:{
                 <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </span>
                         Medals
                         <div class="total">0</div>
                         <button class="detail-button">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -489,12 +490,12 @@ $:{
                 <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
                         </span>
                         Statistics
                         <button on:click={()=>  handleDiooosb(4)} class="hover">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -502,7 +503,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                                     </span>
                                     Total Wins</div>
                                 <div class="item-value">{$userStatistics.total_win}</div>
@@ -511,7 +512,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Bets</div>
                                 <div class="item-value">{$userStatistics.total_bet}</div>
@@ -519,7 +520,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Wagered
                                 </div>
@@ -563,13 +564,13 @@ $:{
                 <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={BiMedal}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </span>
                         Medals
                         <div class="total">0</div>
                         <button class="detail-button">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -641,12 +642,12 @@ $:{
                 <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                     <div class="module-name">
                         <span class="sc-gsDKAQ hxODWG icon icon-name">
-                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                            <Icon src={BiBarChartAlt}  size="16"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
                         </span>
                         Statistics
                         <button on:click={()=>  handleDiooosb(4)} class="hover">
                             Details
-                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                         </button>
                     </div>
                     <div class="content">
@@ -654,7 +655,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="arror" />
+                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" />
                                     </span>
                                     Total Wins</div>
                                 <div class="item-value">{$userStatistics.total_win}</div>
@@ -663,7 +664,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Bets</div>
                                 <div class="item-value">{$userStatistics.total_bet}</div>
@@ -671,7 +672,7 @@ $:{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="arror" />
+                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" />
                                     </span>
                                     Total Wagered
                                 </div>

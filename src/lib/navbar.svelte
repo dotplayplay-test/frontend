@@ -12,7 +12,7 @@ export let chatroom;
 import { browser } from '$app/environment';
 import { current_route, routes } from "./store/routes"
 import { handleisLoggin, handleisLoading } from "$lib/store/profile";
-import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher, onMount } from 'svelte';
 import Statistic from "./statistics/main/statistic.svelte";
 import { statisticsEl } from "$lib/store/statistic"
 import Login from "./nestedpages/auth/login/login.svelte";
@@ -77,6 +77,13 @@ const handleRegister = (()=>{
     }
 })
 
+let uyi
+$:{
+  uyi=  browser && window.navigator.onLine
+}
+
+
+
 </script>
 
     <!-- {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
@@ -90,6 +97,15 @@ const handleRegister = (()=>{
     {#if  $handleNestedRoute === "/login/info" || browser && window.location.pathname === "/login/info"  }
         <Info />
     {/if} -->
+
+{#if !uyi}
+    <div class="reconnecting">
+        <div class="riuwx">
+            <p>Connection lost, Reconnecting...</p>
+        </div>
+    </div>
+{/if}
+
 
 
 <div id="main" class="sc-gVkuDy gAvMHL" style={` margin-right: ${chatroom}px; `} >
@@ -219,6 +235,31 @@ const handleRegister = (()=>{
     background: rgba(23, 22, 22, 0.52);
     border-radius: 50%;
 }
+}
+
+.reconnecting{
+    position: fixed;
+    /* top: 80px;
+    right: 50%; */
+    right: 0;
+    display: flex;
+    background: rgba(91, 91, 91, 0.176);
+    z-index: 14689066;
+    width: 100%;
+    height: 100%;
+}
+
+.reconnecting .riuwx{
+    background-color: var(--background-color);
+    width: 300px;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    height: 40px;
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px;
+    color: aliceblue;
 }
 
 /* .elBGFt.big-enter {
