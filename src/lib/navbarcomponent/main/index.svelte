@@ -269,7 +269,7 @@ const handleDeposit = (()=>{
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
                     <span class="currency">{$handleisLoggin && $default_Wallet.coin_name}</span>
-                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
+                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" />
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
@@ -283,7 +283,7 @@ const handleDeposit = (()=>{
             <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span style="margin-right: 4px;">
-                        <Icon src={BiSolidWallet}  size="13"  color="rgb(255, 255, 255)"  title="arror" />
+                        <Icon src={BiSolidWallet}  size="13"  color="rgb(255, 255, 255)"  />
                     </span>
                     <span>Wallet</span>
                 </div>
@@ -295,7 +295,7 @@ const handleDeposit = (()=>{
                         <img class="avatar " alt="" src={$profileStore.profile_image}></a>
                         <button on:click={handleUserProfile} class="svg">
                             <span class="na-menu">
-                                <Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                                <Icon src={CgMenuCheese}  size="18" color="rgba(153, 164, 176, 0.6)" />
                             </span>
                         </button>
                         {#if userProfile}
@@ -361,6 +361,13 @@ const handleDeposit = (()=>{
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+}
+
+.fGPfpD {
+    height: 100%;
+    width: 5.05rem;
+    font-size: 12px;
+    border-radius: 30px;
 }
 }
 
