@@ -239,8 +239,6 @@ $:{
 
 .reconnecting{
     position: fixed;
-    /* top: 80px;
-    right: 50%; */
     right: 0;
     display: flex;
     background: rgba(91, 91, 91, 0.176);
@@ -248,7 +246,6 @@ $:{
     width: 100%;
     height: 100%;
 }
-
 .reconnecting .riuwx{
     background-color: var(--background-color);
     width: 300px;
