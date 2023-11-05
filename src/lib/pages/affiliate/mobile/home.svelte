@@ -44,133 +44,221 @@ $:{
 
 </script>
 
-<div class="section">
+<div>
+{#if reward_modal}
+    <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
+        <div class="dialog casino-commission-dialog" style="opacity: 1;  transform: scale(1) translateZ(0px);"><div class="dialog-head has-close"><div class="dialog-title">Commission Rewards Rule</div>
+    </div>
+    <button on:click={()=>handleOpenModal(0)} class="sc-ieecCq fLASqZ close-icon dialog-close">
+        <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" />
+    </button>
+    <div class="dialog-body default-style casino-commission-dialog" style="z-index: 2; transform: none;"><div class="sc-dkPtRN jScFby scroll-view sc-hcupDf fymRoF"><div class="commission-dialog"></div></div></div></div>
+    </div>
+{/if}
 
-    {#if reward_modal}
-        <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
-            <div class="dialog casino-commission-dialog" style="opacity: 1; width: 464px; height: 470px; margin-top: -235px; margin-left: -232px; transform: scale(1) translateZ(0px);"><div class="dialog-head has-close"><div class="dialog-title">Commission Rewards Rule</div>
-        </div>
-        <button on:click={()=>handleOpenModal(0)} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" />
-        </button>
-        <div class="dialog-body default-style casino-commission-dialog" style="z-index: 2; transform: none;"><div class="sc-dkPtRN jScFby scroll-view sc-hcupDf fymRoF"><div class="commission-dialog"></div></div></div></div>
-        </div>
-    {/if}
 
-
-    <div class="title pc-spec">Affiliate Rewards</div>
-    <div class="content">
-        <div class="sc-jCHUfY funZYP my-rewards">
-            <div class="rewards-item rewards">
-                <div class="common">
-                    <div class="title ttu">
-                        <span>Extra&nbsp;</span>
-                        <span class="type theme">USD Rewards</span>
-                    </div>
-                    <div class="hover">
-                        <button on:click={()=>handleOpenModal(1)} class="theme">USD Rewards Rules</button>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
-                    </div>
-                    <div class="amount-wrap">
-                        <div class="amount">{$affilliate_info.available_usd_reward}<span class="unit">USD</span></div>
-                        <div class="desc">Newly Available USD Rewards</div></div>
-                    <div class="tips">
-                        <div class="tips_flex">
-                            <div>Received:&nbsp;<span class="theme">{$affiliate_info.total_earn_me}</span>
-                                <span class="unit gapx"> USD</span>
-                            </div>
-                            <div class="question-box">
-                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
-                            </div>
-                            <div>Locked:&nbsp;
-                                <span class="theme">{$affiliate_info.total_usd_reward}</span>
-                                <span class="unit"> USD</span>
-                            </div>
-                        </div>
-                        <div>Your current friends staying active will unlock you more USD Rewards</div>
-                    </div>
-                    <a class="withdraw" href="//mycasino.nanogames.io/mycasino/rewards">Withdraw</a>
+<div class="title pc-spec">Affiliate Rewards</div>
+<div class="content">
+    <div class="sc-jCHUfY funZYP my-rewards">
+        <div class="rewards-item rewards">
+            <div class="common">
+                <div class="title ttu">
+                    <span>Extra&nbsp;</span>
+                    <span class="type theme">USD Rewards</span>
                 </div>
-                <div class="list-group">
-                    <div class="list-header">
-                        <div class="list-header_friends">
-                            <span>All Friends</span>
-                            <span class="value">{$affilliate_info.registered_friends}</span>
-                        </div>
-                    </div>
-                    <div class="list-content">
-                        <div class="fc thead">
-                            <div class="th">My Top3 Friends</div>
-                            <div class="th">VIP level</div>
-                            <div class="th">Earned Me</div>
-                        </div>
-                        {#if is_loading}
-                            <div>laoding...</div>
-                        {:else}
-                            {#each $affiliate_info.friends_list as friends}
-                            <div class="tr fc">
-                                <div class="td fc">
-                                    <img class="avatar user-avatar" alt="" src={friends.profile_image}>
-                                    <div class="nickanme">{friends.username}</div>
-                                </div>
-                                <div class="td fc">
-                                    <div class="bar">
-                                        <div class="bar-cover" style={`width: ${friends.vip_progress}%;`}></div>
-                                    </div>
-                                    <div class="level">V{friends.vip_level}</div>
-                                </div>
-                                <div class="td fc yellow">
-                                    <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
-                                    <span>{friends.earn_me}</span>
-                                </div>
-                            </div>
-                            {/each}
-                        {/if}
-               
-                    </div>
-                    <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
-                        <span>View More</span>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
-                    </a>
+                <div class="hover">
+                    <button on:click={()=>handleOpenModal(1)} class="theme">USD Rewards Rules</button>
+                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                 </div>
+                <div class="amount-wrap">
+                    <div class="amount">{$affilliate_info.available_usd_reward}<span class="unit">USD</span></div>
+                    <div class="desc">Newly Available USD Rewards</div></div>
+                <div class="tips">
+                    <div class="tips_flex">
+                        <div>Received:&nbsp;<span class="theme">{$affiliate_info.total_earn_me}</span>
+                            <span class="unit gapx"> USD</span>
+                        </div>
+                        <div class="question-box">
+                            <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                        </div>
+                        <div>Locked:&nbsp;
+                            <span class="theme">{$affiliate_info.total_usd_reward}</span>
+                            <span class="unit"> USD</span>
+                        </div>
+                    </div>
+                    <div>Your current friends staying active will unlock you more USD Rewards</div>
+                </div>
+                <a class="withdraw" href="//mycasino.nanogames.io/mycasino/rewards">Withdraw</a>
             </div>
-            <div class="rewards-item commission">
-                <div class="common">
-                    <div class="title ttu">
-                        My
-                        <span class="type theme">Commission Rewards</span></div>
-                    <div class="hover">
-                        <button on:click={()=>handleOpenModal(0)} class="theme">Commission Reward Rules</button>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+            <div class="list-group">
+                <div class="list-header">
+                    <div class="list-header_friends">
+                        <span>All Friends</span>
+                        <span class="value">{$affilliate_info.registered_friends}</span>
                     </div>
-                    <div class="amount-wrap">
-                        <div class="amount">{$affilliate_info.commission_reward}<span class="unit">USD</span></div>
-                        <div class="desc">Newly Available Commission Rewards</div>
-                    </div>
-                    <div class="total-commission">
-                        <div class="commission-desc">
-                            <span class="theme">Commission</span> You've Received in Total:</div>
-                        <div class="commission-amount">{$affiliate_info.total_commission_reward}<span class="unit">USD</span></div>
-                    </div>
-                    <a class="withdraw" href="//mycasino.nanogames.io/mycasino/commissions">Withdraw</a>
                 </div>
-                <div class="nothing list-group">
-                    <div class="nothing-tip">No info yet <br> Invite friends to join you now!</div>
-                    <div class="list-header">
-                        <div>Cryptocurrency Distribution Info</div>
+                <div class="list-content">
+                    <div class="fc thead">
+                        <div class="th">My Top3 Friends</div>
+                        <div class="th">VIP level</div>
+                        <div class="th">Earned Me</div>
                     </div>
-                    <div class="list-content"></div>
-                    <a class="list-footer" href="//mycasino.nanogames.io/mycasino/commissions">
-                        <span>View More</span>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
-                    </a>
+                    {#if is_loading}
+                        <div>laoding...</div>
+                    {:else}
+                        {#each $affiliate_info.friends_list as friends}
+                        <div class="tr fc">
+                            <div class="td fc">
+                                <img class="avatar user-avatar" alt="" src={friends.profile_image}>
+                                <div class="nickanme">{friends.username}</div>
+                            </div>
+                            <div class="td fc">
+                                <div class="bar">
+                                    <div class="bar-cover" style={`width: ${friends.vip_progress}%;`}></div>
+                                </div>
+                                <div class="level">V{friends.vip_level}</div>
+                            </div>
+                            <div class="td fc yellow">
+                                <img class="icon" alt="" src="https://nanogames.io/coin/USD.black.png">
+                                <span>{friends.earn_me}</span>
+                            </div>
+                        </div>
+                        {/each}
+                    {/if}
+           
                 </div>
+                <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
+                    <span>View More</span>
+                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                </a>
+            </div>
+        </div>
+
+        <div class="rewards-item commission">
+            <div class="common">
+                <div class="title ttu">
+                    My
+                    <span class="type theme">Commission Rewards</span></div>
+                <div class="hover">
+                    <button on:click={()=>handleOpenModal(0)} class="theme">Commission Reward Rules</button>
+                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                </div>
+                <div class="amount-wrap">
+                    <div class="amount">{$affilliate_info.commission_reward}<span class="unit">USD</span></div>
+                    <div class="desc">Newly Available Commission Rewards</div>
+                </div>
+                <div class="total-commission">
+                    <div class="commission-desc">
+                        <span class="theme">Commission</span> You've Received in Total:</div>
+                    <div class="commission-amount">{$affiliate_info.total_commission_reward}<span class="unit">USD</span></div>
+                </div>
+                <a class="withdraw" href="//mycasino.nanogames.io/mycasino/commissions">Withdraw</a>
+            </div>
+            <div class="nothing list-group">
+                <div class="nothing-tip">No info yet <br> Invite friends to join you now!</div>
+                <div class="list-header">
+                    <div>Cryptocurrency Distribution Info</div>
+                </div>
+                <div class="list-content"></div>
+                <a class="list-footer" href="//mycasino.nanogames.io/mycasino/commissions">
+                    <span>View More</span>
+                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                </a>
             </div>
         </div>
     </div>
 </div>
 
+
+
+</div>
+
 <style>
+
+.kBjSXI {
+    position: fixed;
+    z-index: 1000;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    filter: none !important;
+}
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+.dialog-head {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 3.75rem;
+    margin-left: 1.125rem;
+    transition: all 0.5s ease 0s;
+}
+.dialog-head.has-close {
+    margin-right: 3.75rem;
+}
+.dialog-head .dialog-title {
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: bold;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(245, 246, 247);
+}
+.fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+.default-style {
+    padding-top: 3.75rem;
+    background-color: rgb(23, 24, 27);
+}
+.dialog-body {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    overflow: hidden;
+}
+.default-style > div {
+    border-radius: 20px;
+    background-color: rgb(30, 32, 36);
+    padding: 1.25rem 1.25rem 0px;
+}
+.dialog-body > div {
+    flex: 1 1 0%;
+}
+.fymRoF .commission-dialog {
+    border-radius: 8px;
+    padding-top: 85%;
+    background: url(https://static.nanogames.io/assets/graph.pit.9f962d2f.png) center top / 100% no-repeat rgb(23, 24, 27);
+}
+
+
 .title {
     font-size: 24px;
     font-weight: 600;
@@ -200,10 +288,11 @@ $:{
     width: 50px;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAADUCAMAAAB5wzuWAAAAk1BMVEUAAAAeICQgKi0eICQeICQeISUeISUeISUeISUfICUpLi5OTk4eICQfICQfIiUgIiYgIiYeICUfICQeICUeICQfICUhIicfICUeISQfISQfISQjIyktLS0eICQeICQeICQfISQfISUfISUfISUeIiYhIychJCciIismJiaAgIAfICQeICQfICUfICUfISUhISYeICRbUIDiAAAAMHRSTlMA9w/v/fu6opJmBwPbxks+NPPp5uFfJtfSeFkVC87AmYaAc1JCKyMdGgK2sKyeai/GNLYaAAACYElEQVR42uzOS07CUABA0bavpdBaoFBAfsof/OHd/+qMYWZiogPjHfSs4ET8WBaaKp8Piujv8Fvx8ySJbv4/A9SbW0eRgbD97EgyEHpRpMlAvhJluJ+KMoS+KEM6EWVIr6IMzE0ZNqYMj0+iDHkpyvBSiDJ0VqIMVSLKcL8UZbg7izI0U1GG0bsoQxiKMtQHUYZ4L8qQLUQZ0qsoA3NTho0pQ9eUIS9FGV4KUYbOSpShSkQZ1ktRhtlZlKE5iTKMj6IMYSjKUB9EGeK+KEO2EGVIe6IM7EwZtqYMXVOGvBRleC1EGTorUYYqEWVYL0UZZhdRhuYkyjA+ijKEoShDPRBliPuiDNlClCHtiTKwM2XYmjJ0TRneSlGG10KU4bkQZXhIRBnWS1GG2UWU4e4kyjA+ijKMhqIMYSDKEPdFGbK9KEO6EGVI96IM8UCUYXQRZahKUYadKVOfRRlyUyadijK8mTJxIsowMWU6pkxciDIcTJm5KZObMpUp05gywZTJTBnaTJtpM23mizbznTbz0c4d2zAIBEAQNEigf/ECCwQmgpj+G3QD3tS6YLeCaeCOEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKzL/qkjBrEqYlYcYkTEnC1CTMEYTZkhamdxJmCcK0pL32HoQ5nyDMHHQ4cAX9QgzvIEwN+hIpQS8r45SD+fQ5Zzhjn3MTVKaYA6Wh5vxcXTkPYOccc9TW9ifkwm67l4Dbw25tY6nH61dfgXj42O/H5kkAAAAASUVORK5CYII=) right top / auto 69px no-repeat;
 }
+
 .funZYP {
     display: flex;
+    flex-direction: column;
     padding-top: 80px;
-    gap: 40px;
     background: url(https://static.nanogames.io/assets/rewards-arrow.614d6e26.png) center top / auto 80px no-repeat;
 }
 .funZYP .rewards-item {
@@ -567,86 +656,4 @@ $:{
     line-height: 1.08;
 }
 
-.kBjSXI {
-    position: fixed;
-    z-index: 1000;
-    inset: 0px;
-    background-color: rgba(0, 0, 0, 0.7);
-    filter: none !important;
-}
-.dialog {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    left: 50%;
-    top: 50%;
-    width: 464px;
-    height: 720px;
-    margin: -375px 0px 0px -280px;
-    transition-property: width, height, margin-left, margin-top;
-    transition-duration: 0.5s;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background-color: rgb(23, 24, 27);
-}
-.dialog-head {
-    position: relative;
-    z-index: 10;
-    flex: 0 0 auto;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 3.75rem;
-    margin-left: 1.125rem;
-    transition: all 0.5s ease 0s;
-}
-.dialog-head.has-close {
-    margin-right: 3.75rem;
-}
-.dialog-head .dialog-title {
-    font-size: 1rem;
-    margin: 0px;
-    font-weight: bold;
-    flex: 1 1 0%;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    color: rgb(245, 246, 247);
-}
-.fLASqZ {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    z-index: 11;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    width: 3.75rem;
-    height: 3.75rem;
-}
-.default-style {
-    padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
-}
-.dialog-body {
-    position: absolute;
-    inset: 0px;
-    display: flex;
-    overflow: hidden;
-}
-.default-style > div {
-    border-radius: 20px;
-    background-color: rgb(30, 32, 36);
-    padding: 1.25rem 1.25rem 0px;
-}
-.dialog-body > div {
-    flex: 1 1 0%;
-}
-.fymRoF .commission-dialog {
-    border-radius: 8px;
-    padding-top: 85%;
-    background: url(https://static.nanogames.io/assets/graph.pit.9f962d2f.png) center top / 100% no-repeat rgb(23, 24, 27);
-}
 </style>

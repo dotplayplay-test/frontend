@@ -168,17 +168,15 @@ const handleCreateReferral = (async()=>{
 {/if}
 
 
-
-
     <div class="sc-cxVPaa fnthVB casino-header">
         <div class="header-sub flex-center">
             <div class="left flex-center">
                 <button on:click={()=>handlePopRule(2)} class="m-item rules">
-                    <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
+                    <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon"  />
                     <span>Commission Rules</span>
                 </button>
                 <button on:click={()=>handlePopRule(1)} class="m-item terms">
-                    <Icon src={BsCircleSquare} size="18" className="custom-icon" title="Custom icon params" />
+                    <Icon src={BsCircleSquare} size="18" className="custom-icon"  />
                     <span>Affiliate Terms</span>
                 </button>
             </div>
@@ -223,7 +221,7 @@ const handleCreateReferral = (async()=>{
         <div class="character banner-layer welcome"></div>
         <button on:click={()=> goto("/my-affiliate/dashboard")} class="management">
             <span style="margin: 0px 5px; display:flex;">
-                <Icon src={TiClipboard} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                <Icon src={TiClipboard} size="18" color="#fff" className="custom-icon"  />
             </span>
             <span>Affiliate Dashboard</span>
         </button>
@@ -286,7 +284,7 @@ const handleCreateReferral = (async()=>{
                             <div class="flex">
                                 <div class="amount">100 USD</div>
                                 <button on:click={()=>handlePopRule(3)} class="hover theme" >USD Rewards Rules</button>
-                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                             </div>
                         </div>
                         <div class="graph" id="system-rewards">

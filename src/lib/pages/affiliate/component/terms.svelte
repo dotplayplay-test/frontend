@@ -200,4 +200,22 @@
     color: rgba(153, 164, 176, 0.8);
     margin: 0.5rem 0px 1.75rem;
 }
+
+@media only screen and (max-width:650px){
+    .feFcbu {
+        border-radius: 20px;
+        background-color: rgb(30, 32, 36);
+        padding: 4.25rem 1.25rem 0px;
+    }
+    .feFcbu .affiliate-terms {
+        white-space: pre-line;
+        background: none;
+        padding: 0px;
+        font-family: inherit;
+        font-size: 13px;
+        color: rgba(153, 164, 176, 0.8);
+        margin: 0.5rem 0px 1.75rem;
+    }
+}
+
 </style>
