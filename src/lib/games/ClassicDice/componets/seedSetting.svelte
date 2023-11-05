@@ -3,9 +3,11 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import {createEventDispatcher } from 'svelte';
 import axios from 'axios';
+import { browser } from '$app/environment';
 import { ServerURl} from "../../../backendUrl";
 const URL = ServerURl()
 const dispatch = createEventDispatcher()
+
 
 const handleCloseHelp = (() => {
     dispatch("close", 5)
@@ -33,12 +35,22 @@ const handleSeedSettings = (async()=>{
     }
 })
 
+let is_mobile = false
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
+
 
 
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog " style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         <div class="dialog-head has-close">
             <div class="dialog-title">Seed Settings</div>
         </div>
@@ -135,6 +147,27 @@ const handleSeedSettings = (async()=>{
     overflow: hidden;
     background-color: rgb(23, 24, 27);
 }
+
+@media only screen and (max-width: 650px){
+    
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+
+}
+
 .dialog-head.has-close {
     margin-right: 3.75rem;
 }

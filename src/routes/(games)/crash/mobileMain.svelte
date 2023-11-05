@@ -501,18 +501,19 @@ const handleCashout = (()=>{
                             </div>
                         </div>
                     {#if !id}
-                        <div class="input-control">
-                            <input type="number" bind:value={bet_amount}>
-                            <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                            <div class="sc-kDTinF bswIvI button-group">
-                                <button  on:click={()=>handleHalf(1)}>/2</button>
-                                <button  on:click={()=>handleHalf(2)}>x2</button>
-                                <button class="sc-ywFzA dxoLcn">
-                                    <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
-                                    <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
-                                </button>
+                    <div class="sc-ezbkAF hzTJOu input sc-iKMXQg gShYvD">
+                        <div class="input-label">
+                            <div class="chance-title">
+                                <div class="auto-title">Auto cash out</div>
+                                <div>Chance&nbsp;&nbsp;<span class="chance-num">0.99%</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="input-control">
+                            <input type="text" value="100.00">
+                            <div class="payout-txt">×</div>
+                        </div>
+                    </div>
                     {:else}
                         <div class="sc-ezbkAF hzTJOu input sc-eBHJIF MycAI">
                             <div class="input-label">
@@ -1096,15 +1097,37 @@ const handleCashout = (()=>{
     background-color: transparent;
     color: rgb(245, 246, 247);
 }
-.gOLODp .coin-icon {
+ .coin-icon {
     order: -1;
     margin-right: 0.3125rem;
     margin-left: -0.625rem;
     width: 1.25rem;
     height: 1.25rem;
 }
+.input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    opacity: 0.5;
+    height: 2.75rem;
+    border-radius: 1.5rem;
+    padding: 0px 1.375rem;
+}
 .jcwJKv .input-control .button-group {
     margin-right: -1.125rem;
+}
+.input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
 }
 .dcPZTa .button-group {
     width: 8.375rem;
@@ -1205,10 +1228,76 @@ const handleCashout = (()=>{
     transform: translateZ(0px);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
 }
+.gOLODp .coin-icon {
+    order: -1;
+    margin-right: 0.3125rem;
+    margin-left: -0.625rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
 @media only screen and (max-width: 650px){
     .button-inner{
         display: flex;
         flex-direction: column;
+    }
+    .input-label {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        line-height: 1em;
+        font-size: 13px;
+        height: 1.25rem;
+        margin: 0px 1.125rem 0.375rem;
+        color: rgba(153, 164, 176, 0.6);
+    }
+    .chance-title {
+        display: flex;
+        flex: 1 1 0%;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+    }
+     .auto-title {
+        margin-right: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .chance-title .chance-num {
+        color: rgb(67, 179, 9);
+    }
+    .input-control {
+        position: relative;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        border: 1px solid rgb(45, 48, 53);
+        background-color: rgba(45, 48, 53, 0.5);
+        opacity: 1;
+        height: 2.75rem;
+        border-radius: 1.5rem;
+        padding: 0px 1.375rem;
+    }
+    .input-control {
+        border-color: transparent;
+    }
+    .input-control input {
+        color: rgb(245, 246, 247);
+    }
+    .input-control input {
+        flex: 1 1 0%;
+        width: 100%;
+        height: 100%;
+        min-width: 1rem;
+        padding: 0px;
+        border: none;
+        background-color: transparent;
+        color: rgb(245, 246, 247);
+        font-weight: bold;
+    }
+    .payout-txt {
+        color: rgb(67, 179, 9);
+        margin-right: -0.3125rem;
+        font-size: 1.625rem;
     }
 }
 </style>

@@ -3,7 +3,6 @@ import "../styles/home/index.css"
 import "../styles/home/indexmobile.css"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import Biggestwin from "$lib/homecomponents/biggestwin.svelte";
-
 import { register } from 'swiper/element/bundle';
 import BsQuestionCircle from "svelte-icons-pack/bs/BsQuestionCircle";
 import Homeoriginals from '$lib/homecomponents/homeoriginals.svelte';

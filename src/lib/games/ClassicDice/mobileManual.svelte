@@ -172,26 +172,34 @@ const handleRollSubmit = (async()=>{
     }
 })
 
+
 </script>
 
 <div class="game-control-panel"> 
- {#if $error_msg}
- <div style="background-color:crimson;" class="error-message">
-     <div class="hTTvsjh"> 
-         <div>{$error_msg}</div>
-     </div>
- </div>
-{/if}
+    {#if $error_msg}
+    <div style="background-color:crimson;" class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+        </div>
+    </div>
+   {/if}
     <div class="sc-juEPzu lgTgT">
+        <button disabled={is_loading} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+            {#if is_loading}
+            <div class="button-inner">Loading....</div>
+            {:else}
+            <div class="button-inner">Roll Now</div>
+            {/if}
+        </button>
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">
                 <div class="sc-hmvnCu efWjNZ label">
-                    <div>Amount</div>
-                    <div class="max-profit">
-                        <button on:mouseleave={()=>Handlemax_profit_tips(2)} on:mouseenter={()=>Handlemax_profit_tips(1)} class="sc-gsDKAQ hxODWG icon" >
-                            <Icon src={BsExclamationCircle}  size="15"  color="rgb(67, 179, 9)"  title="" />
-                        </button>
-                        {#if max_profit_tips}
+                <div>Amount</div>
+                <div class="max-profit">
+                    <button on:mouseleave={()=>Handlemax_profit_tips(2)} on:mouseenter={()=>Handlemax_profit_tips(1)} class="sc-gsDKAQ hxODWG icon" >
+                        <Icon src={BsExclamationCircle}  size="15"  color="rgb(67, 179, 9)"  title="" />
+                    </button>
+                    {#if max_profit_tips}
                         <div class="tip">
                             <span class="tit">Max Profit:&nbsp;</span>
                             <div class="sc-Galmp erPQzq coin notranslate">
@@ -201,10 +209,10 @@ const handleRollSubmit = (async()=>{
                                 </div>
                             </div>
                         </div>
-                        {/if}
-                    </div>
+                    {/if}
                 </div>
-                <!-- <div class="label-amount">0 USD</div> -->
+            </div>
+            <!-- <div class="label-amount">0.00034783 USD</div> -->
             </div>
             <div class="input-control">
                 <input type="number" bind:value={bet_amount}>
@@ -224,9 +232,8 @@ const handleRollSubmit = (async()=>{
             </div>
         </div>
         <div class="sc-ezbkAF gWrsXy input sc-fvxzrP gOLODp" disabled="">
-            <div class="input-label">
-                Win Amount
-                <!-- <div class="label-amount">0 USD</div> -->
+            <div class="input-label">Win Amount
+                <!-- <div class="label-amount">0.00067516 USD</div> -->
             </div>
             <div class="input-control">
                 <input type="number" disabled bind:value={wining_amount}>
@@ -237,18 +244,18 @@ const handleRollSubmit = (async()=>{
                 {/if}
             </div>
         </div>
-        <button disabled={is_loading} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-            {#if is_loading}
-            <div class="button-inner">Loading....</div>
-            {:else}
-            <div class="button-inner">Roll Now</div>
-            {/if}
-        </button>
     </div>
 </div>
 
 <style>
-.input-control:focus-within {
-    border: 1px solid var(--primary-color);
+.game-control-panel {
+    padding: 0px 1.125rem;
 }
+.game-control-panel {
+    flex: 1 1 0%;
+}
+.lgTgT .bet-button {
+    margin: 1.25rem 0px;
+}
+
 </style>

@@ -30,6 +30,7 @@ const HandleAboutGame = ((e) => {
     }
 })
 
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">

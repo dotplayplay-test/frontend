@@ -76,6 +76,8 @@ function togglePlayback() {
   }
 }
 
+
+
 const handleChange = ((e)=>{
     playSound()
     range = e
@@ -668,4 +670,5 @@ const handleRollUnder = ()=>{
     user-select: none;
     cursor: pointer;
 }
+
 </style>
