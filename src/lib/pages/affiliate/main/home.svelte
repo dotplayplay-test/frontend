@@ -107,7 +107,7 @@ $:{
                         {#if is_loading}
                             <div>laoding...</div>
                         {:else}
-                            {#each $affiliate_info.friends_list as friends}
+                            {#each $affiliate_info.friends_list.slice(0, 3) as friends}
                             <div class="tr fc">
                                 <div class="td fc">
                                     <img class="avatar user-avatar" alt="" src={friends.profile_image}>

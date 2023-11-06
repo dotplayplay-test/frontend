@@ -11,6 +11,8 @@ const handleStatistics = (()=>{
     statisticsEl.set(true)
 })
 
+$: console.log($profileStore)
+
 </script>
 
 <div class="setting-wrap" style="opacity: 1; transform: none;">
@@ -149,9 +151,9 @@ const handleStatistics = (()=>{
                <p><span>Need {$profileStore.next_level_point} xp</span>vip {parseInt($profileStore.vip_level) + 1} </div>
            <div class="vip-bg">
                <div class="bg">
-                   <div class="status" style={`width: ${$profileStore.vip_progress}%; background: rgb(145, 150, 168);`}></div>
+                   <div class="status" style={`width: ${(parseFloat($profileStore.vip_progress)).toFixed(0)}%; background: rgb(145, 150, 168);`}></div>
                </div>
-               <div class="bg_status" style="color: rgb(145, 150, 168);">{$profileStore.vip_progress}%</div>
+               <div class="bg_status" style="color: rgb(145, 150, 168);">{(parseFloat($profileStore.vip_progress)).toFixed(0)}%</div>
            </div>
        </div>
        <div class="link-info">
