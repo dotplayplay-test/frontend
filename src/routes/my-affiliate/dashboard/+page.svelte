@@ -6,7 +6,7 @@ import { affiliate_info , affilliate_info } from "$lib/pages/affiliate/main/stor
             <div class="dashboard-top">
                 <div class="dashboard-box">
                     <div class="box-img img-unlocked"></div>
-                    <div class="box-number">{$affiliate_info.total_earn_me}</div>
+                    <div class="box-number">{(parseFloat($affiliate_info.total_earn_me)).toFixed(2)}</div>
                     <div class="box-word">Unlocked</div>
                 </div>
                 <div class="dashboard-line">
@@ -15,7 +15,7 @@ import { affiliate_info , affilliate_info } from "$lib/pages/affiliate/main/stor
                 </div>
                 <div class="dashboard-box">
                     <div class="box-img img-unlockedmore"></div>
-                    <div class="box-number">{$affiliate_info.total_usd_reward}</div>
+                    <div class="box-number">{(parseFloat($affiliate_info.total_usd_reward)).toFixed(4)}</div>
                     <div class="box-word">To be unlocked</div>
                 </div>
             </div>
@@ -27,7 +27,7 @@ import { affiliate_info , affilliate_info } from "$lib/pages/affiliate/main/stor
                 </div>
                 <div class="dashboard-box dashboard-item item-last">
                     <div class="box-img img-rewards"></div>
-                    <div class="box-number">{$affilliate_info.today_commission} USD</div>
+                    <div class="box-number">{(parseFloat($affilliate_info.today_commission)).toFixed(4)} USD</div>
                     <div class="box-word">Today’s Commission Rewards (Approx.)</div>
                 </div>
             </div>

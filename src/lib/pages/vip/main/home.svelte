@@ -14,6 +14,10 @@ const handleVIPCARDS = (()=>{
     is_cards = !is_cards
 })
 
+let unit_range = (212993000 - 0) / 100
+let range = (parseFloat($profileStore.total_wagered) - 0).toFixed(0)
+let progressPercent = (range / unit_range).toFixed(0)
+
 
 </script>
 
@@ -29,11 +33,18 @@ const handleVIPCARDS = (()=>{
    
 
     <button on:click={handleVIPCARDS} class="sc-kjOQFR jdoMCb class bage-0">
-        <div class="card-img-wrap">
-            <img class="card-img" src="https://static.nanogames.io/assets/Bronze.eae10e4e.png" alt="bronze.jpg">
-        </div>
+        {#if parseFloat($profileStore.vip_level) < 8}
+            <div class="card-img-wrap">
+                <img class="card-img" src="https://static.nanogames.io/assets/Bronze.eae10e4e.png" alt="bronze.jpg">
+            </div>
+            {:else if  parseFloat($profileStore.vip_level) > 8 && parseFloat($profileStore.vip_level) < 22}
+            <!-- <div class="card-img-wrap">
+                <img alt="vip-card" src="https://static.nanogames.io/assets/3.6df0fd1c.png">
+            </div> -->
+        {/if}
+
         <div class="card-badge">
-            <div class="card-badge-num ">0</div>
+            <div class="card-badge-num ">{$profileStore.vip_level && $profileStore.vip_level}</div>
             <img class="badge-img" src="https://static.nanogames.io/assets/badge1.624c0289.png" alt="badge1.png">
         </div>
     </button>
@@ -42,7 +53,7 @@ const handleVIPCARDS = (()=>{
             <div class="user-info">
                 <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/505090/s?t=1696674992199">
                 <div class="user-info-detail">
-                    <div class="user-name">{$profileStore.username}</div>
+                    <div class="user-name">{$profileStore.username && $profileStore.username}</div>
                     <div class="user-star">
                         <div class="sc-khQegj fPtvsS  levelnums_0">
                             <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
@@ -68,13 +79,13 @@ const handleVIPCARDS = (()=>{
                         <div class="sc-cTAIfT gGiuXV  sort-pr-bar">
                             <div class="pr-mark-wrap">
                                 <div class="pr-mark lock-num">
-                                    <div>V01</div>
+                                    <div>V{$profileStore.vip_level && parseFloat($profileStore.vip_level) + 1}</div>
                                 </div>
                                 <div class="pr-mark lock-num">
-                                    <div>V02</div>
+                                    <div>V{$profileStore.vip_level && parseFloat($profileStore.vip_level) + 2}</div>
                                 </div>
                                 <div class="pr-mark lock-num">
-                                    <div>V04</div>
+                                    <div>V{$profileStore.vip_level && parseFloat($profileStore.vip_level) + 3}</div>
                                 </div>
                                 <div class="pr-mark lock-num">
                                     <div>SV32</div>
@@ -99,13 +110,13 @@ const handleVIPCARDS = (()=>{
                                     <li class="tri-top " style="transform: translate(0px, 0px);"></li>
                                 </div>
                                 <div class="pr-bar">
-                                    <div class="pr-tip" style="left: 1%; opacity: 1; transform: translate(-27.2px, 0px);">
+                                    <div class="pr-tip" style={`left: ${progressPercent}%%; opacity: 1; transform: translate(-27.2px, 0px);`}>
                                         <div class="prompt-wrap">
-                                            <div class="pr-num">V0</div>
+                                            <div class="pr-num">V{$profileStore.vip_level && $profileStore.vip_level}</div>
                                         </div>
                                         <div class="tri-bot"></div>
                                     </div>
-                                    <div class="pr-progress" style="width: 1%;">
+                                    <div class="pr-progress" style={`width: ${progressPercent}%;`}>
                                         <div class="dot-wrap">
                                             <div class="dot-near">
                                                 <div class="dot-icon"></div>

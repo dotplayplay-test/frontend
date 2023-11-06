@@ -1,6 +1,7 @@
 <script>
 import { is_loading, affiliate_list } from "$lib/pages/affiliate/main/store/index";
 
+
 </script>
 
 <div class="sc-gsDKAQ eKuxOW">

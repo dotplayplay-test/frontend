@@ -11,8 +11,6 @@ const handleStatistics = (()=>{
     statisticsEl.set(true)
 })
 
-$: console.log($profileStore)
-
 </script>
 
 <div class="setting-wrap" style="opacity: 1; transform: none;">

@@ -31,6 +31,7 @@ const fetchFriendsInfo = (async()=>{
     .then((res)=>{
         is_loading = false
         affiliate_info.set(res.data)
+        console.log(res.data)
     })
     .catch((err)=>{
         is_loading = false
@@ -69,21 +70,21 @@ $:{
                     </div>
                     <div class="hover">
                         <button on:click={()=>handleOpenModal(1)} class="theme">USD Rewards Rules</button>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </div>
                     <div class="amount-wrap">
                         <div class="amount">{$affilliate_info.available_usd_reward}<span class="unit">USD</span></div>
                         <div class="desc">Newly Available USD Rewards</div></div>
                     <div class="tips">
                         <div class="tips_flex">
-                            <div>Received:&nbsp;<span class="theme">{$affiliate_info.total_earn_me}</span>
+                            <div>Received:&nbsp;<span class="theme">{(parseFloat($affiliate_info.total_earn_me)).toFixed(2)}</span>
                                 <span class="unit gapx"> USD</span>
                             </div>
                             <div class="question-box">
-                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                             </div>
                             <div>Locked:&nbsp;
-                                <span class="theme">{$affiliate_info.total_usd_reward}</span>
+                                <span class="theme">{(parseFloat($affiliate_info.total_usd_reward)).toFixed(4)}</span>
                                 <span class="unit"> USD</span>
                             </div>
                         </div>
@@ -130,7 +131,7 @@ $:{
                     </div>
                     <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
                         <span>View More</span>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </a>
                 </div>
             </div>
@@ -141,7 +142,7 @@ $:{
                         <span class="type theme">Commission Rewards</span></div>
                     <div class="hover">
                         <button on:click={()=>handleOpenModal(0)} class="theme">Commission Reward Rules</button>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </div>
                     <div class="amount-wrap">
                         <div class="amount">{$affilliate_info.commission_reward}<span class="unit">USD</span></div>
@@ -150,7 +151,7 @@ $:{
                     <div class="total-commission">
                         <div class="commission-desc">
                             <span class="theme">Commission</span> You've Received in Total:</div>
-                        <div class="commission-amount">{$affiliate_info.total_commission_reward}<span class="unit">USD</span></div>
+                        <div class="commission-amount">{(parseFloat($affiliate_info.total_commission_reward)).toFixed(5)}<span class="unit">USD</span></div>
                     </div>
                     <a class="withdraw" href="//mycasino.nanogames.io/mycasino/commissions">Withdraw</a>
                 </div>
@@ -162,7 +163,7 @@ $:{
                     <div class="list-content"></div>
                     <a class="list-footer" href="//mycasino.nanogames.io/mycasino/commissions">
                         <span>View More</span>
-                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
+                        <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </a>
                 </div>
             </div>
