@@ -1,13 +1,15 @@
 import { handleHasbet,handleHasbet_amount , winning} from "./store"
 import {default_Wallet} from "../store/coins"
 import {ServerURl} from "$lib/backendUrl"
+import { browser } from '$app/environment';
 const URL = ServerURl()
 
 export const useCrashBet = () => {
     let error = ''
     let isLoading = false
     let result = ''
-    const user = JSON.parse(localStorage.getItem('user'))
+
+    const user = browser && JSON.parse(localStorage.getItem('user'))
     const crashBet = async (data) => {
       isLoading = true
       error = null

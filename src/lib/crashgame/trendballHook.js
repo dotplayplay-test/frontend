@@ -1,13 +1,14 @@
 import { redTrendballEl} from "./store"
 import {default_Wallet} from "../store/coins"
 import {ServerURl} from "$lib/backendUrl"
+import { browser } from '$app/environment';
 const URL = ServerURl()
 
 export const useRedTrendball = () => {
     let error = ''
     let result = ""
     let isLoading = false
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = browser && JSON.parse(localStorage.getItem('user'))
     const redTrendball = async (data) => {
       isLoading = true
       error = null
