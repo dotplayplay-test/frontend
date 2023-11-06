@@ -97,6 +97,7 @@ export const handleSignIn = (async (email, password, reff)=>{
         localStorage.removeItem("user_bet_amount");
         handleisLoggin.set(false)
         profileStore.set({})
+        window.location.href = ("")
       }).catch((error) => {
        console.log(error)
       });

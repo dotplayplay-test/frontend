@@ -47,26 +47,28 @@ $:{
 
 
 $:{
-    onMount(async()=>{
-        data.token &&  handleAuthToken.set(data.token)
-    })
+    data.token &&  handleAuthToken.set(data.token)
+    if(data.token){
+        handleisLoading.set(false)
+        handleisLoggin.set(true)
+    }
 }
 
-$:{
-    onMount(() => {
-    const auth = getAuth(app);
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            handleisLoggin.set(true)
-            handleisLoading.set(false)
-        } else {
-            handleisLoggin.set(false)
-            handleisLoading.set(false)
-        }
-    });
-})
-}
+// $:{
+//     onMount(() => {
+//     const auth = getAuth(app);
+//     onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//             const uid = user.uid;
+//             handleisLoggin.set(true)
+//             handleisLoading.set(false)
+//         } else {
+//             handleisLoggin.set(false)
+//             handleisLoading.set(false)
+//         }
+//     });
+// })
+// }
 
 let ens = browser && window.innerWidth
 
@@ -161,28 +163,14 @@ const handleMenu = () => {
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
 
-        {#if $handleisLoading}
-        <!-- Loading animation -->
-        <div class="center">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-        </div>
-        {:else}
+       
         <main class="sc-lhMiDA ePAxUv">
             <slot></slot>
         </main>
         <footer>
             <Footer />
         </footer>
-        {/if}
+   
 
     </div>
     {#if (isChatRoom)}

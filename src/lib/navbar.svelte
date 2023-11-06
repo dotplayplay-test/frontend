@@ -82,7 +82,10 @@ $:{
   uyi=  browser && window.navigator.onLine
 }
 
-
+let waitaibit = false
+setTimeout(()=>{
+    waitaibit = true
+},2000)
 
 </script>
 
@@ -123,26 +126,27 @@ $:{
                     {/if}
                 </div>
             </div>
-            {#if !$handleisLoading}
-            {#if $handleisLoggin}
-                <MainNavbar on:handleChatRoom={handleChat} />
-            {:else}
-            <div class="login-in">
-                <button  on:click={()=> goto("/login")} >
-                    <p >Sign in</p>
-                </button>
-                <button on:click={()=> goto("/register")}  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
-                    <div class="button-inner">Sign up</div>
-                </button>
-                <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
-                    <div class="chat-btn ">
-                        <Icon src={BsDroplet}  size="18"   color="#fff" className="custom-icon" title="arror" />
-                        <div class="sc-fotOHu gGSOuF badge ">26</div>
-                    </div>
-                </button>
-            </div>
+        {#if waitaibit}
+        {#if $handleisLoggin}
+            <MainNavbar on:handleChatRoom={handleChat} />
+        {:else}
+        <div class="login-in">
+            <button  on:click={()=> goto("/login")} >
+                <p >Sign in</p>
+            </button>
+            <button on:click={()=> goto("/register")}  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                <div class="button-inner">Sign up</div>
+            </button>
+            <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
+                <div class="chat-btn ">
+                    <Icon src={BsDroplet}  size="18"   color="#fff" className="custom-icon" title="arror" />
+                    <div class="sc-fotOHu gGSOuF badge ">26</div>
+                </div>
+            </button>
+        </div>
+        {/if}
             {/if}
-            {/if}
+        
         </div>
     </div>
 </div>
