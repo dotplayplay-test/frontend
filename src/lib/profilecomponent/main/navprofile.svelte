@@ -11,6 +11,7 @@ const handleStatistics = (()=>{
     statisticsEl.set(true)
 })
 
+
 </script>
 
 <div class="setting-wrap" style="opacity: 1; transform: none;">

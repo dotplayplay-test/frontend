@@ -122,7 +122,7 @@ const handleDeposit = (()=>{
 {/if}
 
 
-{#if !$handleisLoading && $default_Wallet.coin_image != undefined}
+{#if  $default_Wallet.coin_image != undefined}
 <div class="sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
         <div class="sc-fmciRz LQlWw">
@@ -130,7 +130,7 @@ const handleDeposit = (()=>{
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
                     <span class="currency">{$handleisLoggin && $default_Wallet.coin_name}</span>
-                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
+                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon"  />
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
@@ -144,7 +144,7 @@ const handleDeposit = (()=>{
             <button on:click={()=> handleDeposit()} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span class="wallet-icon">
-                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />
+                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"   />
                     </span>
                     <span style="padding-left: 10px;">Wallet</span>
                 </div>
@@ -167,7 +167,7 @@ const handleDeposit = (()=>{
                 </div>
             {/if}
             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class ="svg">
-                <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
                 {#if userProfile}
                     <Navprofile />
                 {/if}
@@ -175,16 +175,16 @@ const handleDeposit = (()=>{
         </div>
     </div>
     <button on:click={()=> goto("/chat")} class="sc-dcgwPl bbYXSv private-chat">
-        <span class="nav-message"><Icon src={BsChatLeftDotsFill}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+        <span class="nav-message"><Icon src={BsChatLeftDotsFill}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
     </button>
     <button  id="notice" class="sc-ksHpcM kultDa notice">
         <div class="notice-btn ">
-            <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+            <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
         </div>
     </button>
     <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn ">
-             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon" title="arror" />
+             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon"  />
             <div class="sc-fotOHu gGSOuF badge ">6</div>
         </div>
     </button>
@@ -198,7 +198,7 @@ const handleDeposit = (()=>{
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                     <span class="currency">PPF</span>
-                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon" title="arror" />
+                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" className="custom-icon"  />
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
@@ -212,7 +212,7 @@ const handleDeposit = (()=>{
             <button on:click={()=> goto("/wallet/deposit")} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span class="wallet-icon">
-                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"  title="arror" />
+                        <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"   />
                     </span>
                     <span style="padding-left: 10px;">Wallet</span>
                 </div>
@@ -222,8 +222,8 @@ const handleDeposit = (()=>{
     <div class="sc-gnnDb fWkueO">
         <div class="user-wrap">
             {#if $profileStore}
-            <a href={`/user/profile`}>
-                <div class="bhYvJJ"></div>
+            <a href={`/`}>
+                <img class="avatar" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828435/dpp_logo_sd2z9d.png">
             </a>
             {:else}
                 <div class="center">
@@ -235,7 +235,7 @@ const handleDeposit = (()=>{
                 </div>
             {/if}
             <button on:mouseenter={handleUserProfile} on:mouseleave={handleUserProfile} class="svg">
-                <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+                <span class="na-menu"><Icon src={CgMenuCheese}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
                 {#if userProfile}
                     <Navprofile />
                 {/if}
@@ -243,16 +243,16 @@ const handleDeposit = (()=>{
         </div>
     </div>
     <button on:click={()=> goto("/chat")} class="sc-dcgwPl bbYXSv private-chat">
-        <span class="nav-message"><Icon src={BsChatLeftDotsFill}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+        <span class="nav-message"><Icon src={BsChatLeftDotsFill}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
     </button>
     <button  id="notice" class="sc-ksHpcM kultDa notice">
         <div class="notice-btn ">
-            <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /></span>
+            <span class="na-notification"><Icon src={IoNotifications}  size="18"   color="rgba(153, 164, 176, 0.6)" className="custom-icon"  /></span>
         </div>
     </button>
     <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn ">
-             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon" title="arror" />
+             <Icon src={BsDroplet}  size="28"   color="#fff" className="custom-icon"  />
             <div class="sc-fotOHu gGSOuF badge ">6</div>
         </div>
     </button>
@@ -263,6 +263,7 @@ const handleDeposit = (()=>{
 
 
 <div class="mobile">
+    {#if  $default_Wallet.coin_image != undefined}
     <div class="sc-gjNHFA jlttqa wallet-enter">
         <div class="sc-fmciRz LQlWw">
             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
@@ -305,15 +306,54 @@ const handleDeposit = (()=>{
                 </div>
         </div>
     </div>
+    {:else}
+    <div class="sc-gjNHFA jlttqa wallet-enter">
+        <div class="sc-fmciRz LQlWw">
+            <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
+                <div class="sc-eXlEPa boxpOO">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                    <span class="currency">PPF</span>
+                    <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(171, 182, 194)" />
+                </div>
+                <div class="sc-Galmp erPQzq coin notranslate balance">
+                    <div class="amount">
+                        <span class="amount-str">0.0000<span class="suffix">00</span></span>
+                    </div>
+                </div>
+            </button>
+            {#if isCoinDrop}
+            <Coins on:coinDefault={handleCoinSelect} />
+            {/if}
+            <button class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal sc-iqVWFU fGPfpD">
+                <div class="button-inner">
+                    <span style="margin-right: 4px;">
+                        <Icon src={BiSolidWallet}  size="13"  color="rgb(255, 255, 255)"  />
+                    </span>
+                    <span>Wallet</span>
+                </div>
+            </button>
+
+            <div class="sc-gnnDb fhlUmF">
+                <div class="user-wrap">
+                    <a  href={`/`}>
+                        <img class="avatar " alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828435/dpp_logo_sd2z9d.png"></a>
+                        <button on:click={handleUserProfile} class="svg">
+                            <span class="na-menu">
+                                <Icon src={CgMenuCheese}  size="18" color="rgba(153, 164, 176, 0.6)" />
+                            </span>
+                        </button>
+                        {#if userProfile}
+                            <Navprofile />
+                        {/if}
+                    </div>
+                </div>
+        </div>
+    </div>
+    {/if}
+    
 </div>
 
 <style>
-.bhYvJJ{
-    background: rgba(0, 0, 0, 0.144);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
 
 @media only screen and (max-width: 650px){
     .LQlWw {

@@ -100,14 +100,14 @@ setTimeout(()=>{
     {#if  $handleNestedRoute === "/login/info" || browser && window.location.pathname === "/login/info"  }
         <Info />
     {/if} -->
-
+<!-- 
 {#if !uyi}
     <div class="reconnecting">
         <div class="riuwx">
             <p>Connection lost, Reconnecting...</p>
         </div>
     </div>
-{/if}
+{/if} -->
 
 
 
@@ -241,7 +241,7 @@ setTimeout(()=>{
 }
 }
 
-.reconnecting{
+/* .reconnecting{
     position: fixed;
     right: 0;
     display: flex;
@@ -261,7 +261,7 @@ setTimeout(()=>{
     text-align: center;
     padding: 10px;
     color: aliceblue;
-}
+} */
 
 /* .elBGFt.big-enter {
     -webkit-box-pack: end;

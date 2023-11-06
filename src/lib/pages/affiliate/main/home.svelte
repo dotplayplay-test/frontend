@@ -90,7 +90,7 @@ $:{
                         </div>
                         <div>Your current friends staying active will unlock you more USD Rewards</div>
                     </div>
-                    <a class="withdraw" href="//mycasino.nanogames.io/mycasino/rewards">Withdraw</a>
+                    <a class="withdraw" href="/my-affiliate/rewards">Withdraw</a>
                 </div>
                 <div class="list-group">
                     <div class="list-header">
@@ -129,7 +129,7 @@ $:{
                         {/if}
                
                     </div>
-                    <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
+                    <a class="list-footer" href="/my-affiliate/friends">
                         <span>View More</span>
                         <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </a>
@@ -153,7 +153,7 @@ $:{
                             <span class="theme">Commission</span> You've Received in Total:</div>
                         <div class="commission-amount">{(parseFloat($affiliate_info.total_commission_reward)).toFixed(5)}<span class="unit">USD</span></div>
                     </div>
-                    <a class="withdraw" href="//mycasino.nanogames.io/mycasino/commissions">Withdraw</a>
+                    <a class="withdraw" href="/my-affiliate/commission">Withdraw</a>
                 </div>
                 <div class="nothing list-group">
                     <div class="nothing-tip">No info yet <br> Invite friends to join you now!</div>
@@ -161,7 +161,7 @@ $:{
                         <div>Cryptocurrency Distribution Info</div>
                     </div>
                     <div class="list-content"></div>
-                    <a class="list-footer" href="//mycasino.nanogames.io/mycasino/commissions">
+                    <a class="list-footer" href="/my-affiliate/friends">
                         <span>View More</span>
                         <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                     </a>
@@ -299,7 +299,7 @@ $:{
     background-color: rgb(49, 52, 60);
     color: rgb(93, 160, 0);
     font-size: 16px;
-    margin: 30px auto 0px;
+    margin: 20px auto 0px;
 }
 .funZYP .list-group {
     height: 346px;
@@ -527,17 +527,7 @@ $:{
 .funZYP .commission-amount .unit {
     margin-left: 5px;
 }
-.funZYP .withdraw {
-    display: block;
-    width: 184px;
-    height: 44px;
-    line-height: 44px;
-    border-radius: 22px;
-    background-color: rgb(49, 52, 60);
-    color: rgb(93, 160, 0);
-    font-size: 16px;
-    margin: 30px auto 0px;
-}
+
 .funZYP .list-group.nothing {
     background-image: url(https://static.nanogames.io/assets/empty.acd1f5fe.png);
     position: relative;
