@@ -10,6 +10,7 @@ import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
+import { browser } from '$app/environment';
 const URL = ServerURl()
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"
@@ -125,6 +126,7 @@ $:{
 }
 
 const handleRollSubmit = (async()=>{
+    if(browser && window.navigator.onLine){
     if($handleisLoggin){
         if(parseFloat($default_Wallet.balance) <= 0){
             error_msg.set("insufficient balance")
@@ -252,6 +254,14 @@ const handleRollSubmit = (async()=>{
             error_msg.set("")
         },4000)
     }
+}else{
+    error_msg.set('Error in network connection')
+    is_Looping = false
+    clearInterval(yu)
+    setTimeout(()=>{
+        error_msg.set('')
+     },4000)
+}
 })
 
 

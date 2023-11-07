@@ -77,21 +77,21 @@ const handlePPFwallet = async () => {
         ppfWallet.set(json[0]) 
     }
 };
-    const handleUSDTwallet = async () => {
-        const response = await fetch(
-            `${URL}/api/wallet/usdt-wallet`,{
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${id}`
-            },
-            }
-        );
-    const json = await response.json();
-        if (response.ok) {
-            usdt_Wallet.set(json[0]) 
+const handleUSDTwallet = async () => {
+    const response = await fetch(
+        `${URL}/api/wallet/usdt-wallet`,{
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${id}`
+        },
         }
-    };
+    );
+const json = await response.json();
+    if (response.ok) {
+        usdt_Wallet.set(json[0]) 
+    }
+};
 
     return { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet, handlePPDwallet }
 };

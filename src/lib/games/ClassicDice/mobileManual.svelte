@@ -13,6 +13,7 @@ import {ServerURl } from "$lib/backendUrl"
 import { onMount  } from "svelte";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 const URL = ServerURl()
+import { browser } from '$app/environment';
 import {  soundHandler } from "../../games/ClassicDice/store/index"
 import axios from "axios";
 import cr from "./audio/click.wav"
@@ -70,6 +71,7 @@ $:{
 
 let is_loading = false
 const handleRollSubmit = (async()=>{
+    if(browser && window.navigator.onLine){
    $soundHandler && playSound(1)
    is_loading = true
     if($handleisLoggin){
@@ -170,6 +172,14 @@ const handleRollSubmit = (async()=>{
             error_msg.set('')
         },4000)
     }
+}
+else{
+    error_msg.set('Error in network connection')
+        is_loading = false
+        setTimeout(()=>{
+            error_msg.set('')
+    },4000)
+}
 })
 
 

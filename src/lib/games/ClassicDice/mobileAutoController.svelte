@@ -1,4 +1,5 @@
 <script>
+import { browser } from '$app/environment';
 import { goto } from "$app/navigation";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
@@ -19,6 +20,7 @@ let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
+
 let uiocd = 4
 let wining_amount = '' ;
 if($default_Wallet.coin_name === "USDT"){
@@ -125,7 +127,8 @@ $:{
 }
 
 const handleRollSubmit = (async()=>{
-    if($handleisLoggin){
+    if(browser && window.navigator.onLine){
+        if($handleisLoggin){
         if(parseFloat(uiocd) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
             is_Looping = false
@@ -244,6 +247,14 @@ const handleRollSubmit = (async()=>{
             error_msg.set("")
         },4000)
     }
+    }else{
+        error_msg.set('Error in network connection')
+            is_Looping = false
+            setTimeout(()=>{
+                error_msg.set('')
+        },4000)
+    }
+
 })
 
 

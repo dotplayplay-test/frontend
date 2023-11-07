@@ -61,12 +61,11 @@ const handleDefaultWallet = (async()=>{
     }
 })
 
-onMount(()=>{
-    setTimeout(()=>{
-        $handleAuthToken && handleProfile()
-        $handleAuthToken && handleDefaultWallet()
-    },50)
-})
+$:{
+    $handleAuthToken && handleProfile()
+    $handleAuthToken && handleDefaultWallet()
+}
+
 
 const handleDailyPPFbonus = (async()=>{
     await axios.get(`${URL}/api/profile/ppf-daily-bonus`,{
