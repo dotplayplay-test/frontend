@@ -48,18 +48,17 @@ $:{
 
 $:{
     data.token &&  handleAuthToken.set(data.token)
-    if(data.token){
+    if($handleAuthToken){
         handleisLoading.set(false)
         handleisLoggin.set(true)
-    }
-}
-
-$:{
-    if($profileStore.email){
-        handleisLoading.set(false)
-        handleisLoggin.set(true)
+        if($profileStore.email){
+            handleisLoading.set(false)
+            handleisLoggin.set(true)
+        }else{
+            handleisLoading.set(true)
+        }
     }else{
-        handleisLoading.set(true)
+        handleisLoading.set(false)
     }
 }
 
