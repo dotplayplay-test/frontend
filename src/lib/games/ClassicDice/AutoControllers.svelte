@@ -126,6 +126,14 @@ $:{
 
 const handleRollSubmit = (async()=>{
     if($handleisLoggin){
+        if(parseFloat($default_Wallet.balance) <= 0){
+            error_msg.set("insufficient balance")
+            is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set("")
+            },4000)
+        }
         if(parseFloat(uiocd) > parseFloat($default_Wallet.balance)){
             error_msg.set("insufficient balance")
             is_Looping = false

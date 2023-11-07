@@ -102,20 +102,8 @@ const handleSelectCoin = ((e) => {
                     </div>
                 </button>
             {:else}
-            <div class="center">
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
+                <div style="text-align: center; padding:20px">Loading...</div>
             {/if}
-       
             {/each}
         </div>
     </div>

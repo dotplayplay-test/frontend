@@ -54,6 +54,15 @@ $:{
     }
 }
 
+$:{
+    if($profileStore.email){
+        handleisLoading.set(false)
+        handleisLoggin.set(true)
+    }else{
+        handleisLoading.set(true)
+    }
+}
+
 // $:{
 //     onMount(() => {
 //     const auth = getAuth(app);
@@ -164,12 +173,27 @@ const handleMenu = () => {
         </header>
 
        
-        <main class="sc-lhMiDA ePAxUv">
-            <slot></slot>
-        </main>
-        <footer>
-            <Footer />
-        </footer>
+        {#if $handleisLoading}
+        <div class="center">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        {:else}
+            <main class="sc-lhMiDA ePAxUv">
+                <slot></slot>
+            </main>
+            <footer>
+                <Footer />
+            </footer>
+        {/if}
+
    
 
     </div>

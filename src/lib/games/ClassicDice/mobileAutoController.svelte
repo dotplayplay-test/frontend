@@ -393,9 +393,9 @@ const handleRollSubmit = (async()=>{
 .cYiOHZ.style-mobile {
     flex-direction: column;
 }
-.cYiOHZ .game-control-panel {
+/* .cYiOHZ .game-control-panel {
     flex: 1 1 0%;
-}
+} */
  .game-control-panel {
     padding: 0px 1.125rem;
 }
@@ -517,9 +517,9 @@ const handleRollSubmit = (async()=>{
 .cBmlor.button-big {
     height: 3.625rem;
 }
-.cYiOHZ.style-mobile .game-control-panel {
+/* .cYiOHZ.style-mobile .game-control-panel {
     padding: 0px 1.125rem;
-}
+} */
 .hzTJOu {
     margin-top: 1rem;
 }
@@ -533,9 +533,9 @@ const handleRollSubmit = (async()=>{
     margin: 0px 1.125rem 0.375rem;
     color: rgba(153, 164, 176, 0.6);
 }
-.glMLZr .input-control {
+/* .glMLZr .input-control {
     border-color: transparent;
-}
+} */
 .input-control {
     background-color: rgba(49, 52, 60, 0.4);
 }
@@ -669,12 +669,12 @@ const handleRollSubmit = (async()=>{
     -webkit-box-pack: center;
     justify-content: center;
 }
-.glMLZr .input-control {
+/* .glMLZr .input-control {
     border-color: transparent;
 }
 .cYiOHZ .input-control {
     background-color: rgba(49, 52, 60, 0.4);
-}
+} */
 .kNGYYA .tip-msg {
     flex: 1 1 0%;
 }
