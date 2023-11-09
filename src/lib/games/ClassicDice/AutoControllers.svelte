@@ -11,7 +11,11 @@ import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 import { browser } from '$app/environment';
+import {dice_troo} from "$lib/games/ClassicDice/store/index"
 const URL = ServerURl()
+
+import { handleCountdown } from "../ClassicDice/socket/index";
+const { handleDicebet } = handleCountdown()
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"
 import axios from "axios"
@@ -37,6 +41,10 @@ $:{
 // $:{
 //     uiocd = $handlediceAutoInput
 // }
+
+export const handleTransmit = (()=>{
+    
+})
 
 let bet_number = 0
 let on_win = false
@@ -78,6 +86,7 @@ let winning_track = 0
 let lose_track = 0
 
 let bet_num_count = 0
+let load = false
 const handleAutoStart = (()=>{
     if(!is_Looping){
         is_Looping = true
@@ -125,6 +134,7 @@ $:{
     history  = [...$dice_history]
 }
 
+let non = 0
 const handleRollSubmit = (async()=>{
     if(browser && window.navigator.onLine){
     if($handleisLoggin){
@@ -176,73 +186,81 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
-
         else{
             let data = {
+                user_id: $profileStore.user_id, 
                 server_seed: $DiceEncription.server_seed,
                 client_seed: $DiceEncription.client_seed,
                 hash_seed: $DiceEncription.hash_seed,
-                nonce:$DiceEncription.nonce,
+                nonce:$DiceEncription.nonce + non,
                 username: $profileStore.username,
+                hidden_from_public: false,
                 profile_img: $profileStore.profile_image,
                 bet_amount:  parseFloat(uiocd),
-                bet_token_img: $default_Wallet.coin_image, 
-                bet_token_name: $default_Wallet.coin_name ,
+                prev_bal: parseFloat($default_Wallet.balance),
+                token_img: $default_Wallet.coin_image, 
+                token: $default_Wallet.coin_name ,
                 chance: parseFloat($betPosition).toFixed(2),
                 payout: parseFloat($payout),
                 time: new Date(),
                 wining_amount: parseFloat(wining_amount) -  parseFloat(uiocd)
             }
-            await axios.post(`${URL}/api/user/dice-game/bet`, {
-                data
-            },{
-                headers:{
-                    Authorization: `Bearer ${$handleAuthToken}`
-                }
-            }).then(res =>{
-                let r = {
-                    client_seed: res.data.client_seed,
-                    server_seed:res.data.client_seed,
-                    hash_seed:res.data.hash,
-                    nonce:res.data.nonce + 1,
-                }
-                dice_history.set(history)
-                DiceEncription.set(r)
-                HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
-                isbetLoadingBtn.set(false)
-                if(parseFloat($betPosition) > parseFloat($HandleDicePoint)){
-                    let wallet = {
-                        coin_name: $default_Wallet.coin_name ,
-                        coin_image: $default_Wallet.coin_image,
-                        balance:  (parseFloat(data.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
-                    }
-                    default_Wallet.set(wallet)
-                    $soundHandler &&  playSound(2)
-                    HandleHas_won.set(true)
-                    if(onWinEl){
-                        let to = ((onWinEl/100) * parseFloat(uiocd)/1)
-                        let from = (to + parseFloat(uiocd)).toFixed(4)
-                        handlediceAutoInput.set(from)
-                    }
-                    winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
-                    history.push({ ...data,has_won:true, cashout:res.data.point, profit:parseFloat(data.wining_amount), token:$default_Wallet.coin_name})
-                }else{
-                    let wallet = {
-                        coin_name: $default_Wallet.coin_name ,
-                        coin_image: $default_Wallet.coin_image,
-                        balance: (parseFloat($default_Wallet.balance) - parseFloat(data.bet_amount)).toFixed(4)
-                    }
-                    default_Wallet.set(wallet)
-                    HandleHas_won.set(false)
-                    if(onLoseEl){
-                        let to = ((onLoseEl/100) * parseFloat(uiocd)/1)
-                        let from = (to + parseFloat(uiocd)).toFixed(4)
-                        handlediceAutoInput.set(from)
-                    }
-                    lose_track += parseFloat(uiocd)
-                    history.push({...data,has_won:false, cashout:res.data.point, profit:0, token:$default_Wallet.coin_name})
-                }
-            })
+            setTimeout(()=>{
+            handleDicebet(data)
+                non += 1
+            },1000)
+
+
+    //         await axios.post(`${URL}/api/user/dice-game/bet`, {
+    //             data
+    //         },{
+    //             headers:{
+    //                 Authorization: `Bearer ${$handleAuthToken}`
+    //             }
+    //         }).then(res =>{
+    //             let r = {
+    //                 client_seed: res.data.client_seed,
+    //                 server_seed:res.data.client_seed,
+    //                 hash_seed:res.data.hash,
+    //                 nonce:res.data.nonce + 1,
+    //             }
+    //             dice_history.set(history)
+    //             DiceEncription.set(r)
+    //             HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
+    //             isbetLoadingBtn.set(false)
+    //             if(parseFloat($betPosition) > parseFloat($HandleDicePoint)){
+    //                 let wallet = {
+    //                     coin_name: $default_Wallet.coin_name ,
+    //                     coin_image: $default_Wallet.coin_image,
+    //                     balance:  (parseFloat(data.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
+    //                 }
+    //                 default_Wallet.set(wallet)
+    //                 $soundHandler &&  playSound(2)
+    //                 HandleHas_won.set(true)
+    //                 if(onWinEl){
+    //                     let to = ((onWinEl/100) * parseFloat(uiocd)/1)
+    //                     let from = (to + parseFloat(uiocd)).toFixed(4)
+    //                     handlediceAutoInput.set(from)
+    //                 }
+    //                 winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
+    //                 history.push({ ...data,has_won:true, cashout:res.data.point, profit:parseFloat(data.wining_amount), token:$default_Wallet.coin_name})
+    //             }else{
+    //                 let wallet = {
+    //                     coin_name: $default_Wallet.coin_name ,
+    //                     coin_image: $default_Wallet.coin_image,
+    //                     balance: (parseFloat($default_Wallet.balance) - parseFloat(data.bet_amount)).toFixed(4)
+    //                 }
+    //                 default_Wallet.set(wallet)
+    //                 HandleHas_won.set(false)
+    //                 if(onLoseEl){
+    //                     let to = ((onLoseEl/100) * parseFloat(uiocd)/1)
+    //                     let from = (to + parseFloat(uiocd)).toFixed(4)
+    //                     handlediceAutoInput.set(from)
+    //                 }
+    //                 lose_track += parseFloat(uiocd)
+    //                 history.push({...data,has_won:false, cashout:res.data.point, profit:0, token:$default_Wallet.coin_name})
+    //             }
+    //         })
         }
      onWin.set(onWinEl)
     }else{

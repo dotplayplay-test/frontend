@@ -10,9 +10,9 @@ import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_al
       h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
       h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
     } from "./store"
-import { dicegameplays } from "../games/ClassicDice/store/index"
+
 import { week_cashback , month_cashback} from "../store/cashbacks";
-import { chats } from "$lib/chat-room/store/index"
+
 export const handleCountdown = (()=>{
     socket.on("countdown", data=>{
         crashLoad.set(data.toFixed(2))
@@ -262,13 +262,4 @@ export const handleCountdown = (()=>{
         month_cashback.set(data)
     })
 
-    socket.on("new-messages", data=>{
-        chats.set(data)
-    })
-
-    const handleChattingMessages = ((data)=>{
-        socket.emit("message", data)
-    })
-
-    return { handleChattingMessages }
 })

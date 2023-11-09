@@ -27,15 +27,20 @@ export const useRegister = () => {
         console.log(error)
       }
       if (response.ok) {
+        let hisex = json.wallet
+        hisex.forEach(element => {
+          if(element.is_active){
+            default_Wallet.set(element)
+          }
+       });
         localStorage.setItem("user", JSON.stringify(json.Token));
         handleAuthToken.set(json.Token)
         profileStore.set(json.result)
-        window.location.href = ("/info")
-        // goto("/info")
-        default_Wallet.set(json.default_wallet)
+        // window.location.href = ("/info")
+        goto("/info")
+        // default_Wallet.set(json.default_wallet)
         isLoading = false
       }
-      
     };
     return { register };
 }

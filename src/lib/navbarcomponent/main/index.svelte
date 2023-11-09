@@ -12,16 +12,16 @@ import axios from "axios";
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
 import { handleAuthToken } from "$lib/store/routes";
-import { profileStore, handleisLoading, handleisLoggin } from "$lib/store/profile";
+import { profileStore, handleisLoading, handleisLoggin, app_Loading } from "$lib/store/profile";
 import { onMount } from "svelte";
 import {  goto } from "$app/navigation";
-import { default_Wallet } from "$lib/store/coins";
+import { default_Wallet, coin_list } from "$lib/store/coins";
 import { ServerURl } from "$lib/backendUrl"
 import Layout from '../../deposit/layout.svelte';
 const URL = ServerURl()
 
-
 const handleProfile = (async()=>{
+    app_Loading.set(true)
     try{
         await axios.get(`${URL}/api/profile`,{
         headers: {
@@ -30,7 +30,15 @@ const handleProfile = (async()=>{
         }
     })
     .then((res)=>{
-        profileStore.set(res.data[0])
+        app_Loading.set(false)
+        profileStore.set(res.data.users[0])
+        let wallet = res.data.wallet
+        coin_list.set(wallet)
+        wallet.forEach(element => {
+          if(element.is_active){
+            default_Wallet.set(element)
+          }
+       });
     })
     .catch((err)=>{
          console.log(err)
@@ -41,30 +49,10 @@ const handleProfile = (async()=>{
     }
 })
 
-const handleDefaultWallet = (async()=>{
-    try{
-     await axios.get(`${URL}/api/wallet/default-wallets`,{
-        headers: {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${$handleAuthToken}`
-        },
-    })
-    .then((res)=>{
-        default_Wallet.set(res.data[0])
-    })
-    .catch((err)=>{
-            console.log(err)
-    })
-    }
-    catch(err){
-        console.log(err)
-    }
-})
 
-$:{
-    $handleAuthToken && handleProfile()
-    $handleAuthToken && handleDefaultWallet()
-}
+onMount(()=>{
+    $handleAuthToken && $profileStore != {} && handleProfile()
+})
 
 
 const handleDailyPPFbonus = (async()=>{
@@ -78,18 +66,14 @@ const handleDailyPPFbonus = (async()=>{
 
 onMount(async()=>{
     setTimeout(()=>{
- $handleAuthToken &&   handleDailyPPFbonus()
+        $handleAuthToken &&  handleDailyPPFbonus()
     },3000)
 })
 
 
 let isCoinDrop = false
 const handleCoinsDrop = ((e) => {
-    if (isCoinDrop) {
-        isCoinDrop = false
-    } else {
-        isCoinDrop = true
-    }
+    isCoinDrop =! isCoinDrop
 })
 
 
@@ -121,11 +105,12 @@ const handleDeposit = (()=>{
 {/if}
 
 
+
 {#if  $default_Wallet.coin_image != undefined}
 <div class="sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
         <div class="sc-fmciRz LQlWw">
-            <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
+            <button on:click={()=> isCoinDrop =! isCoinDrop} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
                     <span class="currency">{$handleisLoggin && $default_Wallet.coin_name}</span>
@@ -208,7 +193,7 @@ const handleDeposit = (()=>{
             {#if isCoinDrop}
                 <Coins on:coinDefault={handleCoinSelect} />
             {/if}
-            <button on:click={()=> goto("/wallet/deposit")} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
+            <button on:click={()=> handleDeposit()} class="sc-iqseJM sc-bqiRlB eWZHfu button button-normal sc-iqVWFU fGPfpD">
                 <div class="button-inner">
                     <span class="wallet-icon">
                         <Icon src={BiSolidWallet}  size="18"  color="rgb(255, 255, 255)"   />
@@ -409,5 +394,6 @@ const handleDeposit = (()=>{
     border-radius: 30px;
 }
 }
+
 
 </style>

@@ -5,28 +5,28 @@ import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 
 export  const UserProfileEl = () => {
-    first_load.set(true)
-    let error = false
-    const id = browser && JSON.parse(localStorage.getItem('user'))
+first_load.set(true)
+let error = false
+const id = browser && JSON.parse(localStorage.getItem('user'))
 
 const handleDefaultwallet = async () => {
-    const response = await fetch(
-        `${URL}/api/wallet/default-wallets`,{
-            method: "GET",
-            headers: {
-            "Content-type": "application/json",
-            "Authorization": `Bearer ${id}`
-            },
-        }
-        );
-        const json = await response.json();
+    // const response = await fetch(
+    //     `${URL}/api/wallet/default-wallets`,{
+    //         method: "GET",
+    //         headers: {
+    //         "Content-type": "application/json",
+    //         "Authorization": `Bearer ${id}`
+    //         },
+    //     }
+    //     );
+    //     const json = await response.json();
 
-        if(!response.ok){
-        (json)
-        }
-        if (response.ok) {
-        default_Wallet.set(json[0]) 
-        }
+    //     if(!response.ok){
+    //     (json)
+    //     }
+    //     if (response.ok) {
+    //     default_Wallet.set(json[0]) 
+    //     }
     };
 
 

@@ -3,11 +3,17 @@
 export let data;
 import { routes } from "$lib/store/routes"
 import { handleAuthToken } from "$lib/store/routes"
+import { browser } from '$app/environment';
 $: routes.set(data)
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import {handleCountdown} from "$lib/crashgame/socket"
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 handleCountdown()
+setTimeout(()=>{
+    if(data.preloaed === null){
+         window.location.href = ("/")
+    }
+},3000)
 import { error_msg} from "$lib/crashgame/store"
 import Navbar from "$lib/navbar.svelte";
 import ProfileAuth from "$lib/profleAuth/index.svelte";
@@ -18,11 +24,11 @@ import Menubar from "$lib/mobile/menu/menubar.svelte";
 import ChatSide from "../lib/chat-room/index.svelte"
 import Notification from "../lib/notification/index.svelte";
 import { handleNestedRoute } from "$lib/store/nested_routes";
-import { handleisLoggin, handleisLoading } from "$lib/store/profile"
+import { handleisLoggin, handleisLoading , app_Loading} from "$lib/store/profile"
 import "../styles/errors/error.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "$lib/firebaseAuth/index";
-import { browser } from '$app/environment';
+
 import { onMount } from "svelte";
 import { default_Wallet } from "../lib/store/coins"
 import { handle_IsRedwinners} from "../lib/crashgame/store"
@@ -31,6 +37,7 @@ let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
+
 
 $:{
     for(let i = 0; i < $handle_IsRedwinners.length; i++){
@@ -159,6 +166,14 @@ const handleMenu = () => {
             </button>
         </div>
     </div>
+    {#if !data.preloaed}
+        <div class="preloading">
+            <div class="gyuys">
+                <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1699447809/preload_b2jdw0.jpg">
+            </div>
+        </div>
+    {/if}
+
 
     <!-- ======================  mobile menu bar ================= -->
     {#if (isMenu)}
@@ -205,3 +220,52 @@ const handleMenu = () => {
 
     {/if}
 </div>
+
+<style>
+.preloading{
+    background-color: var(--background-color);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 367898978920;
+}
+.preloading .gyuys{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.gyuys img{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 30%;
+    align-content: center;
+    width: 180px;
+    border-radius: 50%;
+    animation: move 10s infinite;
+}
+
+@keyframes move{
+    10%{
+        top: 10%;
+        transition: all 4.5s ease;
+    }
+ 
+    100%{
+        top: 55%;
+        transition: all 4.5s ease;
+    }
+    /* 70%{
+        top: 55%;
+        transition: all 4.5s ease;
+    }
+    100%{
+        top: 0%;
+        transition: all 4.5s ease;
+    } */
+}
+
+</style>

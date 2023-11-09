@@ -33,15 +33,9 @@ let progressPercent = (range / unit_range).toFixed(0)
    
 
     <button on:click={handleVIPCARDS} class="sc-kjOQFR jdoMCb class bage-0">
-        {#if parseFloat($profileStore.vip_level) < 8}
             <div class="card-img-wrap">
                 <img class="card-img" src="https://static.nanogames.io/assets/Bronze.eae10e4e.png" alt="bronze.jpg">
             </div>
-            {:else if  parseFloat($profileStore.vip_level) > 8 && parseFloat($profileStore.vip_level) < 22}
-            <!-- <div class="card-img-wrap">
-                <img alt="vip-card" src="https://static.nanogames.io/assets/3.6df0fd1c.png">
-            </div> -->
-        {/if}
 
         <div class="card-badge">
             <div class="card-badge-num ">{$profileStore.vip_level && $profileStore.vip_level}</div>

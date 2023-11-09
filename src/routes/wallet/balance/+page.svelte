@@ -1,5 +1,6 @@
 <script>
-  
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 </script>
 
 <div class="scglv9m wallet-balance">
@@ -8,16 +9,16 @@
             <img src="https://bc.game/assets/coin.8d5cf053.png" alt="">
             <div>
                 <div class="tit">Total Balance</div>
-                <div class="balance">₦ 0</div>
+                <div class="balance">$ 0</div>
             </div>
         </div>
         <div class="real-money">
             <div class="sub-tit">Real Money</div>
-            <div class="amount">₦ 0</div>
+            <div class="amount">$ 0</div>
         </div>
         <div class="bonus-money">
             <div class="sub-tit">Bonus Money</div>
-            <div class="amount">₦ 0</div>
+            <div class="amount">$ 0</div>
         </div>
     </div>
 
@@ -25,15 +26,6 @@
         <div class="currency-opt">
             <div class="hide-balance">Hide 0 balance <div class="ui-switch open">
                 <div class="dot"></div>
-            </div>
-        </div>
-        <div class="ui-input">
-            <div class="input-control">
-                <input type="text" placeholder="Search" value="">
-                <!-- <svg class="s1ff97qc icon icon-search">
-                    <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Search">
-                    </use>
-                </svg> -->
             </div>
         </div>
     </div>
@@ -46,11 +38,80 @@
                 </div>
                     <div class="name-wrap">
                         <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
-                            <div class="button-inner">
-                                <!-- <svg class="s1ff97qc icon icon-help">
-                                    <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Inform"></use>
-                                </svg> -->
-                            </div>
+                            <!-- <div class="button-inner">
+                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                            </div> -->
+                        </button>
+                    </div>
+                </div>
+                <div class="amount-wrap">
+                    <div class="amount-info">
+                        <div class="cy2znlo coin notranslate monospace">
+                            <div class="amount amount-str"> 99996.22</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="currency-item-wrap">
+            <div class="c1ubyjee currency-item notranslate">
+                <div class="coin-wrap">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                </div>
+                    <div class="name-wrap">
+                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
+                            <!-- <div class="button-inner">
+                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                            </div> -->
+                        </button>
+                    </div>
+                </div>
+                <div class="amount-wrap">
+                    <div class="amount-info">
+                        <div class="cy2znlo coin notranslate monospace">
+                            <div class="amount amount-str"> 99996.22</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="currency-item-wrap">
+            <div class="c1ubyjee currency-item notranslate">
+                <div class="coin-wrap">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                </div>
+                    <div class="name-wrap">
+                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
+                            <!-- <div class="button-inner">
+                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                            </div> -->
+                        </button>
+                    </div>
+                </div>
+                <div class="amount-wrap">
+                    <div class="amount-info">
+                        <div class="cy2znlo coin notranslate monospace">
+                            <div class="amount amount-str"> 99996.22</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="currency-item-wrap">
+            <div class="c1ubyjee currency-item notranslate">
+                <div class="coin-wrap">
+                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                </div>
+                    <div class="name-wrap">
+                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
+                            <!-- <div class="button-inner">
+                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                            </div> -->
                         </button>
                     </div>
                 </div>
@@ -175,9 +236,9 @@
     left: 0.75rem;
     background-color: var(--primary-color);
 }
-.s1lzp5ru .currency-opt .ui-input {
+/* .s1lzp5ru .currency-opt .ui-input {
     margin-top: 0;
-}
+} */
 .scglv9m .crypto-list {
     margin-top: 1.25rem;
 }
@@ -234,6 +295,7 @@
     color: #fff;
     font-weight: 800;
     height: 1.25rem;
+    margin-top: 5px;
     line-height: 1.25rem;
     display: -webkit-box;
     display: -webkit-flex;

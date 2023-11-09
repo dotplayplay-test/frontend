@@ -20,7 +20,7 @@ import Signup from "./nestedpages/auth/signup/signup.svelte";
 import Info from "./nestedpages/auth/info/info.svelte";
 import { handleNestedRoute } from "$lib/store/nested_routes"
 import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
-
+$: browser && localStorage.setItem("preload", JSON.stringify("is_active"));
 const dispatch = createEventDispatcher()
 const handleChat = ((e) => {
     dispatch("handleChatRoom", e)
@@ -127,7 +127,7 @@ setTimeout(()=>{
                 </div>
             </div>
         {#if waitaibit}
-        {#if $handleisLoggin}
+        {#if $handleAuthToken}
             <MainNavbar on:handleChatRoom={handleChat} />
         {:else}
         <div class="login-in">

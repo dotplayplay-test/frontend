@@ -24,7 +24,7 @@ import {tipped_user } from "$lib/store/tipUser"
 import { profileStore } from '$lib/store/profile';
 import { handleisLoggin } from "$lib/store/profile";
 import { handleAuthToken} from "$lib/store/routes";
-import {handleCountdown} from "../../lib/crashgame/socket"
+import {handleCountdown} from "../../lib/games/ClassicDice/socket/index"
 const { handleChattingMessages } = handleCountdown()
 let element;
 let newMessages = ''
@@ -32,7 +32,6 @@ import { chats } from "$lib/chat-room/store/index"
 import { ServerURl } from "../backendUrl"
     import Mobile from "./mobile.svelte";
 let URL = ServerURl()
-
 
 onMount(async () => {
     await axios.get(`${URL}/api/users/previus-chats`)

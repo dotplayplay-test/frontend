@@ -3,66 +3,31 @@ import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import { createEventDispatcher , onMount} from 'svelte'
 const dispatch = createEventDispatcher()
+import axios from "axios";
 import { updateCoins } from "./updateCoin"
-import { UserProfileEl } from "../../index";
-const { handleUSDTwallet, handlePPFwallet,  handlePPLwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
-import { ppdWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import { profileStore, handleisLoading, handleisLoggin, app_Loading } from "$lib/store/profile";
+import { handleAuthToken } from "$lib/store/routes";
+import { default_Wallet, coin_list } from "$lib/store/coins";
 import { browser } from '$app/environment'
-
-onMount(async()=>{
-    handleUSDTwallet()
-    handlePPFwallet()
-    handlePPLwallet()
-    handlePPDwallet()
-})
-
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 let show_currencyName
 
 $:{
     show_currencyName = browser && JSON.parse(localStorage.getItem('show-full-curency'))
 }
 
-let coins
-$:{
-    coins = [
-    {
-        id: 1,
-        coin_name: $usdt_Wallet.coin_name,
-        coin_fname: $usdt_Wallet.coin_fname,
-        coin_image: $usdt_Wallet.coin_image,
-        balance: $usdt_Wallet.balance,
-        select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 2,
-        coin_name: $ppdWallet && $ppdWallet.coin_name,
-        coin_fname:  $ppdWallet.coin_fname,
-        coin_image: $ppdWallet.coin_image,
-        balance: $ppdWallet.balance,
-        select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 4,
-        coin_name: $pplWallet.coin_name,
-        coin_fname:  $pplWallet.coin_fname,
-        coin_image:  $pplWallet.coin_image,
-        balance:  $pplWallet.balance,
-        select: ($pplWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 5,
-        coin_name: $ppfWallet.coin_name,
-        coin_fname:  $ppfWallet.coin_fname,
-        coin_image: $ppfWallet.coin_image,
-        balance:  $ppfWallet.balance,
-        select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
-    },
-]
-}
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)
+    $coin_list.forEach(element => {
+    if(element.coin_name === e.coin_name){
+        element.is_active = true
+    }else{
+        element.is_active = false
+    }
+ });
     useCoinUpdate(e)
 })
 
@@ -79,9 +44,9 @@ const handleSelectCoin = ((e) => {
             </div>
         </div>
         <div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list">
-            {#each coins as coin}
+            {#each $coin_list as coin}
             {#if coin.coin_image !== undefined}
-                <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
+                <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.is_active ? "active" : "normal"}  `}>
                     <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
                         <div class="coin-wrap">
                             <img class="coin-icon" alt="" src={coin.coin_image}>
