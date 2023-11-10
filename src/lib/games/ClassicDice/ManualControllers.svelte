@@ -132,8 +132,8 @@ const handleRollSubmit = (async()=>{
                     wining_amount: parseFloat(wining_amount) -  parseFloat(bet_amount)
                 }
                 non += 1
+                handleDicebet(data)
                 setTimeout(()=>{
-                    handleDicebet(data)
                     is_loading = false
                 },600)
                 // await axios.post(`${URL}/api/user/dice-game/bet`, {
