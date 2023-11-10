@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
-const URL = "https://dotplayplay-3a34f3d133a0.herokuapp.com"
-// const URL = "http://localhost:8000"
+import { ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 import { chats } from "$lib/chat-room/store/index"
 const socket = io(`${URL}`);
 import {dice_troo} from "../store/index"

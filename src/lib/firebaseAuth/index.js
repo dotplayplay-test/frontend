@@ -1,5 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/firestore";
+import { browser } from '$app/environment';
 import { initializeApp } from "firebase/app";
 import {  goto } from "$app/navigation"
 import { useLogin } from "../hook/useLogin";
@@ -93,11 +94,11 @@ export const handleSignIn = (async (email, password, reff)=>{
  export const handleLogout = (async()=>{
     const auth = getAuth(app);
     signOut(auth).then((res) => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("user_bet_amount");
         handleisLoggin.set(false)
         profileStore.set({})
-        window.location.href = ("")
+    //    browser && window.location.href = ("")
+        localStorage.removeItem("user");
+        localStorage.removeItem("user_bet_amount");
       }).catch((error) => {
        console.log(error)
       });

@@ -123,12 +123,6 @@ export const handleCountdown = (()=>{
         mybetEl.set(data)
     })
 
-    socket.on("dice-gamePLayers", data=>{
-        dicegameplays.set(data)
-    })
-
-
-
     socket.on("v_default", data=>{
         v_default.set(data)
     })
