@@ -96,7 +96,7 @@ export const handleSignIn = (async (email, password, reff)=>{
     signOut(auth).then((res) => {
         handleisLoggin.set(false)
         profileStore.set({})
-    //    browser && window.location.href = ("")
+        window.location.href = ("")
         localStorage.removeItem("user");
         localStorage.removeItem("user_bet_amount");
       }).catch((error) => {
