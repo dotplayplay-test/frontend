@@ -1,12 +1,27 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import FaSolidCopy from "svelte-icons-pack/fa/FaSolidCopy";
+import axios from "axios"
+import {onMount} from "svelte"
+import { is_loading, deposit_info } from "$lib/store/deposit"
+import { handleAuthToken } from "$lib/store/routes";
+import { ServerURl } from "$lib/backendUrl"
+import { default_Wallet, coin_list } from "$lib/store/coins";
+const url = ServerURl()
+
+
+let active_coin = ""
+$coin_list.forEach(element => {
+    if(element.coin_name === "USDT"){
+        active_coin = element
+    }
+});
 
 let networks = [
     {id:1, network: `ERC20`, status: "active"},
     {id:2, network: `TRX20`, status: ""},
     {id:3, network: `BEP20`, status: ""},
-    {id:4, network: `Solana`, status: ""},
 ]
 
 let actice_network = {}
@@ -35,6 +50,99 @@ networks.forEach(element => {
     is_open =! is_open
  })
 
+let ispo_loading = false
+ const handleFetchPendingOrder = (async()=>{
+    ispo_loading = true
+    await axios.get(`${url}/api/deposit/pending-order`, {
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        if(res.data.length !== 0){
+            deposit_info.set(res.data[0])
+        }
+        ispo_loading = false
+    })
+    .catch((err)=>{
+        is_loading.set(false)
+        ispo_loading = false
+    })
+})
+
+
+let amount = 10
+let is_olii = false
+ const handleSubmit = (async()=>{
+    is_olii = true
+    let data = {
+        network: actice_network.network,
+        amount,
+    }
+        await axios.post(`${url}/api/deposit/initiate`, {
+            data: data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+            }
+        })
+        .then((res)=>{
+            is_olii = true
+            if(res.data.message !== "success"){
+                err_msg = res.data.message
+            }else{
+                handleFetchPendingOrder()
+            }
+        })
+        .catch((err)=>{
+            is_olii = true
+            console.log(err)
+        })
+ 
+ })
+
+ onMount(()=>{
+    handleFetchPendingOrder()
+ })
+
+ let amount_msg = ''
+ function handleCopyAmomut() {
+    navigator.clipboard.writeText($deposit_info.amount)
+    .then(() => {
+        amount_msg = 'Copied'
+    setTimeout(()=>{
+        amount_msg = ("")
+},4000)
+})
+}
+
+let address_msg = ''
+function handleCopyCode() {
+    navigator.clipboard.writeText($deposit_info.pay_address)
+    .then(() => {
+        address_msg = 'Copied'
+    setTimeout(()=>{
+        address_msg = ("")
+},4000)
+})
+}
+
+let hours
+let minutes 
+let seconds
+$:{
+setInterval(()=>{
+    let countDownDate = new Date($deposit_info.expire_in).getTime();
+    let now = new Date().getTime();
+    let distance = countDownDate - now;
+     hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((distance % (1000 * 60)) / 1000);
+}, 1000)
+}
+
 
 </script>
 
@@ -48,27 +156,30 @@ networks.forEach(element => {
                     <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">USDT</div>
                 </button>
             </div>
+            
             <div class="ui-select wallet-balance-input-wrap">
-
                 <div class="select-trigger">
                     <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">
                     <span class="alias">USDT</span>
                     <div class="balance">Balance</div>
-                    <div class="amount">0</div>
+                    <div class="amount">{active_coin.balance}</div>
                      <div class="arrow ">
                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                     </div>
                 </div>
             </div>
         </div>
+        {#if !ispo_loading}
         <div class="sbaeww">
             <div class="sq07zth page-margin">
-                <div class="label">Choose Network</div>
+                <div class="label"> {$deposit_info ? "" : "Choose"} Network</div>
                 <div class={`ui-select select-tokens ${is_open ? "is-open" : ""} `}>
-                    <button on:click={handleNetworks_isOpen} class="select-trigger">
+                    <button disabled={$deposit_info} on:click={handleNetworks_isOpen} class="select-trigger">
                         {actice_network.network}
                         <div class="arrow ">
+                        {#if !$deposit_info}
                         <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                        {/if}
                         </div>
                     </button>
                     {#if is_open}
@@ -92,32 +203,79 @@ networks.forEach(element => {
                     <span> deposit</span>
                 </div>
                 <div class="btn">
-                    <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                    <!-- <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   /> -->
                 </div>
             </div>
+            <div class="sjwiin">
+                
+                <div class="sc-ezbkAF kDuLvp input input">
+                    <div class="input-label">Depost amount</div>
+                    <div class="input-control">
+                        <input type="number" readonly={$deposit_info}  autocomplete="off" placeholder="0.0000" bind:value={amount}>
+                        {#if $deposit_info}
+                        <p style="color: green; font-size:13px">{amount_msg}</p>
+                            <button on:click={handleCopyAmomut} style="cursor: pointer;" class="arrow ">
+                                <Icon src={FaSolidCopy}  size="18"  color="rgb(255, 255, 255)"   />
+                            </button>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            
+            {#if !$deposit_info}
+            <div class="tisks-btn">
+                <div class="3siisd">
+                    <button disabled={is_olii} on:click={handleSubmit}  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal">
+                        <div class="button-inner">{is_olii ? "Loading..." : `Submit`}</div>
+                    </button>
+                </div>
+            </div>
+            {:else}
             <div class="sbz45td">
+                
                 <div class="qr-wrap">
                     <div class="qz3bl7d">
                         <img src="https://bc.game/api/game/support/qrcode/320/?text=0x8d3f78BDAd3F1eaa4e5B02E277D24a72C932505a" alt="qr.png"></div>
                     </div>
                     <div class="address-info">
                         <div class="sub-tit">Deposit Address</div>
+                        <div>Expire in: <span style="color: yellow; letter-spacing:1px"> {`${ typeof hours === "number"  && hours}hr : ${ typeof minutes === "number" && minutes}m : ${typeof seconds === "number" && seconds}s`}</span> </div>
+                        <div style="color: green; font-size:13px">{address_msg}</div>
                         <div class="cont">
                             <div class="notranslate address-text">
-                                <span class="cl-primary">0x8d3f78BDAd3F1eaa4e5B02E277D24a72C932505a</span>
+                                <span class="cl-primary">{$deposit_info.pay_address}</span>
                             </div>
-                            <button class="ui-button button-normal copy">
+                            
+                            <button on:click={handleCopyCode} class="ui-button button-normal copy">
                                 <div class="button-inner">Copy</div>
                             </button>
                         </div>
                     </div>
             </div>
-            <div class="d5oeih5">
+             <div class="d5oeih5">
                 <p>
                     <span class="cl-primary">NOTICE:</span> Send only USDT to this deposit address. Coins will be deposited automatically after 6 network confirmations. Smart contract addresses are not supported(Contact us).</p>
                 </div>
+            {/if}
         </div>
         </div>
+        {:else}
+        <div style="height: 100px;">
+            <div class="center" style="height: 300px;">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        </div>
+
+        {/if}
+       
 
    </div>
 </div>
@@ -125,6 +283,14 @@ networks.forEach(element => {
 <style>
 .ui-scrollview {
     padding: 0.25rem 2rem 1.25rem;
+}
+.tisks-btn{
+    margin-top: 30px;
+}
+
+.kDuLvp .input-control{
+    background-color: rgba(23,24,27,.5);
+    height: 3rem;
 }
 .ui-scrollview {
     box-sizing: border-box;
@@ -137,6 +303,19 @@ networks.forEach(element => {
     touch-action: pan-y;
     overscroll-behavior: contain;
 }
+.sjwiin{
+    margin-top: 22px;
+}
+.kDuLvp .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0px 0.75rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+    font-size: 14px;
+}
 .swm8knq {
     --18w92jy: #fff;
     --1cq0e1f: #F6F7FA;
@@ -145,7 +324,7 @@ networks.forEach(element => {
 }
 .qz3bl7d img {
     width: 100%;
-    border-radius: var(--border-radius);
+    border-radius: 5px;
     image-rendering: pixelated;
 }
 .swm8knq .label {
@@ -177,7 +356,7 @@ networks.forEach(element => {
     color: var(--primary-color);
 }
 .s4kezgj .fast-btns .ui-button {
-    border-radius: var(--border-radius);
+    border-radius: 30px;
     border: 1px solid #3C404A;
     height: 1.875rem;
     border-radius: 0.9375rem;
@@ -294,7 +473,7 @@ networks.forEach(element => {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border-radius: var(--border-radius);
+    border-radius: 1.25rem;
     background-color: #17181b;
 }
 .ui-select .select-trigger .arrow {
@@ -335,7 +514,7 @@ networks.forEach(element => {
 .sbz45td {
     margin-top: 0.375rem;
     background-color: rgba(23,24,27,.5);
-    border-radius: var(--border-radius);
+    border-radius: 30px;
     padding: 1.125rem 0.875rem;
     display: -webkit-box;
     display: -webkit-flex;
@@ -357,7 +536,7 @@ networks.forEach(element => {
     width: 9.25rem;
     height: 9.25rem;
     padding: 0.125rem;
-    border-radius: var(--border-radius);
+    border-radius: 5px;
     overflow: hidden;
     background-color: #2d3035;
     -webkit-animation: placeholderShimmer-qz3bl7d 1.5s linear infinite;
@@ -402,6 +581,9 @@ networks.forEach(element => {
     margin-left: 0.625rem;
     font-weight: 400;
 }
+.address-info .ui-button:hover{
+    background: #484f57;
+}
 .ui-button>.button-inner {
     display: -webkit-box;
     display: -webkit-flex;
@@ -420,7 +602,7 @@ networks.forEach(element => {
 }
 .d5oeih5 {
     padding: 0.5rem 0.75rem;
-    border-radius: var(--border-radius);
+    border-radius: 5px;
     font-size: .75rem;
     line-height: 1rem;
     background: rgba(58,201,72,.1);
@@ -432,6 +614,7 @@ networks.forEach(element => {
     width: 101%;
     background-color: #1E2024;
     box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    border-radius: 30px;
 }
 .ui-select.is-open .select-options-wrap {
     pointer-events: auto;
@@ -448,7 +631,7 @@ networks.forEach(element => {
     box-shadow: none;
 }
 .ui-select .select-options {
-    border-radius: var(--border-radius);
+    border-radius: 30px;
     padding: 0.125rem 0.375rem;
     background-color: var(--18w92jy);
     box-shadow: 0 0 8px #00000024;
@@ -490,7 +673,7 @@ networks.forEach(element => {
     height: 2rem;
     margin: 0.25rem 0;
     border: 1px solid transparent;
-    border-radius: var(--border-radius);
+    border-radius: 30px;
     cursor: pointer;
     color: rgba(153,164,176,.6);
     white-space: nowrap;

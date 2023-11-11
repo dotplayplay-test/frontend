@@ -89,7 +89,7 @@ const handleUSDTwallet = async () => {
     );
 const json = await response.json();
     if (response.ok) {
-        usdt_Wallet.set(json[0]) 
+        return json[0]
     }
 };
 

@@ -18,6 +18,8 @@ let unit_range = (212993000 - 0) / 100
 let range = (parseFloat($profileStore.total_wagered) - 0).toFixed(0)
 let progressPercent = (range / unit_range).toFixed(0)
 
+$: console.log($profileStore)
+
 
 </script>
 
@@ -222,13 +224,13 @@ let progressPercent = (range / unit_range).toFixed(0)
                             </div>
                         </div>
                         <div class="level-bot-wrap">
-                            <div class="level-xp">Your current XP :<span class="xw-txt">0 XP</span>
+                            <div class="level-xp">Your current XP :<span class="xw-txt">{$profileStore.next_level_point} XP</span>
                                 / Total wager :
-                                <span class="xw-txt">0.00 USD</span>
+                                <span class="xw-txt">{(parseFloat($profileStore.total_wagered)).toFixed(2)} USD</span>
                             </div>
-                            <div class="level-next">Reach <span class="xw-txt">1 xp</span>
+                            <div class="level-next">Reach <span class="xw-txt">{$profileStore.next_level_point} xp</span>
                                 to
-                                <span class="xw-txt">VIP 1</span>
+                                <span class="xw-txt">VIP {$profileStore.vip_level + 1}</span>
                             </div>
                         </div>
                     </div>

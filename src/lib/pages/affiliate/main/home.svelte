@@ -31,7 +31,6 @@ const fetchFriendsInfo = (async()=>{
     .then((res)=>{
         is_loading = false
         affiliate_info.set(res.data)
-        console.log(res.data)
     })
     .catch((err)=>{
         is_loading = false

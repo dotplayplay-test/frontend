@@ -73,7 +73,7 @@ $:{
 let non = 0
 let is_loading = false
 const handleRollSubmit = (async()=>{
-    if(browser && window.navigator.onLine){
+    // if(browser && window.navigator.onLine){
         $soundHandler && playSound(1)
         is_loading = true
         if($handleisLoggin){
@@ -182,13 +182,13 @@ const handleRollSubmit = (async()=>{
                 error_msg.set('')
             },4000)
         }
-    }else{
-        error_msg.set('Error in network connection')
-            is_loading = false
-            setTimeout(()=>{
-                error_msg.set('')
-        },4000)
-    }
+    // }else{
+    //     error_msg.set('Error in network connection')
+    //         is_loading = false
+    //         setTimeout(()=>{
+    //             error_msg.set('')
+    //     },4000)
+    // }
  
 })
 

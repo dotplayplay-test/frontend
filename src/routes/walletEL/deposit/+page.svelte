@@ -74,7 +74,7 @@ handleFetchPendingOrder()
         <div class="sc-ezbkAF kDuLvp input ">
             <div class="input-label">
                 <div style="flex: 1 1 0%;">Deposit Currency</div>
-                <a href="/transactions/deposit/DOGE">Record</a>
+                <a href="/transactions/deposit">Record</a>
             </div>
             <button on:click={handlecoinSelectEl} class="sc-kszsFN evIEvq input-control">
                 <div class="sc-cBIieI wvKye">
@@ -82,7 +82,7 @@ handleFetchPendingOrder()
                         <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                         <span class="currency">{$default_Wallet.coin_name}</span>
                         <span class="svg">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" />
                         </span>
                     </div>
                 </div>

@@ -11,5 +11,5 @@ export let handleSecurity = writable(handleSecurityEl)
 let isLoading = false
 export let is_loading = writable(isLoading)
 
-let depositBonusReportAccess
+let depositBonusReportAccess = ""
 export let deposit_info = writable(depositBonusReportAccess)

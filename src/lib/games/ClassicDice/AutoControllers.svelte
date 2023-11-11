@@ -136,7 +136,7 @@ $:{
 
 let non = 0
 const handleRollSubmit = (async()=>{
-    if(browser && window.navigator.onLine){
+    // if(browser && window.navigator.onLine){
     if($handleisLoggin){
         if(parseFloat($default_Wallet.balance) <= 0){
             error_msg.set("insufficient balance")
@@ -272,14 +272,14 @@ const handleRollSubmit = (async()=>{
             error_msg.set("")
         },4000)
     }
-}else{
-    error_msg.set('Error in network connection')
-    is_Looping = false
-    clearInterval(yu)
-    setTimeout(()=>{
-        error_msg.set('')
-     },4000)
-}
+// }else{
+//     error_msg.set('Error in network connection')
+//     is_Looping = false
+//     clearInterval(yu)
+//     setTimeout(()=>{
+//         error_msg.set('')
+//      },4000)
+// }
 })
 
 

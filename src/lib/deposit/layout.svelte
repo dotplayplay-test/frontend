@@ -126,7 +126,7 @@ const handleCancel = (()=>{
     transition-property: width,height,margin-left,margin-top,background-color;
     -webkit-transition-duration: .3s;
     transition-duration: .3s;
-    border-radius: 15px;
+    border-radius: 30px;
     overflow: hidden;
     background-color: #17181b;
     -webkit-transform: translateZ(0),;
@@ -202,7 +202,7 @@ const handleCancel = (()=>{
     align-items: center;
     height: 2.25rem;
     position: relative;
-    border-radius: 3px;
+    border-radius: 30px;
     background-color:#24262b;
 }
 .su96gxq .tabs-navs {
@@ -210,6 +210,7 @@ const handleCancel = (()=>{
 }
 .su96gxq .tabs-navs .is-active {
     background-color: #2a2e33;
+    border-radius: 30px;
 }
 .tabs-circle .tabs-nav.is-active {
     background-color: #2d3035;

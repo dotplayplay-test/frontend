@@ -1,6 +1,76 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import { handleAuthToken } from "$lib/store/routes";
+import { ServerURl } from "$lib/backendUrl"
+import axios from "axios"
+import { default_Wallet, usdt_Wallet, ppfWallet,ppdWallet, pplWallet } from "$lib/store/coins"
+import {onMount} from "svelte"
+import {UserProfileEl} from "$lib/index"
+const { handleUSDTwallet } = UserProfileEl()
+const URL = ServerURl()
+
+let networks = [
+    {id:1, network: `ERC20`, status: "active"},
+    {id:2, network: `TRX20`, status: ""},
+    {id:3, network: `BEP20`, status: ""},
+]
+
+onMount(async()=>{
+    let rts = await handleUSDTwallet()
+    usdt_Wallet.set(rts)
+})
+
+
+let actice_network = {}
+const handleNetworks = ((e)=>{
+    networks.forEach(element => {
+    if(element.network === e.network){
+        element.status = "active"
+        networks = networks
+        actice_network = {...element}
+        handleNetworks_isOpen()
+    }
+    else{
+        element.status = ""
+    }
+ });
+})
+
+networks.forEach(element => {
+    if(element.status === "active"){
+        actice_network = {...element}
+    }
+ });
+
+ let is_open = false
+ const handleNetworks_isOpen = (()=>{
+    is_open =! is_open
+ })
+
+ let address = ""
+ let amount = 0
+ const handleSubmit = (async()=>{
+    let data = {
+        address, 
+        network: actice_network.network,
+        amount
+    }
+    await axios.post(`${URL}/api/withdraw/initiate`,{
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+            }
+        })
+        .then(response =>{
+            console.log(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.response.data.message)
+        })
+ })
 
 </script>
   <div class="right-info">
@@ -11,10 +81,10 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                   <div class="label">Withdraw Currency</div>
                   <div class="ui-select wallet-balance-input-wrap">
                       <div class="select-trigger">
-                          <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                          <span class="alias">BNB</span>
+                          <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">
+                          <span class="alias">USDT</span>
                           <div class="balance">Balance</div>
-                          <div class="amount">0</div>
+                          <div class="amount">{$usdt_Wallet.balance}</div>
                           <div class="arrow ">
                             <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                           </div>
@@ -24,13 +94,22 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 
             <div class="sq07zth page-margin">
                 <div class="label">Choose Network</div>
-                <div class="ui-select select-tokens">
-                    <div class="select-trigger">
-                        ERC20
+                <div class={`ui-select select-tokens ${is_open ? "is-open" : ""} `}>
+                    <button on:click={handleNetworks_isOpen} class="select-trigger">
+                        {actice_network.network}
                         <div class="arrow ">
                             <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                           </div>
+                    </button>
+                    {#if is_open}
+                    <div class="select-options-wrap" style="top: 100%; opacity: 1; transform: none;">
+                        <div class="ui-scrollview select-options len-9">
+                            {#each networks as net (net.id)}
+                                <button class={`select-option ${net.status === "active" ? "active" : ""} `} on:click={()=>handleNetworks(net)}>{net.network}</button>
+                            {/each}
+                        </div>
                     </div>
+                {/if}
                 </div>
             </div>
 
@@ -39,7 +118,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     <div>Withdrawal Address</div>
                 </div>
                 <div class="input-control">
-                    <input type="text" placeholder="Fill in carefully according to the specific currency" value="">
+                    <input type="text" placeholder="Fill in carefully according to the specific currency" bind:value={address}>
                 </div>
             </div>
 
@@ -47,17 +126,17 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <div class="input-label">
                     <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
                         <div style="text-transform: capitalize;">Withdraw amount</div>
-                        <div style="font-size: 12px;">Min: 24.843575</div>
+                        <div style="font-size: 12px;">Min: 5.6</div>
                     </div>
                 </div>
                 <div class="input-control">
-                    <input type="text" value="0.0000"></div>
+                    <input type="number" placeholder="0.000" bind:value={amount}></div>
                 </div>
             </div>
             <div class="unlock-balance s13ylein">
                 <div class="available unlock-item">
                     <div class="label">Available:</div>
-                    <div class="value">$0.00</div>
+                    <div class="value">${(parseFloat($usdt_Wallet.balance)).toFixed(2)}</div>
                 </div>
             </div>
 
@@ -66,7 +145,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     <div class="label">Withdraw amount:</div>
                     <div class="val">
                         <div class="cy2znlo coin notranslate">
-                            <div class="amount amount-str"> 0.00</div>
+                            <div class="amount amount-str">{amount ? (parseFloat(amount)).toFixed(2) : 0}</div>
                         </div>
                         USDT
                     </div>
@@ -78,13 +157,18 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                         </svg> -->
                     </button>
                 </div>
-                <div class="val">4.843575 USDT</div>
+                <div class="val">{actice_network.network !== "ERC20" ? 1 : 5} USDT</div>
             </div>
             <div class="item">
                 <div class="label">Total withdrawal amount:</div>
                 <div class="val cl-primary">
                     <div class="cy2znlo coin notranslate">
-                        <div class="amount amount-str"> 0.00</div>
+                        {#if amount > 6.5}
+                         <div class="amount amount-str"> { actice_network.network !== "ERC20" ? amount - 1 : amount - 5}</div>
+                         {:else}
+                         <div class="amount amount-str"> 0</div>
+                        {/if}
+                        
                     </div> USDT</div>
                 </div>
             </div>
@@ -93,13 +177,60 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <p><span class="cl-primary">Notice:</span> For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</p>
             </div>
 
-            <button class="ui-button button-normal s-conic submit-btn">
+            <button on:click={handleSubmit} class="ui-button button-normal s-conic submit-btn">
                 <div class="button-inner">Confirm</div>
             </button>
      </div>
   </div>
 </div>
 <style>
+.ui-select .select-options-wrap {
+    margin: 0.125rem -0.125rem 0;
+    width: 101%;
+    background-color: #1E2024;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    border-radius: 30px;
+}
+.ui-select.is-open .select-options-wrap {
+    pointer-events: auto;
+}
+.ui-select .select-options-wrap {
+    position: absolute;
+    padding: 0.3125rem 0;
+    width: 100%;
+    left: 0;
+    z-index: 2;
+}
+.ui-select .select-options {
+    background-color: transparent;
+    box-shadow: none;
+}
+.ui-select .select-options {
+    border-radius: 30px;
+    padding: 0.125rem 0.375rem;
+    background-color: var(--18w92jy);
+    box-shadow: 0 0 8px #00000024;
+    height: auto;
+    max-height: 16.25rem;
+}
+.ui-select {
+    height: 3rem;
+}
+.sq07zth .ui-select {
+    position: relative;
+    z-index: 9;
+}
+.ui-select .select-options:not(.len-1)>.active {
+    border: 2px solid #3bc11766;
+    border-radius: 30px;
+    color: #fff;
+}
+.sq07zth .ui-select .select-option {
+    height: 3rem;
+    width: 100%;
+    line-height: 3rem;
+
+}
 .limit-width {
     max-width: 500px;
 }
@@ -113,6 +244,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 }
 .ui-select .select-trigger {
     background-color: #1E2024;
+    width: 100%;
 }
 .swm8knq .select-trigger .coin-icon {
     width: 1.75rem;
