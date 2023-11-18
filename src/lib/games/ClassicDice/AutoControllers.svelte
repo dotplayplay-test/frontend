@@ -18,7 +18,6 @@ import { handleCountdown } from "../ClassicDice/socket/index";
 const { handleDicebet } = handleCountdown()
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"
-import axios from "axios"
 
 let is_min_max = false
 const handleMinMax = (()=>{
@@ -27,12 +26,10 @@ const handleMinMax = (()=>{
 let uiocd = 0
 let wining_amount = '' ;
 
-
 let walletRange = 0
 let x = 0;
 $:{
     wining_amount = (uiocd * $payout).toFixed(4)
-
 }
 onMount(()=>{
     if($default_Wallet.coin_name === "USDT"){

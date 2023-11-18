@@ -19,7 +19,7 @@ const handleNavigation = ((w) => {
 let is_loading = true
 setTimeout(()=>{
     is_loading = false
-},3000)
+},5000)
 
 let hide_trends = false
 const handleTrends = (()=>{
@@ -28,13 +28,7 @@ const handleTrends = (()=>{
 
 </script>
 
-{#if is_loading}
-    <div class="shWnixNNx animate">
-        <div class="gcfyxdtx">
-            <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697892621/5cRX6a9bi-removebg-preview_rvporq.png" alt="">
-        </div>
-    </div>
-    {:else}
+{#if !is_loading}
     <div id="main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-eZhRLC jDDdCf game-style1 sc-eDtABA deWqiM">
@@ -78,11 +72,48 @@ const handleTrends = (()=>{
             </div>
         </div>
     </div>
+
+    {:else}
+    <div class="uytutfyh">
+        <div class="tdthuy">
+            <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg" alt="">
+        </div>
+    </div>
 {/if}
 
 
 
 <style>
+    .uytutfyh{
+    background-color: var(--background-color);
+    width: 100%;
+    height: 100vh;
+}
+.tdthuy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 500px;
+}
+.tdthuy img{
+    width: 120px;
+    background-color: rgba(51, 57, 57, 0.502);
+    padding: 20px;
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: monyy 3s infinite;
+}
+
+@keyframes monyy{
+    10%{
+        margin-right: -100px;
+    }
+
+    100%{
+        margin-right: 100px;
+    }
+}
 .ePAxUv {
     margin-left: 0rem;
     margin-top: 4rem;
@@ -169,71 +200,6 @@ const handleTrends = (()=>{
     margin-top: 2.5rem;
 }
 
-.shWnixNNx .gcfyxdtx{
-    background-color: rgb(25, 27, 33);
-    position: fixed;
-    width: 100%;
-    z-index: 1934;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-.shWnixNNx.animate{
-    justify-content: center;
-    align-items: center;
-}
-.shWnixNNx img{
-    width: 100px;
-    margin: 220px  120px;
-    animation: dice 5s infinite;
-}
-@keyframes dice {
-    0% {
-        transform: translate3d(100px, 0%, 0px);
-    }
-    30% {
-        transform: translate3d(30px, 0%, 0px);
-    }
-    50% {
-        transform: translate3d(0px, 0%, 0px);
-    }
-    70% {
-        transform: translate3d(30px, 0%, 0px);
-    }
-    100% {
-        transform: translate3d(100px, 0%, 0px);
-    }
-}
-
-@media only screen and ( min-width : 1000px){
-    .shWnixNNx img{
-    width: 100px;
-    margin: 0px;
-    justify-self: center;
-    position: absolute;
-    top: 30%;
-    left: 40%;
-    animation: dice 4s infinite;
-}
-@keyframes dice {
-    0% {
-        transform: translate3d(100px, 0%, 0px);
-    }
-    30% {
-        transform: translate3d(30px, 0%, 0px);
-    }
-    50% {
-        transform: translate3d(0px, 0%, 0px);
-    }
-    70% {
-        transform: translate3d(30px, 0%, 0px);
-    }
-    100% {
-        transform: translate3d(100px, 0%, 0px);
-    }
-}
-
-}
 
 @media only screen and ( max-width : 650px) {
 .ePAxUv {
