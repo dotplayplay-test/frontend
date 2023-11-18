@@ -341,7 +341,7 @@ const handlesjen = ((e)=>{
                         </div>
                         <button on:click={()=> handlesjen(100)} style={`${walletRange === 100 ? `color:#ffff;` : ""}`} class="">Max</button>
                      </div>
-                {/if}
+                    {/if}
 
                     <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />

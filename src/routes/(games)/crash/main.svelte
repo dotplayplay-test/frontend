@@ -7,6 +7,7 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import Hotkeys from './hotkeys.svelte';
 import axios from "axios"
+import { onMount  } from "svelte";
 import { goto } from "$app/navigation";
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
@@ -33,6 +34,7 @@ const handleHotkeyEnable = (()=>{
         ishotKey = true
     }
 })
+let walletRange = 0
 
 
 let isAdvance = false
@@ -78,6 +80,9 @@ if($default_Wallet.coin_name === "USDT"){
     bet_amount = (100).toFixed(4)
 }
 
+const handleRangeSTlop = ((eui)=>{
+    bet_amount = (parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4)
+})
 
 
 const handleHalf = ((e)=>{
@@ -89,6 +94,15 @@ const handleHalf = ((e)=>{
         }
     }
 })
+
+onMount(()=>{
+    if($default_Wallet.coin_name === "USDT"){
+    bet_amount = (0.20).toFixed(4)
+}else{
+    bet_amount = (100).toFixed(4)
+}
+})
+
 
 let isRange = false
 const ranging = (()=>{
@@ -271,6 +285,17 @@ const handleCashout = (()=>{
     }
 })
 
+let is_min_max = false
+const handleMinMax = (()=>{
+   is_min_max = !is_min_max
+})
+
+const handlesjen = ((e)=>{
+    bet_amount = (parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4)
+    walletRange = e
+})
+
+
 </script>
 
 
@@ -385,7 +410,7 @@ const handleCashout = (()=>{
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button  on:click={()=>handleHalf(1)}>/2</button>
                                     <button  on:click={()=>handleHalf(2)}>x2</button>
-                                    <button class="sc-ywFzA dxoLcn">
+                                    <button on:click={handleMinMax} class="sc-ywFzA dxoLcn">
                                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                                     </button>
@@ -398,20 +423,18 @@ const handleCashout = (()=>{
                                 <div class="sc-kDTinF bswIvI button-group">
                                     <button on:click={()=>handleHalf(1)}>/2</button>
                                     <button  on:click={()=>handleHalf(2)}>x2</button>
-                                    {#if isRange}
-                                        <div class="fix-layer" style="opacity: 1; transform: none;">
-                                            <button class="">Min</button>
-                                            <div class="sc-kLwhqv eOA-dmL slider">
-                                                <div class="slider-after" style="transform: scaleX(0);"></div>
-                                                <div class="slider-handler-wrap" style="transform: translateX(0%);">
-                                                    <button class="slider-handler"></button>
-                                                </div>
-                                                <div class="slider-before" style="transform: scaleX(1);"></div>
-                                            </div>
-                                            <button class="active">Max</button>
-                                        </div>
-                                    {/if}
-                                    <button on:click={ranging} class="sc-ywFzA dxoLcn">
+                                    {#if is_min_max }
+                                    <div class="fix-layer" style="opacity: 1; transform: none;">
+                                       <button on:click={()=>  handlesjen(0) } style={`${walletRange === 0 ? `color:#ffff;` : ""}`} class="">Min</button>
+                                       <div class="sc-kLwhqv eOA-dmL slider">
+                                          <div class="slider-after" style="transform: scaleX(100.001001);"></div>
+                                            <input type="range" class="drag-block" on:input={(e)=> handleRangeSTlop(e.target.value)} bind:value={walletRange}>
+                                          <div class="slider-before" style="transform: scaleX(100.998999);"></div>
+                                       </div>
+                                       <button on:click={()=> handlesjen(100)} style={`${walletRange === 100 ? `color:#ffff;` : ""}`} class="">Max</button>
+                                    </div>
+                                   {/if}
+                                    <button on:click={handleMinMax} class="sc-ywFzA dxoLcn">
                                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
                                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
                                     </button>
@@ -485,7 +508,7 @@ const handleCashout = (()=>{
     background-color: rgba(216, 222, 227, 0.4);
     transform-origin: left center;
 }
-.fCSgTW .fix-layer .slider {
+.gOLODp .fix-layer .slider {
     flex: 1 1 0%;
     height: 100%;
 }
@@ -498,19 +521,8 @@ const handleCashout = (()=>{
     padding: 0px 0.8125rem;
     cursor: pointer;
 }
-.fix-layer > button.active {
-    color: rgb(245, 246, 247);
-    font-weight: 600;
-    background-color: rgb(60, 64, 74);
-}
- .fix-layer > button {
-    height: 100%;
-    width: 2.5rem;
-    flex: 0 0 auto;
-    font-size: 0.75rem;
-    background-color: rgba(60, 64, 74, 0.5);
-}
-.fCSgTW .fix-layer .slider-after {
+
+.gOLODp .fix-layer .slider-after {
     width: 86%;
     left: 7%;
     height: 0.5rem;
@@ -527,35 +539,102 @@ const handleCashout = (()=>{
     top: 50%;
     margin-top: -1px;
 }
-.eOA-dmL .slider-handler-wrap {
-    flex: 1 1 0%;
-    position: relative;
-    z-index: 2;
-}
-.fCSgTW .fix-layer .slider-handler {
-    height: 100%;
-    position: relative;
-    background: none;
-}
-.eOA-dmL .slider-handler {
-    display: block;
-    width: 1.5rem;
-    height: 100%;
-    border-radius: 0.4375rem;
-    transform: translate(-50%, 0px);
-    background-color: rgb(216, 216, 216);
-    touch-action: pan-y;
-}
-.fCSgTW .fix-layer .slider-handler::after {
-    content: "";
+
+.gOLODp .fix-layer {
     position: absolute;
-    top: 20%;
-    bottom: 20%;
-    left: 0.3125rem;
-    width: 0.75rem;
-    border-radius: 0.375rem;
-    background-color: rgb(204, 207, 217);
+    right: 0px;
+    top: 2.875rem;
+    z-index: 2;
+    touch-action: pan-x;
+    width: 200px;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 0.625rem;
+    background-color: rgb(33, 35, 40);
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 7px 0px;
+}
+.gOLODp .fix-layer > button {
+    height: 100%;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    background-color: rgba(60, 64, 74, 0.5);
+}
+.gOLODp .fix-layer .slider {
+    flex: 1 1 0%;
+    height: 100%;
+}
+.gOLODp .fix-layer > button {
+    height: 100%;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    background-color: rgba(60, 64, 74, 0.5);
+}
+.gOLODp .fix-layer .slider {
+    flex: 1 1 0%;
+    height: 100%;
+}
+.eOA-dmL .slider-after {
+    height: 2px;
+    width: 98%;
+    position: absolute;
+    left: 1%;
+    top: 50%;
+    margin-top: -1px;
+}
+.eOA-dmL .slider-after {
+    background-color: rgba(216, 222, 227, 0.4);
+    transform-origin: left center;
 }
 
-
+.gOLODp .fix-layer .slider-before, .gOLODp .fix-layer .slider-after {
+    width: 86%;
+    left: 7%;
+    height: 0.5rem;
+    margin-top: -0.25rem;
+    border-radius: 0.25rem;
+    background-color: rgb(23, 24, 27);
+    transform: scaleX(1) !important;
+}
+.eOA-dmL .slider-before {
+    background-color: rgba(216, 222, 227, 0.4);
+    transform-origin: right center;
+}
+.eOA-dmL .slider-before, .eOA-dmL .slider-after {
+    height: 2px;
+    width: 98%;
+    position: absolute;
+    left: 1%;
+    top: 50%;
+    margin-top: -1px;
+}
+.drag-block::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: 0px;
+    /* Centers thumb on the track */
+    background-color: #feffff;
+    height: 1.5rem;
+    width: 1rem;
+    border-radius: 10px;
+    cursor: grabbing;
+}
+.drag-block {
+    position: absolute;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    background-color: transparent;
+    border-radius: 10px;
+    appearance: none;
+    width: 100%;
+    margin: 0px;
+    height: 100%;
+    cursor: grab;
+    -webkit-appearance: none;
+}
 </style>
