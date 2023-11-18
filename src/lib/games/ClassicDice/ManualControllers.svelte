@@ -5,12 +5,9 @@ import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
 import { payout, isbetLoadingBtn, betPosition, rollunder } from "./store";
-import { handleAuthToken } from "$lib/store/routes"
-import {dice_troo} from "$lib/games/ClassicDice/store/index"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
-import {  HandleDicePoint ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import { dice_history} from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
-import { browser } from '$app/environment';
 import {ServerURl } from "$lib/backendUrl"
 import { onMount  } from "svelte";
 import { handleCountdown } from "../ClassicDice/socket/index";
@@ -18,7 +15,6 @@ const { handleDicebet } = handleCountdown()
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 const URL = ServerURl()
 import {  soundHandler } from "../../games/ClassicDice/store/index"
-import axios from "axios";
 import cr from "./audio/click.wav";
 import win from "./audio/mixkit-achievement-bell-600.wav";
 
@@ -110,7 +106,6 @@ const handleRollSubmit = (async()=>{
             }
             else if( parseFloat(bet_amount) < 0.20 && $default_Wallet.coin_name === "USDT"){
                 error_msg.set("Minimum bet amount for USDT is 0.20")
-    
                  is_loading = false
                 setTimeout(()=>{
                     error_msg.set('')
