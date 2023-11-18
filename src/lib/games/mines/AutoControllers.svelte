@@ -5,7 +5,7 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
-import { payout, isbetLoadingBtn, betPosition } from "./store";
+import { payout, isbetLoadingBtn } from "./store";
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 
 import cr from "./audio/click-button-140881.mp3"
@@ -155,7 +155,6 @@ const handleRollSubmit = (async()=>{
                 bet_amount: parseFloat(uiocd),
                 bet_token_img: $default_Wallet.coin_image, 
                 bet_token_name: $default_Wallet.coin_name ,
-                chance: $betPosition,
                 payout: $payout,
                 wining_amount: parseFloat(uiocd * $payout) - parseFloat(uiocd)
             }

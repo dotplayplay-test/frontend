@@ -1,65 +1,104 @@
 <script>
-    import Gameview from "$lib/games/mines/gameview.svelte";
-    import "$lib/games/mines/styles/index.css"
-    import Controls from "$lib/games/mines/Controls.svelte";
-    import Icon from 'svelte-icons-pack/Icon.svelte';
-    import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
-    import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
-    import BiStats from "svelte-icons-pack/bi/BiStats";
-    import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
-    import { DicegameSocket } from "$lib/games/mines/socket/Socket"
-    import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
-    import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
-    import Allbet from "$lib/games/mines/componets/allbet.svelte";
-    import Mybet from "$lib/games/mines/componets/mybet.svelte";
-    import Hotkey from "$lib/games/mines/componets/hotkey.svelte";
-    import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
-    import SeedSetting from "$lib/games/mines/componets/seedSetting.svelte";
-    import Help from "$lib/games/mines/componets/help.svelte";
-    import { handleAuthToken } from "$lib/store/routes"
-    import { soundHandler } from "$lib/games/mines/store/index"
-     DicegameSocket()
-      
-
-    
-    let is_allbet = true
-    let is_mybet = false
-    let is_contest = false
-    const handleAllbet = ((e) => {
-        if (e === 1) {
-            is_allbet = true
-            is_mybet = false
-            is_contest = false
-        } else if (e === 2) {
-            is_allbet = false
-            is_mybet = true
-        } else {
-            is_contest = true
-            is_allbet = false
-            is_mybet = false
+import Gameview from "$lib/games/mines/gameview.svelte";
+import "$lib/games/mines/styles/index.css"
+import Controls from "$lib/games/mines/Controls.svelte";
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
+import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
+import IoMusicalNotes from "svelte-icons-pack/io/IoMusicalNotes";
+import BiStats from "svelte-icons-pack/bi/BiStats";
+import {onMount} from "svelte"
+import axios from "axios"
+import { handleAuthToken } from "$lib/store/routes"
+import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
+import { DicegameSocket } from "$lib/games/mines/socket/Socket"
+import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
+import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
+import Allbet from "$lib/games/mines/componets/allbet.svelte";
+import Mybet from "$lib/games/mines/componets/mybet.svelte";
+import Hotkey from "$lib/games/mines/componets/hotkey.svelte";
+import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
+import SeedSetting from "$lib/games/mines/componets/seedSetting.svelte";
+import Help from "$lib/games/mines/componets/help.svelte";
+import { soundHandler} from "$lib/games/mines/store/index"
+import {MinesEncription} from "$lib/games/mines/store/index"
+import background from "$lib/games/mines/audio/sadness.mp3"
+DicegameSocket()
+import { ServerURl } from "$lib/backendUrl"
+const URl = ServerURl()
+let is_loading = false
+const handleMinesGameEncrypt = (async()=>{
+    is_loading = true
+    await axios.get(`${URl}/api/user/mine-game/mine-encrypt`,{
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
         }
     })
-    
-    let is_hotkey = false
-    const handleHotKey = (()=>{
-      is_hotkey = !is_hotkey
+    .then((res)=>{
+        is_loading = false
+        MinesEncription.set(res.data[0])
     })
-    
-    let is_stats = false
-    let stats = (()=>{
-      is_stats = !is_stats
+    .catch((err)=>{
+        is_loading = false
+        console.log(err)
     })
-    let isSeed = false
-    const  hanhisSeed = (()=>{
-      isSeed = !isSeed
-    })
+})
+
+onMount(()=>{
+  $handleAuthToken && handleMinesGameEncrypt()
+})
+
+let playPlayb = false
+function playBackground() {
+    playPlayb =! playPlayb
+    if(playPlayb){
+        const audio = new Audio(background);
+        audio.volume = 1;
+        audio.play();
+    }else{
+        const audio = new Audio(background);        
+        audio.volume = 0;
+        audio.paused();
+    }
+}
     
-    let isHelp = false
-    
-    const handleIsHelp = (()=>{
-      isHelp = !isHelp
-    })
-    
+let is_allbet = true
+let is_mybet = false
+let is_contest = false
+const handleAllbet = ((e) => {
+    if (e === 1) {
+        is_allbet = true
+        is_mybet = false
+        is_contest = false
+    } else if (e === 2) {
+        is_allbet = false
+        is_mybet = true
+    } else {
+        is_contest = true
+        is_allbet = false
+        is_mybet = false
+    }
+})
+let is_hotkey = false
+const handleHotKey = (()=>{
+    is_hotkey = !is_hotkey
+})
+
+let is_stats = false
+let stats = (()=>{
+    is_stats = !is_stats
+})
+let isSeed = false
+const  hanhisSeed = (()=>{
+    isSeed = !isSeed
+})
+
+let isHelp = false
+const handleIsHelp = (()=>{
+    isHelp = !isHelp
+})
+ 
     
     const handleSoundState = (()=>{
         if($soundHandler){
@@ -88,9 +127,7 @@
     {/if}
     
     
-    
-    
-    
+    {#if !is_loading}
     <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
         <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
             <div class="game-area">
@@ -101,6 +138,9 @@
                     <div class="game-actions">
                         <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
                             <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
+                        </button>
+                        <button on:click={()=> playBackground()} class={`action-item ${playPlayb ? "active" : ""} `}>
+                            <Icon src={IoMusicalNotes} size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
                         </button>
                         <button on:click={handleHotKey} class="action-item ">
                             <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />
@@ -131,11 +171,12 @@
                     <div class="bg" style="left: 66.6667%; right: 0%;"></div>
                    {/if}
                 </div>
-                {#if is_allbet}
+                <Allbet />
+                <!-- {#if !is_allbet}
                 <Allbet />
                 {:else if is_mybet}
                 <Mybet />
-                {/if}
+                {/if} -->
             </div>
     
             <div class="sc-knKHOI cFxmZX">
@@ -158,10 +199,47 @@
             </div>
         </div>
     </div>
+{:else}
+    <div class="uytutfyh">
+        <div class="tdthuy">
+            <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg" alt="">
+        </div>
+    </div>
+{/if}
     
     
-    
-    <style>
+<style>
+.uytutfyh{
+    background-color: var(--background-color);
+    width: 100%;
+    height: 100vh;
+}
+.tdthuy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 500px;
+}
+.tdthuy img{
+    width: 120px;
+    background-color: rgba(51, 57, 57, 0.502);
+    padding: 20px;
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: monyy 3s infinite;
+}
+
+@keyframes monyy{
+    10%{
+        margin-right: -100px;
+    }
+
+    100%{
+        margin-right: 100px;
+    }
+}
+
     .ePAxUv {
         margin-top: 4rem;
     }

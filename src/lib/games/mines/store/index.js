@@ -3,17 +3,17 @@ import { writable } from "svelte/store"
 let payoutEl = ''
 export let payout = writable(payoutEl)
 
-let isbetDiceBTN = false
-export let isbetLoadingBtn = writable(isbetDiceBTN)
+let isbetMineBTN = false
+export let isbetLoadingBtn = writable(isbetMineBTN)
 
-let dicepoint = 50
-export let HandleDicePoint = writable(dicepoint)
+let mineGems = 0
+export let HandlemineGems = writable(mineGems)
 
-let betPositionEl = 50
-export let betPosition = writable(betPositionEl)
+let betDetail = 0
+export let betDetails = writable(betDetail)
 
-let dice_historyEl = []
-export let dice_history = writable(dice_historyEl)
+let mine_historyEl = []
+export let mine_history = writable(mine_historyEl)
 
 let Singledice_historyEl = []
 export let Singledice_history = writable(Singledice_historyEl)
@@ -40,5 +40,17 @@ let sounds = 1
 export let soundHandler = writable(sounds)
 
 
-let btn_constrolEl = false
-export let btn_constrol = writable(btn_constrolEl)
+let Cashoii = 0
+export let Cashout = writable(Cashoii)
+
+let mine_sd = []
+export let minesStore = writable(mine_sd)
+
+let MineEncriptionEL = ""
+export let MinesEncription = writable(MineEncriptionEL)
+
+let mineIsUp = false
+export let HandleIsAlive = writable(mineIsUp)
+
+let winnig = ""
+export let HandleWinning= writable(winnig)
