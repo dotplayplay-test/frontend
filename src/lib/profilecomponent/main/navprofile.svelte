@@ -1,8 +1,39 @@
 <script>
 import {goto} from "$app/navigation";
 import {handleLogout } from "$lib/firebaseAuth/index";
-import { profileStore} from "../../store/profile";
+import { profileStore, proressbar} from "../../store/profile";
 import { statisticsEl } from "$lib/store/statistic";
+import { handleAuthToken } from "$lib/store/routes";
+import axios from "axios"
+import { onMount } from "svelte";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+
+const handleProfile = (async()=>{
+    try{
+        await axios.get(`${URL}/api/profile`,{
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        let response = res.data.users[0]
+        proressbar.set(response)
+    })
+    .catch((err)=>{
+         console.log(err)
+    })
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
+onMount(async()=>{
+   await handleProfile()
+})
+
 const handleSignOut = (()=>{
     handleLogout()
 })
@@ -147,13 +178,13 @@ const handleStatistics = (()=>{
     </div>
     <div class="vip-info notranslate">
         <div class="num">
-            <p>vip {$profileStore.vip_level}</p>
-            <p><span>Need {$profileStore.next_level_point} xp</span>vip {parseInt($profileStore.vip_level) + 1} </div>
+            <p>vip {$proressbar.vip_level}</p>
+            <p><span>Need {$proressbar.next_level_point} xp</span>vip {parseInt($proressbar.vip_level) + 1} </div>
         <div class="vip-bg">
             <div class="bg">
-                <div class="status" style={`width: ${(parseFloat($profileStore.vip_progress)).toFixed(0)}%; background: rgb(145, 150, 168);`}></div>
+                <div class="status" style={`width: ${(parseFloat($proressbar.vip_progress)).toFixed(0)}%; background: rgb(145, 150, 168);`}></div>
             </div>
-            <div class="bg_status" style="color: rgb(145, 150, 168);">{(parseFloat($profileStore.vip_progress)).toFixed(0)}%</div>
+            <div class="bg_status" style="color: rgb(145, 150, 168);">{(parseFloat($proressbar.vip_progress)).toFixed(2)}%</div>
         </div>
     </div>
     {:else}
@@ -194,15 +225,15 @@ const handleStatistics = (()=>{
                        PDDSwap
                    </div>
                </button>
-               <div class="link-item">
+               <button on:click={()=> goto("/wallet/transaction")} class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Transaction"></use>
                        </svg>
                        Transactions
                    </div>
-               </div>
-               <button on:click={()=> goto("/wallet/vault")} class="link-item">
+               </button>
+               <button  class="link-item">
                    <div class="hover">
                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
                            <use xlink:href="#icon_Vault"></use>

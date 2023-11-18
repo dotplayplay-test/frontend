@@ -5,8 +5,9 @@ import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 const { historyD } = DiceHistory()
-import {dice_troo} from "$lib/games/ClassicDice/store/index"
+import {dice_troo, dice_wallet} from "$lib/games/ClassicDice/store/index"
 import { onMount } from "svelte";
+import { isbetLoadingBtn } from "./store";
 import { default_Wallet, coin_list } from "$lib/store/coins";
 import { handleisLoggin, profileStore } from "../../store/profile"
 import HistoryDetails from "./componets/historyDetails.svelte";
@@ -23,6 +24,12 @@ $:{
 }
 
 $:{
+    if(range < 0){
+        range = 2
+    }
+    if(range > 98){
+        range = 98
+    }
     betPosition.set(range)
 }
 
@@ -87,10 +94,10 @@ const handleChange = ((e)=>{
 
 $:{
     if($betPosition < 0){
-        $betPosition = 0.01
+        $betPosition = 2
     }
     if($payout > 9900){
-        $payout = 9900
+        $payout = 98
     }
     if($payout < 1.0102){
         $payout = 1.0102
@@ -121,46 +128,65 @@ let history
 $:{
     history  = [...$dice_history]
 }
+
 $:{
-    $dice_troo.forEach(element => {
+    if($dice_wallet.length > 0){
+        $dice_wallet.forEach(element => {
+        if($profileStore.user_id === element.user_id){
+            let wallet = {
+                coin_name: element.token,
+                coin_image: element.token_img,
+                balance:  element.current_amount
+             }
+             default_Wallet.set(wallet)
+        }
+    });
+    }
+}
+
+
+$:{
+    if($dice_troo.length > 0){
+        $dice_troo.forEach(element => {
         if($profileStore.user_id === element.user_id){
             dice_history.set(history)
             HandleDicePoint.set(element.cashout)
             history.push(element)
+            isbetLoadingBtn.set()
+            dice_troo.set([])
             if(element.has_won){
-                let wallet = {
-                coin_name: $default_Wallet.coin_name ,
-                coin_image: $default_Wallet.coin_image,
-                balance:  (parseFloat(element.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
-             }
-             $coin_list.forEach(coin => {
-                if(coin.coin_name === $default_Wallet.coin_name){
-                    coin.balance = parseFloat(wallet.balance)
-                }
-                playSoundR(2)
-             });
-             default_Wallet.set(wallet)
+            //     let wallet = {
+            //     coin_name: $default_Wallet.coin_name ,
+            //     coin_image: $default_Wallet.coin_image,
+            //     balance:  (parseFloat(element.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
+            //  }
+            //  default_Wallet.set(wallet)
+            //  $coin_list.forEach(coin => {
+            //     if(coin.coin_name === $default_Wallet.coin_name){
+            //         coin.balance = parseFloat(wallet.balance)
+            //     }
+            //  });
+             playSoundR(2)
              HandleHas_won.set(true)
             }else{
-                let wallet = {
-                coin_name: $default_Wallet.coin_name ,
-                coin_image: $default_Wallet.coin_image,
-                balance: (parseFloat($default_Wallet.balance) - parseFloat(element.bet_amount)).toFixed(4)
-            }
-            $coin_list.forEach(coin => {
-                if(coin.coin_name === $default_Wallet.coin_name){
-                    coin.balance = parseFloat(wallet.balance)
-                }
-             });
-                default_Wallet.set(wallet)
+            //     let wallet = {
+            //     coin_name: $default_Wallet.coin_name ,
+            //     coin_image: $default_Wallet.coin_image,
+            //     balance: (parseFloat($default_Wallet.balance) - parseFloat(element.bet_amount)).toFixed(4)
+            // }
+            // default_Wallet.set(wallet)
+            // $coin_list.forEach(coin => {
+            //     if(coin.coin_name === $default_Wallet.coin_name){
+            //         coin.balance = parseFloat(wallet.balance)
+            //     }
+            //  });
                 HandleHas_won.set(false)
             }
         }
     }); 
+    }
+
 }
-
-
-
 
 </script>
 

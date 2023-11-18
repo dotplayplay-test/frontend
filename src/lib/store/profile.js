@@ -4,8 +4,11 @@ let isLoggin = false
 let isLoading = true
 let first_loadEl = false
 let app_loadingEl = false
+let procress = 0
+
 
 export let profileStore = writable(profile)
+export let proressbar = writable(procress)
 export let handleisLoggin = writable(isLoggin)
 export let handleisLoading = writable(isLoading)
 export let first_load = writable(first_loadEl)

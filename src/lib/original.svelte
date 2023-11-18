@@ -72,7 +72,7 @@ const handleOriginalRoute = ((e, i) => {
 <div class="orginal-game-routes" style={`left: ${styls ? 240 : 76}px;`}>
     <div class="orginal-game-routes-container">
         {#each games as game (game.id)}
-        <button on:click={()=> handleOriginalRoute(game.route, 2)}>
+        <button on:click={()=> handleOriginalRoute(`/${game.route}`, 2)}>
             <div class={game.isAtive ? "IsActive-original-content" : "original-content"}>
                 <div class="icon">
                     <Icon src={game.icon} />

@@ -53,3 +53,5 @@ export let rollunder = writable(rollunderEl)
 
 let dice_trooEL = []
 export let dice_troo = writable(dice_trooEL)
+let dice_waa = []
+export let dice_wallet = writable(dice_waa)

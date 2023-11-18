@@ -1,7 +1,28 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import { UserProfileEl } from "$lib/index"
+const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
+import { onMount} from 'svelte'
+import {  coin_list } from "$lib/store/coins";
+
+onMount(async()=>{
+    let usdt = await handleUSDTwallet()
+    let ppd = await handlePPDwallet()
+    let ppl = await handlePPLwallet()
+    let ppf = await handlePPFwallet()
+    coin_list.set([usdt, ppd, ppl, ppf] )
+})
+
+let balanceop = 0
+$coin_list.forEach(element => {
+    if(element.coin_name === "USDT" || element.coin_name === "PPL" || element.coin_name === "PPD" ){
+        balanceop += element.balance
+    }
+});
+
 </script>
+
 
 <div class="scglv9m wallet-balance">
     <div class="balance-head">
@@ -9,16 +30,25 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
             <img src="https://bc.game/assets/coin.8d5cf053.png" alt="">
             <div>
                 <div class="tit">Total Balance</div>
-                <div class="balance">$ 0</div>
+                <div class="balance">${(parseFloat(balanceop)).toFixed(6)}</div>
             </div>
         </div>
         <div class="real-money">
             <div class="sub-tit">Real Money</div>
-            <div class="amount">$ 0</div>
+            {#each $coin_list as oi }
+            {#if oi.coin_name === "USDT"}
+            <div class="amount">${(parseFloat(oi.balance)).toFixed(4)}</div>
+            {/if}
+            
+        {/each}
         </div>
         <div class="bonus-money">
             <div class="sub-tit">Bonus Money</div>
-            <div class="amount">$ 0</div>
+            {#each $coin_list as oi }
+            {#if oi.coin_name === "PPD"}
+                <div class="amount">${(parseFloat(oi.balance)).toFixed(4)}</div>
+            {/if}
+            {/each}
         </div>
     </div>
 
@@ -31,13 +61,15 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
     </div>
     <div class="crypto-list">
         <div class="list-tit">Crypto Currency</div>
+        {#each $coin_list as pip}
         <div class="currency-item-wrap">
+           
             <div class="c1ubyjee currency-item notranslate">
                 <div class="coin-wrap">
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+                    <img class="coin-icon" alt="" src={pip.coin_image}>
                 </div>
                     <div class="name-wrap">
-                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
+                        <div class="currency-name">{pip.coin_name}<button class="ui-button button-normal b1d79k6a">
                             <!-- <div class="button-inner">
                                 <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                             </div> -->
@@ -47,83 +79,13 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                 <div class="amount-wrap">
                     <div class="amount-info">
                         <div class="cy2znlo coin notranslate monospace">
-                            <div class="amount amount-str"> 99996.22</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        <div class="currency-item-wrap">
-            <div class="c1ubyjee currency-item notranslate">
-                <div class="coin-wrap">
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
-                            <!-- <div class="button-inner">
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
-                            </div> -->
-                        </button>
-                    </div>
-                </div>
-                <div class="amount-wrap">
-                    <div class="amount-info">
-                        <div class="cy2znlo coin notranslate monospace">
-                            <div class="amount amount-str"> 99996.22</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-        <div class="currency-item-wrap">
-            <div class="c1ubyjee currency-item notranslate">
-                <div class="coin-wrap">
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
-                            <!-- <div class="button-inner">
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
-                            </div> -->
-                        </button>
-                    </div>
-                </div>
-                <div class="amount-wrap">
-                    <div class="amount-info">
-                        <div class="cy2znlo coin notranslate monospace">
-                            <div class="amount amount-str"> 99996.22</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-        <div class="currency-item-wrap">
-            <div class="c1ubyjee currency-item notranslate">
-                <div class="coin-wrap">
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">PPF<button class="ui-button button-normal b1d79k6a">
-                            <!-- <div class="button-inner">
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
-                            </div> -->
-                        </button>
-                    </div>
-                </div>
-                <div class="amount-wrap">
-                    <div class="amount-info">
-                        <div class="cy2znlo coin notranslate monospace">
-                            <div class="amount amount-str"> 99996.22</div>
+                            <div class="amount amount-str">{(parseFloat(pip.balance)).toFixed(4)}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {/each}
     </div>
 </div>
 </div>
@@ -195,6 +157,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
     flex-direction: column;
     background-color: #31343c;
     padding: 1rem 2rem;
+    margin-top: 20px;
     border-radius: .25rem;
 }
 .s1lzp5ru .currency-opt {
@@ -256,8 +219,8 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
     -ms-flex-align: center;
     align-items: center;
     background-color: #24262B;
-    border-radius: 0.25rem;
-    margin-bottom: 0.0625rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.0625rem;
 }
 .s1lzp5ru .currency-item-wrap .currency-item {
     -webkit-flex: auto;

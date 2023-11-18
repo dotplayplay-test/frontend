@@ -21,9 +21,9 @@ import click from "$lib/games/ClassicDice/audio/click.wav"
 import cr from "$lib/games/ClassicDice/audio/click.wav"
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
 import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
-    import LiveStats from "../../../lib/games/ClassicDice/componets/liveStats.svelte";
+    import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
     import Help from "../crash/help.svelte";
-    import SeedSetting from "../../../lib/games/ClassicDice/componets/seedSetting.svelte";
+    import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 let range = 50
 
 $:{

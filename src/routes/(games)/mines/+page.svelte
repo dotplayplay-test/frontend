@@ -16,10 +16,11 @@
     import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
     import SeedSetting from "$lib/games/mines/componets/seedSetting.svelte";
     import Help from "$lib/games/mines/componets/help.svelte";
+    import { handleAuthToken } from "$lib/store/routes"
     import { soundHandler } from "$lib/games/mines/store/index"
      DicegameSocket()
       
-    
+
     
     let is_allbet = true
     let is_mybet = false

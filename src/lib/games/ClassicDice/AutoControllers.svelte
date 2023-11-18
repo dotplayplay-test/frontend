@@ -24,27 +24,33 @@ let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
-let uiocd = 4
+let uiocd = 0
 let wining_amount = '' ;
-if($default_Wallet.coin_name === "USDT"){
-    uiocd = (0.20).toFixed(4)
-}else{
-    uiocd = (100).toFixed(4)
-}
 
 
+let walletRange = 0
+let x = 0;
 $:{
     wining_amount = (uiocd * $payout).toFixed(4)
+    if($default_Wallet.coin_name === "USDT"){
+        if(uiocd < 0.20){
+            uiocd = (0.20).toFixed(4)
+        }
+        if(uiocd < 5000){
+            uiocd = (5000).toFixed(4)
+        }
+    }
+    else{
+        if(uiocd < 100){
+            uiocd = (100).toFixed(4)
+        }
+        if(uiocd > 10000){
+            uiocd = (10000).toFixed(4)
+        }
+    }
 }
 
 
-// $:{
-//     uiocd = $handlediceAutoInput
-// }
-
-export const handleTransmit = (()=>{
-    
-})
 
 let bet_number = 0
 let on_win = false
@@ -75,6 +81,10 @@ function playSound(e) {
 const dive = (()=>{
     uiocd = (uiocd / 2).toFixed(4)
     handlediceAutoInput.set(uiocd)
+})
+
+const handleRangeSTlop = ((eui)=>{
+    uiocd = (parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4)
 })
 
 const mult = (()=>{
@@ -134,7 +144,7 @@ $:{
     history  = [...$dice_history]
 }
 
-let non = 0
+let non = 1
 const handleRollSubmit = (async()=>{
     // if(browser && window.navigator.onLine){
     if($handleisLoggin){
@@ -203,14 +213,13 @@ const handleRollSubmit = (async()=>{
                 chance: parseFloat($betPosition).toFixed(2),
                 payout: parseFloat($payout),
                 time: new Date(),
-                wining_amount: parseFloat(wining_amount) -  parseFloat(uiocd)
+                wining_amount: parseFloat(uiocd) - parseFloat(wining_amount)
             }
+            non += 1
             setTimeout(()=>{
             handleDicebet(data)
-                non += 1
             },1000)
-
-
+            
     //         await axios.post(`${URL}/api/user/dice-game/bet`, {
     //             data
     //         },{
@@ -282,7 +291,10 @@ const handleRollSubmit = (async()=>{
 // }
 })
 
-
+const handlesjen = ((e)=>{
+    uiocd = (parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4)
+    walletRange = e
+})
 
 </script>
 
@@ -329,17 +341,15 @@ const handleRollSubmit = (async()=>{
                     <button on:click={()=> mult() }>x2</button>
                     {#if is_min_max }
                      <div class="fix-layer" style="opacity: 1; transform: none;">
-                        <button  class="">Min</button>
+                        <button on:click={()=>  handlesjen(0) } style={`${walletRange === 0 ? `color:#ffff;` : ""}`} class="">Min</button>
                         <div class="sc-kLwhqv eOA-dmL slider">
-                           <div class="slider-after" style="transform: scaleX(10.001001);"></div>
-                           <div class="slider-handler-wrap" style="transform: translateX(0.1001%);">
-                              <button class="slider-handler"></button>
-                           </div>
-                           <div class="slider-before" style="transform: scaleX(10.998999);"></div>
+                           <div class="slider-after" style="transform: scaleX(100.001001);"></div>
+                             <input type="range" class="drag-block" on:input={(e)=> handleRangeSTlop(e.target.value)} bind:value={walletRange}>
+                           <div class="slider-before" style="transform: scaleX(100.998999);"></div>
                         </div>
-                        <button class="">Max</button>
+                        <button on:click={()=> handlesjen(100)} style={`${walletRange === 100 ? `color:#ffff;` : ""}`} class="">Max</button>
                      </div>
-                    {/if }
+                {/if}
 
                     <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />
@@ -432,7 +442,31 @@ const handleRollSubmit = (async()=>{
 
 
 <style>
-
+.drag-block {
+    position: absolute;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    background-color: transparent;
+    border-radius: 10px;
+    appearance: none;
+    width: 100%;
+    margin: 0px;
+    height: 100%;
+    cursor: grab;
+    -webkit-appearance: none;
+}
+.drag-block::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: 0px;
+    /* Centers thumb on the track */
+    background-color: #feffff;
+    height: 1.5rem;
+    width: 1rem;
+    border-radius: 10px;
+    cursor: grabbing;
+}
 .fCSgTW .fix-layer {
     position: absolute;
     right: 0px;
@@ -499,11 +533,6 @@ const handleRollSubmit = (async()=>{
     background-color: rgb(23, 24, 27);
     transform: scaleX(1) !important;
 }
-.eOA-dmL .slider-handler-wrap {
-    flex: 1 1 0%;
-    position: relative;
-    z-index: 2;
-}
 .eOA-dmL .slider-after {
     height: 2px;
     width: 98%;
@@ -516,35 +545,7 @@ const handleRollSubmit = (async()=>{
     background-color: rgba(216, 222, 227, 0.4);
     transform-origin: left center;
 }
-.eOA-dmL .slider-handler-wrap {
-    flex: 1 1 0%;
-    position: relative;
-    z-index: 2;
-}
-.fCSgTW .fix-layer .slider-handler {
-    height: 100%;
-    position: relative;
-    background: none;
-}
-.eOA-dmL .slider-handler {
-    display: block;
-    width: 1.5rem;
-    height: 100%;
-    border-radius: 0.4375rem;
-    transform: translate(-50%, 0px);
-    background-color: rgb(216, 216, 216);
-    touch-action: pan-y;
-}
-.fCSgTW .fix-layer .slider-handler::after {
-    content: "";
-    position: absolute;
-    top: 20%;
-    bottom: 20%;
-    left: 0.3125rem;
-    width: 0.75rem;
-    border-radius: 0.375rem;
-    background-color: rgb(204, 207, 217);
-}
+
 .fCSgTW .fix-layer .slider-before, .fCSgTW .fix-layer .slider-after {
     width: 86%;
     left: 7%;

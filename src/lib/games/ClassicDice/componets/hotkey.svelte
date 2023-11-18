@@ -17,7 +17,7 @@ const handleCloseHelp = (() => {
             <div class="dialog-title">Hot keys</div>
         </div>
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" />
         </button>
 
         <div class="dialog-body default-style " style="z-index: 2; transform: none;">

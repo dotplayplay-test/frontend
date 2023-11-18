@@ -143,13 +143,13 @@ const handleSoundState = (()=>{
                     <button on:click={()=>handleAllbet(1)} class={`tabs-nav ${is_allbet && "is-active"}`}>All Bets</button>
                     <button on:click={()=>handleAllbet(2)} class={`tabs-nav ${is_mybet && "is-active"}`}>My Bets</button>
                     <button on:click={()=>handleAllbet(3)} class={`tabs-nav ${is_contest && "is-active"}`}>Contest</button>
-                    {#if is_allbet}
-                    <div class="bg" style={`left: 0%; right: 66.6667%;`}></div>
-                    {:else if is_mybet}
-                    <div class="bg" style="left: 33.3333%; right: 33.3333%;"></div>
-                    {:else if is_contest}
-                    <div class="bg" style="left: 66.6667%; right: 0%;"></div>
-                   {/if}
+            {#if is_allbet}
+                <div class="bg" style={`left: 0%; right: 66.6667%;`}></div>
+            {:else if is_mybet}
+                <div class="bg" style="left: 33.3333%; right: 33.3333%;"></div>
+            {:else if is_contest}
+                <div class="bg" style="left: 66.6667%; right: 0%;"></div>
+            {/if}
                 </div>
                 {#if is_allbet}
                 <Allbet />

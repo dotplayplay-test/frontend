@@ -84,7 +84,7 @@ networks.forEach(element => {
                           <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">
                           <span class="alias">USDT</span>
                           <div class="balance">Balance</div>
-                          <div class="amount">{$usdt_Wallet.balance}</div>
+                          <div class="amount">{(parseFloat($usdt_Wallet.balance)).toFixed(4)}</div>
                           <div class="arrow ">
                             <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                           </div>
@@ -99,7 +99,7 @@ networks.forEach(element => {
                         {actice_network.network}
                         <div class="arrow ">
                             <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
-                          </div>
+                        </div>
                     </button>
                     {#if is_open}
                     <div class="select-options-wrap" style="top: 100%; opacity: 1; transform: none;">
@@ -129,7 +129,7 @@ networks.forEach(element => {
                         <div style="font-size: 12px;">Min: 5.6</div>
                     </div>
                 </div>
-                <div class="input-control">
+                <div style={` ${ amount && amount < 5.6 && `border: 1px solid red;`}; ${amount > parseFloat($usdt_Wallet.balance) && `border: 1px solid red;`} `} class="input-control">
                     <input type="number" placeholder="0.000" bind:value={amount}></div>
                 </div>
             </div>
@@ -177,7 +177,7 @@ networks.forEach(element => {
                 <p><span class="cl-primary">Notice:</span> For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</p>
             </div>
 
-            <button on:click={handleSubmit} class="ui-button button-normal s-conic submit-btn">
+            <button disabled={amount && amount < 5.6 || amount > parseFloat($usdt_Wallet.balance)} on:click={handleSubmit} class="ui-button button-normal s-conic submit-btn">
                 <div class="button-inner">Confirm</div>
             </button>
      </div>
@@ -200,6 +200,10 @@ networks.forEach(element => {
     width: 100%;
     left: 0;
     z-index: 2;
+}
+.s-conic:disabled.ui-button:not(.is-loading) {
+    opacity: 0.5;
+    cursor: default;
 }
 .ui-select .select-options {
     background-color: transparent;

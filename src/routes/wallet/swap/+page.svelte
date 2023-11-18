@@ -2,10 +2,32 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertical";
+import Coins from './coins.svelte';
+import { UserProfileEl } from "$lib/index"
+const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
+import { default_Wallet, coin_list } from "$lib/store/coins";
+import { createEventDispatcher , onMount} from 'svelte'
+let is_open = false
+const handleCOins = (()=>{
+    is_open =! is_open
+})
+
+onMount(async()=>{
+    let usdt = await handleUSDTwallet()
+    let ppd = await handlePPDwallet()
+    let ppl = await handlePPLwallet()
+    let ppf = await handlePPFwallet()
+    coin_list.set([usdt, ppd, ppl, ppf] )
+})
+
 </script>
 
 
 <div class="right-info">
+    {#if is_open}
+    <Coins on:close={handleCOins} />
+    {/if}
+   
    <div class="s1j4cqzb">
       <div class="swap-record">
       <div>You get Approximately</div>
@@ -16,11 +38,11 @@ import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertica
          <div class="input-control">
             <input type="text" value="0">
             <button class="max-btn">Max</button>
-            <div class="input-pre">
+            <button on:click={handleCOins} class="input-pre">
                <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                <span class="currency">USDT</span>
                <Icon src={RiSystemArrowDownSLine}  size="18"  color="rgb(255, 255, 255)"   />
-            </div>
+            </button>
          </div>
       </div>
       <div class="btn-exchange">
@@ -31,11 +53,11 @@ import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertica
       <div class="ui-input s16h1zvs to-input">
          <div class="input-control">
             <input type="text" value="0">
-            <div class="input-pre">
+            <button on:click={handleCOins} class="input-pre">
                <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                <span class="currency">BCD</span>
                <Icon src={RiSystemArrowDownSLine}  size="18"  color="rgb(255, 255, 255)"   />
-            </div>
+            </button>
          </div>
       </div>
    </div>
@@ -120,15 +142,17 @@ import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertica
     border-bottom: 2px solid #2d3035;
 }
 .s1j4cqzb .input-wrap .from-input .input-control {
-    border-top-left-radius: var(--border-radius);
+    /* border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
-    border: none;
+    border: none; */
+    padding-left: 10px;
 }
 .s1orvhr .ui-input .input-control {
     height: 3rem;
     background-color: #1E2024;
     border: none;
     display: flex;
+    padding-left: 10px;
 }
 
 .s16h1zvs div.input-control input {
@@ -260,7 +284,7 @@ import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertica
     -ms-flex-pack: start;
     justify-content: flex-start;
     color: #fff;
-    border-radius: var(--border-radius);
+    /* border-radius: var(--border-radius); */
     margin-bottom: 1px;
 }
 .tips .item {

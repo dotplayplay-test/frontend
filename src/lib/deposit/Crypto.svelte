@@ -7,7 +7,7 @@ import {onMount} from "svelte"
 import { is_loading, deposit_info } from "$lib/store/deposit"
 import { handleAuthToken } from "$lib/store/routes";
 import { ServerURl } from "$lib/backendUrl"
-import { default_Wallet, coin_list } from "$lib/store/coins";
+import { coin_list } from "$lib/store/coins";
 const url = ServerURl()
 
 
@@ -162,7 +162,7 @@ setInterval(()=>{
                     <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">
                     <span class="alias">USDT</span>
                     <div class="balance">Balance</div>
-                    <div class="amount">{active_coin.balance}</div>
+                    <div class="amount">{(parseFloat(active_coin.balance)).toFixed(4)}</div>
                      <div class="arrow ">
                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                     </div>
@@ -239,7 +239,12 @@ setInterval(()=>{
                     </div>
                     <div class="address-info">
                         <div class="sub-tit">Deposit Address</div>
+                        {#if hours <= 0 && minutes <= 0 && minutes <= 0 && seconds <= 0}
+                        <div>Deposit Address has: <span style="color: yellow; letter-spacing:1px"> Expired </div>
+                        {:else}
                         <div>Expire in: <span style="color: yellow; letter-spacing:1px"> {`${ typeof hours === "number"  && hours}hr : ${ typeof minutes === "number" && minutes}m : ${typeof seconds === "number" && seconds}s`}</span> </div>
+                        {/if}
+                       
                         <div style="color: green; font-size:13px">{address_msg}</div>
                         <div class="cont">
                             <div class="notranslate address-text">

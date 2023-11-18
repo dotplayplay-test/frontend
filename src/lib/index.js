@@ -6,28 +6,25 @@ const URL = ServerURl()
 
 export  const UserProfileEl = () => {
 first_load.set(true)
-let error = false
 const id = browser && JSON.parse(localStorage.getItem('user'))
 
-const handleDefaultwallet = async () => {
-    // const response = await fetch(
-    //     `${URL}/api/wallet/default-wallets`,{
-    //         method: "GET",
-    //         headers: {
-    //         "Content-type": "application/json",
-    //         "Authorization": `Bearer ${id}`
-    //         },
-    //     }
-    //     );
-    //     const json = await response.json();
-
-    //     if(!response.ok){
-    //     (json)
-    //     }
-    //     if (response.ok) {
-    //     default_Wallet.set(json[0]) 
-    //     }
-    };
+const handleprofile = async () => {
+const response = await fetch( `${URL}/api/profile`,{
+        method: "GET",
+        headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${id}`
+        }
+    }
+    );
+    const json = await response.json();
+    if(!response.ok){
+    (json)
+    }
+    if (response.ok) {
+        return json.users[0]
+    }
+};
 
 
 const handlePPDwallet = async () => {
@@ -42,7 +39,7 @@ const handlePPDwallet = async () => {
         );
         const json = await response.json();
         if (response.ok) {
-        ppdWallet.set(json[0]) 
+        return json[0]
         }
     };
                    
@@ -58,7 +55,7 @@ const handlePPDwallet = async () => {
             );
             const json = await response.json();
             if (response.ok) {
-                pplWallet.set(json[0])
+                return json[0] 
             }
         };
             
@@ -74,7 +71,7 @@ const handlePPFwallet = async () => {
     );
     const json = await response.json();
     if (response.ok) {
-        ppfWallet.set(json[0]) 
+        return json[0] 
     }
 };
 const handleUSDTwallet = async () => {
@@ -93,5 +90,5 @@ const json = await response.json();
     }
 };
 
-    return { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet, handlePPDwallet }
+    return { handleprofile, handleUSDTwallet, handlePPFwallet, handlePPLwallet, handlePPDwallet }
 };

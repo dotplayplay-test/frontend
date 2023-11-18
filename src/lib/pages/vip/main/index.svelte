@@ -22,8 +22,6 @@ const handleNavigate = (slide) => {
     }
 }
 
-$: console.log($profileStore)
-
 
 </script>
 

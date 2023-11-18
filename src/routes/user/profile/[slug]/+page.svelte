@@ -29,8 +29,8 @@ import { userStatistics } from "$lib/store/statistic"
 import UserProfile from '$lib/user-profile/user-profile.svelte';
 import Statistics from '$lib/user-profile/statistics.svelte';
 
-let is_loadingel
-let is_loading
+let is_loadingel = false
+let is_loading = false
 async function fetchData() {
     is_loadingel = true
     await axios.post(`${URL}/api/users/profile/${$page.params.slug}`)
@@ -72,11 +72,6 @@ onMount(async()=>{
     fetchData();
 })
 
-
-$: {
-    is_loadingel
-}
-
 let is_mobile = false
 $:{
     if (browser && window.innerWidth < 650) {
@@ -104,7 +99,7 @@ $:{
                 <div class="dialog-title">User Information</div>
                 <div class="sc-hgJWpk cGdWiX vip-level">
                     <div class="vip-box" style="background-image: url(&quot;https://static.nanogames.io/assets/vip_type1.9697d4e3.svg&quot;);">
-                       {!is_loadingel && !is_loading && $users_profile.vip_level ? `V ${$users_profile.vip_level} `: ""}</div>
+                       {!is_loadingel && $users_profile ? `V ${$users_profile.vip_level} `: ""}</div>
                 </div>
             {:else if is_edit}
                 <div class="dialog-title">Nickname</div>
@@ -386,7 +381,7 @@ $:{
                                     </span>
                                     Total Wagered
                                 </div>
-                                <div class="item-value">{$userStatistics.total_wagered} USD</div>
+                                <div class="item-value">{$users_profile.total_wagered} USD</div>
                             </div>
                         </div>
                     </div>
@@ -524,7 +519,7 @@ $:{
                                     </span>
                                     Total Wagered
                                 </div>
-                                <div class="item-value">{$userStatistics.total_wagered} USD</div>
+                                <div class="item-value">{$users_profile.total_wagered} USD</div>
                             </div>
                         </div>
                     </div>

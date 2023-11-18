@@ -3,21 +3,28 @@ import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import { createEventDispatcher , onMount} from 'svelte'
 const dispatch = createEventDispatcher()
-import axios from "axios";
+import { UserProfileEl } from "../../index"
 import { updateCoins } from "./updateCoin"
 const { useCoinUpdate } = updateCoins()
 import { profileStore, handleisLoading, handleisLoggin, app_Loading } from "$lib/store/profile";
-import { handleAuthToken } from "$lib/store/routes";
 import { default_Wallet, coin_list } from "$lib/store/coins";
 import { browser } from '$app/environment'
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 let show_currencyName
+const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
 
 $:{
     show_currencyName = browser && JSON.parse(localStorage.getItem('show-full-curency'))
 }
 
+onMount(async()=>{
+    let usdt = await handleUSDTwallet()
+    let ppd = await handlePPDwallet()
+    let ppl = await handlePPLwallet()
+    let ppf = await handlePPFwallet()
+    coin_list.set([usdt, ppd, ppl, ppf] )
+})
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)

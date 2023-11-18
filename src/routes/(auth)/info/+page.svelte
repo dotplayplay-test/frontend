@@ -3,7 +3,7 @@ import { browser } from '$app/environment';
 import { error_msg } from "./store";
 import axios from "axios";
 import { onMount } from "svelte";
-import {  goto } from "$app/navigation";
+import { goto } from "$app/navigation";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { profileStore } from "$lib/store/profile";
@@ -167,7 +167,7 @@ onMount(() => {
             <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1698231569/dpp-logowhite_qv3nij.png">
         </div>
         <button on:click={()=> handleClose()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
             <div class="welcome">

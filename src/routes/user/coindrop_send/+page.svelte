@@ -7,21 +7,19 @@ import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine"
 import { usePublicMessages } from "$lib/chat-room/componets/index"
 import { UserProfileEl } from "$lib/index";
 import { onMount } from 'svelte';
-const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet,  handlePPLwallet, handlePPDwallet } = UserProfileEl()
+const { handleUSDTwallet, handlePPFwallet,  handlePPLwallet, handlePPDwallet } = UserProfileEl()
 const { sendMessage } = usePublicMessages()
 import { ppdWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
 import { profileStore } from '$lib/store/profile';
 
 $:{
     onMount(async()=>{
-        handleDefaultwallet()
         handleUSDTwallet()
         handlePPFwallet()
         handlePPLwallet()
         handlePPDwallet()
     })
 }
-
 
 let coins = [{
         id: 1,

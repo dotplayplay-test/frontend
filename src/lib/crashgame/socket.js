@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
-const URL = "https://dpp-f82256e6e6d2.herokuapp.com"
-// const URL = "http://localhost:3000"
+import {RealTimeURl} from "$lib/backendUrl"
+const URL = RealTimeURl()
+
 const socket = io(`${URL}`);
 import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,v_default,
      loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,green_trendball_hasWinEl,Moon_trendball_hasWinEl,
