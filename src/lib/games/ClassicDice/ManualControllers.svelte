@@ -138,7 +138,6 @@ const handleRollSubmit = (async()=>{
                 }
                 isbetLoadingBtn.set(true)
                 non += 1
-                console.log(data)
                 handleDicebet(data)
                 setTimeout(()=>{
                      is_loading = false
