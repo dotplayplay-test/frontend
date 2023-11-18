@@ -1,6 +1,6 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder, flix} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
@@ -16,6 +16,8 @@ import click from "./audio/click.wav"
 import cr from "./audio/click.wav"
 import win from "./audio/mixkit-achievement-bell-600.wav";
 let range = 50
+let rangeEl = 50
+let flip = 50
 
 $:{
     onMount(async()=>{
@@ -31,6 +33,7 @@ $:{
         range = 98
     }
     betPosition.set(range)
+    flix.set(rangeEl)
 }
 
 let ishover = false
@@ -41,22 +44,38 @@ const handleRangl = ((w)=>{
         ishover = false
     }
 })
+let pop = 0
 
 let houseEgde = 1
 let game__charges = 100 / houseEgde
 let game_logic;
 let total_charge;
 
+
 $: {
-    game_logic = 100 / $betPosition
-    total_charge = game_logic / game__charges
-    payout.set((game_logic - total_charge).toFixed(4))
+    if($rollunder){
+        game_logic =  100 / ($betPosition)
+        total_charge = game_logic / game__charges
+        payout.set((game_logic - total_charge).toFixed(4))
+    }else{
+        game_logic =  100 / (100 - $betPosition)
+        total_charge = game_logic / game__charges
+        payout.set((game_logic - total_charge).toFixed(4))
+    }
 }
 
 $: {
-    game_logic = 100 / $payout
-    total_charge = game_logic / game__charges
-    betPosition.set((game_logic - total_charge).toFixed(2))
+    if($rollunder){
+        game_logic = 100 / $payout
+        total_charge = game_logic / game__charges
+        betPosition.set((game_logic - total_charge).toFixed(2))
+        range = ($betPosition)
+    }else{
+        game_logic = 100 / $payout
+        total_charge = game_logic / game__charges
+        betPosition.set((game_logic - total_charge).toFixed(2))
+        range = (100 - $betPosition)
+    }
 }
 
 
@@ -89,7 +108,9 @@ function togglePlayback() {
 
 const handleChange = ((e)=>{
     playSounRd()
-    range = e
+    range = e 
+    let re = 100 - range
+    rangeEl = 100 - range
 })
 
 $:{
@@ -107,8 +128,10 @@ $:{
 const handleRollUnder = ()=>{
     if($rollunder){
         rollunder.set(false)
+        range = (100 - $betPosition)
     }else{
         rollunder.set(true)
+        range = ($betPosition)
     }
 }
 
@@ -228,9 +251,9 @@ $:{
             <div class="slider-wrapper">
                 <div class="slider-handles">
                     {#if ishover}
-                        <div class="slider-tip" style={`left: ${$betPosition -5}%;`}>{range}</div>
+                        <div class="slider-tip" style={`left: ${ $rollunder ? $betPosition - 5 : 100 - $betPosition - 5 }%;`}>{(parseFloat(range)).toFixed(0)}</div>
                     {/if}
-                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$betPosition}>
+                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={range}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                         {#if parseFloat($HandleDicePoint) === 50}
                         <div class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>
@@ -242,8 +265,8 @@ $:{
                         </div>
                     </div>
                     <div class="slider-line ">
-                        <div class={ $rollunder ? "slide-win" : "slide-lose"} style={`width: ${$betPosition}%;`}></div>
-                        <div class={$rollunder ? "slide-lose" : "slide-win"} style={`width: ${100 - $betPosition}%;`}></div>
+                        <div class={ $rollunder ? "slide-win" : "slide-lose"} style={`width: ${$rollunder ? $betPosition : 100 - $betPosition }%;`}></div>
+                        <div class={$rollunder ? "slide-lose" : "slide-win"} style={`width: ${$rollunder ? 100 - $betPosition : $betPosition}%;`}></div>
                         <div class="slider-sign" style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                             <div class="sign"></div>
                         </div>
@@ -269,7 +292,7 @@ $:{
                 <div class="sc-ezbkAF gcQjQT input roll-switch">
                     <div class="input-label">{ $rollunder ? "Roll Under" : "Roll Over"}</div>
                     <button on:click={handleRollUnder} class="input-control">
-                        <input type="text" readonly value={$betPosition}>
+                        <input type="text" readonly value={ $rollunder ? $betPosition : (parseFloat(100 - $betPosition)).toFixed(2)}>
                         <span class="right-info">
                             <Icon src={AiOutlineSwap}  size="18"  color="rgb(67, 179, 9)"/>
                         </span>

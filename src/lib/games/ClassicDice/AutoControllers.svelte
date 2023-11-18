@@ -8,12 +8,12 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
-import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 import { browser } from '$app/environment';
 import {dice_troo} from "$lib/games/ClassicDice/store/index"
 const URL = ServerURl()
-
+import { onMount  } from "svelte";
 import { handleCountdown } from "../ClassicDice/socket/index";
 const { handleDicebet } = handleCountdown()
 import cr from "./audio/click-button-140881.mp3"
@@ -32,23 +32,15 @@ let walletRange = 0
 let x = 0;
 $:{
     wining_amount = (uiocd * $payout).toFixed(4)
-    if($default_Wallet.coin_name === "USDT"){
-        if(uiocd < 0.20){
-            uiocd = (0.20).toFixed(4)
-        }
-        if(uiocd < 5000){
-            uiocd = (5000).toFixed(4)
-        }
-    }
-    else{
-        if(uiocd < 100){
-            uiocd = (100).toFixed(4)
-        }
-        if(uiocd > 10000){
-            uiocd = (10000).toFixed(4)
-        }
-    }
+
 }
+onMount(()=>{
+    if($default_Wallet.coin_name === "USDT"){
+    uiocd = (0.20).toFixed(4)
+}else{
+    uiocd = (100).toFixed(4)
+}
+})
 
 
 
@@ -210,16 +202,16 @@ const handleRollSubmit = (async()=>{
                 prev_bal: parseFloat($default_Wallet.balance),
                 token_img: $default_Wallet.coin_image, 
                 token: $default_Wallet.coin_name ,
-                chance: parseFloat($betPosition).toFixed(2),
+                chance: $rollunder ? parseFloat($betPosition).toFixed(2) : 100 - parseFloat($betPosition).toFixed(2) ,
                 payout: parseFloat($payout),
                 time: new Date(),
+                is_roll_under:$rollunder,
                 wining_amount: parseFloat(uiocd) - parseFloat(wining_amount)
             }
             non += 1
             setTimeout(()=>{
             handleDicebet(data)
             },1000)
-            
     //         await axios.post(`${URL}/api/user/dice-game/bet`, {
     //             data
     //         },{

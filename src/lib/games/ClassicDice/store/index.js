@@ -49,7 +49,8 @@ export let DiceEncription = writable(DiceEncriptionEL)
 
 let rollunderEl = true
 export let rollunder = writable(rollunderEl)
-
+let ditoEL = []
+export let flix = writable(ditoEL)
 
 let dice_trooEL = []
 export let dice_troo = writable(dice_trooEL)

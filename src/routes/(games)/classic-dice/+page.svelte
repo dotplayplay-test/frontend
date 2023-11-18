@@ -24,7 +24,9 @@ import { ServerURl } from "$lib/backendUrl"
     import Mobile from "./mobile.svelte";
 const URl = ServerURl()
 
+let is_loading = false
 const handleDiceGameEncrypt = (async()=>{
+    is_loading = true
     await axios.get(`${URl}/api/user/dice-game/encrypt`,{
         headers: {
         "Content-type": "application/json",
@@ -32,9 +34,11 @@ const handleDiceGameEncrypt = (async()=>{
         }
     })
     .then((res)=>{
+        is_loading = false
         DiceEncription.set(res.data[0])
     })
     .catch((err)=>{
+        is_loading = false
         console.log(err)
     })
 })
@@ -42,6 +46,7 @@ const handleDiceGameEncrypt = (async()=>{
 onMount(()=>{
   $handleAuthToken && handleDiceGameEncrypt()
 })
+
 
 let is_allbet = true
 let is_mybet = false
@@ -110,6 +115,8 @@ const handleSoundState = (()=>{
 <Help on:close={handleIsHelp} />
 {/if}
 
+
+{#if !is_loading}
 <div id="main">
     <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
         <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
@@ -117,7 +124,6 @@ const handleSoundState = (()=>{
                 <div class="game-main">
                     <Controls />
                     <Gameview />
-    
                     <div class="game-actions">
                         <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
                             <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
@@ -137,7 +143,6 @@ const handleSoundState = (()=>{
                     </div>
                 </div>
             </div>
-    
             <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
                 <div class="tabs-navs">
                     <button on:click={()=>handleAllbet(1)} class={`tabs-nav ${is_allbet && "is-active"}`}>All Bets</button>
@@ -179,16 +184,51 @@ const handleSoundState = (()=>{
         </div>
     </div>
 </div>
-
 <div class="mobile">
     <Mobile />
 </div>
-
-
-
-
+{:else}
+<div class="uytutfyh">
+    <div class="tdthuy">
+        <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg" alt="">
+    </div>
+</div>
+{/if}
 
 <style>
+
+.uytutfyh{
+    background-color: var(--background-color);
+    width: 100%;
+    height: 100vh;
+}
+.tdthuy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 500px;
+}
+.tdthuy img{
+    width: 120px;
+    background-color: rgba(51, 57, 57, 0.502);
+    padding: 20px;
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: monyy 3s infinite;
+}
+
+@keyframes monyy{
+    10%{
+        margin-right: -100px;
+    }
+
+    100%{
+        margin-right: 100px;
+    }
+}
+
+
 .ePAxUv {
     margin-top: 4rem;
 }

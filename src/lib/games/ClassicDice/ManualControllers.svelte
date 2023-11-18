@@ -4,7 +4,7 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
-import { payout, isbetLoadingBtn, betPosition } from "./store";
+import { payout, isbetLoadingBtn, betPosition, rollunder } from "./store";
 import { handleAuthToken } from "$lib/store/routes"
 import {dice_troo} from "$lib/games/ClassicDice/store/index"
 import { profileStore,handleisLoggin } from "$lib/store/profile"
@@ -75,7 +75,6 @@ let is_loading = false
 const handleRollSubmit = (async()=>{
     // if(browser && window.navigator.onLine){
         $soundHandler && playSound(1)
-       
         is_loading = true
         if($handleisLoggin){
             if( parseFloat(bet_amount)> parseFloat($default_Wallet.balance)){
@@ -131,13 +130,15 @@ const handleRollSubmit = (async()=>{
                     bet_amount:  parseFloat(bet_amount),
                     token_img: $default_Wallet.coin_image, 
                     token: $default_Wallet.coin_name ,
-                    chance: parseFloat($betPosition).toFixed(2),
+                    chance: $rollunder ? parseFloat($betPosition).toFixed(2) : 100 - parseFloat($betPosition).toFixed(2) ,
                     payout: parseFloat($payout),
                     time: new Date(),
+                    is_roll_under:$rollunder,
                     wining_amount: parseFloat(wining_amount) -  parseFloat(bet_amount)
                 }
                 isbetLoadingBtn.set(true)
                 non += 1
+                console.log(data)
                 handleDicebet(data)
                 setTimeout(()=>{
                      is_loading = false
@@ -155,7 +156,6 @@ const handleRollSubmit = (async()=>{
                 //         hash_seed:res.data.hash,
                 //         nonce:res.data.nonce + 1,
                 //     }
-                    
                 //     DiceEncription.set(r)
                 //     HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
                 //     is_loading = false
@@ -198,24 +198,6 @@ const handleRollSubmit = (async()=>{
  
 })
 
-$:{
-    if($default_Wallet.coin_name === "USDT"){
-        if(bet_amount < 0.20){
-            bet_amount = (0.20).toFixed(4)
-        }
-        if(bet_amount < 5000){
-            bet_amount = (5000).toFixed(4)
-        }
-    }
-    else{
-        if(bet_amount < 100){
-            bet_amount = (100).toFixed(4)
-        }
-        if(bet_amount > 10000){
-            bet_amount = (10000).toFixed(4)
-        }
-    }
-}
 
 
 let is_min_max = false
