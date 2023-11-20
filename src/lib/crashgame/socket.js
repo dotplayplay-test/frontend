@@ -5,28 +5,47 @@ const URL = RealTimeURl()
 const socket = io(`${URL}`);
 import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,v_default,
      loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,green_trendball_hasWinEl,Moon_trendball_hasWinEl,
-     v_two, hasCrashed, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
+     v_two, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
       crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
       v_three, v_five, v_seven, v_nine, v_ten, v_twenty,v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
       h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
-      h_eighty, h_hundred, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
+      h_eighty, h_hundred,hasCrashed, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
     } from "./store"
 
 import { week_cashback , month_cashback} from "../store/cashbacks";
 
 export const handleCountdown = (()=>{
     socket.on("countdown", data=>{
-        crashLoad.set(data.toFixed(2))
+        if(data){
+            crashLoad.set(data.toFixed(2))
+        }else{
+            crashLoad.set(data)
+        }
     })
     socket.on("load-animation", data=>{
         Load_animation.set(data)
     })
+
     socket.on("crash-point", data=>{
         crashPoint.set(data)
     })
  
    socket.on("running-crash", data=>{
-        crashRunning.set(data)
+        if(data){
+            crashRunning.set(data)
+        }
+        else{
+            crashRunning.set(0)
+        }
+    })
+
+    socket.on("crash-point", data=>{
+        if(data){
+            hasCrashed.set(data)
+        }
+        else{
+            hasCrashed.set(0)
+        }
     })
 
     socket.on("crash-all-redball-users", data =>{

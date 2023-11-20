@@ -2,7 +2,7 @@ import { writable } from "svelte/store"
 
 let isLoading = true
 let isRunning = false
-let isCrashed = false
+let isCrashed = 0
 
 let isUpto2 = false
 let trackTwo = 3    
@@ -15,7 +15,7 @@ export let IsUpto2 = writable(isUpto2)
 export let TrackTwo = writable(trackTwo)
 
 let running_at = 0
-let loading_at = 5
+let loading_at = 0
 let crash_at = "0.00" 
 let animateLoad = 220
 

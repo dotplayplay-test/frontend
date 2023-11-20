@@ -3,11 +3,9 @@ import HasCrashed from "./HasCrashed.svelte";
 import Loading from "./loading.svelte";
 import {
     crashPoint,
-    crashRunning,
     Load_animation,
+    crashRunning,
     v_ten,
-    winning,
-    crashCurve,
     crashLoad,
     v_default,
     v_two,
@@ -39,27 +37,28 @@ import {
     h_Threehundred,
     h_Sevenhundred,
     h_onethousand,
+    hasCrashed,
     loadingCrash,
     winningEl,
     crashIsAlive,
-    hasCrashed
+
 } from "../store"
 import RunningCrash from "./RunningCrash.svelte";
+
 </script>
 
 <div class="crash-board dvgwiw">
     <div class="crash-chart">
-
         <!-- Render screens -->
-        {#if $loadingCrash}
+        {#if $crashLoad && !$hasCrashed && !$crashRunning}
         <div class="cntsnsnQn">
             <Loading />
         </div>
         {/if}
-        {#if $hasCrashed}
+        {#if $hasCrashed && !$crashRunning && !$crashLoad}
         <HasCrashed />
         {/if}
-        {#if $crashIsAlive}
+        {#if  !$crashLoad && !$hasCrashed &&  $crashRunning}
         <RunningCrash />
         {/if}
 
