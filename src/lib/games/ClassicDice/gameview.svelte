@@ -1,6 +1,6 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder, flix} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history, handleOnLose, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
@@ -176,33 +176,23 @@ $:{
             HandleDicePoint.set(element.cashout)
             history.push(element)
             isbetLoadingBtn.set()
-            dice_troo.set([])
+            dice_troo.set([])    
             if(element.has_won){
-            //     let wallet = {
-            //     coin_name: $default_Wallet.coin_name ,
-            //     coin_image: $default_Wallet.coin_image,
-            //     balance:  (parseFloat(element.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
-            //  }
-            //  default_Wallet.set(wallet)
-            //  $coin_list.forEach(coin => {
-            //     if(coin.coin_name === $default_Wallet.coin_name){
-            //         coin.balance = parseFloat(wallet.balance)
-            //     }
-            //  });
+                winning_track.set($winning_track += parseFloat(element.profit))
+                if($handleOnwin){
+                    let to = (($handleOnwin/100) * parseFloat($handlediceAutoInput)/1)
+                    let from = (to + parseFloat($handlediceAutoInput)).toFixed(4)
+                    handlediceAutoInput.set(from)
+                }
              playSoundR(2)
              HandleHas_won.set(true)
             }else{
-            //     let wallet = {
-            //     coin_name: $default_Wallet.coin_name ,
-            //     coin_image: $default_Wallet.coin_image,
-            //     balance: (parseFloat($default_Wallet.balance) - parseFloat(element.bet_amount)).toFixed(4)
-            // }
-            // default_Wallet.set(wallet)
-            // $coin_list.forEach(coin => {
-            //     if(coin.coin_name === $default_Wallet.coin_name){
-            //         coin.balance = parseFloat(wallet.balance)
-            //     }
-            //  });
+                losing_track.set($losing_track += parseFloat(element.bet_amount))
+                if($handleOnLose){
+                    let to = (($handleOnLose/100) * parseFloat($handlediceAutoInput)/1)
+                    let from = (to + parseFloat($handlediceAutoInput)).toFixed(4)
+                    handlediceAutoInput.set(from)
+                }
                 HandleHas_won.set(false)
             }
         }

@@ -56,3 +56,21 @@ let dice_trooEL = []
 export let dice_troo = writable(dice_trooEL)
 let dice_waa = []
 export let dice_wallet = writable(dice_waa)
+
+let onWinEl = 0
+export let handleOnwin = writable(onWinEl)
+
+let StoponWinEl = 0
+export let handleStopOnwin = writable(StoponWinEl)
+
+let winning_trackEl = 0
+export let winning_track = writable(winning_trackEl)
+
+let StoponLoseEl = 0
+export let handleStopOnLose = writable(StoponLoseEl)
+
+let Losing_trackEl = 0
+export let losing_track = writable(Losing_trackEl)
+
+let handleOnLoseEl = 0
+export let handleOnLose = writable(handleOnLoseEl)

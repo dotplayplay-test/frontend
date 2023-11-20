@@ -199,7 +199,7 @@ setInterval(()=>{
                     <span>Get extra </span>
                     <b>180%</b>
                     <span> bonus on minimum of </span>
-                    <b class="amount">10.00 USDT</b>
+                    <b class="amount">{(180 * parseFloat(amount)).toFixed(2)} USDT</b>
                     <span> deposit</span>
                 </div>
                 <div class="btn">
