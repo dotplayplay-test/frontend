@@ -4,7 +4,7 @@
 
 <div class="running crash">
     <div class="bhuSSkjs">
-        <div>{$crashRunning}x</div>
+        <div class="snownd">{$crashRunning}x</div>
     </div>
     <div id="main">
       <div class="container">
@@ -54,7 +54,7 @@
     left: -1%;
 }
 .bhuSSkjs div{
-    font-size: 29px;
+    font-size: 23px;
     margin-bottom: 30px;
     word-wrap: normal;
     letter-spacing: 0.5rem;
@@ -72,19 +72,22 @@
       width: 100%;
       height: 100%;
       display: flex;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       z-index: 10;
    }
-   .bhuSSkjs div{
-    font-size: 45px;
+   .bhuSSkjs .snownd{
+    font-size: 40px;
     margin-bottom: 100px;
     word-wrap: normal;
     letter-spacing: 0.5rem;
     font-weight: bold;
     color: #fff;
-    width: 120px;
-    white-space: 2;
+    text-align: justify;
+    width: 100px;
+    font-family: 'Roboto Mono', monospace;
+    white-space: 1;
     font-stretch: expanded;
    }
    .container{

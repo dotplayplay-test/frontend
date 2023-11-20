@@ -4,7 +4,7 @@
 </script>
 
 <div class="bhuSSkjs">
-    <div class="word crash-point">{$crashPoint}x</div>
+    <div class="word crash-point">{$crashPoint}<span>x</span></div>
     <div class="word hascrashed">Crashed</div>
 </div>
 
@@ -20,8 +20,9 @@
     justify-content: center;
     align-items: center;
 }
+
 .word.crash-point {
-    font-size:27px;
+    font-size:20px;
     color: rgb(237, 99, 0);
     margin-bottom: 7px;
     font-weight: bold;
@@ -33,6 +34,7 @@
     letter-spacing: 0.5rem;
     font-weight: bold;
     width: 120px;
+    
     white-space: 2;
     font-stretch: expanded;
 }

@@ -6,7 +6,7 @@
 <div class="bhuSSkjs">
    <div class="nJbsiaks">
       <div class="content">
-         <span>Starts in  {$crashLoad}s</span>
+         <span>Starts in {$crashLoad} s</span>
       </div>
       <div class="load" style={`width: ${$Load_animation}%;`}></div>
    </div>
@@ -40,6 +40,9 @@
       position: absolute;
       align-items: center;
       z-index: 12;
+      letter-spacing: 0.1rem;
+      text-align: justify;
+      font-family: 'Roboto Mono', monospace;
    }
    .nJbsiaks .load{
       background: linear-gradient(90deg, #43B309 59.12%, rgba(74, 125, 48, 0.54) 80.17%);
