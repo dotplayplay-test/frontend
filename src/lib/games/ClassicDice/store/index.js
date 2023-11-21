@@ -74,3 +74,7 @@ export let losing_track = writable(Losing_trackEl)
 
 let handleOnLoseEl = 0
 export let handleOnLose = writable(handleOnLoseEl)
+
+
+let prev = 0
+export let Autopre_bal = writable(prev)

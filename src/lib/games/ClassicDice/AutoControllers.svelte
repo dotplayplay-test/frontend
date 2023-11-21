@@ -8,7 +8,7 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
-import { error_msg, handlediceAutoInput, onWin,winning_track,losing_track, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import { error_msg, handlediceAutoInput, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 import { browser } from '$app/environment';
 import {dice_troo} from "$lib/games/ClassicDice/store/index"
@@ -79,41 +79,50 @@ const handleRangeSTlop = ((eui)=>{
 const mult = (()=>{
     handlediceAutoInput.set(($handlediceAutoInput * 2).toFixed(4))
 })
+let prev_bal;
+const handlePreBetamout = ((event)=>{
+   return prev_bal
+})
 
+$: console.log($Autopre_bal)
 
 let lose_track = 0
 
-let bet_num_count = 0
+let bet_num_count = 1
 let load = false
 const handleAutoStart = (()=>{
     if(!is_Looping){
+        prev_bal = $handlediceAutoInput
+        Autopre_bal.set(prev_bal)
         is_Looping = true
         yu = setInterval(()=>{
             if(bet_number){
-                if(bet_num_count === bet_number){
+                if(bet_number < bet_num_count){
                     is_Looping = false
                     clearInterval(yu)
-                    bet_num_count = 0
+                    bet_num_count = 1
                 }
                 else{
                     handleRollSubmit()
                     bet_num_count += 1
                 }
             } 
-           if($handleStopOnwin){
+           else if($handleStopOnwin){
                 if($winning_track >= $handleStopOnwin ){
                     is_Looping = false
                     clearInterval(yu)   
                     winning_track.set(0)
+                    handleStopOnwin.set(0)
                 }else{
                     handleRollSubmit()
                 }
             }
-            if($handleStopOnLose){
+            else if($handleStopOnLose){
                 if($losing_track >= $handleStopOnLose ){
                     is_Looping = false
                     clearInterval(yu)   
                     losing_track.set(0)
+                    handleStopOnLose.set(0)
                 }else{
                     handleRollSubmit()
                 }
@@ -125,6 +134,8 @@ const handleAutoStart = (()=>{
     }else{
         is_Looping = false
         clearInterval(yu)
+        let s = handlePreBetamout()
+        handlediceAutoInput.set((parseFloat(s)).toFixed(5))
     }
 })
  

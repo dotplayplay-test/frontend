@@ -1,6 +1,6 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, handleOnLose, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
@@ -183,6 +183,9 @@ $:{
                     let to = (($handleOnwin/100) * parseFloat($handlediceAutoInput)/1)
                     let from = (to + parseFloat($handlediceAutoInput)).toFixed(4)
                     handlediceAutoInput.set(from)
+                }
+                if($handleOnLose){
+                    handlediceAutoInput.set($Autopre_bal)
                 }
              playSoundR(2)
              HandleHas_won.set(true)

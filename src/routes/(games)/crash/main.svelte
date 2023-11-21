@@ -13,7 +13,7 @@ import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
 import Trend from '$lib/crashgame/components/trends/index.svelte';
-import { loadingCrash,handleHasbet,game_id,  crashIsAlive, hasCrashed, crashRunning,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
+import { loadingCrash,handleHasbet,game_id,crashLoad,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
 import {default_Wallet } from "$lib/store/coins";
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore,handleisLoggin } from "$lib/store/profile";
@@ -322,7 +322,6 @@ const handlesjen = ((e)=>{
         </div>
     </div>
    {/if}
-  
 
 <div id="crash-control-0" class="sc-jNHqnW bqxYHQ game-control style1">
         <div class="sc-iwjdpV ikWSlH radio game-control-switch">
@@ -337,7 +336,7 @@ const handlesjen = ((e)=>{
         {#if isClassic}
         <div class="game-control-panel">
             <div class="sc-lVTEl hjMJHh">
-                {#if $crashIsAlive && !$handleHasbet}
+                {#if !$crashIsAlive && !$crashLoad && !$hasCrashed &&  $crashRunning}
                     <button on:click={handleLoadBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{isLoadBet ? "Loading..." : "Bet" }</div>
@@ -345,7 +344,7 @@ const handlesjen = ((e)=>{
                         </div>
                     </button>
                 {/if}
-                {#if $crashIsAlive && $handleHasbet}
+                {#if $crashIsAlive && $crashRunning}
                     <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
@@ -353,14 +352,8 @@ const handlesjen = ((e)=>{
                         </div>
                     </button>
                 {/if}
-            {#if $loadingCrash && !$handleisLoggin}
-                <button  on:click={()=> handleCrashBet()} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
-                    <div class="button-inner">
-                        <div>Bet</div>
-                    </div>
-                </button>
-            {/if}
-                {#if $loadingCrash && $handleisLoggin}
+
+                {#if $crashLoad && !$hasCrashed && !$crashRunning}
                     <button disabled={is_loading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                          {#if $handleHasbet}
                             <div class="button-inner">
@@ -373,7 +366,7 @@ const handlesjen = ((e)=>{
                         {/if}
                     </button>
                 {/if}
-                {#if $hasCrashed}
+                {#if $hasCrashed && !$crashRunning && !$crashLoad}
                     <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>Bet</div>
@@ -435,8 +428,8 @@ const handlesjen = ((e)=>{
                                     </div>
                                    {/if}
                                     <button on:click={handleMinMax} class="sc-ywFzA dxoLcn">
-                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+                                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
+                                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                                     </button>
                                 </div>
                             </div>
@@ -467,13 +460,13 @@ const handlesjen = ((e)=>{
 
     <div class="game-actions">
         <button on:click={handleHotkeyEnable} class="action-item  ">
-            <Icon src={FaSolidKeyboard}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+            <Icon src={FaSolidKeyboard}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
         <button on:click={handleStatistics} class="action-item  ">
-            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
         <button on:click={handleHelp} class="action-item  ">
-            <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" title="arror" />
+            <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
     </div>
 </div>
