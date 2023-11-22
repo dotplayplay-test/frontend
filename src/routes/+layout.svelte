@@ -89,9 +89,11 @@ onMount(() => {
     if (browser && window.innerWidth < 650) {
         isOpenSide = true
         sideDetection = 0
-    } else if (browser && window.innerWidth > 1000) {
+        is_open__Appp.set(false)
+    } else if (browser && window.innerWidth > 1220) {
         isOpenSide = true
         sideDetection = 240
+        is_open__Appp.set(true)
     } else {
         isOpenSide = false
         sideDetection = 76
