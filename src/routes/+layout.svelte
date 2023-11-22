@@ -14,7 +14,7 @@ setTimeout(()=>{
          window.location.href = ("/")
     }
 },3000)
-import { screen, is_open__Appp } from "$lib/store/screen"
+import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen"
 import Navbar from "$lib/navbar.svelte";
 import ProfileAuth from "$lib/profleAuth/index.svelte";
 import { profileStore } from "$lib/store/profile"
@@ -134,8 +134,10 @@ const handleChatroom = ((e) => {
     if (isChatRoom) {
         isnotification = false
         isChatRoom = 0
+        is_open__chat.set(false)
     } else {
         isChatRoom = 360
+        is_open__chat.set(true)
         if (e === "notification") {
             isnotification = true
         } else {

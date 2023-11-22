@@ -6,7 +6,7 @@ import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
-import { screen, is_open__Appp } from "$lib/store/screen";
+import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -28,9 +28,10 @@ const handleTrends = (()=>{
     hide_trends = !hide_trends
 })
 
+
 </script>
 {#if !is_loading}
-    <div style={`${!$is_open__Appp && $screen > 1050 || $is_open__Appp && $screen > 1220 ? "" : "display:none"}`} id="crash-main">
+    <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-eZhRLC jDDdCf game-style1 sc-eDtABA deWqiM">
                 <div class="sc-gRtYjc bGZULB">
@@ -51,7 +52,7 @@ const handleTrends = (()=>{
         </div>
     </div>
 
-    <div style={`${$is_open__Appp && $screen < 1220 || !$is_open__Appp && $screen < 1220 ? "" : "display:none"}`} class="crash-mobile">
+    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && $is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="crash-mobile">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-gRtYjc iIcxfY game-style-mobile sc-jWULZn KqoAz">
                 <div class="sc-UMyrj fghMqx">
