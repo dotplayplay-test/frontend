@@ -10,8 +10,6 @@ import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { error_msg, handlediceAutoInput, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
-import { browser } from '$app/environment';
-import {dice_troo} from "$lib/games/ClassicDice/store/index"
 const URL = ServerURl()
 import { onMount  } from "svelte";
 import { handleCountdown } from "../ClassicDice/socket/index";
@@ -23,6 +21,7 @@ let is_min_max = false
 const handleMinMax = (()=>{
    is_min_max = !is_min_max
 })
+
 let uiocd = 0
 let wining_amount = '' ;
 
@@ -31,10 +30,10 @@ let x = 0;
 
 onMount(()=>{
     if($default_Wallet.coin_name === "USDT"){
-        handlediceAutoInput.set((0.20).toFixed(4))
-}else{
-    handlediceAutoInput.set((100).toFixed(4))
-}
+            handlediceAutoInput.set((0.20).toFixed(4))
+    }else{
+        handlediceAutoInput.set((100).toFixed(4))
+    }
 })
 
 $:{
@@ -83,8 +82,6 @@ let prev_bal;
 const handlePreBetamout = ((event)=>{
    return prev_bal
 })
-
-$: console.log($Autopre_bal)
 
 let lose_track = 0
 

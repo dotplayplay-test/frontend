@@ -1,11 +1,12 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import "../../../styles/crash/main.css"
+import "../../../styles/crash/main.css";
 import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
+import { screen, is_open__Appp } from "$lib/store/screen";
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -16,6 +17,7 @@ const handleNavigation = ((w) => {
     }
 })
 
+// $: console.log($screen, $is_open__Appp)
 let is_loading = true
 setTimeout(()=>{
     is_loading = false
@@ -27,9 +29,8 @@ const handleTrends = (()=>{
 })
 
 </script>
-
 {#if !is_loading}
-    <div id="main">
+    <div style={`${!$is_open__Appp && $screen > 1050 || $is_open__Appp && $screen > 1220 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-eZhRLC jDDdCf game-style1 sc-eDtABA deWqiM">
                 <div class="sc-gRtYjc bGZULB">
@@ -50,7 +51,7 @@ const handleTrends = (()=>{
         </div>
     </div>
 
-    <div class="mobile">
+    <div style={`${$is_open__Appp && $screen < 1220 || !$is_open__Appp && $screen < 1220 ? "" : "display:none"}`} class="crash-mobile">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-gRtYjc iIcxfY game-style-mobile sc-jWULZn KqoAz">
                 <div class="sc-UMyrj fghMqx">
@@ -72,7 +73,6 @@ const handleTrends = (()=>{
             </div>
         </div>
     </div>
-
     {:else}
     <div class="uytutfyh">
         <div class="tdthuy">
@@ -84,7 +84,8 @@ const handleTrends = (()=>{
 
 
 <style>
-    .uytutfyh{
+
+.uytutfyh{
     background-color: var(--background-color);
     width: 100%;
     height: 100vh;
@@ -199,12 +200,6 @@ const handleTrends = (()=>{
 .game-tabs {
     margin-top: 2.5rem;
 }
-
-
-@media only screen and ( max-width : 650px) {
-.ePAxUv {
-    margin-top: 8.375rem;
-}
 .iIcxfY.game-style-mobile {
     padding: 0.625rem;
 }
@@ -285,6 +280,12 @@ const handleTrends = (()=>{
 .fNKiky {
     margin-right: 0px;
 }
+
+@media only screen and ( max-width : 650px) {
+.ePAxUv {
+    margin-top: 8.375rem;
+}
+
 }
 
 </style>

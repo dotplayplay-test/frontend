@@ -14,7 +14,7 @@ setTimeout(()=>{
          window.location.href = ("/")
     }
 },3000)
-import { error_msg} from "$lib/crashgame/store"
+import { screen, is_open__Appp } from "$lib/store/screen"
 import Navbar from "$lib/navbar.svelte";
 import ProfileAuth from "$lib/profleAuth/index.svelte";
 import { profileStore } from "$lib/store/profile"
@@ -28,7 +28,6 @@ import { handleisLoggin, handleisLoading , app_Loading} from "$lib/store/profile
 import "../styles/errors/error.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "$lib/firebaseAuth/index";
-
 import { onMount } from "svelte";
 import { default_Wallet } from "../lib/store/coins"
 import { handle_IsRedwinners} from "../lib/crashgame/store"
@@ -85,7 +84,6 @@ $:{
 // })
 // }
 
-let ens = browser && window.innerWidth
 
 onMount(() => {
     if (browser && window.innerWidth < 650) {
@@ -103,20 +101,32 @@ onMount(() => {
 const handleMainMenu = (() => {
     if (isOpenSide) {
         isOpenSide = false
+        is_open__Appp.set(false)
         sideDetection = 76
     } else {
         if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
         isOpenSide = true
+        is_open__Appp.set(true)
         sideDetection = 76
     }else{
         isOpenSide = true
+        is_open__Appp.set(true)
         sideDetection = 240
     }
     }
 })
 
+let ens = browser && window.innerWidth
+$:{
 browser && addEventListener("resize", () => {
     ens = (window.innerWidth)
+    screen.set(ens)
+})
+}
+
+onMount(()=>{
+    ens = browser && window.innerWidth
+    screen.set(ens)
 })
 
 let isnotification = false
@@ -145,7 +155,6 @@ const handleMenu = () => {
 </script>
 
 <div class="app">
-
     {#if $profileStore && $profileStore.born === '' && $handleNestedRoute !== "/login/info" }
         <ProfileAuth />
     {/if}

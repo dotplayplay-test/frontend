@@ -473,7 +473,6 @@ const handlesjen = ((e)=>{
 
 
 <style>
- 
  .fix-layer {
     position: absolute;
     right: 0px;
