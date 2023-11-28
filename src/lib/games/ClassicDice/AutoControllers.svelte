@@ -314,26 +314,26 @@ const handlesjen = ((e)=>{
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="number" bind:value={$handlediceAutoInput}>
+                <input disabled={$Handles_alive} type="number" bind:value={$handlediceAutoInput}>
                 {#if $handleisLoggin}
                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {/if}
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button on:click={()=> dive() }>/2</button>
-                    <button on:click={()=> mult() }>x2</button>
+                    <button disabled={$Handles_alive} on:click={()=> dive() }>/2</button>
+                    <button disabled={$Handles_alive} on:click={()=> mult() }>x2</button>
                     {#if is_min_max }
                      <div class="fix-layer" style="opacity: 1; transform: none;">
-                        <button on:click={()=>  handlesjen(0) } style={`${walletRange === 0 ? `color:#ffff;` : ""}`} class="">Min</button>
+                        <button disabled={$Handles_alive} on:click={()=>  handlesjen(0) } style={`${walletRange === 0 ? `color:#ffff;` : ""}`} class="">Min</button>
                         <div class="sc-kLwhqv eOA-dmL slider">
                            <div class="slider-after" style="transform: scaleX(100.001001);"></div>
-                             <input type="range" class="drag-block" on:input={(e)=> handleRangeSTlop(e.target.value)} bind:value={walletRange}>
+                             <input disabled={$Handles_alive} type="range" class="drag-block" on:input={(e)=> handleRangeSTlop(e.target.value)} bind:value={walletRange}>
                            <div class="slider-before" style="transform: scaleX(100.998999);"></div>
                         </div>
-                        <button on:click={()=> handlesjen(100)} style={`${walletRange === 100 ? `color:#ffff;` : ""}`} class="">Max</button>
+                        <button disabled={$Handles_alive} on:click={()=> handlesjen(100)} style={`${walletRange === 100 ? `color:#ffff;` : ""}`} class="">Max</button>
                      </div>
                     {/if}
 
-                    <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
+                    <button disabled={$Handles_alive} on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
                         <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />
                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="max" />
                     </button>
@@ -344,11 +344,11 @@ const handlesjen = ((e)=>{
         <div class="sc-ezbkAF hzTJOu input ">
             <div class="input-label">Number of Bets</div>
             <div class="input-control">
-                <input type="number" bind:value={bet_number}>
+                <input type="number" disabled={$Handles_alive} bind:value={bet_number}>
                 <div class={`sc-kDTinF bswIvI button-group`}>
-                    <button on:click={()=> bet_number = 0}>∞</button>
-                    <button on:click={()=> bet_number = 10}>10</button>
-                    <button on:click={()=> bet_number = 100}>100</button>
+                    <button disabled={$Handles_alive} on:click={()=> bet_number = 0}>∞</button>
+                    <button disabled={$Handles_alive} on:click={()=> bet_number = 10}>10</button>
+                    <button disabled={$Handles_alive} on:click={()=> bet_number = 100}>100</button>
                 </div>
             </div>
         </div>
@@ -356,9 +356,9 @@ const handlesjen = ((e)=>{
         <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
             <div class="input-label">On win</div>
             <div class="input-control">
-                <input type="number" readonly={!on_win} bind:value={$handleOnwin}>
+                <input type="number" disabled={$Handles_alive} readonly={!on_win} bind:value={$handleOnwin}>
                 <div class={`sc-cxVPaa ${on_win ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
-                    <button on:click={()=> on_win = !on_win} class="dot-wrap">
+                    <button disabled={$Handles_alive} on:click={()=> on_win = !on_win} class="dot-wrap">
                         <div  class="dot"></div>
                     </button>
                     <div class="reset text">Reset</div>
@@ -372,7 +372,7 @@ const handlesjen = ((e)=>{
             <div class="input-label">Stop on win<div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="number" bind:value={$handleStopOnwin}>
+                <input type="number" disabled={$Handles_alive} bind:value={$handleStopOnwin}>
             {#if $handleisLoggin}
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
              {/if}
@@ -382,9 +382,9 @@ const handlesjen = ((e)=>{
         <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
             <div class="input-label">On lose</div>
             <div class="input-control">
-                <input type="number" readonly={!on_lose} bind:value={$handleOnLose}>
+                <input type="number" disabled={$Handles_alive} readonly={!on_lose} bind:value={$handleOnLose}>
                 <div class={`sc-cxVPaa ${on_lose ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
-                    <button on:click={()=> on_lose = !on_lose}  class="dot-wrap">
+                    <button disabled={$Handles_alive} on:click={()=> on_lose = !on_lose}  class="dot-wrap">
                         <div class="dot"></div>
                     </button>
                     <div class="reset text">Reset</div>
@@ -398,7 +398,7 @@ const handlesjen = ((e)=>{
             <div class="input-label">Stop on lose<div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="number" bind:value={$handleStopOnLose}>
+                <input type="number" disabled={$Handles_alive} bind:value={$handleStopOnLose}>
                 {#if $handleisLoggin}
                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {/if}
