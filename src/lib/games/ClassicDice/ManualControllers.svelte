@@ -5,7 +5,7 @@ import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
 import { payout, isbetLoadingBtn, betPosition, rollunder } from "./store";
-import { profileStore,handleisLoggin } from "$lib/store/profile"
+import { profileStore,handleisLoggin, Handles_Loading } from "$lib/store/profile"
 import { dice_history} from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
 import {ServerURl } from "$lib/backendUrl"
@@ -67,31 +67,28 @@ $:{
 }
 
 let non = 0
-let is_loading = false
 const handleRollSubmit = (async()=>{
     // if(browser && window.navigator.onLine){
         $soundHandler && playSound(1)
-        is_loading = true
+        Handles_Loading.set(true)
         if($handleisLoggin){
             if( parseFloat(bet_amount)> parseFloat($default_Wallet.balance)){
             error_msg.set("Insufficient balance")
-            is_loading = false
+             Handles_Loading.set(false)
             setTimeout(()=>{
                 error_msg.set('')
             },4000)
             }
             else if( parseFloat(bet_amount) > 5000 && $default_Wallet.coin_name === "USDT"){
                 error_msg.set("Maximum bet amount for USDT is 5,000")
-
-                is_loading = false
+                 Handles_Loading.set(false)
                 setTimeout(()=>{
                     error_msg.set('')
                 },4000)
             }
             else if( parseFloat(bet_amount) > 10000 && $default_Wallet.coin_name === "PPF"){
                 error_msg.set("Maximum bet amount for PPF is 10,000")
-    
-                 is_loading = false
+                  Handles_Loading.set(false)
                 setTimeout(()=>{
                     error_msg.set('')
                 },4000)
@@ -99,14 +96,14 @@ const handleRollSubmit = (async()=>{
             else if( parseFloat(bet_amount) < 100 && $default_Wallet.coin_name === "PPF"){
                 error_msg.set("Minimum bet amount for PPF is 100")
     
-                 is_loading = false
+                  Handles_Loading.set(false)
                 setTimeout(()=>{
                     error_msg.set('')
                 },4000)
             }
             else if( parseFloat(bet_amount) < 0.20 && $default_Wallet.coin_name === "USDT"){
                 error_msg.set("Minimum bet amount for USDT is 0.20")
-                 is_loading = false
+                  Handles_Loading.set(false)
                 setTimeout(()=>{
                     error_msg.set('')
                 },4000)
@@ -135,19 +132,19 @@ const handleRollSubmit = (async()=>{
                 non += 1
                 handleDicebet(data)
                 setTimeout(()=>{
-                     is_loading = false
+                      Handles_Loading.set(false)
                 },500)
             }
         }else{
             error_msg.set('You are not Logged in')
-            is_loading = false
+             Handles_Loading.set(false)
             setTimeout(()=>{
                 error_msg.set('')
             },4000)
         }
     // }else{
     //     error_msg.set('Error in network connection')
-    //         is_loading = false
+    //          Handles_Loading.set(false)
     //         setTimeout(()=>{
     //             error_msg.set('')
     //     },4000)
@@ -279,8 +276,8 @@ const handlesjen = ((e)=>{
                 {/if}
             </div>
         </div>
-        <button disabled={is_loading} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-            {#if is_loading}
+        <button disabled={$Handles_Loading} on:click={handleRollSubmit} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+            {#if $Handles_Loading}
             <div class="button-inner">Loading....</div>
             {:else}
             <div class="button-inner">Roll Now</div>

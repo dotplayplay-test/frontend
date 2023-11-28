@@ -82,3 +82,6 @@ export let Autopre_bal = writable(prev)
 
 let s_alive = false
 export let Handles_alive = writable(s_alive)
+
+let s_aloading = false
+export let Handles_Loading = writable(s_aloading)
