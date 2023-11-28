@@ -30,7 +30,6 @@ export const handleCountdown = (()=>{
     socket.on("dice-troo", data=>{
         dice_troo.set(data)
         Handles_Loading.set(false)
-        console.log(data)
     })
     return { handleDicebet, handleChattingMessages }
 })
