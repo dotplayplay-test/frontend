@@ -4,8 +4,8 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
-import { payout, isbetLoadingBtn, betPosition, rollunder } from "./store";
-import { profileStore,handleisLoggin, Handles_Loading } from "$lib/store/profile"
+import { payout, isbetLoadingBtn, betPosition, rollunder , Handles_Loading} from "./store";
+import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { dice_history} from "../ClassicDice/store/index"
 import { error_msg } from "./store/index"
 import {ServerURl } from "$lib/backendUrl"
