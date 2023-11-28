@@ -1,12 +1,26 @@
 <script>
-  import {
-   crashLoad, Load_animation} from "../store"
+import { crashLoad, Load_animation} from "../store"
+import { onMount } from "svelte";
+
+let internalLoad = 0
+internalLoad = $crashLoad
+
+
+// if(internalLoad){
+//   let ius = setInterval(()=>{
+//       internalLoad -= 0.01
+//       if(!internalLoad){
+//          clearInterval(ius)
+//       }
+//    },10)
+// }
+
 </script>
 
 <div class="bhuSSkjs">
    <div class="nJbsiaks">
       <div class="content">
-         <span>Starts in {$crashLoad} s</span>
+         <span>Starts in {(parseFloat(internalLoad)).toFixed(2)} s</span>
       </div>
       <div class="load" style={`width: ${$Load_animation}%;`}></div>
    </div>

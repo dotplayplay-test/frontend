@@ -1,6 +1,6 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
+import { HandleDicePoint, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
 import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
@@ -246,7 +246,7 @@ $:{
                     {#if ishover}
                         <div class="slider-tip" style={`left: ${ $rollunder ? $betPosition - 5 : 100 - $betPosition - 5 }%;`}>{(parseFloat(range)).toFixed(0)}</div>
                     {/if}
-                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={range}>
+                    <input disabled={$Handles_alive} type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={range}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                         {#if parseFloat($HandleDicePoint) === 50}
                         <div class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>

@@ -8,7 +8,7 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
-import { error_msg, handlediceAutoInput, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import { error_msg, handlediceAutoInput,Handles_alive, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 const URL = ServerURl()
 import { onMount  } from "svelte";
@@ -73,11 +73,27 @@ const dive = (()=>{
 
 const handleRangeSTlop = ((eui)=>{
     handlediceAutoInput.set((parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4))
+    if($default_Wallet.coin_name === "USDT"){
+        if($handlediceAutoInput < 0.1){
+            handlediceAutoInput.set((0.1).toFixed(4))
+        }
+        else if($handlediceAutoInput > 2000){
+            handlediceAutoInput.set((2000).toFixed(4))
+        }
+    }else{
+        if($handlediceAutoInput < 100){
+            handlediceAutoInput.set((100).toFixed(4))
+        }
+        else if($handlediceAutoInput > 5000){
+            handlediceAutoInput.set((5000).toFixed(4))
+        }
+    }
 })
 
 const mult = (()=>{
     handlediceAutoInput.set(($handlediceAutoInput * 2).toFixed(4))
 })
+
 let prev_bal;
 const handlePreBetamout = ((event)=>{
    return prev_bal
@@ -132,6 +148,7 @@ const handleAutoStart = (()=>{
         is_Looping = false
         clearInterval(yu)
         let s = handlePreBetamout()
+        Handles_alive.set(false)
         handlediceAutoInput.set((parseFloat(s)).toFixed(5))
     }
 })
@@ -215,6 +232,7 @@ const handleRollSubmit = (async()=>{
                 is_roll_under:$rollunder,
                 wining_amount: parseFloat(wining_amount) - parseFloat($handlediceAutoInput)
             }
+            Handles_alive.set(true)
             non += 1
             setTimeout(()=>{
             handleDicebet(data)
@@ -242,6 +260,21 @@ const handleRollSubmit = (async()=>{
 const handlesjen = ((e)=>{
     handlediceAutoInput.set((parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4))
     walletRange = e
+    if($default_Wallet.coin_name === "USDT"){
+        if($handlediceAutoInput < 0.1){
+            handlediceAutoInput.set((0.1).toFixed(4))
+        }
+        else if($handlediceAutoInput > 2000){
+            handlediceAutoInput.set((2000).toFixed(4))
+        }
+    }else{
+        if($handlediceAutoInput < 100){
+            handlediceAutoInput.set((100).toFixed(4))
+        }
+        else if($handlediceAutoInput > 5000){
+            handlediceAutoInput.set((5000).toFixed(4))
+        }
+    }
 })
 
 

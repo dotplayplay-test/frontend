@@ -78,3 +78,7 @@ export let handleOnLose = writable(handleOnLoseEl)
 
 let prev = 0
 export let Autopre_bal = writable(prev)
+
+
+let s_alive = false
+export let Handles_alive = writable(s_alive)

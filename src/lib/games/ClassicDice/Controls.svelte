@@ -1,6 +1,7 @@
 <script>
 import AutoControllers from "./AutoControllers.svelte";
 import ManualControllers from "./ManualControllers.svelte";
+import {Handles_alive} from "$lib/games/ClassicDice/store/index"
 
 let is_manual = true
 const hanleManualControls = ((e)=>{
@@ -14,10 +15,10 @@ const hanleManualControls = ((e)=>{
 
 <div id="ClassicDice-control-0" class="sc-hLVXRe cYiOHZ game-control style0">
     <div class="sc-iwjdpV ikWSlH radio game-control-switch">
-        <button on:click={()=> hanleManualControls(1)} class={`${is_manual ? "is-active" : ""} `}>
+        <button disabled={$Handles_alive} on:click={()=> hanleManualControls(1)} class={`${is_manual ? "is-active" : ""} `}>
             <div class="label">Manual</div>
         </button>
-        <button on:click={()=> hanleManualControls(2)} on:click={hanleManualControls} class={`${!is_manual ? "is-active" : ""} `}>
+        <button disabled={$Handles_alive}  on:click={()=> hanleManualControls(2)} on:click={hanleManualControls} class={`${!is_manual ? "is-active" : ""} `}>
             <div class="label">Auto</div>
         </button>
     </div>

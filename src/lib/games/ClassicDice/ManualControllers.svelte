@@ -137,43 +137,6 @@ const handleRollSubmit = (async()=>{
                 setTimeout(()=>{
                      is_loading = false
                 },500)
-                // await axios.post(`${URL}/api/user/dice-game/bet`, {
-                //     data
-                // },{
-                //     headers:{
-                //         Authorization: `Bearer ${$handleAuthToken}`
-                //     }
-                // }).then(res =>{
-                //     let r = {
-                //         client_seed: res.data.client_seed,
-                //         server_seed:res.data.client_seed,
-                //         hash_seed:res.data.hash,
-                //         nonce:res.data.nonce + 1,
-                //     }
-                //     DiceEncription.set(r)
-                //     HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
-                //     is_loading = false
-                //     if(parseFloat($betPosition) > parseFloat($HandleDicePoint)){
-                //         let wallet = {
-                //             coin_name: $default_Wallet.coin_name ,
-                //             coin_image: $default_Wallet.coin_image,
-                //             balance:  (parseFloat(data.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
-                //         }
-                //         default_Wallet.set(wallet)
-                //         $soundHandler &&  playSound(2)
-                //         HandleHas_won.set(true)
-                //         history.push({ ...data,has_won:true, cashout:res.data.point, profit:parseFloat(data.wining_amount), token:$default_Wallet.coin_name})
-                //     }else{
-                //         let wallet = {
-                //             coin_name: $default_Wallet.coin_name ,
-                //             coin_image: $default_Wallet.coin_image,
-                //             balance: (parseFloat($default_Wallet.balance) - parseFloat(data.bet_amount)).toFixed(4)
-                //         }
-                //         default_Wallet.set(wallet)
-                //         HandleHas_won.set(false)
-                //         history.push({...data,has_won:false, cashout:res.data.point, profit:0, token:$default_Wallet.coin_name})
-                //     }
-                // })
             }
         }else{
             error_msg.set('You are not Logged in')
@@ -202,11 +165,41 @@ const handleMinMax = (()=>{
 let walletRange = 0
 const handleRangeSTlop = ((eui)=>{
     bet_amount = (parseFloat($default_Wallet.balance)  * (eui / 100 )).toFixed(4)
+    if($default_Wallet.coin_name === "USDT"){
+        if(bet_amount < 0.1){
+            bet_amount = (0.1).toFixed(4)
+        }
+        else if(bet_amount > 2000){
+            bet_amount =  (2000).toFixed(4)
+        }
+    }else{
+        if(bet_amount < 100){
+            bet_amount = (100).toFixed(4)
+        }
+        else if(bet_amount > 5000){
+            bet_amount = (5000).toFixed(4)
+        }
+    }
 })
 
 const handlesjen = ((e)=>{
     bet_amount = (parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4)
     walletRange = e
+    if($default_Wallet.coin_name === "USDT"){
+        if(bet_amount < 0.1){
+            bet_amount = (0.1).toFixed(4)
+        }
+        else if(bet_amount > 2000){
+            bet_amount =  (2000).toFixed(4)
+        }
+    }else{
+        if(bet_amount < 100){
+            bet_amount = (100).toFixed(4)
+        }
+        else if(bet_amount > 5000){
+            bet_amount = (5000).toFixed(4)
+        }
+    }
 })
 
 

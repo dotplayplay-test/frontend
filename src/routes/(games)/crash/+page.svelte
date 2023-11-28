@@ -256,7 +256,6 @@ const handleTrends = (()=>{
     height: 100%;
     cursor: pointer;
     white-space: nowrap;
-    width: 100%;
     z-index: 1;
 }
 .kQfmQV .tabs-nav.is-active {

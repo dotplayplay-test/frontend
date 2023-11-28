@@ -372,7 +372,7 @@ const handleCashout = (()=>{
         <div class="game-view">
             <div class="sc-eBhrFy jrzKwG game-recent sc-jLuXOi gfnnAw">
                 <div class="recent-list-wrap">
-                    <div class="recent-list" style="width: 133.333%; transform: translate(0%, 0px);">
+                    <div class="recent-list" style="transform: translate(0%, 0px);">
                         {#if $crash_historyEl.length !== 0}
                         {#each $crash_historyEl as his}
                             <button on:click={()=> handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 30%;">
@@ -1299,5 +1299,11 @@ const handleCashout = (()=>{
         margin-right: -0.3125rem;
         font-size: 1.625rem;
     }
+}
+.empty-item{
+    text-align: center;
+    display: flex;
+    padding: 7px 120px 0 9px;
+    justify-content: center;
 }
 </style>
