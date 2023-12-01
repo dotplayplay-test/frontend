@@ -47,6 +47,10 @@ export const handleCountdown = (()=>{
             hasCrashed.set(0)
         }
     })
+    
+    socket.on("crash-p", data=>{
+        crashRunning.set(data)
+    })
 
     socket.on("crash-all-redball-users", data =>{
         if(data === "is-crash"){

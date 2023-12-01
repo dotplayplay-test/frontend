@@ -41,14 +41,11 @@ const handleProfile = (async()=>{
        });
     })
     .catch((err)=>{
-         console.log(err.response.data.error)
-         if(err.response.data.error === "Request not authorized"){
-            handleisLoggin.set(false)
-            profileStore.set({})
-            window.location.href = ("")
-            localStorage.removeItem("user");
-            localStorage.removeItem("user_bet_amount");
-         }
+        handleisLoggin.set(false)
+        profileStore.set({})
+        window.location.href = ("")
+        localStorage.removeItem("user");
+        localStorage.removeItem("user_bet_amount");
     })
     }
     catch(err){
