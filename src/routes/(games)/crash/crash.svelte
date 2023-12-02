@@ -1,7 +1,20 @@
 <script>
+import { io } from "socket.io-client";
+import {RealTimeURl} from "$lib/backendUrl"
+const URL = RealTimeURl()
+const socket = io(`${URL}`);
+import { onMount, tick } from "svelte";
+
+let runnfs ;
+onMount(async()=>{
+    socket.on("crash-p", data=>{
+        runnfs = data
+    })
+})
+
+
 import { default_Wallet } from "$lib/store/coins"
-import { crashPoint , crashRunning ,Load_animation,
-     winning,crashCurve, crashLoad,
+import { crashPoint , crashRunning ,Load_animation, winning,crashCurve, crashLoad,
       loadingCrash,winningEl, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
 import {
     Stage,
@@ -14,10 +27,8 @@ import {
 import {
     browser
 } from '$app/environment'
-import { onMount, tick } from "svelte";
 let v2 = 10
 let v3 = -10
-
 let handleVerticalLoop = setInterval(()=>{
     if(v2 > 150 && v2 < 200){
         v2 += 0.1
@@ -81,7 +92,7 @@ let objWidth = 220
 <div class="chart-crash">
 <Stage config={{ width: width, height:height }}>
     <Layer>
-        {#if $winning}
+        <!-- {#if $winning}
             <Text config={{
                 text: `${($winningEl).toFixed(2)} ${$default_Wallet.coin_name} `,
                 fontSize: 25,
@@ -109,16 +120,16 @@ let objWidth = 220
                 height: 160,
                 image
             }} />
-        {/if}
+        {/if} -->
 
-        <Image config={{
+        <!-- <Image config={{
             x:23,
             y:70,
           
             image:animate
-        }} />
+        }} /> -->
 
-        {#if $hasCrashed}
+        <!-- {#if $hasCrashed}
             <Text config={{
                 text: `${$crashPoint}x`,
                 fontSize: 50,
@@ -146,11 +157,11 @@ let objWidth = 220
                 fontStyle: '500',
                 fontFamily: 'Poppins',
             }}/>
-        {/if}
+        {/if} -->
     <!-- ======================================== is_alive curve ============================= -->
-        {#if $crashIsAlive}
+        <!-- {#if $crashIsAlive} -->
             <Text config={{
-                text: `${$crashRunning}x`,
+                text: `${runnfs}x`,
                 fontSize: 50,
                 fill: '#ffff',
                 x: width / 2 - 50,
@@ -158,12 +169,12 @@ let objWidth = 220
                 fontStyle: '700',
                 fontFamily: 'Poppins',
             }}/>
-        {/if}
+        <!-- {/if} -->
  
 
     <!-- ========================================== Starting load ========================= -->
 
-    {#if $loadingCrash}
+    <!-- {#if $loadingCrash}
         <Rect config={{
             x: width / 2 - objWidth / 2,
             y: 130,
@@ -192,7 +203,7 @@ let objWidth = 220
             fontStyle: '400',
             fontFamily: 'Poppins',
         }}/> 
-    {/if}
+    {/if} -->
 
 
  <!-- =========================================== Default vertical position ======================================== -->
