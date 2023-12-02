@@ -6,9 +6,14 @@ const socket = io(`${URL}`);
 import { onMount, tick } from "svelte";
 
 let runnfs ;
+let countdowWe ;
 onMount(async()=>{
-    socket.on("crash-p", data=>{
+    socket.on("running-crash", data=>{
         runnfs = data
+    })
+
+    socket.on("countdown", data=>{
+        countdowWe = data
     })
 })
 
