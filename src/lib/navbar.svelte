@@ -86,7 +86,14 @@ let waitaibit = false
 setTimeout(()=>{
     waitaibit = true
 },2000)
-
+import {RealTimeURl} from "$lib/backendUrl";
+let counterTest = 0;
+onMount(()=>{
+    const event = new EventSource(`${RealTimeURl()}/events`);
+    event.addEventListener("countdown-test", ({data}) => {
+        counterTest = JSON.parse(data);
+    });
+})
 </script>
 
     <!-- {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
@@ -119,6 +126,7 @@ setTimeout(()=>{
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
                 <div class="sc-iukxot jivBdD logo-pc">
+                    {counterTest}
                     {#if styles }
                     <img alt="logo" class="logo-com" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
                     {:else}
