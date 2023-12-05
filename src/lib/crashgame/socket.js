@@ -1,105 +1,119 @@
-import {io } from "socket.io-client";
-import {RealTimeURl} from "$lib/backendUrl"
+// import {io } from "socket.io-client";
+import { RealTimeURl } from "$lib/backendUrl"
 const URL = RealTimeURl()
 
-const socket = io(`${URL}`);
-import { crashLoad,handleHasbet,active_playerEl, Load_animation,game_id,crash_all_users_Moon_trendballEl,v_default,
-     loadingCrash,handleHasbet_amount, crashIsAlive,crashCurve,green_trendball_hasWinEl,Moon_trendball_hasWinEl,
-     v_two, crashPoint, crashRunning, crash_historyEl,handle_IsRed,handle_IsGreen,crash_all_users_green_trendballEl,
-      crash_all_users_red_trendballEl ,handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
-      v_three, v_five, v_seven, v_nine, v_ten, v_twenty,v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
-      h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty, 
-      h_eighty, h_hundred,hasCrashed, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
-    } from "./store"
+// const socket = io(`${URL}`);
+import {
+    crashLoad, handleHasbet, active_playerEl, Load_animation, game_id, crash_all_users_Moon_trendballEl, v_default,
+    loadingCrash, handleHasbet_amount, crashIsAlive, crashCurve, green_trendball_hasWinEl, Moon_trendball_hasWinEl,
+    v_two, crashPoint, crashRunning, crash_historyEl, handle_IsRed, handle_IsGreen, crash_all_users_green_trendballEl,
+    crash_all_users_red_trendballEl, handleRedtrendballPlayers, mybetEl, trendball_has_winEl, handle_IsMoon,
+    v_three, v_five, v_seven, v_nine, v_ten, v_twenty, v_fivety, v_hundred, v_Twohundred, v_FiveHundred, v_thousand,
+    h_two, h_four, h_six, h_eight, h_ten, h_twelve, h_fourteen, h_sixteen, h_eighteen, h_twenty, h_thirthy, h_fourty, h_sixty,
+    h_eighty, h_hundred, hasCrashed, h_Threehundred, h_Sevenhundred, h_onethousand, handle_IsRedwinners
+} from "./store"
 
-import { week_cashback , month_cashback} from "../store/cashbacks";
+import { week_cashback, month_cashback } from "../store/cashbacks";
 
-export const handleCountdown = (()=>{
-    socket.on("countdown", data=>{
-        if(data){
+export const handleCountdown = (() => {
+    const event = new EventSource(`${URL}/events`);
+    event.addEventListener("countdown", ({ data }) => {
+        data = JSON.parse(data);
+        // console.log("Countdown Event => ", data);
+        if (data) {
             crashLoad.set(data.toFixed(2))
-        }else{
+        } else {
             crashLoad.set(data)
         }
     })
-    socket.on("load-animation", data=>{
+    event.addEventListener("load-animation", ({ data }) => {
+        data = JSON.parse(data);
         Load_animation.set(data)
     })
 
-    socket.on("crash-point", data=>{
+    event.addEventListener("crash-point", ({ data }) => {
+        data = JSON.parse(data);
         crashPoint.set(data)
     })
- 
-   socket.on("running-crash", data=>{
-        if(data){
+
+    event.addEventListener("running-crash", ({ data }) => {
+        data = JSON.parse(data);
+        // console.log("running crash Event => ", data);
+        if (data) {
             crashRunning.set(data)
         }
-        else{
+        else {
             crashRunning.set(0)
         }
     })
 
-    socket.on("crash-point", data=>{
-        if(data){
+    event.addEventListener("crash-point", ({ data }) => {
+        data = JSON.parse(data);
+        if (data) {
             hasCrashed.set(data)
         }
-        else{
+        else {
             hasCrashed.set(0)
         }
     })
-    
-    socket.on("crash-p", data=>{
+
+    event.addEventListener("crash-p", ({ data }) => {
+        data = JSON.parse(data);
         crashRunning.set(data)
     })
 
-    socket.on("crash-all-redball-users", data =>{
-        if(data === "is-crash"){
+    event.addEventListener("crash-all-redball-users", data => {
+        if (data === "is-crash") {
             crash_all_users_red_trendballEl.set(true)
-        }else if(data = "has_win"){
+        } else if (data = "has_win") {
             trendball_has_winEl.set(true)
         }
     })
 
-    socket.on("crash-all-greenball-users", data =>{
-        if(data === "is-crash"){
+    event.addEventListener("crash-all-greenball-users", data => {
+        if (data === "is-crash") {
             crash_all_users_green_trendballEl.set(true)
-        }else if(data = "has_win"){
+        } else if (data = "has_win") {
             green_trendball_hasWinEl.set(true)
         }
     })
 
-    socket.on("crash-all-moonball-users", data =>{
-        if(data === "is-crash"){
+    event.addEventListener("crash-all-moonball-users", data => {
+        if (data === "is-crash") {
             crash_all_users_Moon_trendballEl.set(true)
-        }else if(data = "has_win"){
+        } else if (data = "has_win") {
             Moon_trendball_hasWinEl.set(true)
         }
     })
 
-    socket.on("crash-game-history", data=>{
+    event.addEventListener("crash-game-history", ({ data }) => {
+        data = JSON.parse(data);
         crash_historyEl.set(data)
     })
 
     let winners = []
-    socket.on("redball_update_wallet", data=>{
+    event.addEventListener("redball_update_wallet", ({ data }) => {
+        data = JSON.parse(data);
         winners.push(data)
-        setTimeout(()=>{
+        setTimeout(() => {
             handle_IsRedwinners.set(winners)
-        },1000)
+        }, 1000)
     })
 
 
-    socket.on("crash-game-redtrend", data=>{
+    event.addEventListener("crash-game-redtrend", ({ data }) => {
+        data = JSON.parse(data);
         handleRedtrendballPlayers.set(data)
     })
 
-    socket.on("crash-autobet-users", data=>{
+    event.addEventListener("crash-autobet-users", ({ data }) => {
+        data = JSON.parse(data);
         handleHasbet.set(false)
     })
 
     // ============= Manage the state of the game =======================
-    socket.on("crash-state", data =>{
-        if(data === "load-crash"){
+    event.addEventListener("crash-state", data => {
+        if (data === "load-crash") {
             loadingCrash.set(true)
             crashIsAlive.set(false)
             hasCrashed.set(false)
@@ -110,12 +124,12 @@ export const handleCountdown = (()=>{
             crash_all_users_green_trendballEl.set(false)
             crash_all_users_red_trendballEl.set(false)
         }
-         if(data === "crash-isRunning"){
+        if (data === "crash-isRunning") {
             loadingCrash.set(false)
             crashIsAlive.set(true)
             hasCrashed.set(false)
-        }  
-        if(data === "hasCrashed"){
+        }
+        if (data === "hasCrashed") {
             loadingCrash.set(false)
             crashIsAlive.set(false)
             hasCrashed.set(true)
@@ -124,159 +138,192 @@ export const handleCountdown = (()=>{
             handle_IsMoon.set(false)
             handleHasbet.set(false)
             handleHasbet_amount.set(null)
-        }  
+        }
     })
 
     // ============ current game id ===========
-    socket.on("game_id", data =>{
+    event.addEventListener("game_id", data => {
         game_id.set(data)
     })
 
     //  ==================== active players ==============
-    socket.on("active_players", data =>{
+    event.addEventListener("active_players", data => {
         active_playerEl.set(data)
     })
 
     //  ==================== crash animation ==============
-       socket.on("nuppp-curve", data =>{
+    event.addEventListener("nuppp-curve", data => {
         crashCurve.set(data)
     })
 
     //  ==================== crash animation ==============
-    socket.on("my-bet", data =>{
+    event.addEventListener("my-bet", data => {
         mybetEl.set(data)
     })
 
-    socket.on("v_default", data=>{
+    event.addEventListener("v_default", ({ data }) => {
+        data = JSON.parse(data);
         v_default.set(data)
     })
 
 
-    socket.on("v_two", data=>{
+    event.addEventListener("v_two", ({ data }) => {
+        data = JSON.parse(data);
         v_two.set(data)
     })
 
-    socket.on("v_three", data=>{
+    event.addEventListener("v_three", ({ data }) => {
+        data = JSON.parse(data);
         v_three.set(data)
     })
 
-    socket.on("v_five", data=>{
+    event.addEventListener("v_five", ({ data }) => {
+        data = JSON.parse(data);
         v_five.set(data)
     })
 
-    socket.on("v_seven", data=>{
+    event.addEventListener("v_seven", ({ data }) => {
+        data = JSON.parse(data);
         v_seven.set(data)
     })
 
-    socket.on("v_nine", data=>{
+    event.addEventListener("v_nine", ({ data }) => {
+        data = JSON.parse(data);
         v_nine.set(data)
     })
 
-    socket.on("v_ten", data=>{
+    event.addEventListener("v_ten", ({ data }) => {
+        data = JSON.parse(data);
         v_ten.set(data)
     })
-    socket.on("v_twenty", data=>{
+    event.addEventListener("v_twenty", ({ data }) => {
+        data = JSON.parse(data);
         v_twenty.set(data)
     })
-    socket.on("v_fivety", data=>{
+    event.addEventListener("v_fivety", ({ data }) => {
+        data = JSON.parse(data);
         v_fivety.set(data)
     })
 
-    socket.on("v_hundred", data=>{
+    event.addEventListener("v_hundred", ({ data }) => {
+        data = JSON.parse(data);
         v_hundred.set(data)
     })
 
-    socket.on("v_Twohundred", data=>{
+    event.addEventListener("v_Twohundred", ({ data }) => {
+        data = JSON.parse(data);
         v_Twohundred.set(data)
     })
 
-    socket.on("v_FiveHundred", data=>{
+    event.addEventListener("v_FiveHundred", ({ data }) => {
+        data = JSON.parse(data);
         v_FiveHundred.set(data)
     })
 
-    socket.on("v_thousand", data=>{
+    event.addEventListener("v_thousand", ({ data }) => {
+        data = JSON.parse(data);
         v_thousand.set(data)
     })
 
 
 
-    socket.on("h_two", data=>{
-         h_two.set(data)
+    event.addEventListener("h_two", ({ data }) => {
+        data = JSON.parse(data);
+        h_two.set(data)
     })
 
-    socket.on("h_four", data=>{
+    event.addEventListener("h_four", ({ data }) => {
+        data = JSON.parse(data);
         h_four.set(data)
     })
 
-    socket.on("h_six", data=>{
+    event.addEventListener("h_six", ({ data }) => {
+        data = JSON.parse(data);
         h_six.set(data)
-    }) 
+    })
 
-    socket.on("h_eight", data=>{
+    event.addEventListener("h_eight", ({ data }) => {
+        data = JSON.parse(data);
         h_eight.set(data)
     })
 
-    socket.on("h_ten", data=>{
+    event.addEventListener("h_ten", ({ data }) => {
+        data = JSON.parse(data);
         h_ten.set(data)
     })
 
-    socket.on("h_twelve", data=>{
+    event.addEventListener("h_twelve", ({ data }) => {
+        data = JSON.parse(data);
         h_twelve.set(data)
     })
 
-    socket.on("h_fourteen", data=>{
+    event.addEventListener("h_fourteen", ({ data }) => {
+        data = JSON.parse(data);
         h_fourteen.set(data)
     })
 
-    socket.on("h_sixteen", data=>{
+    event.addEventListener("h_sixteen", ({ data }) => {
+        data = JSON.parse(data);
         h_sixteen.set(data)
     })
 
-    socket.on("h_eighteen", data=>{
+    event.addEventListener("h_eighteen", ({ data }) => {
+        data = JSON.parse(data);
         h_eighteen.set(data)
     })
 
-    socket.on("h_twenty", data=>{
+    event.addEventListener("h_twenty", ({ data }) => {
+        data = JSON.parse(data);
         h_twenty.set(data)
     })
 
-    socket.on("h_thirthy", data=>{
+    event.addEventListener("h_thirthy", ({ data }) => {
+        data = JSON.parse(data);
         h_thirthy.set(data)
     })
 
-    socket.on("h_fourty", data=>{
+    event.addEventListener("h_fourty", ({ data }) => {
+        data = JSON.parse(data);
         h_fourty.set(data)
     })
 
-    socket.on("h_sixty", data=>{
+    event.addEventListener("h_sixty", ({ data }) => {
+        data = JSON.parse(data);
         h_sixty.set(data)
     })
 
-    socket.on("h_eighty", data=>{
+    event.addEventListener("h_eighty", ({ data }) => {
+        data = JSON.parse(data);
         h_eighty.set(data)
     })
 
-    socket.on("h_hundred", data=>{
+    event.addEventListener("h_hundred", ({ data }) => {
+        data = JSON.parse(data);
         h_hundred.set(data)
     })
 
-    socket.on("h_Threehundred", data=>{
+    event.addEventListener("h_Threehundred", ({ data }) => {
+        data = JSON.parse(data);
         h_Threehundred.set(data)
     })
 
-    socket.on("h_Sevenhundred", data=>{
+    event.addEventListener("h_Sevenhundred", ({ data }) => {
+        data = JSON.parse(data);
         h_Sevenhundred.set(data)
     })
-    
-    socket.on("h_onethousand", data=>{
+
+    event.addEventListener("h_onethousand", ({ data }) => {
+        data = JSON.parse(data);
         h_onethousand.set(data)
     })
 
-    socket.on("weekly-count-down", data=>{
+    event.addEventListener("weekly-count-down", ({ data }) => {
+        data = JSON.parse(data);
         week_cashback.set(data)
     })
 
-    socket.on("monthly-count-down", data=>{
+    event.addEventListener("monthly-count-down", ({ data }) => {
+        data = JSON.parse(data);
         month_cashback.set(data)
     })
 
