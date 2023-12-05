@@ -59,7 +59,7 @@ const handleAllbet = ((e)=>{
             <span>House Edge 1%</span>
         </div>
         <div class="sc-feYDSs hgDXdf">
-            <Crash />
+            <Crashlayout />
         </div>
         <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs>
             <linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%">
