@@ -41,7 +41,8 @@ let newItem;
 
 $: {
     // $crash_historyEl.sort((a, b) => b._id - a._id);
-    newItem =  [...$mybetEl].reverse()
+    // newItem =  [...$mybetEl].reverse()
+    newItem =  []
 }
 
 
