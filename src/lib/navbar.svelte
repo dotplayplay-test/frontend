@@ -126,7 +126,7 @@ onMount(()=>{
         <div class="header">
             <div class="sc-hGnimi ftyLxH left">
                 <div class="sc-iukxot jivBdD logo-pc">
-                    {counterTest}
+                    <!-- {counterTest} -->
                     {#if styles }
                     <img alt="logo" class="logo-com" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
                     {:else}

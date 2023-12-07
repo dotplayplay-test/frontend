@@ -7,6 +7,7 @@
   import "../../styles/lottery/mobile/rules.css"
   import "../../styles/lottery/mobile/instructions.css"
   import "../../styles/lottery/mobile/guides.css"
+
 </script>
 
 <div>
