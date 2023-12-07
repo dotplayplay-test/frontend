@@ -5,10 +5,14 @@
     import { createEventDispatcher } from "svelte";
     import { onMount } from "svelte";
     import BuyTicket from "../buy-tickets/layout.svelte";
+    import ProvablyFair from "../provably-fair/layout.svelte";
     import { ServerURl } from "$lib/backendUrl";
     import { handleAuthToken } from "$lib/store/routes";
     $: currentTab = 1;
     $: buyTicketDialogOpen = false;
+    $: provablyFairD = null;
+
+
 
     const URL = ServerURl();
     const getGame = async (id) => {
@@ -91,6 +95,10 @@
     });
 </script>
 
+{#if !!provablyFairD}
+    <ProvablyFair showData={provablyFairD} on:close-pfd={() => provablyFairD = null}/>
+{/if}
+
 {#if buyTicketDialogOpen}
     <BuyTicket on:close-dialog={() => (buyTicketDialogOpen = false)} />
 {/if}
@@ -102,7 +110,7 @@
                 Lottery Game ID. <span>{gameData?.game_id ?? "..."}</span>
             </div>
             <a href="#lottery_rule" class="rule">Rules</a>
-            <button class="fairness">Provably Fair</button>
+            <button on:click={() => provablyFairD = {tab: 0}} class="fairness">Provably Fair</button>
             <div class="cont">
                 <div class="next-time">
                     <div class="txt">Next Draw in</div>
@@ -155,7 +163,7 @@
                 <button
                     on:click={() => (currentTab = 2)}
                     class="tabs-nav {currentTab === 2 ? 'is-active' : ''}"
-                    >My Winnigs</button
+                    >My Winnings</button
                 >
                 <button
                     on:click={() => (currentTab = 3)}
