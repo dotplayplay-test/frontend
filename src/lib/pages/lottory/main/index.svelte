@@ -1,5 +1,8 @@
 <script>
     import History from "./history.svelte";
+    import MyTickets from "./my-tickets.svelte";
+    import MyWinings from "./winnings.svelte";
+    import Loader from "$lib/components/loader.svelte";
     import Icon from "svelte-icons-pack/Icon.svelte";
     import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
     import { createEventDispatcher } from "svelte";
@@ -11,8 +14,6 @@
     $: currentTab = 1;
     $: buyTicketDialogOpen = false;
     $: provablyFairD = null;
-
-
 
     const URL = ServerURl();
     const getGame = async (id) => {
@@ -36,16 +37,13 @@
         }
     };
     const getTickets = async () => {
-        const response = await fetch(
-            `${URL}/api/lottery/tickets`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${$handleAuthToken}`,
-                },
+        const response = await fetch(`${URL}/api/lottery/tickets`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${$handleAuthToken}`,
             },
-        );
+        });
         const json = await response.json();
         if (!response.ok) {
             console.log(json.error);
@@ -54,23 +52,25 @@
         if (response.ok) {
             return json;
         }
-    }
+    };
+    $: loading = true;
     $: gameData = null;
-    $: myTickets = [];
+    $: myTickets = 0;
     let countDownInterval;
     $: countDownParts = ["00", "00", "00"];
     onMount(async () => {
         try {
-            const [game, ticketData] = await Promise.all([getGame(), getTickets()]);
+            const [game, ticketData] = await Promise.all([
+                getGame(),
+                getTickets().catch(),
+            ]);
             console.log(game);
-            myTickets = ticketData.tickets;
+            myTickets = ticketData?.tickets?.reduce((a, {amount}) => a + amount, 0);
             gameData = {
                 ...game.lottery,
-                ticketCount: game.ticketCount,
-                purchases: game.purchases,
-                previousGames: game.previousGames
+                ticketCount: game.total_tickets,
             };
-            const endsInDate = new Date(gameData.endsIn);
+            const endsInDate = new Date(gameData.draw_date);
             const now = new Date();
             let diffInSeconds = Math.floor((endsInDate - now) / 1000);
             if (countDownInterval) {
@@ -84,25 +84,35 @@
                     const hours = Math.floor(diffInSeconds / 3600);
                     const minutes = Math.floor((diffInSeconds % 3600) / 60);
                     const seconds = diffInSeconds % 60;
-                    countDownParts = [hours.toString().padStart(2, '0'), minutes.toString().padStart(2, '0'), seconds.toString().padStart(2, '0')];
+                    countDownParts = [
+                        hours.toString().padStart(2, "0"),
+                        minutes.toString().padStart(2, "0"),
+                        seconds.toString().padStart(2, "0"),
+                    ];
                     diffInSeconds--;
                 }
             }, 1000);
-            console.log("Tickets => ", tickets)
+            console.log("Tickets => ", tickets);
         } catch (err) {
             console.log("Error", err);
+        } finally {
+            loading = false;
         }
     });
 </script>
 
-{#if !!provablyFairD}
-    <ProvablyFair showData={provablyFairD} on:close-pfd={() => provablyFairD = null}/>
+{#if Boolean(provablyFairD)}
+    <ProvablyFair
+        showData={provablyFairD}
+        on:close-pfd={() => (provablyFairD = null)}
+    />
 {/if}
 
 {#if buyTicketDialogOpen}
     <BuyTicket on:close-dialog={() => (buyTicketDialogOpen = false)} />
 {/if}
 
+{#if !loading}
 <div id="main" class="sc-zjkyB jlxrhk">
     <div class="sc-gDGHff jtyGOM lottery-header">
         <div class="wrap">
@@ -110,12 +120,17 @@
                 Lottery Game ID. <span>{gameData?.game_id ?? "..."}</span>
             </div>
             <a href="#lottery_rule" class="rule">Rules</a>
-            <button on:click={() => provablyFairD = {tab: 0}} class="fairness">Provably Fair</button>
+            <button
+                on:click={() => (provablyFairD = { tab: 1 })}
+                class="fairness">Provably Fair</button
+            >
             <div class="cont">
                 <div class="next-time">
                     <div class="txt">Next Draw in</div>
                     <div class="time">
-                        <span>{countDownParts[0]}h</span>:<span>{countDownParts[1]}m</span>:<span>{countDownParts[2]}s</span>
+                        <span>{countDownParts[0]}h</span>:<span
+                            >{countDownParts[1]}m</span
+                        >:<span>{countDownParts[2]}s</span>
                     </div>
                 </div>
                 <button
@@ -145,10 +160,11 @@
                 </div>
             </div>
             {#if gameData?.ticketCount}
-            <div class="sp">
-                Don't miss your chance! <span class="lottery-green">{gameData?.ticketCount}</span> tickets
-                have been sold today!
-            </div>
+                <div class="sp">
+                    Don't miss your chance! <span class="lottery-green"
+                        >{gameData?.totalTicktes}</span
+                    > tickets have been sold today!
+                </div>
             {/if}
         </div>
     </div>
@@ -158,7 +174,7 @@
                 <button
                     on:click={() => (currentTab = 1)}
                     class="tabs-nav {currentTab === 1 ? 'is-active' : ''}"
-                    >My Ticket({myTickets?.length || "0"})</button
+                    >My Ticket({myTickets || "0"})</button
                 >
                 <button
                     on:click={() => (currentTab = 2)}
@@ -185,34 +201,16 @@
             </div>
             <div class="tabs-view" style="transform: none;">
                 {#if currentTab === 1}
-                    {#if !myTickets.length}
-                    <div class="sc-wkwDy iBMYzh no-ticket">
-                        <div class="tips">You have no ticket!</div>
-                        <button
-                            class="sc-iqseJM sc-hBUSln cBmlor blefOg button button-normal"
-                        >
-                            <div class="button-inner">Buy ticket now</div>
-                        </button>
-                    </div>
-                    {:else}
-                    <div>
-                        {#each myTickets as ticket (ticket.ticket_id)}
-                        <div>{ticket.ticket_id}: ({ticket.numbers})</div>
-                        {/each}
-                    </div>
-                    {/if}
+                    <MyTickets
+                        on:buy-tickets={() => (buyTicketDialogOpen = true)}
+                    />
                 {:else if currentTab === 2}
-                    <div class="sc-epFoly etYRmD">
-                        <div class="sc-eCImPb biQums cuPxwd empty">
-                            <img
-                                alt="No data"
-                                src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
-                            />
-                            <div class="msg">Oops! There is no data yet!</div>
-                        </div>
-                    </div>
+                    <MyWinings />
                 {:else}
-                    <History />
+                    <History
+                        on:show-pdf={(game_id) =>
+                            (provablyFairD = { game_id, tab: 1 })}
+                    />
                 {/if}
             </div>
         </div>
@@ -610,3 +608,9 @@
         </div>
     </div>
 </div>
+{:else}
+<div style="height: 400px">
+    <Loader/>
+</div>
+{/if}
+

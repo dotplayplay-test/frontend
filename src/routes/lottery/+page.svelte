@@ -3,7 +3,7 @@
   import Mobile from "$lib/pages/lottory/mobile/index.svelte"
   import "../../styles/lottery/mobile/index.css"
   import "../../styles/lottery/lottery.css"
-  import "../../styles/lottery/mobile/history.css"
+//   import "../../styles/lottery/mobile/history.css"
   import "../../styles/lottery/mobile/rules.css"
   import "../../styles/lottery/mobile/instructions.css"
   import "../../styles/lottery/mobile/guides.css"

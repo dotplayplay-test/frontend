@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from "svelte";
+	import { handleAuthToken } from "$lib/store/routes";
 	import CgSoftwareDownload from "svelte-icons-pack/hi/HiSolidDownload";
 	import HiOutlineScale from "svelte-icons-pack/hi/HiOutlineScale";
 	import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
@@ -9,11 +10,9 @@
 	import Loader from "$lib/components/loader.svelte";
 	import Icon from "svelte-icons-pack/Icon.svelte";
 	import {UseFetchData} from "$lib/hook/useFetchData";
-	export let serverSeedHash =
-		"72eb919f6d9ad9266e9a3b9245ad5994e376077c00b17fdb69c3dc492f11cb5d";
 	export let showData = {game_id: 0, tab: 1}
 
-	$: gameData = {};
+	$: gameSeeds = {};
 	$: loading = !!showData.game_id;
 
 	const handleTabChange = async (tab) => {
@@ -21,11 +20,9 @@
 		if (tab === 2) {
 			loading = true;
 			try {
-				const {data, error} = await UseFetchData().fetchData(`/lottery/game-hashes${showData.game_id ? `?id=${showData.game_id}` : ""}`);
+				const {data, error} = await UseFetchData($handleAuthToken).fetchData(`/lottery/game-seeds${showData.game_id ? `?id=${showData.game_id}` : ""}`);
 				if (error) throw new Error(error);
-
-				gameData = data;
-
+				gameSeeds = data.seeds;
 			} catch (error) {
 				currentTab = 1;
 			} finally {
@@ -41,7 +38,7 @@
 	const handleCopy = () => {
 		navigator.clipboard.writeText(serverSeed);
 	};
-	$: currentTab = showMode;
+	$: currentTab = showData.tab;
 	
 </script>
 
@@ -139,7 +136,7 @@
 							</div>
 						</div>
 						<div class="input-control">
-							<input type="text" readonly="" value={serverSeedHash} /><button
+							<input type="text" readonly="" value={gameSeeds.server_seed_hash} /><button
 								on:click={handleCopy}
 								class="sc-iqseJM cBmlor button button-normal copy-button"
 								><div class="button-inner">
@@ -163,7 +160,7 @@
 							</div>
 						</div>
 						<div class="input-control">
-							<input type="text" readonly value="Reveal after draw" />
+							<input type="text" readonly value="{gameSeeds.server_seed || "Reveal after draw"}" />
 						</div>
 					</div>
 					<div class="sc-ezbkAF kDuLvp input">
@@ -226,8 +223,8 @@
 							<input
 								type="text"
 								placeholder="Reveal after Client Seed Block generated"
-								readonly=""
-								value=""
+								readonly
+								value="{gameSeeds.client_seed_hash || "Reveal after Client Seed Block generated"}"
 							/>
 						</div>
 					</div>

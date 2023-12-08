@@ -1,16 +1,15 @@
 import { ServerURl } from "$lib/backendUrl"
-import { handleAuthToken } from "$lib/store/routes";
 const URL = ServerURl()
-export const UseFetchData = () => {
+export const UseFetchData = (handleAuthToken) => {
   let error;
   const fetchData = async (endpoint, data = {}, method = "GET") => {
     const response = await fetch(
-      `${URL}${endpoint}`, {
+      `${URL}/api${endpoint}`, {
       method,
-      body: JSON.stringify(data),
+      ...(method === "POST" ? { data: JSON.stringify(data)} : {}),
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${$handleAuthToken}`,
+        Authorization: `Bearer ${handleAuthToken}`,
       },
     }
     );
