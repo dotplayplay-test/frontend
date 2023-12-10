@@ -40,8 +40,7 @@ import {
     hasCrashed,
     loadingCrash,
     winningEl,
-    crashIsAlive,
-
+    crashIsAlive
 } from "../store"
 import RunningCrash from "./RunningCrash.svelte";
 
@@ -50,21 +49,21 @@ import RunningCrash from "./RunningCrash.svelte";
 <div class="crash-board dvgwiw">
     <div class="crash-chart">
         <!-- Render screens -->
-        {#if $crashLoad && !$hasCrashed && !$crashRunning}
-        <div class="cntsnsnQn">
-            <Loading />
-        </div>
+        {#if $loadingCrash}
+            <div class="cntsnsnQn">
+                <Loading />
+            </div>
         {/if}
         {#if $hasCrashed && !$crashRunning && !$crashLoad}
-        <HasCrashed />
+            <HasCrashed />
         {/if}
-        {#if  !$crashLoad && !$hasCrashed &&  $crashRunning}
-        <RunningCrash />
+        {#if  $crashIsAlive}
+            <RunningCrash />
         {/if}
 
         {#if $v_two}
-        <div class="strock" style={`top: ${$v_two + 3.5}%;`}></div>
-        <span class="reixxT" style={`top: ${$v_two}%;`}>2x</span>
+            <div class="strock" style={`top: ${$v_two + 3.5}%;`}></div>
+            <span class="reixxT" style={`top: ${$v_two}%;`}>2x</span>
         {/if}
 
         {#if $v_three}

@@ -1,13 +1,13 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
-import { crash_historyEl } from "$lib/crashgame/store"
+import { crash_historyEl, crashLoad, Load_animation, loadingCrash ,crashRunning, crashIsAlive} from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
-    import Crash from './crash.svelte';
+import Crash from './crash.svelte';
 const { getAllPlayers } = useAllplayer()
 const handleTrends = (()=>{
     dispatch("closeTrend", 5)
@@ -23,6 +23,26 @@ const handleAllbet = ((e)=>{
         getAllPlayers(e)
     }
 })
+
+import {RealTimeURl} from "$lib/backendUrl";
+
+onMount(()=>{
+    const event = new EventSource(`${RealTimeURl()}/events`);
+    event.addEventListener("countdown", ({data}) => {
+        let mimik = JSON.parse(data);
+        crashLoad.set(mimik.timeSec)
+        Load_animation.set(mimik.load_animate)
+        loadingCrash.set(true)
+        crashIsAlive.set(false)
+    });
+    event.addEventListener("running-crash", ({data}) => {
+        loadingCrash.set(false)
+        crashIsAlive.set(true)
+        let mimik = JSON.parse(data);
+        crashRunning.set(mimik)
+    })
+})
+
 
 </script>
 

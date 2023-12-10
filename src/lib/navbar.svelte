@@ -86,15 +86,6 @@ let waitaibit = false
 setTimeout(()=>{
     waitaibit = true
 },2000)
-import {RealTimeURl} from "$lib/backendUrl";
-let counterTest = 0;
-onMount(()=>{
-    const event = new EventSource(`${RealTimeURl()}/events`);
-    event.addEventListener("countdown-test", ({data}) => {
-        counterTest = JSON.parse(data);
-    });
-})
-
 </script>
 
     <!-- {#if ($handleNestedRoute === "/login" || browser && window.location.pathname === "/login")}
@@ -154,7 +145,7 @@ onMount(()=>{
             </button>
         </div>
         {/if}
-            {/if}
+        {/if}
         
         </div>
     </div>
