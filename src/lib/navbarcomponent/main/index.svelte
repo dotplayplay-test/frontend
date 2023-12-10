@@ -18,6 +18,7 @@ import {  goto } from "$app/navigation";
 import { default_Wallet, coin_list } from "$lib/store/coins";
 import { ServerURl } from "$lib/backendUrl"
 import Layout from '../../deposit/layout.svelte';
+import {isLightMode} from '../../../lib/store/theme'
 const URL = ServerURl()
 
 const handleProfile = (async()=>{
@@ -111,9 +112,9 @@ const handleDeposit = (()=>{
 
 
 {#if  $default_Wallet.coin_image != undefined}
-<div class="sc-DtmNo euzHLF right">
+<div class= "sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
-        <div class="sc-fmciRz LQlWw">
+        <div class={$isLightMode ? "light-grey-bg sc-fmciRz LQlWw" : "sc-fmciRz LQlWw"}>
             <button on:click={()=> isCoinDrop =! isCoinDrop} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
@@ -122,7 +123,7 @@ const handleDeposit = (()=>{
                 </div>
                 <div class="sc-Galmp erPQzq coin notranslate balance">
                     <div class="amount">
-                        <span class="amount-str">{(parseFloat($default_Wallet.balance)).toFixed(6)}<span class="suffix">00</span></span>
+                        <span class={$isLightMode ? "light-text amount-str" : "amount-str"} >{(parseFloat($default_Wallet.balance)).toFixed(6)}<span class="suffix">00</span></span>
                     </div>
                 </div>
             </button>
@@ -139,7 +140,7 @@ const handleDeposit = (()=>{
             </button>
         </div>
     </div>
-    <div class="sc-gnnDb fWkueO">
+    <div class={$isLightMode ? "light-grey-bg sc-gnnDb fWkueO" : "sc-gnnDb fWkueO"}>
         <div class="user-wrap">
             {#if $profileStore}
             <a href={`/user/profile/${$profileStore.user_id}`}>
@@ -181,7 +182,7 @@ const handleDeposit = (()=>{
 
 <div class="sc-DtmNo euzHLF right">
     <div class="sc-gjNHFA juteh wallet-enter">
-        <div class="sc-fmciRz LQlWw">
+        <div class={$isLightMode ? "light-grey-bg sc-fmciRz LQlWw" : "sc-fmciRz LQlWw"}>
             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
@@ -207,7 +208,7 @@ const handleDeposit = (()=>{
             </button>
         </div>
     </div>
-    <div class="sc-gnnDb fWkueO">
+    <div class={$isLightMode ? "light-grey-bg sc-gnnDb fWkueO" : "sc-gnnDb fWkueO"}>
         <div class="user-wrap">
             {#if $profileStore}
             <a href={`/`}>
@@ -253,7 +254,7 @@ const handleDeposit = (()=>{
 <div class="mobile">
     {#if  $default_Wallet.coin_image != undefined}
     <div class="sc-gjNHFA jlttqa wallet-enter">
-        <div class="sc-fmciRz LQlWw">
+        <div class={$isLightMode ? "light-grey-bg sc-fmciRz LQlWw" : "sc-fmciRz LQlWw"}>
             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src={$handleisLoggin && $default_Wallet.coin_image}>
@@ -296,7 +297,7 @@ const handleDeposit = (()=>{
     </div>
     {:else}
     <div class="sc-gjNHFA jlttqa wallet-enter">
-        <div class="sc-fmciRz LQlWw">
+        <div class={$isLightMode ? "light-grey-bg sc-fmciRz LQlWw" : "sc-fmciRz LQlWw"}>
             <button on:click={()=>handleCoinsDrop("open")} class="sc-iFMAIt icGouR">
                 <div class="sc-eXlEPa boxpOO">
                     <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
@@ -342,6 +343,19 @@ const handleDeposit = (()=>{
 </div>
 
 <style>
+     .light-mode{
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(49, 55, 61) !important;
+  }
+  .light-grey-bg{
+    background-color: rgb(245, 246, 250) !important;
+  }
+  .light-bg {
+    background-color: rgb(255, 255, 255) !important;
+  }
+  .light-text {
+    color: rgb(49, 55, 61) !important;
+  }
 
 @media only screen and (max-width: 650px){
     .LQlWw {

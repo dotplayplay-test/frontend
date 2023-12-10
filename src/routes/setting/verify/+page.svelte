@@ -1,23 +1,23 @@
 <script>
-
+   import { isLightMode } from "../../../lib/store/theme";
 </script>
 
 <div class="sc-jnSlpE kIgFIY">
     <div class="left">
-        <div class="title">Verify Setup</div>
+        <div class={$isLightMode ? "light-text title" : "title"}>Verify Setup</div>
         <div>To serve you better we ask that you provide original identifying documents. This will secure your account in cases of account recovery. It also helps to ensure that the gifts or actual rewards you receive are sent to the correct location.</div>
         <div class="word">An acceptable proof of identification includes a photo of your Govt, approved ID card, driver's license and passport. We will reach out to you via email once this process has been completed.</div>
         <img class="bc-img" alt="bc" src="https://static.nanogames.io/assets/step_2.299e66eb.png">
     </div>
     <div class="right">
         <div class="sc-hRMJXU jilEdF flex-center">
-            <button class="step__item flex-center current">Step 01</button>
+            <button class={$isLightMode ? " light-text step__item flex-center current":"step__item flex-center current"}>Step 01</button>
             <div class="step__line"></div>
-            <button class="step__item flex-center normal">Step 02</button>
+            <button class={$isLightMode ? " light-text step__item flex-center normal":"step__item flex-center normal"}>Step 02</button>
             <div class="step__line"></div>
-            <button class="step__item flex-center normal">Step 03</button>
+            <button  class={$isLightMode ? " light-text step__item flex-center normal":"step__item flex-center normal"}>Step 03</button>
             <div class="step__line"></div>
-            <button class="step__item flex-center normal">Step 04</button>
+            <button  class={$isLightMode ? " light-text step__item flex-center normal":"step__item flex-center normal"}>Step 04</button>
         </div>
         <div class="step-main">
             <div class="sc-icMgfS jmSctS step step1">
@@ -25,21 +25,27 @@
                 <div class="step1__form">
                     <div class="inline">
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">First Name</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>First Name</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <input type="text" value="uih"></div>
                         </div>
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">Last Name</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>Last Name</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <input type="text" value="ygf">
                             </div>
                         </div>
                     </div>
                     <div class="inline">
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">Gender</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>Gender</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <div class="sc-jJoQJp gOHquD select  sc-czWrlN huGcJs">
                                     <div class="select-triggeer">Male<div class="arrow ">
                                         <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -50,36 +56,46 @@
                             </div>
                         </div>
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">Date of Birth</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>Date of Birth</div>
+                            <div c    class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <input type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="2000-01-01">
                             </div>
                         </div>
                     </div>
                     <div class="line"></div>
                     <div class="sc-ezbkAF gcQjQT input ">
-                        <div class="input-label">Address</div>
-                        <div class="input-control">
+                        <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>Address</div>
+                        <div     class={$isLightMode
+                            ? "light-input-control input-control"
+                            : "input-control"}>
                             <input type="text" value=""></div>
                     </div>
                     <div class="inline">
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">ZIP/Postal Code</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>ZIP/Postal Code</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <input type="text" value="">
                             </div>
                         </div>
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">City</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>City</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <input type="text" value="">
                             </div>
                         </div>
                     </div>
                     <div class="inline">
                         <div class="sc-ezbkAF gcQjQT input ">
-                            <div class="input-label">Country</div>
-                            <div class="input-control">
+                            <div class={$isLightMode ? "light-input-label input-label" : "input-label"}>Country</div>
+                            <div     class={$isLightMode
+                                ? "light-input-control input-control"
+                                : "input-control"}>
                                 <div class="sc-jJoQJp gOHquD select  sc-czWrlN huGcJs">
                                     <div class="select-triggeer">
                                         Afghanistan
@@ -103,6 +119,25 @@
 </div>
 
 <style>
+      .light-grey-bg {
+    background-color: rgb(245, 246, 250) !important;
+  }
+  .light-bg {
+    background-color: rgb(255, 255, 255) !important;
+  }
+  .light-text {
+    color: rgb(49, 55, 61) !important;
+  }
+  .light-input-control {
+    border: 1px solid rgb(233, 234, 242) !important;
+    background-color: rgb(245, 246, 250) !important;
+  }
+  .light-input-control input {
+    color: black !important;
+  }
+  .light-input-label{
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
 .kIgFIY {
     display: flex;
     height: 100%;

@@ -4,6 +4,7 @@ import { routes } from "$lib/store/routes"
 import {profileStore} from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes";
 import {ServerURl} from "$lib/backendUrl"
+import {isLightMode} from '../../../lib/store/theme'
 const URL = ServerURl()
 
 let Hide_gameing_profile = false
@@ -161,7 +162,7 @@ const handleTips = (()=>{
             <span class="bottom">Even if hidden, your avatar and username are always visible in chatrooms.</span>
         </p>
         <button on:click={handleGamingProfile} class={`sc-giYglK hRMjrF switch ${Hide_gameing_profile && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
     <div class="item">
@@ -170,7 +171,7 @@ const handleTips = (()=>{
             <span class="bottom">If hidden, no one can view your profile by clicking on your avatar or username on public rankings or bets list.</span>
         </p>
         <button on:click={handleHideUserName} class={`sc-giYglK hRMjrF switch ${hide_userName && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
     <div class="item">
@@ -178,7 +179,7 @@ const handleTips = (()=>{
             <span>Hide my online presence in private chat</span>
         </p>
         <button on:click={handleonlinePresence} class={`sc-giYglK hRMjrF switch ${hide_onlinePresence && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
     <div class="item">
@@ -186,7 +187,7 @@ const handleTips = (()=>{
             <span>Allow private messages from strangers</span>
         </p>
         <button on:click={handlePrivateMessages} class={`sc-giYglK hRMjrF switch ${allow_private_messages && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
     <div class="item">
@@ -194,7 +195,7 @@ const handleTips = (()=>{
             <span>Refuse any new friend request</span>
         </p>
         <button on:click={handleFriendRequest} class={`sc-giYglK hRMjrF switch ${refuse_friend_request && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
     <div class="item">
@@ -202,12 +203,29 @@ const handleTips = (()=>{
             <span>Refuse tip from strangers</span>
         </p>
         <button on:click={handleTips} class={`sc-giYglK hRMjrF switch ${refuse_tip && "open"} `}>
-            <div class="dot"></div>
+            <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
         </button>
     </div>
 </div>
 
 <style>
+      .light-mode{
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(49, 55, 61) !important;
+  }
+  .light-grey-bg{
+    background-color: rgb(245, 246, 250) !important;
+  }
+  .light-bg {
+    background-color: rgb(255, 255, 255) !important;
+  }
+  .light-text {
+    color: rgb(49, 55, 61) !important;
+  }
+  .light-dot{
+    background-color: #FFF !important;
+  }
+  
 .isgvhu > .item:first-child {
     padding-top: 0px;
 }
