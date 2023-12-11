@@ -13,57 +13,57 @@ const handleTrends = (()=>{
     dispatch("closeTrend", 5)
 })
 
-// let allbet = false
+let allbet = false
 
-// const handleAllbet = ((e)=>{
-//     if(allbet){
-//         allbet = false
-//     }else{
-//         allbet = true
-//         getAllPlayers(e)
-//     }
-// })
+const handleAllbet = ((e)=>{
+    if(allbet){
+        allbet = false
+    }else{
+        allbet = true
+        getAllPlayers(e)
+    }
+})
 
-// import {RealTimeURl} from "$lib/backendUrl";
+import {RealTimeURl} from "$lib/backendUrl";
 
-// onMount(()=>{
-//     const event = new EventSource(`${RealTimeURl()}/events`);
-//     event.addEventListener("countdown", ({data}) => {
-//         let mimik = JSON.parse(data);
-//         crashLoad.set(mimik.timeSec)
-//         Load_animation.set(mimik.load_animate)
-//         loadingCrash.set(true)
-//         crashIsAlive.set(false)
-//         hasCrashed.set(false)
-//     });
-//     event.addEventListener("running-crash", ({data}) => {
-//         loadingCrash.set(false)
-//         crashIsAlive.set(true)
-//         let mimik = JSON.parse(data);
-//         crashRunning.set(mimik)
-//         hasCrashed.set(false)
-//     })
-//     event.addEventListener("nuppp-curve", ({data}) =>{
-//         let mimik = JSON.parse(data);
-//         crashCurve.set(mimik)
-//     })
-//     event.addEventListener("crash-details", ({data}) =>{
-//         let mimik = JSON.parse(data);
-//         crashPoint.set(mimik.crash_point)
-//         hasCrashed.set(true)
-//         loadingCrash.set(false)
-//         crashIsAlive.set(false)
-//     })
-//     event.addEventListener("crash-game-history", ({data}) =>{
-//         let mimik = JSON.parse(data);
-//         let pip = {
-//             hash:mimik.hash,
-//             crash_point: mimik.crashpoint,
-//             game_id: mimik.game_id
-//         }
-//         crash_historyEl.set([...$crash_historyEl, pip])
-//     })
-// })
+onMount(()=>{
+    const event = new EventSource(`${RealTimeURl()}/events`);
+    event.addEventListener("countdown", ({data}) => {
+        let mimik = JSON.parse(data);
+        crashLoad.set(mimik.timeSec)
+        Load_animation.set(mimik.load_animate)
+        loadingCrash.set(true)
+        crashIsAlive.set(false)
+        hasCrashed.set(false)
+    });
+    event.addEventListener("running-crash", ({data}) => {
+        loadingCrash.set(false)
+        crashIsAlive.set(true)
+        let mimik = JSON.parse(data);
+        crashRunning.set(mimik)
+        hasCrashed.set(false)
+    })
+    event.addEventListener("nuppp-curve", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashCurve.set(mimik)
+    })
+    event.addEventListener("crash-details", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashPoint.set(mimik.crash_point)
+        hasCrashed.set(true)
+        loadingCrash.set(false)
+        crashIsAlive.set(false)
+    })
+    event.addEventListener("crash-game-history", ({data}) =>{
+        let mimik = JSON.parse(data);
+        let pip = {
+            hash:mimik.hash,
+            crash_point: mimik.crashpoint,
+            game_id: mimik.game_id
+        }
+        crash_historyEl.set([...$crash_historyEl, pip])
+    })
+})
 
 
 </script>
