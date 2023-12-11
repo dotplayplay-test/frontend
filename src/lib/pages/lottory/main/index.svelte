@@ -27,11 +27,11 @@
 
   const fetcher = UseFetchData($handleAuthToken);
   const getGame = async (id) => {
-    const { data } = await fetcher(`lottery/details${!!id ? `?id=${id}` : ""}`);
+    const { data } = await fetcher(`/lottery/details${!!id ? `?id=${id}` : ""}`);
     return data;
   };
   const getTickets = async () => {
-    const { data } = await fetcher("api/lottery/tickets");
+    const { data } = await fetcher("/lottery/tickets");
     return data;
   };
   $: loading = true;
