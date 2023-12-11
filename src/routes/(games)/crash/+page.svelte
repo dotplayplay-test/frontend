@@ -63,7 +63,7 @@ const handleTrends = (()=>{
                     </div>
                 </div>
                 <div class="game-area">
-                    <!-- <Main isClassic={isClassic} /> -->
+                    <Main isClassic={isClassic} />
                     <Allbet isClassic={isClassic} />
                 </div>
                 <Mybet />
