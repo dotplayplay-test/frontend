@@ -1,11 +1,12 @@
 <script>
-  
+    import { isLightMode } from "../../../lib/store/theme";
+
 </script>
 
 <div class="sc-kTqLtj fpLWcl">
-   <p class="title">Sessions Used in Past</p>
+   <p class={$isLightMode ? "light-text title" : "title"}>Sessions Used in Past</p>
    <div class="session-table">
-      <table class="sc-bBHHxi kISsPx">
+      <table class={$isLightMode ? "light-text sc-bBHHxi kISsPx" : "sc-bBHHxi kISsPx"}>
          <thead>
             <tr>
                <th>Browser</th>
@@ -17,27 +18,27 @@
          </thead>
          <tbody>
             <tr>
-               <td class="white-td">Windows 10 (Chrome 11)</td>
-               <td>NG</td>
-               <td class="white-td">102.88.35.179</td>
-               <td>Online</td>
-               <td class="white-td">Using</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>Windows 10 (Chrome 11)</td>
+               <td class={$isLightMode ? "light-text" : ""}>NG</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>102.88.35.179</td>
+               <td class={$isLightMode ? "light-text" : ""}>Online</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>Using</td>
             </tr>
             <tr>
-               <td class="white-td">Linux (Chrome 8)</td>
-               <td>NG</td>
-               <td class="white-td">102.215.57.197</td>
-               <td>11:52:52 AM</td>
-               <td class="white-td">
+               <td class={$isLightMode ? "light-text" : "white-td"}>Linux (Chrome 8)</td>
+               <td class={$isLightMode ? "light-text" : ""}>NG</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>102.215.57.197</td>
+               <td class={$isLightMode ? "light-text" : ""}>11:52:52 AM</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>
                   <div class="remove-btn">Remove Device</div>
                </td>
             </tr>
             <tr>
-               <td class="white-td">Windows 10 (Chrome 11)</td>
-               <td>NG</td>
-               <td class="white-td">102.215.57.197</td>
-               <td>11:52:18 AM</td>
-               <td class="white-td">
+               <td class={$isLightMode ? "light-text" : "white-td"}>Windows 10 (Chrome 11)</td>
+               <td class={$isLightMode ? "light-text" : ""}>NG</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>102.215.57.197</td>
+               <td class={$isLightMode ? "light-text" : ""}>11:52:18 AM</td>
+               <td class={$isLightMode ? "light-text" : "white-td"}>
                   <div class="remove-btn">Remove Device</div>
                </td>
             </tr>
@@ -65,6 +66,22 @@
 </div>
 
 <style>
+    .light-grey-bg {
+    background-color: rgb(245, 246, 250) !important;
+  }
+  .light-bg {
+    background-color: rgb(255, 255, 255) !important;
+  }
+  .light-text {
+    color: rgb(49, 55, 61) !important;
+  }
+  .remove-btn{
+    color: rgb(237, 99, 0);
+    cursor: pointer;
+  }
+  .remove-btn:hover{
+    text-decoration: underline;
+  }
 .fpLWcl .title {
     margin: 0px;
     color: rgb(245, 246, 247);
