@@ -303,80 +303,80 @@
               <p>Game results will be displayed here.</p>
             </div>
           </div>
-        
-        </div>  <div class="no-web sc-bQFuvY bFXMsx">
-            <div class="history">
-              <Icon
-                src={BsClock}
-                size="12"
-                color="rgba(153, 164, 176, 0.6)"
-                title=""
-              />History
+        </div>
+        <div class="no-web sc-bQFuvY bFXMsx">
+          <div class="history">
+            <Icon
+              src={BsClock}
+              size="12"
+              color="rgba(153, 164, 176, 0.6)"
+              title=""
+            />History
+          </div>
+          <div class="title">Result</div>
+          <div class="wrap ball-wrap">
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              23
             </div>
-            <div class="title">Result</div>
-            <div class="wrap ball-wrap">
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                23
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                14
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                6
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                5
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                11
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                18
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                39
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                15
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                31
-              </div>
-              <div
-                class="range-item"
-                style="opacity: 1; transform: translate(0px, 0px);"
-              >
-                24
-              </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              14
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              6
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              5
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              11
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              18
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              39
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              15
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              31
+            </div>
+            <div
+              class="range-item"
+              style="opacity: 1; transform: translate(0px, 0px);"
+            >
+              24
             </div>
           </div>
+        </div>
         <div class="sc-oXPCX fQmThe game-box sc-bOtlzW cxPcDj">
           <div class="sc-bjztik cKpuTs">
             <div class="keno-wrap">
@@ -2721,33 +2721,6 @@
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
   }
-  body,
-  input,
-  textarea,
-  a,
-  button {
-    color: var(--text-color);
-  }
-  body,
-  input,
-  textarea,
-  a,
-  button {
-    font-family:
-      Montserrat,
-      -apple-system,
-      Framedcn,
-      Helvetica Neue,
-      Condensed,
-      DisplayRegular,
-      Helvetica,
-      Arial,
-      PingFang SC,
-      Hiragino Sans GB,
-      WenQuanYi Micro Hei,
-      Microsoft Yahei,
-      sans-serif;
-  }
   button {
     border: none;
     padding: 0;
@@ -2927,21 +2900,6 @@
   .gJxbeS .input-control {
     border-color: transparent;
   }
-  .eQfpOS .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
-  }
-  .gcQjQT .input-control {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    opacity: 1;
-    height: 2.75rem;
-    border-radius: 1.5rem;
-    padding: 0px 1.375rem;
-  }
   .lnBinR .input-control input {
     font-weight: bold;
   }
@@ -3045,9 +3003,6 @@
   }
   .gJxbeS .input-control {
     border-color: transparent;
-  }
-  .eQfpOS .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
   }
   .gcQjQT .input-control {
     position: relative;
@@ -3318,7 +3273,7 @@
     cursor: pointer;
     border: none;
     padding: 0px;
-    border-radius: 7px;
+    border-radius: 200px;
     background-color: transparent;
     position: relative;
   }
@@ -3333,6 +3288,12 @@
     border-radius: 3.5px;
     overflow: hidden;
     animation: 0.2s ease 0s 1 normal none running elastic;
+    transition: 0.5s;
+  }
+  .cKpuTs .keno_styles_item .keno-ritem:hover {
+    top: -5px;
+    bottom: 5px;
+    background-color: rgb(111, 112, 114);
   }
   .cKpuTs .keno_styles_item .keno-ritem .keno-num {
     position: absolute;
@@ -3342,6 +3303,7 @@
     font-size: 16px;
     color: rgb(153, 164, 176);
   }
+
   .cKpuTs .keno_styles_item::after {
     content: "";
     display: block;
@@ -4391,18 +4353,6 @@
   .cYiOHZ .input-control {
     background-color: rgba(49, 52, 60, 0.4);
   }
-  .gcQjQT .input-control {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    opacity: 1;
-    height: 2.75rem;
-    border-radius: 1.5rem;
-    padding: 0px 1.375rem;
-  }
   .fCSgTW .input-control input {
     font-weight: bold;
   }
@@ -4448,14 +4398,6 @@
     padding-left: 0.125rem;
     border-top-left-radius: 1.125rem;
     border-bottom-left-radius: 1.125rem;
-  }
-  .bswIvI > button {
-    height: 2.25rem;
-    width: 2.75rem;
-    padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
-    margin-left: 1px;
   }
   .bswIvI > button:last-child {
     padding-right: 0.125rem;
@@ -4530,25 +4472,10 @@
     border-top-left-radius: 1.125rem;
     border-bottom-left-radius: 1.125rem;
   }
-  .bswIvI > button {
-    height: 2.25rem;
-    width: 2.75rem;
-    padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
-    margin-left: 1px;
-  }
   .bswIvI > button:last-child {
     padding-right: 0.125rem;
     border-top-right-radius: 1.125rem;
     border-bottom-right-radius: 1.125rem;
-  }
-  .dOhRZH {
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
   }
   .hzTJOu .input-control textarea[readonly],
   .hzTJOu .input-control input[readonly] {
@@ -4619,11 +4546,6 @@
     margin: 20px 0px 0px;
     align-items: flex-end;
   }
-  .gEBngo.button {
-    color: rgb(245, 246, 247);
-    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
-    background-color: rgb(107, 113, 128);
-  }
   .jcGUIr button {
     flex-basis: 48%;
     height: 44px;
@@ -4633,9 +4555,6 @@
     background-color: rgb(30, 32, 36);
     border-radius: 1.25rem;
     padding: 1px 0px;
-  }
-  .kQfmQV .tabs-view {
-    position: relative;
   }
   .iycaRo {
     min-height: 30rem;
@@ -4715,28 +4634,11 @@
     height: 3.3125rem;
     color: rgb(153, 164, 176);
   }
-  .kHsZCY .item,
-  .kHsZCY .head {
-    margin: 0px;
-    padding: 0px 0.75rem;
-  }
-  .kHsZCY .flex {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-  }
-  .flex {
-    display: flex;
-  }
-
   li {
     margin: 0.5em 0;
   }
   .kHsZCY .seed-box {
     display: flex;
-  }
-  .kHsZCY .col-2 {
-    flex: 0 0 50%;
   }
   .kHsZCY .seed {
     flex: 1 1 0%;
@@ -4805,10 +4707,5 @@
     gap: 5px;
     margin-left: auto;
     align-items: center;
-  }
-  .bFXMsx .history svg {
-    display: inline-block;
-    vertical-align: top;
-    margin: 1px 3px 0px 0px;
   }
 </style>
