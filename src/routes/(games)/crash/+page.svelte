@@ -23,21 +23,21 @@ const handleNavigation = ((w) => {
     }
 })
 
-let is_loading = true
-const handleCrashHistory = (async()=>{
-    await axios.post(`${URL}/api/user/crash-game/history`)
-    .then((result) => {
-        is_loading = false
-        crash_historyEl.set(result.data)
-    }).catch((err) => {
-        is_loading = false
-        console.log(err)  
-    });
-})
+let is_loading = false
+// const handleCrashHistory = (async()=>{
+//     await axios.post(`${URL}/api/user/crash-game/history`)
+//     .then((result) => {
+//         is_loading = false
+//         crash_historyEl.set(result.data)
+//     }).catch((err) => {
+//         is_loading = false
+//         console.log(err)  
+//     });
+// })
 
-onMount(async()=>{
-  await handleCrashHistory()
-})
+// onMount(async()=>{
+//   await handleCrashHistory()
+// })
    
 
 let hide_trends = false
