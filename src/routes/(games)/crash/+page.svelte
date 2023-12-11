@@ -10,44 +10,44 @@ import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
 import { crash_historyEl} from "$lib/crashgame/store"
 
-// import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
-// import { ServerURl } from "$lib/backendUrl"
-// const URL = ServerURl()
+import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
-// let isClassic = true
-// const handleNavigation = ((w) => {
-//     if (w === 1) {
-//         isClassic = true
-//     }else{
-//         isClassic = false
-//     }
-// })
+let isClassic = true
+const handleNavigation = ((w) => {
+    if (w === 1) {
+        isClassic = true
+    }else{
+        isClassic = false
+    }
+})
 
-// let is_loading = true
-// const handleCrashHistory = (async()=>{
-//     await axios.post(`${URL}/api/user/crash-game/history`)
-//     .then((result) => {
-//         is_loading = false
-//         crash_historyEl.set(result.data)
-//     }).catch((err) => {
-//         is_loading = false
-//         console.log(err)  
-//     });
-// })
+let is_loading = true
+const handleCrashHistory = (async()=>{
+    await axios.post(`${URL}/api/user/crash-game/history`)
+    .then((result) => {
+        is_loading = false
+        crash_historyEl.set(result.data)
+    }).catch((err) => {
+        is_loading = false
+        console.log(err)  
+    });
+})
 
-// onMount(async()=>{
-//   await handleCrashHistory()
-// })
+onMount(async()=>{
+  await handleCrashHistory()
+})
    
 
-// let hide_trends = false
-// const handleTrends = (()=>{
-//     hide_trends = !hide_trends
-// })
+let hide_trends = false
+const handleTrends = (()=>{
+    hide_trends = !hide_trends
+})
 
 
 </script>
-<h3>Hello bropppbbkn7</h3>
+<h3>Hello bropppbb----kn7</h3>
 <!-- {#if !is_loading}
     <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
