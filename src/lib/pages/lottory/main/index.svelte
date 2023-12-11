@@ -25,16 +25,15 @@
     } else goto("/login");
   };
 
-  const fetcher = UseFetchData($handleAuthToken);
   const getGame = async (id) => {
-    const { data } = await fetcher(
+    const { data } = await UseFetchData($handleAuthToken).fetchData(
       `/lottery/details${!!id ? `?id=${id}` : ""}`
     );
     return data;
   };
   const getTickets = async () => {
     try {
-      const { data } = await fetcher("/lottery/tickets");
+      const { data } = await UseFetchData($handleAuthToken).fetchData("/lottery/tickets");
       return data;
     } catch (error) {
       return null;
