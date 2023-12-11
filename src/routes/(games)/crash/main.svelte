@@ -7,9 +7,9 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
 import Hotkeys from './hotkeys.svelte';
 import axios from "axios"
-// import { onMount  } from "svelte";
-// import { goto } from "$app/navigation";
-// import Livestat from './livestat.svelte';
+import { onMount  } from "svelte";
+import { goto } from "$app/navigation";
+import Livestat from './livestat.svelte';
 // import Help from './help.svelte';
 // import Crashview from './crashview.svelte';
 // import Trend from '$lib/crashgame/components/trends/index.svelte';
