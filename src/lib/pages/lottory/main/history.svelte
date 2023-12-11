@@ -233,7 +233,7 @@
     </div>
   </div>
 {:else}
-<div class="sc-epFoly etYRmD">
+  <div class="sc-epFoly etYRmD">
     <div class="sc-eCImPb biQums cuPxwd empty">
       <img
         alt="No data"
