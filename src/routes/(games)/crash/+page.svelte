@@ -1,8 +1,8 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-// import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-// import "../../../styles/crash/main.css";
-// import { onMount } from 'svelte';
+import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
+import "../../../styles/crash/main.css";
+import { onMount } from 'svelte';
 // import axios from "axios"
 // import Allbet from "./allbet.svelte";
 // import Main from "./main.svelte";
