@@ -27,12 +27,18 @@
 
   const fetcher = UseFetchData($handleAuthToken);
   const getGame = async (id) => {
-    const { data } = await fetcher(`/lottery/details${!!id ? `?id=${id}` : ""}`);
+    const { data } = await fetcher(
+      `/lottery/details${!!id ? `?id=${id}` : ""}`
+    );
     return data;
   };
   const getTickets = async () => {
-    const { data } = await fetcher("/lottery/tickets");
-    return data;
+    try {
+      const { data } = await fetcher("/lottery/tickets");
+      return data;
+    } catch (error) {
+      return null;
+    }
   };
   $: loading = true;
   $: gameData = null;
@@ -42,12 +48,10 @@
 
   onMount(async () => {
     try {
-      const [game, ticketData] = await Promise.all([
-        getGame(),
-        getTickets().catch(),
-      ]);
+      const [game, ticketData] = await Promise.all([getGame(), getTickets()]);
       console.log(game);
-      myTickets = ticketData?.tickets?.reduce((a, { amount }) => a + amount, 0);
+      myTickets =
+        ticketData?.tickets?.reduce((a, { amount }) => a + amount, 0) || 0;
       gameData = {
         ...game.lottery,
         ticketCount: game.total_tickets,
@@ -548,7 +552,10 @@
         <button class="sc-iqseJM cBmlor button button-normal btn">
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <div on:click={() => provablyFairD = {  tab: 1 }} class="button-inner">
+          <div
+            on:click={() => (provablyFairD = { tab: 1 })}
+            class="button-inner"
+          >
             Provably Fair
             <Icon
               src={RiSystemArrowRightSLine}
