@@ -23,17 +23,7 @@
   };
 
   const handleLightMode = () => {
-//     is_light_mode = !is_light_mode;
-//      // You can also save the user's preference in localStorage if needed
-//   localStorage.setItem("is_light_mode", JSON.stringify(is_light_mode));
-
-// // To retrieve the boolean value
-// const storedValue = localStorage.getItem("is_light_mode");
-// const retrievedValue = storedValue ? JSON.parse(storedValue) : false;
-
-// console.log(retrievedValue)
     $isLightMode = !$isLightMode; // Update the store value
-
 };
 
 

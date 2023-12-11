@@ -192,6 +192,14 @@
 .dprxuS .theme-check .item.is-active {
     background-image: linear-gradient(to right, rgba(105, 179, 1, 0.4), rgba(85, 89, 102, 0.4) 45%, rgba(85, 89, 102, 0.4));
 }
+ .theme .theme-check .item.is-activeL {
+    background-image: linear-gradient(
+      to left,
+      rgba(85, 89, 102, 0),
+      rgba(85, 89, 102, 0.411),
+      rgb(88, 174, 20)
+    );
+  }
 .dprxuS .theme-check {
     display: flex;
     -webkit-box-align: center;

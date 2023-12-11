@@ -8,6 +8,8 @@ import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
 import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
 import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
 import Original from "./original.svelte";
+import FaSolidSun from "svelte-icons-pack/fa/FaSolidSun";
+import { isLightMode } from "./store/theme";
 import '../styles/sidebar/sidebar.css'
 import '../styles/sidebar/sidebarmobile.css'
 export let styls;
@@ -21,14 +23,9 @@ const openOriginal = ((e) => {
     }
 })
 
-let isLight = false
-const handeTheme = ((e) => {
-    if (e === `light`) {
-        isLight = true
-    } else {
-        isLight = false
-    }
-})
+const handleLightMode = () => {
+    $isLightMode = !$isLightMode; // Update the store value
+};
 </script>
 
 <div id="main" class="sc-jHkVzv eTxQfM unfold">
@@ -118,21 +115,32 @@ const handeTheme = ((e) => {
                     </div>
                 </div>
             </div> -->
-            <!-- <div class="sc-gSQFLo dprxuS theme">
-                <div class="theme-check">
-                    <button on:click={()=>handeTheme("dark")} class={ `item ${isLight ? "" : "is-active"} `}>
-                        <Icon src={IoMoon}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="moon" />
-                    </button>
-                    <button on:click={()=>handeTheme("light")} class={ `item ${isLight ? "is-active" : ""} `}>
-                        <Icon  src={HiSolidLightBulb}  size="18"  color="#ffff" className="custom-icon" title="light" />
-                    </button>
-                </div>
-                <div class="theme-word">
-                    <p>{ isLight ? `Lightmode` : `Darkmode` }</p>
+            <div class="dviHQs-div">
+                <div class="sc-gSQFLo dprxuS theme">
+                  <button on:click={handleLightMode} class={$isLightMode ? "light-grey-bg theme-check" :"theme-check"}>
+                    <div class:is-active={!$isLightMode} class="item">
+                      <Icon
+                        src={IoMoon}
+                        size="23"
+                        color={$isLightMode ? "rgba(153, 164, 176, 0.6)" :"rgb(245, 246, 247)"}
+                        title="Dark"
+                      />
+                    </div>
+                    <div class:is-activeL={$isLightMode} class="item">
+                      <Icon
+                        src={FaSolidSun}
+                        size="23"
+                        color={$isLightMode ? "rgb(245, 246, 247)" :"rgba(153, 164, 176, 0.6)"}
+                        title="Light"
+                      />
+                    </div>
+                  </button>
+                  <div class="theme-word">
+                    <p class={$isLightMode ? "light-text" :""}>Darkmode</p>
                     <p>Currently</p>
+                  </div>
                 </div>
-            </div> -->
-
+              </div>
             <div class="border_bottom">
                 <div class="live">
                     <div class="support-icon">
