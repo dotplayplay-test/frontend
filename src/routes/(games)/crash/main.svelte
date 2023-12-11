@@ -73,233 +73,232 @@ const handleTrends = (()=>{
     }
 })
 
-// let bet_amount = 10
-// if($default_Wallet.coin_name === "USDT"){
-//     bet_amount = (0.10).toFixed(4)
-// }else{
-//     bet_amount = (100).toFixed(4)
-// }
+let bet_amount = 10
+if($default_Wallet.coin_name === "USDT"){
+    bet_amount = (0.10).toFixed(4)
+}else{
+    bet_amount = (100).toFixed(4)
+}
 
-// const handleRangeSTlop = ((eui)=>{
-//     bet_amount = (parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4)
-// })
-
-
-// const handleHalf = ((e)=>{
-//     if(bet_amount > 0){
-//         if(e === 1){
-//         bet_amount = (bet_amount / 2).toFixed(2)
-//         }else{
-//             bet_amount = (bet_amount * 2).toFixed(2)
-//         }
-//     }
-// })
-// onMount(()=>{
-//     if($default_Wallet.coin_name === "USDT"){
-//     bet_amount = (0.20).toFixed(4)
-// }else{
-//     bet_amount = (100).toFixed(4)
-// }
-// })
+const handleRangeSTlop = ((eui)=>{
+    bet_amount = (parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4)
+})
 
 
-// let isRange = false
-// const ranging = (()=>{
-//     if(isRange){
-//         isRange = false
-//     }else{
-//         isRange = true
-//     }
-// })
+const handleHalf = ((e)=>{
+    if(bet_amount > 0){
+        if(e === 1){
+        bet_amount = (bet_amount / 2).toFixed(2)
+        }else{
+            bet_amount = (bet_amount * 2).toFixed(2)
+        }
+    }
+})
+onMount(()=>{
+    if($default_Wallet.coin_name === "USDT"){
+    bet_amount = (0.20).toFixed(4)
+}else{
+    bet_amount = (100).toFixed(4)
+}
+})
 
-// let is_loading = false
-// $:{
-//     if(!$handleHasbet){
-//         is_loading = false
-//     }
-// }
 
-// let auto_bet = (100).toFixed(2)
-// let bet_amountEl =  0
+let isRange = false
+const ranging = (()=>{
+    if(isRange){
+        isRange = false
+    }else{
+        isRange = true
+    }
+})
 
-// let chance;
-// let x;
-// let l;
-// $:{
-//     if(auto_bet < 1){
-//         auto_bet = 1.01
-//     }
-//     x = 100 / auto_bet
-//     l = x / 100
-//     chance =(x - l).toFixed(2)
-//     if(chance < 0){
-//        chance = (0.01).toFixed(2)
-//     }
-// }
+let is_loading = false
+$:{
+    if(!$handleHasbet){
+        is_loading = false
+    }
+}
 
-// let bet_price;
-// $: bet_price = ($crashRunning * parseFloat(bet_amountEl)).toFixed(2)
-// const handleCrashBet = (async()=>{
-//     bet_amountEl = parseFloat(bet_amount) 
-//     is_loading = true
-//     if($handleisLoggin){
-//         if(parseFloat(bet_amountEl) > parseFloat($default_Wallet.balance)){
-//             error_msg.set("insufficient balance")
-//             is_loading = false
-//          setTimeout(()=>{
-//             error_msg.set('')
-//         },4000)
-//         }
-//         else if( parseFloat(bet_amountEl) > 5000 && $default_Wallet.coin_name === "USDT"){
-//             error_msg.set("Maximum bet amount for USDT is 5,000")
-//             is_loading = false
-//             setTimeout(()=>{
-//                 error_msg.set('')
-//             },4000)
-//         }
-//         else if( parseFloat(bet_amountEl) > 10000 && $default_Wallet.coin_name === "PPF"){
-//             error_msg.set("Maximum bet amount for PPF is 10,000")
-//             is_loading = false
-//             setTimeout(()=>{
-//                 error_msg.set('')
-//             },4000)
-//         }
-//         else if( parseFloat(bet_amountEl) < 100 && $default_Wallet.coin_name === "PPF"){
-//             error_msg.set("Minimum bet amount for PPF is 100")
-//             is_loading = false
-//             setTimeout(()=>{
-//                 error_msg.set('')
-//             },4000)
-//         }
-//         else if( parseFloat(bet_amountEl) < 0.10 && $default_Wallet.coin_name === "USDT"){
-//             error_msg.set("Minimum bet amount for USDT is 0.20")
-//             is_loading = false
-//             setTimeout(()=>{
-//                 error_msg.set('')
-//             },4000)
-//         }
-//         else{
-//             const data = {
-//             username: $profileStore.username,
-//             user_img: $profileStore.profile_image,
-//             game_id: $game_id,
-//             bet_amount : parseFloat(parseFloat(bet_amountEl)),
-//             auto_cashout: auto_bet,
-//             time: new Date(),
-//             bet_token_img: $default_Wallet.coin_image, 
-//             bet_token_name: $default_Wallet.coin_name ,
-//             chance: "0"
-//         }
-//         axios.post(`${URL}/api/user/crash-game/bet`, {
-//             data
-//         },{
-//             headers: {
-//             "Content-type": "application/json",
-//             'Authorization': `Bearer ${$handleAuthToken}`
-//           }
-//         })
+let auto_bet = (100).toFixed(2)
+let bet_amountEl =  0
 
-//         .then((response)=>{
-//         let result = response.data
-//          let wllet = {
-//           coin_name: result.bet_token_name,
-//           coin_image:  result.bet_token_img,
-//           balance:  result.current_amount,
-//         }
-//         default_Wallet.set(wllet)
-//          handleHasbet.set(true)
-//         })
-//         .catch((error)=>{
-//             is_loading = false
-//             console.log(error)
-//         })
-//     }
-//     }else{
-//         error_msg.set('You are not Logged in')
-//         setTimeout(()=>{
-//             error_msg.set('')
-//             goto("/login")
-//         },4000)
-//         is_loading = false
-//     }
-// })
+let chance;
+let x;
+let l;
+$:{
+    if(auto_bet < 1){
+        auto_bet = 1.01
+    }
+    x = 100 / auto_bet
+    l = x / 100
+    chance =(x - l).toFixed(2)
+    if(chance < 0){
+       chance = (0.01).toFixed(2)
+    }
+}
 
-// let isLoadBet = false
-// let loop;
-// const handleLoadBet = (()=>{
-//     if(!isLoadBet){
-//         loop = setInterval(()=>{
-//         if($loadingCrash){
-//             setTimeout(()=>{
-//                 handleCrashBet()
-//             },100)
-//             clearInterval(loop)
-//             isLoadBet = false
-//         }else{
-//             isLoadBet = true
-//         }
-//     },10)
-//     }else if (isLoadBet){
-//         isLoadBet = false
-//         clearInterval(loop)
-//     }
-// })
+let bet_price;
+$: bet_price = ($crashRunning * parseFloat(bet_amountEl)).toFixed(2)
+const handleCrashBet = (async()=>{
+    bet_amountEl = parseFloat(bet_amount) 
+    is_loading = true
+    if($handleisLoggin){
+        if(parseFloat(bet_amountEl) > parseFloat($default_Wallet.balance)){
+            error_msg.set("insufficient balance")
+            is_loading = false
+         setTimeout(()=>{
+            error_msg.set('')
+        },4000)
+        }
+        else if( parseFloat(bet_amountEl) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(bet_amountEl) < 0.10 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+            is_loading = false
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else{
+            const data = {
+            username: $profileStore.username,
+            user_img: $profileStore.profile_image,
+            game_id: $game_id,
+            bet_amount : parseFloat(parseFloat(bet_amountEl)),
+            auto_cashout: auto_bet,
+            time: new Date(),
+            bet_token_img: $default_Wallet.coin_image, 
+            bet_token_name: $default_Wallet.coin_name ,
+            chance: "0"
+        }
+        axios.post(`${URL}/api/user/crash-game/bet`, {
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+          }
+        })
 
-// const handleCashout = (()=>{
-//     if($handleisLoggin){
-//     let houseEgde =  (1 / 100) * (  parseFloat(bet_price)  / 1)
-//     let winning_amount = parseFloat(bet_price) - houseEgde
-//     let data = {
-//         cashout_at : winning_amount,
-//         username: $profileStore.username,
-//         user_img: $profileStore.profile_image,
-//         game_id: $game_id,
-//         profit:  parseFloat(winning_amount) - parseFloat(bet_amountEl),
-//         bet_token_img: $default_Wallet.coin_image, 
-//         bet_token_name: $default_Wallet.coin_name,
-//         crash: $crashRunning
-//     }
-//     axios.post(`${URL}/api/user/crash-game/cashout`, {
-//         data
-//     },{
-//         headers: {
-//         "Content-type": "application/json",
-//         'Authorization': `Bearer ${$handleAuthToken}`
-//     }
-//     })
-//     .then((response)=>{
-//     let result = response.data
-//      let wllet = {
-//         coin_name: result.bet_token_name,
-//         coin_image:  result.bet_token_img,
-//         balance:  parseFloat(result.balance).toFixed(4)
-//     }
-//     default_Wallet.set(wllet)
-//      handleHasbet.set(false)
-// })
-//     }else{
-//         error_msg.set('You are not Logged in')
-//         setTimeout(()=>{
-//             error_msg.set('')
-//         },2000)
-//     }
-// })
+        .then((response)=>{
+        let result = response.data
+         let wllet = {
+          coin_name: result.bet_token_name,
+          coin_image:  result.bet_token_img,
+          balance:  result.current_amount,
+        }
+        default_Wallet.set(wllet)
+         handleHasbet.set(true)
+        })
+        .catch((error)=>{
+            is_loading = false
+            console.log(error)
+        })
+    }
+    }else{
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+            goto("/login")
+        },4000)
+        is_loading = false
+    }
+})
 
-// let is_min_max = false
-// const handleMinMax = (()=>{
-//    is_min_max = !is_min_max
-// })
+let isLoadBet = false
+let loop;
+const handleLoadBet = (()=>{
+    if(!isLoadBet){
+        loop = setInterval(()=>{
+        if($loadingCrash){
+            setTimeout(()=>{
+                handleCrashBet()
+            },100)
+            clearInterval(loop)
+            isLoadBet = false
+        }else{
+            isLoadBet = true
+        }
+    },10)
+    }else if (isLoadBet){
+        isLoadBet = false
+        clearInterval(loop)
+    }
+})
 
-// const handlesjen = ((e)=>{
-//     bet_amount = (parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4)
-//     walletRange = e
-// })
+const handleCashout = (()=>{
+    if($handleisLoggin){
+    let houseEgde =  (1 / 100) * (  parseFloat(bet_price)  / 1)
+    let winning_amount = parseFloat(bet_price) - houseEgde
+    let data = {
+        cashout_at : winning_amount,
+        username: $profileStore.username,
+        user_img: $profileStore.profile_image,
+        game_id: $game_id,
+        profit:  parseFloat(winning_amount) - parseFloat(bet_amountEl),
+        bet_token_img: $default_Wallet.coin_image, 
+        bet_token_name: $default_Wallet.coin_name,
+        crash: $crashRunning
+    }
+    axios.post(`${URL}/api/user/crash-game/cashout`, {
+        data
+    },{
+        headers: {
+        "Content-type": "application/json",
+        'Authorization': `Bearer ${$handleAuthToken}`
+    }
+    })
+    .then((response)=>{
+    let result = response.data
+     let wllet = {
+        coin_name: result.bet_token_name,
+        coin_image:  result.bet_token_img,
+        balance:  parseFloat(result.balance).toFixed(4)
+    }
+    default_Wallet.set(wllet)
+     handleHasbet.set(false)
+})
+    }else{
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },2000)
+    }
+})
+
+let is_min_max = false
+const handleMinMax = (()=>{
+   is_min_max = !is_min_max
+})
+
+const handlesjen = ((e)=>{
+    bet_amount = (parseFloat($default_Wallet.balance)  * (e / 100 )).toFixed(4)
+    walletRange = e
+})
 
 
 </script>
-<h2>7897</h2>
 
-<!-- <div class="game-main">
+<div class="game-main">
     {#if ishotKey }
         <Hotkeys on:close={handleHotkeyEnable} />
     {/if}
@@ -456,7 +455,7 @@ const handleTrends = (()=>{
         {/if}
     </div>
 
-    <Crashview on:closeTrend={handleTrends}  />
+    <!-- <Crashview on:closeTrend={handleTrends}  /> -->
 
     <div class="game-actions">
         <button on:click={handleHotkeyEnable} class="action-item  ">
@@ -469,7 +468,7 @@ const handleTrends = (()=>{
             <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
     </div>
-</div> -->
+</div>
 
 
 <style>
