@@ -48,7 +48,7 @@ const handleTrends = (()=>{
 
 </script>
 <h3>Hello bropppbb----kn7</h3>
-<!-- {#if !is_loading}
+{#if !is_loading}
     <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-eZhRLC jDDdCf game-style1 sc-eDtABA deWqiM">
@@ -62,7 +62,7 @@ const handleTrends = (()=>{
                     </div>
                 </div>
                 <div class="game-area">
-                    <Main isClassic={isClassic} />
+                    <!-- <Main isClassic={isClassic} /> -->
                     <Allbet isClassic={isClassic} />
                 </div>
                 <Mybet />
@@ -98,9 +98,7 @@ const handleTrends = (()=>{
             <img src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848286/dpp-favicon-logo_j53rwc.jpg" alt="">
         </div>
     </div>
-{/if} -->
-
-
+{/if}
 
 <style>
 
