@@ -7,7 +7,7 @@ import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadi
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
-import Crash from './crash.svelte';
+// import Crash from './crash.svelte';
 const { getAllPlayers } = useAllplayer()
 const handleTrends = (()=>{
     dispatch("closeTrend", 5)
@@ -54,6 +54,15 @@ onMount(()=>{
         loadingCrash.set(false)
         crashIsAlive.set(false)
     })
+    event.addEventListener("crash-game-history", ({data}) =>{
+        let mimik = JSON.parse(data);
+        let pip = {
+            hash:mimik.hash,
+            crash_point: mimik.crashpoint,
+            game_id: mimik.game_id
+        }
+        crash_historyEl.set([...$crash_historyEl, pip])
+    })
 })
 
 
@@ -68,10 +77,10 @@ onMount(()=>{
         <div class="recent-list-wrap">
             <div class="recent-list" style="transform: translate(0%, 0px);">
                 {#if $crash_historyEl.length !== 0}
-                {#each $crash_historyEl as his (his._id)}
+                {#each $crash_historyEl as his}
                     <button on:click={()=>handleAllbet(his)} class={`game-item ${his.crash_point >= 10 && "is-moon"} ${his.crash_point > 2 && his.crash_point < 10 && "is-doubble"} `} style="width: 25%;">
                         <div class="issus">{his.game_id}</div>
-                        <div>{(his.crash_point).toFixed(2)}x</div>
+                        <div>{(parseFloat(his.crash_point)).toFixed(2)}x</div>
                     </button>
                 {/each}
                 {:else}

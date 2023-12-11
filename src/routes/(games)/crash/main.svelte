@@ -217,7 +217,6 @@ const handleCrashBet = (async()=>{
         error_msg.set('You are not Logged in')
         setTimeout(()=>{
             error_msg.set('')
-            goto("/login")
         },4000)
         is_loading = false
     }
@@ -226,6 +225,7 @@ const handleCrashBet = (async()=>{
 let isLoadBet = false
 let loop;
 const handleLoadBet = (()=>{
+    if($handleisLoggin){
     if(!isLoadBet){
         loop = setInterval(()=>{
         if($loadingCrash){
@@ -241,6 +241,12 @@ const handleLoadBet = (()=>{
     }else if (isLoadBet){
         isLoadBet = false
         clearInterval(loop)
+    }
+    }else{
+        error_msg.set('You are not Logged in')
+        setTimeout(()=>{
+            error_msg.set('')
+        },2000)
     }
 })
 
@@ -297,7 +303,6 @@ const handlesjen = ((e)=>{
 
 </script>
 
-
 <div class="game-main">
     {#if ishotKey }
         <Hotkeys on:close={handleHotkeyEnable} />
@@ -312,7 +317,6 @@ const handlesjen = ((e)=>{
     {#if isTrend}
         <Trend on:close={handleTrends} />
     {/if}
-
 
     {#if $error_msg}
     <div style="background-color:crimson;" class="error-message">
@@ -335,7 +339,7 @@ const handlesjen = ((e)=>{
         {#if isClassic}
         <div class="game-control-panel">
             <div class="sc-lVTEl hjMJHh">
-                {#if !$crashIsAlive && !$crashLoad && !$hasCrashed &&  $crashRunning}
+                {#if $crashIsAlive}
                     <button on:click={handleLoadBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{isLoadBet ? "Loading..." : "Bet" }</div>
@@ -343,7 +347,7 @@ const handlesjen = ((e)=>{
                         </div>
                     </button>
                 {/if}
-                {#if $crashIsAlive && $crashRunning}
+                {#if $handleHasbet}
                     <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
@@ -352,7 +356,7 @@ const handlesjen = ((e)=>{
                     </button>
                 {/if}
 
-                {#if $crashLoad && !$hasCrashed && !$crashRunning}
+                {#if $loadingCrash}
                     <button disabled={is_loading} on:click={handleCrashBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                          {#if $handleHasbet}
                             <div class="button-inner">
@@ -365,7 +369,7 @@ const handlesjen = ((e)=>{
                         {/if}
                     </button>
                 {/if}
-                {#if $hasCrashed && !$crashRunning && !$crashLoad}
+                {#if $hasCrashed}
                     <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>Bet</div>
@@ -454,7 +458,6 @@ const handlesjen = ((e)=>{
        <Trendball />
         {/if}
     </div>
-
     <Crashview on:closeTrend={handleTrends}  />
 
     <div class="game-actions">
