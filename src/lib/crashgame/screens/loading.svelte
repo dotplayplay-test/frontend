@@ -1,6 +1,5 @@
 <script>
 import { crashLoad, Load_animation} from "../store"
-import { onMount } from "svelte";
 
 </script>
 

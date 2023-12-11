@@ -198,6 +198,7 @@ const handleCrashBet = (async()=>{
             'Authorization': `Bearer ${$handleAuthToken}`
           }
         })
+        
         .then((response)=>{
         let result = response.data
          let wllet = {
