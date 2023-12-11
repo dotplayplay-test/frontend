@@ -3,7 +3,7 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
 import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
-import { crash_historyEl, crashLoad, Load_animation, loadingCrash ,crashRunning, crashIsAlive} from "$lib/crashgame/store"
+import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
@@ -34,12 +34,25 @@ onMount(()=>{
         Load_animation.set(mimik.load_animate)
         loadingCrash.set(true)
         crashIsAlive.set(false)
+        hasCrashed.set(false)
     });
     event.addEventListener("running-crash", ({data}) => {
         loadingCrash.set(false)
         crashIsAlive.set(true)
         let mimik = JSON.parse(data);
         crashRunning.set(mimik)
+        hasCrashed.set(false)
+    })
+    event.addEventListener("nuppp-curve", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashCurve.set(mimik)
+    })
+    event.addEventListener("crash-details", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashPoint.set(mimik.crash_point)
+        hasCrashed.set(true)
+        loadingCrash.set(false)
+        crashIsAlive.set(false)
     })
 })
 

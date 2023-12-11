@@ -2,6 +2,7 @@
 import HasCrashed from "./HasCrashed.svelte";
 import Loading from "./loading.svelte";
 import {
+    hasCrashed,
     crashPoint,
     Load_animation,
     crashRunning,
@@ -37,7 +38,6 @@ import {
     h_Threehundred,
     h_Sevenhundred,
     h_onethousand,
-    hasCrashed,
     loadingCrash,
     winningEl,
     crashIsAlive
@@ -54,7 +54,7 @@ import RunningCrash from "./RunningCrash.svelte";
                 <Loading />
             </div>
         {/if}
-        {#if $hasCrashed && !$crashRunning && !$crashLoad}
+        {#if $hasCrashed}
             <HasCrashed />
         {/if}
         {#if  $crashIsAlive}
