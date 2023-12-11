@@ -454,7 +454,6 @@ const handlesjen = ((e)=>{
        <Trendball />
         {/if}
     </div>
-
     <!-- <Crashview on:closeTrend={handleTrends}  /> -->
 
     <div class="game-actions">
