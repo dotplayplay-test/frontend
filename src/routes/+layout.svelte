@@ -8,7 +8,7 @@ $: routes.set(data)
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import {handleCountdown} from "$lib/crashgame/socket"
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
-handleCountdown()
+
 setTimeout(()=>{
     if(data.preloaed === null){
          window.location.href = ("/")
@@ -86,6 +86,7 @@ $:{
 
 
 onMount(() => {
+    handleCountdown()
     if (browser && window.innerWidth < 650) {
         isOpenSide = true
         sideDetection = 0

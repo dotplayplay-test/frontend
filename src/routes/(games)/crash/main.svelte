@@ -94,7 +94,6 @@ const handleHalf = ((e)=>{
         }
     }
 })
-
 onMount(()=>{
     if($default_Wallet.coin_name === "USDT"){
     bet_amount = (0.20).toFixed(4)

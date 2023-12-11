@@ -23,8 +23,8 @@ import {  createEventDispatcher,  onMount } from "svelte";
 import {tipped_user } from "$lib/store/tipUser"
 import { profileStore } from '$lib/store/profile';
 import { handleisLoggin } from "$lib/store/profile";
-import { handleAuthToken} from "$lib/store/routes";
-import {handleCountdown} from "../../lib/games/ClassicDice/socket/index"
+import { handleAuthToken } from "$lib/store/routes";
+import {handleCountdown} from "../../lib/games/ClassicDice/socket/index";
 const { handleChattingMessages } = handleCountdown()
 let element;
 let newMessages = ''

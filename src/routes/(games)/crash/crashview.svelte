@@ -1,13 +1,13 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
-import { crash_historyEl } from "$lib/crashgame/store"
+import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
-    import Crash from './crash.svelte';
+import Crash from './crash.svelte';
 const { getAllPlayers } = useAllplayer()
 const handleTrends = (()=>{
     dispatch("closeTrend", 5)
@@ -23,6 +23,39 @@ const handleAllbet = ((e)=>{
         getAllPlayers(e)
     }
 })
+
+import {RealTimeURl} from "$lib/backendUrl";
+
+onMount(()=>{
+    const event = new EventSource(`${RealTimeURl()}/events`);
+    event.addEventListener("countdown", ({data}) => {
+        let mimik = JSON.parse(data);
+        crashLoad.set(mimik.timeSec)
+        Load_animation.set(mimik.load_animate)
+        loadingCrash.set(true)
+        crashIsAlive.set(false)
+        hasCrashed.set(false)
+    });
+    event.addEventListener("running-crash", ({data}) => {
+        loadingCrash.set(false)
+        crashIsAlive.set(true)
+        let mimik = JSON.parse(data);
+        crashRunning.set(mimik)
+        hasCrashed.set(false)
+    })
+    event.addEventListener("nuppp-curve", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashCurve.set(mimik)
+    })
+    event.addEventListener("crash-details", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashPoint.set(mimik.crash_point)
+        hasCrashed.set(true)
+        loadingCrash.set(false)
+        crashIsAlive.set(false)
+    })
+})
+
 
 </script>
 
@@ -59,7 +92,7 @@ const handleAllbet = ((e)=>{
             <span>House Edge 1%</span>
         </div>
         <div class="sc-feYDSs hgDXdf">
-            <Crash />
+            <Crashlayout />
         </div>
         <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs>
             <linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%">
