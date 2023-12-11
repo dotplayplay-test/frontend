@@ -5,7 +5,7 @@ import "../../../styles/crash/main.css";
 import { onMount } from 'svelte';
 import axios from "axios"
 import Allbet from "./allbet.svelte";
-// import Main from "./main.svelte";
+import Main from "./main.svelte";
 // import Mybet from "./mybet.svelte";
 // import MobileMain from './mobileMain.svelte';
 // import { crash_historyEl} from "$lib/crashgame/store"
@@ -47,7 +47,7 @@ import Allbet from "./allbet.svelte";
 
 
 </script>
-<h3>Hello bro090lkn7</h3>
+<h3>Hello brobbkn7</h3>
 <!-- {#if !is_loading}
     <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
