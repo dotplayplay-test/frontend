@@ -40,6 +40,7 @@ let is_loading = false
 // })
    
 
+
 let hide_trends = false
 const handleTrends = (()=>{
     hide_trends = !hide_trends
