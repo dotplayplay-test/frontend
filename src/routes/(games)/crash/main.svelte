@@ -12,66 +12,66 @@ import { goto } from "$app/navigation";
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 // import Crashview from './crashview.svelte';
-// import Trend from '$lib/crashgame/components/trends/index.svelte';
-// import { loadingCrash,handleHasbet,game_id,crashLoad,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
-// import {default_Wallet } from "$lib/store/coins";
-// import { handleAuthToken } from "$lib/store/routes";
-// import { profileStore,handleisLoggin } from "$lib/store/profile";
-// import { ServerURl } from "$lib/backendUrl"
-// const URL = ServerURl()
-// export let isClassic
-// import { error_msg  } from "$lib/crashgame/store";
-// import { browser } from '$app/environment'
-// import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
-// const id = browser && JSON.parse(localStorage.getItem('user'))
-// let getBet_amount;
+import Trend from '$lib/crashgame/components/trends/index.svelte';
+import { loadingCrash,handleHasbet,game_id,crashLoad,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
+import {default_Wallet } from "$lib/store/coins";
+import { handleAuthToken } from "$lib/store/routes";
+import { profileStore,handleisLoggin } from "$lib/store/profile";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+export let isClassic
+import { error_msg  } from "$lib/crashgame/store";
+import { browser } from '$app/environment'
+import Trendball from "$lib/crashgame/components/trendball/Trendball.svelte";
+const id = browser && JSON.parse(localStorage.getItem('user'))
+let getBet_amount;
 
-// let ishotKey = false
-// const handleHotkeyEnable = (()=>{
-//     if(ishotKey){
-//         ishotKey = false
-//     }else{
-//         ishotKey = true
-//     }
-// })
-// let walletRange = 0
+let ishotKey = false
+const handleHotkeyEnable = (()=>{
+    if(ishotKey){
+        ishotKey = false
+    }else{
+        ishotKey = true
+    }
+})
+let walletRange = 0
 
 
-// let isAdvance = false
-// const handleAdvancebg = ((q)=>{
-//     if(q === 1){
-//         isAdvance = false
-//     }else{
-//         isAdvance = true
-//     }
-// })
+let isAdvance = false
+const handleAdvancebg = ((q)=>{
+    if(q === 1){
+        isAdvance = false
+    }else{
+        isAdvance = true
+    }
+})
 
-// let isStat = false
-// const handleStatistics = (()=>{
-//     if(isStat){
-//         isStat = false
-//     }else{
-//         isStat = true
-//     }
-// })
+let isStat = false
+const handleStatistics = (()=>{
+    if(isStat){
+        isStat = false
+    }else{
+        isStat = true
+    }
+})
 
-// let isHelp = false
-// const handleHelp = ()=>{
-//     if(isHelp){
-//         isHelp = false
-//     }else{
-//         isHelp = true
-//     }
-// }
+let isHelp = false
+const handleHelp = ()=>{
+    if(isHelp){
+        isHelp = false
+    }else{
+        isHelp = true
+    }
+}
 
-// let isTrend = false
-// const handleTrends = (()=>{
-//     if(isTrend){
-//         isTrend = false
-//     }else{
-//         isTrend = true
-//     }
-// })
+let isTrend = false
+const handleTrends = (()=>{
+    if(isTrend){
+        isTrend = false
+    }else{
+        isTrend = true
+    }
+})
 
 // let bet_amount = 10
 // if($default_Wallet.coin_name === "USDT"){
