@@ -1,50 +1,49 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import "../../../styles/crash/main.css";
-import { onMount } from 'svelte';
-import axios from "axios"
-import Allbet from "./allbet.svelte";
-import Main from "./main.svelte";
-import Mybet from "./mybet.svelte";
-import MobileMain from './mobileMain.svelte';
-import { crash_historyEl} from "$lib/crashgame/store"
+// import Icon from 'svelte-icons-pack/Icon.svelte';
+// import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
+// import "../../../styles/crash/main.css";
+// import { onMount } from 'svelte';
+// import axios from "axios"
+// import Allbet from "./allbet.svelte";
+// import Main from "./main.svelte";
+// import Mybet from "./mybet.svelte";
+// import MobileMain from './mobileMain.svelte';
+// import { crash_historyEl} from "$lib/crashgame/store"
 
-import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
-import { ServerURl } from "$lib/backendUrl"
-const URL = ServerURl()
+// import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+// import { ServerURl } from "$lib/backendUrl"
+// const URL = ServerURl()
 
-let isClassic = true
-const handleNavigation = ((w) => {
-    if (w === 1) {
-        isClassic = true
-    }else{
-        isClassic = false
-    }
-})
+// let isClassic = true
+// const handleNavigation = ((w) => {
+//     if (w === 1) {
+//         isClassic = true
+//     }else{
+//         isClassic = false
+//     }
+// })
 
-let is_loading = true
-const handleCrashHistory = (async()=>{
-    await axios.post(`${URL}/api/user/crash-game/history`)
-    .then((result) => {
-        is_loading = false
-        crash_historyEl.set(result.data)
-    }).catch((err) => {
-        is_loading = false
-        console.log(err)  
-    });
-})
+// let is_loading = true
+// const handleCrashHistory = (async()=>{
+//     await axios.post(`${URL}/api/user/crash-game/history`)
+//     .then((result) => {
+//         is_loading = false
+//         crash_historyEl.set(result.data)
+//     }).catch((err) => {
+//         is_loading = false
+//         console.log(err)  
+//     });
+// })
 
-onMount(async()=>{
-  await handleCrashHistory()
-})
+// onMount(async()=>{
+//   await handleCrashHistory()
+// })
    
-// $: console.log($screen, $is_open__Appp)
 
-let hide_trends = false
-const handleTrends = (()=>{
-    hide_trends = !hide_trends
-})
+// let hide_trends = false
+// const handleTrends = (()=>{
+//     hide_trends = !hide_trends
+// })
 
 
 </script>
