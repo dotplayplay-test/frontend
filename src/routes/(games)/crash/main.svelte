@@ -198,7 +198,7 @@ const handleCrashBet = (async()=>{
             'Authorization': `Bearer ${$handleAuthToken}`
           }
         })
-        
+
         .then((response)=>{
         let result = response.data
          let wllet = {
@@ -297,9 +297,9 @@ const handlesjen = ((e)=>{
 
 
 </script>
+<h2>7897</h2>
 
-
-<div class="game-main">
+<!-- <div class="game-main">
     {#if ishotKey }
         <Hotkeys on:close={handleHotkeyEnable} />
     {/if}
@@ -469,7 +469,7 @@ const handlesjen = ((e)=>{
             <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
     </div>
-</div>
+</div> -->
 
 
 <style>

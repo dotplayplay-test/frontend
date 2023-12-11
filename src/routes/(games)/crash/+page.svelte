@@ -5,7 +5,7 @@ import "../../../styles/crash/main.css";
 import { onMount } from 'svelte';
 import axios from "axios"
 import Allbet from "./allbet.svelte";
-// import Main from "./main.svelte";
+import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
 import { crash_historyEl} from "$lib/crashgame/store"
