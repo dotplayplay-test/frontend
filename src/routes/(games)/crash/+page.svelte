@@ -1,18 +1,18 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
-import "../../../styles/crash/main.css";
-import { onMount } from 'svelte';
-import axios from "axios"
-import Allbet from "./allbet.svelte";
-import Main from "./main.svelte";
-import Mybet from "./mybet.svelte";
-import MobileMain from './mobileMain.svelte';
-import { crash_historyEl} from "$lib/crashgame/store"
+// import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
+// import "../../../styles/crash/main.css";
+// import { onMount } from 'svelte';
+// import axios from "axios"
+// import Allbet from "./allbet.svelte";
+// import Main from "./main.svelte";
+// import Mybet from "./mybet.svelte";
+// import MobileMain from './mobileMain.svelte';
+// import { crash_historyEl} from "$lib/crashgame/store"
 
-import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
-import { ServerURl } from "$lib/backendUrl"
-const URL = ServerURl()
+// import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+// import { ServerURl } from "$lib/backendUrl"
+// const URL = ServerURl()
 
 // let isClassic = true
 // const handleNavigation = ((w) => {
@@ -47,7 +47,7 @@ const URL = ServerURl()
 
 
 </script>
-<h3>Hello bro67</h3>
+<h3>Hello bro667</h3>
 <!-- {#if !is_loading}
     <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="crash-main">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
