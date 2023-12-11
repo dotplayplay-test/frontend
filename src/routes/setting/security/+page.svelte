@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { handleAuthToken } from "$lib/store/routes";
   import RiSystemErrorWarningLine from "svelte-icons-pack/ri/RiSystemErrorWarningLine";
   import RiSystemEyeCloseLine from "svelte-icons-pack/ri/RiSystemEyeCloseLine";
@@ -6,7 +7,7 @@
   import BiSolidCopy from "svelte-icons-pack/bi/BiSolidCopy";
   import Icon from "svelte-icons-pack/Icon.svelte";
   import { isLightMode } from "../../../lib/store/theme";
-  import {Endpoints} from '../../../lib/services/endPoints'
+  import { Endpoints } from "../../../lib/services/endPoints";
   let showOldPassword = false;
   let showNewPassword = false;
   let showConfirmPassword = false;
@@ -15,7 +16,28 @@
   let newPassword = "";
   let confirmNewPassword = "";
   let errorMessage = "";
+  let responseData = null;
+  let error = null;
+  
+  onMount(async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/users/2fa", {     headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${handleAuthToken}`
+            },});
+      console.log("response", response);
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      responseData = await response.json();
+    } catch (e) {
+      error = e.message;
+    }
+  });
+
+  console.log(JSON.stringify(responseData, null, 2));
   function toggleOldPasswordVisibility() {
     showOldPassword = !showOldPassword;
   }
@@ -38,9 +60,9 @@
       const response = await fetch(Endpoints.Settings.ChangePassword, {
         method: "PUT",
         headers: {
-            "Content-type": "application/json",
-            "Authorization": `Bearer ${handleAuthToken}`
-            },
+          "Content-type": "application/json",
+          Authorization: `Bearer ${handleAuthToken}`,
+        },
         body: JSON.stringify({
           oldPassword,
           newPassword,
@@ -48,11 +70,11 @@
         }),
       });
 
-      if (response.ok) { 
-        errorMessage = ""; 
-      } else { 
+      if (response.ok) {
+        errorMessage = "";
+      } else {
         const errorData = await response.json();
-        errorMessage = errorData.message;  
+        errorMessage = errorData.message;
       }
     } catch (error) {
       console.error("Error:", error);
@@ -61,7 +83,7 @@
   };
 </script>
 
-{#if $handleAuthToken}
+{#if !$handleAuthToken}
   <div
     class={$isLightMode ? "light-text sc-dXNJws iQcnrl" : "sc-dXNJws iQcnrl"}
   >

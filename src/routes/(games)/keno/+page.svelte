@@ -4,11 +4,15 @@
   import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
   import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
   import HiSolidSpeakerphone from "svelte-icons-pack/hi/HiSolidSpeakerphone";
+  import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
   import VscLaw from "svelte-icons-pack/vsc/VscLaw";
   import IoGitNetwork from "svelte-icons-pack/io/IoGitNetwork";
   import RiDocumentFolderOpenFill from "svelte-icons-pack/ri/RiDocumentFolderOpenFill";
   import BiHelpCircle from "svelte-icons-pack/bi/BiHelpCircle";
   import BsClock from "svelte-icons-pack/bs/BsClock";
+  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+  import AiOutlineInfoCircle from "svelte-icons-pack/ai/AiOutlineInfoCircle";
+  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 
   let activeTab = "tab1";
   let activeTabB = "tabB1";
@@ -18,6 +22,41 @@
   }
   function handleTabBChange(tabB) {
     activeTabB = tabB;
+  }
+  let isOpenHistoryModal = false;
+  let isOpenHotKeysModal = false;
+  let isOpenLiveStatsModal = false;
+
+  function openHistoryModal() {
+    isOpenHistoryModal = true;
+  }
+  function openHotKeysModal() {
+    isOpenHotKeysModal = true;
+  }
+  function openLiveStatsModal() {
+    isOpenLiveStatsModal = true;
+  }
+  function closeHistoryModal() {
+    isOpenHistoryModal = false;
+  }
+  function closeHotKeysModal() {
+    isOpenHotKeysModal = false;
+  }
+  function closeLiveStatsModal() {
+    isOpenLiveStatsModal = false;
+  }
+
+  let isOpenRisk = false;
+  let selectedRiskOption = null;
+
+  const riskOption = ["Low", "Classic", "Medium", "High"];
+
+  function toggleDropdown() {
+    isOpenRisk = !isOpenRisk;
+  }
+  function selectOption(option) {
+    selectedRiskOption = option;
+    isOpenRisk = false;
   }
 </script>
 
@@ -57,11 +96,12 @@
                     <div class="sc-gsFzgR bxrMFn label">
                       <div>Amount</div>
                       <div class="max-profit">
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          class="sc-gsDKAQ hxODWG icon"
-                          ><use xlink:href="#icon_Inform"></use></svg
-                        >
+                        <Icon
+                          src={AiOutlineInfoCircle}
+                          size="17"
+                          color="rgb(67, 179, 9)"
+                          title=""
+                        />
                         <div class="tip">
                           <span class="tit">Max Profit:&nbsp;</span>
                           <div class="sc-Galmp erPQzq coin notranslate">
@@ -78,7 +118,11 @@
                   </div>
                   <div class="input-control">
                     <input type="text" value="184.778645833" />
-                    <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+                    <img
+                      class="coin-icon"
+                      src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
+                      alt=""
+                    />
                     <div class="sc-kDTinF bswIvI button-group">
                       <button>/2</button><button>x2</button><button
                         class="sc-cAhXWc cMPLfC flex-button"
@@ -104,16 +148,45 @@
                   <div class="input-control">
                     <div class="sc-jJoQJp gOHquD select sc-iKMXQg dChWmb">
                       <div class="select-trigger">
-                        Classic
-                        <div class="arrow">
-                          <svg
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            class="sc-gsDKAQ hxODWG icon"
-                            ><use xlink:href="#icon_Arrow"></use></svg
-                          >
-                        </div>
+                        <button on:click={toggleDropdown}>
+                          {selectedRiskOption || riskOption[1]}
+                          <div class="arrow">
+                            <Icon
+                              src={RiSystemArrowRightSLine}
+                              size="17"
+                              color="rgba(153, 164, 176, 0.6)"
+                              title=""
+                            />
+                          </div>
+                        </button>
                       </div>
-                    </div>
+                      <!-- {#if isOpenRisk}
+                        <ul class="options">
+                          {#each options as option (option)}
+                            <li on:click={() => selectOption(option)}>
+                              {option}
+                            </li>
+                          {/each}
+                        </ul>
+                      {/if} -->
+            
+                    </div>          
+                    {#if isOpenRisk}
+                        <div
+                          class="sc-hiCibw iVwWcQ select-options-wrap"
+                          style="opacity: 1; top: 100%; transform: none;"
+                        >
+                          <div
+                            class="sc-dkPtRN jScFby scroll-view select-options len-4"
+                          >
+                            {#each riskOption as option (option)}
+                              <div class:active={selectedRiskOption === option} class="select-option">
+                                <button on:click={() => selectOption(option)}>{option}</button>
+                              </div>
+                            {/each}
+                          </div>
+                        </div>
+                      {/if}
                   </div>
                 </div>
               </div>
@@ -168,11 +241,12 @@
                     <div class="sc-hmvnCu efWjNZ label">
                       <div>Amount</div>
                       <div class="max-profit">
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          class="sc-gsDKAQ hxODWG icon"
-                          ><use xlink:href="#icon_Inform"></use></svg
-                        >
+                        <Icon
+                          src={AiOutlineInfoCircle}
+                          size="17"
+                          color="rgb(67, 179, 9)"
+                          title=""
+                        />
                         <div class="tip">
                           <span class="tit">Max Profit:&nbsp;</span>
                           <div class="sc-Galmp erPQzq coin notranslate">
@@ -189,7 +263,11 @@
                   </div>
                   <div class="input-control">
                     <input type="text" value="0.004400000" />
-                    <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
+                    <img
+                      class="coin-icon"
+                      src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
+                      alt=""
+                    />
                     <div class="sc-kDTinF bswIvI button-group">
                       <button>/2</button><button>x2</button>
                       <button class="sc-cAhXWc cMPLfC flex-button">
@@ -252,9 +330,10 @@
                     <div class="label-amount">0 USD</div>
                   </div>
                   <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
+                    <input type="text" value="0.000000000" />
+                    <img
                       class="coin-icon"
-                      src="/coin/BTC.black.png"
+                      src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
                       alt=""
                     />
                   </div>
@@ -265,9 +344,10 @@
                     <div class="label-amount">0 USD</div>
                   </div>
                   <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
+                    <input type="text" value="0.000000000" />
+                    <img
                       class="coin-icon"
-                      src="/coin/BTC.black.png"
+                      src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
                       alt=""
                     />
                   </div>
@@ -292,7 +372,11 @@
               <span class="tit">Bankroll</span><span>CUB</span>
             </div>
             <div class="sc-Galmp erPQzq coin notranslate">
-              <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+              <img
+                class="coin-icon"
+                src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
+                alt=""
+              />
               <div class="amount">
                 <span class="amount-str">1234538.98</span>
               </div>
@@ -305,14 +389,14 @@
           </div>
         </div>
         <div class="no-web sc-bQFuvY bFXMsx">
-          <div class="history">
+          <button on:click={openHistoryModal} class="history">
             <Icon
               src={BsClock}
               size="12"
               color="rgba(153, 164, 176, 0.6)"
               title=""
             />History
-          </div>
+          </button>
           <div class="title">Result</div>
           <div class="wrap ball-wrap">
             <div
@@ -589,7 +673,16 @@
             color="rgba(153, 164, 176, 0.6)"
             title=""
           /></button
-        ><button class="action-item"
+        >
+        <button on:click={openHotKeysModal} class="action-item"
+          ><Icon
+            src={BiSolidKeyboard}
+            size="23"
+            color="rgba(153, 164, 176, 0.6)"
+            title=""
+          /></button
+        >
+        <button on:click={openLiveStatsModal} class="action-item"
           ><Icon
             src={IoGitNetwork}
             size="23"
@@ -628,14 +721,14 @@
     </div>
     <div class="web no-mobile sc-hRMJXU cWaNyl">
       <div class="sc-bQFuvY bFXMsx">
-        <div class="history">
+        <button on:click={openHistoryModal} class="history">
           <Icon
             src={BsClock}
             size="12"
             color="rgba(153, 164, 176, 0.6)"
             title=""
           />History
-        </div>
+        </button>
         <div class="title">Result</div>
         <div class="wrap ball-wrap">
           <div
@@ -2619,9 +2712,1002 @@
       </div>
     </div>
   </div>
+  <!-- HISTORY MODAL -->
+  {#if isOpenHistoryModal}
+    <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
+      <div
+        class="dialog"
+        style="opacity: 1; width: 464px; height: 720px; margin-top: -360px; margin-left: -232px; transform: scale(1) translateZ(0px);"
+      >
+        <div class="dialog-head has-close">
+          <div class="dialog-title">History</div>
+        </div>
+        <button
+          on:click={closeHistoryModal}
+          class="sc-ieecCq fLASqZ close-icon dialog-close"
+        >
+          <Icon
+            src={IoCloseSharp}
+            size="18"
+            color="rgb(255, 255, 255)"
+            className="custom-icon"
+            title="arror"
+          />
+          <!-- <svg
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="sc-gsDKAQ hxODWG icon"
+          ><use xlink:href="#icon_Close"></use></svg
+        > -->
+        </button>
+        <div
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <div class="sc-dkPtRN jScFby scroll-view sc-jHwEXd ffDZhz">
+            <div class="h-it">
+              <div class="h-num">3248820:</div>
+              <div class="h-ball">36</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">2</div>
+              <div class="h-ball">40</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">21</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">14</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248819:</div>
+              <div class="h-ball">38</div>
+              <div class="h-ball">33</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">28</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">8</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">40</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248818:</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">38</div>
+              <div class="h-ball">8</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">28</div>
+              <div class="h-ball">14</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">35</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">17</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248817:</div>
+              <div class="h-ball">10</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">35</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">12</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248816:</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">2</div>
+              <div class="h-ball">38</div>
+              <div class="h-ball">37</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">34</div>
+              <div class="h-ball">17</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">9</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248815:</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">2</div>
+              <div class="h-ball">32</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">37</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248814:</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">14</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">26</div>
+              <div class="h-ball">10</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">3</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248813:</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">34</div>
+              <div class="h-ball">8</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">28</div>
+              <div class="h-ball">7</div>
+              <div class="h-ball">26</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">10</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248812:</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">37</div>
+              <div class="h-ball">17</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">16</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248811:</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">19</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">16</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">7</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">4</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248810:</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">14</div>
+              <div class="h-ball">6</div>
+              <div class="h-ball">32</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">7</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">36</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248809:</div>
+              <div class="h-ball">6</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">5</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">32</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">34</div>
+              <div class="h-ball">26</div>
+              <div class="h-ball">16</div>
+              <div class="h-ball">37</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248808:</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">6</div>
+              <div class="h-ball">37</div>
+              <div class="h-ball">4</div>
+              <div class="h-ball">16</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">39</div>
+              <div class="h-ball">34</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">8</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248807:</div>
+              <div class="h-ball">39</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">12</div>
+              <div class="h-ball">34</div>
+              <div class="h-ball">28</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">2</div>
+              <div class="h-ball">11</div>
+              <div class="h-ball">1</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248806:</div>
+              <div class="h-ball">4</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">14</div>
+              <div class="h-ball">39</div>
+              <div class="h-ball">24</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">17</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">33</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248805:</div>
+              <div class="h-ball">40</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">26</div>
+              <div class="h-ball">39</div>
+              <div class="h-ball">9</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">24</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248804:</div>
+              <div class="h-ball">36</div>
+              <div class="h-ball">24</div>
+              <div class="h-ball">30</div>
+              <div class="h-ball">18</div>
+              <div class="h-ball">21</div>
+              <div class="h-ball">39</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">7</div>
+              <div class="h-ball">11</div>
+              <div class="h-ball">10</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248803:</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">17</div>
+              <div class="h-ball">36</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">19</div>
+              <div class="h-ball">16</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">8</div>
+              <div class="h-ball">11</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248802:</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">38</div>
+              <div class="h-ball">22</div>
+              <div class="h-ball">36</div>
+              <div class="h-ball">31</div>
+              <div class="h-ball">15</div>
+              <div class="h-ball">1</div>
+              <div class="h-ball">16</div>
+            </div>
+            <div class="h-it">
+              <div class="h-num">3248801:</div>
+              <div class="h-ball">10</div>
+              <div class="h-ball">25</div>
+              <div class="h-ball">27</div>
+              <div class="h-ball">19</div>
+              <div class="h-ball">29</div>
+              <div class="h-ball">13</div>
+              <div class="h-ball">3</div>
+              <div class="h-ball">23</div>
+              <div class="h-ball">20</div>
+              <div class="h-ball">22</div>
+            </div>
+            <div class="sc-cCcXHH dXTFyi pagination">
+              <div class="sc-cidDSM dmcoXZ">Total 324882</div>
+              <div class="sc-jcFjpl sc-iUKqMP dORpLZ jrpAIs pages-wrap">
+                <button class="active" disabled="">1</button><button class=""
+                  >2</button
+                ><button class="">3</button>
+              </div>
+              <div class="sc-jcFjpl sc-iUKqMP dORpLZ jrpAIs page-pn">
+                <button disabled="" class="disabled previous-btn"
+                  ><svg
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    class="sc-gsDKAQ hxODWG icon prev"
+                    ><use xlink:href="#icon_Arrow"></use></svg
+                  ></button
+                ><button class="next-page"
+                  ><svg
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    class="sc-gsDKAQ hxODWG icon next"
+                    ><use xlink:href="#icon_Arrow"></use></svg
+                  ></button
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {/if}
+  <!-- HISTORY MODAL -->
+  <!-- HOT KEYS MODAL -->
+  {#if isOpenHotKeysModal}
+    <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
+      <div
+        class="dialog"
+        style="opacity: 1; width: 464px; height: 720px; margin-top: -360px; margin-left: -232px; transform: scale(1) translateZ(0px);"
+      >
+        <div class="dialog-head has-close">
+          <div class="dialog-title">Hot keys</div>
+        </div>
+        <button
+          on:click={closeHotKeysModal}
+          class="sc-ieecCq fLASqZ close-icon dialog-close"
+        >
+          <Icon
+            src={IoCloseSharp}
+            size="18"
+            color="rgb(255, 255, 255)"
+            className="custom-icon"
+            title="arror"
+          />
+        </button>
+        <div
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <div class="sc-dkPtRN jScFby scroll-view sc-hIagIn cxLQEF dialog-box">
+            <div class="hotkey-list">
+              <div class="hotkey-item">
+                <div class="hotkey-txt">Half bet amount</div>
+                <div class="hotkey-key">A</div>
+              </div>
+              <div class="hotkey-item">
+                <div class="hotkey-txt">Double bet amount</div>
+                <div class="hotkey-key">S</div>
+              </div>
+              <div class="hotkey-item">
+                <div class="hotkey-txt">Make a bet</div>
+                <div class="hotkey-key">Space</div>
+              </div>
+              <div class="hotkey-item">
+                <div class="hotkey-txt">Auto pick tiles</div>
+                <div class="hotkey-key">Q</div>
+              </div>
+              <div class="hotkey-item">
+                <div class="hotkey-txt">Clear table</div>
+                <div class="hotkey-key">W</div>
+              </div>
+            </div>
+            <div class="hotkey-enabled">
+              <div class="hotkey-select"></div>
+              <div>Hotkeys Enabled</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {/if}
+  <!-- HOT KEYS MODAL -->
+  <!-- LIVE STATS MODAL -->
+  {#if isOpenLiveStatsModal}
+    <div
+      class="sc-dJjYzT JLcsN dragpop"
+      style="transform: translate3d(334px, 124.5px, 0px);"
+    >
+      <div class="dragpop-title">Live Stats</div>
+      <button on:click={closeLiveStatsModal} class="dragpop-close hover">
+        <Icon
+          src={IoCloseSharp}
+          size="18"
+          color="rgb(255, 255, 255)"
+          className="custom-icon"
+          title="arror"
+        /></button
+      >
+      <div class="dragpop-content">
+        <div class="sc-dkPtRN jScFby scroll-view sc-eBTqsU eLzuEc">
+          <div class="sc-faIbUi lgxnv">
+            <div class="trigger flex-center m-item fold">
+              <div class="current">Bet</div>
+              <Icon
+              src={RiSystemArrowRightSLine}
+              size="17"
+              color="rgba(153, 164, 176, 0.6)"
+              title=""
+            />
+            </div>
+          </div>
+          <div class="sc-bZSZLb eIMCYw m-item">
+            <div class="title flex-center">
+              <span>Bet</span><button class="title-btn"
+                ><svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  class="sc-gsDKAQ hxODWG icon"
+                  ><use xlink:href="#icon_Clear"></use></svg
+                ></button
+              >
+            </div>
+            <div class="chart-cont">
+              <div class="item-wrap wagered">
+                <div class="item-label">Wagered</div>
+                <div class="sc-Galmp erPQzq coin notranslate">
+                  <img class="coin-icon" src="/coin/BTC.black.png" />
+                  <div class="amount">
+                    <span class="amount-str"
+                      >0.<span class="suffix">00000000</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="item-wrap profit">
+                <div class="item-label">Profit</div>
+                <div class="sc-Galmp erPQzq coin notranslate cl-success">
+                  <img class="coin-icon" src="/coin/BTC.black.png" />
+                  <div class="amount">
+                    <span class="amount-str"
+                      >0.<span class="suffix">00000000</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <div
+                class="VictoryContainer"
+                style="height: 100%; width: 100%; pointer-events: none; touch-action: none; position: relative;"
+              >
+                <svg
+                  width="450"
+                  height="300"
+                  role="img"
+                  viewBox="0 0 450 300"
+                  style="pointer-events: all; width: 100%; height: 100%;"
+                  ><g
+                    clip-path="url(#victory-clip-17)"
+                    style="height: 100%; width: 100%;"
+                    ><defs
+                      ><clipPath id="victory-clip-17"
+                        ><rect x="0" y="0" width="100%" height="300"
+                        ></rect></clipPath
+                      ></defs
+                    ><g
+                      ><path
+                        role="presentation"
+                        shape-rendering="auto"
+                        style="fill: rgb(93, 160, 0); stroke: none; stroke-width: 5; fill-opacity: 0.7; stroke-linecap: round; width: 2px;"
+                      ></path><path
+                        role="presentation"
+                        shape-rendering="auto"
+                        style="fill: none; stroke: rgb(93, 160, 0); stroke-width: 5; fill-opacity: 0.7; stroke-linecap: round; width: 2px;"
+                      ></path></g
+                    ></g
+                  ><g
+                    clip-path="url(#victory-clip-18)"
+                    style="height: 100%; width: 100%;"
+                    ><defs
+                      ><clipPath id="victory-clip-18"
+                        ><rect x="0" y="300" width="100%" height="100%"
+                        ></rect></clipPath
+                      ></defs
+                    ><g
+                      ><path
+                        role="presentation"
+                        shape-rendering="auto"
+                        style="fill: rgb(237, 99, 0); stroke: none; stroke-width: 5; fill-opacity: 0.7; stroke-linecap: round; width: 2px;"
+                      ></path><path
+                        role="presentation"
+                        shape-rendering="auto"
+                        style="fill: none; stroke: rgb(237, 99, 0); stroke-width: 5; fill-opacity: 0.7; stroke-linecap: round; width: 2px;"
+                      ></path></g
+                    ></g
+                  ></svg
+                >
+                <div
+                  style="z-index: 99; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"
+                >
+                  <svg
+                    width="450"
+                    height="300"
+                    viewBox="0 0 450 300"
+                    style="overflow: visible; width: 100%; height: 100%;"
+                  ></svg>
+                </div>
+              </div>
+            </div>
+            <div class="bet-wrap">
+              <div class="bet-item win">
+                <span class="txt ttc">win</span><span class="num false">0</span>
+              </div>
+              <div class="bet-item lose">
+                <span class="txt ttc">lose</span><span class="num false">0</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {/if}
+  <!-- LIVE STATS MODAL -->
 </div>
 
 <style>
+  .gOHquD.is-open .select-options-wrap {
+    pointer-events: auto;
+  }
+  .iVwWcQ {
+    position: absolute;
+    padding: 0.3125rem 0px;
+    width: 100%;
+    left: 0px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .iVwWcQ .select-options {
+    border-radius: 1.25rem;
+    padding: 0.125rem 0.375rem;
+    background-color: rgb(23, 24, 27);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
+    height: auto;
+    max-height: 16.25rem;
+  }
+  .jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .iVwWcQ .select-options:not(.len-1) > .active {
+    border-color: rgba(91, 174, 28, 0.4);
+  }
+  .iVwWcQ .select-options:not(.len-1) > .active::after {
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    top: 50%;
+    margin-top: -0.25rem;
+    right: 0.625rem;
+    background-color: rgb(67, 179, 9);
+    box-shadow: rgba(91, 174, 28, 0.15) 0px 0px 0px 0.3125rem;
+  }
+  .iVwWcQ .select-option {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    padding: 0px 0.625rem;
+    font-size: 0.875rem;
+    height: 2rem;
+    margin: 0.25rem 0px;
+    border: 1px solid transparent;
+    border-radius: 1.0625rem;
+    cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+    white-space: nowrap;
+  }
+  /* Modal Style */
+  .kBjSXI {
+    position: fixed;
+    z-index: 1000;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    filter: none !important;
+  }
+  .dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+  }
+  .dialog-head.has-close {
+    margin-right: 3.75rem;
+  }
+  .dialog-head {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 3.75rem;
+    margin-left: 1.125rem;
+    transition: all 0.5s ease 0s;
+  }
+  .dialog-head .dialog-title {
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: bold;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(245, 246, 247);
+  }
+  .fLASqZ {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 11;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+  .fLASqZ svg {
+    transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    cursor: pointer;
+    font-size: 0.75rem;
+  }
+  .default-style {
+    padding-top: 3.75rem;
+    background-color: rgb(23, 24, 27);
+  }
+  .dialog-body {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    overflow: hidden;
+  }
+  .default-style > div {
+    border-radius: 20px;
+    background-color: rgb(30, 32, 36);
+    padding: 1.25rem 1.25rem 0px;
+  }
+  .dialog-body > div {
+    flex: 1 1 0%;
+  }
+  .ffDZhz {
+    padding: 1.875rem 2.5rem;
+  }
+  .jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .ffDZhz .h-it {
+    height: 1.875rem;
+    line-height: 1.875rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0.3125rem 0px;
+    margin-bottom: 0.3125rem;
+    cursor: pointer;
+  }
+  .ffDZhz .h-it .h-num {
+    min-width: 5rem;
+    color: rgb(153, 164, 176);
+  }
+  .ffDZhz .h-it .h-ball {
+    width: 1.875rem;
+    height: 1.875rem;
+    text-align: center;
+    background-color: rgb(49, 52, 60);
+    border-radius: 1.125rem;
+    margin-right: 0.3125rem;
+    color: rgb(153, 164, 176);
+  }
+  .ffDZhz .pagination {
+    margin: 1.25rem 0px;
+  }
+  .dXTFyi {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  .dmcoXZ {
+    height: 2rem;
+    line-height: 2rem;
+    margin: 0px 0.5rem 0px 24px;
+    font-size: 0.75rem;
+    color: rgba(153, 164, 176, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dORpLZ.pages-wrap {
+    background-color: rgba(24, 25, 29, 0.6);
+    padding: 0px px 1.125rem;
+  }
+  .dORpLZ {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: 2rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px;
+  }
+  .ffDZhz .pagination .pages-wrap button {
+    background-color: transparent;
+  }
+  .dORpLZ.pages-wrap .active {
+    color: rgb(245, 246, 247);
+    font-weight: 600;
+  }
+  .ffDZhz .pagination button {
+    background-color: rgba(45, 48, 53, 0.6);
+  }
+  .dORpLZ.pages-wrap button {
+    font-size: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 0px;
+  }
+  .dORpLZ.page-pn {
+    margin-left: 0.75rem;
+  }
+  .ffDZhz .pagination button.disabled {
+    background-color: rgba(45, 48, 53, 0.4);
+  }
+  .jrpAIs.page-pn button.disabled {
+    background-color: rgba(45, 48, 53, 0.4);
+  }
+  .dORpLZ.page-pn .previous-btn {
+    margin: 0px 1px 0px 0px;
+  }
+  .dORpLZ.page-pn .disabled {
+    cursor: not-allowed;
+  }
+  .dORpLZ .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  .cxLQEF .hotkey-list {
+    margin-top: 0.5rem;
+  }
+  .cxLQEF .hotkey-item {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 1.25rem;
+    height: 3.5rem;
+    border-radius: 1.25rem;
+    margin-bottom: 0.5rem;
+    background-color: rgb(23, 24, 27);
+    color: rgba(153, 164, 176, 0.6);
+  }
+  .cxLQEF .hotkey-item .hotkey-key {
+    width: 6.25rem;
+    text-align: center;
+    position: relative;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+    padding: 0.5rem 0px 0.5rem 1.25rem;
+  }
+  .cxLQEF .hotkey-item .hotkey-key::after {
+    content: "";
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    opacity: 0.13;
+    position: absolute;
+    width: 1px;
+    background-color: rgb(153, 164, 176);
+  }
+  .cxLQEF .hotkey-enabled {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 1.25rem;
+    cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+  }
+  .cxLQEF .hotkey-enabled .hotkey-select {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    position: relative;
+    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid rgb(45, 48, 53);
+  }
+  .JLcsN {
+    position: fixed;
+    z-index: 110;
+    left: 0px;
+    top: 0px;
+    min-width: 12.5rem;
+    min-height: 12.5rem;
+    border-radius: 1.25rem;
+    background-color: rgb(23, 24, 27);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.5rem 0px;
+  }
+  .JLcsN .dragpop-title {
+    flex: 1 1 0%;
+    height: 3.125rem;
+    line-height: 3.125rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: rgb(245, 246, 247);
+    text-align: center;
+    touch-action: none;
+    user-select: none;
+    cursor: grab;
+  }
+  .JLcsN .dragpop-close {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+  .eLzuEc {
+    font-size: 0.75rem;
+    min-width: 300px;
+    max-height: 70vh;
+    margin-bottom: 1.125rem;
+  }
+  .jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .lgxnv {
+    position: relative;
+  }
+  .lgxnv .trigger {
+    height: 2.5rem;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    color: rgb(245, 246, 247);
+    cursor: pointer;
+  }
+  .eLzuEc .m-item {
+    border-radius: 1.25rem;
+    background: rgb(30, 32, 36);
+    margin: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .eIMCYw {
+    width: 260px;
+    height: 301.6px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    box-sizing: content-box;
+    color: rgba(153, 164, 176, 0.6);
+    padding-bottom: 1.25rem;
+  }
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .eLzuEc .m-item > .title {
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 600;
+    color: rgb(245, 246, 247);
+  }
+  .eIMCYw > .title {
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+  }
+  .eIMCYw .title-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: -0.625rem;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  .eIMCYw .chart-cont {
+    display: flex;
+  }
+  .eIMCYw .chart-cont .item-wrap.wagered {
+    flex: 1 1 0%;
+  }
+  .erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .eIMCYw .chart-cont .item-wrap .coin-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.3125rem;
+  }
+  .erPQzq .coin-icon {
+    width: 1.4em;
+    height: 1.4em;
+    margin-right: 0.25em;
+  }
+  .eIMCYw .chart-cont .item-wrap.wagered .amount {
+    color: rgb(245, 246, 247);
+  }
+  .eIMCYw .chart-cont .item-wrap .amount {
+    font-weight: 600;
+  }
+  .erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+  }
+  .erPQzq .suffix {
+    opacity: 0.5;
+  }
+  .eIMCYw .chart-cont .item-wrap .cl-success .amount {
+    color: rgb(67, 179, 9);
+  }
+  .eIMCYw .chart-cont .item-wrap.profit .amount {
+    color: rgb(67, 179, 9);
+  }
+  .eIMCYw .chart-cont .item-wrap .amount {
+    font-weight: 600;
+  }
+  .eIMCYw .chart-wrap {
+    position: relative;
+    width: 16.25rem;
+    height: 10.9375rem;
+  }
+  .eIMCYw .bet-wrap {
+    display: flex;
+  }
+  .eIMCYw .bet-wrap .win {
+    flex: 1 1 0%;
+  }
+  .eIMCYw .bet-wrap .bet-item {
+    display: flex;
+  }
+  .ttc {
+    text-transform: capitalize;
+  }
+  .eIMCYw .bet-wrap .win .num {
+    color: rgb(67, 179, 9);
+  }
+  .eIMCYw .bet-wrap .lose .num {
+    color: rgb(237, 99, 0);
+  }
+  .eIMCYw .bet-wrap .num {
+    margin-left: 0.75rem;
+    font-weight: 600;
+  }
+  /* Modal Style */
   @media (max-width: 1000px) {
     .no-mobile {
       display: none !important;
