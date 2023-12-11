@@ -3,28 +3,28 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
 import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
-import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
-import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
-import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
-import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
-import Crash from './crash.svelte';
-const { getAllPlayers } = useAllplayer()
-const handleTrends = (()=>{
-    dispatch("closeTrend", 5)
-})
+// import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
+// import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
+// import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
+// import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
+// import Crash from './crash.svelte';
+// const { getAllPlayers } = useAllplayer()
+// const handleTrends = (()=>{
+//     dispatch("closeTrend", 5)
+// })
 
-let allbet = false
+// let allbet = false
 
-const handleAllbet = ((e)=>{
-    if(allbet){
-        allbet = false
-    }else{
-        allbet = true
-        getAllPlayers(e)
-    }
-})
+// const handleAllbet = ((e)=>{
+//     if(allbet){
+//         allbet = false
+//     }else{
+//         allbet = true
+//         getAllPlayers(e)
+//     }
+// })
 
-import {RealTimeURl} from "$lib/backendUrl";
+// import {RealTimeURl} from "$lib/backendUrl";
 
 // onMount(()=>{
 //     const event = new EventSource(`${RealTimeURl()}/events`);
