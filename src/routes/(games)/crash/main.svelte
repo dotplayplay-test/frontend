@@ -11,7 +11,7 @@ import { onMount  } from "svelte";
 import { goto } from "$app/navigation";
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
-import Crashview from './crashview.svelte';
+// import Crashview from './crashview.svelte';
 // import Trend from '$lib/crashgame/components/trends/index.svelte';
 // import { loadingCrash,handleHasbet,game_id,crashLoad,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
 // import {default_Wallet } from "$lib/store/coins";
