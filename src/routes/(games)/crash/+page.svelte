@@ -14,6 +14,7 @@ import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 
+
 let isClassic = true
 const handleNavigation = ((w) => {
     if (w === 1) {
