@@ -45,7 +45,7 @@
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
 	<div
 		class="dialog"
-		style="opacity: 1; width: 464px; height: 720px; margin-top: -360px; margin-left: -232px; transform: scale(1) translateZ(0px);"
+		style="opacity: 1; width: 464px; max-height: 720px; height: calc(100vh - 5%); margin-top: -280px; margin-left: -232px; transform: scale(1) translateZ(0px);"
 	>
 		{#if currentTab === 2 && !showData.game_id}
 			<button
@@ -81,7 +81,7 @@
 				class="dialog-body default-style"
 				style="z-index: 2; transform: none;"
 			>
-				<div class="sc-dkPtRN jScFby scroll-view sc-haTkiu YCgQD">
+				<div style="padding-bottom: 40px;" class="sc-dkPtRN jScFby scroll-view sc-haTkiu YCgQD">
 					<div class="item">
 						Lottery is drawn in 5+1 balls rule, with five regular balls taken
 						from 36 numbers and a jackpot ball taken from 10 numbers.
@@ -178,7 +178,7 @@
 								type="text"
 								placeholder="Reveal everyday at 15:00 UTC+0"
 								readonly
-								value
+								value="{gameSeeds.client_start_block || 0}"
 							/>
 						</div>
 					</div>
@@ -197,7 +197,7 @@
 								type="text"
 								placeholder="Reveal when the 20th block after the stop block is generated"
 								readonly
-								value="0"
+								value="{!!gameSeeds.client_start_block ?  gameSeeds.client_start_block + 10 : 0}"
 							/>
 						</div>
 					</div>
@@ -215,8 +215,7 @@
 					src={CgSoftwareDownload}
 					size="20"
 					color="rgba(153, 164, 176, 0.6)"
-				/>All Tickets List File</a
-								>
+				/>All Tickets List File</a>
 							</div>
 						</div>
 						<div class="input-control">
