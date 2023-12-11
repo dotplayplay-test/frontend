@@ -4,7 +4,7 @@ import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill"
 import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
 import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
-// import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
+import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 // import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 // import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
 // import Crash from './crash.svelte';
