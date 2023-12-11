@@ -68,11 +68,11 @@ onMount(()=>{
 
 </script>
 
-<!-- {#if allbet}
+{#if allbet}
     <Allplayers  on:close={handleAllbet} />
-{/if} -->
+{/if}
 
-<!-- <div class="game-view">
+<div class="game-view">
     <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
         <div class="recent-list-wrap">
             <div class="recent-list" style="transform: translate(0%, 0px);">
@@ -113,7 +113,7 @@ onMount(()=>{
     </svg>
 </div>
 
-</div> -->
+</div>
 
 <style>
 .game-view {
