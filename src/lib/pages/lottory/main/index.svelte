@@ -32,12 +32,16 @@
     return data;
   };
   const getTickets = async () => {
-    try {
-      const { data } = await UseFetchData($handleAuthToken).fetchData("/lottery/tickets");
-      return data;
-    } catch (error) {
-      return null;
+    if ($handleisLoggin) {
+      try {
+        const { data } =
+          await UseFetchData($handleAuthToken).fetchData("/lottery/tickets");
+        return data;
+      } catch (error) {
+        return null;
+      }
     }
+    return null;
   };
   $: loading = true;
   $: gameData = null;
@@ -48,7 +52,6 @@
   onMount(async () => {
     try {
       const [game, ticketData] = await Promise.all([getGame(), getTickets()]);
-      console.log(game);
       myTickets =
         ticketData?.tickets?.reduce((a, { amount }) => a + amount, 0) || 0;
       gameData = {
@@ -80,7 +83,6 @@
           diffInSeconds--;
         }
       }, 1000);
-      console.log("Tickets => ", tickets);
     } catch (err) {
       console.log("Error", err);
     } finally {
