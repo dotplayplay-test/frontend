@@ -3,7 +3,7 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemMenuUnfoldFill from "svelte-icons-pack/ri/RiSystemMenuUnfoldFill";
 import { createEventDispatcher, onMount } from 'svelte';
 const dispatch = createEventDispatcher()
-import { crash_historyEl, crashLoad, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
+import { crash_historyEl, crashLoad,game_id,handleHasbet, Load_animation,crashCurve,hasCrashed, loadingCrash ,crashRunning,crashPoint, crashIsAlive} from "$lib/crashgame/store"
 import Crashlayout from '$lib/crashgame/screens/Crashlayout.svelte';
 import Allplayers from '$lib/crashgame/components/allPlayers/allplayers.svelte';
 import { useAllplayer } from "$lib/crashgame/fetchallPlayers"
@@ -35,6 +35,7 @@ onMount(()=>{
         loadingCrash.set(true)
         crashIsAlive.set(false)
         hasCrashed.set(false)
+        game_id.set(mimik.game_id)
     });
     event.addEventListener("running-crash", ({data}) => {
         loadingCrash.set(false)
@@ -53,6 +54,7 @@ onMount(()=>{
         hasCrashed.set(true)
         loadingCrash.set(false)
         crashIsAlive.set(false)
+        handleHasbet.set(false)
     })
     event.addEventListener("crash-game-history", ({data}) =>{
         let mimik = JSON.parse(data);

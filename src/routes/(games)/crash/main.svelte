@@ -339,7 +339,7 @@ const handlesjen = ((e)=>{
         {#if isClassic}
         <div class="game-control-panel">
             <div class="sc-lVTEl hjMJHh">
-                {#if $crashIsAlive}
+                {#if !$handleHasbet && $crashIsAlive}
                     <button on:click={handleLoadBet} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{isLoadBet ? "Loading..." : "Bet" }</div>
@@ -347,7 +347,7 @@ const handlesjen = ((e)=>{
                         </div>
                     </button>
                 {/if}
-                {#if $handleHasbet}
+                {#if $handleHasbet && $crashIsAlive}
                     <button on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-cdJjGe jfUTnA">
                         <div class="button-inner">
                             <div>{($crashRunning * bet_amountEl).toFixed(2)}</div>
