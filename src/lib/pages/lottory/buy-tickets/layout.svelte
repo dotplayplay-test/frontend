@@ -15,9 +15,13 @@
   $: jackpotNum = 0;
   $: ticketAmount = 1;
   const handleRandomGeneration = () => {
-    selectedNumbers = Array.from({ length: 5 }, () =>
-      Math.max(1, Math.min(36, Math.round(Math.random() * 36) + 1))
-    );
+    const balls = Array(36)
+      .fill(null)
+      .map((_, i) => i + 1);
+    selectedNumbers = Array.from({ length: 5 }, () => {
+      const randomIndex = Math.floor(Math.random() * balls.length);
+      return balls.splice(randomIndex, 1)[0];
+    });
     jackpotNum = Math.max(1, Math.min(10, Math.round(Math.random() * 10) + 1));
   };
   const handleSetTicketAmount = (amount, update) => {
@@ -188,7 +192,7 @@
                     >
                       <div
                         class="slider-after"
-                        style="transform: scaleX({ticketAmount/1000});"
+                        style="transform: scaleX({ticketAmount / 1000});"
                       ></div>
                       <div
                         class="slider-handler-wrap"
@@ -207,7 +211,7 @@
                       </div>
                       <div
                         class="slider-before"
-                        style="transform: scaleX({ 1 - (ticketAmount/1000)});"
+                        style="transform: scaleX({1 - ticketAmount / 1000});"
                       ></div>
                     </div>
                     <button
