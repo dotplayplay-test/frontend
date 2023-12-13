@@ -3,7 +3,6 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import Trendball from './trendball.svelte';
 import { active_playerEl , hasCrashed} from "$lib/crashgame/store";
-
 export let isClassic;
 
 const handleAllbet = (()=>{

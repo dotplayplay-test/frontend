@@ -4,7 +4,6 @@ import { crash_historyEl } from "../../store"
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 let newItem;
-
 $: {
     // $crash_historyEl.sort((a, b) => b._id - a._id);
     newItem =  [...$crash_historyEl].reverse()
@@ -36,11 +35,10 @@ $: {
                     </tr>
                 </thead>
                 <tbody>
-                    {#each newItem.slice(0, 20) as history (history._id)}
+                    {#each newItem.slice(0, 20) as history}
                     <tr>
                         <td>
                             <div class="game-link">
-
                                 <div class={`dot ${parseFloat(history.crash_point) > 2 ? "type-2" : "type-1" } `}></div>
                                 {history.game_id}
                             </div>

@@ -8,12 +8,11 @@ import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
-import { crash_historyEl} from "$lib/crashgame/store"
-
+import { crash_historyEl, mybetEl, game_id} from "$lib/crashgame/store"
+import { handleAuthToken } from "$lib/store/routes";
 import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
-
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -36,8 +35,24 @@ const handleCrashHistory = (async()=>{
     });
 })
 
+const handleMybet = (async()=>{
+    await axios.get(`${URL}/api/user/crash-game/my-bet`,{
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((result) => {
+        mybetEl.set(result.data)
+    }).catch((err) => {
+        console.log(err.response)  
+    });
+})
+
+
 onMount(async()=>{
   await handleCrashHistory()
+  await handleMybet()
 })
    
 
