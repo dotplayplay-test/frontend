@@ -75,11 +75,10 @@
 }
 @media screen and (min-width: 650px) {
     #deposit {
-        border-radius: 20px;
         background-color: rgb(30, 32, 36);
-        padding: 0.725rem 0.7725rem 0px;
+        padding: 0 10px 120px 10px;
         box-sizing: border-box;
-        height: 350px;
+        height: 480px;
         overflow-y: auto;
         touch-action: pan-y;
         overscroll-behavior: contain;

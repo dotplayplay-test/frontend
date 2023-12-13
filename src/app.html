@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/apple-touch-icon.png" />
 		<meta name="viewport" content="width=device-width" />
-
+		<meta name="ccpayment-site-verification" content="9bb9852b78e55603158ed65149db7dd6"/>
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -25,6 +25,8 @@
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
 		
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
 		<style>
 			*{
 				padding: 0;
@@ -52,6 +54,7 @@
 				margin: 0;
 				background-color: #24262b;
 			}
+			
 			body, input, textarea, a, button {
 				font-family: Montserrat,-apple-system,Framedcn,Helvetica Neue, Poppins, Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
 			}
@@ -79,9 +82,16 @@
 				--placeholder-color: #75808c;
 				--autofill-color: #f5f6f7;
 				--scroll-color: #24262B;
+				--border-radius:18px
 			}
 			.ttu {
 				text-transform: uppercase;
+			}
+
+
+			
+			.hTTvsjh{
+				color: #f5f6f7;
 			}
 
 			/*=========================================================== Main screen ================================================ */
@@ -92,7 +102,18 @@
 				.ePAxUv {
 					margin-top: 4rem;
 				}
+				.error-message{
+				position: fixed;
+				background: #24262B;
+				width: 400px;
+				left: 6px;
+				bottom: 2%;
+				border-radius: 20px;
 
+				padding: 24px 15px;
+				margin: 10px;
+				z-index: 910;
+			}
 				main{
 					width: 100%;
 					margin: 10px 0;
@@ -140,11 +161,25 @@
 					margin: 0;
 					width: 100%;
 				}
+				#footer{
+					display: none;
+				}
 			}
 			/* ============================= mobile screen ====================================================== */
 			@media only screen and ( max-width : 650px) {
 				#main{
 					display: none;
+				}
+				.error-message {
+					position: fixed;
+					background: #24262B;
+					width: 97%;
+					left: 6px;
+					top: 2%;
+					border-radius: 20px;
+					padding: 24px 15px;
+					margin: 0;
+					z-index: 910;
 				}
 				.footer-general{
 					display: none;
@@ -153,7 +188,7 @@
 					width: 100%;
 				}
 				.ePAxUv{
-					margin-top: 7.375rem;
+					margin-top: 8.375rem;
 				}
 			}
 

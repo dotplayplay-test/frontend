@@ -1,6 +1,5 @@
-
 /** @type {import('./$types').PageLoad} */
 
-export function load({ route, fetch }) {
-    return {yi : 5 }
-  }
+export function load({ route }) {
+    return {route : route.id }
+}

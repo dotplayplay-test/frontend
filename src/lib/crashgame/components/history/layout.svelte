@@ -1,8 +1,14 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-
+import { crash_historyEl } from "../../store"
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+let newItem;
+$: {
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$crash_historyEl].reverse()
+}
+
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -29,112 +35,29 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     </tr>
                 </thead>
                 <tbody>
+                    {#each newItem.slice(0, 20) as history}
                     <tr>
                         <td>
                             <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
+                                <div class={`dot ${parseFloat(history.crash_point) > 2 ? "type-2" : "type-1" } `}></div>
+                                {history.game_id}
                             </div>
                         </td>
-                        <td>1.69x</td>
+                        <td>{(parseFloat(history.crash_point)).toFixed(2)}x</td>
                         <td>
                             <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
+                                <input type="text" readonly value={history.hash}>
+                                <a target="_blank" href={`https://dppgames.netlify.app/verify/crash?hash=${history.hash}`}>
                                     Verify
                                 </a>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
-                            </div>
-                        </td>
-                        <td>1.69x</td>
-                        <td>
-                            <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                    Verify
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
-                            </div>
-                        </td>
-                        <td>1.69x</td>
-                        <td>
-                            <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                    Verify
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
-                            </div>
-                        </td>
-                        <td>1.69x</td>
-                        <td>
-                            <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                    Verify
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
-                            </div>
-                        </td>
-                        <td>1.69x</td>
-                        <td>
-                            <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                    Verify
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="game-link">
-                                <div class="dot type-2"></div>
-                                5616002
-                            </div>
-                        </td>
-                        <td>1.69x</td>
-                        <td>
-                            <div class="flex-center">
-                                <input type="text" readonly="" value="6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                <a target="_blank" href="https://nanogamesio.github.io/verify/crash.html?hash=6cf3402962974605dfc75fcbd1cd8448f33b2c1f44e1c8694100059670bb3f16">
-                                    Verify
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    {/each}
                 </tbody>
             </table>
             <div class="sc-cCcXHH dXTFyi pagination ">
-                <div class="sc-cidDSM dmcoXZ">Total 100</div>
+                <div class="sc-cidDSM dmcoXZ">Total {$crash_historyEl.length}</div>
                 <div class="sc-jcFjpl sc-iAKWXU dORpLZ bnBwbM pages-wrap">
                     <button class="active" disabled="">1</button>
                     <button class="">2</button>
@@ -154,6 +77,13 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
 </div>
 
 <style>
+
+@media only screen and (max-width: 650px){
+.table{
+    font-size: 13px;
+}
+}
+
 .tabs-view {
     background-color: rgb(30, 32, 36);
     border-radius: 1.25rem;
@@ -250,6 +180,9 @@ table {
 }
 .iovqrr .dot.type-2 {
     background-color: rgb(67, 179, 9);
+}
+.iovqrr .dot.type-1 {
+    background-color: rgb(237, 99, 0);
 }
 .iovqrr .dot {
     width: 0.625rem;

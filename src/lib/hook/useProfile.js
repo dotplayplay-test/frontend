@@ -1,4 +1,5 @@
-
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
 export const useProfile = () => {
     let error;
     let isLoading;
@@ -6,7 +7,7 @@ export const useProfile = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/users/create-profile",{
+        `${URL}/api/users/create-profile`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

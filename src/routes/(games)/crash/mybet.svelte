@@ -2,12 +2,13 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
-import Sharebet from '../../../lib/crashgame/components/mybetDetails/sharebet.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
-
+import {mybetEl, mybetElDetails, game_id } from "$lib/crashgame/store"
+import { profileStore, handleisLoggin} from "$lib/store/profile"
 let isBet = true
 let isHistory = false
 let isContent = false
+let now = new Date()
 
 const handleRoute = ((w)=>{
     if(w === 1){
@@ -27,13 +28,32 @@ const handleRoute = ((w)=>{
     }
 })
 let isBetHistory = false
-let handleBetHistory = (()=>{
+let handleBetHistory = ((e)=>{
     if(isBetHistory){
         isBetHistory = false
     }else{
+        mybetElDetails.set(e)
         isBetHistory = true
     }
 })
+
+let newItem;
+$: {
+    // $crash_historyEl.sort((a, b) => b._id - a._id);
+    newItem =  [...$mybetEl].reverse()
+}
+
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  }
+
 
 </script>
 
@@ -68,31 +88,50 @@ let handleBetHistory = (()=>{
                 </tr>
             </thead>
             <tbody>
-                <tr on:click={()=>handleBetHistory()} class="values">
+            {#if $handleisLoggin}
+                {#each newItem.slice(0, 20) as mybet}
+                {#if (mybet.username === $profileStore.username)}
+                <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>
-                        <p class="hash ellipsis">728240291</p>
+                        <p class="hash ellipsis">{mybet.bet_id}</p>
                     </td>
-                    <td>11:21:47 AM</td>
+                    <!-- <td>{new Date(mybet.time).getFullYear()}-{new Date(mybet.time).getMonth()}-{new Date(mybet.time).getDate()}  {new Date(mybet.time).getHours()}:{new Date(mybet.time).getMinutes()}:{new Date(mybet.time).getSeconds()}</td> -->
+                    <td>{formatTime(mybet.time)}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                            <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                <span class="amount-str">2.<span class="suffix">00000000</span>
+                                <span class="amount-str">{(mybet.bet_amount).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
                     </td>
-                    <td class="payout">0.00×</td>
+                    {#if mybet.has_won}
+                    <td class="payout">{mybet.cashout}×</td>
+                    {:else}
+                    <td class="payout">{"0.00"}x</td>
+                    {/if}
                     <td class="profitline is-lose">
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                            <img class="coin-icon" alt="" src={mybet.token_img}>
                             <div class="amount">
-                                <span class="amount-str">2.<span class="suffix">00000000</span>
-                                </span>
+                                {#if mybet.has_won}
+                                <span class="amount-str" style="color:#43b309">+{(mybet.profit).toFixed(4)}<span class="suffix">00</span> </span>
+                                {:else}
+                                <span class="amount-str" style="color: rgb(237, 99, 0);">{(mybet.bet_amount).toFixed(4)}<span class="suffix">00</span> </span>
+                                {/if}
                             </div>
                         </div>
                     </td>
                 </tr>
+                {/if}
+                {/each}
+                {:else}
+                <div class="sc-eCImPb cuPxwd empty ">
+                    <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" alt="">
+                    <div class="msg">Oops! There is no data yet!</div>
+                </div>
+                {/if} 
             </tbody>
         </table>
     </div>
@@ -221,6 +260,7 @@ let handleBetHistory = (()=>{
 
 .iycaRo tr {
     cursor: pointer;
+    font-size: 14px;
 }
 
 .lmWKWf .game-tabs .tabs-navs {

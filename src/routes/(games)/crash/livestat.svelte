@@ -36,7 +36,7 @@ const dispatch = createEventDispatcher()
                     <div class="item-wrap wagered">
                         <div class="item-label">Wagered</div>
                         <div class="sc-Galmp erPQzq coin notranslate">
-                            <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                            <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                             <div class="amount">
                                 <span class="amount-str">0.<span class="suffix">00000000</span>
                             </span>
@@ -46,7 +46,7 @@ const dispatch = createEventDispatcher()
                 <div class="item-wrap profit">
                     <div class="item-label">Profit</div>
                     <div class="sc-Galmp erPQzq coin notranslate cl-success">
-                        <img class="coin-icon" alt="" src="https://www.linkpicture.com/q/ppf_logo.png">
+                        <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
                         <div class="amount">
                             <span class="amount-str">0.<span class="suffix">00000000</span>
                         </span>

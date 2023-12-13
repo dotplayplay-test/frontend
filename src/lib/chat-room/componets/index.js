@@ -1,3 +1,6 @@
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
+
 export const usePublicMessages = () => {
     let error;
     let isLoading;
@@ -5,7 +8,7 @@ export const usePublicMessages = () => {
       isLoading = true
       error = null
       const user = JSON.parse(localStorage.getItem('user'))
-      const response = await fetch("http://localhost:8000/api/public-chat",{
+      const response = await fetch(`${URL}/api/public-chat`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {

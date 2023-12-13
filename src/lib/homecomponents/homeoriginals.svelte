@@ -71,7 +71,7 @@ let games = [
         <div class="sc-gfqkcP epfPPG bot-view   game-Mines">
             <a class="sc-hKTqa dbJiKC game-item-wrap " href="/mines">
                 <div class="lazy-img img">
-                    <img src="https://img2.nanogames.io/game/image/48c4ac4d-8e93-4ad4-af48-695fa8f5397e.png" alt="">
+                    <img src="https://img2.nanogames.io/game/image/0aa3d807-0380-4f8e-b65e-3179d4af2234.png" alt="">
                 </div>
                 <div class="hover-mask">
                     <div class="house-edge">House Edge 1%</div>
@@ -92,107 +92,61 @@ let games = [
             </div>
         </div>
 
-    <div class="sc-gfqkcP epfPPG bot-view   game-Plinko">
-        <a class="sc-hKTqa dbJiKC game-item-wrap " href="/plinko">
-            <div class="lazy-img img">
-                <img src="https://img2.nanogames.io/game/image/ae817f12-fa67-49b8-b33e-6cafda497488.png" alt="">
-            </div>
-            <div class="hover-mask">
-                <div class="house-edge">House Edge 1%</div>
-                <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63"><defs></defs><g fill="none" fill-rule="evenodd"><circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle><path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
-                </svg>
-            </div>
-        </a>
-        <div class="sc-fivaXQ gVplre bot-view">
-            <div class="wrap">
-                <a class="item" href="/plinko">Plinko</a>
-                <div class="help-btn-wrap">
-                    <button>
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Help"></use>
-                        </svg>
-                    </button>
+        <div class="sc-gfqkcP epfPPG bot-view   game-Mines">
+            <a class="sc-hKTqa dbJiKC game-item-wrap " href="/mines">
+                <div class="lazy-img img">
+                    <img src="https://img2.nanogames.io/game/image/d64c5ee5-68c0-4d7e-bf8d-0be925f378b1.png" alt="">
+                </div>
+                <div class="hover-mask">
+                    <div class="house-edge">House Edge 1%</div>
+                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63"><defs></defs><g fill="none" fill-rule="evenodd"><circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle><path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
+                    </svg>
+                </div>
+            </a>
+            <div class="sc-fivaXQ gVplre bot-view">
+                <div class="wrap">
+                    <a class="item" href="/hilo">Hilo</a>
+                    <div class="help-btn-wrap">
+                        <button>
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Help"></use>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<div class="sc-gfqkcP epfPPG bot-view   game-Hilo">
-    <a class="sc-hKTqa dbJiKC game-item-wrap " href="/hilo">
-        <div class="lazy-img img">
-            <img src="https://img2.nanogames.io/game/image/d64c5ee5-68c0-4d7e-bf8d-0be925f378b1.png" alt="">
-        </div>
-        <div class="hover-mask">
-            <div class="house-edge">House Edge 1%</div>
-            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63">
-                <defs></defs><g fill="none" fill-rule="evenodd">
-                    <circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle>
-                    <path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
-                </svg>
-            </div>
-        </a>
-        <div class="sc-fivaXQ gVplre bot-view">
-            <div class="wrap">
-                <a class="item" href="/hilo">Hilo</a>
-                <div class="help-btn-wrap"><button>
-                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                        <use xlink:href="#icon_Help"></use>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="sc-gfqkcP epfPPG bot-view   game-coloroffortune">
-    <a class="sc-hKTqa dbJiKC game-item-wrap coming-soon" href="/tower">
-        <div class="lazy-img img">
-            <img src="https://img2.nanogames.io/game/image/7f1f471d-0768-42f1-9d92-e70ce0e10235.png" alt="">
-        </div>
-        <div class="hover-mask">
-            <div class="house-edge">House Edge 1%</div>
-            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63"><defs></defs><g fill="none" fill-rule="evenodd"><circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle><path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
-            </svg>
-        </div>
-    </a>
-    <div class="sc-fivaXQ gVplre bot-view">
-        <div class="wrap">
-            <a class="item" href="/tower">Tower</a>
-            <div class="help-btn-wrap">
-                <button>
-                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                        <use xlink:href="#icon_Help"></use>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="sc-gfqkcP epfPPG bot-view   game-coloroffortune">
-    <a class="sc-hKTqa dbJiKC game-item-wrap coming-soon" href="/diamond">
-        <div class="lazy-img img">
-            <img src="https://img2.nanogames.io/game/image/42026a73-a033-4a57-bb1c-7e09fd2ea30f.png" alt="">
-        </div>
-        <div class="hover-mask">
-            <div class="house-edge">House Edge 1%</div>
-            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63"><defs></defs><g fill="none" fill-rule="evenodd"><circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle><path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
-            </svg>
-        </div>
-    </a>
-    <div class="sc-fivaXQ gVplre bot-view">
-        <div class="wrap">
-            <a class="item" href="/diamond">Tower</a>
-            <div class="help-btn-wrap">
-                <button>
-                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
-                        <use xlink:href="#icon_Help"></use>
+        <div class="sc-gfqkcP epfPPG bot-view   game-Mines">
+            <a class="sc-hKTqa dbJiKC game-item-wrap " href="/mines">
+                <div class="lazy-img img">
+                    <img src="https://img2.nanogames.io/game/image/ae817f12-fa67-49b8-b33e-6cafda497488.png" alt="">
+                </div>
+                <div class="hover-mask">
+                    <div class="house-edge">House Edge 1%</div>
+                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63"><defs></defs><g fill="none" fill-rule="evenodd"><circle cx="31.3" cy="31.3" r="30.3" fill="#000" fill-opacity=".2" stroke="#E5E7EE" stroke-width="2"></circle><path fill="#F5F6F7" d="M39.5 34.3l-11.3 7.5a2 2 0 01-3-1.6v-15a2 2 0 013-1.7L39.5 31a2 2 0 010 3.3z"></path></g>
                     </svg>
-                </button>
+                </div>
+            </a>
+            <div class="sc-fivaXQ gVplre bot-view">
+                <div class="wrap">
+                    <a class="item" href="/mines">Plinko</a>
+                    <div class="help-btn-wrap">
+                        <button>
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Help"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+<div class="sc-ckRZPU iBmEfj">
+    <div class="bg-img"></div>
 </div>
 <div class="sc-ckRZPU iBmEfj">
     <div class="bg-img"></div>
 </div>
+
 </div>
 </div>
 
@@ -351,9 +305,9 @@ let games = [
     border-radius: 1.25rem;
     transform: translateZ(0px);
     position: relative;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.317);
     overflow: hidden;
-    background-image: url(https://static.nanogames.io/assets/logo3.f66f89e3.png);
+    background-image: url(https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848358/dpp-favic_bh8fwz.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 32%;

@@ -3,14 +3,9 @@ import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
 import "./styles/index.css"
 import "./styles/coinrain.css"
 import "./styles/gif.css"
-import Pusher from "pusher-js"
-
-import {
-    goto
-} from "$app/navigation"
-
+import {  goto } from "$app/navigation"
 import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
-import HiSolidEmojiHappy from "svelte-icons-pack/hi/HiSolidEmojiHappy";
+import BsTelegram from "svelte-icons-pack/bs/BsTelegram";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import CgInfo from "svelte-icons-pack/cg/CgInfo";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -20,92 +15,44 @@ import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
 import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
 import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
 import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
-import {
-    usePublicMessages
-} from "./componets/index"
-import {
-    afterUpdate,
-    tick
-} from 'svelte';
+import { afterUpdate,  tick } from 'svelte';
 import axios from "axios"
-const {
-    sendMessage
-} = usePublicMessages()
-import {
-    GIFs
-} from "./data/index"
-import {
-    emojis
-} from "./data/index"
-
-import {
-    createEventDispatcher,
-    onMount
-} from "svelte";
-import {
-    browser
-} from '$app/environment'
-import {
-    db
-} from "$lib/firebaseAuth/index"
-import {
-    doc,
-    getDoc
-} from "firebase/firestore";
-
+import { GIFs } from "./data/index"
+import { emojis } from "./data/index"
+import {  createEventDispatcher,  onMount } from "svelte";
 import {tipped_user } from "$lib/store/tipUser"
-import {
-    profileStore
-} from '$lib/store/profile';
+import { profileStore } from '$lib/store/profile';
+import { handleisLoggin } from "$lib/store/profile";
+import { handleAuthToken } from "$lib/store/routes";
+import {handleCountdown} from "../../lib/games/ClassicDice/socket/index";
+const { handleChattingMessages } = handleCountdown()
 let element;
 let newMessages = ''
-
-const id = browser && JSON.parse(localStorage.getItem('user'))
-
-let profile
-$: {
-    id && onMount(async () => {
-        const docRef = doc(db, "profile", id.email);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            profile = docSnap.data()
-        } else {
-            console.log("No such document!");
-        }
-    })
-}
-
-var pusher = new Pusher('afa2ab8a9e167845720a', {
-    cluster: 'mt1'
-});
-
-let chats = [];
+import { chats } from "$lib/chat-room/store/index"
+import { ServerURl } from "../backendUrl"
+    import Mobile from "./mobile.svelte";
+let URL = ServerURl()
 
 onMount(async () => {
-    await axios.get("http://localhost:8000/api/users/previus-chats")
-        .then((res) => {
-            chats = res.data
-        })
+    await axios.get(`${URL}/api/users/previus-chats`)
+    .then((res) => {
+        chats.set(res.data)
+    })
 })
 
-$:{
-    onMount(() => {
-        var channel = pusher.subscribe('chat-room');
-        channel.bind('public-messages', function(data) {
-            chats = [...chats, data]
-        });
-    })
-}
-
 const handleSendMessage = (async (e, name) => {
-    if (e.key === "Enter" && name.newMessages || e === "gifHit") {
+        if (e.key === "Enter" && name.newMessages || e.type === "click" || e === "gifHit") {
         if (e.key === "Enter") {
             e.preventDefault();
         }
 
+        if ($chats && element) {
+            scrollToBottom(element);
+        }
+
         if (newMessages === "/rain ") {
             goto("/user/rain")
-        } 
+        }  
         else if (newMessages === "/coindrop ") {
             goto("/user/coindrop_send")
         }  
@@ -114,68 +61,66 @@ const handleSendMessage = (async (e, name) => {
             goto("/user/tip")
         }
         else {
-            let date = new Date();
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let newformat = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let time = (hours + ':' + minutes + ' ' + newformat);
-            let data = {
-            id: Math.floor(Math.random() * 230000000),
-            email: id.email,
-            type: name.type,
-            text: name.newMessages ? name.newMessages : "",
-            sent_at: time,
-            profle_img: $profileStore.profile_image,
-            sender_username: $profileStore.username,
-            gif: name.gif ? name.gif : "",
-
-            coin_rain_amount: '' ,
-            coin_rain_comment: '',
-            coin_rain_num: '',
-            coin_rain_token:  '',
-
-            coin_drop_amount: '',
-            coin_drop_comment: '',
-            coin_drop_num:'',
-            coin_drop_token: '',
-
-            tipped_user: "",
-            tipped_amount: "",
-            tipped_comment: "",
-            tipped_coin_image: "",
-            tip_Token: "",
-            vip_level: $profileStore.vip_level
+            if($handleisLoggin){
+                let data = {
+                    msg_id: Math.floor(Math.random() * 230000000),
+                    user_id: $profileStore.user_id,
+                    type: name.type,
+                    text: name.newMessages ? name.newMessages : ".",
+                    profle_img: $profileStore.profile_image,
+                    username: $profileStore.username,
+                    gif: name.gif ? name.gif : ".",
+                    hide_profile:$profileStore.hide_profile,
+                    vip_level: $profileStore.vip_level,
+                    time: new Date()
+                }
+                handleChattingMessages(data)
             }
-            sendMessage(data)
-        }
+            else{
+                goto("/login")
+                handlecloseChat()
+            }
+    }
         newMessages = ''
         isGif = false
     }
+    
 })
 
-const scrollToBottom = async (node) => {
-    node.scroll({
-        top: node.scrollHeight,
-        behavior: 'smooth'
-    });
-};
-afterUpdate(() => {
-    if (chats) scrollToBottom(element);
+
+// const scrollToBottom = async (node) => {
+//     node.scroll({
+//         top: node.scrollHeight,
+//         behavior: 'smooth'
+//     });
+// }
+// $:{
+//  afterUpdate(() => {
+//     if ($chats) scrollToBottom(element);
+// })
+// }
+
+let chatContainer;
+
+onMount(() => {
+  scrollToBottom();
 });
 
-$: if (chats && element) {
-    scrollToBottom(element);
-}
+afterUpdate(() => {
+  scrollToBottom();
+});
 
 const dispatch = createEventDispatcher()
 const handlecloseChat = (() => {
     dispatch("closeChat")
 })
 
-// 
+function scrollToBottom() {
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  }
+
 let isGif = false
 const handleGIF = (() => {
     if (isGif) {
@@ -253,6 +198,16 @@ const handleTipsControls = ((e) => {
         newMessages = "/coindrop "
     }
 })
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
+
 </script>
 
 <svelte:body on:keypress={()=> handleSendMessage(event, {newMessages, type: "normal"})} />
@@ -280,38 +235,136 @@ const handleTipsControls = ((e) => {
                     <Icon src={IoClose}  size="17"  color="rgba(153, 164, 176, 0.8)"  title="arror" />
                 </button>
             </div>
-
         </div>
         <div class="sc-bSqaIl eA-dYOl">
-            <div bind:this={element} class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
+            <div bind:this={chatContainer} id="chat-container" class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
                 <div class="sc-AjmGg kgsidd">
-                    {#each chats as chat , i}
+                    {#each $chats as chat , i}
                     <div class="flat-item">
                         <div class="sc-tAExr VfNib notranslate">
                             <div class="head">
-                                <a class="head-link" href="/user/profile/78805">
+                                <a class="head-link" href={`/user/profile/${chat.user_id}`}>
                                     <img class="avatar " alt="" src={chat.profle_img}>
                                     <div class="sc-jQrDum jouJMO user-level type-1">
                                         <div class="level-wrap">
                                             <span>V</span><span>{chat.vip_level}</span>
                                         </div>
                                     </div>
+                                    {#if chat.vip_level === 0}
                                     <div class="sc-khQegj fPtvsS level levelnums_2">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA3lBMVEUAAACJjqKGjJ92fIuBhZqUnq15fpyBipqHjKB4fZJ5fpR2fox9gZeDiJ12fZOVmqqMk6SNm6mYnKx5foGnq7l6fY5/hI13fYyvsb+Yn6yIjqCFi5719vzZ3OX////n6fF3fYvb3ufk5+/4+P7S1d7LztfIy9X6+//z9PrX2uPAxNDp6/PW2OGMkaSxtcSGi5+DiZ1+hJV4fo5zeojw8fjg4+vd4OnQ09zGydLl5u3i5OygpbV2eop2fIi7vsrr7vWqrrynrLuboLCWm66Bhpt/gZZzeYfCxc6zt8WIjZ93mwEKAAAAHHRSTlMA8fEuw0MiEPbs5cq9oZeUjXd1dWlkPTksI/nzVB2wFAAAAU1JREFUKM9V0WdzwjAMBmB3lz3KbIkVO3Fskw0Z7A1t//8fapKSHLznO+mes75IKM+gWh2g+7w13f3ebb7dWqdsM4yZXe4U9PLsbQTmHIuN9/yS0bB22s0xHiXBeL471YYItd8PVkaalrF1+Gwj7wdjLbUgyArGjoe+SDapCUoFH2k8EMY7etRxOiqAUhBcAyUcP/xjYM4pgAmRZSn0ipq5SMgM429GSIECYDu3jBmTpPg54oIqbMYMPVIK5BzYzGDMsEiBPFjomc0KJJhKKWNdSj2WCYLxgNzNNlQUhUQkSdJQ03FR43cZmwvlmgXES7uRLs52JEQpRSAd+7q81vk4DoEQCMfHcyu/xcp3lwaAsXT9VX6Rp9Vl4tuOY/uTy+opR1WdTn3P86dTVb3BhLN3g5P1elLpditpzbGvluq9tOnVS2r/iq8fr+iu/QOlRjrmG6FiBAAAAABJRU5ErkJggg==">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAqFBMVEUAAAD39/3e4On+/v/p6fLb3ebJzNnz9Prm5+/s7PV4foyHjaB3fYvj5e11e4qAh5vS1d+JkKLT1d/CxtKMkqV2e4nX2eOHjqF7gZCCiJqhpbNzeomeo7Sprr3KztiHj6F/hpfBxdGzuMZ0eoh+hJSFi5ydo62gq7KLj52ytsS8v8uDip/d3ud6f42Xnq+hp7d3fouGipyfo7FvdoGGiJCGjJS1tb91fovpdGSwAAAAOHRSTlMAWVlZWVlZWVlZXFQQWWNgWVRfX2ddWVlZSClpaGdeXlpZWVlWNhgLBWVjaF9dWllJPTMtIxcQDZ72iIwAAAEnSURBVCjPVdFnk4MgEAZgTlgEEyK5s8XYS0zv5f//s9sz6pn3A8w8A+ywS/o8F4sn+cy6TuM4rddjCysnoTRxqnCg1WK3NenXFzW3u8WqpeZix4KioVIR25cGb6YRvOnNEKUhsTcdmWbHG5tM9p0JgYrvmsmETL5pa0wIhtUYqJ/5G02JxCQzPA9Yj1IhSaVzbhgDmmjC45zDCLEMcIxWI6SMt/GMAfGczj9xTwUAaA3gaXwSZDIn9lYqMPqAwST+6OpEmgnoTDAdOde/xjkFtKdBSSicrnmhfcwVwxIqP9phPws380+cMX7yM7efyNR1g8wvCj8LXHfao2WVZeD7QVla1ggDa4bB7R8Ps+XsfL+fcTsMuKzqB8E86mrZ4+vWkC7N7YXrLzZ3GQcYnSzFAAAAAElFTkSuQmCC">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAqFBMVEUAAAD39/3e4On+/v/p6fLb3ebJzNnz9Prm5+/s7PV4foyHjaB3fYvj5e11e4qAh5vS1d+JkKLT1d/CxtKMkqV2e4nX2eOHjqF7gZCCiJqhpbNzeomeo7Sprr3KztiHj6F/hpfBxdGzuMZ0eoh+hJSFi5ydo62gq7KLj52ytsS8v8uDip/d3ud6f42Xnq+hp7d3fouGipyfo7FvdoGGiJCGjJS1tb91fovpdGSwAAAAOHRSTlMAWVlZWVlZWVlZXFQQWWNgWVRfX2ddWVlZSClpaGdeXlpZWVlWNhgLBWVjaF9dWllJPTMtIxcQDZ72iIwAAAEnSURBVCjPVdFnk4MgEAZgTlgEEyK5s8XYS0zv5f//s9sz6pn3A8w8A+ywS/o8F4sn+cy6TuM4rddjCysnoTRxqnCg1WK3NenXFzW3u8WqpeZix4KioVIR25cGb6YRvOnNEKUhsTcdmWbHG5tM9p0JgYrvmsmETL5pa0wIhtUYqJ/5G02JxCQzPA9Yj1IhSaVzbhgDmmjC45zDCLEMcIxWI6SMt/GMAfGczj9xTwUAaA3gaXwSZDIn9lYqMPqAwST+6OpEmgnoTDAdOde/xjkFtKdBSSicrnmhfcwVwxIqP9phPws380+cMX7yM7efyNR1g8wvCj8LXHfao2WVZeD7QVla1ggDa4bB7R8Ps+XsfL+fcTsMuKzqB8E86mrZ4+vWkC7N7YXrLzZ3GQcYnSzFAAAAAElFTkSuQmCC">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAqFBMVEUAAAD39/3e4On+/v/p6fLb3ebJzNnz9Prm5+/s7PV4foyHjaB3fYvj5e11e4qAh5vS1d+JkKLT1d/CxtKMkqV2e4nX2eOHjqF7gZCCiJqhpbNzeomeo7Sprr3KztiHj6F/hpfBxdGzuMZ0eoh+hJSFi5ydo62gq7KLj52ytsS8v8uDip/d3ud6f42Xnq+hp7d3fouGipyfo7FvdoGGiJCGjJS1tb91fovpdGSwAAAAOHRSTlMAWVlZWVlZWVlZXFQQWWNgWVRfX2ddWVlZSClpaGdeXlpZWVlWNhgLBWVjaF9dWllJPTMtIxcQDZ72iIwAAAEnSURBVCjPVdFnk4MgEAZgTlgEEyK5s8XYS0zv5f//s9sz6pn3A8w8A+ywS/o8F4sn+cy6TuM4rddjCysnoTRxqnCg1WK3NenXFzW3u8WqpeZix4KioVIR25cGb6YRvOnNEKUhsTcdmWbHG5tM9p0JgYrvmsmETL5pa0wIhtUYqJ/5G02JxCQzPA9Yj1IhSaVzbhgDmmjC45zDCLEMcIxWI6SMt/GMAfGczj9xTwUAaA3gaXwSZDIn9lYqMPqAwST+6OpEmgnoTDAdOde/xjkFtKdBSSicrnmhfcwVwxIqP9phPws380+cMX7yM7efyNR1g8wvCj8LXHfao2WVZeD7QVla1ggDa4bB7R8Ps+XsfL+fcTsMuKzqB8E86mrZ4+vWkC7N7YXrLzZ3GQcYnSzFAAAAAElFTkSuQmCC">
-                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAAqFBMVEUAAAD39/3e4On+/v/p6fLb3ebJzNnz9Prm5+/s7PV4foyHjaB3fYvj5e11e4qAh5vS1d+JkKLT1d/CxtKMkqV2e4nX2eOHjqF7gZCCiJqhpbNzeomeo7Sprr3KztiHj6F/hpfBxdGzuMZ0eoh+hJSFi5ydo62gq7KLj52ytsS8v8uDip/d3ud6f42Xnq+hp7d3fouGipyfo7FvdoGGiJCGjJS1tb91fovpdGSwAAAAOHRSTlMAWVlZWVlZWVlZXFQQWWNgWVRfX2ddWVlZSClpaGdeXlpZWVlWNhgLBWVjaF9dWllJPTMtIxcQDZ72iIwAAAEnSURBVCjPVdFnk4MgEAZgTlgEEyK5s8XYS0zv5f//s9sz6pn3A8w8A+ywS/o8F4sn+cy6TuM4rddjCysnoTRxqnCg1WK3NenXFzW3u8WqpeZix4KioVIR25cGb6YRvOnNEKUhsTcdmWbHG5tM9p0JgYrvmsmETL5pa0wIhtUYqJ/5G02JxCQzPA9Yj1IhSaVzbhgDmmjC45zDCLEMcIxWI6SMt/GMAfGczj9xTwUAaA3gaXwSZDIn9lYqMPqAwST+6OpEmgnoTDAdOde/xjkFtKdBSSicrnmhfcwVwxIqP9phPws380+cMX7yM7efyNR1g8wvCj8LXHfao2WVZeD7QVla1ggDa4bB7R8Ps+XsfL+fcTsMuKzqB8E86mrZ4+vWkC7N7YXrLzZ3GQcYnSzFAAAAAElFTkSuQmCC">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
                                     </div>
+                                    {:else if chat.vip_level === 1 ||  chat.vip_level === 2  ||  chat.vip_level === 3}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                    <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/bh.d27abdd5.png">
+                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    </div>
+                                    {:else if chat.vip_level === 4 || chat.vip_level === 5 || chat.vip_level === 6 || chat.vip_level === 7}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/b.d9e6b0ec.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    </div>
+                                    {:else if chat.vip_level === 8 || chat.vip_level === 9 || chat.vip_level === 10  || chat.vip_level === 11  || chat.vip_level === 12  || chat.vip_level === 13}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/s.7c2e9f37.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/sh.ddd2bd05.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAAD29vzd3+iSmKl4fozo6PHLztqRl6jGydS3vcvW2eHt7/bR1N6lpaWXnK2Znaqeo7WZpbCGi5t8g5OSl6mTmaikqbiLkaKSlqmVmKq8wcyytsWrsL6Sl6l4gIyVmKuWmap3fo6Umql5gYx8gY2Ik556foySmauJjJu6tS+cAAAAKXRSTlMAWVlZWVlZWFlZWVlZBFkQWQlZWU43WVlUJ1lZWUs+Lh5RQjAjF0dGKVUfY0EAAAIeSURBVEjHzdfdcqsgFAVgASEKqPlva6xpmqTt+z/hIYDdkwE3OOem66LTOH4TFjGzSTGX7nDoimVpzivGVudmiXl7ZTavb9nk/s5+837PIpuDvXut9dr+c9hklTFpBTERLWMZ1T727JFaERtV25f7D4R03/aegZPf8MFe+u4SZSR5ikSqNW6b24oEqVq3/Q1aBoJV6z7t1SMlM6FHe8NnF34yBAl8akgZtFrnnpkTJ8nwk3uyumIfK4NX2xcr81eQWKIbKR7P1QPVUcN5TKmTR1XUmESu0hpB3CYgFEOKh0pRiiJvnmpxiiAwVgHBEBBwZmUYAgGhkqKIRyKFEBJBKkpM9JJ3osIF7/RMtDcyfyOkmEJxRIKVmcgUUgERmqYQmcpAaBopKLMAUfEcnUZKiqVIUboYcRpBMo6ALETwnXFrkiY6hTidorWE+6TWNI6ApAKoVjQ/J49Yn296ZpAbAOsqj1RrNwD8qBl0mujBjxoYarXEiaxhqMH4bCt0Za0fn8GgFnNEwKAOjwSDjBE5zJx2mjNz1ULjyrDouWr3wtz2x7aZveyKWMrSs6MGoo+elGUcmWxX7oAgfRl3CFhtyxJBhrlq/cP0rowlKCqnan0/lSmTCBiQNIJqrkwaAYMyaQRr3G53ZT6C/F30dWua29cSdLl2/nt2vWSi8dbAxeY2osi/SXDS31wvKBrvRTT3cQ6NPxvkV9XPWPxf/gH/cTH6/dEd9gAAAABJRU5ErkJggg==">
+                                    </div>
+            
+                                    {:else if chat.vip_level === 14 || chat.vip_level === 15 || chat.vip_level === 16  || chat.vip_level === 17  || chat.vip_level === 18  || chat.vip_level === 19 || chat.vip_level === 20 ||  chat.vip_level === 20}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/s.7c2e9f37.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/s.7c2e9f37.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAflBMVEUAAADl5f/U1PzAwOV4eLrr6//////Ly/HS0vXFxerb2/v09P/f3/7KyuTOzvS5uea+vubCwu/AwObBwea/v+afn9GHh8N+fry/v+d9fbq5ueKyst2mptaUlMp4eLnAwOZ5ebzAwOe/v+XBweV4eL7Bwee/v+a/v+h4eLl6ercEdekCAAAAKnRSTlMAWVlZWVlZWVlZWVlZBFkPTQlURyhZWVkwI1lZWVlLQj41Ih0aFDw4My7zJdT+AAACBklEQVRIx83X2XKjMBAFUCRLCMRm4hDbWRzHcbb//8HRSMCtsURL1LzkPnk7RV9VUY2zpXSHQ5etS3PYmByaNeZyt7G5uySTj91mzu4jifSf9tdlUZT2xWefUsYRZmJZvNpla3/W1symbu3b7SVeRlniohVdrf9yk2kQy9yMX32ozL075oJ5Kdzx33vV3lHmNqj2/g/pXr3JgjO+dijzhmMOB8f/1lNlyGrdFsccSa1ctS7bhcrQ1XbZ8mRycca/SAVJnlcsEOVQ+EK5ifTn4xTKbW5PgnMKVUZAgQQRjKc0pxFMXkkQAsmRwNnJKGSFpzSFZB4yUsqaQFWQmDBqPJ+4aArJIJHpBwHDOI2YR0x0DFUguFAMsYkgPI6qW8NSEEgyqplcjTjXa5Hm6Qi3ZgjVYTQTIFZrPdbTywhfGT+/MZDxMAKJBUjVPD2lQ0alG7sDxgXQppHWLYBp1ZRFnBTluGqw1FR8MuxrrM+WnAzrE4uaZi0Wtf9IoIpgGeU/Eoz7euPYUpmNKeNn/4wZ/cme91koQjw8OVZ4x/z0IEQYmbw8ohrKPL4IsYRshqkaygxCRJCYqik1lRFxNFebyyQhVw1laITsB1tmL5IQZhwGTBZHyO9Fp2PTHE+r0Hc33mffqeh8bPBhczzH0emn9/4Z/JxIdL5mwVzPS+iKsRCMec3+L38A3Osupj7TKGcAAAAASUVORK5CYII=">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAflBMVEUAAADl5f/U1PzAwOV4eLrr6//////Ly/HS0vXFxerb2/v09P/f3/7KyuTOzvS5uea+vubCwu/AwObBwea/v+afn9GHh8N+fry/v+d9fbq5ueKyst2mptaUlMp4eLnAwOZ5ebzAwOe/v+XBweV4eL7Bwee/v+a/v+h4eLl6ercEdekCAAAAKnRSTlMAWVlZWVlZWVlZWVlZBFkPTQlURyhZWVkwI1lZWVlLQj41Ih0aFDw4My7zJdT+AAACBklEQVRIx83X2XKjMBAFUCRLCMRm4hDbWRzHcbb//8HRSMCtsURL1LzkPnk7RV9VUY2zpXSHQ5etS3PYmByaNeZyt7G5uySTj91mzu4jifSf9tdlUZT2xWefUsYRZmJZvNpla3/W1symbu3b7SVeRlniohVdrf9yk2kQy9yMX32ozL075oJ5Kdzx33vV3lHmNqj2/g/pXr3JgjO+dijzhmMOB8f/1lNlyGrdFsccSa1ctS7bhcrQ1XbZ8mRycca/SAVJnlcsEOVQ+EK5ifTn4xTKbW5PgnMKVUZAgQQRjKc0pxFMXkkQAsmRwNnJKGSFpzSFZB4yUsqaQFWQmDBqPJ+4aArJIJHpBwHDOI2YR0x0DFUguFAMsYkgPI6qW8NSEEgyqplcjTjXa5Hm6Qi3ZgjVYTQTIFZrPdbTywhfGT+/MZDxMAKJBUjVPD2lQ0alG7sDxgXQppHWLYBp1ZRFnBTluGqw1FR8MuxrrM+WnAzrE4uaZi0Wtf9IoIpgGeU/Eoz7euPYUpmNKeNn/4wZ/cme91koQjw8OVZ4x/z0IEQYmbw8ohrKPL4IsYRshqkaygxCRJCYqik1lRFxNFebyyQhVw1laITsB1tmL5IQZhwGTBZHyO9Fp2PTHE+r0Hc33mffqeh8bPBhczzH0emn9/4Z/JxIdL5mwVzPS+iKsRCMec3+L38A3Osupj7TKGcAAAAASUVORK5CYII=">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAflBMVEUAAADl5f/U1PzAwOV4eLrr6//////Ly/HS0vXFxerb2/v09P/f3/7KyuTOzvS5uea+vubCwu/AwObBwea/v+afn9GHh8N+fry/v+d9fbq5ueKyst2mptaUlMp4eLnAwOZ5ebzAwOe/v+XBweV4eL7Bwee/v+a/v+h4eLl6ercEdekCAAAAKnRSTlMAWVlZWVlZWVlZWVlZBFkPTQlURyhZWVkwI1lZWVlLQj41Ih0aFDw4My7zJdT+AAACBklEQVRIx83X2XKjMBAFUCRLCMRm4hDbWRzHcbb//8HRSMCtsURL1LzkPnk7RV9VUY2zpXSHQ5etS3PYmByaNeZyt7G5uySTj91mzu4jifSf9tdlUZT2xWefUsYRZmJZvNpla3/W1symbu3b7SVeRlniohVdrf9yk2kQy9yMX32ozL075oJ5Kdzx33vV3lHmNqj2/g/pXr3JgjO+dijzhmMOB8f/1lNlyGrdFsccSa1ctS7bhcrQ1XbZ8mRycca/SAVJnlcsEOVQ+EK5ifTn4xTKbW5PgnMKVUZAgQQRjKc0pxFMXkkQAsmRwNnJKGSFpzSFZB4yUsqaQFWQmDBqPJ+4aArJIJHpBwHDOI2YR0x0DFUguFAMsYkgPI6qW8NSEEgyqplcjTjXa5Hm6Qi3ZgjVYTQTIFZrPdbTywhfGT+/MZDxMAKJBUjVPD2lQ0alG7sDxgXQppHWLYBp1ZRFnBTluGqw1FR8MuxrrM+WnAzrE4uaZi0Wtf9IoIpgGeU/Eoz7euPYUpmNKeNn/4wZ/cme91koQjw8OVZ4x/z0IEQYmbw8ohrKPL4IsYRshqkaygxCRJCYqik1lRFxNFebyyQhVw1laITsB1tmL5IQZhwGTBZHyO9Fp2PTHE+r0Hc33mffqeh8bPBhczzH0emn9/4Z/JxIdL5mwVzPS+iKsRCMec3+L38A3Osupj7TKGcAAAAASUVORK5CYII=">
+                                        </div>
+            
+                                        
+                                    {:else if chat.vip_level === 22 || chat.vip_level === 23 || chat.vip_level === 24  || chat.vip_level === 25  || chat.vip_level === 26  || chat.vip_level === 27 || chat.vip_level === 28 ||  chat.vip_level === 29}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/g.d9fc75c0.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/g.d9fc75c0.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/gh.d5753240.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAmVBMVEUAAAD/ul/8qT/omzTOdQv2zjn/4mr0pDr1qkjsnjX/ulzwoTj1qlb/3WX4qDz5szzomjL8tFL+t1jdiSDUgBblmi3xojf8sUn/yWH5uzzomTPNdw//0mX/wl/5wjv3xznOdwz721XhkSnpmjPomjTqnDbpnTPpnjbxoDz51UfqmjHpnDPfjSbNdwvQegzmmTPMdw3NeA/NdBHulRdVAAAAM3RSTlMAWVlZWVlZWVlZWVkEWVlZSFlZWVkOCFlZWVQhWVlZWVNZWU42KyYeEVlCMhdHQTw8My5PUuIIAAACLElEQVRIx73X626qQBQFYLkJIpRbsSAFaW3VU+31/R/ujB1lBTp7D6RJ1y+j+cJaJGRwRiU/HvPZtARHS+QYTDG7tfWd9W40OcVWl/g0iqzerXMWnrf4/vC+0o95llfwfMPwPfn5WTNtv70SkY5t9ww5yDHL1OiSLuW0AzXmSY5JjF4SOe1ppRyzRjMEHdeYNhjjpoYiqauadniRYxKDSCKnvRx+jPEMJl5vWrBTj6Gm7cS0PFaOYabF+SxWjeGnxTOyWV2THc/INVRmPi9UFZcX5KmNQvl3psugcH5OPSQmEGXmYe8uCMKhewEGKr0zWVRLI1WBZgwqQpAL80UzDuEiyEMTcahQkPCf4zjlSAQi0nD1wmEzRybiUKEgaMffCDSTMXlUd+TB6RKxCJeSRGZjEggJ0QwX0qF7ECzSIjRDOw1KGmc0wgNQDlFDIjwA0UgEokIlieTTDLQpo6jc4I4rkRhzTSPA9XNUNhsK+SB8gNzEHJ+lREKZky5kyQNgcTOO3CzkAZBfTnQwmlxO+hyHGhhLxKHWOz5ddgyOTxzUmEaNwUGNVwJ0pJpt99SblKtoxrxX2Rmm/RyT2QoikH37iGn9MY+3NoUEszANYyxBaCSSXadhTGbbPEJH10UzHQID0SN0RDMegYHoETpmGZrpEfJHqG0no9cqCKrXKaj9zOVX+Wc7Er1VAb4Mqjc9ar/y4ff5V0sj8dPHifhH9UGhqlox/6qqava7/AetljkjNbdgugAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAmVBMVEUAAAD/ul/8qT/omzTOdQv2zjn/4mr0pDr1qkjsnjX/ulzwoTj1qlb/3WX4qDz5szzomjL8tFL+t1jdiSDUgBblmi3xojf8sUn/yWH5uzzomTPNdw//0mX/wl/5wjv3xznOdwz721XhkSnpmjPomjTqnDbpnTPpnjbxoDz51UfqmjHpnDPfjSbNdwvQegzmmTPMdw3NeA/NdBHulRdVAAAAM3RSTlMAWVlZWVlZWVlZWVkEWVlZSFlZWVkOCFlZWVQhWVlZWVNZWU42KyYeEVlCMhdHQTw8My5PUuIIAAACLElEQVRIx73X626qQBQFYLkJIpRbsSAFaW3VU+31/R/ujB1lBTp7D6RJ1y+j+cJaJGRwRiU/HvPZtARHS+QYTDG7tfWd9W40OcVWl/g0iqzerXMWnrf4/vC+0o95llfwfMPwPfn5WTNtv70SkY5t9ww5yDHL1OiSLuW0AzXmSY5JjF4SOe1ppRyzRjMEHdeYNhjjpoYiqauadniRYxKDSCKnvRx+jPEMJl5vWrBTj6Gm7cS0PFaOYabF+SxWjeGnxTOyWV2THc/INVRmPi9UFZcX5KmNQvl3psugcH5OPSQmEGXmYe8uCMKhewEGKr0zWVRLI1WBZgwqQpAL80UzDuEiyEMTcahQkPCf4zjlSAQi0nD1wmEzRybiUKEgaMffCDSTMXlUd+TB6RKxCJeSRGZjEggJ0QwX0qF7ECzSIjRDOw1KGmc0wgNQDlFDIjwA0UgEokIlieTTDLQpo6jc4I4rkRhzTSPA9XNUNhsK+SB8gNzEHJ+lREKZky5kyQNgcTOO3CzkAZBfTnQwmlxO+hyHGhhLxKHWOz5ddgyOTxzUmEaNwUGNVwJ0pJpt99SblKtoxrxX2Rmm/RyT2QoikH37iGn9MY+3NoUEszANYyxBaCSSXadhTGbbPEJH10UzHQID0SN0RDMegYHoETpmGZrpEfJHqG0no9cqCKrXKaj9zOVX+Wc7Er1VAb4Mqjc9ar/y4ff5V0sj8dPHifhH9UGhqlox/6qqava7/AetljkjNbdgugAAAABJRU5ErkJggg==">
+                                    </div>
+            
+                                    {:else if chat.vip_level === 30 || chat.vip_level === 31 || chat.vip_level === 32  || chat.vip_level === 33 || chat.vip_level === 34  || chat.vip_level === 35 || chat.vip_level === 36 ||  chat.vip_level === 37}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/g.d9fc75c0.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/g.d9fc75c0.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/g.d9fc75c0.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAmVBMVEUAAAD/ul/8qT/omzTOdQv2zjn/4mr0pDr1qkjsnjX/ulzwoTj1qlb/3WX4qDz5szzomjL8tFL+t1jdiSDUgBblmi3xojf8sUn/yWH5uzzomTPNdw//0mX/wl/5wjv3xznOdwz721XhkSnpmjPomjTqnDbpnTPpnjbxoDz51UfqmjHpnDPfjSbNdwvQegzmmTPMdw3NeA/NdBHulRdVAAAAM3RSTlMAWVlZWVlZWVlZWVkEWVlZSFlZWVkOCFlZWVQhWVlZWVNZWU42KyYeEVlCMhdHQTw8My5PUuIIAAACLElEQVRIx73X626qQBQFYLkJIpRbsSAFaW3VU+31/R/ujB1lBTp7D6RJ1y+j+cJaJGRwRiU/HvPZtARHS+QYTDG7tfWd9W40OcVWl/g0iqzerXMWnrf4/vC+0o95llfwfMPwPfn5WTNtv70SkY5t9ww5yDHL1OiSLuW0AzXmSY5JjF4SOe1ppRyzRjMEHdeYNhjjpoYiqauadniRYxKDSCKnvRx+jPEMJl5vWrBTj6Gm7cS0PFaOYabF+SxWjeGnxTOyWV2THc/INVRmPi9UFZcX5KmNQvl3psugcH5OPSQmEGXmYe8uCMKhewEGKr0zWVRLI1WBZgwqQpAL80UzDuEiyEMTcahQkPCf4zjlSAQi0nD1wmEzRybiUKEgaMffCDSTMXlUd+TB6RKxCJeSRGZjEggJ0QwX0qF7ECzSIjRDOw1KGmc0wgNQDlFDIjwA0UgEokIlieTTDLQpo6jc4I4rkRhzTSPA9XNUNhsK+SB8gNzEHJ+lREKZky5kyQNgcTOO3CzkAZBfTnQwmlxO+hyHGhhLxKHWOz5ddgyOTxzUmEaNwUGNVwJ0pJpt99SblKtoxrxX2Rmm/RyT2QoikH37iGn9MY+3NoUEszANYyxBaCSSXadhTGbbPEJH10UzHQID0SN0RDMegYHoETpmGZrpEfJHqG0no9cqCKrXKaj9zOVX+Wc7Er1VAb4Mqjc9ar/y4ff5V0sj8dPHifhH9UGhqlox/6qqava7/AetljkjNbdgugAAAABJRU5ErkJggg==">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAmVBMVEUAAAD/ul/8qT/omzTOdQv2zjn/4mr0pDr1qkjsnjX/ulzwoTj1qlb/3WX4qDz5szzomjL8tFL+t1jdiSDUgBblmi3xojf8sUn/yWH5uzzomTPNdw//0mX/wl/5wjv3xznOdwz721XhkSnpmjPomjTqnDbpnTPpnjbxoDz51UfqmjHpnDPfjSbNdwvQegzmmTPMdw3NeA/NdBHulRdVAAAAM3RSTlMAWVlZWVlZWVlZWVkEWVlZSFlZWVkOCFlZWVQhWVlZWVNZWU42KyYeEVlCMhdHQTw8My5PUuIIAAACLElEQVRIx73X626qQBQFYLkJIpRbsSAFaW3VU+31/R/ujB1lBTp7D6RJ1y+j+cJaJGRwRiU/HvPZtARHS+QYTDG7tfWd9W40OcVWl/g0iqzerXMWnrf4/vC+0o95llfwfMPwPfn5WTNtv70SkY5t9ww5yDHL1OiSLuW0AzXmSY5JjF4SOe1ppRyzRjMEHdeYNhjjpoYiqauadniRYxKDSCKnvRx+jPEMJl5vWrBTj6Gm7cS0PFaOYabF+SxWjeGnxTOyWV2THc/INVRmPi9UFZcX5KmNQvl3psugcH5OPSQmEGXmYe8uCMKhewEGKr0zWVRLI1WBZgwqQpAL80UzDuEiyEMTcahQkPCf4zjlSAQi0nD1wmEzRybiUKEgaMffCDSTMXlUd+TB6RKxCJeSRGZjEggJ0QwX0qF7ECzSIjRDOw1KGmc0wgNQDlFDIjwA0UgEokIlieTTDLQpo6jc4I4rkRhzTSPA9XNUNhsK+SB8gNzEHJ+lREKZky5kyQNgcTOO3CzkAZBfTnQwmlxO+hyHGhhLxKHWOz5ddgyOTxzUmEaNwUGNVwJ0pJpt99SblKtoxrxX2Rmm/RyT2QoikH37iGn9MY+3NoUEszANYyxBaCSSXadhTGbbPEJH10UzHQID0SN0RDMegYHoETpmGZrpEfJHqG0no9cqCKrXKaj9zOVX+Wc7Er1VAb4Mqjc9ar/y4ff5V0sj8dPHifhH9UGhqlox/6qqava7/AetljkjNbdgugAAAABJRU5ErkJggg==">
+                                    </div>
+            
+                                    {:else if chat.vip_level === 38 || chat.vip_level === 39 || chat.vip_level === 40  || chat.vip_level === 41 || chat.vip_level === 42  || chat.vip_level === 43 || chat.vip_level === 44 ||  chat.vip_level === 45}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/ph.7f694585.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAACpef+bYfyMVultNsnGo/+VXfSeZ/WndP6faPyRWu+kcPyXYPaqduuNWeuwf/+KXfG+mP+zhv6ASdyMVumBTNu4jv6JUeR3QNKMVeqNVumNVOqMV+mQWOqNVettOMduN8iNV+twO8iDTN9vOcZuN8hvN8huN8hvN8j5AKtTAAAAKXRSTlMAWVlZWVlZWVlZWVlZBA9ZCFlZWVMdWVlZTEdANismV1EyJRdHQTwzLuTl3dsAAAIYSURBVEjHvdfpUoMwFAVg1pCwlzaorZYubu//hFZCPI0hNzDOeH51wG+8J8rcErhSn891sC7VOb7lXK0xx108ZndcTK77+Cf76yLSHsafzrMsHz8cWn+Zl3hMxsOQZ+rzi6eaVGVKHo7hpaomCVKrMnkR/qTIVbXaVeZZTSNCI0JdfW5ny+x0GTO62s6uJp9QxgyqPUmzzAFl7KDaobbKZCGRzKhWHefLuKodb9VqVYaBuBlT1epgP1eGrrYPnJM1jXPGb1SGcyZNuzmVTyibN1AgImIESsc0vypFEYU2qa0KEc0iGJ37ySIKNTDppgMhUKcI0o9lCNT0qZ0NFxTqLDAdfEGg3ia96kSNZ5HpzAWFOrOMIsRB4C+EMjoRjRqjzBRBIZwFJsMp2AjR/weI8KMNyqCRD/XqmBHuRwUefS/CAyB+o8KBQKLFCHfXIP00A/FCiKmecCKOW8UN6M9CcO5AIL4AlZjan3xCMYtW/aJ4WgDlMlKqBaBWDRhNplWDpca8k2GpYX3SjGF9YlHTM5ZY1HeRqOYuI+0vH84ZGfG9Ktmqm6VJSnV1m1hgRMnjA2Y0J3t4TFwITBsQFxqzvavG9GQJicByxnIQD8KMmMyDwED8CDNiMj8CA/Ej5L/QMKxGr5equryuQaePenrOPk4L0ZuscLGSb350+mytN4PPkxsNyfB+dbxRvQ8OJC8t8VZ1kcHf8gWGpC2PSBHvXgAAAABJRU5ErkJggg==">
+                                    </div>
+            
+                                    {:else if chat.vip_level === 46 || chat.vip_level === 47 || chat.vip_level === 48  || chat.vip_level === 49 || chat.vip_level === 50  || chat.vip_level === 51 || chat.vip_level === 52 ||  chat.vip_level === 53}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAAAe1BMVEUAAACpef+bYfyMVultNsnGo/+VXfSeZ/WndP6faPyRWu+kcPyXYPaqduuNWeuwf/+KXfG+mP+zhv6ASdyMVumBTNu4jv6JUeR3QNKMVeqNVumNVOqMV+mQWOqNVettOMduN8iNV+twO8iDTN9vOcZuN8hvN8huN8hvN8j5AKtTAAAAKXRSTlMAWVlZWVlZWVlZWVlZBA9ZCFlZWVMdWVlZTEdANismV1EyJRdHQTwzLuTl3dsAAAIYSURBVEjHvdfpUoMwFAVg1pCwlzaorZYubu//hFZCPI0hNzDOeH51wG+8J8rcErhSn891sC7VOb7lXK0xx108ZndcTK77+Cf76yLSHsafzrMsHz8cWn+Zl3hMxsOQZ+rzi6eaVGVKHo7hpaomCVKrMnkR/qTIVbXaVeZZTSNCI0JdfW5ny+x0GTO62s6uJp9QxgyqPUmzzAFl7KDaobbKZCGRzKhWHefLuKodb9VqVYaBuBlT1epgP1eGrrYPnJM1jXPGb1SGcyZNuzmVTyibN1AgImIESsc0vypFEYU2qa0KEc0iGJ37ySIKNTDppgMhUKcI0o9lCNT0qZ0NFxTqLDAdfEGg3ia96kSNZ5HpzAWFOrOMIsRB4C+EMjoRjRqjzBRBIZwFJsMp2AjR/weI8KMNyqCRD/XqmBHuRwUefS/CAyB+o8KBQKLFCHfXIP00A/FCiKmecCKOW8UN6M9CcO5AIL4AlZjan3xCMYtW/aJ4WgDlMlKqBaBWDRhNplWDpca8k2GpYX3SjGF9YlHTM5ZY1HeRqOYuI+0vH84ZGfG9Ktmqm6VJSnV1m1hgRMnjA2Y0J3t4TFwITBsQFxqzvavG9GQJicByxnIQD8KMmMyDwED8CDNiMj8CA/Ej5L/QMKxGr5equryuQaePenrOPk4L0ZuscLGSb350+mytN4PPkxsNyfB+dbxRvQ8OJC8t8VZ1kcHf8gWGpC2PSBHvXgAAAABJRU5ErkJggg==">
+                                    </div>
+                                    
+                                    {:else if chat.vip_level === 54 || chat.vip_level === 55 || chat.vip_level === 56  || chat.vip_level === 57 || chat.vip_level === 58  || chat.vip_level === 59 || chat.vip_level === 60 ||  chat.vip_level === 61}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/ph.7f694585.png">
+                                    </div>
+                                    {:else if chat.vip_level === 62 || chat.vip_level === 63 || chat.vip_level === 64  || chat.vip_level === 65 || chat.vip_level === 66  || chat.vip_level === 67 || chat.vip_level === 68 ||  chat.vip_level === 69}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                    </div>
+            
+                                    {:else if chat.vip_level > 69}
+                                    <div class="sc-khQegj fPtvsS level levelnums_2">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                        <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/p.47604fa2.png">
+                                    </div>
+                                 {/if}
                                 </a>
                             </div>
                             <div class="content">
                                 <div class="title">
                                     <div class="name">
-                                        <a href="/user/profile/78805">
-                                            <span>{chat.sender_username}</span>
+                                        <a href={`/user/profile/${chat.user_id}`}>
+                                            <span>{chat.username}</span>
                                         </a>
-                                        <div class="time">{chat.sent_at}</div>
+                                        <div class="time">{formatTime(chat.time)}</div>
                                     </div>
                                 </div>
                                 {#if (chat.type === "normal")}
@@ -473,6 +526,11 @@ const handleTipsControls = ((e) => {
                             </button>
                         </div>
                     </div>
+                    {#if newMessages}
+                    <button  on:click={()=>handleSendMessage(event, {newMessages, type: "normal"})} class="sc-JkixQ cVsgdS emoji-r-wrap">
+                        <Icon src={BsTelegram}  size="34"  color="#fff" title="arror" />
+                    </button>
+                {/if}
                 </div>
 
                 <div class="send-controls">
@@ -522,124 +580,12 @@ const handleTipsControls = ((e) => {
                     {/each}
                 </div>
                 {/if}
-
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- =========================== mobile ================================= -->
-
-<div class="mobile">
-    <div class="sc-bkkeKt kBjSXI" style="background-color: transparent;">
-        <div class="dialog sc-dkqQuH ikQOCU">
-            <div class="dialog-head has-close">
-                <div class="sc-hJZKUC dWgZek">
-                    <div class="select-wrap">
-                        <div class="sc-jJoQJp gOHquD select">
-                            <div class="select-trigger">
-                                <div class="select-label">English</div>
-                                <div class="arrow ">
-                                    <Icon src={RiSystemArrowRightSLine}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-features">
-                        <div class="inform">
-                            <Icon src={CgInfo}  size="25"  color="rgb(85, 91, 101)"  title="arror" />
-                        </div>
-                        <div class="sc-iWBNLc bXthlR rich-btn">
-                            <img alt="rich" src="https://static.nanogames.io/assets/rich.8786d13b.png">
-                        </div>
-                        <button on:click={handlecloseChat} class="sc-ieecCq fLASqZ close-icon">
-                            <Icon src={IoClose}  size="17"  color="rgba(153, 164, 176, 0.8)"  title="arror" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="dialog-body no-style sc-dkqQuH ikQOCU" style="z-index: 2; transform: none;">
-                <div id="public-chat" class="sc-ewSTlh hHMWvP">
-                    <div class="sc-bSqaIl eA-dYOl">
-                        <div class="sc-dkPtRN jScFby scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list">
-                            <div class="sc-AjmGg kgsidd" style="height: 100%;">
-                                <div class="flat-item">
-                                    <div class="sc-tAExr VfNib notranslate ">
-                                        <div class="head">
-                                            <a class="head-link" href="/user/profile/243417">
-                                                <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/243417/s">
-                                                <div class="sc-jQrDum jouJMO user-level type-3">
-                                                    <div class="level-wrap">
-                                                        <span>V</span>
-                                                        <span>23</span>
-                                                    </div>
-                                                </div>
-                                                <div class="sc-khQegj fPtvsS level levelnums_5">
-                                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAABMlBMVEUAAADllzDllS3LcwjMdwbuoTflly3PdhDhjh3LdArijyTilC7jjSbjlCvOdQ/rnjTomzDuoTfsoDXtsGHQfhDMdQrvs0btnzXbei3OdQzUfxPnkB/6qT3/uVz/vmL8qz7NdQrLdAfzoznIbwT+rD/2rU3jkyn/u13/s1rlmS//wGT/vGH7pT77oz7qnDT/5Wv/uFvuozz7qDr10Df01TbllS7/4Gn/32f/xmD2pjv1pTrsoDn0zC7djSX/5HL/6G7/tVv3sFD5rzz4tzv4vDrvoTj1zjT/427/t2H/wV7/sFj+t1f6tFX61VH8sEr0qUjwqEX20z73wzn5pTfz1S/Yhh7TfhTPeQ7/7W3/zmn/wWj/2Wf/12b83F38vlP/skr41Ej7qEX5sTz5rDz3rzX1xzSVkSzCAAAAHHRSTlMA8fEvZ0P57OXKxMK6oZeQjXdyaT02LCMhGhMOpg/WFQAAAXFJREFUKM9V0AVzwjAUB/BsY+4+IKQSaGkLLS0Ud3eXue/7f4U9oHTsf7nIL7l3uYdWuTk6ukH/4z6TUinpzL1ul3tmj5CeuXdp0/aB0PfIoih7+sLB9oJujwW9LSseiCK3deH4FqGLHbVACIjfDxMhPnXnAgm6QsS5xeNzFR+JLqDNggz7UFPUco1mSFRab8kNtOkj8CzfiGlaNF7Pdw2DX2AoFH/StFg0m+uURgZjof/5PhqtZV8G458AttCTF2O1bOw9nQ4XbYSaD7lONV2NlIPYRqX+OkhXw+FIyUZZaX18jyNgf1ggXWP0NSx/FstDKIm98E9T9xoY40AwGAgCYcZbMdGpqSa8DF4GKKFKp9C4Q4nHwAvCvHS4bN55JpWEM9wkU5lztIyLTqRKgmESFWlCXRZucXSWUXlezcwot7VClqV0KghTSll2DVmOcjDYdeQ4dt/h2IfVxmtu9+QKQa5OdrlrC52OO2TlzuGE+Rf2K0QhKXSN7QAAAABJRU5ErkJggg==">                                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAABMlBMVEUAAADllzDllS3LcwjMdwbuoTflly3PdhDhjh3LdArijyTilC7jjSbjlCvOdQ/rnjTomzDuoTfsoDXtsGHQfhDMdQrvs0btnzXbei3OdQzUfxPnkB/6qT3/uVz/vmL8qz7NdQrLdAfzoznIbwT+rD/2rU3jkyn/u13/s1rlmS//wGT/vGH7pT77oz7qnDT/5Wv/uFvuozz7qDr10Df01TbllS7/4Gn/32f/xmD2pjv1pTrsoDn0zC7djSX/5HL/6G7/tVv3sFD5rzz4tzv4vDrvoTj1zjT/427/t2H/wV7/sFj+t1f6tFX61VH8sEr0qUjwqEX20z73wzn5pTfz1S/Yhh7TfhTPeQ7/7W3/zmn/wWj/2Wf/12b83F38vlP/skr41Ej7qEX5sTz5rDz3rzX1xzSVkSzCAAAAHHRSTlMA8fEvZ0P57OXKxMK6oZeQjXdyaT02LCMhGhMOpg/WFQAAAXFJREFUKM9V0AVzwjAUB/BsY+4+IKQSaGkLLS0Ud3eXue/7f4U9oHTsf7nIL7l3uYdWuTk6ukH/4z6TUinpzL1ul3tmj5CeuXdp0/aB0PfIoih7+sLB9oJujwW9LSseiCK3deH4FqGLHbVACIjfDxMhPnXnAgm6QsS5xeNzFR+JLqDNggz7UFPUco1mSFRab8kNtOkj8CzfiGlaNF7Pdw2DX2AoFH/StFg0m+uURgZjof/5PhqtZV8G458AttCTF2O1bOw9nQ4XbYSaD7lONV2NlIPYRqX+OkhXw+FIyUZZaX18jyNgf1ggXWP0NSx/FstDKIm98E9T9xoY40AwGAgCYcZbMdGpqSa8DF4GKKFKp9C4Q4nHwAvCvHS4bN55JpWEM9wkU5lztIyLTqRKgmESFWlCXRZucXSWUXlezcwot7VClqV0KghTSll2DVmOcjDYdeQ4dt/h2IfVxmtu9+QKQa5OdrlrC52OO2TlzuGE+Rf2K0QhKXSN7QAAAABJRU5ErkJggg==">
-                                                    <img class="img-star" alt="level-star" src="https://static.nanogames.io/assets/gh.adb3fa38.png">
-                                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA1VBMVEUAAAD/ul/9qT//vmX/rEHmmDH/tVz9pD/8qD3PdQv4r1D3pDv/5m7/4mn/wWj1pj3NdAn30Tv11jb1zDPMcAT7sDzSfBXikSjZgBvvojz/62//xmLllCfNcAXrnTXnmjPmmjP2rU3kkizMcgfLcAb5uzvvozvonTXKbwXllSvqojntsFTUeA3Wfhbnp0/xp0L+22T/v13+sUz4xTjtoDrjlSvOdg7ekSjZiCD/uGT61036tjzPdgzIdAjjkSDmlC7NfBTunTvyoj/xq0LouG7/0Gv701PBjG8QAAAAR3RSTlMAWVlZWVRZWVlcX19ZWVlZEFlZWWRZWVgGZVlZaWloZV5dXV1bWVlZWUkzJyYVC2NZWVlZaWNiYFxZWVlYSUU9OCsZFxBZWeq79pMAAAFBSURBVCjPVdFpc4IwEAZgTGiMrYCggNwoNyLeV+ut7f//SV0sMPSdfMg8k92dzDJVnufzk/mfYequ1246bNpENUcYj0x1UtM9MWctvgVnZib3F+WXjUZ43IJgnmibSw6Vrg2VIIQUjEe2O2HGGoZKMMMAhR5YGzNv73+26OoLUEyWH2+AGIgYXLfLGQeypLRCYw7E6fpPQClbIpnrHLyci9KqjWpsFcWf/b4oA9Y9v3WgvhS0UY34sBDhmSh91chjgmRJAmsgXtK2vApkOVjJJY5nLKUItV9BYCz8KHVsyqI6LLWdlGEeiSMAlyQ4yYMpctuFAmKBkBDubtUuvH0UCiwrhNHeqzbS83xFjQQhUhXf61XY6cSxoqpKHHc6DTz6A4h/bOLA2p6y7LS1BjVOLeU6fV2uijWtpmc5UybPium/9dQhpeT5/ikAAAAASUVORK5CYII=">
-                                                    <img class="img-star" alt="level-star" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAMAAABLAV/qAAAA1VBMVEUAAAD/ul/9qT//vmX/rEHmmDH/tVz9pD/8qD3PdQv4r1D3pDv/5m7/4mn/wWj1pj3NdAn30Tv11jb1zDPMcAT7sDzSfBXikSjZgBvvojz/62//xmLllCfNcAXrnTXnmjPmmjP2rU3kkizMcgfLcAb5uzvvozvonTXKbwXllSvqojntsFTUeA3Wfhbnp0/xp0L+22T/v13+sUz4xTjtoDrjlSvOdg7ekSjZiCD/uGT61036tjzPdgzIdAjjkSDmlC7NfBTunTvyoj/xq0LouG7/0Gv701PBjG8QAAAAR3RSTlMAWVlZWVRZWVlcX19ZWVlZEFlZWWRZWVgGZVlZaWloZV5dXV1bWVlZWUkzJyYVC2NZWVlZaWNiYFxZWVlYSUU9OCsZFxBZWeq79pMAAAFBSURBVCjPVdFpc4IwEAZgTGiMrYCggNwoNyLeV+ut7f//SV0sMPSdfMg8k92dzDJVnufzk/mfYequ1246bNpENUcYj0x1UtM9MWctvgVnZib3F+WXjUZ43IJgnmibSw6Vrg2VIIQUjEe2O2HGGoZKMMMAhR5YGzNv73+26OoLUEyWH2+AGIgYXLfLGQeypLRCYw7E6fpPQClbIpnrHLyci9KqjWpsFcWf/b4oA9Y9v3WgvhS0UY34sBDhmSh91chjgmRJAmsgXtK2vApkOVjJJY5nLKUItV9BYCz8KHVsyqI6LLWdlGEeiSMAlyQ4yYMpctuFAmKBkBDubtUuvH0UCiwrhNHeqzbS83xFjQQhUhXf61XY6cSxoqpKHHc6DTz6A4h/bOLA2p6y7LS1BjVOLeU6fV2uijWtpmc5UybPium/9dQhpeT5/ikAAAAASUVORK5CYII=">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <div class="title">
-                                                <div class="name">
-                                                    <a href="/user/profile/243417">
-                                                        <span>⚡Aria⁠atash</span>
-                                                    </a>
-                                                    <div class="time">19:21</div>
-                                                </div>
-                                            </div>
-                                            <div class="msg-wrap">
-                                                <div class="sc-jKTccl bkGvjR">
-                                                    <a class="cl-primary" href="/user/profile/399425">@💤✍️Zuuonia 🇵🇱</a>
-                                                    😍😍😍🙋‍♀️🙋‍♀️🙋‍♀️😘
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-infos "></div>
-                    <div class="sc-hkgtus ddROGz">
-                        <div class="send-input">
-                            <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
-                                <div class="input-control">
-                                    <textarea placeholder="Your Message" style="height: 38px;"></textarea>
-                                    <button class="sc-JkixQ cVsgdS emoji-r-wrap">
-                                        <Icon src={HiSolidEmojiHappy}  size="25"  color="rgb(85, 91, 101)"  title="arror" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="send-controls">
-                            <div class="left-actions">
-                                <a class="chat-icon" href="/user/rain">
-                                    <Icon src={FaSolidAt}   size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                                </a>
-                                <div class="command-btn">
-                                    <Icon src={IoLanguageOutline}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                                </div>
-                                <a class="chat-icon" href="/user/coindrop_send">
-                                    <Icon src={SiRainmeter}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                                </a>
-                            </div>
-                            <div class="sc-dkQkyq gbjudO gift-r-wrap hide-gift">
-                                <button class="gift-btn">
-                                    <Icon src={BsFiletypeGif}  size="16"  color="rgba(153, 164, 176, 0.8)" title="arror" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
+
+<Mobile on:closeChat={handlecloseChat} />
 
 <style>
 .eA-dYOl {
@@ -1202,12 +1148,6 @@ const handleTipsControls = ((e) => {
 .dialog-head.has-close {
     margin-right: 3.75rem;
 }
-
-.ikQOCU .dialog-head {
-    width: 100%;
-    margin: 0px;
-}
-
 .dWgZek {
     height: 4rem;
     position: relative;
@@ -1219,14 +1159,6 @@ const handleTipsControls = ((e) => {
     align-items: center;
     padding: 0px;
     background-color: rgb(30, 32, 36);
-}
-
-.ikQOCU .dialog-head>div {
-    left: 0px;
-    width: 100%;
-    padding: 0px;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
 }
 
 .dWgZek .select-wrap {

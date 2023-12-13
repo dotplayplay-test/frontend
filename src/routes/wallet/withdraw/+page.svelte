@@ -1,410 +1,525 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import Selectcoin from '$lib/wallet/selectcoin.svelte';
-import { default_Wallet } from "$lib/store/coins"
+import { handleAuthToken } from "$lib/store/routes";
+import { ServerURl } from "$lib/backendUrl"
+import axios from "axios"
+import { default_Wallet, usdt_Wallet, ppfWallet,ppdWallet, pplWallet } from "$lib/store/coins"
+import {onMount} from "svelte"
+import {UserProfileEl} from "$lib/index"
+const { handleUSDTwallet } = UserProfileEl()
+const URL = ServerURl()
+
+let networks = [
+    {id:1, network: `ERC20`, status: "active"},
+    {id:2, network: `TRX20`, status: ""},
+    {id:3, network: `BEP20`, status: ""},
+]
+
+onMount(async()=>{
+    let rts = await handleUSDTwallet()
+    usdt_Wallet.set(rts)
+})
 
 
-
-let isSelectCoin = false
-const handlecoinSelect = (()=>{
-    if(isSelectCoin){
-        isSelectCoin = false
-    }else{
-        isSelectCoin = true
+let actice_network = {}
+const handleNetworks = ((e)=>{
+    networks.forEach(element => {
+    if(element.network === e.network){
+        element.status = "active"
+        networks = networks
+        actice_network = {...element}
+        handleNetworks_isOpen()
     }
+    else{
+        element.status = ""
+    }
+ });
 })
 
+networks.forEach(element => {
+    if(element.status === "active"){
+        actice_network = {...element}
+    }
+ });
 
-const handleCoins = ((e)=>{
-    default_Wallet.set(e.detail)
-    handlecoinSelect()
-})
+ let is_open = false
+ const handleNetworks_isOpen = (()=>{
+    is_open =! is_open
+ })
+
+ let address = ""
+ let amount = 0
+ const handleSubmit = (async()=>{
+    let data = {
+        address, 
+        network: actice_network.network,
+        amount
+    }
+    await axios.post(`${URL}/api/withdraw/initiate`,{
+            data
+        },{
+            headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+            }
+        })
+        .then(response =>{
+            console.log(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.response.data.message)
+        })
+ })
 
 </script>
+  <div class="right-info">
+  <div class="tabs-view" style="transform: none;">
+     <div class="limit-width">
+          <div class="bs9gc4t">
+              <div class="swm8knq">
+                  <div class="label">Withdraw Currency</div>
+                  <div class="ui-select wallet-balance-input-wrap">
+                      <div class="select-trigger">
+                          <img class="coin-icon" alt="" src="https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663">
+                          <span class="alias">USDT</span>
+                          <div class="balance">Balance</div>
+                          <div class="amount">{(parseFloat($usdt_Wallet.balance)).toFixed(4)}</div>
+                          <div class="arrow ">
+                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
-
-    <div  id="withdraw" class="sc-ezbkAF kDuLvp input ">
-        {#if isSelectCoin}
-            <Selectcoin on:handleCoinSelect={handleCoins}/>
-        {/if}
-        <div class="input-label">
-            <div style="flex: 1 1 0%;">Withdraw Currency</div>
-            <a href="/transactions/withdraw/DOGE">Record</a>
-        </div>
-        <button on:click={handlecoinSelect} class="sc-kszsFN evIEvq input-control">
-            <div class="sc-cBIieI wvKye">
-                <div class="wrap">
-                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
-                    <span class="currency">{$default_Wallet.coin_name}</span>
-                    <span class="svg">
-                     <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
-                 </span>
-                </div>
-            </div>
-            <div class="sc-kqnjJL kdWfvE">
-                <div class="wrap">
-                    <div class="tit">Balance : </div>
-                    <div class="amount">{$default_Wallet.balance}</div>
-                </div>
-            </div>
-        </button>
-        <div class="sc-hRnpUl bUlDWK">
-          
-
-            {#if $default_Wallet.coin_name === "USDT"}
-            <div class="sc-wkwDy blotCy">
-                <div class="label">
-                    <div>Withdraw Address
-                        <span class="cl-primary">{`(Note: Only ${$default_Wallet.coin_name} Coin)`}</span>
+            <div class="sq07zth page-margin">
+                <div class="label">Choose Network</div>
+                <div class={`ui-select select-tokens ${is_open ? "is-open" : ""} `}>
+                    <button on:click={handleNetworks_isOpen} class="select-trigger">
+                        {actice_network.network}
+                        <div class="arrow ">
+                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
+                        </div>
+                    </button>
+                    {#if is_open}
+                    <div class="select-options-wrap" style="top: 100%; opacity: 1; transform: none;">
+                        <div class="ui-scrollview select-options len-9">
+                            {#each networks as net (net.id)}
+                                <button class={`select-option ${net.status === "active" ? "active" : ""} `} on:click={()=>handleNetworks(net)}>{net.network}</button>
+                            {/each}
+                        </div>
                     </div>
-                </div>
-                <div class="box">
-                    <div class="cont">
-                        <input class="address" placeholder="Fill in carefully according to the specific currency" value="">
-                    </div>
+                {/if}
                 </div>
             </div>
-            <div class="sc-ezbkAF kDuLvp input sc-hrJsxi hjdfLc">
+
+            <div class="ui-input page-margin">
                 <div class="input-label">
-                    <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
-                        <div>Withdraw amount</div>
-                        <div style="font-size: 12px;">Min: 6.5USDT</div>
-                    </div>
+                    <div>Withdrawal Address</div>
                 </div>
                 <div class="input-control">
-                    <input type="text" value="0.00000000">
-                    <div class="btn-wrap">
-                        <button>Min</button>
-                        <button>25%</button>
-                        <button>50%</button>
-                        <button>Max</button>
-                    </div>
+                    <input type="text" placeholder="Fill in carefully according to the specific currency" bind:value={address}>
                 </div>
             </div>
-            <div class="sc-dWbSDx jJMDVL">
-                <div class="sc-bZSZLb dVsvjK disabled">
-                    <div class="sc-iJKOTD kdCtGQ checkbox "></div>
-                    <div class="jb-deduct">
-                        <span class="txt">Unlock at VIP 22</span>
-                        <button>
-                         <Icon src={BsQuestionCircleFill}  size="14"   color="rgb(93, 160, 0)" className="custom-icon" title="arror" />
-                        </button>
+
+            <div class="ui-input s8xfgc0 page-margin">
+                <div class="input-label">
+                    <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="text-transform: capitalize;">Withdraw amount</div>
+                        <div style="font-size: 12px;">Min: 5.6</div>
                     </div>
                 </div>
-                <div class="sc-eZKLwX jJQdnO">
-                    <div class="sc-faIbUi bGuvOe">Fee&nbsp;<b> 0.023428 DOGE</b>
+                <div style={` ${ amount && amount < 5.6 && `border: 1px solid red;`}; ${amount > parseFloat($usdt_Wallet.balance) && `border: 1px solid red;`} `} class="input-control">
+                    <input type="number" placeholder="0.000" bind:value={amount}></div>
+                </div>
+            </div>
+            <div class="unlock-balance s13ylein">
+                <div class="available unlock-item">
+                    <div class="label">Available:</div>
+                    <div class="value">${(parseFloat($usdt_Wallet.balance)).toFixed(2)}</div>
+                </div>
+            </div>
+
+            <div class="withdraw-info">
+                <div class="item">
+                    <div class="label">Withdraw amount:</div>
+                    <div class="val">
+                        <div class="cy2znlo coin notranslate">
+                            <div class="amount amount-str">{amount ? (parseFloat(amount)).toFixed(2) : 0}</div>
+                        </div>
+                        USDT
                     </div>
-                    <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal sub-btn">
-                        <div class="button-inner">Confirm</div>
+                </div>
+                <div class="item">
+                    <div class="label">Fee:<button>
+                        <!-- <svg class="s1ff97qc icon icon-help">
+                            <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Help"></use>
+                        </svg> -->
                     </button>
                 </div>
-                <div class="sc-fpyFWH jksbXu">For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</div>
+                <div class="val">{actice_network.network !== "ERC20" ? 1 : 5} USDT</div>
+            </div>
+            <div class="item">
+                <div class="label">Total withdrawal amount:</div>
+                <div class="val cl-primary">
+                    <div class="cy2znlo coin notranslate">
+                        {#if amount > 6.5}
+                         <div class="amount amount-str"> { actice_network.network !== "ERC20" ? amount - 1 : amount - 5}</div>
+                         {:else}
+                         <div class="amount amount-str"> 0</div>
+                        {/if}
+                        
+                    </div> USDT</div>
+                </div>
             </div>
 
-            {:else}
-        <div class="sc-gRtYjc fIolUb">
-            <div class="oval">
-                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-left">
-                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-center">
-                <img alt="" src="https://static.nanogames.io/assets/bcdcoin.141c7b8c.png" class="bcd-right">
+            <div class="bjruw94">
+                <p><span class="cl-primary">Notice:</span> For security purposes, large or suspicious withdrawal may take 1-6 hours for audit process. We appreciate your patience!</p>
             </div>
-            <div class="bcd-usd">
-                <img alt="bcd-usd" src="https://static.nanogames.io/assets/bcd_usd.ae5190d3.png">
-            </div>
-            <p><span class="word">{$default_Wallet.coin_name}</span> (DPP Dollar) is a crypto launched by DOTPLAYPLAY. You can play games, tip, coindrop, rain with it.</p>
-            <p><span class="word">1 {$default_Wallet.coin_name} = 1 USD</span> , You can <a class="hover" href="/wallet/swap">DPPSwap</a> DPP into any other currencies at any time and withdraw it to your wallet.</p>
-            <p>Deposit {$default_Wallet.coin_name} into Vault, Enjoy up to <span class="word">10%</span> Annual Percentage Rate return.</p>
-            <p><span class="hover">Deposit</span> to claim your {$default_Wallet.coin_name} bonus now.</p>
-            <button class="more-about">
-                <span>More about {$default_Wallet.coin_name}</span>
-                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+
+            <button disabled={amount && amount < 5.6 || amount > parseFloat($usdt_Wallet.balance)} on:click={handleSubmit} class="ui-button button-normal s-conic submit-btn">
+                <div class="button-inner">Confirm</div>
             </button>
-        </div>
-        {/if}
-          
-        </div>
-        <div class="share-wrap">
-            Share<div class="sc-epFoly ftnlFA">
-                <a href="https://www.facebook.com/sharer.php?u=https://nanogames.io/referral-code/0KLVA2KJR5Q6H1" target="_blank" class="share-item enabled">
-                    <img class="icon" alt="" src="https://static.nanogames.io/assets/share-2.f44906ec.svg">
-                </a>
-                <a href="https://t.me/share?url=https://nanogames.io/referral-code/0KLVA2KJR5Q6H1" target="_blank" class="share-item enabled">
-                    <img alt="" class="icon" src="https://static.nanogames.io/assets/share-4.4c6af5b2.svg">
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-
+     </div>
+  </div>
+</div>
 <style>
-@media screen and (min-width: 650px){
-    #withdraw {
-        border-radius: 20px;
-        background-color: rgb(30, 32, 36);
-        padding: 0.75rem 0.75rem 0px;
-        box-sizing: border-box;
-        /* height: 380px; */
-        overflow-y: auto;
-        touch-action: pan-y;
-        overscroll-behavior: contain;
-    }
+.ui-select .select-options-wrap {
+    margin: 0.125rem -0.125rem 0;
+    width: 101%;
+    background-color: #1E2024;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    border-radius: 30px;
 }
-.kDuLvp {
-    margin-top: 1rem;
+.ui-select.is-open .select-options-wrap {
+    pointer-events: auto;
 }
-
-.jJMDVL {
-    margin-top: 1rem;
-}
-.kDuLvp .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
- .input-control {
-    min-height: 3.5rem;
-}
-.kDuLvp .input-control {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    height: 3.5rem;
-    padding: 0px 1.25rem;
-    opacity: 1;
+.ui-select .select-options-wrap {
+    position: absolute;
+    padding: 0.3125rem 0;
     width: 100%;
+    left: 0;
+    z-index: 2;
 }
-.wvKye {
-    flex: 6 1 0%;
-    line-height: 1.875rem;
+.s-conic:disabled.ui-button:not(.is-loading) {
+    opacity: 0.5;
+    cursor: default;
 }
-.wvKye .wrap {
-    padding-right: 1.25rem;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-}
-.evIEvq .currency {
-    flex: 1 1 auto;
-    margin-left: 0.9375rem;
-    font-size: 1.125rem;
-    font-weight: 800;
-}
-.evIEvq .coin-icon {
-    width: 1.875rem;
-    height: 1.875rem;
-    display: inline-block;
-    vertical-align: top;
-}
-.wvKye .currency {
-    color: rgb(245, 246, 247);
-    font-size: 1.125rem;
-}
-
-.evIEvq .svg {
-    width: 0.875rem;
-    height: 0.875rem;
-}
-.kdWfvE {
-    border-left: 1px solid rgb(45, 48, 53);
-    line-height: 0.9375rem;
-    flex: 4 1 0%;
-}
-.kdWfvE .wrap {
-    padding-left: 1.25rem;
-}
-.kdWfvE .amount {
-    color: rgb(245, 246, 247);
-}
-
-.evIEvq .amount {
-    font-size: 0.9375rem;
-    font-weight: 800;
-}
-.blotCy {
-    margin-top: 1rem;
-    width: 100%;
-    font-size: 0.8125rem;
-}
-.blotCy .label {
-    margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
-.cl-primary {
-    color: var(--primary-color);
-}
-.blotCy .box {
-    background-color: rgba(45, 48, 53, 0.5);
-    border: 1px solid rgb(45, 48, 53);
-    padding: 0.3125rem 1.25rem;
-    width: 100%;
-    border-radius: 1.25rem;
-    min-height: 3.5rem;
-    display: flex;
-    flex-direction: column;
-}
-.blotCy .cont {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex: 1 1 auto;
-}
-
-.blotCy .cont .address {
-    flex: 1 1 auto;
-    word-break: break-all;
-    color: rgb(245, 246, 247);
-}
-.blotCy .address {
-    border: none;
+.ui-select .select-options {
     background-color: transparent;
-    padding: 0.625rem 0px;
+    box-shadow: none;
 }
-.kDuLvp {
-    margin-top: 1rem;
+.ui-select .select-options {
+    border-radius: 30px;
+    padding: 0.125rem 0.375rem;
+    background-color: var(--18w92jy);
+    box-shadow: 0 0 8px #00000024;
+    height: auto;
+    max-height: 16.25rem;
 }
-.kDuLvp .input-label {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 1em;
-    height: 1.25rem;
-    margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 12px;
+.ui-select {
+    height: 3rem;
 }
-.hjdfLc .btn-wrap {
-    width: 10.9375rem;
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    border-radius: 2.25rem;
-    overflow: hidden;
-    margin-right: -0.625rem;
-}
-.hjdfLc .btn-wrap button:first-child {
-    padding-left: 0.1875rem;
-}
-.hjdfLc .btn-wrap button {
-    background-color: rgba(60, 64, 74, 0.6);
-    height: 2.25rem;
-    width: 2.6875rem;
-    font-size: 0.75rem;
-}
-.dVsvjK {
-    display: flex;
-    margin: 1rem 0px 0.625rem 1rem;
-    -webkit-box-align: center;
-    align-items: center;
+.sq07zth .ui-select {
     position: relative;
+    z-index: 9;
 }
-.dVsvjK.disabled .checkbox {
-    opacity: 0.5;
-    cursor: not-allowed;
+.ui-select .select-options:not(.len-1)>.active {
+    border: 2px solid #3bc11766;
+    border-radius: 30px;
+    color: #fff;
 }
-.dVsvjK .checkbox {
-    margin-right: 0.3125rem;
+.sq07zth .ui-select .select-option {
+    height: 3rem;
+    width: 100%;
+    line-height: 3rem;
+
 }
-.kdCtGQ {
-    width: 1rem;
-    height: 1rem;
-    flex: 0 0 auto;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 0.1875rem;
-    box-sizing: border-box;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    font-size: 0.875rem;
-    padding: 0.0625rem 0.0625rem 0.0625rem 0.125rem;
-    color: transparent;
-    position: relative;
-    cursor: pointer;
+.limit-width {
+    max-width: 500px;
 }
-.dVsvjK .jb-deduct {
+.swm8knq .label {
+    margin-bottom: 0.75rem;
+    line-height: .875rem;
+    font-size: .875rem;
+} 
+.ui-select {
+    height: 3rem;
+}
+.ui-select .select-trigger {
+    background-color: #1E2024;
+    width: 100%;
+}
+.swm8knq .select-trigger .coin-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 1rem;
+    margin-left: -0.1875rem;
+}
+.swm8knq .select-trigger .alias {
+    font-size: 1rem;
+    color: #fff;
+}
+.swm8knq .select-trigger .balance {
+    margin-left: auto;
+}
+.ui-select .select-trigger .arrow {
+    width: 2.5rem;
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-align-items: center;
     -webkit-box-align: center;
-    align-items: center;
-    position: relative;
-}
-.dVsvjK.disabled .txt {
-    opacity: 0.5;
-}
-.dVsvjK button {
-    display: flex;
-    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.ui-select .select-trigger {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    padding: 0 1.25rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: var(--border-radius);
+    background-color: #17181b;
+}
+.swm8knq .select-trigger .amount {
+    color: #fff;
+    margin-right: 1.25rem;
     margin-left: 0.3125rem;
 }
-.jJQdnO {
-    margin: 0px 1rem 0.375rem;
+.right-info {
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
-}
-.bGuvOe {
-    margin-top: 0.625rem;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-size: 12px;
-}
-.bGuvOe b {
-    color: rgb(67, 179, 9);
-    margin-right: 0.1875rem;
-}
-.bUlDWK .sub-btn {
-    margin: 0.625rem auto;
-}
-.jksbXu {
-    padding: 0.625rem 1rem;
-    border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    margin-top: 10px;
-    font-size: 0.75rem;
-}
-.share-wrap {
-    display: flex;
-    -webkit-box-pack: end;
-    justify-content: flex-end;
-    -webkit-box-align: center;
-    align-items: center;
-    margin: 0.625rem 0px;
-}
-.JghUg .share-wrap a {
-    margin: 0px 0.625rem;
-    display: inline-block;
-}
-.ftnlFA .share-item img {
-    height: 1.5rem;
-    width: auto;
-}
-.JghUg .share-wrap img {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-block;
-    vertical-align: top;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-left: 0.25rem;
+    background-color: #31343c;
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem 2rem;
 }
 
+.page-margin {
+    margin-top: 1.5rem;
+}
+.sq07zth .label {
+    margin-bottom: 0.75rem;
+    line-height: .875rem;
+    font-size: .875rem;
+}
+.s1orvhr .ui-input .input-label {
+    margin-left: 0;
+}
+.ui-input .input-label {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0 0 0.375rem;
+}
+.ui-input .input-control {
+    height: 3rem;
+    background-color: #1E2024;
+    border: none;
+}
+.ui-input .input-control input {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #f5f6f7;
+}
+.ui-input .input-control input::placeholder {
+    color: #737a82;
+}
+.ui-input .input-control {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    border: 1px solid #2d3035;
+    background-color: #222328;
+    height: 3.5rem;
+    padding: 0 1.25rem;
+    opacity: 1;
+}
+.s13ylein {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+.s13ylein .unlock-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.s13ylein .label {
+    margin-right: 0.1875rem;
+    font-size: 14px;
+    font-family: "poppins";
+}
+.s13ylein .value {
+    font-weight: 600;
+    color: #fff;
+    font-family: "poppins";
+}
+ .withdraw-info {
+    background-color: #26282C;
+    border-radius: var(--border-radius);
+    width: 100%;
+    margin-top: 1.375rem;
+}
+ .withdraw-info .item {
+    padding: 0.375rem 0.75rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.withdraw-info .item .val {
+    color: #fff;
+    font-weight: 800;
+}
+.withdraw-info .item .cl-primary {
+    color: var(--primary-color);
+}
+.cy2znlo {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.bjruw94 {
+    background: rgba(58,201,72,.1);
+    padding: 0.125rem 0.75rem;
+    border-radius: var(--border-radius);
+    margin-top: 0.75rem;
+    font-size: .875rem;
+    line-height: 1rem;
+    color: #fff;
+}
+p {
+    margin: 0.8em 0;
+}
+.ui-button.s-conic {
+    color: #fff;
+    background-color: #1d803ab3;
+    background-image: conic-gradient(from 1turn,rgba(88,175,16,1),rgba(29,128,58,1));
+}
+.submit-btn {
+    min-width: 14rem;
+    width: auto;
+    margin: 2rem auto;
+}
+.ui-button {
+    --3xr1hu: rgba(107,113,128,.8);
+    display: block;
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 30px;
+    height: 3rem;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform .2s cubic-bezier(.36,.66,.04,1);
+    -webkit-transition: transform .2s cubic-bezier(.36,.66,.04,1);
+    transition: transform .2s cubic-bezier(.36,.66,.04,1);
+}
+.ui-button>.button-inner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
 </style>

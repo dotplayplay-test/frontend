@@ -1,8 +1,26 @@
 <script>
+import { io } from "socket.io-client";
+import {RealTimeURl} from "$lib/backendUrl"
+const URL = RealTimeURl()
+const socket = io(`${URL}`);
+import { onMount, tick } from "svelte";
 
-import {handleCountdown } from "$lib/crashgame/socket"
-handleCountdown()
-import { crashPoint , crashRunning ,Load_animation, TrackTwo,animateCrashCurve, crashLoad, loadingCrash, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
+let runnfs ;
+let countdowWe ;
+onMount(async()=>{
+    socket.on("running-crash", data=>{
+        runnfs = data
+    })
+
+    socket.on("countdown", data=>{
+        countdowWe = data
+    })
+})
+
+
+import { default_Wallet } from "$lib/store/coins"
+import { crashPoint , crashRunning ,Load_animation, winning,crashCurve, crashLoad,
+      loadingCrash,winningEl, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
 import {
     Stage,
     Layer,
@@ -11,10 +29,11 @@ import {
     Line,
     Image
 } from "svelte-konva";
-
+import {
+    browser
+} from '$app/environment'
 let v2 = 10
 let v3 = -10
-
 let handleVerticalLoop = setInterval(()=>{
     if(v2 > 150 && v2 < 200){
         v2 += 0.1
@@ -29,18 +48,93 @@ let handleVerticalLoop = setInterval(()=>{
     }
 }, 10)
 
+let image = null;
+onMount(() => {
+    const img = document.createElement("img");
+    img.src = `<svg xmlns="http://www.w3.org/2000/svg" width="623" height="309" viewBox="0 0 623 309" fill="none">
+          <g filter="url(#filter0_d_160_5)">
+            <path d="M5 297C272 270.5 519 133 615 3" stroke="url(#paint0_linear_160_5)" stroke-width="4"/>
+          </g>
+          <defs>
+            <filter id="filter0_d_160_5" x="0.60498" y="0.623779" width={$crashCurve} height="308.357" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dy="4"/>
+              <feGaussianBlur stdDeviation="2"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_160_5"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_160_5" result="shape"/>
+            </filter>
+            <linearGradient id="paint0_linear_160_5" x1="252.742" y1="284.714" x2="523.573" y2="150.893" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#E2E2E2"/>
+              <stop offset="0.9933" stop-color="#508B56"/>
+            </linearGradient>
+          </defs>
+      </svg>`
+    img.onload = () => {
+        image = img;
+    };
+});
+
+let animate = null;
+$:{
+    onMount(async() => {
+        const img = new window.Image;
+ 
+        img.onload = () => {
+            animate = img;
+        };
+    });
+}
+
 let width = 690
 let height = 310
 let objWidth = 220
 
 </script>
 
-
 <div class="chart-crash">
 <Stage config={{ width: width, height:height }}>
     <Layer>
+        <!-- {#if $winning}
+            <Text config={{
+                text: `${($winningEl).toFixed(2)} ${$default_Wallet.coin_name} `,
+                fontSize: 25,
+                fill: '#ffff',
+                shadowBlur: 1,
+                x: 357,
+                y: 50.5,
+                fontStyle: '600',
+                fontFamily: 'Helvetica',
+            }}/> 
+            <Text config={{
+                text: 'You won',
+                fontSize:28,
+                fill: '#43b309',
+                shadowBlur: 1,
+                x: 230,
+                y: 50.5,
+                fontStyle: '600',
+                fontFamily: 'Helvetica',
+            }}/> 
+            <Image config={{
+                x:213,
+                y:70,
+                width: 272,
+                height: 160,
+                image
+            }} />
+        {/if} -->
 
-        {#if $hasCrashed}
+        <!-- <Image config={{
+            x:23,
+            y:70,
+          
+            image:animate
+        }} /> -->
+
+        <!-- {#if $hasCrashed}
             <Text config={{
                 text: `${$crashPoint}x`,
                 fontSize: 50,
@@ -68,11 +162,11 @@ let objWidth = 220
                 fontStyle: '500',
                 fontFamily: 'Poppins',
             }}/>
-        {/if}
+        {/if} -->
     <!-- ======================================== is_alive curve ============================= -->
-        {#if $crashIsAlive}
+        <!-- {#if $crashIsAlive} -->
             <Text config={{
-                text: `${$crashRunning}x`,
+                text: `${runnfs}x`,
                 fontSize: 50,
                 fill: '#ffff',
                 x: width / 2 - 50,
@@ -80,12 +174,12 @@ let objWidth = 220
                 fontStyle: '700',
                 fontFamily: 'Poppins',
             }}/>
-        {/if}
+        <!-- {/if} -->
  
 
     <!-- ========================================== Starting load ========================= -->
 
-    {#if $loadingCrash}
+    <!-- {#if $loadingCrash}
         <Rect config={{
             x: width / 2 - objWidth / 2,
             y: 130,
@@ -114,7 +208,7 @@ let objWidth = 220
             fontStyle: '400',
             fontFamily: 'Poppins',
         }}/> 
-    {/if}
+    {/if} -->
 
 
  <!-- =========================================== Default vertical position ======================================== -->
@@ -323,7 +417,7 @@ let objWidth = 220
             closed: true,
             stroke: '#ffffff0e',
         }}/>
-
+   
     </Layer>
 </Stage>
 </div>

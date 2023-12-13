@@ -3,6 +3,7 @@
     padding: 0px 20px;
 }
 
+
 .fnthVB.casino-header {
     background-color: rgb(36, 38, 43);
     margin: 0px -1.25rem;
@@ -33,6 +34,12 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.fnthVB .header-sub .m-item:hover {
+    color: #fff;
+    transition: all 0.5s ease-in;
 }
 
 .sc-gsDKAQ {
@@ -162,6 +169,8 @@
     justify-content: center;
     background-color: rgb(152, 30, 234);
     height: 44px;
+    cursor: pointer;
+    z-index: 83;
     line-height: 44px;
     padding: 0px 20px;
     border-radius: 22px;

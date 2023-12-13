@@ -1,4 +1,9 @@
-
+import { handleAuthToken } from "$lib/store/routes"
+import { profileStore } from "$lib/store/profile"
+import { default_Wallet } from "$lib/store/coins"
+import {  goto } from "$app/navigation";
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
 
 export const useRegister = () => {
     let error;
@@ -7,7 +12,7 @@ export const useRegister = () => {
       isLoading = true
       error = null
       const response = await fetch(
-        "http://localhost:8000/api/users/register",{
+        `${URL}/api/users/register`,{
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -22,12 +27,20 @@ export const useRegister = () => {
         console.log(error)
       }
       if (response.ok) {
-        // Save user to localStorage
-        localStorage.setItem("user", JSON.stringify(json));
-        // Update the auth store
-        window.location.href = '/login/info'
+        let hisex = json.wallet
+        hisex.forEach(element => {
+          if(element.is_active){
+            default_Wallet.set(element)
+          }
+       });
+        localStorage.setItem("user", JSON.stringify(json.Token));
+        handleAuthToken.set(json.Token)
+        profileStore.set(json.result)
+        // window.location.href = ("/info")
+        goto("/info")
+        // default_Wallet.set(json.default_wallet)
         isLoading = false
       }
     };
-    return { register, isLoading, error };
-  };
+    return { register };
+}

@@ -1,0 +1,705 @@
+<script>
+import { browser } from '$app/environment';
+import { goto } from "$app/navigation";
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
+import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+import { default_Wallet } from '../../store/coins';
+import { profileStore,handleisLoggin } from "$lib/store/profile"
+import { handleAuthToken } from "$lib/store/routes"
+import { payout, isbetLoadingBtn, betPosition } from "./store";
+import {DiceEncription} from '$lib/games/ClassicDice/store/index'
+import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import {ServerURl} from "$lib/backendUrl"
+const URL = ServerURl()
+import cr from "./audio/click-button-140881.mp3"
+import win from "./audio/mixkit-achievement-bell-600.wav"
+import axios from "axios"
+
+let is_min_max = false
+const handleMinMax = (()=>{
+   is_min_max = !is_min_max
+})
+
+let uiocd = 4
+let wining_amount = '' ;
+if($default_Wallet.coin_name === "USDT"){
+    uiocd = (0.20).toFixed(4)
+}else{
+    uiocd = (100).toFixed(4)
+}
+
+
+$:{
+    wining_amount = (uiocd * $payout).toFixed(4)
+}
+
+
+// $:{
+//     uiocd = $handlediceAutoInput
+// }
+
+let bet_number = 0
+let on_win = false
+let onWinEl = 0
+
+let on_lose = false
+let onLoseEl = 0
+
+let stopOnwin = 0
+let stopOnlose = 0
+
+let is_Looping = false
+let yu 
+let turbo = 1000
+
+function playSound(e) {
+    if(e === 1){
+        const audio = new Audio(cr);
+        audio.volume = 0.5;
+        audio.play();
+    }else{
+        const audio = new Audio(win);
+        audio.volume = 0.1;
+        audio.play();
+    }
+}
+
+const dive = (()=>{
+    uiocd = (uiocd / 2).toFixed(4)
+    handlediceAutoInput.set(uiocd)
+})
+
+const mult = (()=>{
+    uiocd = (uiocd * 2).toFixed(4)
+    handlediceAutoInput.set(uiocd)
+})
+
+let winning_track = 0
+let lose_track = 0
+
+let bet_num_count = 0
+const handleAutoStart = (()=>{
+    if(!is_Looping){
+        is_Looping = true
+        yu = setInterval(()=>{
+            if(bet_number){
+                if(bet_num_count === bet_number){
+                    is_Looping = false
+                    clearInterval(yu)
+                    bet_num_count = 0
+                }
+                else{
+                    handleRollSubmit()
+                    bet_num_count += 1
+                }
+            } else if(stopOnwin){
+                if(winning_track > stopOnwin ){
+                    is_Looping = false
+                    clearInterval(yu)   
+                    stopOnwin = 0
+                }else{
+                    handleRollSubmit()
+                }
+            }
+            else if(stopOnlose){
+                if(lose_track > stopOnlose ){
+                    is_Looping = false
+                    clearInterval(yu)   
+                    stopOnlose = 0
+                }else{
+                    handleRollSubmit()
+                }
+            }
+            else{
+                handleRollSubmit()
+            }
+        }, turbo)
+    }else{
+        is_Looping = false
+        clearInterval(yu)
+    }
+})
+
+let history 
+$:{
+    history  = [...$dice_history]
+}
+
+const handleRollSubmit = (async()=>{
+    if(browser && window.navigator.onLine){
+        if($handleisLoggin){
+        if(parseFloat(uiocd) > parseFloat($default_Wallet.balance)){
+            error_msg.set("insufficient balance")
+            is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set("")
+            },4000)
+        }
+        else if( parseFloat(uiocd) > 5000 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Maximum bet amount for USDT is 5,000")
+              is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(uiocd) > 10000 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Maximum bet amount for PPF is 10,000")
+              is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(uiocd) < 100 && $default_Wallet.coin_name === "PPF"){
+            error_msg.set("Minimum bet amount for PPF is 100")
+             is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+        else if( parseFloat(uiocd) < 0.20 && $default_Wallet.coin_name === "USDT"){
+            error_msg.set("Minimum bet amount for USDT is 0.20")
+             is_Looping = false
+            clearInterval(yu)
+            setTimeout(()=>{
+                error_msg.set('')
+            },4000)
+        }
+
+        else{
+            let data = {
+                server_seed: $DiceEncription.server_seed,
+                client_seed: $DiceEncription.client_seed,
+                hash_seed: $DiceEncription.hash_seed,
+                nonce:$DiceEncription.nonce,
+                username: $profileStore.username,
+                profile_img: $profileStore.profile_image,
+                bet_amount:  parseFloat(uiocd),
+                bet_token_img: $default_Wallet.coin_image, 
+                bet_token_name: $default_Wallet.coin_name ,
+                chance: parseFloat($betPosition).toFixed(2),
+                payout: parseFloat($payout),
+                time: new Date(),
+                wining_amount: parseFloat(wining_amount) -  parseFloat(uiocd)
+            }
+            await axios.post(`${URL}/api/user/dice-game/bet`, {
+                data
+            },{
+                headers:{
+                    Authorization: `Bearer ${$handleAuthToken}`
+                }
+            }).then(res =>{
+                let r = {
+                    client_seed: res.data.client_seed,
+                    server_seed:res.data.client_seed,
+                    hash_seed:res.data.hash,
+                    nonce:res.data.nonce + 1,
+                }
+                dice_history.set(history)
+                DiceEncription.set(r)
+                HandleDicePoint.set((parseFloat(res.data.point)).toFixed(2))
+                isbetLoadingBtn.set(false)
+                if(parseFloat($betPosition) > parseFloat($HandleDicePoint)){
+                    let wallet = {
+                        coin_name: $default_Wallet.coin_name ,
+                        coin_image: $default_Wallet.coin_image,
+                        balance:  (parseFloat(data.wining_amount) + parseFloat($default_Wallet.balance)).toFixed(4)
+                    }
+                    default_Wallet.set(wallet)
+                    $soundHandler &&  playSound(2)
+                    HandleHas_won.set(true)
+                    if(onWinEl){
+                        let to = ((onWinEl/100) * parseFloat(uiocd)/1)
+                        let from = (to + parseFloat(uiocd)).toFixed(4)
+                        handlediceAutoInput.set(from)
+                    }
+                    winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
+                    history.push({ ...data,has_won:true, cashout:res.data.point, profit:parseFloat(data.wining_amount), token:$default_Wallet.coin_name})
+                }else{
+                    let wallet = {
+                        coin_name: $default_Wallet.coin_name ,
+                        coin_image: $default_Wallet.coin_image,
+                        balance: (parseFloat($default_Wallet.balance) - parseFloat(data.bet_amount)).toFixed(4)
+                    }
+                    default_Wallet.set(wallet)
+                    HandleHas_won.set(false)
+                    if(onLoseEl){
+                        let to = ((onLoseEl/100) * parseFloat(uiocd)/1)
+                        let from = (to + parseFloat(uiocd)).toFixed(4)
+                        handlediceAutoInput.set(from)
+                    }
+                    lose_track += parseFloat(uiocd)
+                    history.push({...data,has_won:false, cashout:res.data.point, profit:0, token:$default_Wallet.coin_name})
+                }
+            })
+        }
+     onWin.set(onWinEl)
+    }else{
+        error_msg.set("You are not Logged in")
+        clearInterval(yu)
+        is_Looping = false
+        setTimeout(()=>{
+            goto("/login")
+            error_msg.set("")
+        },4000)
+    }
+    }else{
+        error_msg.set('Error in network connection')
+            is_Looping = false
+            setTimeout(()=>{
+                error_msg.set('')
+        },4000)
+    }
+
+})
+
+
+</script>
+
+<div class="game-control-panel">
+
+    {#if $error_msg}
+    <div style="background-color:crimson;" class="error-message">
+        <div class="hTTvsjh"> 
+            <div>{$error_msg}</div>
+        </div>
+    </div>
+   {/if}
+
+    <div class="sc-gFSQbh hRGEiw">
+        <button on:click={handleAutoStart} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+            <div class="button-inner"> {is_Looping ? "Stop" : "Start"} Auto Bet</div>
+        </button>
+        
+        <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
+            <div class="input-label">
+                <div class="sc-hmvnCu efWjNZ label">
+                    <div>Amount</div>
+                    <div class="max-profit">
+                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                            <use xlink:href="#icon_Inform"></use>
+                        </svg>
+                        <div class="tip">
+                            <span class="tit">Max Profit:&nbsp;</span>
+                            <div class="sc-Galmp erPQzq coin notranslate">
+                                <div class="amount">
+                                    <span class="amount-str">0.11<span class="suffix">000000</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="label-amount">0.00138705 USD</div>
+            </div>
+            <div class="input-control">
+                <input type="number" bind:value={uiocd}>
+                {#if $handleisLoggin}
+                   <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {/if}
+                <div class="sc-kDTinF bswIvI button-group">
+                    <button on:click={()=> dive() }>/2</button>
+                    <button on:click={()=> mult() }>x2</button>
+                    {#if is_min_max }
+                    <div class="fix-layer" style="opacity: 1; transform: none;">
+                       <button  class="">Min</button>
+                       <div class="sc-kLwhqv eOA-dmL slider">
+                          <div class="slider-after" style="transform: scaleX(10.001001);"></div>
+                          <div class="slider-handler-wrap" style="transform: translateX(0.1001%);">
+                             <button class="slider-handler"></button>
+                          </div>
+                          <div class="slider-before" style="transform: scaleX(10.998999);"></div>
+                       </div>
+                       <button class="">Max</button>
+                    </div>
+                   {/if }
+                <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
+                    <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />
+                    <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="max" />
+                </button>
+                </div>
+            </div>
+        </div>
+        <div class="sc-ezbkAF hzTJOu input ">
+            <div class="input-label">Number of Bets</div>
+            <div class="input-control">
+                <input type="number" bind:value={bet_number}>
+                <div class="sc-kDTinF bswIvI button-group">
+                    <button on:click={()=> bet_number = 0}>∞</button>
+                    <button on:click={()=> bet_number = 10}>10</button>
+                    <button on:click={()=> bet_number = 100}>100</button>
+                </div>
+            </div>
+        </div>
+        <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+            <div class="input-label">On win</div>
+            <div class="input-control">
+                <input type="number" readonly={!on_win} bind:value={onWinEl}>
+                <div class={`sc-cxVPaa ${on_win ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
+                    <button on:click={()=> on_win = !on_win} class="dot-wrap">
+                        <div  class="dot"></div>
+                    </button>
+                    <div class="reset text">Reset</div>
+                    <div class="increse text">Increase by</div>
+                </div>
+                <div class="percent">%</div>
+            </div>
+        </div>
+        <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+            <div class="input-label">
+                Stop on win<div class="label-amount">0 USD</div>
+            </div>
+            <div class="input-control">
+                <input type="number" bind:value={stopOnwin}>
+            {#if $handleisLoggin}
+                <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+             {/if}
+            </div>
+        </div>
+        <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+            <div class="input-label">On lose</div>
+            <div class="input-control">
+                <input type="number" readonly={!on_lose} bind:value={onLoseEl}>
+                <div class={`sc-cxVPaa ${on_lose ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
+                    <button on:click={()=> on_lose = !on_lose}  class="dot-wrap">
+                        <div class="dot"></div>
+                    </button>
+                    <div class="reset text">Reset</div>
+                    <div class="increse text">Increase by</div>
+                </div>
+                <div class="percent">%</div>
+            </div>
+        </div>
+        <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+            <div class="input-label">
+                Stop on lose
+                <div class="label-amount">0 USD</div>
+            </div>
+            <div class="input-control">
+                <input type="number" bind:value={stopOnlose}>
+                {#if $handleisLoggin}
+                   <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
+                {/if}
+            </div>
+        </div>
+        <div class="sc-gfXuXe kNGYYA script-tips">
+            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
+                <use xlink:href="#icon_Help"></use>
+            </svg>
+            <div class="tip-msg">
+                <span>Use of script is optional and players must take full responsibility for any attendant risks. We will not be held liable in this regard.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.cYiOHZ {
+    display: flex;
+}
+.cYiOHZ.style-mobile {
+    flex-direction: column;
+}
+/* .cYiOHZ .game-control-panel {
+    flex: 1 1 0%;
+} */
+ .game-control-panel {
+    padding: 0px 1.125rem;
+}
+.hRGEiw .bet-button {
+    margin: 1.25rem 0px;
+}
+.cBmlor.button-big {
+    height: 3.625rem;
+}
+.gcQjQT {
+    margin-top: 1rem;
+}
+.gcQjQT .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    font-size: 13px;
+    height: 1.25rem;
+    margin: 0px 1.125rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+.efWjNZ {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 1rem;
+}
+.efWjNZ .max-profit {
+    position: relative;
+    margin-left: 0.1875rem;
+    width: 1rem;
+    height: 1rem;
+}
+.efWjNZ .tip {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    left: -0.75rem;
+    top: -2.625rem;
+    height: 2.25rem;
+    line-height: 1.25rem;
+    padding: 0.3125rem 0.625rem;
+    white-space: nowrap;
+    color: rgba(153, 164, 176, 0.8);
+    background-color: rgb(37, 39, 43);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
+    border-radius: 1.125rem;
+}
+.gOLODp .label-amount {
+    margin-left: auto;
+}
+
+.gcQjQT .input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    opacity: 1;
+    height: 2.75rem;
+    border-radius: 1.5rem;
+    padding: 0px 1.375rem;
+}
+.gcQjQT .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+}
+.cYiOHZ .input-control input {
+    color: rgb(245, 246, 247);
+}
+.fCSgTW .input-control input {
+    font-weight: bold;
+}
+.cYiOHZ .input-control .button-group {
+    margin-right: -1.125rem;
+}
+.fCSgTW .button-group {
+    width: 8.375rem;
+    position: relative;
+}
+.bswIvI {
+    display: flex;
+}
+.bswIvI > button:first-child {
+    margin-left: 0px;
+    padding-left: 0.125rem;
+    border-top-left-radius: 1.125rem;
+    border-bottom-left-radius: 1.125rem;
+}
+.bswIvI > button {
+    height: 2.25rem;
+    width: 2.75rem;
+    padding: 0px;
+    color: rgb(153, 164, 176);
+    background: rgb(49, 52, 60);
+    margin-left: 1px;
+}
+.bswIvI > button:last-child {
+    padding-right: 0.125rem;
+    border-top-right-radius: 1.125rem;
+    border-bottom-right-radius: 1.125rem;
+}
+.cMPLfC {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.cBmlor.button-big {
+    height: 3.625rem;
+}
+/* .cYiOHZ.style-mobile .game-control-panel {
+    padding: 0px 1.125rem;
+} */
+.hzTJOu {
+    margin-top: 1rem;
+}
+.hzTJOu .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    font-size: 13px;
+    height: 1.25rem;
+    margin: 0px 1.125rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+/* .glMLZr .input-control {
+    border-color: transparent;
+} */
+.input-control {
+    background-color: rgba(49, 52, 60, 0.4);
+}
+.hzTJOu .input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    opacity: 1;
+    height: 2.75rem;
+    border-radius: 1.5rem;
+    padding: 0px 1.375rem;
+}
+.hzTJOu .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+.kvRMBr {
+    order: -1;
+    position: relative;
+    margin-left: -1rem;
+    padding-left: 2.25rem;
+    margin-right: 2rem;
+    width: 8.125rem;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    background: rgb(49, 52, 60);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.kvRMBr .dot-wrap {
+    position: absolute;
+    width: 1rem;
+    height: 1.75rem;
+    border-radius: 0.46875rem;
+    background: rgb(67, 179, 9);
+    left: 0.875rem;
+    top: 0.25rem;
+}
+.kvRMBr .dot-wrap .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    left: 0px;
+    transition: top 0.1s ease-in-out 0s;
+    top: 0rem;
+}
+.kvRMBr .reset {
+    color: rgb(153, 164, 176);
+}
+.kvRMBr .text {
+    padding: 0px 0.25rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    height: 0.875rem;
+}
+.kvRMBr .increse {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+
+.eIHoct .dot-wrap {
+    position: absolute;
+    width: 1rem;
+    height: 1.75rem;
+    border-radius: 0.46875rem;
+    background: rgb(67, 179, 9);
+    left: 0.875rem;
+    top: 0.25rem;
+}
+.eIHoct .dot-wrap .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    left: 0px;
+    transition: top 0.1s ease-in-out 0s;
+    top: 0.875rem;
+}
+.eIHoct .reset {
+    color: rgb(153, 164, 176);
+}
+.eIHoct .text {
+    padding: 0px 0.25rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    height: 0.875rem;
+}
+.eIHoct .increse {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+.cTKsPy .percent {
+    margin-right: -0.375rem;
+    color: rgb(67, 179, 9);
+}
+.eIHoct {
+    order: -1;
+    position: relative;
+    margin-left: -1rem;
+    padding-left: 2.25rem;
+    margin-right: 2rem;
+    width: 8.125rem;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    background: rgb(49, 52, 60);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+/* .glMLZr .input-control {
+    border-color: transparent;
+}
+.cYiOHZ .input-control {
+    background-color: rgba(49, 52, 60, 0.4);
+} */
+.kNGYYA .tip-msg {
+    flex: 1 1 0%;
+}
+.kNGYYA {
+    display: flex;
+    margin-top: 0.75rem;
+    font-size: 12px;
+    color: rgb(153, 164, 176);
+    opacity: 0.6;
+}
+.kNGYYA {
+    margin: 0.6rem 0px;
+}
+.input-control input[readonly] {
+    opacity: 0.5;
+}
+</style>

@@ -26,6 +26,11 @@ const handleOriginals = (()=>{
     }
 })
 
+const handleGames = ((e)=>{
+    goto(e.detail)
+    dispatch("menu")
+})
+
 const handleNavigation = ((e) => {
     goto(e)
     dispatch("menu")
@@ -34,18 +39,14 @@ const handleNavigation = ((e) => {
 </script>
 
 <div class="sc-fXEqDS hZgDyO">
-    <button on:click={handleMenu}>
-        <span  class="close-wrap">
-            <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="20" className="custom-icon" title="Custom icon params" />
-        </span>
-    </button>
-
-
     <div id="sidebar" class="sc-xiLah beBixG">
         <div class="mobile-sidebar-top-tab">
             <div class="sc-uojGG hksQGj">
-                <a class="is-active" href="/">Menu</a>
-                <div></div>
+                <button on:click={handleMenu}>
+                    <span  class="close-wrap">
+                        <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="35" className="custom-icon" title="Custom icon params" />
+                    </span>
+                </button>
             </div>
         </div>
         <button on:click={()=>handleNavigation("/")} class="nav-item"> 
@@ -56,18 +57,17 @@ const handleNavigation = ((e) => {
         <button class="nav-item" on:click={handleOriginals}>
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
                 <div class="nav-right">NG Originals</div>
-                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="17" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
+                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="27" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
         </button>
-
 
         <!-- =================== Games ============================ -->
         {#if (isGames)}
-            <Games />
+            <Games on:dipla={handleGames} />
         {/if}
 
         <button on:click={()=>handleNavigation("/bonus")}  class="nav-item">
             <span style="padding: 10px">
-                <Icon src={AiFillGift}  size="25"  color="rgb(67, 179, 9)" className="custom-icon" title="bonus" />
+                <Icon src={AiFillGift}  size="25"  color="#9900CC" className="custom-icon" title="bonus" />
             </span>
             <div class="nav-right">Bonus</div>
         </button>
@@ -100,7 +100,7 @@ const handleNavigation = ((e) => {
             <div class="nav-right">Recent Play</div>
         </button>
 
-        <div class="theme-live border_top">
+        <!-- <div class="theme-live border_top">
             <div class="sc-gSQFLo dprxuS theme">
                 <div class="theme-check">
                     <div class="item is-active">
@@ -121,9 +121,9 @@ const handleNavigation = ((e) => {
                 </div>
                 <span>Live Support</span>
             </div>
-        </div>
+        </div> -->
 
-        <div class="language border_top">
+        <!-- <div class="language border_top">
             <span>Language Options</span>
             <div class="sc-jJoQJp gOHquD select  sc-dVNjXY bfVniQ">
                 <div class="select-trigger">
@@ -133,7 +133,7 @@ const handleNavigation = ((e) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="network border_top">
             <span>Social Media</span>
@@ -151,3 +151,18 @@ const handleNavigation = ((e) => {
         </div>
     </div>
 </div>
+
+
+<style>
+.sc-uojGG.hksQGj{
+    width: 100%;
+    position: fixed;
+}
+/* .mobile-sidebar-top-tab{
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    background-color: rgb(36, 38, 43);
+    z-index: 56;
+} */
+</style>

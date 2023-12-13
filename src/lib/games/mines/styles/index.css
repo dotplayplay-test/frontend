@@ -1,0 +1,313 @@
+.lmWKWf.game-style0, .lmWKWf.game-style1, .lmWKWf.game-style-iframe {
+    max-width: 1368px;
+    margin: 0px auto;
+    padding: 1.25rem 0.625rem;
+}
+.lmWKWf {
+    min-height: 90vh;
+}
+.lmWKWf.game-style0 .game-area, .lmWKWf.game-style1 .game-area, .lmWKWf.game-style-iframe .game-area {
+    display: flex;
+    flex-wrap: wrap;
+}
+.lmWKWf.game-style0 .game-main {
+    padding-left: 330px;
+    min-height: 47.5rem;
+}
+.lmWKWf.game-style0 .game-main, .lmWKWf.game-style1 .game-main, .lmWKWf.game-style-iframe .game-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    overflow: hidden;
+}
+.lmWKWf .game-main {
+    position: relative;
+    border-radius: 1.25rem;
+    background-color: rgb(23, 24, 27);
+}
+.cYiOHZ.style0 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.625rem;
+    border-right: 1px solid rgba(49, 52, 60, 0.5);
+}
+.cYiOHZ {
+    display: flex;
+}
+.cYiOHZ .game-control-switch {
+    display: flex;
+    flex: 0 0 auto;
+}
+.ikWSlH {
+    display: flex;
+    opacity: 1;
+}
+.cYiOHZ.style0 .game-control-switch > button {
+    height: 2.75rem;
+    line-height: 2.75rem;
+    text-align: center;
+    border-radius: 1.375rem;
+}
+.cYiOHZ .game-control-switch > button.is-active {
+    color: rgb(245, 246, 247);
+    font-weight: bold;
+}
+.cYiOHZ .game-control-switch > button {
+    flex: 1 1 0%;
+    cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+}
+.cYiOHZ .game-control-switch > button {
+    flex: 1 1 0%;
+    cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+}
+.cYiOHZ.style0 .game-control-switch > button.is-active {
+    background-color: rgba(49, 52, 60, 0.4);
+}
+.lmWKWf.game-style0 .game-control-panel {
+    height: 1%;
+}
+.cYiOHZ .game-control-panel {
+    flex: 1 1 0%;
+}
+
+.gcQjQT .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0px 1.125rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+.efWjNZ {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 1rem;
+}
+.efWjNZ .max-profit {
+    position: relative;
+    margin-left: 0.1875rem;
+    width: 1rem;
+    height: 1rem;
+}
+.efWjNZ .tit {
+    color: rgb(128, 143, 158);
+}
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}
+.gOLODp .label-amount {
+    margin-left: auto;
+}
+.lmWKWf .input-control {
+    border-color: transparent;
+}
+.cYiOHZ .input-control {
+    background-color: rgba(49, 52, 60, 0.4);
+}
+.gcQjQT .input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    opacity: 1;
+    height: 2.75rem;
+    border-radius: 1.5rem;
+    padding: 0px 1.375rem;
+}
+.lgTgT input {
+    font-weight: bold;
+}
+.fCSgTW .input-control input {
+    font-weight: bold;
+}
+.cYiOHZ .input-control input {
+    color: rgb(245, 246, 247);
+}
+.gcQjQT .input-control textarea, .gcQjQT .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+}
+.gOLODp .coin-icon {
+    order: -1;
+    margin-right: 0.3125rem;
+    margin-left: -0.625rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.cYiOHZ .input-control .button-group {
+    margin-right: -1.125rem;
+}
+.fCSgTW .button-group {
+    width: 8.375rem;
+    position: relative;
+}
+.bswIvI {
+    display: flex;
+}
+.bswIvI > button:first-child {
+    margin-left: 0px;
+    padding-left: 0.125rem;
+    border-top-left-radius: 1.125rem;
+    border-bottom-left-radius: 1.125rem;
+}
+.bswIvI > button {
+    height: 2.25rem;
+    width: 2.75rem;
+    padding: 0px;
+    color: rgb(153, 164, 176);
+    background: rgb(49, 52, 60);
+    margin-left: 1px;
+}
+.bswIvI > button:last-child {
+    padding-right: 0.125rem;
+    border-top-right-radius: 1.125rem;
+    border-bottom-right-radius: 1.125rem;
+}
+.bswIvI > button {
+    height: 2.25rem;
+    width: 2.75rem;
+    padding: 0px;
+    color: rgb(153, 164, 176);
+    background: rgb(49, 52, 60);
+    margin-left: 1px;
+}
+.cMPLfC {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.gWrsXy {
+    margin-top: 1rem;
+}
+.gWrsXy .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0px 1.125rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+.gOLODp .label-amount {
+    margin-left: auto;
+}
+.lmWKWf .input-control {
+    border-color: transparent;
+}
+.cYiOHZ .input-control {
+    background-color: rgba(49, 52, 60, 0.4);
+}
+.gWrsXy .input-control {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(45, 48, 53);
+    background-color: rgba(45, 48, 53, 0.5);
+    opacity: 0.5;
+    height: 2.75rem;
+    border-radius: 1.5rem;
+    padding: 0px 1.375rem;
+}
+.gWrsXy .input-control textarea, .gWrsXy .input-control input {
+    flex: 1 1 0%;
+    width: 100%;
+    height: 100%;
+    min-width: 1rem;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: rgb(245, 246, 247);
+}
+.lgTgT input {
+    font-weight: bold;
+}
+.gOLODp .coin-icon {
+    order: -1;
+    margin-right: 0.3125rem;
+    margin-left: -0.625rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.gWrsXy .input-control::after {
+    position: absolute;
+    z-index: 10;
+    inset: 0px;
+    content: "";
+}
+.lgTgT .bet-button {
+    margin-top: 1.875rem;
+}
+.efWjNZ .max-profit {
+    position: relative;
+    margin-left: 0.1875rem;
+    width: 1rem;
+    height: 1rem;
+}
+.efWjNZ .icon {
+    fill: rgb(67, 179, 9);
+    width: 1rem;
+    height: 1rem;
+    vertical-align: top;
+    transform: rotate(180deg);
+    cursor: pointer;
+}
+.efWjNZ .tip {
+    box-sizing: border-box;
+    position: absolute;
+    left: -0.75rem;
+    top: -2.625rem;
+    height: 2.25rem;
+    line-height: 1.25rem;
+    padding: 0.3125rem 0.625rem;
+    white-space: nowrap;
+    color: rgba(153, 164, 176, 0.8);
+    background-color: rgb(37, 39, 43);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
+    border-radius: 1.125rem;
+}
+.erPQzq {
+    display: inline-flex;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+}
+.erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+}
+.erPQzq .suffix {
+    opacity: 0.5;
+}

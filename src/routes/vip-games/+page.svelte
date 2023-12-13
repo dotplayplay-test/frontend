@@ -13,3 +13,9 @@
         <Mobile />
     </div>
 </div>
+
+<style>
+.vip-mobile-page{
+    display: none;
+}
+</style>

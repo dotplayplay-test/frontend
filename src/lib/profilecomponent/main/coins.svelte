@@ -3,78 +3,38 @@ import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import { createEventDispatcher , onMount} from 'svelte'
 const dispatch = createEventDispatcher()
+import { UserProfileEl } from "../../index"
 import { updateCoins } from "./updateCoin"
-import { UserProfileEl } from "../../index";
-const { handleDefaultwallet, handleUSDTwallet, handlePPFwallet, 
-    handlePPLwallet,handlePPEwallet, handlePPDwallet } = UserProfileEl()
 const { useCoinUpdate } = updateCoins()
-import { ppdWallet, ppeWallet, ppfWallet, pplWallet, usdt_Wallet, default_Wallet } from "$lib/store/coins"
+import { profileStore, handleisLoading, handleisLoggin, app_Loading } from "$lib/store/profile";
+import { default_Wallet, coin_list } from "$lib/store/coins";
+import { browser } from '$app/environment'
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+let show_currencyName
+const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
 
 $:{
-    onMount(async()=>{
-        handleDefaultwallet()
-        handleUSDTwallet()
-        handlePPFwallet()
-        handlePPLwallet()
-        handlePPEwallet()
-        handlePPDwallet()
-    })
+    show_currencyName = browser && JSON.parse(localStorage.getItem('show-full-curency'))
 }
 
-let coins
-$:{
-    coins = [
-    {
-        id: 1,
-        coin_name: $usdt_Wallet.coin_name,
-        coin_fname: $usdt_Wallet.coin_fname,
-        coin_image: $usdt_Wallet.coin_image,
-        balance: $usdt_Wallet.balance,
-        suffix: $usdt_Wallet.suffix,
-        select: ($usdt_Wallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 2,
-        coin_name: $ppdWallet && $ppdWallet.coin_name,
-        coin_fname:  $ppdWallet.coin_fname,
-        coin_image: $ppdWallet.coin_image,
-        balance: $ppdWallet.balance,
-        suffix: $ppdWallet.suffix,
-        select: ($ppdWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 3,
-        coin_name:  $ppeWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
-        coin_image: $ppeWallet.coin_image,
-        balance: $ppeWallet.balance,
-        suffix: $ppeWallet.suffix,
-        select: ($ppeWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 4,
-        coin_name: $pplWallet.coin_name,
-        coin_fname:  $ppeWallet.coin_fname,
-        coin_image:  $pplWallet.coin_image,
-        balance:  $pplWallet.balance,
-        suffix: $pplWallet.suffix,
-        select: ($pplWallet.coin_name === $default_Wallet.coin_name)
-    },
-    {
-        id: 5,
-        coin_name: $ppfWallet.coin_name,
-        coin_fname:  $ppfWallet.coin_name,
-        coin_image: $ppfWallet.coin_image,
-        balance:  $ppfWallet.balance,
-        suffix: $ppfWallet.suffix,
-        select: ($ppfWallet.coin_name == $default_Wallet.coin_name)
-    },
-]
-}
-
+onMount(async()=>{
+    let usdt = await handleUSDTwallet()
+    let ppd = await handlePPDwallet()
+    let ppl = await handlePPLwallet()
+    let ppf = await handlePPFwallet()
+    coin_list.set([usdt, ppd, ppl, ppf] )
+})
 
 const handleSelectCoin = ((e) => {
     dispatch(`coinDefault`, e)
+    $coin_list.forEach(element => {
+    if(element.coin_name === e.coin_name){
+        element.is_active = true
+    }else{
+        element.is_active = false
+    }
+ });
     useCoinUpdate(e)
 })
 
@@ -91,24 +51,31 @@ const handleSelectCoin = ((e) => {
             </div>
         </div>
         <div class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list">
-            {#each coins as coin (coin.id)}
-            <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.select ? "active" : "normal"}  `}>
-                <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
-                    <div class="coin-wrap">
-                        <img class="coin-icon" alt="" src={coin.coin_image}>
-                    </div>
-                    <div class="name-wrap">
-                        <div class="currency-name">{coin.coin_name}</div>
-                    </div>
-                    <div class="amount-wrap">
-                        <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <div class="amount">
-                                <span class="amount-str">{coin.balance}.<span class="suffix">{coin.suffix}</span></span>
+            {#each $coin_list as coin}
+            {#if coin.coin_image !== undefined}
+                <button on:click={()=> handleSelectCoin(coin)} class={`sc-TBWPX kjMlDW currency-item notranslate ${coin.is_active ? "active" : "normal"}  `}>
+                    <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
+                        <div class="coin-wrap">
+                            <img class="coin-icon" alt="" src={coin.coin_image}>
+                        </div>
+                        <div class="name-wrap">
+                            <div class="currency-name">{coin.coin_name}</div>
+                            {#if show_currencyName}
+                                <div class="full-name">{coin.coin_fname}</div>
+                            {/if}
+                        </div>
+                        <div class="amount-wrap">
+                            <div class="sc-Galmp erPQzq coin notranslate monospace">
+                                <div class="amount">
+                                    <span class="amount-str">{(coin.balance).toFixed(4)}<span class="suffix">00</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </button>
+                </button>
+            {:else}
+                <div style="text-align: center; padding:20px">Loading...</div>
+            {/if}
             {/each}
         </div>
     </div>
@@ -280,25 +247,25 @@ const handleSelectCoin = ((e) => {
 
 @media screen and (max-width: 650px) {
     .eqDSYn {
-        height: 38.75rem;
-        /* width: 26.25rem; */
-        position: absolute;
-        right: 0px;
-        top: 100%;
-        /* padding-top: 0.5rem; */
-        /* z-index: 99; */
-    }
+    height: 21.75rem;
+    width: 26.2rem;
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    padding-top: 0.5rem;
+    z-index: 99;
+}
 
-    .eqDSYn {
-        width: 100%;
-        left: 0px;
-        z-index: 10;
-        padding-top: 0px;
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px 0px;
-    }
+.eqDSYn {
+    width: 137%;
+    left: -80px;
+    z-index: 10;
+    padding-top: 0px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px 0px;
+}
 
-    .eqDSYn .balance-select {
-        border-radius: 0px 0px 1.25rem 1.25rem;
-    }
+.eqDSYn .balance-select {
+    border-radius: 0px 0px 1.25rem 1.25rem;
+}
 }
 </style>

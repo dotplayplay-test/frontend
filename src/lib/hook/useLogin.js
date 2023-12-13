@@ -1,11 +1,19 @@
+import { handleAuthToken } from "$lib/store/routes"
+import { profileStore } from "$lib/store/profile"
+import { default_Wallet } from "$lib/store/coins"
+import {  goto } from "$app/navigation";
+import { error_msg, is_loading} from "../../lib/nestedpages/auth/login/store"
+import { ServerURl } from "$lib/backendUrl"
+const URL = ServerURl()
+
 export const useLogin = () => {
   let error;
   let isLoading;
   const login = async (data) => {
-    isLoading = true
+    is_loading.set(true)
     error = null
     const response = await fetch(
-      "http://localhost:8000/api/users/signup",{
+      `${URL}/api/users/signup`,{
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -15,15 +23,18 @@ export const useLogin = () => {
     );
     const json = await response.json();
     if (!response.ok) {
-      isLoading = false;
+      is_loading.set(false)
       error = json.error
       console.log(error)
     }
     if (response.ok) {
-      // Save user to localStorage
-      localStorage.setItem("user", JSON.stringify(json));
-      // Update the auth store
-      window.location.href = '/'
+ 
+      localStorage.setItem("user", JSON.stringify(json.Token));
+      handleAuthToken.set(json.Token)
+      profileStore.set(json.result)
+      window.location.href = ("/")
+      // goto("/")
+      default_Wallet.set(json.default_wallet)
       isLoading = false
     }
   };

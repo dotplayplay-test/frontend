@@ -15,7 +15,6 @@
 }
 .gAvMHL .header {
   transition: all 0.5s ease 0s;
-  max-width: 112.5rem;
   padding: 0px 0.75rem;
   margin: 0px auto;
   display: flex;
@@ -188,17 +187,8 @@
   align-items: center;
   position: relative;
 }
-.icGouR {
-  position: relative;
-  margin: 0.4375rem 0.25rem 0.4375rem 0.4375rem;
-}
-.boxpOO {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  font-weight: 800;
-  min-width: 5.75rem;
-}
+
+
 .boxpOO .coin-icon {
   width: 1rem;
   height: 1rem;
@@ -217,10 +207,7 @@
   color: rgb(245, 246, 247);
   font-weight: 800;
 }
-.erPQzq .amount-str {
-  width: 7em;
-  display: inline-block;
-}
+
 .erPQzq .suffix {
   opacity: 0.5;
 }
@@ -269,8 +256,51 @@
   height: 2.5rem;
   border-radius: 50%;
 }
-.fGPfpD {
-  height: 100%;
-  width: 7.25rem;
-  border-radius: 30px;
+@media only screen and (min-width: 650px) {
+  .fGPfpD {
+    height: 100%;
+    width: 7.25rem;
+    border-radius: 30px;
+  }
+  .boxpOO {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 800;
+    min-width: 5.75rem;
+  }
+  .erPQzq .amount-str {
+    width: 7em;
+    display: inline-block;
+  }
+  .icGouR {
+    position: relative;
+    margin: 0.4375rem 1.95rem 0.2375rem 0.2375rem;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .fGPfpD {
+    height: 100%;
+    width: 5.05rem;
+    font-size: 12px;
+    border-radius: 30px;
+  }
+  .boxpOO {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 800;
+    min-width: 0rem;
+  }
+  .erPQzq .amount-str {
+    display: inline-block;
+  }
+  .icGouR {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    width: 28%;
+}
 }
