@@ -1,4 +1,5 @@
 <script>
+
 import Gameview from "$lib/games/ClassicDice/gameview.svelte";
 import "$lib/games/ClassicDice/styles/index.css"
 import Controls from "$lib/games/ClassicDice/Controls.svelte";
@@ -195,6 +196,7 @@ const handleSoundState = (()=>{
 </div>
 {/if}
 
+
 <style>
 
 .uytutfyh{
@@ -204,6 +206,7 @@ const handleSoundState = (()=>{
 }
 .tdthuy {
     display: flex;
+
     align-items: center;
     justify-content: center;
     align-content: center;
@@ -217,6 +220,7 @@ const handleSoundState = (()=>{
     border-radius: 50%;
     animation: monyy 3s infinite;
 }
+
 
 @keyframes monyy{
     10%{
