@@ -369,10 +369,11 @@ const handlesjen = ((e)=>{
         </div>
 
         <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
-            <div class="input-label">Stop on win<div class="label-amount">0 USD</div>
+            <div class="input-label">
+                Stop on win<div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
-                <input type="number" disabled={$Handles_alive} bind:value={$handleStopOnwin}>
+                <input type="number" bind:value={stopOnwin}>
             {#if $handleisLoggin}
                 <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
              {/if}
@@ -382,9 +383,9 @@ const handlesjen = ((e)=>{
         <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
             <div class="input-label">On lose</div>
             <div class="input-control">
-                <input type="number" disabled={$Handles_alive} readonly={!on_lose} bind:value={$handleOnLose}>
+                <input type="number" readonly={!on_lose} bind:value={onLoseEl}>
                 <div class={`sc-cxVPaa ${on_lose ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
-                    <button disabled={$Handles_alive} on:click={()=> on_lose = !on_lose}  class="dot-wrap">
+                    <button on:click={()=> on_lose = !on_lose}  class="dot-wrap">
                         <div class="dot"></div>
                     </button>
                     <div class="reset text">Reset</div>
