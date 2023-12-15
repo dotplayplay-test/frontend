@@ -25,6 +25,7 @@ const handleNavigation = ((w) => {
 
 let is_loading = false
 const handleCrashHistory = (async()=>{
+    is_loading = true
     await axios.post(`${URL}/api/user/crash-game/history`)
     .then((result) => {
         is_loading = false

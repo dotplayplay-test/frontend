@@ -2,7 +2,6 @@
 import MobileManual from "$lib/games/ClassicDice/mobileManual.svelte";
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder} from "$lib/games/ClassicDice/store/index"
-import { DiceHistory } from "$lib/games/ClassicDice/hook/diceHistory"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
@@ -11,8 +10,6 @@ import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
 import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
-const { historyD } = DiceHistory()
-import { onMount } from "svelte";
 import { handleisLoggin } from "$lib/store/profile"
 import HistoryDetails from "$lib/games/ClassicDice/componets/historyDetails.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
@@ -21,16 +18,11 @@ import click from "$lib/games/ClassicDice/audio/click.wav"
 import cr from "$lib/games/ClassicDice/audio/click.wav"
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
 import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
-    import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
-    import Help from "../crash/help.svelte";
-    import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
+import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
+import Help from "../crash/help.svelte";
+import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 let range = 50
 
-$:{
-    onMount(async()=>{
-        $handleisLoggin &&  historyD()
-    })
-}
 
 $:{
     betPosition.set(range)

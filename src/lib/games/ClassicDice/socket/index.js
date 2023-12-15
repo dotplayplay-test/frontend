@@ -18,7 +18,6 @@ export const handleCountdown = (()=>{
     socket.on("dice-wallet", data=>{
         dice_wallet.set(data)
     })
-
     socket.on("new-messages", data=>{
         chats.set(data)
     })

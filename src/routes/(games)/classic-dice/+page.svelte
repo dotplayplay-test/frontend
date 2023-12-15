@@ -21,7 +21,7 @@ import Help from "$lib/games/ClassicDice/componets/help.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { ServerURl } from "$lib/backendUrl"
-    import Mobile from "./mobile.svelte";
+import Mobile from "./mobile.svelte";
 const URl = ServerURl()
 
 let is_loading = false
