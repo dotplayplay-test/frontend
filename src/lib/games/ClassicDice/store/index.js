@@ -3,6 +3,9 @@ import { writable } from "svelte/store"
 let payoutEl = ''
 export let payout = writable(payoutEl)
 
+let hks = 50
+export let range = writable(hks)
+
 let isbetDiceBTN = false
 export let isbetLoadingBtn = writable(isbetDiceBTN)
 

@@ -12,6 +12,7 @@ import { browser } from '$app/environment';
 import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 export let DgII
+import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 $: (DgII)
 
 import {
@@ -36,7 +37,6 @@ let is_seeed_settigs = false
 const handleSeedSettings = (()=>{
     is_seeed_settigs = !is_seeed_settigs
 })
-
 
 function formatTime(timestamp) {
     const date = new Date(timestamp);
@@ -179,14 +179,16 @@ $:{
                     <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">Server Seed</div>
                         <div class="input-control">
-                            <input type="text" placeholder="The seed hasn't been revealed yet." readonly value="">
+                            <input type="text" placeholder="The seed hasn't been revealed yet." readonly value={$DiceEncription.server_seed === DgII.server_seed ? "" : DgII.server_seed}>
                         </div>
                     </div>
                     <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">
                             <div class="seed-col">
                                 <div>Server Seed (hash)</div>
-                                <button on:click={()=>handleSeedSettings()} class="cl-primary">Seed Settings</button>
+                                {#if $DiceEncription.server_seed === DgII.server_seed}
+                                    <button on:click={()=>handleSeedSettings()} class="cl-primary">Seed Settings</button>
+                                {/if}
                             </div>
                         </div>
                         <div class="input-control">
