@@ -1,8 +1,6 @@
 <script>
-import {
-    dicegameplays
-} from "../store/index"
-    import HistoryDetails from "./historyDetails.svelte";
+import { dicegameplays} from "../store/index"
+import HistoryDetails from "./historyDetails.svelte";
 
 let newItem;
  $: {
@@ -49,7 +47,7 @@ function formatTime(timestamp) {
                 </tr>
             </thead>
             <tbody>
-                {#each newItem.slice(0, 15) as dice  }
+                {#each newItem.slice(0, 20) as dice  }
                 <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
                     <td>
                         <button class="hash ellipsis">{dice.bet_id}</button>

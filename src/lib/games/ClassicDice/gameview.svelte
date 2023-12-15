@@ -1,10 +1,10 @@
 <script>
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
-import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
+import { dicegameplays } from "../ClassicDice/store/index"
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
-const { historyD } = DiceHistory()
+import axios from "axios"
 import {dice_troo, dice_wallet} from "$lib/games/ClassicDice/store/index"
 import { onMount } from "svelte";
 import { isbetLoadingBtn } from "./store";
@@ -12,6 +12,9 @@ import { default_Wallet, coin_list } from "$lib/store/coins";
 import { handleisLoggin, profileStore } from "../../store/profile"
 import HistoryDetails from "./componets/historyDetails.svelte";
 import click from "./audio/click.wav"
+import { handleAuthToken } from "$lib/store/routes"
+import { ServerURl } from "$lib/backendUrl"
+const URl = ServerURl()
 // import { handleTransmit } from "../ClassicDice/AutoControllers.svelte"
 import cr from "./audio/click.wav"
 import win from "./audio/mixkit-achievement-bell-600.wav";
@@ -19,11 +22,23 @@ let range = 50
 let rangeEl = 50
 let flip = 50
 
-$:{
-    onMount(async()=>{
-        $handleisLoggin &&  historyD()
-    })
-}
+const handleDiceGameHistory = (async()=>{
+     await axios.get(`${URl}/api/user/dice-game/dice-history`,{
+          headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+        }})
+        .then((response)=>{
+            dice_history.set(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.response)
+        })
+})
+
+onMount(async()=>{
+    $handleisLoggin && await handleDiceGameHistory()
+})
 
 $:{
     if(range < 0){
@@ -50,7 +65,6 @@ let houseEgde = 1
 let game__charges = 100 / houseEgde
 let game_logic;
 let total_charge;
-
 
 $: {
     if($rollunder){
@@ -216,7 +230,7 @@ $:{
             {#if $handleisLoggin}
                 {#if $dice_history.length !== 0}
                 <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-                {#each $dice_history.slice(-6) as  dice} 
+                {#each $dice_history.slice(-10) as  dice} 
                     <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
                         <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{(parseFloat(dice.cashout)).toFixed(2)}</div>
                     </button>

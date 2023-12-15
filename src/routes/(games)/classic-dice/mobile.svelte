@@ -2,7 +2,6 @@
 import MobileManual from "$lib/games/ClassicDice/mobileManual.svelte";
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder} from "$lib/games/ClassicDice/store/index"
-import { DiceHistory } from "$lib/games/ClassicDice/hook/diceHistory"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
@@ -11,8 +10,6 @@ import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
 import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
-const { historyD } = DiceHistory()
-import { onMount } from "svelte";
 import { handleisLoggin } from "$lib/store/profile"
 import HistoryDetails from "$lib/games/ClassicDice/componets/historyDetails.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
@@ -21,16 +18,11 @@ import click from "$lib/games/ClassicDice/audio/click.wav"
 import cr from "$lib/games/ClassicDice/audio/click.wav"
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
 import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
-    import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
-    import Help from "../crash/help.svelte";
-    import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
+import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
+import Help from "../crash/help.svelte";
+import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 let range = 50
 
-$:{
-    onMount(async()=>{
-        $handleisLoggin &&  historyD()
-    })
-}
 
 $:{
     betPosition.set(range)
@@ -217,7 +209,7 @@ const handleSoundState = (()=>{
                                 </div>
                             {/if}
                         </div>
-                        </div>
+                    </div>
                     </div>
                     <div class="sc-hcupDf dqwCNK game-box sc-jwQYvw fPOrXr">
                         <div class="sc-gLDmcm gnjHQb">
@@ -285,7 +277,6 @@ const handleSoundState = (()=>{
                                 </div>
                             </div>
                             <svg class="box-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 996 46"><defs><linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#31343C"></stop><stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop></linearGradient></defs><g opacity=".899"><path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path></g></svg>
-
                         </div>
                     </div>
                 </div>
@@ -320,7 +311,6 @@ const handleSoundState = (()=>{
                         <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
                     </button>
                 </div>
-
             </div>
         </div>
     <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
@@ -379,9 +369,9 @@ const handleSoundState = (()=>{
     position: relative;
     border-radius: 1.375rem;
 }
-.fIoiVG .recent-list-wrap {
+/* .fIoiVG .recent-list-wrap {
     margin: 0px 0.625rem;
-}
+} */
 .fIoiVG .empty-item {
     display: flex;
     width: 100%;
@@ -415,7 +405,7 @@ const handleSoundState = (()=>{
     min-height: 37.5rem;
 }
 .fPOrXr {
-    padding: 0px 0.75rem;
+    /* padding: 0px 0.75rem; */
     min-height: 30rem;
 }
 .gnjHQb {
@@ -451,7 +441,7 @@ const handleSoundState = (()=>{
 }
 .fPOrXr .game-slider {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 3rem;
 }
 .fPOrXr .game-slider .slider-wrapper {
     position: relative;
@@ -467,6 +457,7 @@ const handleSoundState = (()=>{
     height: 2.5rem;
     position: absolute;
     inset: 0px 1.125rem;
+    padding-top: 10px;
     transition: opacity 0.3s ease 0s;
 }
 .fPOrXr .game-slider .slider-wrapper .slider-handles .drag-block {
@@ -556,9 +547,9 @@ const handleSoundState = (()=>{
     background-color: rgb(35, 38, 43);
 }
 .fPOrXr .game-slider .slider-wrapper .slider-handles .slider-track .dice_num {
-    width: 6rem;
-    height: 2.75rem;
-    font-size: 1rem;
+    width: 7rem;
+    height: 3.25rem;
+    font-size: 1.4rem;
     font-weight: bold;
     top: -2.5rem;
     left: 0.125rem;
@@ -598,7 +589,7 @@ const handleSoundState = (()=>{
     box-shadow: rgba(49, 52, 60, 0.4) 0px 0px 0px 1.5rem;
 }
 .fPOrXr .game-slider .slider-wrapper .slider-handles .slider-line {
-    height: 0.375rem;
+    /* height: 0.375rem; */
     box-shadow: rgba(49, 52, 60, 0.4) 0px 0px 0px 1.25rem;
 }
 .fPOrXr .game-slider .slider-wrapper .slider-handles .slider-line .slide-win {
@@ -920,9 +911,9 @@ const handleSoundState = (()=>{
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
 }
 
-.fIoiVG .recent-list-wrap {
+/* .fIoiVG .recent-list-wrap {
     margin: 0px 0.625rem;
-}
+} */
 .fIoiVG .recent-list {
     position: absolute;
     font-size: 13px;

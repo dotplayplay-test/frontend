@@ -7,32 +7,60 @@ import { browser } from '$app/environment';
 import { ServerURl} from "../../../backendUrl";
 const URL = ServerURl()
 const dispatch = createEventDispatcher()
+import { handleAuthToken } from "$lib/store/routes"
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function generateString(length) {
+    let result = '';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
 
 const handleCloseHelp = (() => {
     dispatch("close", 5)
 })
 
-let client = ''
+let client = generateString(10)
 let server = ''
+let is_loading = false
 const handleSeedSettings = (async()=>{
-    if(!client){
-        console.log("Can't be empty")
-    }else{
-        let data = {
-            client,
-            server
-        }
-        await axios.post(`${URL}/api/user/dice-game/seed-settings`,{
-            data
-        })
-        .then((res)=>{
-            console.log(res)
-        })
-        .catch(error =>{
-            console.log(error)
-        })
+    const regex = /^[a-zA-Z0-9]+$/;
+    is_loading = true
+    if(!client || client.length < 10){
+        setTimeout(()=>{
+            error_msg.set("Field must have at least 10 characters")
+            is_loading = false
+        },800)
+    }else if(!regex.test(client)){
+        setTimeout(()=>{
+            error_msg.set("Field must have at least 10 characters")
+            is_loading = false
+        },800)
     }
+    else{
+    await axios.post(`${URL}/api/user/dice-game/seed-settings`,{
+        data: client
+    },{
+    headers: {
+        "Content-type": "application/json",
+        'Authorization': `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((res)=>{
+        error_msg.set(res.data)
+        is_loading = false
+        handleCancle()
+    })
+    .catch((error)=>{
+        is_loading = false
+    })
+}
+setTimeout(()=>{
+    error_msg.set("")
+},4000)
 })
 
 let is_mobile = false

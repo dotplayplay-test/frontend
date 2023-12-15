@@ -1,11 +1,12 @@
 <script>
 import { profileStore } from "$lib/store/profile"
-import { dicegameplays } from "../../ClassicDice/store/index"
+import { dice_history } from "../../ClassicDice/store/index"
 import HistoryDetails from "./historyDetails.svelte";
 let newItem;
 
+
 $: {
-    newItem =  [...$dicegameplays].reverse()
+    newItem =  [...$dice_history].reverse()
 }
 
 let DgII = ''
@@ -29,7 +30,6 @@ function formatTime(timestamp) {
 }
 
 </script>
-
 
 {#if hisQQ}
     <HistoryDetails on:close={handleDiceHistoryDetail} DgII={DgII}/> 
@@ -66,7 +66,7 @@ function formatTime(timestamp) {
                         </div>
                     </td>
                     {#if dice.has_won}
-                    <td class="payout">{dice.payout}×</td>
+                    <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
                     {:else}
                     <td class="payout">0.00×</td>
                     {/if}

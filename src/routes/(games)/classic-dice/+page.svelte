@@ -1,4 +1,5 @@
 <script>
+
 import Gameview from "$lib/games/ClassicDice/gameview.svelte";
 import "$lib/games/ClassicDice/styles/index.css"
 import Controls from "$lib/games/ClassicDice/Controls.svelte";
@@ -21,7 +22,8 @@ import Help from "$lib/games/ClassicDice/componets/help.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 import { ServerURl } from "$lib/backendUrl"
-    import Mobile from "./mobile.svelte";
+import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+import Mobile from "./mobile.svelte";
 const URl = ServerURl()
 
 let is_loading = false
@@ -97,6 +99,7 @@ const handleSoundState = (()=>{
 
 
 
+
 </script>
 
 {#if is_hotkey}
@@ -117,7 +120,8 @@ const handleSoundState = (()=>{
 
 
 {#if !is_loading}
-<div id="main">
+
+<div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="dice-main">
     <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
         <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
             <div class="game-area">
@@ -184,7 +188,7 @@ const handleSoundState = (()=>{
         </div>
     </div>
 </div>
-<div class="mobile">
+<div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && !$is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="dice-mobile">
     <Mobile />
 </div>
 {:else}
@@ -195,6 +199,7 @@ const handleSoundState = (()=>{
 </div>
 {/if}
 
+
 <style>
 
 .uytutfyh{
@@ -204,6 +209,7 @@ const handleSoundState = (()=>{
 }
 .tdthuy {
     display: flex;
+
     align-items: center;
     justify-content: center;
     align-content: center;
@@ -217,6 +223,7 @@ const handleSoundState = (()=>{
     border-radius: 50%;
     animation: monyy 3s infinite;
 }
+
 
 @keyframes monyy{
     10%{

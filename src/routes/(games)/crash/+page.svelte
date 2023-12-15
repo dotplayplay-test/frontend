@@ -8,12 +8,11 @@ import Allbet from "./allbet.svelte";
 import Main from "./main.svelte";
 import Mybet from "./mybet.svelte";
 import MobileMain from './mobileMain.svelte';
-import { crash_historyEl} from "$lib/crashgame/store"
-
+import { crash_historyEl, mybetEl, game_id} from "$lib/crashgame/store"
+import { handleAuthToken } from "$lib/store/routes";
 import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
-
 
 let isClassic = true
 const handleNavigation = ((w) => {
@@ -26,6 +25,7 @@ const handleNavigation = ((w) => {
 
 let is_loading = false
 const handleCrashHistory = (async()=>{
+    is_loading = true
     await axios.post(`${URL}/api/user/crash-game/history`)
     .then((result) => {
         is_loading = false
@@ -36,8 +36,24 @@ const handleCrashHistory = (async()=>{
     });
 })
 
+const handleMybet = (async()=>{
+    await axios.get(`${URL}/api/user/crash-game/my-bet`,{
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${$handleAuthToken}`
+        }
+    })
+    .then((result) => {
+        mybetEl.set(result.data)
+    }).catch((err) => {
+        console.log(err.response)  
+    });
+})
+
+
 onMount(async()=>{
   await handleCrashHistory()
+  await handleMybet()
 })
    
 
@@ -72,7 +88,7 @@ const handleTrends = (()=>{
         </div>
     </div>
 
-    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && $is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="crash-mobile">
+    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && !$is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="crash-mobile">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-gRtYjc iIcxfY game-style-mobile sc-jWULZn KqoAz">
                 <div class="sc-UMyrj fghMqx">

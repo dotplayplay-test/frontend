@@ -106,7 +106,6 @@
         $default_Wallet.coin_name === "PPF"
       ) {
         error_msg.set("Minimum bet amount for PPF is 100");
-
         Handles_Loading.set(false);
         setTimeout(() => {
           error_msg.set("");

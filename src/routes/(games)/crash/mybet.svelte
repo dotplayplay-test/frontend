@@ -3,8 +3,8 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Indev from '$lib/crashgame/components/mybetDetails/indev.svelte';
 import Layout from '$lib/crashgame/components/history/layout.svelte';
-import {mybetEl, mybetElDetails } from "$lib/crashgame/store"
-import { profileStore , handleisLoggin} from "$lib/store/profile"
+import {mybetEl, mybetElDetails, game_id } from "$lib/crashgame/store"
+import { profileStore, handleisLoggin} from "$lib/store/profile"
 let isBet = true
 let isHistory = false
 let isContent = false
@@ -38,11 +38,9 @@ let handleBetHistory = ((e)=>{
 })
 
 let newItem;
-
 $: {
     // $crash_historyEl.sort((a, b) => b._id - a._id);
-    // newItem =  [...$mybetEl].reverse()
-    newItem =  []
+    newItem =  [...$mybetEl].reverse()
 }
 
 
@@ -90,8 +88,8 @@ function formatTime(timestamp) {
                 </tr>
             </thead>
             <tbody>
-                {#if $handleisLoggin}
-                {#each newItem.slice(0, 20) as mybet (mybet._id)}
+            {#if $handleisLoggin}
+                {#each newItem.slice(0, 20) as mybet}
                 {#if (mybet.username === $profileStore.username)}
                 <tr on:click={()=>handleBetHistory(mybet)} class="values">
                     <td>
@@ -134,8 +132,6 @@ function formatTime(timestamp) {
                     <div class="msg">Oops! There is no data yet!</div>
                 </div>
                 {/if} 
-               
-           
             </tbody>
         </table>
     </div>
