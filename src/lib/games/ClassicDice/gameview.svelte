@@ -230,7 +230,7 @@ $:{
             {#if $handleisLoggin}
                 {#if $dice_history.length !== 0}
                 <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-                {#each $dice_history.slice(-6) as  dice} 
+                {#each $dice_history.slice(-10) as  dice} 
                     <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
                         <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{(parseFloat(dice.cashout)).toFixed(2)}</div>
                     </button>
