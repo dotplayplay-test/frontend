@@ -24,16 +24,19 @@
         { data: ticketsData, error: ticketsError },
       ] = await Promise.all([
         UseFetchData($handleAuthToken).fetchData(
-          `/lottery/details?id=${gameID}`
+          `/lottery/details?id=${gameID}`,
         ),
         UseFetchData($handleAuthToken).fetchData(
-          `/lottery/tickets?id=${gameID}`
+          `/lottery/tickets?id=${gameID}`,
         ),
       ]);
-      if (lotteryError || ticketsError) throw new Error(lotteryError || ticketsError);
+      if (lotteryError || ticketsError)
+        throw new Error(lotteryError || ticketsError);
       game = lotteryData.lottery;
-      tickets = ticketsData.tickets.reduce((a, {amount}) => a + amount , 0);
-      bonuses = ticketsData.tickets.filter(ticket => ticket.prize <= 2).reduce((a, {amount}) => a + amount , 0);
+      tickets = ticketsData.tickets.reduce((a, { amount }) => a + amount, 0);
+      bonuses = ticketsData.tickets
+        .filter((ticket) => ticket.prize <= 2)
+        .reduce((a, { amount }) => a + amount, 0);
     } catch (error) {
       handleClose();
     } finally {
@@ -72,24 +75,22 @@
               alt=""
             />
             <div class="nums">
-              {#each game.numbers as number, index (number)}
-                {#if index < 5}
-                  <div class="ball">
-                    <img
-                      src="https://static.nanogames.io/assets/ball.161fa8af.png"
-                      alt="wining number({number})"
-                    />
-                    <div class="num">{number}</div>
-                  </div>
-                {/if}
+              {#each game.numbers.slice(0, 5) as number (number)}
+                <div class="ball">
+                  <img
+                    src="https://static.nanogames.io/assets/ball.161fa8af.png"
+                    alt="wining number({number})"
+                  />
+                  <div class="num">{number}</div>
+                </div>
               {/each}
             </div>
             <div class="jackpotNum">
               <img
-                alt="Jackpot Number({game.number[5]})"
+                alt="Jackpot Number({game.numbers[5]})"
                 src="https://static.nanogames.io/assets/jackpot_ball.23b29c5d.png"
               />
-              <div class="num">{game.number[5]}</div>
+              <div class="num">{game.numbers[5]}</div>
             </div>
           </div>
           <div class="tickets-num">

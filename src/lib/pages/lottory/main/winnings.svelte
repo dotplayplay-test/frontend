@@ -26,21 +26,35 @@
     <table class="sc-gWXbKe iUeetX table">
       <thead
         ><tr>
+          <th>Game ID</th>
           <th class="hnums">Numbers</th><th>Matches</th>
           <th>Prize</th>
         </tr></thead
       ><tbody>
         {#each tickets as ticket (ticket.ticket_id)}
-          <tr
-            ><td
+          <tr>
+            <td>{ticket.game_id}</td>
+            <td
               ><div class="nums-wrap">
                 <div class="nums-inner">
                   <div class="sc-iseIHH gHuzXM draw">
-                    {#each ticket.numbers as number, index (number)}
-                      <div class="ball {index === 5 ? 'jackpot-ball' : ''}">
+                    {#each ticket.numbers.slice(0,5) as number, index (`${number}_${index}`)}
+                      <div
+                        class="ball {ticket.matches.includes(number)
+                          ? 'active'
+                          : ''}"
+                      >
                         <div>{number}</div>
                       </div>
                     {/each}
+                    <div
+                      class="ball jackpot-ball {ticket.jackpotNumber ===
+                      ticket.numbers[5]
+                        ? 'active'
+                        : ''}"
+                    >
+                      <div>{ticket.numbers[5]}</div>
+                    </div>
                   </div>
                   <p class="quantity">
                     x {ticket.amount}
@@ -78,15 +92,22 @@
     border-collapse: separate;
     border-spacing: 0px;
   }
+  .iUeetX .nums-inner {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
   }
   @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:first-child,
-    .jMsmRL table tbody tr td:first-child {
-      width: 18%;
+    .iUeetX.table thead tr th:first-child,
+    .iUeetX.table tbody tr td:first-child {
+      width: 10%;
     }
   }
 
@@ -129,12 +150,6 @@
     font-weight: normal;
     color: rgba(153, 164, 176, 0.6);
   }
-  @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:first-child,
-    .jMsmRL table tbody tr td:first-child {
-      width: 18%;
-    }
-  }
 
   .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
@@ -150,7 +165,7 @@
     padding: 0.5625rem 0.75rem;
   }
 
-  .jMsmRL table td {
+  .iUeetX table td {
     width: 25%;
   }
 
@@ -177,7 +192,9 @@
     -webkit-box-align: center;
     align-items: center;
   }
-
+  .gHuzXM .ball.active {
+    opacity: 1;
+  }
   .gHuzXM .ball {
     width: 1.75rem;
     height: 1.75rem;
@@ -224,7 +241,7 @@
     font-weight: 800;
     flex: 0 0 auto;
   }
-  .jMsmRL .nums-wrap .quantity {
+  .iUeetX .nums-wrap .quantity {
     flex: 0 0 auto;
     margin-left: 0.5rem;
     color: rgb(255, 255, 255);
@@ -232,8 +249,8 @@
     white-space: nowrap;
   }
   @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:nth-child(3),
-    .jMsmRL table tbody tr td:nth-child(3) {
+    .iUeetX.table thead tr th:nth-child(3),
+    .iUeetX.table tbody tr td:nth-child(3) {
       width: 24%;
     }
   }
@@ -243,7 +260,7 @@
     padding: 0.5625rem 0.75rem;
   }
 
-  .jMsmRL table td {
+  .iUeetX.table td {
     width: 25%;
   }
 
@@ -259,8 +276,8 @@
     padding: 0.875rem 0.75rem;
   }
   @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:nth-child(4),
-    .jMsmRL table tbody tr td:nth-child(4) {
+    .iUeetX.table thead tr th:nth-child(4),
+    .iUeetX.table tbody tr td:nth-child(4) {
       width: 12%;
     }
   }
@@ -279,7 +296,7 @@
     padding: 0.5625rem 0.75rem;
   }
 
-  .jMsmRL table td {
+  .iUeetX table td {
     width: 25%;
   }
 
@@ -293,5 +310,8 @@
     overflow: hidden;
     text-align: center;
     padding: 0.875rem 0.75rem;
+  }
+  .iUeetX.table tbody td .green-word {
+    color: rgb(67, 179, 9);
   }
 </style>

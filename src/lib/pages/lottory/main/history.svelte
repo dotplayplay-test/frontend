@@ -6,8 +6,8 @@
   import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
   import Loader from "$lib/components/loader.svelte";
   import HiOutlineScale from "svelte-icons-pack/hi/HiOutlineScale";
-  import IoArrowBack from "svelte-icons-pack/io/IoArrowBack";
-  import IoArrowForward from "svelte-icons-pack/io/IoArrowForward";
+  import IoArrowBack from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
+  import IoArrowForward from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
   import BiArrowToRight from "svelte-icons-pack/bi/BiArrowToRight";
   import { UseFetchData } from "$lib/hook/useFetchData";
   import { createEventDispatcher, onMount } from "svelte";
@@ -18,6 +18,7 @@
   $: gameHistory = [];
   $: currentIndex = 0;
   $: currentGame = gameHistory[currentIndex];
+  $: selectOptionsOpen = false;
 
   const { fetchData } = UseFetchData($handleAuthToken);
 
@@ -25,9 +26,10 @@
     dispatch("showPFD", currentGame.game_id);
   };
   const handleChangeIndex = (to, replace) => {
-    if (currentGame + to >= 0 && currentGame + to < gameHistory.length) {
-      currentGame = replace ? to : currentGame + to;
-      loadTickets(currentGame);
+    if (currentIndex + to >= 0 && currentIndex + to < gameHistory.length) {
+      currentIndex = replace ? to : currentIndex + to;
+      currentGame = gameHistory[currentIndex];
+      loadTickets(currentIndex);
     }
   };
 
@@ -41,7 +43,7 @@
     }
     try {
       const { data, error } = await fetchData(
-        `/lottery/game-tickets?id=${game.game_id}`
+        `/lottery/game-tickets?id=${game.game_id}`,
       );
       if (index === currentIndex) tickets = data.tickets;
     } catch (error) {
@@ -72,8 +74,8 @@
       <div class="game-no">Game ID</div>
       <div class="gameno-control">
         <button
-          on:click={() => handleChangeIndex(-1)}
-          disabled={currentIndex === 0}
+          on:click={() => handleChangeIndex(1)}
+          disabled={currentIndex === gameHistory.length - 1}
           class="sc-iqseJM cBmlor button button-normal pre"
           ><div class="button-inner">
             <Icon
@@ -83,15 +85,60 @@
             />
           </div></button
         >
-        <div class="sc-jJoQJp gOHquD select">
-          <div class="select-trigger">
+        <div
+          on:pointerleave={() => (selectOptionsOpen = false)}
+          class="sc-jJoQJp gOHquD select {selectOptionsOpen ? 'is-open' : ''}"
+        >
+          <div
+            on:pointerover={() => (selectOptionsOpen = true)}
+            class="select-trigger"
+          >
             <p class="select-option">{currentGame.game_id}</p>
-            <div class="arrow"></div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div
+              on:click={() => (selectOptionsOpen = !selectOptionsOpen)}
+              class="arrow"
+            >
+              <div class="icon-wrap">
+                <Icon
+                  src={IoArrowForward}
+                  size="23"
+                  color="rgba(153, 164, 176, 0.6)"
+                />
+              </div>
+            </div>
           </div>
+          {#if selectOptionsOpen}
+            <div
+              class="sc-hiCibw iVwWcQ select-options-wrap"
+              style="opacity: 1; top: 100%; transform: none;"
+            >
+              <div
+                class="sc-dkPtRN jScFby scroll-view select-options len-{gameHistory.length}"
+              >
+                {#each gameHistory as game, index (game.game_id)}
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <div
+                    on:click={() => {
+                      selectOptionsOpen = false;
+                      handleChangeIndex(index, true);
+                    }}
+                    class="select-option {currentGame.game_id === game.game_id
+                      ? 'active'
+                      : ''}"
+                  >
+                    {game.game_id}
+                  </div>
+                {/each}
+              </div>
+            </div>
+          {/if}
         </div>
         <button
-          on:click={() => handleChangeIndex(1)}
-          disabled={currentIndex === gameHistory.length}
+          on:click={() => handleChangeIndex(-1)}
+          disabled={currentIndex === 0}
           class="sc-iqseJM cBmlor button button-normal"
           ><div class="button-inner">
             <Icon
@@ -101,9 +148,9 @@
             />
           </div></button
         ><button
-          on:click={() => handleChangeIndex(gameHistory.length - 1, true)}
+          on:click={() => handleChangeIndex(0, true)}
           class="sc-iqseJM cBmlor button button-normal"
-          disabled={currentIndex === gameHistory.length}
+          disabled={currentIndex === 0}
           ><div class="button-inner">
             <Icon
               src={BiArrowToRight}
@@ -131,16 +178,14 @@
           alt=""
         />
         <div class="nums">
-          {#each currentGame.numbers as number, index (number)}
-            {#if index < 5}
-              <div class="ball">
-                <img
-                  src="https://static.nanogames.io/assets/ball.161fa8af.png"
-                  alt=""
-                />
-                <div class="num">{number}</div>
-              </div>
-            {/if}
+          {#each currentGame.numbers.slice(0, 5) as number (number)}
+            <div class="ball">
+              <img
+                src="https://static.nanogames.io/assets/ball.161fa8af.png"
+                alt=""
+              />
+              <div class="num">{number}</div>
+            </div>
           {/each}
         </div>
         <div class="jackpotNum">
@@ -176,29 +221,37 @@
                       ><td
                         ><a
                           class="sc-jUosCB iTDswZ user-info"
-                          href="/user/profile/543251"
+                          href="/user/profile/{ticket.user.user_id}"
                           ><img
                             alt="avatar"
                             class="avatar"
-                            src="https://img2.nanogames.io/avatar/543251/s"
+                            src={ticket.user.image}
                           />
-                          <div class="name">ticket.user.username</div></a
+                          <div class="name">{ticket.user.username}</div></a
                         ></td
                       ><td
                         ><div class="nums-wrap">
                           <div class="nums-inner">
                             <div class="sc-iseIHH gHuzXM draw">
-                              {#each ticket.numbers as number, index (number)}
+                              {#each ticket.numbers.slice(0, 5) as number, index (`${number}_${index}`)}
                                 <div
-                                  class="ball {index === 5
-                                    ? 'jackpot-ball'
-                                    : ''} {currentGame.numbers.includes(number)
+                                  class="ball {currentGame.numbers.includes(
+                                    number,
+                                  )
                                     ? 'active'
                                     : ''}"
                                 >
                                   <div>{number}</div>
                                 </div>
                               {/each}
+                              <div
+                                class="ball jackpot-ball {currentGame
+                                  .numbers[5] === ticket.numbers[5]
+                                  ? 'active'
+                                  : ''}"
+                              >
+                                <div>{ticket.numbers[5]}</div>
+                              </div>
                             </div>
                             <p class="quantity">
                               x {ticket.amount}
@@ -224,7 +277,7 @@
               </div>
             {/if}
           {:else}
-            <div style="min-height: 200;">
+            <div style="height: 200px;">
               <Loader />
             </div>
           {/if}
@@ -301,7 +354,99 @@
     background-color: rgba(45, 48, 53, 0.5);
     color: rgb(255, 255, 255);
   }
+  .gOHquD.is-open .select-options-wrap {
+    pointer-events: auto;
+  }
+  .gOHquD .arrow > .icon-wrap {
+    display: grid;
+    place-items: center;
+  }
+  .dTcUpI .gameno-control .select-trigger .arrow > * {
+    font-size: 0.625rem;
+    transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+  }
+  .gOHquD.is-open .arrow > .icon-wrap {
+    transform: rotateZ(90deg) !important;
+  }
+  .iVwWcQ {
+    position: absolute;
+    padding: 0.3125rem 0px;
+    width: 100%;
+    left: 0px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .iVwWcQ .select-options {
+    border-radius: 1.25rem;
+    padding: 0.125rem 0.375rem;
+    background-color: rgb(23, 24, 27);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
+    height: auto;
+    max-height: 16.25rem;
+  }
+  .iVwWcQ .select-options::-webkit-scrollbar-button {
+    display: none;
+  }
+  .iVwWcQ .select-options::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-color);
+    transition: all 0.5s;
+    border-radius: 5px;
+  }
+  .iVwWcQ .select-options::-webkit-scrollbar-track {
+    margin: 20px 0;
+  }
+  .iVwWcQ .select-options::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: transparent;
+    border-radius: 5px;
+  }
 
+  .iVwWcQ .select-options:not(.len-1) > .active {
+    border-color: rgba(91, 174, 28, 0.4);
+  }
+  .iVwWcQ .select-options:not(.len-1) > .active:hover {
+    background-color: transparent;
+  }
+  .iVwWcQ .select-option:hover {
+    background-color: rgba(45, 48, 53, 0.4);
+  }
+  .iVwWcQ .select-options:not(.len-1) > .active::after {
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    top: 50%;
+    margin-top: -0.25rem;
+    right: 0.625rem;
+    background-color: rgb(67, 179, 9);
+    box-shadow: rgba(91, 174, 28, 0.15) 0px 0px 0px 0.3125rem;
+  }
+
+  .iVwWcQ .select-option {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    padding: 0px 0.625rem;
+    font-size: 0.875rem;
+    height: 2rem;
+    margin: 0.25rem 0px;
+    border: 1px solid transparent;
+    border-radius: 1.0625rem;
+    cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+    white-space: nowrap;
+  }
+  .jScFby {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
   .gOHquD .select-trigger {
     position: relative;
     display: flex;
@@ -399,7 +544,7 @@
   .dTcUpI .fairness {
     margin-left: auto;
   }
-  .bcoOmv .tabs .table-wrap {
+  .jMsmRL .tabs .table-wrap {
     padding: 1.125rem;
   }
   .iJCxbN .jackpot-bg {
@@ -518,7 +663,7 @@
   .jMsmRL .top .sub-txt span {
     margin-left: 0.5rem;
   }
-  .bcoOmv table {
+  .jMsmRL table {
     background-color: rgb(24, 25, 28);
     border-radius: 1.25rem;
     padding: 0.25rem 0.75rem 0.5625rem;
@@ -551,7 +696,7 @@
     text-align: left;
   }
 
-  .bcoOmv table thead tr th {
+  .jMsmRL table thead tr th {
     color: var(--text-color);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
@@ -568,7 +713,7 @@
     font-weight: normal;
     color: rgba(153, 164, 176, 0.6);
   }
-  .bcoOmv table thead tr th {
+  .jMsmRL table thead tr th {
     color: rgba(153, 164, 176, 0.8);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
@@ -601,7 +746,7 @@
     text-align: left;
   }
 
-  .bcoOmv table tbody td {
+  .jMsmRL table tbody td {
     color: rgb(255, 255, 255);
     padding: 0.5625rem 0.75rem;
   }
@@ -735,11 +880,11 @@
     }
   }
 
-  .bcoOmv table tbody .res {
+  .jMsmRL table tbody .res {
     color: rgb(255, 255, 255);
   }
 
-  .bcoOmv table tbody td {
+  .jMsmRL table tbody td {
     color: rgb(255, 255, 255);
     padding: 0.5625rem 0.75rem;
   }
@@ -775,7 +920,7 @@
     text-align: right;
   }
 
-  .bcoOmv table tbody td {
+  .jMsmRL table tbody td {
     color: rgb(255, 255, 255);
     padding: 0.5625rem 0.75rem;
   }
@@ -795,7 +940,7 @@
     text-align: center;
     padding: 0.875rem 0.75rem;
   }
-  .bcoOmv table tbody td .green-word {
+  .jMsmRL table tbody td .green-word {
     color: rgb(67, 179, 9);
   }
 </style>

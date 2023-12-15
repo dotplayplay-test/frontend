@@ -1,5 +1,7 @@
 <script>
+  import { slide, fade } from "svelte/transition";
   import { goto } from "$app/navigation";
+  import moment from "moment";
   import { handleisLoggin } from "$lib/store/profile";
   import History from "./history.svelte";
   import MyTickets from "./my-tickets.svelte";
@@ -11,25 +13,30 @@
   import BuyTicket from "../buy-tickets/layout.svelte";
   import ProvablyFair from "../provably-fair/layout.svelte";
   import LotteryDrawEndDialog from "../lottery-draw-end/layout.svelte";
-  import { ServerURl } from "$lib/backendUrl";
   import { handleAuthToken } from "$lib/store/routes";
   import { UseFetchData } from "$lib/hook/useFetchData";
   $: currentTab = 1;
   $: buyTicketDialogOpen = false;
   $: lotteryDrawDialogOpen = false;
   $: provablyFairD = null;
-
-  const handleBuyTicket = () => {
-    if ($handleisLoggin) {
-      buyTicketDialogOpen = true;
-    } else goto("/login");
-  };
+  $: gameEnded = false;
+  $: purchases = [];
 
   const getGame = async (id) => {
     const { data } = await UseFetchData($handleAuthToken).fetchData(
-      `/lottery/details${!!id ? `?id=${id}` : ""}`
+      `/lottery/details${!!id ? `?id=${id}` : ""}`,
     );
     return data;
+  };
+  const getGameTickets = async () => {
+    try {
+      const { data } = await UseFetchData($handleAuthToken).fetchData(
+        "/lottery/game-tickets?purchased=true&limit=10",
+      );
+      return data;
+    } catch (error) {
+      return null;
+    }
   };
   const getTickets = async () => {
     if ($handleisLoggin) {
@@ -47,30 +54,32 @@
   $: gameData = null;
   $: myTickets = 0;
   let countDownInterval;
+  let buyInterval;
   $: countDownParts = ["00", "00", "00"];
+  $: inIntermission = false;
 
-  onMount(async () => {
-    try {
-      const [game, ticketData] = await Promise.all([getGame(), getTickets()]);
-      myTickets =
-        ticketData?.tickets?.reduce((a, { amount }) => a + amount, 0) || 0;
-      gameData = {
-        ...game.lottery,
-        ticketCount: game.total_tickets,
-      };
-      const endsInDate = new Date(gameData.draw_date);
-      const now = new Date();
-      let diffInSeconds = Math.floor((endsInDate - now) / 1000);
-      if (countDownInterval) {
-        clearInterval(countDownInterval);
-      }
+  const handleBuyTicket = () => {
+    if ($handleisLoggin) {
+      if (inIntermission || gameEnded) return;
+      buyTicketDialogOpen = true;
+    } else goto("/login");
+  };
+
+  const startCountDown = () => {
+    const gameID = gameData.game_id;
+    const endsInDate = moment(gameData.draw_date);
+    let diffInSeconds = endsInDate.diff(moment.utc(), "seconds");
+    gameEnded = diffInSeconds <= 0;
+    if (countDownInterval) {
+      clearInterval(countDownInterval);
+    }
+    if (!gameEnded) {
       countDownInterval = setInterval(() => {
         if (diffInSeconds <= 0) {
+          gameEnded = true;
           clearInterval(countDownInterval);
           countDownParts = ["00", "00", "00"];
-          setTimeout(() => {
-            lotteryDrawDialogOpen = true;
-          }, 60_000);
+          checkForDrawEnd(gameID);
         } else {
           const hours = Math.floor(diffInSeconds / 3600);
           const minutes = Math.floor((diffInSeconds % 3600) / 60);
@@ -83,6 +92,70 @@
           diffInSeconds--;
         }
       }, 1000);
+    } else checkForDrawEnd(gameID);
+  };
+  const gameSetup = async () => {
+    const [game, ticketData, gameTicketsData] = await Promise.all([
+      getGame(),
+      getTickets(),
+      getGameTickets(),
+    ]);
+    myTickets =
+      ticketData?.tickets?.reduce((a, { amount }) => a + amount, 0) || 0;
+    gameData = {
+      ...game.lottery,
+      ticketCount: game.lottery.total_tickets,
+      tickets: gameTicketsData.tickets,
+    };
+    const now = moment.utc();
+    inIntermission = moment(gameData.start_date).isAfter(now);
+    if (!inIntermission) startCountDown();
+    else {
+      setTimeout(
+        () => {
+          startCountDown();
+          inIntermission = false;
+        },
+        moment(gameData.start_date).diff(now, "milliseconds"),
+      );
+    }
+
+    if (gameTicketsData.tickets.length) {
+      const tickets = gameTicketsData.tickets;
+      if (buyInterval) clearInterval(buyInterval);
+      let currentIndex = 0;
+      purchases = [tickets[currentIndex++]];
+      buyInterval = setInterval(() => {
+        purchases = [tickets[currentIndex++ % tickets.length]];
+      }, 10_000);
+    }
+  };
+
+  const checkForDrawEnd = async (game_id) => {
+    try {
+      let { lottery } = await getGame(game_id);
+      if (lottery.numbers.length) {
+        lotteryDrawDialogOpen = true;
+      } else {
+        setTimeout(() => checkForDrawEnd(game_id), 3_000);
+      }
+    } catch (error) {
+      console.log("Error => ", error);
+    }
+  };
+
+  const handleCloseDrawDialog = async () => {
+    lotteryDrawDialogOpen = false;
+    try {
+      await gameSetup();
+    } catch (error) {
+      console.log("Error setting up new Game");
+    }
+  };
+
+  onMount(async () => {
+    try {
+      await gameSetup();
     } catch (err) {
       console.log("Error", err);
     } finally {
@@ -99,12 +172,18 @@
 {/if}
 
 {#if buyTicketDialogOpen}
-  <BuyTicket on:close-dialog={() => (buyTicketDialogOpen = false)} />
+  <BuyTicket
+    on:close-dialog={(e) => {
+      console.log(e);
+      if (e.detail?.ticket_id) myTickets += e.detail.amount;
+      buyTicketDialogOpen = false;
+    }}
+  />
 {/if}
 {#if lotteryDrawDialogOpen}
   <LotteryDrawEndDialog
     gameID={gameData.game_id}
-    on:close-ldd={() => (lotteryDrawDialogOpen = false)}
+    on:close-ldd={handleCloseDrawDialog}
   />
 {/if}
 
@@ -121,13 +200,21 @@
         >
         <div class="cont">
           <div class="next-time">
-            <div class="txt">Next Draw in</div>
-            <div class="time">
-              <span>{countDownParts[0]}h</span>:<span>{countDownParts[1]}m</span
-              >:<span>{countDownParts[2]}s</span>
+            <div class="txt">
+              {inIntermission
+                ? "Game will begin in a few minutes..."
+                : "Next Draw in"}
             </div>
+            {#if !inIntermission}
+              <div class="time">
+                <span>{countDownParts[0]}h</span>:<span
+                  >{countDownParts[1]}m</span
+                >:<span>{countDownParts[2]}s</span>
+              </div>
+            {/if}
           </div>
           <button
+            disabled={inIntermission || gameEnded}
             class="sc-iqseJM sc-hBUSln cBmlor blefOg button button-normal"
           >
             <div
@@ -148,15 +235,23 @@
       <div class="desc">
         <div class="sc-hAWBJg gAsrpM auto-scroll">
           <div style="position: absolute; transform: none;">
-            <div class="win-item">
-              <b>Tenmhbfnyb</b> Bought <span>1</span> lottery tickets
-            </div>
+            {#each purchases as ticket (ticket.ticket_id)}
+              <div
+                out:fade={{ duration: 300 }}
+                in:slide={{ duration: 300 }}
+                class="win-item"
+              >
+                <b>{ticket.user.username}</b> Bought
+                <span>{ticket.amount}</span>
+                lottery ticket{ticket.amount > 1 ? "s" : ""}
+              </div>
+            {/each}
           </div>
         </div>
         {#if gameData?.ticketCount}
           <div class="sp">
             Don't miss your chance! <span class="lottery-green"
-              >{gameData?.totalTicktes}</span
+              >{gameData?.ticketCount}</span
             > tickets have been sold today!
           </div>
         {/if}
@@ -168,7 +263,7 @@
           <button
             on:click={() => (currentTab = 1)}
             class="tabs-nav {currentTab === 1 ? 'is-active' : ''}"
-            >My Ticket({myTickets || "0"})</button
+            >My Ticket{$handleisLoggin ? `(${myTickets || "0"})` : ""}</button
           >
           <button
             on:click={() => (currentTab = 2)}
@@ -195,12 +290,13 @@
         </div>
         <div class="tabs-view" style="transform: none;">
           {#if currentTab === 1}
-            <MyTickets on:buy-tickets={() => (buyTicketDialogOpen = true)} />
+            <MyTickets on:buy-tickets={handleBuyTicket} />
           {:else if currentTab === 2}
             <MyWinings />
           {:else}
             <History
-              on:show-pdf={(game_id) => (provablyFairD = { game_id, tab: 2 })}
+              on:showPFD={(e) =>
+                (provablyFairD = { game_id: e.detail, tab: 2 })}
             />
           {/if}
         </div>

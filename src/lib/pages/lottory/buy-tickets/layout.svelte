@@ -5,15 +5,14 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
   import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-  import { ServerURl } from "$lib/backendUrl";
-  import axios from "axios";
+  import { UseFetchData } from "$lib/hook/useFetchData";
   import { handleAuthToken } from "$lib/store/routes";
   import { default_Wallet } from "$lib/store/coins";
-  const URL = ServerURl();
   const dispatch = createEventDispatcher();
   let selectedNumbers = [];
   $: jackpotNum = 0;
   $: ticketAmount = 1;
+  $: ticketCost = 1 * 0.1;
   const handleRandomGeneration = () => {
     const balls = Array(36)
       .fill(null)
@@ -29,6 +28,7 @@
       if (update)
         ticketAmount = Math.min(1000, Math.max(1, ticketAmount + amount));
       else ticketAmount = amount;
+      ticketCost = ticketAmount * 0.1;
     };
   };
   const handleSelection = (num) => {
@@ -41,34 +41,27 @@
 
   $: isManual = false;
   const handleClose = () => {
+    if (loading) return;
     dispatch("close-dialog");
   };
   $: loading = false;
   const buyTicket = async () => {
-    loading = true;
     if (
       $default_Wallet.coin_name !== "PPL" ||
       (isManual && (selectedNumbers.length < 5 || !jackpotNum)) ||
-      $default_Wallet.balance < ticketAmount
+      $default_Wallet.balance < ticketCost
     )
       return;
+
+      loading = true;
     try {
-      await axios.post(
-        `${URL}/api/lottery/buy-ticket`,
-        {
-          numbers: selectedNumbers,
+      const {data} = await UseFetchData($handleAuthToken).fetchData('/lottery/buy-ticket', {
+        numbers: selectedNumbers,
           random: !isManual,
           amount: ticketAmount,
           jackpot: jackpotNum,
-        },
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${$handleAuthToken}`,
-          },
-        }
-      );
-      dispatch("close-dialog");
+      }, 'POST');
+      dispatch("close-dialog", data);
     } catch (error) {
       console.log("Error > ", error);
     } finally {
@@ -76,23 +69,6 @@
     }
   };
   $: showSlider = false;
-  onMount(() => {});
-  let dragging = false;
-
-  function dragstart() {
-    dragging = true;
-  }
-
-  function dragend() {
-    dragging = false;
-  }
-
-  function drag(e) {
-    const x = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-    if (dragging) {
-      //ToDo handle slider
-    }
-  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -243,7 +219,7 @@
               <div class="cont">
                 <div class="cost">Total Cost:</div>
                 <div style="font-size: .875rem" class="amount error">
-                  {parseFloat(ticketAmount * 0.1).toFixed(8)} PPL
+                  {parseFloat(ticketCost).toFixed(8)} PPL
                 </div>
               </div>
             </div>
@@ -331,7 +307,7 @@
           on:click={buyTicket}
           class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal submit-btn"
           disabled={loading ||
-            $default_Wallet.balance < ticketAmount ||
+            $default_Wallet.balance < ticketCost ||
             (isManual && (selectedNumbers.length < 5 || !jackpotNum))}
           ><div class="button-inner">Buy Tickets</div></button
         >

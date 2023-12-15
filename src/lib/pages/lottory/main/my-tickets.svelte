@@ -36,7 +36,7 @@
               ><div class="nums-wrap">
                 <div class="nums-inner">
                   <div class="sc-iseIHH gHuzXM draw">
-                    {#each ticket.numbers as number, index (number)}
+                    {#each ticket.numbers as number, index (`${number}_${index}`)}
                       <div class="ball {index === 5 ? 'jackpot-ball' : ''}">
                         <div>{number}</div>
                       </div>
@@ -155,36 +155,27 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
-  @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:first-child,
-    .jMsmRL table tbody tr td:first-child {
-      width: 18%;
-    }
+  .iUeetX .nums-inner {
+    display: flex;
+    align-items: center;
+    justify-content: start;
   }
-
   .iUeetX th:first-child,
   .iUeetX td:first-child {
     text-align: left;
   }
 
-  .bcoOmv table thead tr th {
+  .jMsmRL table thead tr th {
     color: var(--text-color);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
-  }
-
-  .iUeetX th,
-  .iUeetX td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.75rem;
   }
 
   .iUeetX th {
     font-weight: normal;
     color: rgba(153, 164, 176, 0.6);
   }
-  .bcoOmv table thead tr th {
+  .iUeetX.table thead tr th {
     color: rgba(153, 164, 176, 0.8);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
@@ -201,41 +192,20 @@
     font-weight: normal;
     color: rgba(153, 164, 176, 0.6);
   }
-  @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:first-child,
-    .jMsmRL table tbody tr td:first-child {
-      width: 18%;
-    }
-  }
+
 
   .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
   }
 
-  .iUeetX th:first-child,
-  .iUeetX td:first-child {
-    text-align: left;
-  }
-
-  .bcoOmv table tbody td {
+  .iUeetX.table tbody td {
     color: rgb(255, 255, 255);
     padding: 0.5625rem 0.75rem;
-  }
-
-  .jMsmRL table td {
-    width: 25%;
   }
 
   .iUeetX td {
     border: 1px solid transparent;
     color: rgb(153, 164, 176);
-  }
-
-  .iUeetX th,
-  .iUeetX td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.75rem;
   }
   .gHuzXM {
     width: 14.6875rem;
@@ -303,21 +273,8 @@
     width: 1.25rem;
     white-space: nowrap;
   }
-  @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:nth-child(3),
-    .jMsmRL table tbody tr td:nth-child(3) {
-      width: 24%;
-    }
-  }
 
-  .bcoOmv table tbody td {
-    color: rgb(255, 255, 255);
-    padding: 0.5625rem 0.75rem;
-  }
 
-  .jMsmRL table td {
-    width: 25%;
-  }
 
   .iUeetX td {
     border: 1px solid transparent;
@@ -329,41 +286,9 @@
     overflow: hidden;
     text-align: center;
     padding: 0.875rem 0.75rem;
-  }
-  @media screen and (min-width: 800px) {
-    .jMsmRL table thead tr th:nth-child(4),
-    .jMsmRL table tbody tr td:nth-child(4) {
-      width: 12%;
-    }
   }
 
   .iUeetX td:last-child {
     border-radius: 0px 0.625rem 0.625rem 0px;
-  }
-
-  .iUeetX th:last-child,
-  .iUeetX td:last-child {
-    text-align: right;
-  }
-
-  .bcoOmv table tbody td {
-    color: rgb(255, 255, 255);
-    padding: 0.5625rem 0.75rem;
-  }
-
-  .jMsmRL table td {
-    width: 25%;
-  }
-
-  .iUeetX td {
-    border: 1px solid transparent;
-    color: rgb(153, 164, 176);
-  }
-
-  .iUeetX th,
-  .iUeetX td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.75rem;
   }
 </style>
