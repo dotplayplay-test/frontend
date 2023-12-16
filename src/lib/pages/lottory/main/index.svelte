@@ -23,14 +23,14 @@
   $: purchases = [];
 
   const getGame = async (id) => {
-    const { data } = await UseFetchData($handleAuthToken).fetchData(
+    const { data } = await UseFetchData($handleAuthToken).fetch(
       `/lottery/details${!!id ? `?id=${id}` : ""}`,
     );
     return data;
   };
   const getGameTickets = async () => {
     try {
-      const { data } = await UseFetchData($handleAuthToken).fetchData(
+      const { data } = await UseFetchData($handleAuthToken).fetch(
         "/lottery/game-tickets?purchased=true&limit=10",
       );
       return data;
@@ -42,7 +42,7 @@
     if ($handleisLoggin) {
       try {
         const { data } =
-          await UseFetchData($handleAuthToken).fetchData("/lottery/tickets");
+          await UseFetchData($handleAuthToken).fetch("/lottery/tickets");
         return data;
       } catch (error) {
         return null;

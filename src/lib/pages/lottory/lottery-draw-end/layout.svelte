@@ -23,10 +23,10 @@
         { data: lotteryData, error: lotteryError },
         { data: ticketsData, error: ticketsError },
       ] = await Promise.all([
-        UseFetchData($handleAuthToken).fetchData(
+        UseFetchData($handleAuthToken).fetch(
           `/lottery/details?id=${gameID}`,
         ),
-        UseFetchData($handleAuthToken).fetchData(
+        UseFetchData($handleAuthToken).fetch(
           `/lottery/tickets?id=${gameID}`,
         ),
       ]);

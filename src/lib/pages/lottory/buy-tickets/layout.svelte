@@ -53,14 +53,18 @@
     )
       return;
 
-      loading = true;
+    loading = true;
     try {
-      const {data} = await UseFetchData($handleAuthToken).fetchData('/lottery/buy-ticket', {
-        numbers: selectedNumbers,
+      const { data } = await UseFetchData($handleAuthToken).fetch(
+        "/lottery/buy-ticket",
+        {
+          numbers: selectedNumbers,
           random: !isManual,
           amount: ticketAmount,
           jackpot: jackpotNum,
-      }, 'POST');
+        },
+        "POST",
+      );
       dispatch("close-dialog", data);
     } catch (error) {
       console.log("Error > ", error);
@@ -181,7 +185,7 @@
                           step="1"
                           max="1000"
                           on:input={(e) =>
-                            handleSetTicketAmount(parseInt(e.target.value))}
+                            handleSetTicketAmount(parseInt(e.target.value))()}
                           bind:value={ticketAmount}
                         />
                       </div>
@@ -265,7 +269,7 @@
                     <button
                       on:click={() => handleSelection(number)}
                       class="sc-iqseJM cBmlor button button-normal {selectedNumbers.includes(
-                        number
+                        number,
                       )
                         ? 'active'
                         : ''}"

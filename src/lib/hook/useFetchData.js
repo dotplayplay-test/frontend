@@ -2,7 +2,7 @@ import { ServerURl } from "$lib/backendUrl"
 import axios from "axios";
 const URL = ServerURl()
 export const UseFetchData = (handleAuthToken) => {
-  const fetchData = async (endpoint, data = {}, method = "GET") => {
+  const fetch = async (endpoint, data = {}, method = "GET") => {
     const url = `${URL}/api${endpoint}`;
     const headers = {
       "Content-type": "application/json",
@@ -18,5 +18,5 @@ export const UseFetchData = (handleAuthToken) => {
       return { error }
     }
   };
-  return { fetchData };
+  return { fetch };
 };

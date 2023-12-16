@@ -20,8 +20,6 @@
   $: currentGame = gameHistory[currentIndex];
   $: selectOptionsOpen = false;
 
-  const { fetchData } = UseFetchData($handleAuthToken);
-
   const handleShowPF = () => {
     dispatch("showPFD", currentGame.game_id);
   };
@@ -42,7 +40,7 @@
       return;
     }
     try {
-      const { data, error } = await fetchData(
+      const { data, error } = await UseFetchData($handleAuthToken).fetch(
         `/lottery/game-tickets?id=${game.game_id}`,
       );
       if (index === currentIndex) tickets = data.tickets;
@@ -54,7 +52,7 @@
   }
   onMount(async () => {
     try {
-      const { data, error } = await fetchData("/lottery/history");
+      const { data, error } = await UseFetchData($handleAuthToken).fetch("/lottery/history");
       gameHistory = data.games;
       loading = false;
       loadTickets(0);

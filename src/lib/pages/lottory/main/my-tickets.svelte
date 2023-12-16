@@ -11,7 +11,7 @@
     if ($handleisLoggin) {
       try {
         const { data, error } =
-          await UseFetchData($handleAuthToken).fetchData("/lottery/tickets");
+          await UseFetchData($handleAuthToken).fetch("/lottery/tickets");
         tickets = data.tickets;
       } catch (error) {
         console.log(error);

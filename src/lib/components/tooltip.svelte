@@ -6,6 +6,10 @@
             .querySelectorAll(".tooltiptext")
             .forEach(el => document.body.removeChild(el));
     };
+
+    const scrollOffset = () => {
+        return document.body.scrollTop || window.pageYOffset || document.documentElement.scrollTop;
+    }
     const handleHover = () => {
         const firstChild = tooltipElement.firstChild;
         const tooltipText = document.createElement("span");
@@ -13,9 +17,9 @@
         document.body.appendChild(tooltipText);
         tooltipText.textContent = text;
         tooltipText.style.top =
-            firstChild.getBoundingClientRect().top - (tooltipText.getBoundingClientRect().height/2) +
+        ((firstChild.getBoundingClientRect().top - (tooltipText.getBoundingClientRect().height)) + scrollOffset()) +
             "px";
-        tooltipText.style.left = firstChild.getBoundingClientRect().left + "px";
+        tooltipText.style.left = (firstChild.getBoundingClientRect().left -  (tooltipText.getBoundingClientRect().width/2))+ "px";
     };
 </script>
 
@@ -34,6 +38,6 @@
 <style>
     .tooltip {
         position: relative;
-        display: inline-block;
+        display: inline-flex;
     }
 </style>

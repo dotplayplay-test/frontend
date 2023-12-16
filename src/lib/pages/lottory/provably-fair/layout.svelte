@@ -23,7 +23,7 @@
 			try {
 				const { data, error } = await UseFetchData(
 					$handleAuthToken,
-				).fetchData(
+				).fetch(
 					`/lottery/game-seeds${
 						showData.game_id ? `?id=${showData.game_id}` : ""
 					}`,
