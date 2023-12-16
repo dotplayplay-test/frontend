@@ -1,7 +1,7 @@
 <script>
 import MobileManual from "$lib/games/ClassicDice/mobileManual.svelte";
 import { payout } from "$lib/games/ClassicDice/store/index"
-import { HandleDicePoint, betPosition, dice_history, HandleHas_won, rollunder} from "$lib/games/ClassicDice/store/index"
+import { HandleDicePoint,range, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "$lib/games/ClassicDice/store/index"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
@@ -21,12 +21,22 @@ import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
 import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
 import Help from "../crash/help.svelte";
 import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
-let range = 50
 
+
+let rangeEl = 50
+let flip = 50
 
 $:{
-    betPosition.set(range)
+    if($range < 0){
+        range.set(2)
+    }
+    if($range > 98){
+        range.set(98)
+    }
+    betPosition.set($range)
+    flix.set(rangeEl)
 }
+
 
 let ishover = false
 const handleRangl = ((w)=>{
@@ -42,17 +52,31 @@ let game__charges = 100 / houseEgde
 let game_logic;
 let total_charge;
 
-$: {
-    game_logic = 100 / $betPosition
-    total_charge = game_logic / game__charges
-    payout.set((game_logic - total_charge).toFixed(4))
-}
+// $: {
+//     if($rollunder){
+//         game_logic =  100 / ($betPosition)
+//         total_charge = game_logic / game__charges
+//         payout.set((game_logic - total_charge).toFixed(4))
+//     }else{
+//         game_logic =  100 / (100 - $betPosition)
+//         total_charge = game_logic / game__charges
+//         payout.set((game_logic - total_charge).toFixed(4))
+//     }
+// }
 
-$: {
-    game_logic = 100 / $payout
-    total_charge = game_logic / game__charges
-    betPosition.set((game_logic - total_charge).toFixed(2))
-}
+// $: {
+//     if($rollunder){
+//         game_logic = 100 / $payout
+//         total_charge = game_logic / game__charges
+//         betPosition.set((game_logic - total_charge).toFixed(2))
+//         range = ($betPosition)
+//     }else{
+//         game_logic = 100 / $payout
+//         total_charge = game_logic / game__charges
+//         betPosition.set((game_logic - total_charge).toFixed(2))
+//         range = (100 - $betPosition)
+//     }
+// }
 
 
 let DgII = ''
@@ -65,6 +89,7 @@ const handleDiceHistoryDetail = ((data)=>{
         hisQQ = true
     }
 })
+
 
 
 
@@ -83,7 +108,9 @@ async function playSound() {
 
 const handleChange = ((e)=>{
     playSound()
-    range = e
+    range.set(e)
+    let re = 100 - $range
+    rangeEl = 100 - $range
 })
 
 $:{
@@ -101,8 +128,10 @@ $:{
 const handleRollUnder = ()=>{
     if($rollunder){
         rollunder.set(false)
+        range.set(100 - $betPosition)
     }else{
         rollunder.set(true)
+        range.set($betPosition)
     }
 }
 
@@ -220,18 +249,22 @@ const handleSoundState = (()=>{
                             <div class="slider-wrapper">
                                 <div class="slider-handles">
                                     {#if ishover}
-                                        <div class="slider-tip" style={`left: ${$betPosition -5}%;`}>{range}</div>
+                                    <div class="slider-tip" style={`left: ${ $rollunder ? $betPosition - 5 : 100 - $betPosition - 5 }%;`}>{(parseFloat($range)).toFixed(0)}</div>
                                     {/if}
-                                    <input type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$betPosition}>
+                                    <input disabled={$Handles_alive} type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$range}>
                                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
+                                        {#if parseFloat($HandleDicePoint) === 50}
                                         <div class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>
+                                        {:else}
+                                            <div style={`color: ${$HandleHas_won ? "rgb(67, 179, 9)" : "rgb(237, 99, 0)"};`} class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>
+                                        {/if}
                                         <div class={`dice_png ${$HandleHas_won ? "dice-animate" : ""}`}>
                                             <img alt="dice.png" src="https://static.nanogames.io/assets/dice.1007262a.png">
                                         </div>
                                     </div>
                                     <div class="slider-line ">
-                                        <div class={ $rollunder ? "slide-win" : "slide-lose"} style={`width: ${$betPosition}%;`}></div>
-                                        <div class={$rollunder ? "slide-lose" : "slide-win"} style={`width: ${100 - $betPosition}%;`}></div>
+                                        <div class={ $rollunder ? "slide-win" : "slide-lose"} style={`width: ${$rollunder ? $betPosition : 100 - $betPosition }%;`}></div>
+                                        <div class={$rollunder ? "slide-lose" : "slide-win"} style={`width: ${$rollunder ? 100 - $betPosition : $betPosition}%;`}></div>
                                         <div class="slider-sign" style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                                             <div class="sign"></div>
                                         </div>
@@ -268,10 +301,10 @@ const handleSoundState = (()=>{
                                         <input type="number" min="2" max="98" bind:value={$betPosition}>
                                         <div class="right-info">
                                             <span class="right-percent">%</span>
-                                            <button on:click={()=> range = 2} class="amount-scale">Min</button>
-                                            <button on:click={()=> range -= 5} class="amount-scale">-5</button>
-                                            <button on:click={()=> range += 5}  class="amount-scale">+5</button>
-                                            <button on:click={()=> range = 98} class="amount-scale">Max</button>
+                                            <button on:click={()=> range.set(2)} class="amount-scale">Min</button>
+                                            <button on:click={()=> range.set($range -5)} class="amount-scale">-5</button>
+                                            <button on:click={()=> range.set($range +5) }  class="amount-scale">+5</button>
+                                            <button on:click={()=> range.set(98)} class="amount-scale">Max</button>
                                         </div>
                                     </div>
                                 </div>
@@ -404,8 +437,13 @@ const handleSoundState = (()=>{
     padding: 0px 10%;
     min-height: 37.5rem;
 }
+@media only screen and (max-width: 400px){
 .fPOrXr {
-    /* padding: 0px 0.75rem; */
+    padding: 0px 0.75rem;
+    min-height: 30rem;
+}
+}
+.fPOrXr {
     min-height: 30rem;
 }
 .gnjHQb {
@@ -833,6 +871,21 @@ const handleSoundState = (()=>{
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+}
+.slider-tip {
+    box-sizing: border-box;
+    position: absolute;
+    top: -3.625rem;
+    height: 2.65rem;
+    width: 2.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    color: rgba(153, 164, 176, 0.8);
+    background-color: rgb(37, 39, 43);
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
+    border-radius: 0.425rem;
 }
 .glMLZr .game-tabs {
     margin-top: 2.5rem;
