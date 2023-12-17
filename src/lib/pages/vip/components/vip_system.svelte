@@ -1917,14 +1917,14 @@
                                                 class="xp-progress"
                                                 style="width: 26.6667px;"
                                             ></div>
-                                            {#if $vipProfiile.total_wagered > goldLevels[1]}
+                                            {#if $vipProfiile.total_wagered > goldLevels[0]}
                                                 <div class="xp-pr-nocomplete">
                                                     Completed
                                                 </div>
                                             {:else}
                                                 <div class="xp-pr-nextlv">
                                                     <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
-                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[1] * 100)}%</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[0] * 100)}%</div>
                                                 </div>
                                             {/if}
                                         </div>
@@ -1994,14 +1994,14 @@
                                                 class="xp-progress"
                                                 style="width: 27.3333px;"
                                             ></div>
-                                            {#if $vipProfiile.total_wagered > goldLevels[2]}
+                                            {#if $vipProfiile.total_wagered > goldLevels[1]}
                                                 <div class="xp-pr-nocomplete">
                                                     Completed
                                                 </div>
                                             {:else}
                                                 <div class="xp-pr-nextlv">
                                                     <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
-                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[2] * 100)}%</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[1] * 100)}%</div>
                                                 </div>
                                             {/if}
                                         </div>
@@ -2071,9 +2071,16 @@
                                                 class="xp-progress"
                                                 style="width: 28px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[2]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[2] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2141,9 +2148,16 @@
                                                 class="xp-progress"
                                                 style="width: 28.6667px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[3]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[3] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2211,9 +2225,16 @@
                                                 class="xp-progress"
                                                 style="width: 29.3333px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[4]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[4] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2281,9 +2302,16 @@
                                                 class="xp-progress"
                                                 style="width: 30px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[5]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[5] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2351,9 +2379,16 @@
                                                 class="xp-progress"
                                                 style="width: 30.6667px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[6]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[6] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2421,9 +2456,16 @@
                                                 class="xp-progress"
                                                 style="width: 31.3333px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[7]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[7] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2491,9 +2533,16 @@
                                                 class="xp-progress"
                                                 style="width: 32px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[8]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[8] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2561,9 +2610,16 @@
                                                 class="xp-progress"
                                                 style="width: 32.6667px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[9]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[9] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2631,9 +2687,16 @@
                                                 class="xp-progress"
                                                 style="width: 33.3333px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[10]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[10] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2701,9 +2764,16 @@
                                                 class="xp-progress"
                                                 style="width: 34px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[11]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[11] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2771,9 +2841,16 @@
                                                 class="xp-progress"
                                                 style="width: 34.6667px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[12]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[12] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2840,9 +2917,16 @@
                                                 class="xp-progress"
                                                 style="width: 35.3333px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[13]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[13] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2910,9 +2994,16 @@
                                                 class="xp-progress"
                                                 style="width: 36px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[14]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[14] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
@@ -2980,9 +3071,16 @@
                                                 class="xp-progress"
                                                 style="width: 36.6667px;"
                                             ></div>
-                                            <div class="xp-pr-nocomplete">
-                                                Not Started
-                                            </div>
+                                            {#if $vipProfiile.total_wagered > goldLevels[15]}
+                                                <div class="xp-pr-nocomplete">
+                                                    Completed
+                                                </div>
+                                            {:else}
+                                                <div class="xp-pr-nextlv">
+                                                    <div class="xp-diff">{Math.floor($vipProfiile.total_wagered)} XP</div>
+                                                    <div class="xp-percent">{Math.round(Math.floor($vipProfiile.total_wagered)/goldLevels[15] * 100)}%</div>
+                                                </div>
+                                            {/if}
                                         </div>
                                     </div>
                                     <div
