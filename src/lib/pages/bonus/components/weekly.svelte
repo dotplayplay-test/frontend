@@ -15,7 +15,7 @@
     let countdownInterval;
 
     const startCountDown = () => {
-        const endsInDate = moment.utc().day(8);
+        const endsInDate = moment().isoWeekday(1).add(7, 'days').startOf('day');
         let diffInSeconds = endsInDate.diff(moment(), "seconds");
         if (countdownInterval) {
             clearInterval(countdownInterval);

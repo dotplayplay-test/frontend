@@ -3,7 +3,7 @@
     import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
     import VipSystem from "./vip_system.svelte";
     import { vipProfiile } from "../vipstore";
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     const dispatch = createEventDispatcher();
 
     const handleCancel = () => {
@@ -11,6 +11,7 @@
     };
 
     const items = Array.from({ length: 15 }, (_, i) => i);
+    
     const itemNumbers = items.map((index) => {
         if (!index) return 1;
         if (index < 3) return 2;
@@ -35,13 +36,24 @@
         if (index === 13) return `SV33`;
         return `SV41`;
     });
+    const milestones = [1, 4, 8, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94, 102, 110];
     $: isHovering = {};
+   
+    $: progressPercent = 0;
+    $: milestoneIndex = 0;
 
-    let unit_range = (212993000 - 0) / 100;
-    let range = (parseFloat($vipProfiile.total_wagered) - 0).toFixed(0);
-    let progressPercent = (range / unit_range).toFixed(0);
+    $: {
+        const vipLevel = $vipProfiile.vip_level;
+        milestoneIndex = milestones.findIndex((m, i) => m >= vipLevel || milestones[i + 1] > vipLevel );
+        const upperLimitIndex = (milestones[milestoneIndex] !== vipLevel && milestones.findIndex(m => vipLevel < m )) || milestoneIndex;
+        const percentageOffset = milestoneIndex !== upperLimitIndex ? (((vipLevel - milestones[milestoneIndex]) / (milestones[upperLimitIndex] - milestones[milestoneIndex]) * 100) / milestones.length) : 0;
+        progressPercent = Math.max(0, Math.floor((milestoneIndex/(milestones.length - 1) * 100) + percentageOffset) - 3.2); // - 3.2 offset centering
+        console.log('Percentage ', progressPercent, milestoneIndex)
+    }
+    
 
-    $: scrollContainer = null;
+    let scrollContainer;
+    let bonusItems;
     $: scrollLeft = 0;
     const handleScrollLeft = () => {
         scrollContainer.scrollTo({
@@ -58,11 +70,20 @@
     };
     let timeout;
     const handleScroll = () => {
+        console.log('Scroll ', scrollContainer.offsetLeft, scrollContainer.scrollLeft)
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {
             scrollLeft = scrollContainer.scrollLeft;
         }, 200);
     };
+    onMount(() => {
+        const itemWidth = bonusItems.clientWidth / milestones.length;
+        const left = Math.floor(((milestones.length) - (scrollContainer.offsetWidth/itemWidth)) * itemWidth) * (((itemWidth * milestoneIndex) / (itemWidth * (milestones.length - 1)) * 100) / 100);
+        scrollContainer.scrollTo({
+            left,
+            behavior: "smooth"
+        });
+    });
 </script>
 
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
@@ -132,7 +153,8 @@
                             alt=""
                         />
                     </div>
-                    <div style="z-index: 60;"
+                    <div
+                        style="z-index: 60;"
                         on:click={handleScrollLeft}
                         class="tag t-left {scrollLeft === 0 ? 'disabled' : ''}"
                     >
@@ -146,7 +168,8 @@
                             src="https://static.nanogames.io/assets/black_hover.5b276789.svg"
                         />
                     </div>
-                    <div style="z-index: 60;"
+                    <div
+                        style="z-index: 60;"
                         on:click={handleScrollRight}
                         class="tag t-right {scrollLeft >= 379
                             ? 'disabled'
@@ -162,10 +185,14 @@
                             src="https://static.nanogames.io/assets/black_hover.5b276789.svg"
                         />
                     </div>
-                    <div on:scroll={handleScroll} bind:this={scrollContainer} class="bp-wrap">
+                    <div
+                        on:scroll={handleScroll}
+                        bind:this={scrollContainer}
+                        class="bp-wrap"
+                    >
                         <div class="bp-scroll">
                             <div class="sc-eoHXOn inWmVI vip-bonus-list">
-                                <div class="vip-bonus-wrap">
+                                <div bind:this={bonusItems} class="vip-bonus-wrap">
                                     {#each items as item (item)}
                                         <div
                                             on:pointerleave={() =>
@@ -410,7 +437,7 @@
                                         class="pr-progress"
                                         style="width: {progressPercent}%;"
                                     >
-                                        <div class="dot-wrap">
+                                        <div class="dot-wrap" style="left: {progressPercent}%; transform: translateX(-18px);">
                                             <div class="dot-near">
                                                 <div class="dot-icon"></div>
                                             </div>

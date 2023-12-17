@@ -1,8 +1,7 @@
 <script>
     import Icon from "svelte-icons-pack/Icon.svelte";
     import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-    import { UserProfileEl } from "$lib/index";
-    const { handleprofile } = UserProfileEl();
+    import {slide} from "svelte/transition";
     import { vipProfiile } from "../vipstore";
 
     $: showBronzeCard = false;
@@ -39,7 +38,8 @@
     <div class="vip-system-title">VIP Level System</div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
-        <div class="vip-system-bar">
+
+        <div on:click={() => (showBronzeCard = !showBronzeCard)} class="vip-system-bar {showBronzeCard ? "expanded" : ""}">
             <div class="bar-cont">
                 <img
                     class="level-icon"
@@ -48,7 +48,7 @@
                 />
                 <div class="bar-tit">Bronze Card</div>
             </div>
-            <button on:click={() => (showBronzeCard = !showBronzeCard)}>
+            <button>
                 <Icon
                     src={RiSystemArrowRightSLine}
                     size="25"
@@ -60,7 +60,7 @@
         </div>
 
         {#if showBronzeCard}
-            <div class="sc-hKwDye fclMSM v-toggle-view">
+            <div transition:slide={{ duration: 300 }} class="sc-hKwDye fclMSM v-toggle-view">
                 <div class="v-table-wrap">
                     <div class=" Bronze-list v-table">
                         <div class="v-thead">
@@ -173,9 +173,7 @@
 
                             <div class="  v-tr-wrap">
                                 <div class="v-tr-item v-tr">
-                                    <div
-                                        class="align-left tlevel v-td width_1 level-td"
-                                    >
+                                    <div class="align-left tlevel v-td width_1 level-td">
                                         <img
                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAABGCAMAAAC0TEcTAAABAlBMVEUAAACRlqmSl6iSlqiSl6mNlqOTk6aSqqq/v7+Sl6iRlqiSl6l3fY2Rl6mSl6mTmKqSl6mTmKuTmaqVmayJjp94fox4fo2Slql3fo2Rl6l4fY2Rlql4foySl6l3fo2Slqh4f42SlqiSmKl5f4ySlqmTl6p4fo55fo14fo16foySmqp3go719vza3eaRlqh3fYy3u8nEyNTy8/rw8fjY2+XJzNeZnq+UmauSl6mPlKbz9Pvs7vXh5Ozc3+jq6/Pn6fHf4erU1uDQ092/w8+qrr2kqLidorOIjZ57gJDl5+7Dx9O1uMahpbWMkqOFi5uBh5d8g5OwtcOvs8HLz9m6v8u6vsuO9w8iAAAALHRSTlMA/N3tMxMNBwT51r6unpduYFEtIxz59fPt5OLPyse6qpGNg4F6eHFnV0c/LQ8iQfIAAAJgSURBVEjHvZbpcqJAFEaJG5poYqLZ933rFkbFIBoXQJJRs2iS93+VkS8MUypI35qqnF/a3Uc9lHiVwijkcgWJRuo0UyplTlMEJZ2Pl0A8nxZ17vZhgP07IaVwjNND0xziwXEhOuYs456saQZjhlZzH2fOItLyu3h1tcFAQ8XT3fwCJXGIM3aT+TRtLB0mQpRiTnf3nS6bouu4q3quGKDIl9vu5kO/zGYo9x/cne1LedZZj5VcBi0WQGuAzdj6lLKxgtVeh4XQ6eHAyoavJFeXcJlNtgATl39pNQklvRZHjFVhC6lYSIuvpSeXeRlvPGqzSNojHF1OSDHEcCYER1pMmuTomsEEMTR9EuZKKhOnMvKkX8JK+TdXqVKbc6rUeORUqdLknCQhBlCk1iOnSo0OBwQJMTTJQAxFQgxRQgxRKiOGJBltDggSYohSBTEUCTE0CTE0CTcAUUIMTcINQJUQQ5EQQ5RwA9AkxBAlFd8ZQcaepH9WRZXqJ36WMQAcTczRHAyAv6PGNqMV0/ZGjT/U9EE14pMNdG+oTY1Pa5Fj+eNzZlAPtdCYoTeog/4S2N0gpWvP/yUA8kUd81qtzsWomND1C1ma5/mphLT+tNOvYfnpWQpCUd5fsN/7+Kd89LD08q4owdKEtzrOjLtezBhP62+KEiaB1++0r+ok5us75hUbYRLw0hzLcrwYJVry0/wYIQlpfoyghDTXQYywhDTEkCTwQ9LWFlk6uE6lrg8o0s7JvQTuT3YEpaMbWfKRb46ipb3z4ux68XxvkbSZvZUCuc1uhkjZq6QUSvIqK/0ffwATstoHLsI5LgAAAABJRU5ErkJggg=="
                                             alt=""
@@ -665,7 +663,7 @@
     </div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
-        <div class="vip-system-bar">
+        <div on:click={() => (showSilverCard = !showSilverCard)} class="vip-system-bar {showSilverCard ? "expanded" : ""}">
             <div class="bar-cont">
                 <img
                     class="level-icon"
@@ -674,7 +672,7 @@
                 />
                 <div class="bar-tit">Silver Card</div>
             </div>
-            <button on:click={() => (showSilverCard = !showSilverCard)}>
+            <button>
                 <Icon
                     src={RiSystemArrowRightSLine}
                     size="25"
@@ -686,7 +684,7 @@
         </div>
 
         {#if showSilverCard}
-            <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
+            <div transition:slide={{ duration: 400 }} class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
                 <div class="v-table-wrap">
                     <div class="show Silver-list v-table">
                         <div class="v-thead">
@@ -1853,7 +1851,7 @@
     </div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
-        <div class="vip-system-bar">
+        <div on:click={() => (showGoldCard = !showGoldCard)} class="vip-system-bar  {showGoldCard ? "expanded" : ""}">
             <div class="bar-cont">
                 <img
                     class="level-icon"
@@ -1862,7 +1860,7 @@
                 />
                 <div class="bar-tit">Gold Card</div>
             </div>
-            <button on:click={() => (showGoldCard = !showGoldCard)}>
+            <button >
                 <Icon
                     src={RiSystemArrowRightSLine}
                     size="25"
@@ -1873,7 +1871,7 @@
             </button>
         </div>
         {#if showGoldCard}
-            <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
+            <div transition:slide={{ duration: 600 }} class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
                 <div class="v-table-wrap">
                     <div class=" Gold-list v-table">
                         <div class="v-thead">
@@ -3039,7 +3037,7 @@
     </div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
-        <div class="vip-system-bar">
+        <div on:click={() => (showPlatinumCard = !showPlatinumCard)} class="vip-system-bar {showPlatinumCard ? "expanded" : ""}">
             <div class="bar-cont">
                 <img
                     class="level-icon"
@@ -3048,7 +3046,7 @@
                 />
                 <div class="bar-tit">Platinum Card</div>
             </div>
-            <button on:click={() => (showPlatinumCard = !showPlatinumCard)}>
+            <button >
                 <Icon
                     src={RiSystemArrowRightSLine}
                     size="25"
@@ -3060,7 +3058,7 @@
         </div>
 
         {#if showPlatinumCard}
-            <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
+            <div transition:slide={{ duration: 800 }} class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
                 <div class="v-table-wrap">
                     <div class=" Platinum-list v-table">
                         <div class="v-thead">
@@ -5333,7 +5331,7 @@
     </div>
 
     <div class="sc-iLOkMM bHtipE vip-system-list">
-        <div class="vip-system-bar">
+        <div on:click={() => (showDiamondCard = !showDiamondCard)} class="vip-system-bar {showDiamondCard ? "expanded" : ""}">
             <div class="bar-cont">
                 <img
                     class="level-icon"
@@ -5348,7 +5346,7 @@
                     />SVIP
                 </div>
             </div>
-            <button on:click={() => (showDiamondCard = !showDiamondCard)}>
+            <button >
                 <Icon
                     src={RiSystemArrowRightSLine}
                     size="25"
@@ -5360,7 +5358,7 @@
         </div>
 
         {#if showDiamondCard}
-            <div class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
+            <div transition:slide={{ duration: 900 }} class="sc-hKwDye fclMSM v-toggle-view" style="height: auto;">
                 <div class="v-table-wrap">
                     <div class=" Diamond-list v-table">
                         <div class="v-thead">
@@ -7712,6 +7710,7 @@
 </div>
 
 <style>
+
     .vip-system .vip-system-title {
         padding-left: 1.625rem;
         color: rgb(245, 246, 247);
@@ -7725,6 +7724,22 @@
 
     .vip-system .more-bottom {
         height: 2.5rem;
+    }
+
+    .vip-system-list {
+        transition: all 200ms ease-out;
+    }
+
+    .vip-system-bar > button {
+        cursor: pointer;
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+        transition: transform 200ms linear;
+    }
+
+    .vip-system-bar.expanded > button {
+        transform: rotateZ(90deg);
     }
 
     .bHtipE .v-toggle-view {

@@ -316,7 +316,7 @@
                 </span>
                 <span>Available at VIP 22</span>
             </div>
-        {:else if $allcashback.recharge_activated && $allcashback.recharge_bonus !== 0}
+        {:else if $allcashback.recharge_activated && ($allcashback.recharge_bonus !== 0 || ($allcashback.recharge_balance && claimAvailable($allcashback)))}
             <button
                 disabled={is_loading}
                 on:click={handleClaimcashbacks}
@@ -340,7 +340,7 @@
                 <button
                     disabled={is_loading}
                     on:click={handleActivateRecharge}
-                    class="quests-btn claim"
+                    class="quests-btn claim activate"
                 >
                     <span
                         >{is_loading
@@ -412,6 +412,11 @@
     .quests-btn.claim {
         background: var(--primary-color);
         color: var(--autofill-color);
+    }
+    .quests-btn.claim:not(.activate) {
+        border-radius: 30px;
+    }
+    .quests-btn.claim.activate {
         border-top-right-radius: 30px;
         border-bottom-right-radius: 30px;
     }
