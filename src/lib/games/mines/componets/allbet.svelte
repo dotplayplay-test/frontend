@@ -1,7 +1,8 @@
 <script>
     import { dicegameplays } from "../store/index"
     import HistoryDetails from "./historyDetails.svelte";
-    
+    import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+
     let newItem;
      $: {
         // $crash_historyEl.sort((a, b) => b._id - a._id);
@@ -33,71 +34,74 @@
         <HistoryDetails on:close={handleDiceHistoryDetail} DgII={DgII}/> 
     {/if}
     
-    <div id="main" class="tabs-view" style="transform: none;">
-        <div class="sc-eZhRLC iycaRo">
-            <table class="sc-gWXbKe iUeetX table is-hover">
-                <thead>
-                    <tr>
-                        <th class="num">Bet ID</th>
-                        <th class="user">Player</th>
-                        <th class="time">Time</th>
-                        <th class="bet">Bet</th>
-                        <th class="payout">Payout</th>
-                        <th class="profit">Profit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each newItem.slice(0, 15) as dice  }
-                    <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
-                        <td>
-                            <button class="hash ellipsis">{dice.bet_id}</button>
-                        </td>
-                        <td>
-                            {#if dice.hidden_from_public }
-                                <div class="sc-jUosCB iTDswZ" >
-                                    <div class="name">Hidden</div>
-                                </div>
-                                {:else}
-                                <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${dice.user_id}`}>
-                                    <div class="name">{dice.username}</div>
-                                </a>
-                            {/if}
-                        </td>
-                        <td>{formatTime(dice.time)}</td>
-                        <td class="bet">
-                            <div class="sc-Galmp erPQzq coin notranslate monospace">
-                                <img class="coin-icon" alt="" src={dice.token_img}>
-                                <div class="amount">
-                                    <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        {#if !dice.has_won}
-                        <td class="payout">0.00×</td>
-                        {:else}
-                        <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
-                        {/if}
-                        <td class={`profitline ${dice.has_won ? "is-win": "is-lose"} `}>
-                            <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                                <img class="coin-icon" alt=""  src={dice.token_img}>
-                                <div class="amount">
-                                    {#if !dice.has_won}
-                                    <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span></span>
+    <div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`}>
+        <div  class="tabs-view" style="transform: none;">
+            <div class="sc-eZhRLC iycaRo">
+                <table class="sc-gWXbKe iUeetX table is-hover">
+                    <thead>
+                        <tr>
+                            <th class="num">Bet ID</th>
+                            <th class="user">Player</th>
+                            <th class="time">Time</th>
+                            <th class="bet">Bet</th>
+                            <th class="payout">Payout</th>
+                            <th class="profit">Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each newItem.slice(0, 15) as dice  }
+                        <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
+                            <td>
+                                <button class="hash ellipsis">{dice.bet_id}</button>
+                            </td>
+                            <td>
+                                {#if dice.hidden_from_public }
+                                    <div class="sc-jUosCB iTDswZ" >
+                                        <div class="name">Hidden</div>
+                                    </div>
                                     {:else}
-                                    <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(6)}<span class="suffix">00</span></span>
-                                    {/if}
+                                    <a class="sc-jUosCB iTDswZ user-info " href={`/user/profile/${dice.user_id}`}>
+                                        <div class="name">{dice.username}</div>
+                                    </a>
+                                {/if}
+                            </td>
+                            <td>{formatTime(dice.time)}</td>
+                            <td class="bet">
+                                <div class="sc-Galmp erPQzq coin notranslate monospace">
+                                    <img class="coin-icon" alt="" src={dice.token_img}>
+                                    <div class="amount">
+                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    {/each}
-                </tbody>
-            </table>
+                            </td>
+                            {#if !dice.has_won}
+                            <td class="payout">0.00×</td>
+                            {:else}
+                            <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
+                            {/if}
+                            <td class={`profitline ${dice.has_won ? "is-win": "is-lose"} `}>
+                                <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
+                                    <img class="coin-icon" alt=""  src={dice.token_img}>
+                                    <div class="amount">
+                                        {#if !dice.has_won}
+                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span></span>
+                                        {:else}
+                                        <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(6)}<span class="suffix">00</span></span>
+                                        {/if}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
     
-    <div class="mobile">
+    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && !$is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`}>
         <div class="tabs-view" style="transform: none;">
             <div class="sc-eZhRLC iycaRo">
                 <table class="sc-gWXbKe iUeetX table is-hover">
@@ -144,7 +148,7 @@
                             </div>
                         </td>
                     </tr>
-                        {/each}
+                    {/each}
                     </tbody>
                 </table>
             </div>

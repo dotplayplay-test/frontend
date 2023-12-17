@@ -3,6 +3,7 @@ import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
+import { browser } from '$app/environment';
 import {
     createEventDispatcher
 } from 'svelte';
@@ -30,10 +31,21 @@ const HandleAboutGame = ((e) => {
     }
 })
 
+let is_mobile = false
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
+
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog "style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         {#if !defaultSate}
         <button on:click={()=> defaultSate = true} class="dialog-back" style="opacity: 1; transform: none;">
             <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
@@ -84,21 +96,7 @@ const HandleAboutGame = ((e) => {
 .dialog-head.has-back {
     margin-left: 3.125rem;
 }
-.dialog {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    left: 50%;
-    top: 50%;
-    width: 464px;
-    height: 720px;
-    margin: -375px 0px 0px -280px;
-    transition-property: width, height, margin-left, margin-top;
-    transition-duration: 0.5s;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background-color: rgb(23, 24, 27);
-}
+
 
 .dialog-head.has-close {
     margin-right: 3.75rem;
@@ -207,5 +205,36 @@ const HandleAboutGame = ((e) => {
     margin-bottom: 0.5rem;
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
+}
+
+@media screen and (min-width: 650px){
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+
+}
+
+@media screen and (max-width: 650px){
+.dialog {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+
 }
 </style>

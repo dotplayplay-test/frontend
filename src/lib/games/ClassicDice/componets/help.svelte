@@ -7,7 +7,7 @@ import {
     createEventDispatcher
 } from 'svelte';
 import About from './helps/about.svelte';
-    import Fairness from './helps/fairness.svelte';
+import Fairness from './helps/fairness.svelte';
 
 const dispatch = createEventDispatcher()
 
@@ -23,7 +23,8 @@ const HandleAboutGame = ((e) => {
         defaultSate = !defaultSate
         is_about = !is_about
         fairness = false
-    }else{
+    }
+    else{
         defaultSate = !defaultSate
         fairness = !fairness
         is_about = false
@@ -36,15 +37,15 @@ const HandleAboutGame = ((e) => {
 <div class="sc-bkkeKt kBjSXI">
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         {#if !defaultSate}
-        <button on:click={()=> defaultSate = true} class="dialog-back" style="opacity: 1; transform: none;">
-            <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
-        </button>
+            <button on:click={()=> defaultSate = true} class="dialog-back" style="opacity: 1; transform: none;">
+                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+            </button>
         {/if}
         <div class={`dialog-head ${defaultSate ? "has-close" : "has-back"} `}>
             <div class="dialog-title">{defaultSate ? "Help" :  is_about ? "What Game Is This?" : "Fairness"}</div>
         </div>
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="close" />
+            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
         </button>
 
         {#if defaultSate}
@@ -55,7 +56,7 @@ const HandleAboutGame = ((e) => {
                         <span>What Game Is This?</span>
                         <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
                     </button>
-                    <button  on:click={()=> HandleAboutGame(2)} class="usiu">
+                    <button on:click={()=> HandleAboutGame(2)} class="usiu">
                         <span>Fairness</span>
                         <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
                     </button>
@@ -65,7 +66,7 @@ const HandleAboutGame = ((e) => {
         {/if}
 
         {#if is_about && !defaultSate}
-        <About />
+            <About />
         {/if}
         {#if fairness && !defaultSate}
             <Fairness />

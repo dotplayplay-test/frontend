@@ -39,7 +39,6 @@ export let settingEl = writable(settings)
 let sounds = 1
 export let soundHandler = writable(sounds)
 
-
 let Cashoii = 0
 export let Cashout = writable(Cashoii)
 
@@ -54,3 +53,12 @@ export let HandleIsAlive = writable(mineIsUp)
 
 let winnig = ""
 export let HandleWinning= writable(winnig)
+
+let mine = 0
+export let HandleMineCount= writable(mine)
+
+let SelectedMine = 0
+export let HandleSelectedMine = writable(SelectedMine)
+
+let netTile = 0
+export let HandleNextTime = writable(netTile)

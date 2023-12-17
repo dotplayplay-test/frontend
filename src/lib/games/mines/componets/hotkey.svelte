@@ -1,6 +1,7 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
+import { browser } from '$app/environment';
 import {
     createEventDispatcher
 } from 'svelte';
@@ -9,10 +10,22 @@ const dispatch = createEventDispatcher()
 const handleCloseHelp = (() => {
     dispatch("close", 5)
 })
+
+let is_mobile = false
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
+
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
+    <div class="dialog "style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         <div class="dialog-head has-close">
             <div class="dialog-title">Hot keys</div>
         </div>
@@ -84,6 +97,7 @@ const handleCloseHelp = (() => {
     background-color: rgba(45, 48, 53, 0.5);
     border: 1px solid rgb(45, 48, 53);
 }
+@media screen and (min-width: 650px){
 .dialog {
     position: absolute;
     display: flex;
@@ -98,6 +112,20 @@ const handleCloseHelp = (() => {
     border-radius: 1.25rem;
     overflow: hidden;
     background-color: rgb(23, 24, 27);
+}
+
+}
+
+@media screen and (max-width: 650px){
+.dialog {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+
 }
 .dialog-head {
     position: relative;

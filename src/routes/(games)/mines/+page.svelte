@@ -3,28 +3,30 @@ import Gameview from "$lib/games/mines/gameview.svelte";
 import "$lib/games/mines/styles/index.css"
 import Controls from "$lib/games/mines/Controls.svelte";
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
-import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
-import IoMusicalNotes from "svelte-icons-pack/io/IoMusicalNotes";
-import BiStats from "svelte-icons-pack/bi/BiStats";
+import FiMusic from "svelte-icons-pack/fi/FiMusic";
+import TiVolumeDown from "svelte-icons-pack/ti/TiVolumeDown";
 import {onMount} from "svelte"
 import axios from "axios"
-import { handleAuthToken } from "$lib/store/routes"
+import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
+import { handleAuthToken } from "$lib/store/routes";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import { DicegameSocket } from "$lib/games/mines/socket/Socket"
-import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
-import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
+import TiVolumeMute from "svelte-icons-pack/ti/TiVolumeMute";
+import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
+import BsEgg from "svelte-icons-pack/bs/BsEgg";
+import RiMapGuideFill from "svelte-icons-pack/ri/RiMapGuideFill";
+import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
 import Allbet from "$lib/games/mines/componets/allbet.svelte";
-import Mybet from "$lib/games/mines/componets/mybet.svelte";
 import Hotkey from "$lib/games/mines/componets/hotkey.svelte";
 import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
 import SeedSetting from "$lib/games/mines/componets/seedSetting.svelte";
 import Help from "$lib/games/mines/componets/help.svelte";
-import { soundHandler} from "$lib/games/mines/store/index"
-import {MinesEncription} from "$lib/games/mines/store/index"
-import background from "$lib/games/mines/audio/sadness.mp3"
+import { soundHandler} from "$lib/games/mines/store/index";
+import {MinesEncription} from "$lib/games/mines/store/index";
+import background from "$lib/games/mines/audio/sadness.mp3";
 DicegameSocket()
-import { ServerURl } from "$lib/backendUrl"
+import { ServerURl } from "$lib/backendUrl";
+import Mobile from "./mobile.svelte";
 const URl = ServerURl()
 let is_loading = false
 const handleMinesGameEncrypt = (async()=>{
@@ -99,35 +101,35 @@ const handleIsHelp = (()=>{
     isHelp = !isHelp
 })
  
+const handleSoundState = (()=>{
+    if($soundHandler){
+        soundHandler.set(0)
+    }else{
+        soundHandler.set(1)
+    }
+})
+
+</script>
     
-    const handleSoundState = (()=>{
-        if($soundHandler){
-            soundHandler.set(0)
-        }else{
-            soundHandler.set(1)
-        }
-    })
+{#if is_hotkey}
+    <Hotkey on:close={handleHotKey} />
+{/if}
     
-    </script>
-    
-    {#if is_hotkey}
-      <Hotkey on:close={handleHotKey} />
-    {/if}
-    
-    {#if is_stats}
-      <LiveStats on:close={stats} />
-    {/if}
-    
-    {#if isSeed}
-      <SeedSetting on:close={hanhisSeed}/>
-    {/if}
-    
-    {#if isHelp}
+{#if is_stats}
+    <LiveStats on:close={stats} />
+{/if}
+
+{#if isSeed}
+    <SeedSetting on:close={hanhisSeed}/>
+{/if}
+
+{#if isHelp}
     <Help on:close={handleIsHelp} />
-    {/if}
+{/if}
     
-    
-    {#if !is_loading}
+
+{#if !is_loading}
+<div style={`${$is_open__chat && $is_open__Appp && $screen > 1579 || $is_open__chat && !$is_open__Appp && $screen > 1219 || !$is_open__chat && !$is_open__Appp && $screen > 1049 || !$is_open__chat && $is_open__Appp && $screen > 1214 ? "" : "display:none"}`} id="dice-main">
     <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
         <div id="game-ClassicDice" class="sc-haTkiu lmWKWf game-style0 sc-gDGHff gYWFhf">
             <div class="game-area">
@@ -136,23 +138,29 @@ const handleIsHelp = (()=>{
                     <Gameview />
     
                     <div class="game-actions">
-                        <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                            <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
+                        <button on:click={()=> handleSoundState()} class={`action-item ${playPlayb ? "active" : ""} `}>
+                            <Icon src={FiMusic}  size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Music" />
                         </button>
-                        <button on:click={()=> playBackground()} class={`action-item ${playPlayb ? "active" : ""} `}>
-                            <Icon src={IoMusicalNotes} size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
+
+                        <button on:click={()=> playBackground()} class={`action-item ${$soundHandler ? "active" : ""} `}>
+                            {#if $soundHandler}
+                             <Icon src={TiVolumeDown}  size="23"  color={`rgb(67, 179, 9)`} title="Sound" />
+                                {:else}
+                             <Icon src={TiVolumeMute}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Sound closed" />
+                            {/if}
                         </button>
-                        <button on:click={handleHotKey} class="action-item ">
-                            <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+
+                        <button on:click={handleHotKey} class="action-item  ">
+                            <Icon src={BiSolidKeyboard}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Hot keys" />
                         </button>
-                        <button on:click={stats} class="action-item ">
-                            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" />
+                        <button on:click={hanhisSeed} class="action-item  " id="set_seed">
+                            <Icon src={BsEgg}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Seed" />
                         </button>
-                        <button on:click={hanhisSeed} class="action-item " id="set_seed">
-                            <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
+                        <button on:click={stats} class="action-item  ">
+                            <Icon src={RiMapGuideFill}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Live stat" />
                         </button>
-                        <button on:click={handleIsHelp} class="action-item ">
-                            <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
+                        <button on:click={handleIsHelp} class="action-item  ">
+                            <Icon src={AiOutlineQuestionCircle}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Help" />
                         </button>
                     </div>
                 </div>
@@ -199,6 +207,12 @@ const handleIsHelp = (()=>{
             </div>
         </div>
     </div>
+</div>
+
+<div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && !$is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="dice-mobile">
+    <Mobile />
+</div>
+
 {:else}
     <div class="uytutfyh">
         <div class="tdthuy">
