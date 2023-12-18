@@ -44,7 +44,7 @@ const handleCancel = (()=>{
 }
 .dIGSON {
     height: 16rem;
-    border-radius: 1.25rem;
+   border-radius: 0.5rem;
     overflow: hidden;
     padding: 0.91rem 1.25rem;
     background: rgb(23, 24, 27);
@@ -66,13 +66,13 @@ const handleCancel = (()=>{
     display: flex;
 }
 .sc-bOtlzW .flex .title {
-    font-size: 1.25rem;
+    font-size: 1.9rem;
 }
 .dIGSON .detail {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .dIGSON .desc {
     margin-top: 0.25rem;
@@ -85,16 +85,18 @@ const handleCancel = (()=>{
 }
  .input {
     margin: 1.2rem 0px;
+    border-radius: 0;
 }
  .button {
-    width: auto;
-    height: 2.4rem;
+    width: 32vw;
+    height: 3rem;
     padding: 0px 1.25rem;
-    color: rgb(34, 35, 41);
-    background-image: conic-gradient(from 1turn, rgb(246, 199, 34), rgb(226, 180, 11), rgb(246, 199, 34));
+    color: grey;
+    background-color: #2a2c31;
+    border-radius: 0;
 }
 .sc-bOtlzW  .button {
-    width: 12.75rem;
+    /* width: 12.75rem; */
     margin: 0px auto;
 }
 </style>
