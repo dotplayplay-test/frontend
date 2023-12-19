@@ -521,12 +521,9 @@
 	.gKwlPS .input .input-control input {
 		color: rgb(245, 246, 247);
 	}
-	.kDuLvp .input-control textarea[readonly],
 	.kDuLvp .input-control input[readonly] {
 		opacity: 0.5;
 	}
-
-	.kDuLvp .input-control textarea,
 	.kDuLvp .input-control input {
 		flex: 1 1 0%;
 		width: 100%;

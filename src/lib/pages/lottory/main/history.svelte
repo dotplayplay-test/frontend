@@ -542,9 +542,6 @@
   .dTcUpI .fairness {
     margin-left: auto;
   }
-  .jMsmRL .tabs .table-wrap {
-    padding: 1.125rem;
-  }
   .iJCxbN .jackpot-bg {
     width: 100%;
     display: inline-block;
