@@ -39,7 +39,7 @@
 	};
 
 	onMount(() => {
-		console.log("SHOW DATA", showData)
+		// console.log("SHOW DATA", showData)
 		if (!!showData.game_id && showData.tab == 2) {
 			handleTabChange(2);
 		}

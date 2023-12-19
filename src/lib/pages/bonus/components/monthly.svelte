@@ -78,7 +78,6 @@
 
     onMount(async () => {
         allcashback.subscribe((v) => {
-            console.log(v);
             if (v.vip_level > 21 && v.month_bonus === 0) {
                 startCountDown();
             }

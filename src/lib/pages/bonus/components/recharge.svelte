@@ -83,7 +83,7 @@
 
     onMount(() => {
         allcashback.subscribe((v) => {
-            console.log("Claim available > ", claimAvailable(v), v);
+            // console.log("Claim available > ", claimAvailable(v), v);
             if (
                 v.recharge_activated &&
                 v.vip_level > 21 &&
