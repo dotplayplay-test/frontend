@@ -13,7 +13,7 @@ const handleCancel = (()=>{
     
 <div class="sc-bOtlzW dIGSON shitcode">
     <div class="flex flex-center">
-        <div class="title ttu bold">Flash drop</div>
+        <div class="title ttu bold" style="margin-top: 30px;">Flash drop</div>
         <div class="detail">
             <span>Details</span>
             <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="sc-gsDKAQ hxODWG icon">
@@ -24,8 +24,8 @@ const handleCancel = (()=>{
     <div class="desc">Redeem shitcodes to unlock crypto rewards</div>
     <div class="flex-center wrap">
         <div class="sc-ezbkAF kDuLvp input ">
-            <div class="input-control">
-                <input type="text" value="">
+            <div class="input-control" style="height: 45px;">
+                <input type="text" value="" >
             </div>
         </div>
         <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal" disabled="">
@@ -43,7 +43,7 @@ const handleCancel = (()=>{
     margin-right: 1.3rem;
 }
 .dIGSON {
-    height: 16rem;
+    height: 17.3rem;
    border-radius: 0.5rem;
     overflow: hidden;
     padding: 0.91rem 1.25rem;
@@ -85,14 +85,16 @@ const handleCancel = (()=>{
 }
  .input {
     margin: 1.2rem 0px;
-    border-radius: 0;
+    /* border-radius: none; */
+    
+    
 }
  .button {
-    width: 32vw;
+    width: 35vw;
     height: 3rem;
     padding: 0px 1.25rem;
     color: grey;
-    background-color: #2a2c31;
+    background-color: #24262B;
     border-radius: 0;
 }
 .sc-bOtlzW  .button {

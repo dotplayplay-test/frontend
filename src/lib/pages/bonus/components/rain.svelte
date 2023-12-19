@@ -43,12 +43,14 @@
     color: rgb(223, 227, 230);
     line-height: normal;
     margin-bottom: 0.75rem;
+    margin-left: 15px;
 }
 .item-desc {
     font-size: 0.875rem;
     color: rgba(152, 167, 181, 0.7);
     line-height: 1.71;
     max-width: 64%;
+    margin-left: 15px;
 }
 .button {
     width: 32vw;

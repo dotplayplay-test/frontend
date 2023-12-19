@@ -117,7 +117,6 @@ $:{
    
 .page-bonus-item {
     width: 32%;
-   
     background:#1C1E22 ;
     position: relative;
     min-width: 7.125rem;

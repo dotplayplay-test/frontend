@@ -35,6 +35,7 @@
     margin: 0px 0.5rem;
      border-radius: 0.5rem;
     cursor: pointer;
+    
 }
 .bold {
     font-weight: 600;
@@ -44,19 +45,21 @@
     color: rgb(223, 227, 230);
     line-height: normal;
     margin-bottom: 0.75rem;
+    margin-left: 15px;
 }
 .item-desc {
     font-size: 0.875rem;
     color: rgba(152, 167, 181, 0.7);
     line-height: 1.71;
     max-width: 64%;
+    margin-left: 15px;
 }
 .button {
     width: 32vw;
     height: 3rem;
     padding: 0px 1.25rem;
     color: grey;
-    background-color: #2a2c31;
+    background-color: #24262B;
     border-radius: 0;
 }
  .button {
