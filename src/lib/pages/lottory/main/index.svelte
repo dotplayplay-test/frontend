@@ -140,15 +140,14 @@
       ) {
         lotteryDrawDialogOpen = {game_id: saved.game_id, lc: true}
       }
-      localStorage.setItem("lottery_game", JSON.stringify({game_id: gameData.game_id, concluded: false}));
     } catch (e) {}
+    localStorage.setItem("lottery_game", JSON.stringify({game_id: gameData.game_id, concluded: false}));
   };
 
   const checkForDrawEnd = async (game_id) => {
     try {
       let { lottery } = await getGame(game_id);
       if (lottery.numbers.length) {
-        localStorage.setItem("lottery_game", JSON.stringify({game_id, concluded: true}));
         lotteryDrawDialogOpen = { game_id };
       } else {
         setTimeout(() => checkForDrawEnd(game_id), 3_000);
@@ -159,9 +158,10 @@
   };
 
   const handleCloseDrawDialog = async () => {
-    const _lc = lotteryDrawDialogOpen?.lc;
+    const {game_id, lc} = lotteryDrawDialogOpen;
+    localStorage.setItem("lottery_game", JSON.stringify({game_id, concluded: true}));
     lotteryDrawDialogOpen = null;
-    if (!_lc) {
+    if (!lc) {
       try {
         await gameSetup();
       } catch (error) {
