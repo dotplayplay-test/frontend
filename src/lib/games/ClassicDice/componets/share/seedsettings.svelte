@@ -18,7 +18,6 @@ function generateString(length) {
 }
 
 let client = generateString(10)
-
 const handleCancle = (()=>{
     dispatch("close", 9)
 })
@@ -56,18 +55,14 @@ const handleSeedSettings = (async()=>{
         is_loading = false
     })
 }
-
 setTimeout(()=>{
     error_msg.set("")
 },4000)
 })
 
-
-
 </script>
 
 <div class="dialog-body default-style " style="z-index: 2; transform: none;">
-
     <div class="sc-dkPtRN jScFby scroll-view sc-hxaKAp iGYNgq dialog-box">
         <div class="warn">You may use this function to set a new server seed + a new client seed, they can be randomly generated or customized (at least 10 characters), 
             and the number of bets will be reset to zero.

@@ -26,7 +26,7 @@ const handleCancel = (()=>{
         </div>
         <div class="bonus-desc last">
             <p>XP to Next Level</p>
-            <p class=""> {$allcashback.total_wagered}/ {$allcashback.next_level_point}</p>
+            <p class=""> {Math.round($allcashback.total_wagered)}/ {$allcashback.next_level_point}</p>
         </div>
         <div class="bonus-desc last">
             <p>Ready to claim</p>

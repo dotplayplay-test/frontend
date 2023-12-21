@@ -25,6 +25,7 @@ const handleNavigation = ((w) => {
 
 let is_loading = false
 const handleCrashHistory = (async()=>{
+    is_loading = true
     await axios.post(`${URL}/api/user/crash-game/history`)
     .then((result) => {
         is_loading = false
@@ -87,7 +88,7 @@ const handleTrends = (()=>{
         </div>
     </div>
 
-    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && $is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="crash-mobile">
+    <div style={`${$is_open__chat && $is_open__Appp && $screen < 1580 || $is_open__chat && !$is_open__Appp && $screen < 1220 || !$is_open__chat && !$is_open__Appp && $screen < 1050 || !$is_open__chat && $is_open__Appp && $screen < 1215  ? "" : "display:none"}`} class="crash-mobile">
         <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
             <div id="game-crash" class="sc-gRtYjc iIcxfY game-style-mobile sc-jWULZn KqoAz">
                 <div class="sc-UMyrj fghMqx">

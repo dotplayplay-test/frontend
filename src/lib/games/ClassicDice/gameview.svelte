@@ -1,10 +1,10 @@
 <script>
-import { payout } from "$lib/games/ClassicDice/store/index"
+import { payout , range} from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
-import { DiceHistory } from "./hook/diceHistory";
 import Icon from 'svelte-icons-pack/Icon.svelte';
+import { dicegameplays } from "../ClassicDice/store/index"
 import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
-const { historyD } = DiceHistory()
+import axios from "axios"
 import {dice_troo, dice_wallet} from "$lib/games/ClassicDice/store/index"
 import { onMount } from "svelte";
 import { isbetLoadingBtn } from "./store";
@@ -12,29 +12,44 @@ import { default_Wallet, coin_list } from "$lib/store/coins";
 import { handleisLoggin, profileStore } from "../../store/profile"
 import HistoryDetails from "./componets/historyDetails.svelte";
 import click from "./audio/click.wav"
+import { handleAuthToken } from "$lib/store/routes"
+import { ServerURl } from "$lib/backendUrl"
+const URl = ServerURl()
 // import { handleTransmit } from "../ClassicDice/AutoControllers.svelte"
 import cr from "./audio/click.wav"
 import win from "./audio/mixkit-achievement-bell-600.wav";
-let range = 50
 let rangeEl = 50
 let flip = 50
 
-$:{
-    onMount(async()=>{
-        $handleisLoggin &&  historyD()
-    })
-}
+const handleDiceGameHistory = (async()=>{
+     await axios.get(`${URl}/api/user/dice-game/dice-history`,{
+          headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${$handleAuthToken}`
+        }})
+        .then((response)=>{
+            dice_history.set(response.data)
+        })
+        .catch((error)=>{
+            console.log(error.response)
+        })
+})
+
+onMount(async()=>{
+    $handleisLoggin && await handleDiceGameHistory()
+})
 
 $:{
-    if(range < 0){
-        range = 2
+    if($range < 0){
+        range.set(2)
     }
-    if(range > 98){
-        range = 98
+    if($range > 98){
+        range.set(98)
     }
-    betPosition.set(range)
+    betPosition.set($range)
     flix.set(rangeEl)
 }
+
 
 let ishover = false
 const handleRangl = ((w)=>{
@@ -50,7 +65,6 @@ let houseEgde = 1
 let game__charges = 100 / houseEgde
 let game_logic;
 let total_charge;
-
 
 $: {
     if($rollunder){
@@ -69,12 +83,12 @@ $: {
         game_logic = 100 / $payout
         total_charge = game_logic / game__charges
         betPosition.set((game_logic - total_charge).toFixed(2))
-        range = ($betPosition)
+        range.set($betPosition)
     }else{
         game_logic = 100 / $payout
         total_charge = game_logic / game__charges
         betPosition.set((game_logic - total_charge).toFixed(2))
-        range = (100 - $betPosition)
+        range.set(100 - $betPosition)
     }
 }
 
@@ -108,9 +122,9 @@ function togglePlayback() {
 
 const handleChange = ((e)=>{
     playSounRd()
-    range = e 
-    let re = 100 - range
-    rangeEl = 100 - range
+    range.set(e)
+    let re = 100 - $range
+    rangeEl = 100 - $range
 })
 
 $:{
@@ -128,10 +142,10 @@ $:{
 const handleRollUnder = ()=>{
     if($rollunder){
         rollunder.set(false)
-        range = (100 - $betPosition)
+        range.set(100 - $betPosition)
     }else{
         rollunder.set(true)
-        range = ($betPosition)
+        range.set($betPosition)
     }
 }
 
@@ -201,7 +215,6 @@ $:{
         }
     }); 
     }
-
 }
 
 </script>
@@ -216,7 +229,7 @@ $:{
             {#if $handleisLoggin}
                 {#if $dice_history.length !== 0}
                 <div class="recent-list" style="width: 100%; transform: translate(0%, 0px);">
-                {#each $dice_history.slice(-6) as  dice} 
+                {#each $dice_history.slice(-10) as  dice} 
                     <button  on:click={()=> handleDiceHistoryDetail(dice)} class="recent-item" style="width: 20%;">
                         <div class={`item-wrap ${dice.has_won ? "is-win" : "is-lose"} `}>{(parseFloat(dice.cashout)).toFixed(2)}</div>
                     </button>
@@ -244,9 +257,9 @@ $:{
             <div class="slider-wrapper">
                 <div class="slider-handles">
                     {#if ishover}
-                        <div class="slider-tip" style={`left: ${ $rollunder ? $betPosition - 5 : 100 - $betPosition - 5 }%;`}>{(parseFloat(range)).toFixed(0)}</div>
+                        <div class="slider-tip" style={`left: ${ $rollunder ? $betPosition - 5 : 100 - $betPosition - 5 }%;`}>{(parseFloat($range)).toFixed(0)}</div>
                     {/if}
-                    <input disabled={$Handles_alive} type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={range}>
+                    <input disabled={$Handles_alive} type="range" on:mouseenter={()=>handleRangl(1)} on:mouseleave={()=>handleRangl(2)} min="2" max="98" step="1" class="drag-block "  on:input={(e)=> handleChange(e.target.value)} bind:value={$range}>
                     <div class="slider-track " style={`transform: translate(${$HandleDicePoint}%, 0px);`}>
                         {#if parseFloat($HandleDicePoint) === 50}
                         <div class="dice_num ">{(parseFloat($HandleDicePoint)).toFixed(2)}</div>
@@ -297,10 +310,10 @@ $:{
                         <input type="number" min="2" max="98" bind:value={$betPosition}>
                         <div class="right-info">
                             <span class="right-percent">%</span>
-                            <button on:click={()=> range = 2} class="amount-scale">Min</button>
-                            <button on:click={()=> range -= 5} class="amount-scale">-5</button>
-                            <button on:click={()=> range += 5}  class="amount-scale">+5</button>
-                            <button on:click={()=> range = 98} class="amount-scale">Max</button>
+                            <button on:click={()=> range.set(2)} class="amount-scale">Min</button>
+                            <button on:click={()=> range.set($range -5)} class="amount-scale">-5</button>
+                            <button on:click={()=> range.set($range +5) }  class="amount-scale">+5</button>
+                            <button on:click={()=> range.set(98)} class="amount-scale">Max</button>
                         </div>
                     </div>
                 </div>

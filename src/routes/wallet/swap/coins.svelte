@@ -41,13 +41,13 @@ $:{
                     </div>
                     <div class="tabs-view" style="transform: none;">
                         <div class="ui-scrollview currency-list">
-                            <div class="c1ubyjee currency-item notranslate active">
+                            <div class={`c1ubyjee currency-item notranslate ${9 === 9 ? "active" : ""} `}>
                                 <div class="coin-wrap">
                                     <img alt="" class="coin-icon" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828435/dpp_logo_sd2z9d.png">
                                 </div>
                                 <div class="name-wrap">
                                     <div class="currency-name">
-                                        BCD
+                                        PPL
                                     </div>
                                 </div>
                                 <div class="amount-wrap">
