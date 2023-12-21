@@ -120,6 +120,7 @@ import FaSolidChessQueen from "svelte-icons-pack/fa/FaSolidChessQueen";
     -ms-flex-pack: center;
     justify-content: center;
     margin-right: 0.25rem;
+    cursor: pointer;
 }
 .in button {
     cursor: pointer;
