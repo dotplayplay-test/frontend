@@ -33,7 +33,7 @@
     min-height: 16rem;
     padding: 3rem 1.875rem 0px;
     margin: 0px 0.5rem;
-    border-radius: 1.25rem;
+     border-radius: 0.5rem;
     cursor: pointer;
 }
 .bold {
@@ -52,14 +52,15 @@
     max-width: 64%;
 }
 .button {
-    width: auto;
-    height: 2.4rem;
+    width: 32vw;
+    height: 3rem;
     padding: 0px 1.25rem;
-    color: rgb(34, 35, 41);
-    background-image: conic-gradient(from 1turn, rgb(246, 199, 34), rgb(226, 180, 11), rgb(246, 199, 34));
+    color: grey;
+    background-color: #2a2c31;
+    border-radius: 0;
 }
  .button {
-    width: 12.75rem;
+    /* width: 12.75rem; */
     margin: 0px auto;
 }
 </style>

@@ -2,6 +2,7 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import IoDice from "svelte-icons-pack/io/IoDice";
   import IoRocket from "svelte-icons-pack/io/IoRocket";
+  import BiBomb from "svelte-icons-pack/bi/BiBomb";
   import { routes } from "../lib/store/routes";
   import { createEventDispatcher } from "svelte";
   export let styls;
@@ -55,7 +56,7 @@
       {
         id: 7,
         name: "Mines",
-        icon: IoDice,
+        icon: BiBomb,
         route: "mines",
         isAtive: $routes.route === "/(games)/mines",
       },
@@ -85,7 +86,7 @@
             : "original-content"}
         >
           <div class="icon">
-            <Icon src={game.icon} />
+            <Icon src={game.icon} size="22"/>
           </div>
           <div class="name">
             <p>{game.name}</p>

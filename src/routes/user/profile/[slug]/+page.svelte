@@ -72,6 +72,7 @@ onMount(async()=>{
     fetchData();
 })
 
+
 let is_mobile = false
 $:{
     if (browser && window.innerWidth < 650) {

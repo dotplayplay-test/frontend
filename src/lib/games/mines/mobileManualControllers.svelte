@@ -1,35 +1,78 @@
 <script>
-import {default_Wallet} from "$lib/store/coins"
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
-import { payout , minesStore, betDetails, Cashout } from "../mines/store/index";
-import { handleAuthToken } from "$lib/store/routes"
+import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+import { default_Wallet } from "$lib/store/coins";
 import { handleisLoggin, profileStore } from "$lib/store/profile"
-import { error_msg } from "./store/index"
-import { bet_amount, soundHandler,mine_history,HandleSelectedMine,HandleNextTime,HandleGame_id,
-     MinesEncription,HandleHas_won,HandleMineCount, HandlemineGems,HandleWinning,  HandleIsAlive} from "$lib/games/mines/store/index"
 import axios from "axios";
-import Loader from "$lib/components/loader.svelte";
-import successSound from "./audio/success-1-6297.mp3"
+import { error_msg } from "./store/index"
+import successSound from "$lib/games/mines/audio/success-1-6297.mp3"
 import { ServerURl } from "$lib/backendUrl"
 import { onMount } from "svelte";
+import Loader from "$lib/components/loader.svelte";
 import { handleCountdown } from "$lib/games/ClassicDice/socket/index"
 const { handleMinesHistory } = handleCountdown()
 const URL = ServerURl()
+import { handleAuthToken } from "$lib/store/routes"
+import { payout , minesStore, betDetails, Cashout, bet_amount } from "$lib/games/mines/store/index";
+import { soundHandler,mine_history,HandleSelectedMine,HandleNextTime,HandleGame_id,skown,
+  MinesEncription,HandleHas_won,HandleMineCount, HandlemineGems,HandleWinning,  HandleIsAlive} from "$lib/games/mines/store/index"
 
-let max_profit_tips = false
-let Handlemax_profit_tips = ((e)=>{
-    if(e === 1){
-        max_profit_tips = true
-    }else{
-        max_profit_tips = false
+
+let max_profit_tips = false;
+  let Handlemax_profit_tips = (e) => {
+    if (e === 1) {
+      max_profit_tips = true;
+    } else {
+      max_profit_tips = false;
     }
-})
+  };
+  let is_min_max = false;
+  const handleMinMax = () => {
+    is_min_max = !is_min_max;
+};
 
-let wining_amount = '' ;
+const handlesjen = (e) => {
+  bet_amount.set(parseFloat($default_Wallet.balance) * (e / 100).toFixed(4));
+  walletRange = e;
+  if ($default_Wallet.coin_name === "USDT") {
+    if ($bet_amount < 0.1) {
+      bet_amount.set((0.1).toFixed(4));
+    } else if ($bet_amount > 2000) {
+      bet_amount.set((2000).toFixed(4));
+    }
+  } 
+  else {
+    if ($bet_amount < 100) {
+      bet_amount.set((100).toFixed(4));
+    } else if ($bet_amount > 5000) {
+      bet_amount.set((5000).toFixed(4));
+    }
+  }
+};
+
+let walletRange = 0;
+const handleRangeSTlop = (eui) => {
+  bet_amount.set((parseFloat($default_Wallet.balance) * (eui / 100)).toFixed(4));
+  if ($default_Wallet.coin_name === "USDT") {
+    if ($bet_amount < 0.1) {
+      bet_amount.set((0.1).toFixed(4));
+    } 
+    else if (bet_amount > 2000) {
+      bet_amount.set((2000).toFixed(4));
+    }
+  }
+  else {
+    if ($bet_amount < 100) {
+      bet_amount.set((100).toFixed(4));
+    } else if ($bet_amount > 5000) {
+      bet_amount.set((5000).toFixed(4));
+    }
+  }
+};
+
 onMount(()=>{
     if($default_Wallet.coin_name === "USDT"){
         bet_amount.set((0.2).toFixed(4))
@@ -39,9 +82,9 @@ onMount(()=>{
 })
 
 
-
+let wining_amount = '' ;
 $:{
-    wining_amount = ($bet_amount * $payout).toFixed(9)
+    wining_amount = (($bet_amount * $payout).toFixed(4))
 }
 
 const dive = (()=>{
@@ -52,13 +95,11 @@ const mult = (()=>{
     bet_amount.set(($bet_amount * 2).toFixed(4))
 })
 
-
 function HandleWinningSound(e) {
     const audio = new Audio(successSound);
     audio.volume = 1;
     audio.play();
 }
-
 
 let jufy = false
 const handleDspo = (()=>{
@@ -110,14 +151,6 @@ const handleActiveMines = ((els)=>{
 });
 handleDspo()
 })
-let multiplayerEl = 1.03
-let multiplier 
-let cm;
-$:{
-    multiplier = multiplayerEl * (25 - $HandlemineGems)
-}
-
-
 
 let uuyd = false
 let none = 1
@@ -222,92 +255,8 @@ const handleDpojb = (async()=>{
                         HandleNextTime.set(1.08)
                     }
                     if($HandleMineCount === 3){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.13)
-                    }
-                    if($HandleMineCount === 4){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.18)
-                    }
-                    if($HandleMineCount === 5){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.24)
-                    }
-                    if($HandleMineCount === 6){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.30)
-                    }
-                    if($HandleMineCount === 7){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.38)
-                    }
-                    if($HandleMineCount === 8){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.48)
-                    }
-                    if($HandleMineCount === 9){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.55)
-                    }
-                    if($HandleMineCount === 10){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.65)
-                    }
-                    if($HandleMineCount === 11){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.77)
-                    }
-                    if($HandleMineCount === 12){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(1.90)
-                    }
-                    if($HandleMineCount === 13){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(2.06)
-                    }
-                    if($HandleMineCount === 14){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(2.25)
-                    }
-                    if($HandleMineCount === 15){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(2.75)
-                    }
-                    if($HandleMineCount === 16){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(2.75)
-                    }
-                    if($HandleMineCount === 17){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(3.09)
-                    }
-                    if($HandleMineCount === 18){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(3.54)
-                    }
-                    if($HandleMineCount === 19){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(4.13)
-                    }
-                    if($HandleMineCount === 20){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(4.95)
-                    }
-                    if($HandleMineCount === 21){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(6.19)
-                    }
-                    if($HandleMineCount === 22){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(8.24)
-                    }
-                    if($HandleMineCount === 23){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(12.38)
-                    }
-                    if($HandleMineCount === 24){
-                        Cashout.set(1.00)
-                        HandleNextTime.set(24.75)
+                        Cashout.set(1.13)
+                        HandleNextTime.set(1.29)
                     }
                 })
                 .catch((error)=>{
@@ -336,8 +285,8 @@ const handleCashout = (async()=>{
         profit: parseFloat($betDetails.bet_amount) * $Cashout,
         has_won: true,
         game_id: $HandleGame_id,
-        time: new Date()
-    }
+        time: new Date(),
+     }
      await axios.post(`${URL}/api/user/mine-game/cashout`, {
         data
     },{
@@ -367,103 +316,71 @@ const handleCashout = (async()=>{
     })
 })
 
-let is_min_max = false;
-  const handleMinMax = () => {
-    is_min_max = !is_min_max;
-};
-
-let walletRange = 0;
-  const handleRangeSTlop = (eui) => {
-    bet_amount.set((parseFloat($default_Wallet.balance) * (eui / 100)).toFixed(4));
-    if ($default_Wallet.coin_name === "USDT") {
-      if ($bet_amount < 0.1) {
-        bet_amount.set((0.1).toFixed(4));
-      } else if ($bet_amount > 2000) {
-        bet_amount.set((2000).toFixed(4));
-      }
-    } 
-    else {
-      if ($bet_amount < 100) {
-        bet_amount.set((100).toFixed(4));
-      } else if ($bet_amount > 5000) {
-        bet_amount.set((5000).toFixed(4));
-      }
-    }
-};
-
-const handlesjen = (e) => {
-    bet_amount.set((parseFloat($default_Wallet.balance) * (e / 100)).toFixed(4));
-    walletRange = e;
-    if ($default_Wallet.coin_name === "USDT") {
-      if ($bet_amount < 0.1) {
-        bet_amount.set((0.1).toFixed(4));
-      } else if ($bet_amount > 2000) {
-        bet_amount.set((2000).toFixed(4));
-      }
-    } 
-    else {
-      if ($bet_amount < 100) {
-        bet_amount.set((100).toFixed(4));
-      } else if ($bet_amount > 5000) {
-        bet_amount.set((5000).toFixed(4));
-      }
-    }
-  };
 
 </script>
 
-<div class="game-control-panel" style="margin-top: 30px;">
-    {#if $error_msg}
-    <div style="background-color:crimson;" class="error-message">
-        <div class="hTTvsjh"> 
-            <div>{$error_msg}</div>
-        </div>
-    </div>
- {/if}   
 
-    <div class="sc-juEPzu lgTgT">
+<div class="game-control-panel">
+  {#if $error_msg}
+  <div style="background-color:crimson;" class="error-message">
+      <div class="hTTvsjh"> 
+          <div>{$error_msg}</div>
+      </div>
+  </div>
+{/if} 
+    <div class="sc-bQFuvY cHwSyr">
         <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput">
             <div class="input-label">
                 <div class="sc-hmvnCu efWjNZ label">
                     <div>Amount</div>
                     <div class="max-profit">
-                        <button on:mouseleave={()=>Handlemax_profit_tips(2)} on:mouseenter={()=>Handlemax_profit_tips(1)} class="sc-gsDKAQ hxODWG icon" >
-                            <Icon src={BsExclamationCircle}  size="15"  color="rgb(67, 179, 9)"  title="" />
-                        </button>
-                        {#if max_profit_tips}
+                        <button
+                        on:mouseleave={() => Handlemax_profit_tips(2)}
+                        on:mouseenter={() => Handlemax_profit_tips(1)}
+                        class="sc-gsDKAQ hxODWG icon"
+                      >
+                        <Icon
+                          src={BsExclamationCircle}
+                          size="15"
+                          color="rgb(67, 179, 9)"
+                          title=""
+                        />
+                      </button>
+                      {#if max_profit_tips}
                         <div class="tip">
                             <span class="tit">Max Profit:&nbsp;</span>
                             <div class="sc-Galmp erPQzq coin notranslate">
                                 <div class="amount">
-                                    <span class="amount-str">5000.<span class="suffix">00</span>
+                                    <span class="amount-str">5000.
+                                        <span class="suffix">00000</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        {/if}
+                    {/if}
                     </div>
                 </div>
                 <div class="label-amount">0 USD</div>
             </div>
             <div class="input-control">
+              {#if $HandleIsAlive}
+              <div style="font-size: 13.5px; font-weight: bold">{(parseFloat($betDetails.bet_amount)).toFixed(4)}</div>
+              <input type="number" readonly>
+              {:else}
+                  <input type="number" bind:value={$bet_amount}>
+              {/if}
+              {#if $handleisLoggin}
                 {#if $HandleIsAlive}
-                    <div style="font-size: 13.5px; font-weight: bold">{(parseFloat($betDetails.bet_amount)).toFixed(4)}</div>
-                    <input type="number" readonly>
+                  <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
                 {:else}
-                    <input type="number" bind:value={$bet_amount}>
+                  <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                 {/if}
-                {#if $handleisLoggin}
-                {#if $HandleIsAlive}
-                    <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
-                    {:else}
-                    <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
-                {/if}  
-                {:else}
-                    <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-                {/if}
+              {:else}
+                  <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
+              {/if}
                 <div class="sc-kDTinF bswIvI button-group">
-                    <button on:click={()=> dive()}>/2</button>
-                    <button on:click={()=> mult()}>x2</button>
+                  <button on:click={()=> dive()}>/2</button>
+                  <button on:click={()=> mult()}>x2</button>
                     {#if is_min_max}
                     <div class="fix-layer" style="opacity: 1; transform: none;">
                       <button
@@ -472,7 +389,10 @@ const handlesjen = (e) => {
                         class="">Min</button
                       >
                       <div class="sc-kLwhqv eOA-dmL slider">
-                        <div  class="slider-after" style="transform: scaleX(100.001001);"></div>
+                        <div
+                          class="slider-after"
+                          style="transform: scaleX(100.001001);"
+                        ></div>
                         <input
                           type="range"
                           class="drag-block"
@@ -491,8 +411,8 @@ const handlesjen = (e) => {
                       >
                     </div>
                   {/if}
-                    <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
-                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
+                    <button  on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
+                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"   />
                         <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                     </button>
                 </div>
@@ -501,81 +421,110 @@ const handlesjen = (e) => {
         <div class="sc-ezbkAF gcQjQT input ">
             <div class="input-label">Mines</div>
             <div class="input-control">
-                <div class="sc-jJoQJp gOHquD select is-open sc-bnOPBZ ewilmB">
-                    <button disabled={$HandleIsAlive} on:click={handleDspo} class="select-trigger">
-                    {#if $HandleIsAlive}
-                        {$HandleMineCount}
-                    {:else}
-                        {activeMIne.id}
-                    {/if}
-                    {#if !$HandleIsAlive}
-                    <div class="arrow ">
-                        <Icon src={RiSystemArrowRightSLine}  size="20"  color="rgba(153, 164, 176, 0.6)"  />
-                    </div>
-                    {/if}
-                </button>
-                {#if jufy}
-                <div class="sc-hiCibw iVwWcQ select-options-wrap" style="opacity: 1; top: 100%; transform: none;">
-                    <div class="sc-dkPtRN jScFby scroll-view select-options len-24">
-                        {#each vyfx as io }
-                        <button on:click={()=>handleActiveMines(io)} class={`select-option ${io.active ? "active" : ""}`}>{io.id}</button>
-                        {/each}
-                    </div>
-                </div>
-                {/if}
-            </div>
-        </div>
+              <div class="sc-jJoQJp gOHquD select is-open sc-bnOPBZ ewilmB">
+                  <button disabled={$HandleIsAlive} on:click={handleDspo} class="select-trigger">
+                  {#if $HandleIsAlive}
+                      {$HandleMineCount}
+                  {:else}
+                      {activeMIne.id}
+                  {/if}
+                  {#if !$HandleIsAlive}
+                  <div class="arrow ">
+                      <Icon src={RiSystemArrowRightSLine}  size="20"  color="rgba(153, 164, 176, 0.6)"  />
+                  </div>
+                  {/if}
+              </button>
+              {#if jufy}
+              <div class="sc-hiCibw iVwWcQ select-options-wrap" style="opacity: 1; top: 100%; transform: none;">
+                  <div class="sc-dkPtRN jScFby scroll-view select-options len-24">
+                      {#each vyfx as io }
+                      <button on:click={()=>handleActiveMines(io)} class={`select-option ${io.active ? "active" : ""}`}>{io.id}</button>
+                      {/each}
+                  </div>
+              </div>
+              {/if}
+          </div>
+      </div>
     </div>
-
     {#if $HandleIsAlive}
-        <div class="preview-wrap">
-            <div class="sc-ezbkAF gcQjQT input ">
-                <div class="input-label">Gems</div>
-                <div class="input-control">
-                    <input type="text" readonly value={$HandlemineGems}>
-                </div>
+    <div class="preview-wrap">
+        <div class="sc-ezbkAF gcQjQT input ">
+            <div class="input-label">Gems</div>
+            <div class="input-control">
+                <input type="text" readonly value={$HandlemineGems}>
             </div>
-            <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp">
-                <div class="input-label">Profit on Next Tile({(parseFloat($HandleNextTime)).toFixed(2)}x)
-                    <div class="label-amount">0 USD</div>
-                </div>
-                <div class="input-control">
-                    <input type="text" readonly value={(parseFloat($betDetails.bet_amount) * $HandleNextTime).toFixed(4)}>
-                    <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
-                </div>
-            </div>
-            <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp">
-                <div class="input-label">Total profit({  $Cashout === 0 ? "1.00" : (parseFloat($Cashout)).toFixed(2)}x)
-                    <div class="label-amount">0 USD</div>
-                </div>
-                <div class="input-control">
-                    <input type="text" readonly value={ $Cashout === 0 ? (parseFloat($betDetails.bet_amount)).toFixed(4) : (parseFloat($betDetails.bet_amount)  * $Cashout).toFixed(4) }>
-                    <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
-                </div>
-            </div>
-            <!-- <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big pick-button">
-                <div class="button-inner">Pick a Tile Randomly</div>
-            </button> -->
         </div>
-        {/if}
-        {#if $HandleIsAlive}
-            <button disabled={$Cashout === 1} on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-                <div class="button-inner">Cash out</div>
-            </button>
-        {:else}
-        <button disabled={is_loading} on:click={handleDpojb} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
-            {#if is_loading}
-                <div style="height: 30px; color:aliceblue">
-                    <Loader />
-                </div>
-            {:else}
-                <div class="button-inner">Roll Now</div>
-            {/if}
-        </button>
-        {/if}
+        <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp">
+            <div class="input-label">Profit on Next Tile({(parseFloat($HandleNextTime)).toFixed(2)}x)
+                <div class="label-amount">0 USD</div>
+            </div>
+            <div class="input-control">
+                <input type="text" readonly value={(parseFloat($betDetails.bet_amount) * $HandleNextTime).toFixed(4)}>
+                <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
+            </div>
+        </div>
+        <div class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp">
+            <div class="input-label">Total profit({  $Cashout === 0 ? "1.00" : (parseFloat($Cashout)).toFixed(2)}x)
+                <div class="label-amount">0 USD</div>
+            </div>
+            <div class="input-control">
+                <input type="text" readonly value={ $Cashout === 0 ? (parseFloat($betDetails.bet_amount)).toFixed(4) : (parseFloat($betDetails.bet_amount)  * $Cashout).toFixed(4) }>
+                <img class="coin-icon" alt="" src={$betDetails.bet_token_img}>
+            </div>
+        </div>
+        <!-- <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big pick-button">
+            <div class="button-inner">Pick a Tile Randomly</div>
+        </button> -->
     </div>
+    {/if}
+    {#if $HandleIsAlive}
+    <button disabled={$Cashout === 1} on:click={handleCashout} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+        <div class="button-inner">Cash out</div>
+    </button>
+    {:else}
+    <button disabled={is_loading} on:click={handleDpojb} class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button">
+      {#if is_loading}
+        <div style="height: 30px">
+          <Loader />
+        </div>
+      {:else}
+        <div class="button-inner">Roll Now</div>
+      {/if}
+    </button>
+    {/if}
 </div>
+</div>
+
 <style>
+.gcQjQT {
+    margin-top: 1rem;
+}
+.gcQjQT .input-label {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 1em;
+    height: 1.25rem;
+    margin: 0px 1.125rem 0.375rem;
+    color: rgba(153, 164, 176, 0.6);
+}
+.efWjNZ {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 1rem;
+}
+.efWjNZ .max-profit {
+    position: relative;
+    margin-left: 0.1875rem;
+    width: 1rem;
+    height: 1rem;
+}
+.ewilmB .select-trigger {
+    background-color: transparent;
+    width: 100%;
+}
+
 
 
 .input-control:focus-within {
@@ -691,37 +640,25 @@ const handlesjen = (e) => {
     margin-top: -1px;
   }
 
-.input-control {
+  .cHwSyr .game-coininput .label-amount {
+    display: block;
+}
+.cHwSyr .bet-button {
+    margin-top: 1.25rem;
+}
+ .input-control {
     border-color: transparent;
 }
-.ewilmB .select-trigger {
-    background-color: transparent;
-    width: 100%;
-}
-.input-control {
-    background-color: rgba(49, 52, 60, 0.4);
-}
-.gcQjQT .input-control {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    opacity: 1;
-    height: 2.75rem;
-    border-radius: 1.5rem;
-    padding: 0px 1.375rem;
-}
-.cBmlor:disabled.sc-iqseJM:not(.is-loading) {
-    opacity: 0.5;
-    cursor: default;
-}
+
 .ewilmB {
     flex: 1 1 0%;
     height: 100%;
     margin: 0px -1.375rem;
 }
+.game-control-panel {
+    padding: 0px 1.125rem;
+}
+
 .gOHquD {
     position: relative;
     height: 2.5rem;
@@ -733,6 +670,10 @@ const handlesjen = (e) => {
 .select-trigger {
     font-weight: bold;
 }
+.cBmlor:disabled.sc-iqseJM:not(.is-loading) {
+      opacity: 0.5;
+      cursor: default;
+  }
 .gOHquD .select-trigger {
     position: relative;
     display: flex;
@@ -846,8 +787,8 @@ const handlesjen = (e) => {
     margin: 0px 1.125rem 0.375rem;
     color: rgba(153, 164, 176, 0.6);
 }
- .input-control {
+.input-control {
     border-color: transparent;
 }
-</style>
 
+</style>
