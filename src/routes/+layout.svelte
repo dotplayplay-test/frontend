@@ -32,6 +32,7 @@ import { onMount } from "svelte";
 import { default_Wallet } from "../lib/store/coins"
 import { handle_IsRedwinners} from "../lib/crashgame/store"
 import Closesidebar from "$lib/closesidebar.svelte";
+    import Loader from "$lib/components/loader.svelte";
 let isOpenSide = true
 let isChatRoom = 0
 let isMenu = false
@@ -85,6 +86,10 @@ $:{
 // }
 
 
+let is_mobile = false
+
+
+
 onMount(() => {
     handleCountdown()
     if (browser && window.innerWidth < 650) {
@@ -124,8 +129,23 @@ $:{
 browser && addEventListener("resize", () => {
     ens = (window.innerWidth)
     screen.set(ens)
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
+        isOpenSide = false
+        is_open__Appp.set(false)
+        sideDetection = 76
+    }
+    else {
+        is_mobile = false
+        isOpenSide = true
+        is_open__Appp.set(true)
+        sideDetection = 240
+    }
 })
 }
+
 
 onMount(()=>{
     ens = browser && window.innerWidth
@@ -195,14 +215,14 @@ const handleMenu = () => {
         <Menubar  on:menu={handleMenu}   />
     </div>
     {/if}
-    <div id="right-bar" style={`width: ${isChatRoom ? ((ens - sideDetection) - 360) : ens - sideDetection}px;`} >
+    <div id="right-bar" style={ is_mobile ? "" : `width: ${isChatRoom ? ((ens - sideDetection) - 360) : ens - sideDetection}px;`} >
         <header>
             <Navbar on:handleMenuMobile={handleMenu} on:handleChatRoom={handleChatroom} styles={isOpenSide} chatroom={isChatRoom} />
         </header>
 
        
         {#if $handleisLoading}
-        <div class="center">
+        <!-- <div class="center">
             <div class="wave"></div>
             <div class="wave"></div>
             <div class="wave"></div>
@@ -212,7 +232,11 @@ const handleMenu = () => {
             <div class="wave"></div>
             <div class="wave"></div>
             <div class="wave"></div>
+        </div> -->
+        <div style="height: 700px">
+            <Loader />
         </div>
+
         {:else}
             <main class="sc-lhMiDA ePAxUv">
                 <slot></slot>

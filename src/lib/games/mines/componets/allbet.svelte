@@ -1,12 +1,11 @@
 <script>
-    import { dicegameplays } from "../store/index"
+    import { dicegameplays, handleliveHistory} from "../store/index"
     import HistoryDetails from "./historyDetails.svelte";
     import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 
     let newItem;
      $: {
-        // $crash_historyEl.sort((a, b) => b._id - a._id);
-        newItem =  [...$dicegameplays].reverse()
+        newItem =  [...$handleliveHistory].reverse()
     }
     
     let DgII = ''
@@ -52,7 +51,7 @@
                         {#each newItem.slice(0, 15) as dice  }
                         <tr  on:click={()=>handleDiceHistoryDetail(dice)}>
                             <td>
-                                <button class="hash ellipsis">{dice.bet_id}</button>
+                                <button class="hash ellipsis">{dice.game_id}</button>
                             </td>
                             <td>
                                 {#if dice.hidden_from_public }
@@ -68,9 +67,9 @@
                             <td>{formatTime(dice.time)}</td>
                             <td class="bet">
                                 <div class="sc-Galmp erPQzq coin notranslate monospace">
-                                    <img class="coin-icon" alt="" src={dice.token_img}>
+                                    <img class="coin-icon" alt="" src={dice.bet_token_img}>
                                     <div class="amount">
-                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span>
+                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(4)}<span class="suffix">00</span>
                                         </span>
                                     </div>
                                 </div>
@@ -78,16 +77,16 @@
                             {#if !dice.has_won}
                             <td class="payout">0.00×</td>
                             {:else}
-                            <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
+                            <td class="payout">{(parseFloat(dice.cashout)).toFixed(2)}×</td>
                             {/if}
                             <td class={`profitline ${dice.has_won ? "is-win": "is-lose"} `}>
                                 <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                                    <img class="coin-icon" alt=""  src={dice.token_img}>
+                                    <img class="coin-icon" alt=""  src={dice.bet_token_img}>
                                     <div class="amount">
                                         {#if !dice.has_won}
-                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span></span>
+                                        <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(4)}<span class="suffix">00</span></span>
                                         {:else}
-                                        <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(6)}<span class="suffix">00</span></span>
+                                        <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(4)}<span class="suffix">00</span></span>
                                         {/if}
                                     </div>
                                 </div>
@@ -117,7 +116,7 @@
                         {#each newItem.slice(0, 15) as dice  }
                         <tr on:click={()=>handleDiceHistoryDetail(dice)}>
                             <td>
-                                <button class="hash ellipsis">{dice.bet_id}</button>
+                                <button class="hash ellipsis">{dice.game_id}</button>
                             </td>
                             <td>
                                 {#if dice.hidden_from_public }
@@ -133,11 +132,11 @@
                             {#if !dice.has_won}
                             <td class="payout">0.00×</td>
                             {:else}
-                            <td class="payout">{(parseFloat(dice.payout)).toFixed(2)}×</td>
+                            <td class="payout">{(parseFloat(dice.cashout)).toFixed(2)}×</td>
                             {/if}
                             <td class={`profitline ${dice.has_won ? "is-win": "is-lose"} `}>
                                 <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                                    <img class="coin-icon" alt=""  src={dice.token_img}>
+                                    <img class="coin-icon" alt=""  src={dice.bet_token_img}>
                                 <div class="amount">
                                     {#if !dice.has_won}
                                     <span class="amount-str">{(parseFloat(dice.bet_amount)).toFixed(6)}<span class="suffix">00</span></span>

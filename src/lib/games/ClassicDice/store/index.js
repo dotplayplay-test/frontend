@@ -9,6 +9,7 @@ export let range = writable(hks)
 let isbetDiceBTN = false
 export let isbetLoadingBtn = writable(isbetDiceBTN)
 
+
 let dicepoint = 50
 export let HandleDicePoint = writable(dicepoint)
 

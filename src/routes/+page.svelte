@@ -484,7 +484,7 @@
                     </div>
                 </div>
     
-                <div class="screen-wrap">
+                <!-- <div class="screen-wrap">
                     <Biggestwin />
     
                     <div style="margin-top: 0.875rem;" class="sc-gsFzgR fjPUUh">
@@ -532,7 +532,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
     
             </div>
         </div>

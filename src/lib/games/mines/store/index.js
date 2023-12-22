@@ -9,6 +9,18 @@ export let isbetLoadingBtn = writable(isbetMineBTN)
 let mineGems = 0
 export let HandlemineGems = writable(mineGems)
 
+let is_automodeEl = false
+export let is_automode = writable(is_automodeEl)
+
+let game_id = 0
+export let HandleGame_id = writable(game_id)
+
+let bet_amountEl = 0.100
+export let bet_amount = writable(bet_amountEl)
+
+let liveHistory = ''
+export let handleliveHistory = writable(liveHistory)
+
 let betDetail = 0
 export let betDetails = writable(betDetail)
 
@@ -62,3 +74,132 @@ export let HandleSelectedMine = writable(SelectedMine)
 
 let netTile = 0
 export let HandleNextTime = writable(netTile)
+
+let skownEl = [{
+    id: 1,
+    active: false,
+    mine: true
+},
+{
+    id: 2,
+    active: false,
+    mine: false
+},
+{
+    id: 3,
+    active: false,
+    mine: false
+},
+{
+    id: 4,
+    active: false,
+    mine: false
+},
+{
+    id: 5,
+    active: false,
+    mine: false
+},
+{
+    id: 6,
+    active: false,
+    mine: false
+},
+{
+    id: 7,
+    active: false,
+    mine: false
+},
+{
+    id: 8,
+    active: false,
+    mine: false
+},
+{
+    id: 9,
+    active: false,
+    mine: false
+},
+{
+    id: 10,
+    active: false,
+    mine: false
+},
+{
+    id: 11,
+    active: false,
+    mine: false
+},
+{
+    id: 12,
+    active: false,
+    mine: true
+},
+{
+    id: 13,
+    active: false,
+    mine: false
+},
+{
+    id: 14,
+    active: false,
+    mine: false
+},
+{
+    id: 15,
+    active: false,
+    mine: false
+},
+{
+    id: 16,
+    active: false,
+    mine: false
+},
+{
+    id: 17,
+    active: false,
+    mine: false
+},
+{
+    id: 18,
+    active: false,
+    mine: false
+},
+{
+    id: 19,
+    active: false,
+    mine: false
+},
+{
+    id: 20,
+    active: false,
+    mine: false
+},
+{
+    id: 21,
+    active: false,
+    mine: false
+},
+{
+    id: 22,
+    active: false,
+    mine: false
+},
+{
+    id: 23,
+    active: false,
+    mine: true
+},
+{
+    id: 24,
+    active: false,
+    mine: false
+},
+{
+    id: 25,
+    active: false,
+    mine: false
+},
+]
+
+export let skown = writable(skownEl)

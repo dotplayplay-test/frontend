@@ -6,16 +6,15 @@ import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
 import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
 import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
 import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
-import BiChart from "svelte-icons-pack/bi/BiChart";
-import FaSolidDice from "svelte-icons-pack/fa/FaSolidDice";
-import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
 import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+import { handleAuthToken } from "$lib/store/routes"
+import { browser } from '$app/environment';
 export let DgII
-$: (DgII)
-
-import {
-    createEventDispatcher
-} from 'svelte';
+import axios from "axios"
+import { ServerURl } from "$lib/backendUrl"
+import { onMount } from "svelte";
+const URL = ServerURl()
+import {createEventDispatcher } from 'svelte';
 import Share from './share/share.svelte';
 import Seedsettings from './share/seedsettings.svelte';
 
@@ -24,7 +23,6 @@ const dispatch = createEventDispatcher()
 const handleCloseHelp = (() => {
     dispatch("close", 5)
 })
-
 
 let hasSharedBet = false
 let handleSharedBet = (() => {
@@ -36,10 +34,51 @@ const handleSeedSettings = (()=>{
     is_seeed_settigs = !is_seeed_settigs
 })
 
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
 
+let dataSjj ;
+let is_loading = true
+const handleDetals = (async()=>{
+    is_loading = true
+    await axios.post(`${URL}/api/user/mine-game/detailed-history`,{
+        data: DgII
+    },{
+    headers:{
+        Authorization: `Bearer ${$handleAuthToken}`
+    }})
+    .then((res)=>{
+        dataSjj = res.data[0]
+        is_loading = false
+    })
+    .catch((error)=>{
+        is_loading = false
+        console.log(error.response)
+    })
+})
+
+onMount(async()=>{
+    await handleDetals()
+})
+
+let is_mobile = false
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
 
 </script>
-
 
 <div class="sc-bkkeKt kBjSXI">
     {#if $error_msg}
@@ -48,27 +87,25 @@ const handleSeedSettings = (()=>{
             <div>{$error_msg}</div>
             </div>
         </div>
-    {/if}   
-    <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
-        
+    {/if} 
+    <div class="dialog "style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         {#if is_seeed_settigs}
-        <button on:click={()=> handleSeedSettings()} class="dialog-back" style="opacity: 1; transform: none;">
-            <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
-        </button>
+            <button on:click={()=> handleSeedSettings()} class="dialog-back" style="opacity: 1; transform: none;">
+                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+            </button>
         {/if}
         <div class={`dialog-head ${is_seeed_settigs ? "has-back" : "has-close"} `}>
             <div class="dialog-title">{is_seeed_settigs ? "Seed Settings" : "Details"}</div>
         </div>
-
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon"  />
         </button>
-
+        {#if !is_loading}
         {#if !is_seeed_settigs}
         <div class="dialog-body default-style " style="z-index: 2; transform: none;">
             <div class="sc-dkPtRN jScFby scroll-view sc-bvFjSx jGQOsZ">
                 <div class="sc-emDsmM Osnbt">
-                    {#if !DgII.has_won}
+                    {#if !dataSjj.has_won}
                     <img class="win-state" alt="" src="https://static.nanogames.io/assets/lose.b4ff48b7.png">
                     {:else}
                     <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">
@@ -79,81 +116,62 @@ const handleSeedSettings = (()=>{
                         </button>
                     </div>
                     <div class="rt_info">
-                        <img class="avatar avatar" alt="" src={DgII.profile_img}>
-                        <div class="name">{DgII.username}</div>
+                        <img class="avatar avatar" alt="" src={dataSjj.profile_img}>
+                        <div class="name">{dataSjj.username}</div>
                         <div class="flex">
-                            <div class="betid">Betting ID: {DgII.bet_id}</div>
+                            <div class="betid">Betting ID: {dataSjj.game_id}</div>
                             <div class="verified">Verified</div>
                         </div>
                     </div>
-                    <div class="rt_time">{DgII.time}</div>
+                    <div class="rt_time">{formatTime(dataSjj.time)}</div>
                     <div class="rt_items">
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" />
+                                    <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon"  />
                                 </span>
                                 Amount
                             </div>
-                            <div class="number flex-center">{DgII.bet_amount} {DgII.token}</div>
+                            <div class="number flex-center">{parseFloat(dataSjj.bet_amount)} {dataSjj.bet_token_name}</div>
                         </div>
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" />
+                                    <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon"  />
                                 </span>
                                 Payout
                             </div>
-                            <div class="number flex-center">{DgII.payout} x</div>
+                            <div class="number flex-center">{(parseFloat(dataSjj.cashout)).toFixed(2)} x</div>
                         </div>
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" />
+                                    <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon"  />
                                 </span>
                                 Profit
                             </div>
-                            <div class="number flex-center">{DgII.profit} {DgII.token}</div>
+                            <div class="number flex-center">{(parseFloat(dataSjj.profit) - parseFloat(dataSjj.bet_amount)).toFixed(4)} {dataSjj.bet_token_name}</div>
                         </div>
                     </div>
                 </div>
                 {#if hasSharedBet}
                     <Share on:close={handleSharedBet}/>
                 {/if}
-
-                <div class="sc-ekrjqK fmwvmO rt_items">
-                    <div class="item-wrap">
-                        <div class="item-num">
-                            <span style="padding-right: 3px;">
-                                <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
-                            </span>
-                            Result
-                        </div>
-                        <div class="item-desc">{DgII.cashout}</div>
+                
+                
+                <div class="sc-eZKLwX gzyxPX">
+                    {#each dataSjj.gameLoop as loop}
+                    <div class="result-item">
+                        {#if loop.active}
+                            <div class="gems"></div>
+                        {/if}
+                        {#if loop.mine && !dataSjj.has_won}
+                            <div class="mines"></div>
+                        {/if}
                     </div>
-                    <div class="item-wrap">
-                        <div class="item-num">
-                            <span style="padding-right: 3px;">
-                                <Icon src={FaSolidDice}  size="13"  color="rgb(15, 98, 254)" className="custom-icon" title="arror" />
-                            </span>
-                            Bet
-                        </div>
-                        <div class="item-desc">
-                            <span class="mthan">&lt;{DgII.chance}</span>
-                        </div>
-                    </div>
-                    <div class="item-wrap">
-                        <div class="item-num">
-                            <span style="padding-right: 3px;">
-                                <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
-                            </span>
-                            Chance
-                        </div>
-                        <div class="item-desc">{DgII.chance}%</div>
-                    </div>
+                    {/each}
                 </div>
-
-
+                
                 <div class="seed-main">
                     <div class="sc-ezbkAF kDuLvp input ">
                         <div class="input-label">Server Seed</div>
@@ -169,27 +187,27 @@ const handleSeedSettings = (()=>{
                             </div>
                         </div>
                         <div class="input-control">
-                            <input type="text" readonly value={DgII.server_seed}>
+                            <input type="text" readonly value={dataSjj.server_seed}>
                         </div>
                     </div>
                     <div class="col">
                         <div class="sc-ezbkAF kDuLvp input ">
                             <div class="input-label">Client Seed</div>
                             <div class="input-control">
-                                <input type="text" readonly value={DgII.client_seed}>
+                                <input type="text" readonly value={dataSjj.client_seed}>
                             </div>
                         </div>
                         <div class="sc-ezbkAF kDuLvp input ">
                             <div class="input-label">nonce</div>
                             <div class="input-control">
-                                <input type="number" readonly value={DgII.game_nonce}>
+                                <input type="number" readonly value={dataSjj.game_nonce}>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="verify-wrap">
-                    <a href={`https://dppgames.netlify.app/verify/classic-dice/?s=${DgII.server_seed}&c=${DgII.client_seed}&n=${DgII.game_nonce}`} target="_blank"> 
+                    <a href={`https://dppgames.netlify.app/verify/classic-dice/?s=${dataSjj.server_seed}&c=${dataSjj.client_seed}&n=${dataSjj.game_nonce}`} target="_blank"> 
                         <button  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal verify-btn">
                             <div class="button-inner">Verify</div>
                         </button>
@@ -198,8 +216,22 @@ const handleSeedSettings = (()=>{
             </div>
         </div>
         {:else}
-        <Seedsettings on:close={handleSeedSettings} settin={DgII} />
+        <Seedsettings on:close={handleSeedSettings} settin={dataSjj} />
         {/if}
+        {:else}
+            <div class="center">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        {/if}
+ 
     
     </div>
 </div>
@@ -212,21 +244,7 @@ const handleSeedSettings = (()=>{
     background-color: rgba(0, 0, 0, 0.7);
     filter: none !important;
 }
-.dialog {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    left: 50%;
-    top: 50%;
-    width: 464px;
-    height: 720px;
-    margin: -375px 0px 0px -280px;
-    transition-property: width, height, margin-left, margin-top;
-    transition-duration: 0.5s;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background-color: rgb(23, 24, 27);
-}
+
 .dialog-head.has-close {
     margin-right: 3.75rem;
 }
@@ -409,48 +427,6 @@ const handleSeedSettings = (()=>{
     padding: 1rem 0px;
     color: rgba(153, 164, 176, 0.6);
 }
-.fmwvmO {
-    margin-top: 0.5rem;
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
-.fmwvmO .item-wrap {
-    height: 4.625rem;
-    border-radius: 0.625rem;
-    background-color: rgb(23, 24, 27);
-    color: rgba(153, 164, 176, 0.6);
-    display: flex;
-    flex-direction: column;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex: 1 1 0%;
-    -webkit-box-align: center;
-    align-items: center;
-    margin-right: 0.375rem;
-    padding: 1rem 0px;
-}
-.fmwvmO .item-wrap .item-num {
-    height: 1.25rem;
-    font-size: 0.75rem;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    font-weight: bold;
-}
-.fmwvmO .item-wrap .item-desc {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 1rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    margin-top: 0.75rem;
-}
 
 .Osnbt .rt_items .item-wrap .label {
     height: 1.25rem;
@@ -562,4 +538,84 @@ const handleSeedSettings = (()=>{
     height: 100%;
 }
 
+.gzyxPX {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 0.5rem 0.375rem;
+    max-width: 22.5rem;
+    margin: 1.25rem auto 0px;
+}
+.gzyxPX .result-item {
+    width: 4rem;
+    height: 3.625rem;
+    background: rgb(23, 24, 27);
+    border-radius: 0.25rem;
+    position: relative;
+}
+.gzyxPX .mines::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5.625rem;
+    padding-top: 112.48%;
+    transform: translate(-50%, -50%);
+    background: url(https://static.nanogames.io/assets/mines-effect.905a1992.png) 60% center / 1600% no-repeat;
+    z-index: 5;
+}
+.gzyxPX .mines {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.gzyxPX .gems {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.gzyxPX .gems::before {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    z-index: 1;
+    border-radius: 0.25rem;
+    background: url(https://static.nanogames.io/assets/gems.f2815a6d.png) center center / 80% no-repeat rgb(57, 14, 113);
+}
+
+
+@media screen and (min-width: 650px){
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 464px;
+    height: 720px;
+    margin: -375px 0px 0px -280px;
+    transition-property: width, height, margin-left, margin-top;
+    transition-duration: 0.5s;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background-color: rgb(23, 24, 27);
+}
+
+}
+
+@media screen and (max-width: 650px){
+.dialog {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+
+}
 </style>

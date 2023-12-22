@@ -8,7 +8,8 @@ import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn, betPosition } from "./store";
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
-import { error_msg, handlediceAutoInput,Handles_alive, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import { error_msg, handlediceAutoInput,Handles_alive, onWin,winning_track,losing_track,Autopre_bal, handleStopOnLose,
+    handleOnLose, HandleDicePoint,handleStopOnwin, handleOnwin, rollunder ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
 import {ServerURl} from "$lib/backendUrl"
 const URL = ServerURl()
 import { onMount  } from "svelte";
@@ -39,7 +40,6 @@ onMount(()=>{
 $:{
     wining_amount = ($handlediceAutoInput * $payout).toFixed(4)
 }
-
 
 let bet_number = 0
 let on_win = false
@@ -357,7 +357,7 @@ const handlesjen = ((e)=>{
             <div class="input-label">On win</div>
             <div class="input-control">
                 <input type="number" disabled={$Handles_alive} readonly={!on_win} bind:value={$handleOnwin}>
-                <div class={`sc-cxVPaa ${on_win ? "kvRMBr"  : "eIHoct"}  increase-switch`}>
+                <div class={`sc-cxVPaa ${on_win ? "kvRMBr" : "eIHoct"}  increase-switch`}>
                     <button disabled={$Handles_alive} on:click={()=> on_win = !on_win} class="dot-wrap">
                         <div  class="dot"></div>
                     </button>

@@ -1,14 +1,12 @@
-<!-- <script>
-import {
-    profileStore
-} from "../../../store/profile"
-import {
-    dicegameplays
-} from "../../ClassicDice/store/index"
-    import HistoryDetails from "./historyDetails.svelte";
+<script>
+import { profileStore } from "../../../store/profile"
+import { dicegameplays, mine_history } from "../../mines/store/index"
+import HistoryDetails from "./historyDetails.svelte";
+import { browser } from '$app/environment';
 
+let newItem;
 $: {
-    $dicegameplays.sort((a, b) => b.id - a.id);
+    newItem =  [...$mine_history].reverse()
 }
 
 let DgII = ''
@@ -22,6 +20,25 @@ const handleDiceHistoryDetail = ((data)=>{
     }
 })
 
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+}
+
+let is_mobile = false
+$:{
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else {
+        is_mobile = false
+    }
+}
 
 </script>
 
@@ -37,40 +54,44 @@ const handleDiceHistoryDetail = ((data)=>{
             <thead>
                 <tr>
                     <th class="num">Bet ID</th>
+                    {#if !is_mobile}
                     <th class="time">Time</th>
-                    <th class="bet">Bet</th>
+                        <th class="bet">Bet</th>
+                    {/if}
                     <th class="payout">Payout</th>
                     <th class="profit">Profit</th>
                 </tr>
             </thead>
             <tbody>
-                {#each $dicegameplays.slice(0, 15) as dice (dice._id) }
+                {#each newItem.slice(0, 15) as dice (dice._id) }
                 {#if $profileStore.user_id === dice.user_id}
                 <tr on:click={()=> handleDiceHistoryDetail(dice)}>
                     <td>
-                        <button  class="hash ellipsis">{dice.bet_id}</button>
+                        <button  class="hash ellipsis">{dice.game_id}</button>
                     </td>
-                    <td>{dice.time}</td>
+                    {#if !is_mobile}
+                    <td>{formatTime(dice.time)}</td>
                     <td class="bet">
                         <div class="sc-Galmp erPQzq coin notranslate monospace">
-                            <img class="coin-icon" alt="" src={dice.token_img}>
+                            <img class="coin-icon" alt="" src={dice.bet_token_img}>
                             <div class="amount">
                                 <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                             </div>
                         </div>
                     </td>
+                    {/if}
                     {#if dice.has_won}
-                    <td class="payout">{dice.payout}×</td>
+                    <td class="payout">{dice.cashout}×</td>
                     {:else}
                     <td class="payout">0.00×</td>
                     {/if}
                     <td class={`profitline ${dice.has_won ? "is-win" : "is-lose" } `}>
                         <div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
-                            <img class="coin-icon" alt="" src={dice.token_img}>
+                            <img class="coin-icon" alt="" src={dice.bet_token_img}>
                             <div class="amount">
                                 {#if dice.has_won}
-                                <span class="amount-str">+{(dice.profit)}<span class="suffix">00</span>
+                                <span class="amount-str">+{(parseFloat(dice.profit)).toFixed(4)}<span class="suffix">00</span>
                                 </span>
                                 {:else}
                                 <span class="amount-str">{(dice.bet_amount).toFixed(4)}<span class="suffix">00</span>
@@ -185,4 +206,4 @@ const handleDiceHistoryDetail = ((data)=>{
 .iycaRo .coin {
     font-weight: bold;
 }
-</style> -->
+</style>

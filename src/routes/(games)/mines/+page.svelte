@@ -1,12 +1,12 @@
 <script>
 import Gameview from "$lib/games/mines/gameview.svelte";
-import "$lib/games/mines/styles/index.css"
+import "$lib/games/mines/styles/index.css";
 import Controls from "$lib/games/mines/Controls.svelte";
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import FiMusic from "svelte-icons-pack/fi/FiMusic";
 import TiVolumeDown from "svelte-icons-pack/ti/TiVolumeDown";
-import {onMount} from "svelte"
-import axios from "axios"
+import {onMount} from "svelte";
+import axios from "axios";
 import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 import { handleAuthToken } from "$lib/store/routes";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
@@ -27,6 +27,7 @@ import background from "$lib/games/mines/audio/sadness.mp3";
 DicegameSocket()
 import { ServerURl } from "$lib/backendUrl";
 import Mobile from "./mobile.svelte";
+import Mybet from "$lib/games/mines/componets/mybet.svelte";
 const URl = ServerURl()
 let is_loading = false
 const handleMinesGameEncrypt = (async()=>{
@@ -138,11 +139,11 @@ const handleSoundState = (()=>{
                     <Gameview />
     
                     <div class="game-actions">
-                        <button on:click={()=> handleSoundState()} class={`action-item ${playPlayb ? "active" : ""} `}>
+                        <button disabled={playPlayb} on:click={()=> playBackground() } class={`action-item ${playPlayb ? "active" : ""} `}>
                             <Icon src={FiMusic}  size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Music" />
                         </button>
 
-                        <button on:click={()=> playBackground()} class={`action-item ${$soundHandler ? "active" : ""} `}>
+                        <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
                             {#if $soundHandler}
                              <Icon src={TiVolumeDown}  size="23"  color={`rgb(67, 179, 9)`} title="Sound" />
                                 {:else}
@@ -179,12 +180,11 @@ const handleSoundState = (()=>{
                     <div class="bg" style="left: 66.6667%; right: 0%;"></div>
                    {/if}
                 </div>
-                <Allbet />
-                <!-- {#if !is_allbet}
-                <Allbet />
-                {:else if is_mybet}
-                <Mybet />
-                {/if} -->
+                {#if is_allbet}
+                    <Allbet />
+                    {:else if is_mybet}
+                    <Mybet />
+                {/if}
             </div>
     
             <div class="sc-knKHOI cFxmZX">
