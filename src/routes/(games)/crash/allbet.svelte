@@ -2,7 +2,7 @@
 import Icon from 'svelte-icons-pack/Icon.svelte';
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import Trendball from './trendball.svelte';
-import { active_playerEl , hasCrashed} from "$lib/crashgame/store";
+import { active_playerEl, game_id } from "$lib/crashgame/store";
 export let isClassic;
 
 const handleAllbet = (()=>{
@@ -43,6 +43,7 @@ const handleAllbet = (()=>{
                     <tbody>
                         {#if $active_playerEl.length !== 0 && $active_playerEl[0].game_type === "Classic"}
                         {#each $active_playerEl as player }
+                        {#if player.game_id === $game_id}
                         <tr>
                             <td class="user">
                                 {#if player.hidden_from_public}
@@ -96,6 +97,7 @@ const handleAllbet = (()=>{
                             {/if}
                             </td>
                         </tr>
+                        {/if}
                         {/each}
                         {:else}
                             <div class="sc-eCImPb cuPxwd empty ">
