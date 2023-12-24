@@ -9,7 +9,7 @@ import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
 import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
-import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
+import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
 import axios from "axios"
 import {onMount} from "svelte"
 import { handleAuthToken } from "$lib/store/routes"
@@ -142,7 +142,7 @@ const handleSoundState = (()=>{
                             <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
                         </button>
                         <button on:click={handleIsHelp} class="action-item ">
-                            <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
+                            <Icon src={AiOutlineQuestionCircle}  size="18"  color="rgb(153, 164, 176)" />
                         </button>
                     </div>
                 </div>
