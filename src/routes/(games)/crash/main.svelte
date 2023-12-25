@@ -17,6 +17,8 @@ import {default_Wallet } from "$lib/store/coins";
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore,handleisLoggin } from "$lib/store/profile";
 import {handleCountdown} from "$lib/games/ClassicDice/socket/index"
+import {HandleCrashSocket} from "$lib/crashgame/socket"
+HandleCrashSocket()
 const {handleCrashActiveBet} = handleCountdown()
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
@@ -36,7 +38,6 @@ const handleHotkeyEnable = (()=>{
     }
 })
 let walletRange = 0
-
 
 let isAdvance = false
 const handleAdvancebg = ((q)=>{

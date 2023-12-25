@@ -1,12 +1,12 @@
 <script>
-    import { crashRunning, crashCurve} from "../store"
+import { crashRunning} from "../store"
 </script>
 
 <div class="running crash">
     <div class="bhuSSkjs">
-        <div class="snownd">{$crashRunning}x</div>
+        <div class="snownd">{(parseFloat($crashRunning)).toFixed(2)}x</div>
     </div>
-    <div id="main">
+    <!-- <div id="main">
       <div class="container">
         <svg xmlns="http://www.w3.org/2000/svg" width="623" height="309" viewBox="0 0 623 309" fill="none">
           <g filter="url(#filter0_d_160_5)">
@@ -30,7 +30,7 @@
           </defs>
       </svg>
   </div>
-</div>
+</div> -->
   
 </div>
 
