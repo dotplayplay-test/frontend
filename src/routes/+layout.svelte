@@ -6,7 +6,6 @@ import { handleAuthToken } from "$lib/store/routes"
 import { browser } from '$app/environment';
 $: routes.set(data)
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import {handleCountdown} from "$lib/crashgame/socket"
 import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
 
 setTimeout(()=>{
@@ -86,32 +85,15 @@ $:{
 // }
 
 
-let is_mobile = false
-
-
-
-onMount(() => {
-    handleCountdown()
-    if (browser && window.innerWidth < 650) {
-        isOpenSide = true
-        sideDetection = 0
-        is_open__Appp.set(false)
-    } else if (browser && window.innerWidth > 1220) {
-        isOpenSide = true
-        sideDetection = 240
-        is_open__Appp.set(true)
-    } else {
-        isOpenSide = false
-        sideDetection = 76
-    }
-})
+let is_mobile = true
 
 const handleMainMenu = (() => {
     if (isOpenSide) {
         isOpenSide = false
         is_open__Appp.set(false)
         sideDetection = 76
-    } else {
+    } 
+    else {
         if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
         isOpenSide = true
         is_open__Appp.set(true)
@@ -134,6 +116,7 @@ browser && addEventListener("resize", () => {
     }
     else if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
         isOpenSide = false
+        is_mobile = false
         is_open__Appp.set(false)
         sideDetection = 76
     }
@@ -145,7 +128,6 @@ browser && addEventListener("resize", () => {
     }
 })
 }
-
 
 onMount(()=>{
     ens = browser && window.innerWidth
@@ -168,6 +150,22 @@ const handleChatroom = ((e) => {
         }
     }
 })
+
+onMount(() => {
+    if (browser && window.innerWidth < 650) {
+        isOpenSide = true
+        sideDetection = 0
+        is_open__Appp.set(false)
+    } else if (browser && window.innerWidth > 1220) {
+        isOpenSide = true
+        sideDetection = 240
+        is_open__Appp.set(true)
+    } else {
+        isOpenSide = false
+        sideDetection = 76
+    }
+})
+
 
 const handleMenu = () => {
     if (isMenu) {
