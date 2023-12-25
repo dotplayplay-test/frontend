@@ -25,46 +25,50 @@ const handleAllbet = ((e)=>{
 
 onMount(()=>{
     const event = new EventSource(`${RealTimeURl()}/events`);
-    event.addEventListener("countdown", ({data}) => {
-        let mimik = JSON.parse(data);
-        crashLoad.set(mimik.timeSec)
-        Load_animation.set(mimik.load_animate)
-        loadingCrash.set(true)
-        crashIsAlive.set(false)
-        hasCrashed.set(false)
-        game_id.set(mimik.game_id)
-    });
-    event.addEventListener("running-crash", ({data}) => {
-        loadingCrash.set(false)
-        crashIsAlive.set(true)
+    event.addEventListener("crash-plucj", ({data}) => {
         let mimik = JSON.parse(data);
         crashRunning.set(mimik)
-        hasCrashed.set(false)
     })
-    event.addEventListener("nuppp-curve", ({data}) =>{
-        let mimik = JSON.parse(data);
-        crashCurve.set(mimik)
-    })
-    event.addEventListener("crash-details", ({data}) =>{
-        let mimik = JSON.parse(data);
-        crashPoint.set(mimik.crash_point)
-        hasCrashed.set(true)
-        loadingCrash.set(false)
-        crashIsAlive.set(false)
-        handleHasbet.set(false)
-    })
-    event.addEventListener("crash-game-history", ({data}) =>{
-        let mimik = JSON.parse(data);
-        crash_historyEl.set(mimik)
-    })
-    event.addEventListener("my-bet", ({data}) =>{
-        let mimik = JSON.parse(data);
-        mybetEl.set(mimik)
-    })
-    event.addEventListener("active_players", ({data}) =>{
-        let mimik = JSON.parse(data);
-        active_playerEl.set(mimik)
-    })
+    // event.addEventListener("countdown", ({data}) => {
+    //     let mimik = JSON.parse(data);
+    //     crashLoad.set(mimik.timeSec)
+    //     Load_animation.set(mimik.load_animate)
+    //     loadingCrash.set(true)
+    //     crashIsAlive.set(false)
+    //     hasCrashed.set(false)
+    //     game_id.set(mimik.game_id)
+    // });
+    // event.addEventListener("running-crash", ({data}) => {
+    //     loadingCrash.set(false)
+    //     crashIsAlive.set(true)
+    //     let mimik = JSON.parse(data);
+    //     crashRunning.set(mimik)
+    //     hasCrashed.set(false)
+    // })
+    // event.addEventListener("nuppp-curve", ({data}) =>{
+    //     let mimik = JSON.parse(data);
+    //     crashCurve.set(mimik)
+    // })
+    // event.addEventListener("crash-details", ({data}) =>{
+    //     let mimik = JSON.parse(data);
+    //     crashPoint.set(mimik.crash_point)
+    //     hasCrashed.set(true)
+    //     loadingCrash.set(false)
+    //     crashIsAlive.set(false)
+    //     handleHasbet.set(false)
+    // })
+    // event.addEventListener("crash-game-history", ({data}) =>{
+    //     let mimik = JSON.parse(data);
+    //     crash_historyEl.set(mimik)
+    // })
+    // event.addEventListener("my-bet", ({data}) =>{
+    //     let mimik = JSON.parse(data);
+    //     mybetEl.set(mimik)
+    // })
+    // event.addEventListener("active_players", ({data}) =>{
+    //     let mimik = JSON.parse(data);
+    //     active_playerEl.set(mimik)
+    // })
 })
 
 </script>
