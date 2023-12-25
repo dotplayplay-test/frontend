@@ -114,7 +114,7 @@ const handleDropdown = ((e)=>{
                         
                         </button>
                         <div class="user-info flex-center">
-                            <img class="avatar " alt="" src={$profileStore.profile_image}>
+                            <img class="avatar " alt="" src={$profileStore?.profile_image}>
                             <div class="flex-column">
                                 <div class="user-name">{$profileStore.username}</div>
                                 <div class="sc-khQegj fPtvsS level-box levelnums_0">

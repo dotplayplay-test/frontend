@@ -58,7 +58,7 @@ $:{
     if($handleAuthToken){
         handleisLoading.set(false)
         handleisLoggin.set(true)
-        if($profileStore.email){
+        if($profileStore?.email){
             handleisLoading.set(false)
             handleisLoggin.set(true)
         }else{

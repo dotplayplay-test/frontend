@@ -511,7 +511,6 @@
     padding: 0px 1.25rem;
     opacity: 1;
   }
-  .kDuLvp .input-control textarea,
   .kDuLvp .input-control input {
     flex: 1 1 0%;
     width: 100%;

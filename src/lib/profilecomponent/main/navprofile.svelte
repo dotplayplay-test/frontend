@@ -50,7 +50,7 @@ const handleStatistics = (()=>{
     {#if $profileStore.email}
     <div class="user-info">
         <a class="left" href={`/user/profile/${$profileStore.user_id}`}>
-            <img class="avatar " alt="" src={$profileStore.profile_image}>
+            <img class="avatar " alt="" src={$profileStore?.profile_image}>
             <div class="name-level">
                 <p>{$profileStore.username}</p>
                 <div class="level">
