@@ -1,7 +1,7 @@
 <script>
 import {goto} from "$app/navigation";
 import {handleLogout } from "$lib/firebaseAuth/index";
-import { profileStore, proressbar} from "../../store/profile";
+import { profileStore, proressbar} from "$lib/store/profile";
 import { statisticsEl } from "$lib/store/statistic";
 import { handleAuthToken } from "$lib/store/routes";
 import axios from "axios"

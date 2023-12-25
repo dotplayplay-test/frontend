@@ -1,22 +1,23 @@
 <script>
 import Icon from 'svelte-icons-pack/Icon.svelte';
-import FaSolidKeyboard from "svelte-icons-pack/fa/FaSolidKeyboard";
-import BiStats from "svelte-icons-pack/bi/BiStats";
 import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
 import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import AiFillQuestionCircle from "svelte-icons-pack/ai/AiFillQuestionCircle";
+import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
+import RiMapGuideFill from "svelte-icons-pack/ri/RiMapGuideFill";
 import Hotkeys from './hotkeys.svelte';
+import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
 import axios from "axios"
 import { onMount  } from "svelte";
-import { goto } from "$app/navigation";
 import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
 import Trend from '$lib/crashgame/components/trends/index.svelte';
-import { loadingCrash,handleHasbet,game_id,crashLoad,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
+import { loadingCrash,handleHasbet,game_id,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
 import {default_Wallet } from "$lib/store/coins";
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore,handleisLoggin } from "$lib/store/profile";
+import {handleCountdown} from "$lib/games/ClassicDice/socket/index"
+const {handleCrashActiveBet} = handleCountdown()
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 export let isClassic
@@ -83,7 +84,6 @@ if($default_Wallet.coin_name === "USDT"){
 const handleRangeSTlop = ((eui)=>{
     bet_amount = (parseFloat($default_Wallet.balance)  * (walletRange / 100 )).toFixed(4)
 })
-
 
 const handleHalf = ((e)=>{
     if(bet_amount > 0){
@@ -188,7 +188,8 @@ const handleCrashBet = (async()=>{
             time: new Date(),
             bet_token_img: $default_Wallet.coin_image, 
             bet_token_name: $default_Wallet.coin_name ,
-            chance: "0"
+            chance: "0",
+            game_type: "Classic"
         }
         axios.post(`${URL}/api/user/crash-game/bet`, {
             data
@@ -200,10 +201,11 @@ const handleCrashBet = (async()=>{
         })
         .then((response)=>{
         let result = response.data
+        // handleCrashActiveBet(result)  
          let wllet = {
-          coin_name: result.bet_token_name,
-          coin_image:  result.bet_token_img,
-          balance:  result.current_amount,
+          coin_name: result.token,
+          coin_image:  result.token_img,
+          balance:  result.current_amount
         }
         default_Wallet.set(wllet)
          handleHasbet.set(true)
@@ -459,16 +461,15 @@ const handlesjen = ((e)=>{
         {/if}
     </div>
     <Crashview on:closeTrend={handleTrends}  />
-
     <div class="game-actions">
         <button on:click={handleHotkeyEnable} class="action-item  ">
-            <Icon src={FaSolidKeyboard}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
+            <Icon src={BiSolidKeyboard}  size="25"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
         <button on:click={handleStatistics} class="action-item  ">
-            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
+            <Icon src={RiMapGuideFill}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
         <button on:click={handleHelp} class="action-item  ">
-            <Icon src={AiFillQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
+            <Icon src={AiOutlineQuestionCircle}  size="18"  color="rgb(153, 164, 176)" className="custom-icon" />
         </button>
     </div>
 </div>

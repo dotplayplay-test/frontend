@@ -5,6 +5,7 @@
   import BiBomb from "svelte-icons-pack/bi/BiBomb";
   import { routes } from "../lib/store/routes";
   import { createEventDispatcher } from "svelte";
+  import BsDice5 from "svelte-icons-pack/bs/BsDice5";
   export let styls;
   let dispatch = createEventDispatcher();
   import { goto } from "$app/navigation";
@@ -21,7 +22,7 @@
       {
         id: 2,
         name: "Classic Dice",
-        icon: IoDice,
+        icon: BsDice5,
         route: "classic-dice",
         isAtive: $routes.route === "/(games)/classic-dice",
       },
