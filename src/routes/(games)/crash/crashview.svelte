@@ -24,9 +24,9 @@ const handleAllbet = ((e)=>{
 })
 
 onMount(()=>{
-    const event = new EventSource(`${RealTimeURl()}/events`);
+    const event = new EventSource(`${RealTimeURl()}/crash-engine`);
     event.addEventListener("crash-plucj", ({data}) => {
-        let mimik = JSON.parse(data);
+        let mimik = JSON.parse(data)
         crashRunning.set(mimik)
     })
     // event.addEventListener("countdown", ({data}) => {

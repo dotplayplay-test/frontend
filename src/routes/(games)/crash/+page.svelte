@@ -53,7 +53,7 @@ const handleMybet = (async()=>{
 
 onMount(async()=>{
   await handleCrashHistory()
-  await handleMybet()
+  $handleAuthToken &&  await handleMybet()
 })
    
 

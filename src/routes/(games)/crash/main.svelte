@@ -12,8 +12,8 @@ import Livestat from './livestat.svelte';
 import Help from './help.svelte';
 import Crashview from './crashview.svelte';
 import Trend from '$lib/crashgame/components/trends/index.svelte';
-import { loadingCrash,handleHasbet,game_id,crashRunning,  crashIsAlive, hasCrashed,winningEl, handleHasbet_amount} from "$lib/crashgame/store"
-import {default_Wallet } from "$lib/store/coins";
+import { loadingCrash,handleHasbet,game_id,crashRunning, crashIsAlive, hasCrashed } from "$lib/crashgame/store"
+import {default_Wallet} from "$lib/store/coins";
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore,handleisLoggin } from "$lib/store/profile";
 import {handleCountdown} from "$lib/games/ClassicDice/socket/index"
@@ -95,12 +95,13 @@ const handleHalf = ((e)=>{
         }
     }
 })
+
 onMount(()=>{
     if($default_Wallet.coin_name === "USDT"){
-    bet_amount = (0.20).toFixed(4)
-}else{
-    bet_amount = (100).toFixed(4)
-}
+        bet_amount = (0.20).toFixed(4)
+    }else{
+        bet_amount = (100).toFixed(4)
+    }
 })
 
 
@@ -122,7 +123,6 @@ $:{
 
 let auto_bet = (100).toFixed(2)
 let bet_amountEl =  0
-
 let chance;
 let x;
 let l;
