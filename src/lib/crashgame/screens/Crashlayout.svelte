@@ -57,7 +57,7 @@ import RunningCrash from "./RunningCrash.svelte";
         {#if $hasCrashed}
             <HasCrashed />
         {/if}
-        {#if  true}
+        {#if  $crashIsAlive}
             <RunningCrash />
         {/if}
 
