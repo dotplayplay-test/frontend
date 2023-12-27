@@ -1,12 +1,12 @@
 <script>
-import { crashRunning} from "../store"
+import { crashRunning, crashCurve} from "../store"
 </script>
 
 <div class="running crash">
     <div class="bhuSSkjs">
         <div class="snownd">{(parseFloat($crashRunning)).toFixed(2)}x</div>
     </div>
-    <!-- <div id="main">
+  <div id="main">
       <div class="container">
         <svg xmlns="http://www.w3.org/2000/svg" width="623" height="309" viewBox="0 0 623 309" fill="none">
           <g filter="url(#filter0_d_160_5)">
@@ -30,7 +30,7 @@ import { crashRunning} from "../store"
           </defs>
       </svg>
   </div>
-</div> -->
+</div>
   
 </div>
 
@@ -47,6 +47,18 @@ import { crashRunning} from "../store"
       justify-content: center;
       align-items: center;
       z-index: 10;
+   }
+  .bhuSSkjs .snownd{
+    font-size: 30px;
+    word-wrap: normal;
+    letter-spacing: 0.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-align: justify;
+    font-family: 'Roboto Mono', monospace;
+    white-space: 1;
+    font-weight: 700;
+    font-stretch: expanded;
    }
    .container{
     position: absolute;
