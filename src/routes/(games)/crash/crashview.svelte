@@ -27,17 +27,19 @@ onMount(()=>{
     const event = new EventSource(`${RealTimeURl()}/crash-engine`);
     event.addEventListener("crash-plucj", ({data}) => {
         let mimik = JSON.parse(data)
-        crashRunning.set(mimik)
+       
     })
-    // event.addEventListener("countdown", ({data}) => {
-    //     let mimik = JSON.parse(data);
-    //     crashLoad.set(mimik.timeSec)
-    //     Load_animation.set(mimik.load_animate)
-    //     loadingCrash.set(true)
-    //     crashIsAlive.set(false)
-    //     hasCrashed.set(false)
-    //     game_id.set(mimik.game_id)
-    // });
+    event.addEventListener("countdown", ({data}) => {
+        let mimik = JSON.parse(data);
+        crashLoad.set(mimik.timeSec)
+        Load_animation.set(mimik.load_animate)
+        loadingCrash.set(mimik.is_loading)
+        crashIsAlive.set(mimik.is_running)
+        hasCrashed.set(mimik.is_crashed)
+        crashRunning.set(mimik.crash_point)
+        crashPoint.set(mimik.crash_point_stop)
+        // game_id.set(mimik.game_id)
+    });
     // event.addEventListener("running-crash", ({data}) => {
     //     loadingCrash.set(false)
     //     crashIsAlive.set(true)
