@@ -40,17 +40,10 @@ onMount(()=>{
         crashPoint.set(mimik.crash_point_stop)
         // game_id.set(mimik.game_id)
     });
-    // event.addEventListener("running-crash", ({data}) => {
-    //     loadingCrash.set(false)
-    //     crashIsAlive.set(true)
-    //     let mimik = JSON.parse(data);
-    //     crashRunning.set(mimik)
-    //     hasCrashed.set(false)
-    // })
-    // event.addEventListener("nuppp-curve", ({data}) =>{
-    //     let mimik = JSON.parse(data);
-    //     crashCurve.set(mimik)
-    // })
+    event.addEventListener("nuppp-curve", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crashCurve.set(mimik)
+    })
     // event.addEventListener("crash-details", ({data}) =>{
     //     let mimik = JSON.parse(data);
     //     crashPoint.set(mimik.crash_point)
