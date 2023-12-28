@@ -40,7 +40,7 @@
       if (error) {
         throw new Error(error.response?.data?.message || error.message)
       } else {
-        error_mgs.set("Seeds Updated!")
+        error_msg.set("Seeds Updated!")
       }
       dispatch("close", fromDetail);
     } catch (error) {
