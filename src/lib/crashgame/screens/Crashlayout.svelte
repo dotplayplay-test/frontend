@@ -59,7 +59,7 @@ import RunningCrash from "./RunningCrash.svelte";
         {/if}
         {#if  $crashIsAlive}
             <RunningCrash />
-        {/if}
+        {/if} 
 
         {#if $v_two}
             <div class="strock" style={`top: ${$v_two + 3.5}%;`}></div>
@@ -133,16 +133,14 @@ import RunningCrash from "./RunningCrash.svelte";
         <!-- <span class="resshbja" style="top: 99.5%;">0</span> -->
         {/if}
 
-
         <span class="ehoIwNks" style={`left: -1.3%`}>0</span>
-     
-
+    
         {#if $h_two}
-        <span class="ehoIwNks" style={`left: ${$h_two}%;`}>2</span>
+            <span class="ehoIwNks" style={`left: ${$h_two}%;`}>2</span>
         {/if}
 
         {#if $h_four}
-        <span class="ehoIwNks" style={`left: ${$h_four}%;`}>4</span>
+            <span class="ehoIwNks" style={`left: ${$h_four}%;`}>4</span>
         {/if}
 
         {#if $h_six}
@@ -204,7 +202,7 @@ import RunningCrash from "./RunningCrash.svelte";
 
         {#if $h_onethousand}
         <span class="ehoIwNks" style={`left: ${$h_onethousand}%;`}>1000</span>
-        {/if}
+        {/if} 
     </div>
 </div>
 

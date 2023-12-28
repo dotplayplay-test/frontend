@@ -44,6 +44,10 @@ onMount(()=>{
         let mimik = JSON.parse(data);
         crashCurve.set(mimik)
     })
+    event.addEventListener("crash_details", ({data}) =>{
+        let mimik = JSON.parse(data);
+        crash_historyEl.set(mimik)
+    })
     // event.addEventListener("crash-details", ({data}) =>{
     //     let mimik = JSON.parse(data);
     //     crashPoint.set(mimik.crash_point)
