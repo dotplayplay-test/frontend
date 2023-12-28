@@ -4,7 +4,7 @@ export default function useLiveStats() {
 
     function recordGame(won, bet_amount, profit, token_img) {
         let stats = JSON.parse(localStorage.getItem("HILO_LIVE_STATS") || JSON.stringify({
-            token, token_img,
+            token_img,
             profit: 0,
             wagered: 0,
             wins: 0,
@@ -48,7 +48,7 @@ export default function useLiveStats() {
 
     function getStats() {
         return JSON.parse(localStorage.getItem("HILO_LIVE_STATS") || JSON.stringify({
-            token: "BTC", token_img: "/coin/BTC.black.png",
+            token_img: "/coin/BTC.black.png",
             profit: 0,
             wagered: 0,
             wins: 0,
