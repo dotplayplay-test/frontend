@@ -122,7 +122,7 @@ let SinglePlayerDetails = []
 export let SinglePlayerDetailsEl = writable(SinglePlayerDetails)
 
 
-let v_defaultEl = false
+let v_defaultEl = true
 export let v_default = writable(v_defaultEl)
 
 let v_twoEl = 0

@@ -391,7 +391,7 @@ const handleCashout = (()=>{
             {#if hide_trends}
                 <Trend />
             {/if}
-          
+
             <div class="sc-faIbUi faJsUu game-box sc-fDZUdJ jvaryA">
                 <div class="sc-kexyCK gUytcA house-edge">
                     <span>House Edge 1%</span>
@@ -403,10 +403,10 @@ const handleCashout = (()=>{
                     <linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%">
                         <stop offset="0%" stop-color="#31343C"></stop><stop offset="100%" stop-color="#1E2024" stop-opacity="0"></stop>
                     </linearGradient>
-                </defs><g opacity=".899">
+                </defs>
+                <g opacity=".899">
                     <path fill="url(#gcardBg)" fill-rule="evenodd" d="M0 0h996L892 46H96z" opacity=".598" transform="rotate(-180 498 23)"></path>
                 </g>
-            </svg>
             </div>
         </div>
         <div id="crash-control-0" class="sc-hCwLRM jcwJKv game-control style-mobile">
@@ -418,7 +418,6 @@ const handleCashout = (()=>{
                     <div class="label">Advanced</div>
                 </button>
             </div>
-
         {#if isClassic}
             <div class="game-control-panel">
                 <div class="sc-jcEtbA eRjsxw">
@@ -761,10 +760,9 @@ const handleCashout = (()=>{
     background-color: rgb(23, 24, 27);
 }
 .game-view {
-    width: 100%;
-    overflow: hidden;
-    min-width: 100%;
-    border-radius: 1.25rem 1.25rem 0px 0px;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
 }
 .jrzKwG {
     display: flex;
@@ -911,6 +909,10 @@ const handleCashout = (()=>{
     font-size: 0.75rem;
     transform: scale(0.83);
 }
+.deLgbW::after {
+    content: "";
+    display: block;
+}
 .deLgbW {
     position: relative;
     margin-top: 1.875rem;
@@ -922,6 +924,9 @@ const handleCashout = (()=>{
     right: 0px;
     bottom: -1px;
     width: 100%;
+}
+.faJsUu {
+    position: relative;
 }
 .gUytcA {
     min-width: 6.25rem;
