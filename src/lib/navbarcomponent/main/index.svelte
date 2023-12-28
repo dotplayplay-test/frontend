@@ -143,7 +143,7 @@ const handleDeposit = (()=>{
         <div class="user-wrap">
             {#if $profileStore}
             <a href={`/user/profile/${$profileStore.user_id}`}>
-             <img class="avatar" alt="" src={$profileStore.profile_image}>
+             <img class="avatar" alt="" src={$profileStore?.profile_image}>
             </a>
             {:else}
                 <div class="center">
@@ -283,7 +283,7 @@ const handleDeposit = (()=>{
                             <img
                                 class="avatar"
                                 alt=""
-                                src={$profileStore.profile_image}
+                                src={$profileStore?.profile_image}
                             /></a
                         >
                         <button on:click={handleUserProfile} class="svg">
