@@ -119,8 +119,9 @@
         }
         if (!!gameCache || rounds.length === 1) {
           setTimeout(() => {
-            cardActivate = { ...cardActivate, ...{ [currentRound.round]: "active" } };
-          }, 400);
+            const old = rounds.length === 1 && Object.keys(cardActivate).length > 1 ? {} : cardActivate;
+            cardActivate = { ...old, ...{ [currentRound.round]: "active" } };
+          }, 250);
         } else {
           const _active = {};
           rounds.forEach(({ round }) => {
