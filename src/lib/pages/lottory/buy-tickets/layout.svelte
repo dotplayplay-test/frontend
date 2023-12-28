@@ -980,31 +980,7 @@
     position: relative;
     z-index: 2;
   }
-  .kyAFkr .input-tickets .fix-layer .slider-handler {
-    height: 100%;
-    position: relative;
-    background: none;
-  }
-
-  .eOA-dmL .slider-handler {
-    display: block;
-    width: 1.5rem;
-    height: 100%;
-    border-radius: 0.4375rem;
-    transform: translate(-50%, 0px);
-    background-color: rgb(216, 216, 216);
-    touch-action: pan-y;
-  }
-  .kyAFkr .input-tickets .fix-layer .slider-handler::after {
-    content: "";
-    position: absolute;
-    top: 20%;
-    bottom: 20%;
-    left: 0.3125rem;
-    width: 0.75rem;
-    border-radius: 0.375rem;
-    background-color: rgb(204, 207, 217);
-  }
+ 
   .kyAFkr .input-tickets .fix-layer .slider-before,
   .kyAFkr .input-tickets .fix-layer .slider-after {
     width: 86%;

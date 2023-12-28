@@ -24,6 +24,7 @@
             if (diffInSeconds <= 0) {
                 clearInterval(countdownInterval);
                 countdown = "";
+                setTimeout(() => startCountDown(), 2000);
             } else {
                 const days = Math.floor(diffInSeconds / (3600 * 24));
                 const hours = Math.floor((diffInSeconds % (3600 * 24)) / 3600);
