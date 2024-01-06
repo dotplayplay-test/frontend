@@ -183,11 +183,11 @@ const handleMenu = () => {
     {/if}
 
     {#if (isOpenSide) }
-    <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
+    <div id="main" style="width:{isOpenSide ? 240 : 76}px; flex: 0 0 {isOpenSide ? 240 : 76}px">
         <SideBar routes={data} styls={isOpenSide} />
     </div>
     {:else}
-    <div id="main" style={`width:${isOpenSide ? 240 : 76}px`}>
+    <div id="main" style="width:{isOpenSide ? 240 : 76}px; flex: 0 0 {isOpenSide ? 240 : 76}px">
         <Closesidebar routes={data} styls={isOpenSide} />
     </div>
     {/if}
