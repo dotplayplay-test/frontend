@@ -21,11 +21,71 @@
   }
 
   let buttonStates = Array(40).fill(false);
+  const Gem = new URL("/static/gem.png", import.meta.url).href;
+  let multipliers = [];
+  let multipliersObject = {
+    0: [],
+    1: ["0.00×", "3.96×"],
+    2: ["0.00×", "1.90×", "4.50×"],
+    3: ["0.00×", "1.00×", "3.10×", "10.40×"],
+    4: ["0.00×", "0.80×", "1.80×", "5.00×", "22.50×"],
+    5: ["0.00×", "0.25×", "1.40×", "4.10×", "16.50×", "36.00×"],
+    6: ["0.00×", "0.00×", "1.00×", "3.68×", "7.00×", "16.50×", "40.00×"],
+    7: [
+      "0.00×",
+      "0.00×",
+      "0.47×",
+      "3.00×",
+      "4.50×",
+      "14.00×",
+      "31.00×",
+      "60.00×",
+    ],
+    8: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "2.20×",
+      "4.00×",
+      "13.00×",
+      "22.00×",
+      "55.00×",
+      "70.00×",
+    ],
+    9: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "1.55×",
+      "3.00×",
+      "8.00×",
+      "15.00×",
+      "44.00×",
+      "60.00×",
+      "85.00×",
+    ],
+    10: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "1.40×",
+      "2.25×",
+      "4.50×",
+      "8.00×",
+      "17.00×",
+      "50.00×",
+      "80.00×",
+      "100.00×",
+    ],
+  };
 
   function toggleSelectState(index) {
     buttonStates[index] = !buttonStates[index];
+    multipliers = displayMultiplier(
+      buttonStates.filter((button) => button).length
+    );
   }
-  
+
   function resetButtons() {
     buttonStates = Array(40).fill(false);
   }
@@ -33,21 +93,24 @@
   function generateRandomNumbers() {
     // Clear previously selected buttons
     resetButtons();
-    
+
     // Generate 10 random numbers from 0 - 40 and select the button states
     const uniqueRandomNumbers = generateUniqueRandomNumbers(10, 0, 39);
 
-    console.log(uniqueRandomNumbers);
-
     // Set toggleState to true
-    uniqueRandomNumbers.forEach(number => {
+    uniqueRandomNumbers.forEach((number) => {
       buttonStates[number] = true;
-    })
+    });
+
+    // display multipliers
+    multipliers = displayMultiplier(uniqueRandomNumbers.length);
   }
 
   function generateUniqueRandomNumbers(count, min, max) {
     if (count > max - min + 1) {
-      throw new Error("Cannot generate unique random numbers. Not enough unique values in the specified range.");
+      throw new Error(
+        "Cannot generate unique random numbers. Not enough unique values in the specified range."
+      );
     }
 
     const uniqueNumbers = new Set();
@@ -58,6 +121,19 @@
     }
 
     return Array.from(uniqueNumbers);
+  }
+
+  function displayMultiplier(count) {
+    return multipliersObject[count];
+  }
+
+  function startBet() {
+    console.warn("yet to implement");
+  }
+
+  function clearGameTable() {
+    resetButtons();
+    multipliers = displayMultiplier(0);
   }
 </script>
 
@@ -80,8 +156,9 @@
           <div class="game-control-panel">
             <div class="sc-fUQcsx jsLoxW">
               <button
+                on:click={() => startBet()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled=""
+                disabled={!multipliers.length}
                 ><div class="button-inner">
                   <img
                     src="https://static.nanogames.io/assets/keno_loading.d3c77d1e.png"
@@ -178,10 +255,12 @@
                   </div>
                 </div>
                 <div class="sc-fSDTwv lgcQbT btn-wrap">
-                  <button on:click={() => generateRandomNumbers()}
+                  <button
+                    on:click={() => generateRandomNumbers()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Auto Pick</div></button
-                  ><button on:click={() => resetButtons()}
+                  ><button
+                    on:click={() => clearGameTable()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Clear Table</div></button
                   >
@@ -194,8 +273,9 @@
           <div class="game-control-panel">
             <div class="sc-juEPzu kkZrMb">
               <button
+                on:click={() => startBet()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled=""
+                disabled={!multipliers.length}
                 ><div class="button-inner">
                   <span>Start Auto Bet</span>
                 </div></button
@@ -314,10 +394,12 @@
                 </div>
               </div>
               <div class="sc-jwQYvw jcGUIr btn-wrap">
-                <button on:click={() => generateRandomNumbers()}
+                <button
+                  on:click={() => generateRandomNumbers()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Auto Pick</div></button
-                ><button on:click={() => resetButtons()}
+                ><button
+                  on:click={() => resetButtons()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Clear Table</div></button
                 >
@@ -422,23 +504,53 @@
             <div class="keno-wrap">
               <div class="keno-item-wrap">
                 <div class="keno-list">
-
                   <!-- Generate button list and handle toggle state -->
-                    {#each buttonStates as isSelected, index (index)}
-                    <button on:click={() => toggleSelectState(index)} class="keno_styles_item"
-                      ><div class="keno-ritem initial" class:select={isSelected}>
+                  {#each buttonStates as isSelected, index (index)}
+                    <button
+                      on:click={() => toggleSelectState(index)}
+                      disabled={multipliers.length === 11 && !isSelected}
+                      class="keno_styles_item"
+                      ><div
+                        class="keno-ritem initial"
+                        class:select={isSelected}
+                      >
                         <span class="keno-num">{index + 1}</span>
                       </div></button
                     >
                   {/each}
                   <!-- Generate button list and handle toggle state -->
-
                 </div>
               </div>
               <div class="sc-hKumaY krTDHD">
                 <div class="sc-eTwdGJ ZOVvL">
-                  <div class="game_payout"></div>
-                  <div class="no_select">Select 1 - 10 numbers to play</div>
+                  <div class="game_payout">
+                    {#if multipliers}
+                      {#each multipliers as multiplier, index (index)}
+                        <span class="payout_item">{multiplier}</span>
+                      {/each}
+                    {/if}
+                  </div>
+                  {#if multipliers && multipliers.length}
+                    <div class="game_selected_items">
+                      {#each multipliers as multiplier, index (index)}
+                        <div class="game_selected_num">
+                          <div class="game_selected_box">
+                            <span class="gem_box"
+                              >{index}×<img
+                                class="gem"
+                                src={Gem}
+                                alt="icon"
+                              /></span
+                            >
+                            <span>{index} Hits</span>
+                          </div>
+                        </div>
+                      {/each}
+                    </div>
+                  {/if}
+                  {#if !multipliers || (multipliers && multipliers.length === 0)}
+                    <div class="no_select">Select 1 - 10 numbers to play</div>
+                  {/if}
                 </div>
               </div>
               <div class="bottom-line"></div>
@@ -3167,6 +3279,11 @@
     background-color: transparent;
     position: relative;
   }
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem {
+    background-color: rgb(36, 38, 43);
+    box-shadow: rgb(30, 32, 36) 0px 4px;
+  }
   .cKpuTs .keno_styles_item .keno-ritem {
     background-color: rgb(49, 52, 60);
     position: absolute;
@@ -3180,7 +3297,12 @@
     animation: 0.2s ease 0s 1 normal none running elastic;
     transition: 0.5s;
   }
-  .cKpuTs .keno_styles_item .keno-ritem:hover {
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem .keno-num {
+    color: rgb(255 255 255 / 22%);
+  }
+
+  .cKpuTs .keno_styles_item:not(:disabled) .keno-ritem:hover {
     top: -5px;
     bottom: 5px;
     background-color: rgb(111, 112, 114);
@@ -3190,6 +3312,52 @@
     background-color: rgb(101, 12, 255);
     box-shadow: rgb(69, 23, 179) 0px 4px;
   }
+
+  .cKpuTs .game_payout .payout_item {
+    background-color: rgb(49, 52, 60);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 0.1875rem;
+  }
+
+  .game_selected_items {
+    background-color: rgb(49, 52, 60);
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    border-radius: 0.1875rem;
+    gap: 0.8em;
+  }
+
+  .game_selected_num {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: help;
+    position: relative;
+    color: rgb(153, 164, 176);
+    text-align: center;
+  }
+
+  .game_selected_box {
+    font-size: 14px;
+  }
+
+  .gem_box {
+    display: flex;
+    align-items: center;
+  }
+
+  .gem {
+    width: 14px;
+    margin-left: 0.1875rem;
+  }
+
   .cKpuTs .keno_styles_item .keno-ritem .keno-num {
     position: absolute;
     left: 50%;
