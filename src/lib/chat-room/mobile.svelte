@@ -485,7 +485,7 @@
                                                         @vvvvx
                                                     </a>
                                                     <div class="msg-cont">
-                                                        <img class="coin-icon" alt="" src="/coin/USDT.black.png">
+                                                        <img class="coin-icon" alt="" src="/coin/BTC.black.png">
                                                         1 USDT
                                                     </div>
                                                 </div>

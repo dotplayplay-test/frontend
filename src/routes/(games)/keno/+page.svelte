@@ -78,7 +78,7 @@
                   </div>
                   <div class="input-control">
                     <input type="text" value="184.778645833" />
-                    <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+                    <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
                     <div class="sc-kDTinF bswIvI button-group">
                       <button>/2</button><button>x2</button><button
                         class="sc-cAhXWc cMPLfC flex-button"
@@ -292,7 +292,7 @@
               <span class="tit">Bankroll</span><span>CUB</span>
             </div>
             <div class="sc-Galmp erPQzq coin notranslate">
-              <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+              <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
               <div class="amount">
                 <span class="amount-str">1234538.98</span>
               </div>
@@ -1140,7 +1140,7 @@
                     <div class="prize-amount">
                       <img
                         class="currency-icon"
-                        src="/coin/NND.black.png"
+                        src="/coin/BTC.black.png"
                       /><span>508.24</span><span class="currency-name">
                         NND</span
                       >
@@ -1211,7 +1211,7 @@
                         <div
                           class="sc-Galmp erPQzq coin notranslate prize-coin"
                         >
-                          <img class="coin-icon" src="/coin/NND.black.png" />
+                          <img class="coin-icon" src="/coin/BTC.black.png" />
                           <div class="amount">
                             <span class="amount-str">370.484841</span>
                           </div>
@@ -1280,7 +1280,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">254.090423</span>
                         </div>
@@ -1328,7 +1328,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">127.045211</span>
                         </div>
@@ -1370,7 +1370,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">60.9817016</span>
                         </div>
@@ -1405,7 +1405,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">30.4908508</span>
                         </div>
@@ -1448,7 +1448,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">15.2454254</span>
                         </div>
@@ -1483,7 +1483,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str"
                             >7.6227127<span class="suffix">0</span></span
@@ -1528,7 +1528,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">4.57362762</span>
                         </div>
@@ -1563,7 +1563,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">3.55726593</span>
                         </div>
@@ -1606,7 +1606,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">2.54090423</span>
                         </div>
@@ -1649,7 +1649,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">2.03272338</span>
                         </div>
@@ -1723,7 +1723,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">370.484841</span>
                         </div>
@@ -1773,7 +1773,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str"
                             >185.24242<span class="suffix">0</span></span
@@ -1823,7 +1823,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str"
                             >88.916362<span class="suffix">0</span></span
@@ -1860,7 +1860,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str"
                             >44.458181<span class="suffix">0</span></span
@@ -1905,7 +1905,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">22.2290905</span>
                         </div>
@@ -1940,7 +1940,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">11.1145452</span>
                         </div>
@@ -1975,7 +1975,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">6.66872715</span>
                         </div>
@@ -2018,7 +2018,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">5.18678778</span>
                         </div>
@@ -2053,7 +2053,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">3.70484841</span>
                         </div>
@@ -2096,7 +2096,7 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img class="coin-icon" src="/coin/BTC.black.png" />
                         <div class="amount">
                           <span class="amount-str">2.96387873</span>
                         </div>
