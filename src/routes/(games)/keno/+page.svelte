@@ -19,6 +19,46 @@
   function handleTabBChange(tabB) {
     activeTabB = tabB;
   }
+
+  let buttonStates = Array(40).fill(false);
+
+  function toggleSelectState(index) {
+    buttonStates[index] = !buttonStates[index];
+  }
+  
+  function resetButtons() {
+    buttonStates = Array(40).fill(false);
+  }
+
+  function generateRandomNumbers() {
+    // Clear previously selected buttons
+    resetButtons();
+    
+    // Generate 10 random numbers from 0 - 40 and select the button states
+    const uniqueRandomNumbers = generateUniqueRandomNumbers(10, 0, 39);
+
+    console.log(uniqueRandomNumbers);
+
+    // Set toggleState to true
+    uniqueRandomNumbers.forEach(number => {
+      buttonStates[number] = true;
+    })
+  }
+
+  function generateUniqueRandomNumbers(count, min, max) {
+    if (count > max - min + 1) {
+      throw new Error("Cannot generate unique random numbers. Not enough unique values in the specified range.");
+    }
+
+    const uniqueNumbers = new Set();
+
+    while (uniqueNumbers.size < count) {
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      uniqueNumbers.add(randomNumber);
+    }
+
+    return Array.from(uniqueNumbers);
+  }
 </script>
 
 <div id="game-Keno" class="sc-cfJLRR gJxbeS game-style1 sc-dXNJws iClKJL">
@@ -138,10 +178,10 @@
                   </div>
                 </div>
                 <div class="sc-fSDTwv lgcQbT btn-wrap">
-                  <button
+                  <button on:click={() => generateRandomNumbers()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Auto Pick</div></button
-                  ><button
+                  ><button on:click={() => resetButtons()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Clear Table</div></button
                   >
@@ -274,10 +314,10 @@
                 </div>
               </div>
               <div class="sc-jwQYvw jcGUIr btn-wrap">
-                <button
+                <button on:click={() => generateRandomNumbers()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Auto Pick</div></button
-                ><button
+                ><button on:click={() => resetButtons()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Clear Table</div></button
                 >
@@ -382,167 +422,17 @@
             <div class="keno-wrap">
               <div class="keno-item-wrap">
                 <div class="keno-list">
-                  <button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">1</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">2</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">3</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">4</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">5</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">6</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">7</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">8</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">9</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">10</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">11</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">12</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">13</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">14</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">15</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">16</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">17</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">18</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">19</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">20</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">21</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">22</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">23</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">24</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">25</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">26</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">27</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">28</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">29</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">30</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">31</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">32</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">33</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">34</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">35</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">36</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">37</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">38</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">39</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">40</span>
-                    </div></button
-                  >
+
+                  <!-- Generate button list and handle toggle state -->
+                    {#each buttonStates as isSelected, index (index)}
+                    <button on:click={() => toggleSelectState(index)} class="keno_styles_item"
+                      ><div class="keno-ritem initial" class:select={isSelected}>
+                        <span class="keno-num">{index + 1}</span>
+                      </div></button
+                    >
+                  {/each}
+                  <!-- Generate button list and handle toggle state -->
+
                 </div>
               </div>
               <div class="sc-hKumaY krTDHD">
@@ -3294,6 +3184,11 @@
     top: -5px;
     bottom: 5px;
     background-color: rgb(111, 112, 114);
+  }
+  .cKpuTs .keno_styles_item .keno-ritem.select {
+    opacity: 1;
+    background-color: rgb(101, 12, 255);
+    box-shadow: rgb(69, 23, 179) 0px 4px;
   }
   .cKpuTs .keno_styles_item .keno-ritem .keno-num {
     position: absolute;
