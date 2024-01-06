@@ -22,6 +22,7 @@
 
   let buttonStates = Array(40).fill(false);
   const Gem = new URL("/static/gem.png", import.meta.url).href;
+  const WinGem = new URL("/static/match.png", import.meta.url).href;
   let multipliers = [];
   let multipliersObject = {
     0: [],
@@ -90,16 +91,16 @@
     buttonStates = Array(40).fill(false);
   }
 
-  function generateRandomNumbers() {
+  function setButtonState() {
     // Clear previously selected buttons
     resetButtons();
 
     // Generate 10 random numbers from 0 - 40 and select the button states
-    const uniqueRandomNumbers = generateUniqueRandomNumbers(10, 0, 39);
+    const uniqueRandomNumbers = generateUniqueRandomNumbers(10, 1, 40); 
 
     // Set toggleState to true
     uniqueRandomNumbers.forEach((number) => {
-      buttonStates[number] = true;
+      toggleSelectState(number - 1);
     });
 
     // display multipliers
@@ -256,7 +257,7 @@
                 </div>
                 <div class="sc-fSDTwv lgcQbT btn-wrap">
                   <button
-                    on:click={() => generateRandomNumbers()}
+                    on:click={() => setButtonState()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Auto Pick</div></button
                   ><button
@@ -395,7 +396,7 @@
               </div>
               <div class="sc-jwQYvw jcGUIr btn-wrap">
                 <button
-                  on:click={() => generateRandomNumbers()}
+                  on:click={() => setButtonState()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Auto Pick</div></button
                 ><button
