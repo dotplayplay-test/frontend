@@ -1,254 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/apple-touch-icon.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="ccpayment-site-verification" content="9bb9852b78e55603158ed65149db7dd6"/>
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-		<title>DOTPLAYPLAY</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,500;0,600;0,700;1,100;1,500;1,600&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap" rel="stylesheet">
-		
-		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-		<script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
-		<style>
-			*{
-				padding: 0;
-				margin: 0;
-				font-family: Poppins;
-				text-decoration: none;
-				box-sizing: border-box;
-			}
-			*, *:before, *:after {
-				box-sizing: border-box;
-			}
-			/* Chrome, Safari, Edge, Opera */
-				input::-webkit-outer-spin-button,
-				input::-webkit-inner-spin-button {
-				-webkit-appearance: none;
-				margin: 0;
-				}
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="ccpayment-site-verification"
+      content="9bb9852b78e55603158ed65149db7dd6"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <title>DOTPLAYPLAY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,500;0,600;0,700;1,100;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,700;1,100&display=swap"
+      rel="stylesheet"
+    />
 
-			/* Firefox */
-			input[type=number] {
-				-moz-appearance: textfield;
-			}
-			body{
-				padding: 0;
-				margin: 0;
-				background-color: #24262b;
-			}
-			
-			body, input, textarea, a, button {
-				font-family: Montserrat,-apple-system,Framedcn,Helvetica Neue, Poppins, Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-			}
-			::-webkit-scrollbar{
-				display: none;
-			}
-			textarea, input{
-				outline: none;
-			}
-			button {
-				border: none;
-				padding: 0;
-				user-select: none;
-				cursor: pointer;
-				background-color: transparent;
-			}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
+    <style>
+      :root {
+        --sidebar-bg: rgb(30, 32, 36);
+        --sidebar-text-hover: rgb(245, 246, 247);
+        --sidebar-card-bg: rgba(45, 48, 53, 0.5);
+        --text-color: rgba(205, 205, 205, 0.8);
+        --primary-color: #43b309;
+        --white: white;
+        --dmin-white: whitesmoke;
+        --background-color: #24262b;
+        --placeholder-color: #75808c;
+        --autofill-color: #f5f6f7;
+        --scroll-color: #24262b;
+        --border-radius: 18px;
+        --card-bg-1: rgb(28, 30, 34);
+        --card-bg-2: rgb(49, 52, 60);
+        --card-bg-3: white;
+        --card-bg-5: rgb(30, 32, 36);
+        --card-bg-4: rgb(36, 38, 43);
+        --card-bg-6: rgb(25, 27, 30);
+        --card-bg-7: rgba(0, 0, 0, 0.3);
+        --card-bg-8: rgba(36, 38, 43, 0.5);
+        --card-bg-9: rgb(26, 28, 32);
+		--card-bg-10: rgb(43, 47, 54);
+		--card-bg-11: rgba(49, 52, 60, 0.4);
+		--card-bg-12: rgb(36, 38, 43);
+		--card-bg-13:rgba(49, 52, 60, 0.6);
+        --text-1: rgb(234, 234, 234);
+        --text-3: rgb(229, 233, 237);
+        --text-4: rgb(153, 164, 176);
+        --text-5: rgb(245, 246, 247);
+        --text-6: rgba(153, 164, 176, 0.6);
+        --text-7: rgb(152, 167, 181);
+        --text-8: rgb(223, 227, 230);
+		--border-1:rgb(45, 48, 53);
+		--border-2: rgba(49, 52, 60, 0.5);
+        --active-tab: linear-gradient(
+          to left,
+          rgb(85, 89, 102),
+          rgb(85, 89, 102),
+          rgb(88, 174, 20)
+        );
+        --tab-nav-bg: rgba(49, 52, 60, 0.7);
+        --original-bg: rgb(45, 48, 53);
+        --original-text: rgba(153, 164, 176, 0.8);
+        --curve-bg-1: linear-gradient(
+          to right,
+          rgb(28, 30, 34),
+          rgb(28, 30, 34)
+        );
+        --curve-bg-img-1: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAABwCAMAAADR/pnBAAAAn1BMVEUAAAAcHiIdHyIdHiIcHiIfIiVwcHAdHiIcHiIcHiMcHyIlLjgcHiIcHiIcHyIcHyIcHyIdHyMeHiQdHyMeHyQcHyIcHiIcHiIcHiIdHyIdHiIhISYiIickJCskJCQ8PDwcHiIcHiIdHyIdHyMcHiIdHyMcHyQeISQoKCgcHiMcHiIcHiIeHiMeICUfHyQfIiUcHyIcHiIdHiIgJSUcHiJEtYpkAAAANHRSTlMA/o7vuSUC+OqQWgnz38+tnHBTQzrXy8O9k4oeFhENBPyypnt2amNNBtqigUs2MSzj0Zcb0lGzEwAAAgJJREFUeNrN3FlS4lAARuHEhAQTQEaZZ0TUVns4+19bN9KUIGrBC5x/Aae+SiWVm5cEfLNSudK56WWF4DLjiEWdp0vwOHKVRT848zh6YdwMzjpO2XlxnLb4jDcdJy6tJV+ULk6D9hcXTkCjlH1aMtAIF5+VFDToJoclCY1pflCy0Lg5uG4aGlcfSx4adx9KItrkx35JRKM42CuZaNzslVQ06rslF6043Cm5aDzulGS08OW9JKPRfi/ZaDtPgo5WXm1LOhqLbclHi7bvBB+N3/9LQtrkdVMS0og3JSONzelISWuN1yUlbXPgddLeTiBO2ts3jJSWFoJASlufxa00Gl5aJdHSWHppP3MtjScvLe1racy8tPBZS6PtpZF5aeVcS2PupZUGWhpVLy181dKIvTTuvbTWWEuj5qVFQy2Nay8tLWhpTL00Gl5aJdHSWHppxZGWRs9LS/taGjMvjaaXduulkXlp5VxLY+6llQZaGlUvLXzR0uh4adS9tIexlkbNS4uGWhpdL21S0NKYemk0vLRfiZbGnZdWHGlpdL20sKml8ZBrafS8tPBZS6M10tKIx1oaVS+NuZcWZloaaV1LI6xpadDz0pittDTafS2NaKmlQfxHSyPKtDS4vdfS1jgt7R+uvrLSIKo2EikNKHYbIykNCFuPtWaupO38oKN6vd7VZn8B7LFgIf7sh1IAAAAASUVORK5CYII=);
+        --curve-bg-img-2: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAADUCAMAAAB5wzuWAAAAk1BMVEUAAAAeICQgKi0eICQeICQeISUeISUeISUeISUfICUpLi5OTk4eICQfICQfIiUgIiYgIiYeICUfICQeICUeICQfICUhIicfICUeISQfISQfISQjIyktLS0eICQeICQeICQfISQfISUfISUfISUeIiYhIychJCciIismJiaAgIAfICQeICQfICUfICUfISUhISYeICRbUIDiAAAAMHRSTlMA9w/v/fu6opJmBwPbxks+NPPp5uFfJtfSeFkVC87AmYaAc1JCKyMdGgK2sKyeai/GNLYaAAACYElEQVR42uzOS07CUABA0bavpdBaoFBAfsof/OHd/+qMYWZiogPjHfSs4ET8WBaaKp8Piujv8Fvx8ySJbv4/A9SbW0eRgbD97EgyEHpRpMlAvhJluJ+KMoS+KEM6EWVIr6IMzE0ZNqYMj0+iDHkpyvBSiDJ0VqIMVSLKcL8UZbg7izI0U1GG0bsoQxiKMtQHUYZ4L8qQLUQZ0qsoA3NTho0pQ9eUIS9FGV4KUYbOSpShSkQZ1ktRhtlZlKE5iTKMj6IMYSjKUB9EGeK+KEO2EGVIe6IM7EwZtqYMXVOGvBRleC1EGTorUYYqEWVYL0UZZhdRhuYkyjA+ijKEoShDPRBliPuiDNlClCHtiTKwM2XYmjJ0TRneSlGG10KU4bkQZXhIRBnWS1GG2UWU4e4kyjA+ijKMhqIMYSDKEPdFGbK9KEO6EGVI96IM8UCUYXQRZahKUYadKVOfRRlyUyadijK8mTJxIsowMWU6pkxciDIcTJm5KZObMpUp05gywZTJTBnaTJtpM23mizbznTbz0c4d2zAIBEAQNEigf/ECCwQmgpj+G3QD3tS6YLeCaeCOEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKzL/qkjBrEqYlYcYkTEnC1CTMEYTZkhamdxJmCcK0pL32HoQ5nyDMHHQ4cAX9QgzvIEwN+hIpQS8r45SD+fQ5Zzhjn3MTVKaYA6Wh5vxcXTkPYOccc9TW9ifkwm67l4Dbw25tY6nH61dfgXj42O/H5kkAAAAASUVORK5CYII=);
+        --vip-img: url(https://static.nanogames.io/assets/flag_bg.fcc40855.png);
+        --vip-card-bg: rgba(49, 52, 58, 0.8);
+        --affiliate-bg: rgb(23, 24, 27);
+        --affiliate-img-1: url(https://static.nanogames.io/assets/graph.line.a4a20112.png);
+		--bxs-1:linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
+      }
+      [data-theme="light"] {
+        --sidebar-bg: white;
+        --sidebar-card-bg: rgba(219, 219, 219, 0.5);
+        --sidebar-text-hover: rgb(27, 27, 27);
+        --text-color: rgba(0, 0, 0, 0.8);
+        --primary-color: #43b309;
+        --background-color: #f3f3f3;
+        --placeholder-color: #75808c;
+        --autofill-color: #262626;
+        --scroll-color: white;
+        --border-radius: 18px;
+        --card-bg-1: white;
+        --card-bg-2: white;
+        --card-bg-3: whitesmoke;
+        --card-bg-4: rgb(241, 241, 241);
+		--text-1: rgb(41, 41, 41);
+        --text-3: rgb(120, 120, 120);
+        --text-4: rgb(40, 41, 43);
+        --text-5: rgb(46, 46, 46);
+        --text-6: rgb(133, 133, 133);
+        --text-7: rgb(88, 88, 88);
+        --text-8: rgb(58, 58, 58);
+		--border-1:rgb(205, 205, 205);
+		--border-2: rgb(203, 203, 203);
+        --card-bg-5: white;
+        --card-bg-6: whitesmoke;
+        --card-bg-7: rgba(255, 255, 255, 0.893);
+        --card-bg-8: rgba(231, 231, 231, 0.632);
+        --card-bg-9: rgb(230, 230, 230);
+		--card-bg-10: rgb(232, 232, 232);
+		--card-bg-11: rgba(239, 239, 239, 0.783);
+		--card-bg-12: rgb(255, 255, 255);
+		--card-bg-13:rgba(206, 206, 206, 0.6);
+        --tab-nav-bg: rgba(255, 255, 255, 0.879);
+        --active-tab: linear-gradient(
+          to left,
+          rgb(210, 210, 210),
+          rgb(210, 210, 210),
+          rgb(88, 174, 20)
+        );
+        --original-bg: white;
+        --original-text: rgba(52, 56, 60, 0.8);
+        --curve-bg-1: linear-gradient(to right, white, white);
+        --curve-bg-img-1: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAABwCAMAAADR/pnBAAAAmVBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VHQRUAAAAMnRSTlMA/pCN+vC6mxUOCfPnz3BaVE03HQMC4NfLw76slHtkJwf369qxpnZEOy0jtaKFa0DRSma7OZIAAAIESURBVHjazdzZUuJQAEXRe80cQgIkgMyzgEPbff7/4zoKahC14CXu8wG7VmWq+xSjH9boNYcjJ7s3vzNdMG84mZn6pwvXvMtNzdPFs37H1DpdM39napyum1/jQ6crt0i735R+nSYNvvmYAGhqZF+WCDTZu69KCJo07p6XIDSt47MShabR2XXD0OR8LnFo+vOpBKK57dMSiKZleFIi0TQ6KaFoalVLLFpSvaUsmh4rJRjNVg6+MJoGHyUarfIm4Gir+VsJR9P72Y1H88JjiUdTcCwBae7+UALS5B9KRJr+vZaQtH5hyiFphwMvk7aMyhKTJqcsQWnuvTFQmtbGUGl65tKaXSxNUy4tibE0PXFpixxL04ZLsx0sTQMuTS0urRdjaZpwaY0QS1PApdk9liafS1ObS+sXWJpSLm0ZYWm64dLcGZamNZemZy6t2cXSNOXSkghL0xOXtsixNG24NHW4tFsuTRmX1ouxNE24tEaIpSng0uweS9OQS1ObS1vNsTSlXJoXYmkac2nuDEvTA5emLZf2t8DSNOXSkghL05hLszssTasYS5PDpdkOlqZ+hKXJL7A0BVyaJlyazbA0uS0sTTbF0iSHS9NmjqVpkGNp8qZYmvSQY2nyMixNum1jaS84LK3EteZUmuQF2wJKK5eMtxGUVs72H9NdjKRVftAR3BznlPsPkvkYMgyvS6YAAAAASUVORK5CYII=);
+        --curve-bg-img-2: url(https://static.nanogames.io/assets/rewards-rectangle-w.8e10c086.png);
+        --vip-img: url(https://static.nanogames.io/assets/flag_bg_w.6eb38051.png);
+        --vip-card-bg: rgba(255, 255, 255, 0.916);
+        --affiliate-bg: rgb(255, 255, 255);
+        --affiliate-img-1: url(https://static.nanogames.io/assets/graph.line-w.b1a3e46b.png);
+		--bxs-1:linear-gradient(rgba(17, 20, 21, 0.24), rgba(36, 38, 43, 0));
+	}
 
-			body, input, textarea, a, button {
-				color: var(--text-color);
-			}
-			:root {
-				--text-color: rgba(153,164,176,.8);
-				--primary-color: #43b309;
-				--background-color: #24262b;
-				--placeholder-color: #75808c;
-				--autofill-color: #f5f6f7;
-				--scroll-color: #24262B;
-				--border-radius:18px
-			}
-			.ttu {
-				text-transform: uppercase;
-			}
+      .button-inner {
+        color: white !important;
+        span {
+          color: white !important;
+        }
+      }
 
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: Poppins;
+        text-decoration: none;
+        box-sizing: border-box;
+        color: var(--text-color);
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-			
-			.hTTvsjh{
-				color: #f5f6f7;
-			}
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
 
-			/*=========================================================== Main screen ================================================ */
-			@media only screen and ( min-width : 650px) {
-				.mobile {
-					display: none;
-				}
-				.ePAxUv {
-					margin-top: 4rem;
-				}
-				.error-message{
-				position: fixed;
-				background: #24262B;
-				width: 400px;
-				left: 6px;
-				bottom: 2%;
-				border-radius: 20px;
+      body,
+      input,
+      textarea,
+      a,
+      button {
+        font-family: Montserrat, -apple-system, Framedcn, Helvetica Neue,
+          Poppins, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC,
+          Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      textarea,
+      input {
+        outline: none;
+      }
+      button {
+        border: none;
+        padding: 0;
+        user-select: none;
+        cursor: pointer;
+        background-color: transparent;
+      }
 
-				padding: 24px 15px;
-				margin: 10px;
-				z-index: 910;
-			}
-				main{
-					width: 100%;
-					margin: 10px 0;
-					transition: left 0.2s linear 0s;
-				}
-				.app{
-					position: relative;
-					display: flex;
-					transition: 0.4s ease-in;
-				}
-				#side-bar{
-					height: 100vh;
-					background: var(--background-color);
-				}
-				#menu{
-					display: block;
-					width: 0.1764%;
-					position: relative;
-				}
-				.menu{
-					border: none;
-					width: 1.875rem;
-					height: 1.875rem;
-					border-radius: 0.9375rem;
-					background-color: rgb(26, 28, 32);
-					box-shadow: transparent 0px 2px 4px 0px;
-					z-index: 203;
-					position: fixed;
-					cursor: pointer;
-					top: 16px;
-					transition: left 0.2s linear 0s;
-				}
-				#right-bar{
-					transition: left 0.2s linear 0s;
-				}
-				.menu:hover{
-					background-color: rgb(46, 49, 56);
-				}
-				.menu img{
-					width: 0.625rem;
-					height: 0.625rem;
-				}
-				footer{
-					padding: 0;
-					margin: 0;
-					width: 100%;
-				}
-				#footer{
-					display: none;
-				}
-			}
-			/* ============================= mobile screen ====================================================== */
-			@media only screen and ( max-width : 650px) {
-				#main{
-					display: none;
-				}
-				.error-message {
-					position: fixed;
-					background: #24262B;
-					width: 97%;
-					left: 6px;
-					top: 2%;
-					border-radius: 20px;
-					padding: 24px 15px;
-					margin: 0;
-					z-index: 910;
-				}
-				.footer-general{
-					display: none;
-				}
-				#right-bar{
-					width: 100%;
-				}
-				.ePAxUv{
-					margin-top: 8.375rem;
-				}
-			}
+      body,
+      input,
+      textarea,
+      a,
+      button {
+        color: var(--text-color);
+      }
 
-/* ==================================== Preloader ============================ */
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.wave {
-  width: 2px;
-  height: 7px;
-  background: linear-gradient(45deg, cyan, #fff);
-  margin: 6px;
-  animation: wave 1s linear infinite;
-  border-radius: 20px;
-}
-.wave:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.wave:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.wave:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.wave:nth-child(5) {
-  animation-delay: 0.4s;
-}
-.wave:nth-child(6) {
-  animation-delay: 0.5s;
-}
-.wave:nth-child(7) {
-  animation-delay: 0.6s;
-}
-.wave:nth-child(8) {
-  animation-delay: 0.7s;
-}
-.wave:nth-child(9) {
-  animation-delay: 0.8s;
-}
-.wave:nth-child(10) {
-  animation-delay: 0.9s;
-}
+      .ttu {
+        text-transform: uppercase;
+      }
 
-@keyframes wave {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
+      .hTTvsjh {
+        color: #f5f6f7;
+      }
 
-.tooltiptext {
-		font-size: 14px;
+      .app,
+      body,
+      html {
+        background-color: var(--background-color) !important;
+      }
+
+      /*=========================================================== Main screen ================================================ */
+      @media only screen and (min-width: 650px) {
+        .mobile {
+          display: none;
+        }
+        .ePAxUv {
+          margin-top: 4rem;
+        }
+        .error-message {
+          position: fixed;
+          background: #24262b;
+          width: 400px;
+          left: 6px;
+          bottom: 2%;
+          border-radius: 20px;
+
+          padding: 24px 15px;
+          margin: 10px;
+          z-index: 910;
+        }
+        main {
+          width: 100%;
+          margin: 10px 0;
+          transition: left 0.2s linear 0s;
+        }
+        .app {
+          position: relative;
+          display: flex;
+          transition: 0.4s ease-in;
+        }
+        #side-bar {
+          height: 100vh;
+          background: var(--background-color);
+        }
+        #menu {
+          display: block;
+          width: 0.1764%;
+          position: relative;
+        }
+        .menu {
+          border: none;
+          width: 1.875rem;
+          height: 1.875rem;
+          border-radius: 0.9375rem;
+          background-color: var(--card-bg-9);
+          box-shadow: transparent 0px 2px 4px 0px;
+          z-index: 203;
+          position: fixed;
+          cursor: pointer;
+          top: 16px;
+          transition: left 0.2s linear 0s;
+        }
+        #right-bar {
+          transition: left 0.2s linear 0s;
+        }
+        .menu:hover {
+          background-color: var(--card-bg-11);
+        }
+        .menu img {
+          width: 0.625rem;
+          height: 0.625rem;
+        }
+        footer {
+          padding: 0;
+          margin: 0;
+          width: 100%;
+        }
+        #footer {
+          display: none;
+        }
+      }
+      /* ============================= mobile screen ====================================================== */
+      @media only screen and (max-width: 650px) {
+        #main {
+          display: none;
+        }
+        .error-message {
+          position: fixed;
+          background: #24262b;
+          width: 97%;
+          left: 6px;
+          top: 2%;
+          border-radius: 20px;
+          padding: 24px 15px;
+          margin: 0;
+          z-index: 910;
+        }
+        .footer-general {
+          display: none;
+        }
+        #right-bar {
+          width: 100%;
+        }
+        .ePAxUv {
+          margin-top: 8.375rem;
+        }
+      }
+
+      /* ==================================== Preloader ============================ */
+      .center {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .wave {
+        width: 2px;
+        height: 7px;
+        background: linear-gradient(45deg, cyan, #fff);
+        margin: 6px;
+        animation: wave 1s linear infinite;
+        border-radius: 20px;
+      }
+      .wave:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .wave:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .wave:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .wave:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .wave:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+      .wave:nth-child(7) {
+        animation-delay: 0.6s;
+      }
+      .wave:nth-child(8) {
+        animation-delay: 0.7s;
+      }
+      .wave:nth-child(9) {
+        animation-delay: 0.8s;
+      }
+      .wave:nth-child(10) {
+        animation-delay: 0.9s;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0);
+        }
+      }
+
+      .tooltiptext {
+        font-size: 14px;
         opacity: 1;
         pointer-events: none;
         transition: opacity 0.3s;
@@ -258,7 +428,7 @@
         /* transform: translate(-50%, -50%); */
         margin-bottom: 0.375rem;
         white-space: nowrap;
-        color: rgba(153, 164, 176, 0.8);
+        color: var(--original-text);
         background-color: rgb(37, 39, 43);
         border-radius: 0.625rem;
         padding: 0.35em 0.7em;
@@ -267,16 +437,15 @@
         box-shadow: rgba(0, 0, 0, 0.12) -2px 4px 8px;
         white-space: unset;
         /* word-break: break-word; */
-    }
+      }
+    </style>
 
-		</style>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
 
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-
-	<!-- Swiper JS -->
-	<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
-	</body>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+  </body>
 </html>

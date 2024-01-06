@@ -98,7 +98,7 @@ const openOriginal = ((e) => {
 }
 
 .eTxQfM button {
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 
 .eTxQfM {
@@ -108,8 +108,8 @@ const openOriginal = ((e) => {
     top: 0px;
     bottom: 0px;
     width: 240px;
-    color: rgba(153, 164, 176, 0.8);
-    background-color: rgb(30, 32, 36);
+    color: var(--original-text);
+    background-color: var(--card-bg-5);
     transition: all 0.2s linear 0s;
 }
 
@@ -122,7 +122,7 @@ const openOriginal = ((e) => {
 .ioXbGd {
     margin-top: 0.4375rem;
     margin-bottom: 0.4375rem;
-    border-bottom: 1px solid rgba(49, 52, 60, 0.6);
+    border-bottom: 1px solid var(--border-2);
     width: 100%;
     height: 3.25rem;
     box-sizing: content-box;
@@ -197,7 +197,7 @@ const openOriginal = ((e) => {
     height: 2.5rem;
 }
 .kCbnNh {
-    border-bottom: 1px solid rgba(49, 52, 60, 0.6);
+    border-bottom: 1px solid var(--border-2);
     margin: 1rem 0.625rem 1.25rem;
 }
 .jzXtuE .fold-lan {
@@ -239,7 +239,7 @@ const openOriginal = ((e) => {
     opacity: 1;
 }
 .lfiNFq .select-trigger {
-    background: rgba(45, 48, 53, 0.5);
+    background: var(--sidebar-card-bg);
 }
 .gOHquD .select-trigger {
     position: relative;
@@ -252,7 +252,7 @@ const openOriginal = ((e) => {
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .gOHquD .select-trigger .arrow {
     width: 2.5rem;

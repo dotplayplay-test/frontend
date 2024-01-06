@@ -513,7 +513,7 @@ const handlesjen = ((e)=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
 }
 .eOA-dmL .slider-after {
@@ -535,7 +535,7 @@ const handlesjen = ((e)=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
 }
 .eOA-dmL .slider-before {
@@ -567,8 +567,7 @@ const handlesjen = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -591,7 +590,7 @@ const handlesjen = ((e)=>{
     line-height: 1.25rem;
     padding: 0.3125rem 0.625rem;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 1.125rem;
@@ -620,7 +619,7 @@ const handlesjen = ((e)=>{
     border-color: transparent;
 }
 .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 
 .gcQjQT .input-control {
@@ -628,8 +627,8 @@ const handlesjen = ((e)=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -640,7 +639,7 @@ const handlesjen = ((e)=>{
     font-weight: bold;
 }
 .cYiOHZ .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gOLODp .coin-icon {
     order: -1;
@@ -670,8 +669,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -683,8 +682,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .cMPLfC {
@@ -705,13 +704,12 @@ const handlesjen = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .input-control {
     border-color: transparent;
 }
 .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .hzTJOu .input-control input {
     flex: 1 1 0%;
@@ -721,7 +719,7 @@ const handlesjen = ((e)=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .cYiOHZ .input-control .button-group {
@@ -737,8 +735,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -750,8 +748,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .hzTJOu {
@@ -773,7 +771,7 @@ const handlesjen = ((e)=>{
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -812,8 +810,8 @@ const handlesjen = ((e)=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -844,7 +842,7 @@ const handlesjen = ((e)=>{
     height: 0.875rem;
 }
 .eIHoct .increse {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .eIHoct .text {
     padding: 0px 0.25rem;
@@ -872,7 +870,7 @@ const handlesjen = ((e)=>{
     display: flex;
     margin-top: 0.75rem;
     font-size: 12px;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     opacity: 0.6;
 }
 .kNGYYA .tip-msg {
@@ -890,7 +888,7 @@ const handlesjen = ((e)=>{
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -917,7 +915,7 @@ const handlesjen = ((e)=>{
     top: 0.875rem;
 }
 .kvRMBr .reset {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .kvRMBr .text {
     padding: 0px 0.25rem;

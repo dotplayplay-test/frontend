@@ -296,7 +296,7 @@ const handleStatistics = (()=>{
     cursor: auto;
     height: 25.625rem;
     width: 26.5rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 1.25rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 8px 0px;
     padding: 1rem 0px;
@@ -349,7 +349,7 @@ const handleStatistics = (()=>{
 .emGYim .user-info .left .name-level p {
     margin: 0px;
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     line-height: 1.25rem;
     font-weight: bold;
 }
@@ -408,7 +408,7 @@ const handleStatistics = (()=>{
 .emGYim .vip-info .num > p {
     font-size: 0.75rem;
     margin: 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .emGYim .vip-info .num > p span {
     color: rgba(153, 164, 176, 0.7);
@@ -418,7 +418,7 @@ const handleStatistics = (()=>{
     height: 2.25rem;
     margin-top: 0.3125rem;
     position: relative;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 1.125rem;
     font-size: 0px;
     padding: 0px 1.5rem;
@@ -455,7 +455,7 @@ const handleStatistics = (()=>{
     display: flex;
     flex-wrap: wrap;
     border-radius: 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 .emGYim .link-info .link-item {
     height: 2.25rem;
@@ -522,7 +522,7 @@ const handleStatistics = (()=>{
         cursor: auto;
         height: 25.625rem;
         width: 105%;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
         border-radius: 1.25rem;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 8px 0px;
         padding: 1rem 0px;

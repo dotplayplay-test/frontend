@@ -318,8 +318,7 @@ setInterval(()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 14px;
+color: var(--text-6);    font-size: 14px;
 }
 .swm8knq {
     --18w92jy: #fff;

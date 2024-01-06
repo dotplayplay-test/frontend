@@ -186,12 +186,7 @@
 </div>
 
 <style>
-  .light-bg {
-    background-color: rgb(255, 255, 255) !important;
-  }
-  .light-text {
-    color: rgb(49, 55, 61) !important;
-  }
+
   @media only screen and (max-width: 650px) {
     .rIdoP {
       padding: 2.25rem 2rem 0px;
@@ -201,11 +196,11 @@
       padding-right: 24px;
       font-size: 12px;
       line-height: 2.3;
-      color: rgba(153, 164, 176, 0.8);
+      color: var(--original-text);
     }
     .rIdoP {
       margin-top: 2.5rem;
-      background-color: rgb(27, 29, 33);
+      background-color:var(--card-bg-1);
       padding: 48px 0px 0px;
     }
     .rIdoP .footer-wrap {
@@ -250,7 +245,7 @@
     .rIdoP .footer__entries a {
       display: block;
       font-size: 12px;
-      color: rgb(192, 203, 213);
+      color: var(--text-4);
       text-transform: uppercase;
     }
     .rIdoP .footer__entries a {
@@ -355,8 +350,7 @@
     }
     .rIdoP .footer__copyright {
       font-size: 12px;
-      color: rgba(153, 164, 176, 0.6);
-      display: flex;
+  color: var(--text-6);      display: flex;
       -webkit-box-align: center;
       align-items: center;
       -webkit-box-pack: center;
@@ -370,7 +364,7 @@
       -webkit-box-pack: center;
       justify-content: center;
       margin: 0px -2rem;
-      background-color: rgb(24, 26, 29);
+      background-color: var(--card-bg-1);
       position: relative;
     }
     .rIdoP .footer__copyright .to-top {
@@ -378,7 +372,7 @@
       height: 48px;
       border-radius: 50%;
       background: rgba(53, 60, 66, 0.4);
-      color: rgb(153, 164, 176);
+      color: var(--text-4);
       display: flex;
       flex-direction: column;
       -webkit-box-align: center;

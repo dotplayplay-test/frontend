@@ -59,7 +59,7 @@
 <style>
 .hJfzJj{
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .sc-dkPtRN{
@@ -72,8 +72,8 @@
 .hJfzJj .google-step-summary-top {
     padding: 1rem 1.25rem;
     border-radius: 0.625rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
 }
 .faaQQX .google-step-summary-top {
     font-size: 0.75rem;
@@ -95,8 +95,8 @@
 .hJfzJj .google-step-summary-top {
     padding: 1rem 1.25rem;
     border-radius: 0.625rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
 }
 .faaQQX .google-step-summary-top {
     font-size: 0.75rem;
@@ -145,8 +145,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .hJfzJj .input .input-control {
     height: 3.5rem;
 }
@@ -155,8 +154,8 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -173,7 +172,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .faaQQX .copy-input .input-control .copy-button {
     width: 2.5rem;
@@ -255,9 +254,9 @@
     height: 3.5rem;
     border-radius: 1.25rem;
     margin-right: 0.625rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
-    color: rgb(245, 246, 247);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
+    color: var(--text-5);
 }
 li {
     margin: 0.5em 0;
@@ -273,8 +272,8 @@ li {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;

@@ -162,7 +162,7 @@ const handleNavigation = ((e) => {
     width: 100%;
     height: 40px;
     position: fixed;
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-4);
     z-index: 56;
 } */
 </style>

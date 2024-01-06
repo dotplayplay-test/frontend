@@ -109,7 +109,7 @@ const handleCancel = ()=>{
     width: 29rem;
     height: 30rem;
     border-radius: 1.25rem;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     padding: 1.5rem 0px;
 }
 .bXHpfl .title {
@@ -209,7 +209,7 @@ const handleCancel = ()=>{
 .uxCLk .item .wrap p {
     margin: 0px;
     position: absolute;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 1.625rem;
     font-weight: bold;
     top: 3.625rem;

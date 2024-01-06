@@ -73,16 +73,15 @@ const handleCloseHelp = (() => {
     align-items: center;
     margin-top: 1.25rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cxLQEF .hotkey-enabled .hotkey-select {
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
     margin-right: 0.5rem;
     position: relative;
-    background-color: rgba(45, 48, 53, 0.5);
-    border: 1px solid rgb(45, 48, 53);
+    background-color: var(--sidebar-card-bg);
+    border: 1px solid var(--border-1);
 }
 .dialog {
     position: absolute;
@@ -97,7 +96,7 @@ const handleCloseHelp = (() => {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-head {
     position: relative;
@@ -118,7 +117,7 @@ const handleCloseHelp = (() => {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fLASqZ {
     position: absolute;
@@ -135,7 +134,7 @@ const handleCloseHelp = (() => {
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;
@@ -145,15 +144,14 @@ const handleCloseHelp = (() => {
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {
     flex: 1 1 0%;
 }
 .dialog-box {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgb(30, 32, 36);
+color: var(--text-6);    background-color: var(--card-bg-5);
     border-top-left-radius: 2.5rem;
     border-top-right-radius: 2.5rem;
     padding: 1.75rem 1.125rem;
@@ -179,15 +177,14 @@ const handleCloseHelp = (() => {
     height: 3.5rem;
     border-radius: 1.25rem;
     margin-bottom: 0.5rem;
-    background-color: rgb(23, 24, 27);
-    color: rgba(153, 164, 176, 0.6);
-}
+    background: var(--affiliate-bg);
+color: var(--text-6);}
 .cxLQEF .hotkey-item .hotkey-key {
     width: 6.25rem;
     text-align: center;
     position: relative;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     padding: 0.5rem 0px 0.5rem 1.25rem;
 }
 .cxLQEF .hotkey-item .hotkey-key::after {
@@ -198,6 +195,6 @@ const handleCloseHelp = (() => {
     opacity: 0.13;
     position: absolute;
     width: 1px;
-    background-color: rgb(153, 164, 176);
+    background-color: var(--text-4);
 }
 </style>

@@ -361,7 +361,7 @@ const handleDeposit = (()=>{
 
 @media only screen and (max-width: 650px){
     .LQlWw {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -381,7 +381,7 @@ const handleDeposit = (()=>{
     -webkit-box-align: center;
     align-items: center;
     margin-left: 7px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     cursor: pointer;
     z-index: 9;

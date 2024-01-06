@@ -531,7 +531,7 @@ const handlesjen = ((e)=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
 }
 .eOA-dmL .slider-after {
@@ -600,7 +600,7 @@ const handlesjen = ((e)=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
 }
 .eOA-dmL .slider-before {
@@ -671,8 +671,7 @@ const handlesjen = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -687,7 +686,7 @@ const handlesjen = ((e)=>{
     font-weight: bold;
 }
 .cYiOHZ .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gOLODp .coin-icon {
     order: -1;
@@ -716,8 +715,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -729,8 +728,8 @@ const handlesjen = ((e)=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 
@@ -753,11 +752,10 @@ const handlesjen = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .ifiUVY .bet-payout {
     margin-left: 0.625rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .ifiUVY .bet-button {
     height: 3rem;
@@ -765,7 +763,7 @@ const handlesjen = ((e)=>{
     position: relative;
 }
 .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
 }

@@ -3005,7 +3005,7 @@ onMount(async () => {
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 0.425rem;
@@ -3035,8 +3035,7 @@ onMount(async () => {
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
 
 .dice-animate::before {
@@ -3065,8 +3064,7 @@ onMount(async () => {
     display: flex;
     width: 100%;
     height: 100%;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -3102,12 +3100,11 @@ onMount(async () => {
 }
 
 .fIoiVG .is-lose {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
 }
 
 .fIoiVG .is-win {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgb(67, 179, 9);
 }
 

@@ -212,7 +212,7 @@ const handleClose = (() => {
 .inlQlO {
     width: 26.25rem;
     height: 28.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 0.625rem 1.25rem;
     position: relative;
@@ -230,7 +230,7 @@ const handleClose = (() => {
     display: -webkit-box;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .cAMmTh .titles .word .two {
@@ -240,24 +240,23 @@ const handleClose = (() => {
     display: -webkit-box;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-    text-transform: capitalize;
+color: var(--text-6);    text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
 }
 .cAMmTh .bet-area {
     display: flex;
     margin-top: 0.625rem;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--sidebar-card-bg);
 }
 .cAMmTh .bet-area > p {
     margin: 0px 0px 0px 0.875rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -288,8 +287,7 @@ const handleClose = (() => {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cAMmTh .info-area .left .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
@@ -303,7 +301,7 @@ const handleClose = (() => {
     width: 100%;
     height: 100%;
     background-color: rgb(60, 63, 73);
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-size: 100%;
     font-size: 1.5rem;
     font-weight: bold;
@@ -338,8 +336,7 @@ const handleClose = (() => {
 .cAMmTh .info-area .right .top > p {
     margin: 0px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cAMmTh .info-area .right .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
@@ -359,14 +356,14 @@ const handleClose = (() => {
     height: 3.5rem;
     padding: 0px 1.25rem;
     border-radius: 1.25rem;
-    border: 1px solid rgba(45, 48, 53, 0.5);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--sidebar-card-bg);
+    background-color: var(--sidebar-card-bg);
 }
 .inlQlO .input-wrap .share-input {
     width: 100%;
     height: 100%;
     line-height: 3.5rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: transparent;
     border: none;
     padding: 0px;

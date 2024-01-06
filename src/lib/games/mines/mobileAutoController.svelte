@@ -408,7 +408,7 @@ const handleAutoBet = (async()=>{
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .gOHquD .select-trigger .arrow {
     width: 2.5rem;
@@ -436,7 +436,7 @@ const handleAutoBet = (async()=>{
 .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -461,8 +461,7 @@ const handleAutoBet = (async()=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 .iVwWcQ .select-option:hover{
     background-color: rgba(75, 75, 75, 0.874)(61, 54, 54);
@@ -482,8 +481,7 @@ const handleAutoBet = (async()=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 .iVwWcQ .select-options:not(.len-1) > .active::after {
     content: "";
@@ -508,8 +506,7 @@ const handleAutoBet = (async()=>{
     font-size: 13.5px;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 
 .game-control-panel {
@@ -595,7 +592,7 @@ const handleAutoBet = (async()=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
   .eOA-dmL .slider-after {
@@ -618,7 +615,7 @@ const handleAutoBet = (async()=>{
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
   .eOA-dmL .slider-before {
@@ -644,8 +641,7 @@ const handleAutoBet = (async()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -662,7 +658,7 @@ const handleAutoBet = (async()=>{
     border-color: transparent;
 }
 .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .ewilmB {
     flex: 1 1 0%;
@@ -684,15 +680,14 @@ const handleAutoBet = (async()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .hzTJOu .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -706,7 +701,7 @@ const handleAutoBet = (async()=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .bswIvI > button:first-child {
@@ -719,8 +714,8 @@ const handleAutoBet = (async()=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -740,7 +735,7 @@ const handleAutoBet = (async()=>{
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -770,7 +765,7 @@ const handleAutoBet = (async()=>{
     height: 0.875rem;
 }
 .eIHoct .increse {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .eIHoct .text {
     padding: 0px 0.25rem;
@@ -799,7 +794,7 @@ const handleAutoBet = (async()=>{
     display: flex;
     margin-top: 0.75rem;
     font-size: 12px;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     opacity: 0.6;
 }
 .kNGYYA .tip-msg {
@@ -818,7 +813,7 @@ const handleAutoBet = (async()=>{
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -845,7 +840,7 @@ const handleAutoBet = (async()=>{
     top: 0.875rem;
 }
 .kvRMBr .reset {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .kvRMBr .text {
     padding: 0px 0.25rem;
