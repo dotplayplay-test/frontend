@@ -1,4 +1,5 @@
-import { debounce } from "lodash";
+import pkg from 'lodash';
+const { debounce } = pkg;
 import EventEmitter from "./EventEmitter";
 import { gsap } from "gsap";
 

@@ -8,7 +8,8 @@
   import { onMount, onDestroy } from "svelte";
   const { autorun } = connect();
   import Decimal from "decimal.js";
-  import { debounce } from "lodash";
+  import pkg from 'lodash';
+const { debounce } = pkg;
   import { crashGame } from "./store";
   function observeElementSizeChange(callback, delay = 0) {
     let isComponentMounted = false;

@@ -1,4 +1,5 @@
-import { debounce } from "lodash";
+import pkg from 'lodash';
+const { debounce } = pkg;
 
 export default class PersistentStorage {
   constructor(initialData, { key, isServer = false }) {
