@@ -1,5 +1,5 @@
 import { writable } from "svelte/store"
-
+//
 let isLoading = false
 let isRunning = false
 let isCrashed = 0
