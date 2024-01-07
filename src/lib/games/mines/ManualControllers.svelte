@@ -651,7 +651,7 @@ const handlesjen = (e) => {
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
   .eOA-dmL .slider-after {
@@ -674,7 +674,7 @@ const handlesjen = (e) => {
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
   .eOA-dmL .slider-before {
@@ -699,15 +699,15 @@ const handlesjen = (e) => {
     width: 100%;
 }
 .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .gcQjQT .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -744,7 +744,7 @@ const handlesjen = (e) => {
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .gOHquD .select-trigger .arrow {
     width: 2.5rem;
@@ -772,7 +772,7 @@ const handlesjen = (e) => {
 .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -797,8 +797,7 @@ const handlesjen = (e) => {
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 .iVwWcQ .select-option:hover{
     background-color: rgba(75, 75, 75, 0.874)(61, 54, 54);
@@ -818,8 +817,7 @@ const handlesjen = (e) => {
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 .iVwWcQ .select-options:not(.len-1) > .active::after {
     content: "";
@@ -844,8 +842,7 @@ const handlesjen = (e) => {
     font-size: 13.5px;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
  .input-control {
     border-color: transparent;
 }

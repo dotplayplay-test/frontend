@@ -336,7 +336,7 @@ onMount(async()=>{
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-top: -0.25rem;
 }
 .jdoMCb .card-badge .badge-img {
@@ -372,7 +372,7 @@ onMount(async()=>{
     font-size: 1.375rem;
     line-height: 1.75rem;
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .xdFYP .user-info-wrap .user-info .user-info-detail .user-star {
     display: flex;
@@ -464,7 +464,7 @@ onMount(async()=>{
 }
 
 .gGiuXV  .pr-mark-wrap .pr-mark.lock-num {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gGiuXV  .pr-mark-wrap .pr-mark {
     font-size: 0.75rem;
@@ -495,7 +495,7 @@ onMount(async()=>{
 }
 .gGiuXV  .pr-mark-wrap .omit {
     margin-left: 1.25rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     position: relative;
     z-index: 2;
@@ -503,7 +503,7 @@ onMount(async()=>{
 
 .gGiuXV .pr-mark-wrap .omit {
     margin-left: 1.25rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     position: relative;
     z-index: 2;
@@ -591,7 +591,7 @@ onMount(async()=>{
     -webkit-box-pack: center;
     justify-content: center;
     background-color: rgb(26, 27, 30);
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 0.75rem;
     font-weight: bold;
 }
@@ -655,11 +655,11 @@ onMount(async()=>{
     white-space: nowrap;
 }
 .xdFYP .level-cl-wrap .level-cont .level-bot-wrap .xw-txt {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     padding: 0px 0.25rem;
 }
 .xdFYP .level-cl-wrap .level-cont .level-bot-wrap .xw-txt {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     padding: 0px 0.25rem;
 }
 .xdFYP .tran-wrap .level-right-super .flower-wrap .tr-img {
@@ -732,7 +732,7 @@ onMount(async()=>{
     line-height: 1.875rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
  .banner-cont-w .level-cont .level-sub-desc {
     line-height: 1.375rem;

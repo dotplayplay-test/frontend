@@ -292,7 +292,7 @@ const handleDropdown = ((e)=>{
 .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -319,8 +319,7 @@ const handleDropdown = ((e)=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 .iVwWcQ .select-option:hover {
     background: #cecccc33;
@@ -353,7 +352,7 @@ const handleDropdown = ((e)=>{
     align-items: center;
 }
 .lgnNLC .td {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .lgnNLC .td:nth-child(1), .lgnNLC .th:nth-child(1) {
     text-align: left;
@@ -361,7 +360,7 @@ const handleDropdown = ((e)=>{
 }
 .lgnNLC .bold {
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .lgnNLC .fc {
     display: flex;
@@ -400,8 +399,7 @@ const handleDropdown = ((e)=>{
     line-height: 2rem;
     margin: 0px 0.5rem 0px 24px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }

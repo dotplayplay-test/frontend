@@ -133,7 +133,7 @@ onMount(() => {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-head.has-close {
     margin-right: 3.75rem;
@@ -157,7 +157,7 @@ onMount(() => {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fLASqZ {
     position: absolute;
@@ -174,7 +174,7 @@ onMount(() => {
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;
@@ -184,7 +184,7 @@ onMount(() => {
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {
@@ -216,8 +216,7 @@ table {
 }
 .bKNIoP th {
     font-weight: 500;
-    color: rgba(153, 164, 176, 0.6);
-    padding-bottom: 0.875rem;
+color: var(--text-6);    padding-bottom: 0.875rem;
 }
 .bKNIoP th, .bKNIoP td {
     overflow: hidden;
@@ -228,8 +227,7 @@ table {
 }
 .bKNIoP th {
     font-weight: 500;
-    color: rgba(153, 164, 176, 0.6);
-    padding-bottom: 0.875rem;
+color: var(--text-6);    padding-bottom: 0.875rem;
 }
 .bKNIoP th, .bKNIoP td {
     overflow: hidden;
@@ -243,7 +241,7 @@ table {
     text-align: right;
 }
 .bKNIoP tbody {
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 .bKNIoP tbody tr {
     height: 3.5rem;
@@ -252,7 +250,7 @@ table {
     border-radius: 1.25rem 0px 0px 1.25rem;
 }
 .bKNIoP tbody tr:nth-child(2n-1) td {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .bKNIoP th:first-of-type, .bKNIoP td:first-of-type {
     padding-left: 1.25rem;
@@ -277,10 +275,10 @@ table {
     display: block;
 }
 .bKNIoP tbody tr:nth-child(2n-1) td {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .iTDswZ {
@@ -290,7 +288,7 @@ table {
 }
 .bKNIoP .username .name {
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .iTDswZ .name {
     flex: 1 1 0%;
@@ -309,17 +307,15 @@ table {
     border-radius: 0px 1.25rem 1.25rem 0px;
 }
 .bKNIoP tbody tr:nth-child(2n-1) td {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .bKNIoP th {
     font-weight: 500;
-    color: rgba(153, 164, 176, 0.6);
-    padding-bottom: 0.875rem;
+color: var(--text-6);    padding-bottom: 0.875rem;
 }
 .cuPxwd {
     padding: 2.5rem 0px;
-    color: rgba(153, 164, 176, 0.6);
-    line-height: 1;
+color: var(--text-6);    line-height: 1;
     text-align: center;
     height: 100%;
     min-height: 16.25rem;

@@ -183,7 +183,7 @@ $:{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 }
 
@@ -202,7 +202,7 @@ $:{
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;
@@ -212,7 +212,7 @@ $:{
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {
@@ -229,7 +229,7 @@ $:{
     margin-top: 0.5rem;
 }
 .cWluKW .help-list > button {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 1.25rem;
     display: flex;
     -webkit-box-align: center;
@@ -241,8 +241,7 @@ $:{
     padding: 0px 1.25rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cWluKW .help-list > button:hover{
     color: #fff;
 }

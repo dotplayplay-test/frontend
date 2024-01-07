@@ -188,7 +188,7 @@ function formatTime(timestamp) {
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 
 .lmWKWf .game-tabs .tabs-navs .tabs-nav {
@@ -237,7 +237,7 @@ function formatTime(timestamp) {
 }
 
 .lmWKWf .game-tabs .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
 }
@@ -276,7 +276,7 @@ function formatTime(timestamp) {
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 
 .lmWKWf .game-tabs .tabs-navs .tabs-nav {
@@ -284,7 +284,7 @@ function formatTime(timestamp) {
 }
 
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
@@ -309,7 +309,7 @@ function formatTime(timestamp) {
 }
 
 .lmWKWf .game-tabs .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
 }
@@ -381,7 +381,7 @@ function formatTime(timestamp) {
 }
 
 .game-tabs .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
 }
@@ -393,7 +393,7 @@ function formatTime(timestamp) {
 .cFxmZX {
     width: 100%;
     border-radius: 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.5rem 1.5rem 2rem;
     margin-top: 2rem;
 }
@@ -405,7 +405,7 @@ function formatTime(timestamp) {
 }
 .cFxmZX .intro-title > p {
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
     margin: 0px;
     white-space: nowrap;
@@ -419,7 +419,7 @@ function formatTime(timestamp) {
     margin: 0px 1.125rem 0.3125rem 0px;
     padding: 0.5rem 1.25rem;
     border-radius: 1.125rem;
-    background-color: rgb(43, 47, 54);
+    background-color: var(--card-bg-10);
 }
 .cFxmZX .description {
     margin-top: 0.75rem;
@@ -430,7 +430,7 @@ function formatTime(timestamp) {
     height: 2.5rem;
     margin-top: 2rem;
     border-radius: 1.25rem;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
     display: flex;
     -webkit-box-align: center;
     align-items: center;

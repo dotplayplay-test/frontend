@@ -7811,7 +7811,7 @@
 
     .vip-system .vip-system-title {
         padding-left: 1.625rem;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-size: 1rem;
         line-height: 1.375rem;
         height: 3.875rem;
@@ -7846,7 +7846,7 @@
     }
 
     .bHtipE {
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         border-radius: 0.625rem;
         position: relative;
         margin: 0px 0.75rem 0.625rem;
@@ -7876,7 +7876,7 @@
     }
 
     .bHtipE .bar-cont .bar-tit {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         padding-left: 0.625rem;
         white-space: nowrap;
     }
@@ -7985,7 +7985,7 @@
 
     .ezzUcl .xp-progress {
         height: 1.25rem;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
         border-radius: 0.25rem;
         margin-right: 0.3125rem;
         overflow: hidden;
@@ -7993,7 +7993,7 @@
 
     .ezzUcl .xp-pr-nextlv {
         position: relative;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         height: 1rem;
         line-height: 0.875rem;
         transform: scale(0.85);
@@ -8026,7 +8026,7 @@
 
     .vip-system .vip-reward {
         position: relative;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         border-radius: 1.25rem;
         height: 8.75rem;
         display: flex;
@@ -8046,7 +8046,7 @@
     }
 
     .vip-system .vip-reward .vip-reward-list .vip-reward-title {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-size: 1rem;
         margin-bottom: 0.75rem;
         font-weight: bold;
@@ -8088,7 +8088,7 @@
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
 
     .bHtipE .bar-cont .bar-svip img {

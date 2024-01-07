@@ -14,7 +14,7 @@
 .dUhyFv .title {
     font-size: 1rem;
     margin: 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     display: flex;
     -webkit-box-align: center;
@@ -51,7 +51,7 @@
 .hJFGXE .content-area .menuee {
     flex: 1 1 0%;
     padding: 1rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     max-width: 15rem;
     min-width: 10rem;
@@ -62,7 +62,7 @@
 .hJFGXE .content-area .menuee > a.select {
     background-color: rgba(30, 32, 36, 0.4);
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .hJFGXE .content-area .menuee > a {
     display: block;
@@ -75,12 +75,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 .hJFGXE .content-area .right-info {
     flex: 5 1 0%;
     margin-left: 0.25rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     min-height: 47.5rem;
     padding: 1.5rem 1.875rem;
@@ -92,7 +92,7 @@
     padding-left: 0.625rem;
     line-height: 1.25rem;
     font-weight: bold;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
 }
 .gOHquD {
     position: relative;
@@ -114,12 +114,12 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .fSBjam .select .select-trigger {
     border-radius: 1.5rem;
     margin-bottom: 0.75rem;
-    background: rgba(36, 38, 43, 0.5);
+    background: var(--card-bg-8);
 }
 .gOHquD .select-trigger .arrow {
     width: 2.5rem;
@@ -143,7 +143,7 @@
 .fVyucj {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     padding-bottom: 1.5rem !important;
 }
 .fVyucj .item {
@@ -163,7 +163,7 @@
     font-size: 0.875rem;
     margin: 0px 0px 0.5rem;
     font-weight: 600;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .fVyucj .item .cl-primary {
     color: rgb(67, 179, 9);
@@ -171,7 +171,7 @@
 .fkQdDC {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 .fkQdDC .item {
     margin-bottom: 2.75rem;
@@ -180,7 +180,7 @@
     font-size: 0.875rem;
     margin: 0.5rem 0px;
     font-weight: 600;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
 }
 .fkQdDC .item p {
     margin: 0.75rem 0px;
@@ -192,7 +192,7 @@
     margin: 1.25rem auto 4rem;
 }
 .eWZHfu.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(88, 26, 196);
     background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
@@ -250,7 +250,7 @@
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .iUeetX th, .iUeetX td {
     overflow: hidden;

@@ -345,7 +345,7 @@ $:{
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 0.425rem;
@@ -376,8 +376,7 @@ $:{
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
  .dice-animate::before {
     content: "";
@@ -412,8 +411,7 @@ $:{
     display: flex;
     width: 100%;
     height: 100%;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -451,11 +449,10 @@ $:{
 }
 
 .fIoiVG .is-lose {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
 }
 .fIoiVG .is-win {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgb(67, 179, 9);
 }
 .fIoiVG .item-wrap {
@@ -637,11 +634,11 @@ $:{
 .fPOXr .game-slider .slider-wrapper .slider-mark .mark {
     width: 1.875rem;
     text-align: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .jdrurA {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
     position: relative;
     display: flex;
     -webkit-box-pack: justify;
@@ -669,8 +666,7 @@ $:{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .jdrurA .input-control {
     display: flex;
     background-color: rgba(49, 52, 60, 0.5);
@@ -681,8 +677,8 @@ $:{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -704,8 +700,7 @@ $:{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .input-control {
     border-color: transparent;
 }
@@ -748,8 +743,8 @@ $:{
     height: 2.25rem;
     line-height: 2.25rem;
     font-size: 0.75rem;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
     border-radius: 0px;
     padding: 0px;
@@ -768,7 +763,7 @@ $:{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .jdrurA .input {
     flex: 1 1 0%;

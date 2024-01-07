@@ -160,7 +160,7 @@ let games = [
 }
 .dJteWA {
     position: relative;
-    background-image: linear-gradient(to right, rgb(28, 30, 34), rgb(28, 30, 34));
+    background-image: var(--curve-bg-1);
     background-repeat: no-repeat;
     background-size: 70% 100%;
     border-top-left-radius: 1.25rem;
@@ -175,7 +175,7 @@ let games = [
     z-index: 99;
     padding: 12px 2.75rem 0rem 1.25rem;
     font-size: 18px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-style: italic;
     font-weight: 800;
     font-family: FuturaBold;
@@ -192,13 +192,13 @@ let games = [
     left: 69%;
     top: 0px;
     bottom: 0px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAABwCAMAAADR/pnBAAAAn1BMVEUAAAAcHiIdHyIdHiIcHiIfIiVwcHAdHiIcHiIcHiMcHyIlLjgcHiIcHiIcHyIcHyIcHyIdHyMeHiQdHyMeHyQcHyIcHiIcHiIcHiIdHyIdHiIhISYiIickJCskJCQ8PDwcHiIcHiIdHyIdHyMcHiIdHyMcHyQeISQoKCgcHiMcHiIcHiIeHiMeICUfHyQfIiUcHyIcHiIdHiIgJSUcHiJEtYpkAAAANHRSTlMA/o7vuSUC+OqQWgnz38+tnHBTQzrXy8O9k4oeFhENBPyypnt2amNNBtqigUs2MSzj0Zcb0lGzEwAAAgJJREFUeNrN3FlS4lAARuHEhAQTQEaZZ0TUVns4+19bN9KUIGrBC5x/Aae+SiWVm5cEfLNSudK56WWF4DLjiEWdp0vwOHKVRT848zh6YdwMzjpO2XlxnLb4jDcdJy6tJV+ULk6D9hcXTkCjlH1aMtAIF5+VFDToJoclCY1pflCy0Lg5uG4aGlcfSx4adx9KItrkx35JRKM42CuZaNzslVQ06rslF6043Cm5aDzulGS08OW9JKPRfi/ZaDtPgo5WXm1LOhqLbclHi7bvBB+N3/9LQtrkdVMS0og3JSONzelISWuN1yUlbXPgddLeTiBO2ts3jJSWFoJASlufxa00Gl5aJdHSWHppP3MtjScvLe1racy8tPBZS6PtpZF5aeVcS2PupZUGWhpVLy181dKIvTTuvbTWWEuj5qVFQy2Nay8tLWhpTL00Gl5aJdHSWHppxZGWRs9LS/taGjMvjaaXduulkXlp5VxLY+6llQZaGlUvLXzR0uh4adS9tIexlkbNS4uGWhpdL21S0NKYemk0vLRfiZbGnZdWHGlpdL20sKml8ZBrafS8tPBZS6M10tKIx1oaVS+NuZcWZloaaV1LI6xpadDz0pittDTafS2NaKmlQfxHSyPKtDS4vdfS1jgt7R+uvrLSIKo2EikNKHYbIykNCFuPtWaupO38oKN6vd7VZn8B7LFgIf7sh1IAAAAASUVORK5CYII=) 0% 0% / 100% 100% no-repeat;
+    background: var(--curve-bg-img-1) 0% 0% / 100% 100% no-repeat;
 }
 *, *:before, *:after {
     box-sizing: border-box;
 }
 .blJYGp .grid-list {
-    background-color: rgb(28, 30, 34);
+    background-color: var(--card-bg-1);
     padding: 12px 0.75rem 1.4375rem;
     border-top-right-radius: 1.25rem;
     border-bottom-right-radius: 1.25rem;
@@ -237,7 +237,7 @@ let games = [
     width: 100%;
     height: 100%;
     transition: all 0.3s ease 0s;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
 }
 .dbJiKC .img img {
     width: 100%;
@@ -264,7 +264,7 @@ let games = [
 .gVplre .item {
     height: 1.25rem;
     line-height: 1.25rem;
-    color: rgb(152, 167, 181);
+    color: var(--text-7);
     display: block;
     white-space: nowrap;
     overflow: hidden;
@@ -296,7 +296,7 @@ let games = [
     opacity: 0;
 }
 .dbJiKC .hover-mask .house-edge {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: right;
     padding: 0.625rem 0.875rem 0px 0px;
 }

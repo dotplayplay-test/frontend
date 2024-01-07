@@ -341,7 +341,7 @@
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
   .dialog-head.has-close {
     margin-right: 3.75rem;
@@ -387,7 +387,7 @@
   }
   .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
 
   .dialog-body {
@@ -399,7 +399,7 @@
 
   .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
   }
 
@@ -447,7 +447,7 @@
     border-radius: 1.25rem;
     color: rgb(255, 255, 255);
     background-color: rgb(37, 39, 44);
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     font-size: 1.125rem;
     cursor: pointer;
     display: flex;
@@ -478,7 +478,7 @@
     -webkit-box-pack: justify;
     justify-content: space-between;
     background-color: rgb(37, 39, 44);
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     padding: 0.6875rem 1.25rem;
     border-radius: 1.25rem;
     position: relative;
@@ -505,8 +505,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -520,7 +520,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .kyAFkr .input-tickets .pre-input .button-group {
     display: flex;
@@ -537,7 +537,7 @@
 
   .kyAFkr .input-tickets .pre-input .button-group .button:hover,
   .kyAFkr .input-tickets .pre-input .button-group .button.active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
     background-color: rgb(60, 64, 74);
   }
@@ -570,8 +570,8 @@
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
   }
   .cBmlor {
@@ -602,8 +602,8 @@
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
   }
   .fuYEiw {
@@ -668,9 +668,9 @@
     height: 1rem;
     border-radius: 0.5em;
     margin-right: 0.3em;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     box-sizing: border-box;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
   }
   .ikWSlH .radio-item.is-active .circle::after {
     display: block;
@@ -711,7 +711,7 @@
     margin: 1.125rem auto 2.5rem;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -858,7 +858,7 @@
     margin: 1.125rem auto 2.5rem;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -903,7 +903,7 @@
   }
   .kyAFkr .input-tickets .fix-layer > button:hover,
   .kyAFkr .input-tickets .fix-layer > button.active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
     background-color: rgb(60, 64, 74);
   }
@@ -960,7 +960,7 @@
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
   .eOA-dmL .slider-before,
@@ -1013,7 +1013,7 @@
     height: 0.5rem;
     margin-top: -0.25rem;
     border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     transform: scaleX(1) !important;
   }
 

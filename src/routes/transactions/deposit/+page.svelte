@@ -43,7 +43,7 @@
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
     position: relative;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     min-height: 100%;
     overflow: hidden;
 }
@@ -85,7 +85,7 @@
 }
 .hImvnV::after {
     content: "";
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     height: 3.4375rem;
     position: absolute;
     top: 0px;
@@ -94,7 +94,7 @@
 }
 .hImvnV::after {
     content: "";
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     height: 3.4375rem;
     position: absolute;
     top: 0px;

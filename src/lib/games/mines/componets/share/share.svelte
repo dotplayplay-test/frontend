@@ -141,7 +141,7 @@ const handleCloseHelp = (() => {
 .gOCfzr {
     width: 26.25rem;
     height: 28.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 0.625rem 1.25rem;
     position: relative;
@@ -199,7 +199,7 @@ const handleCloseHelp = (() => {
 .gOCfzr {
     width: 26.25rem;
     height: 28.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 0.625rem 1.25rem;
     position: relative;
@@ -232,7 +232,7 @@ const handleCloseHelp = (() => {
     display: -webkit-box;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kGXfTx .titles .word .two {
@@ -242,20 +242,19 @@ const handleCloseHelp = (() => {
     display: -webkit-box;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-    text-transform: capitalize;
+color: var(--text-6);    text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
 }
 .kGXfTx .bet-area {
     display: flex;
     margin-top: 0.625rem;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--sidebar-card-bg);
 }
 /* .guoRFn .left {
     position: absolute;
@@ -283,7 +282,7 @@ const handleCloseHelp = (() => {
 } */
 .kGXfTx .bet-area > p {
     margin: 0px 0px 0px 0.875rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -311,8 +310,7 @@ const handleCloseHelp = (() => {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .kGXfTx .info-area .left .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
@@ -326,7 +324,7 @@ const handleCloseHelp = (() => {
     width: 100%;
     height: 100%;
     background-color: rgb(60, 63, 73);
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-size: 100%;
     font-size: 1.5rem;
     font-weight: bold;
@@ -361,8 +359,7 @@ const handleCloseHelp = (() => {
 .kGXfTx .info-area .right .top > p {
     margin: 0px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .kGXfTx .info-area .right .animation-card-wrap {
     width: 100%;
     height: 3.5rem;
@@ -380,7 +377,7 @@ const handleCloseHelp = (() => {
     width: 100%;
     height: 100%;
     background-color: rgb(60, 63, 73);
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-size: 100%;
     font-size: 1.5rem;
     font-weight: bold;
@@ -409,14 +406,14 @@ const handleCloseHelp = (() => {
     height: 3.5rem;
     padding: 0px 1.25rem;
     border-radius: 1.25rem;
-    border: 1px solid rgba(45, 48, 53, 0.5);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--sidebar-card-bg);
+    background-color: var(--sidebar-card-bg);
 }
 .gOCfzr .input-wrap .share-input {
     width: 100%;
     height: 100%;
     line-height: 3.5rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: transparent;
     border: none;
     padding: 0px;
@@ -459,7 +456,7 @@ const handleCloseHelp = (() => {
     font-size: 0.8125rem;
 }
 .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
 }

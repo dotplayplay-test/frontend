@@ -156,11 +156,11 @@ onMount(()=>{
     -webkit-box-pack: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 
 .kQtbd .recent-list-wrap {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
     border-radius: 1.375rem;
     padding: 0px 0.625rem;
     margin: 0px 0.625rem;
@@ -184,7 +184,7 @@ onMount(()=>{
     justify-content: flex-end;
 }
 .kQtbd .recent-list-wrap {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
     border-radius: 1.375rem;
     padding: 0px 0.625rem;
     margin: 0px 0.625rem;
@@ -247,8 +247,7 @@ onMount(()=>{
 }
 .frfwnj {
     margin-right: 1.5rem;
-    color: rgba(153, 164, 176, 0.6);
-    min-height: 1.875rem;
+color: var(--text-6);    min-height: 1.875rem;
     font-size: 1rem;
 }
 .flex-center {
@@ -284,8 +283,7 @@ onMount(()=>{
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
 .hjPxpf {
     position: relative;

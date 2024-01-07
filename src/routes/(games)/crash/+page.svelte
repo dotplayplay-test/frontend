@@ -168,7 +168,7 @@ const handleTrends = (()=>{
     align-items: center;
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
@@ -183,7 +183,7 @@ const handleTrends = (()=>{
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 
 .kQfmQV .tabs-nav {
@@ -264,8 +264,7 @@ const handleTrends = (()=>{
 }
 .fNKiky {
     margin-right: 1.5rem;
-    color: rgba(153, 164, 176, 0.6);
-    min-height: 1.875rem;
+color: var(--text-6);    min-height: 1.875rem;
     font-size: 1.1rem;
 }
 .kQfmQV .tabs-navs {
@@ -275,7 +274,7 @@ const handleTrends = (()=>{
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 .fghMqx .tabs-nav {
     width: 5.625rem;
@@ -293,7 +292,7 @@ const handleTrends = (()=>{
     z-index: 1;
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kQfmQV .tabs-navs .bg {

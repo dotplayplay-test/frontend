@@ -370,7 +370,7 @@
 		transition-duration: 0.5s;
 		border-radius: 1.25rem;
 		overflow: hidden;
-		background-color: rgb(23, 24, 27);
+		background: var(--affiliate-bg);
 	}
 	.dialog-head {
 		position: relative;
@@ -391,7 +391,7 @@
 		display: flex;
 		-webkit-box-align: center;
 		align-items: center;
-		color: rgb(245, 246, 247);
+		color: var(--text-5);
 	}
 	.fLASqZ {
 		position: absolute;
@@ -408,7 +408,7 @@
 	}
 	.default-style {
 		padding-top: 3.75rem;
-		background-color: rgb(23, 24, 27);
+		background: var(--affiliate-bg);
 	}
 	.dialog-body {
 		position: absolute;
@@ -418,7 +418,7 @@
 	}
 	.default-style > div {
 		border-radius: 20px;
-		background-color: rgb(30, 32, 36);
+		background-color: var(--card-bg-5);
 		padding: 1.25rem 1.25rem 0px;
 	}
 	.dialog-body > div {
@@ -435,7 +435,7 @@
 		margin-top: 0.9375rem;
 	}
 	.YCgQD .pri-tips {
-		border: 1px solid rgb(45, 48, 53);
+		border: 1px solid var(--border-1);
 		background-color: rgb(37, 39, 44);
 		padding: 0.9375rem 1.25rem;
 		border-radius: 1.25rem;
@@ -447,7 +447,7 @@
 	}
 	.dialog-box {
 		color: rgba(153, 164, 176, 0.6);
-		background-color: rgb(30, 32, 36);
+		background-color: var(--card-bg-5);
 		border-top-left-radius: 2.5rem;
 		border-top-right-radius: 2.5rem;
 		padding: 1.75rem 1.125rem;
@@ -509,8 +509,8 @@
 		-webkit-box-align: center;
 		align-items: center;
 		border-radius: 1.25rem;
-		border: 1px solid rgb(45, 48, 53);
-		background-color: rgba(45, 48, 53, 0.5);
+		border: 1px solid var(--border-1);
+		background-color: var(--sidebar-card-bg);
 		height: 3.5rem;
 		padding: 0px 1.25rem;
 		opacity: 1;
@@ -519,7 +519,7 @@
 		opacity: 1;
 	}
 	.gKwlPS .input .input-control input {
-		color: rgb(245, 246, 247);
+		color: var(--text-5);
 	}
 	.kDuLvp .input-control textarea[readonly],
 	.kDuLvp .input-control input[readonly] {
@@ -535,7 +535,7 @@
 		padding: 0px;
 		border: none;
 		background-color: transparent;
-		color: rgb(245, 246, 247);
+		color: var(--text-5);
 	}
 	.gKwlPS .sub-btn {
 		width: 17.75rem;
@@ -543,7 +543,7 @@
 	}
 
 	.fnKcEH.button {
-		color: rgb(245, 246, 247);
+		color: var(--text-5);
 		box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
 		background-color: rgb(67, 179, 9);
 		background-image: conic-gradient(

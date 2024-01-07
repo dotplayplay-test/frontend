@@ -258,7 +258,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 .engBBI .banner .knife {
     font-size: 1.25rem;
     line-height: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .engBBI .banner .knife img {
@@ -322,16 +322,14 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 }
 
 .engBBI th {
-    color: rgba(153, 164, 176, 0.6);
-    border-bottom: 1px solid rgba(49, 52, 60, 0.6);
+color: var(--text-6);    border-bottom: 1px solid var(--border-2);
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
 
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iUeetX th {
     overflow: hidden;
@@ -402,7 +400,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 }
 
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
@@ -453,7 +451,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .iUeetX td {
@@ -468,7 +466,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 }
 
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
@@ -512,7 +510,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .iUeetX td {
@@ -526,7 +524,7 @@ import { handleRedtrendballPlayers, crash_all_users_red_trendballEl,trendball_ha
 }
 
 .engBBI .status-0 {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .erPQzq {

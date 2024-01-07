@@ -255,7 +255,7 @@
     left: 0px;
     top: 0px;
     right: 0px;
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-12);
     transition: all 0.2s linear 0s;
   }
   .gAvMHL .header-wrap {

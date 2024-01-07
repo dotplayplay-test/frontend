@@ -139,7 +139,7 @@ const handleSubmit = (async()=>{
     border-radius: 1.25rem;
     position: relative;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     font-size: 0.8125rem;
     padding: 1.25rem;
     transition: all 0.5s ease;
@@ -160,8 +160,7 @@ const handleSubmit = (async()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .eEagjO .input-after {
     display: flex;
     margin: 0px;
@@ -175,8 +174,8 @@ const handleSubmit = (async()=>{
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -194,7 +193,7 @@ const handleSubmit = (async()=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
 }
 .eEagjO .input-after > .input {

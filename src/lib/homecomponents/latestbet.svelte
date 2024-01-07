@@ -45,7 +45,7 @@
     margin-top: 40px;
 }
 .fufAIq .tabs-navs {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 0.875rem;
     margin-left: 0.625rem;
     margin-bottom: 0.75rem;
@@ -58,10 +58,10 @@
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kQfmQV .tabs-nav {
@@ -98,7 +98,7 @@
 .emIWso {
     min-height: 38.25rem;
     padding: 0.625rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
 }
 table {
@@ -121,7 +121,7 @@ table {
 .emIWso {
     min-height: 38.25rem;
     padding: 0.625rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
 }
 
@@ -138,8 +138,7 @@ table {
 }
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .iUeetX th, .iUeetX td {
     overflow: hidden;
     text-align: center;
@@ -153,7 +152,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .emIWso .game-name .game-icon {
     width: 1.5rem;
@@ -167,7 +166,7 @@ table {
     text-overflow: ellipsis;
 }
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .iTDswZ .name {
@@ -183,7 +182,7 @@ table {
 }
 .emIWso .coin {
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .table .sc-Galmp {
     font-family: Monmono;
