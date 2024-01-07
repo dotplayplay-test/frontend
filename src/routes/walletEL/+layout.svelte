@@ -217,7 +217,7 @@ const handleOpenCoinSelect = (() => {
         transition-duration: 0.5s;
         border-radius: 1.25rem;
         overflow: hidden;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
 
     .dialog-head.has-back {
@@ -248,7 +248,7 @@ const handleOpenCoinSelect = (() => {
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
 
     .sobNK {
@@ -256,8 +256,7 @@ const handleOpenCoinSelect = (() => {
     }
 
     .sobNK span {
-        color: rgba(153, 164, 176, 0.6);
-        font-size: 0.875rem;
+    color: var(--text-6);        font-size: 0.875rem;
     }
 
     .sobNK .icon {
@@ -284,14 +283,14 @@ const handleOpenCoinSelect = (() => {
 
     .default-style {
         padding-top: 3.75rem;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
 
     .fsVpnS {
         display: flex;
         -webkit-box-pack: justify;
         justify-content: space-between;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         border-radius: 1.25rem;
         margin: 0.25rem 0.625rem 0.625rem;
         order: 0;
@@ -301,7 +300,7 @@ const handleOpenCoinSelect = (() => {
 
     .default-style>div {
         border-radius: 20px;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         padding: 1.25rem 1.25rem 0px;
     }
 
@@ -326,8 +325,7 @@ const handleOpenCoinSelect = (() => {
         flex-direction: column;
         box-sizing: border-box;
         position: relative;
-        color: rgba(153, 164, 176, 0.6);
-    }
+    color: var(--text-6);    }
 
     .fsVpnS .tab.active {
         background-color: rgb(67, 179, 9);
@@ -337,7 +335,7 @@ const handleOpenCoinSelect = (() => {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     padding: 1.125rem 0px;
     border-top: 1px solid rgba(128, 141, 152, 0.1);
 }
@@ -365,7 +363,7 @@ const handleOpenCoinSelect = (() => {
         transition-duration: 0.5s;
         border-radius: 1.25rem;
         overflow: hidden;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
 
     .dialog-head.has-close {
@@ -392,7 +390,7 @@ const handleOpenCoinSelect = (() => {
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
 
     .fktpVO {
@@ -400,8 +398,7 @@ const handleOpenCoinSelect = (() => {
     }
 
     .fktpVO span {
-        color: rgba(153, 164, 176, 0.6);
-        font-size: 0.875rem;
+    color: var(--text-6);        font-size: 0.875rem;
     }
 
     .fLASqZ {
@@ -420,7 +417,7 @@ const handleOpenCoinSelect = (() => {
 
     .no-style {
         padding-top: 3.75rem;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
 
     .dialog-body {
@@ -439,8 +436,7 @@ const handleOpenCoinSelect = (() => {
         flex-direction: column;
         box-sizing: border-box;
         position: relative;
-        color: rgba(153, 164, 176, 0.6);
-    }
+    color: var(--text-6);    }
 
     .eDKSkl {
         flex: 1 1 auto;
@@ -458,7 +454,7 @@ const handleOpenCoinSelect = (() => {
 
     .JghUg {
         border-radius: 1.25rem;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         position: relative;
         padding: 0.625rem;
     }
@@ -476,7 +472,7 @@ const handleOpenCoinSelect = (() => {
         display: flex;
         -webkit-box-pack: justify;
         justify-content: space-between;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         border-radius: 1.25rem;
         margin: 0.25rem 0.625rem 0.625rem;
         order: 1;
@@ -521,7 +517,7 @@ const handleOpenCoinSelect = (() => {
     flex: 0 0 auto;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 2.4375rem;
     height: 3.5rem;
 }
@@ -535,7 +531,7 @@ const handleOpenCoinSelect = (() => {
 }
 
 .eWZHfu.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(88, 26, 196);
     background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));

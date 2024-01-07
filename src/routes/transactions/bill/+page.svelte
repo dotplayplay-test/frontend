@@ -107,7 +107,7 @@
     width: 100%;
     padding: 0.625rem;
     border-radius: 1.75rem;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(45, 48, 53, 0.6);
     display: flex;
     -webkit-box-align: center;
@@ -141,7 +141,7 @@
     padding-top: 5px;
 }
 .rTttx.active div {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 800;
     background-color: rgba(85, 89, 102, 0.4);
 }
@@ -153,8 +153,7 @@
     height: 2.25rem;
     cursor: pointer;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .rTttx div:hover {
 color: aliceblue;
 }
@@ -170,7 +169,7 @@ color: aliceblue;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
     position: relative;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     min-height: 100%;
     overflow: hidden;
 }
@@ -189,7 +188,7 @@ color: aliceblue;
 }
 .hImvnV::after {
     content: "";
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     height: 3.4375rem;
     position: absolute;
     top: 0px;

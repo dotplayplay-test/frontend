@@ -12,7 +12,7 @@
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
     padding: 1.25rem;
-    background: rgb(30, 32, 35);
+    background: var(--card-bg-5);
 }
 .kFLjc .cont {
     padding: 0.5rem;
@@ -20,7 +20,7 @@
 .kFLjc .cont .table {
     border-radius: 0.625rem;
     min-height: 18.75rem;
-    background: rgb(25, 27, 30);
+    background: var(--card-bg-6);
 }
 .kFLjc .cont .table .big-prize .matches {
     padding-left: 1.5625rem;

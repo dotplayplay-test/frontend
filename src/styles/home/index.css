@@ -56,7 +56,7 @@
     flex: 2 1 0%;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     display: block;
     position: relative;
     margin: 0px 0.375rem;
@@ -81,7 +81,7 @@
     flex: 1 1 0%;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     display: block;
     position: relative;
     margin: 0px 0.375rem;
@@ -114,7 +114,7 @@
     -webkit-box-align: center;
     align-items: center;
     height: 208px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--card-bg-7);
     border-radius: 1.25rem;
 }
 .GNbnV .list-one, .GNbnV .list-two {
@@ -158,7 +158,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-left: 0.5rem;
-    color: rgb(229, 233, 237);
+    color: var(--text-3);
 }
 
 .dGbYFZ p {
@@ -243,12 +243,12 @@
     overflow: hidden;
 }
 .gPcmgp .image-inner {
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     width: 100%;
     height: 100%;
 }
 .gPcmgp .image-inner {
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     width: 100%;
     height: 100%;
 }
@@ -272,7 +272,7 @@
     height: 1rem;
     line-height: 1rem;
     width: 100%;
-    color: rgb(229, 233, 237);
+    color: var(--text-3);
     font-size: 0.75rem;
     overflow: hidden;
     white-space: nowrap;
@@ -281,8 +281,7 @@
 .gZglJR .right .right-word-wrap p.sp {
     font-weight: normal;
     opacity: 0.6;
-    color: rgb(152, 167, 181);
-}
+color: var(--text-7);}
 .dGbYFZ p {
     margin: 0px;
 }
@@ -302,7 +301,7 @@
     height: 1rem;
     line-height: 1rem;
     width: 100%;
-    color: rgb(229, 233, 237);
+    color: var(--text-3);
     font-size: 0.75rem;
     overflow: hidden;
     white-space: nowrap;

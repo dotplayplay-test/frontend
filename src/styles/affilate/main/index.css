@@ -5,7 +5,7 @@
 
 
 .fnthVB.casino-header {
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-4);
     margin: 0px -1.25rem;
     position: relative;
     padding: 0px 1.25rem;
@@ -205,7 +205,7 @@
 }
 
 .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
@@ -246,7 +246,7 @@
 .kguWsM .section>.title {
     font-size: 24px;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-bottom: 40px;
     text-align: center;
 }
@@ -286,13 +286,13 @@
     flex: 1 1 0%;
     font-size: 14px;
     line-height: 1.43;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     background-repeat: no-repeat;
     background-position: right top;
     background-size: auto 190px;
     border-radius: 1.25rem;
     padding: 114px 30px 40px;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .esTNSq .title {
@@ -313,14 +313,14 @@
 .kguWsM .section>.title {
     font-size: 24px;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-bottom: 40px;
     text-align: center;
 }
 
 .kguWsM>.container>.section .tip {
     font-size: 14px;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     text-align: center;
     width: 914px;
     line-height: 1.43;
@@ -347,7 +347,7 @@
     font-weight: 600;
     height: 68px;
     line-height: 68px;
-    background: url(https://static.nanogames.io/assets/star.321c7b6c.png) 23px center / 30px no-repeat rgb(30, 32, 36);
+    background: url(https://static.nanogames.io/assets/star.321c7b6c.png) 23px center / 30px no-repeat var(--sidebar-bg);
     border-radius: 12px 0px 0px 12px;
     padding: 0px 5px 0px 65px;
     margin: 0px auto 0px -25px;
@@ -360,7 +360,7 @@
 .kguWsM .section>.title {
     font-size: 24px;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-bottom: 40px;
     text-align: center;
 }
@@ -372,7 +372,7 @@
     right: -44px;
     height: 100%;
     width: 50px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAADUCAMAAAB5wzuWAAAAk1BMVEUAAAAeICQgKi0eICQeICQeISUeISUeISUeISUfICUpLi5OTk4eICQfICQfIiUgIiYgIiYeICUfICQeICUeICQfICUhIicfICUeISQfISQfISQjIyktLS0eICQeICQeICQfISQfISUfISUfISUeIiYhIychJCciIismJiaAgIAfICQeICQfICUfICUfISUhISYeICRbUIDiAAAAMHRSTlMA9w/v/fu6opJmBwPbxks+NPPp5uFfJtfSeFkVC87AmYaAc1JCKyMdGgK2sKyeai/GNLYaAAACYElEQVR42uzOS07CUABA0bavpdBaoFBAfsof/OHd/+qMYWZiogPjHfSs4ET8WBaaKp8Piujv8Fvx8ySJbv4/A9SbW0eRgbD97EgyEHpRpMlAvhJluJ+KMoS+KEM6EWVIr6IMzE0ZNqYMj0+iDHkpyvBSiDJ0VqIMVSLKcL8UZbg7izI0U1GG0bsoQxiKMtQHUYZ4L8qQLUQZ0qsoA3NTho0pQ9eUIS9FGV4KUYbOSpShSkQZ1ktRhtlZlKE5iTKMj6IMYSjKUB9EGeK+KEO2EGVIe6IM7EwZtqYMXVOGvBRleC1EGTorUYYqEWVYL0UZZhdRhuYkyjA+ijKEoShDPRBliPuiDNlClCHtiTKwM2XYmjJ0TRneSlGG10KU4bkQZXhIRBnWS1GG2UWU4e4kyjA+ijKMhqIMYSDKEPdFGbK9KEO6EGVI96IM8UCUYXQRZahKUYadKVOfRRlyUyadijK8mTJxIsowMWU6pkxciDIcTJm5KZObMpUp05gywZTJTBnaTJtpM23mizbznTbz0c4d2zAIBEAQNEigf/ECCwQmgpj+G3QD3tS6YLeCaeCOEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKzL/qkjBrEqYlYcYkTEnC1CTMEYTZkhamdxJmCcK0pL32HoQ5nyDMHHQ4cAX9QgzvIEwN+hIpQS8r45SD+fQ5Zzhjn3MTVKaYA6Wh5vxcXTkPYOccc9TW9ifkwm67l4Dbw25tY6nH61dfgXj42O/H5kkAAAAASUVORK5CYII=) right top / auto 69px no-repeat;
+    background: var(--curve-bg-img-2) right top / auto 69px no-repeat;
 }
 
 .jIdaRB {
@@ -382,13 +382,13 @@
 }
 
 .jIdaRB .item {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 16px;
     flex: 1 1 0%;
 }
 
 .jIdaRB .system {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     background-repeat: no-repeat;
     background-position: 95% 5px;
     background-size: auto 200px;
@@ -399,18 +399,18 @@
 }
 
 .jIdaRB .item {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 16px;
     flex: 1 1 0%;
 }
 
 .jIdaRB .rewards .graph {
-    background-image: url(https://static.nanogames.io/assets/graph.line.a4a20112.png);
+    background-image: var(--affiliate-img-1);
 }
 
 .jIdaRB .graph {
     margin: 0px 18px;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
@@ -427,7 +427,7 @@
     line-height: 1.43;
     max-width: 70%;
     margin: 20px 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .jIdaRB .commission .graph {
     background-image: url(https://static.nanogames.io/assets/graph.pit.9f962d2f.png);
@@ -444,14 +444,13 @@
     padding-top: 16px;
 }
 .jIdaRB .footer .text {
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 14px;
+color: var(--text-6);    font-size: 14px;
     margin: 0px 0px 8px;
 }
 .jIdaRB .contact {
     height: 36px;
     border-radius: 18px;
-    background: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     font-size: 14px;
     display: inline-flex;
     -webkit-box-align: center;
@@ -487,14 +486,14 @@
     margin-bottom: 70px;
 }
 .fLdMfS .is-pc {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 20px;
     padding: 24px 20px 32px;
     margin-top: -50px;
 }
 .fLdMfS .title {
     text-align: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 24px;
     line-height: normal;
     margin-bottom: 10px;
@@ -526,8 +525,7 @@
     flex: 0 1 42%;
 }
 .fLdMfS .desc {
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 14px;
+color: var(--text-6);    font-size: 14px;
     text-align: center;
     max-width: 334px;
     white-space: nowrap;
@@ -569,16 +567,16 @@
     flex: 1 1 49%;
 }
 .khcCBN .tbody .tr:nth-child(2n-1) {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 1.25rem;
 }
 .khcCBN .tbody .tr:nth-child(2n-1) {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 1.25rem;
 }
 
 .khcCBN .tbody .tr:nth-child(2n-1) {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 1.25rem;
 }
 .khcCBN .tbody .tr {
@@ -596,7 +594,7 @@
     padding: 0px 46px;
 }
 .khcCBN .th, .khcCBN .td {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
 }
 .khcCBN .fc {
@@ -607,15 +605,13 @@
     justify-content: space-between;
 }
 .khcCBN .th {
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .khcCBN .th, .khcCBN .td {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
 }
 .khcCBN .th {
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .khcCBN .th:last-child, .khcCBN .td:last-child {
     text-align: right;

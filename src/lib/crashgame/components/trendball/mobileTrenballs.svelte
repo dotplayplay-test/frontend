@@ -373,11 +373,10 @@ if($default_Wallet.coin_name === "USDT"){
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gAiddS .bet-payout {
     margin-left: 0.625rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gAiddS .bet-button.type-200::before {
     background-color: rgb(237, 99, 0);
@@ -449,8 +448,8 @@ if($default_Wallet.coin_name === "USDT"){
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {

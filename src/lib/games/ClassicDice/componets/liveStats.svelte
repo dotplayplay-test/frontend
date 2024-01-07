@@ -96,7 +96,7 @@ const handleCloseHelp = (() => {
     min-width: 12.5rem;
     min-height: 12.5rem;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.5rem 0px;
 }
 .JLcsN .dragpop-title {
@@ -105,7 +105,7 @@ const handleCloseHelp = (() => {
     line-height: 3.125rem;
     font-weight: bold;
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: center;
     touch-action: none;
     user-select: none;
@@ -143,12 +143,12 @@ const handleCloseHelp = (() => {
     height: 2.5rem;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     cursor: pointer;
 }
 .eLzuEc .m-item {
     border-radius: 1.25rem;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     margin: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -160,7 +160,7 @@ const handleCloseHelp = (() => {
 }
 .eLzuEc .m-item {
     border-radius: 1.25rem;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     margin: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -178,8 +178,7 @@ const handleCloseHelp = (() => {
     -webkit-box-pack: justify;
     justify-content: space-between;
     box-sizing: content-box;
-    color: rgba(153, 164, 176, 0.6);
-    padding-bottom: 1.25rem;
+color: var(--text-6);    padding-bottom: 1.25rem;
 }
 .eLzuEc .m-item > .title {
     height: 2.5rem;
@@ -187,7 +186,7 @@ const handleCloseHelp = (() => {
     -webkit-box-align: center;
     align-items: center;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gkgVm > .title {
     -webkit-box-pack: justify;
@@ -227,7 +226,7 @@ const handleCloseHelp = (() => {
     margin-right: 0.25em;
 }
 .gkgVm .chart-cont .item-wrap.wagered .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gkgVm .chart-cont .item-wrap .amount {
     font-weight: 600;

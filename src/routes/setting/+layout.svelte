@@ -103,7 +103,7 @@
   .dxlfST .title {
     font-size: 1rem;
     margin: 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     display: flex;
     -webkit-box-align: center;
@@ -148,7 +148,7 @@
   .hJFGXE .content-area .menue {
     flex: 1 1 0%;
     padding: 1rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     max-width: 15rem;
     min-width: 10rem;
@@ -168,17 +168,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
   }
   .hJFGXE .content-area .menue > a.select {
     background-color: rgba(30, 32, 36, 0.4);
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .hJFGXE .content-area .right-info {
     flex: 5 1 0%;
     margin-left: 0.25rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     min-height: 47.5rem;
     padding: 1.5rem 1.875rem;

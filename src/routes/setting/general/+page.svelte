@@ -174,7 +174,7 @@ Option 3: Simplified Chinese -->
     width: 1.75rem;
     height: 1rem;
     border-radius: 0.5rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     position: relative;
     cursor: pointer;
   }
@@ -197,7 +197,7 @@ Option 3: Simplified Chinese -->
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .iyNvkI .local-currency .coin-icon {
     width: 1.5rem;
@@ -220,7 +220,7 @@ Option 3: Simplified Chinese -->
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     height: 2.5rem;
     border-radius: 1.25rem;
     cursor: pointer;
@@ -235,7 +235,7 @@ Option 3: Simplified Chinese -->
   }
   .dprxuS .theme-word > p:first-child {
     font-weight: bold;
-    /* color: rgb(245, 246, 247); */
+    /* color: var(--text-5); */
   }
   .dprxuS .theme-word > p {
     margin: 0px;
@@ -260,7 +260,7 @@ Option 3: Simplified Chinese -->
   }
   .iyNvkI .select .select-trigger {
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgba(37, 39, 46, 0.8);
   }
   .gOHquD .select-trigger {
@@ -274,7 +274,7 @@ Option 3: Simplified Chinese -->
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
   .gOHquD .select-trigger .arrow {
     width: 2.5rem;

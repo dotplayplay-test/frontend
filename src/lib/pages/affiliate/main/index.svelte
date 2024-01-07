@@ -481,7 +481,7 @@ const handleCreateReferral = (async()=>{
     max-width: 1328px;
     margin: 0px auto;
     padding-bottom: 120px;
-    background: rgb(36, 38, 43);
+    background: var(--card-bg-4);
 }
 
 .kguWsM > .container  {
@@ -704,7 +704,7 @@ const handleCreateReferral = (async()=>{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-head.has-close {
     margin-right: 3.75rem;
@@ -728,7 +728,7 @@ const handleCreateReferral = (async()=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fLASqZ {
     position: absolute;
@@ -745,7 +745,7 @@ const handleCreateReferral = (async()=>{
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;

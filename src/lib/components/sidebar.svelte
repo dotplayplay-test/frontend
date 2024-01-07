@@ -35,7 +35,7 @@ import { routes} from "$lib/store/routes"
     left: 0px;
     width: 240px;
     top: 0px;
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-4);
     bottom: 0px;
 }
 .hNtLjc {

@@ -592,13 +592,13 @@ function formatTime(timestamp) {
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
 }
 
 .cVsgdS .emoji-box-wrap {
     width: 280px;
     height: 200px;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 12px 0px;
     padding: 10px 10px 40px;
     border-radius: 10px;
@@ -710,8 +710,7 @@ function formatTime(timestamp) {
     display: -webkit-box;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-    text-transform: capitalize;
+color: var(--text-6);    text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
 }
@@ -727,8 +726,7 @@ function formatTime(timestamp) {
 
 .VfNib .content .title .name a {
     line-height: 1.125rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-weight: 600;
+color: var(--text-6);    font-weight: 600;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -788,8 +786,7 @@ function formatTime(timestamp) {
 .ljeDJu .info-area .right .top>p {
     margin: 0px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .dWrldy .mid-area .bet-area {
     margin-top: 0.625rem;
@@ -808,7 +805,7 @@ function formatTime(timestamp) {
 
 .ljeDJu .bet-area>p {
     margin: 0px 0px 0px 0.875rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -846,8 +843,7 @@ function formatTime(timestamp) {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .ljeDJu .info-area .left>p {
     margin: 0px 0px 0px 1rem;
@@ -856,8 +852,7 @@ function formatTime(timestamp) {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .dWrldy .mid-area .info-area img {
     animation: auto ease 0s 1 normal none running none;
@@ -882,8 +877,7 @@ function formatTime(timestamp) {
     height: 100%;
     margin-left: 0.75rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .dWrldy .mid-area .info-area>.left .animation-card-wrap .animation-card {
     font-size: 1.125rem;
@@ -903,7 +897,7 @@ function formatTime(timestamp) {
     width: 100%;
     height: 100%;
     background-color: rgb(60, 63, 73);
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-size: 100%;
     font-size: 1.5rem;
     font-weight: bold;
@@ -972,8 +966,7 @@ function formatTime(timestamp) {
     height: 100%;
     margin-left: 0.75rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .bkGvjR {
     user-select: text;
@@ -1080,7 +1073,7 @@ function formatTime(timestamp) {
 
 .ljeDJu .bet-area>p {
     margin: 0px 0px 0px 0.875rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1100,12 +1093,12 @@ function formatTime(timestamp) {
 .ljeDJu .bet-area {
     display: flex;
     margin-top: 0.625rem;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--sidebar-card-bg);
 }
 
 /* ======================= mobile =================================== */
@@ -1130,7 +1123,7 @@ function formatTime(timestamp) {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-head {
@@ -1158,7 +1151,7 @@ function formatTime(timestamp) {
     -webkit-box-align: center;
     align-items: center;
     padding: 0px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 
 .dWgZek .select-wrap {
@@ -1187,11 +1180,11 @@ function formatTime(timestamp) {
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dWgZek .select-wrap .select .select-trigger {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background: transparent;
     border-radius: 0px;
     padding: 0px;
@@ -1231,13 +1224,13 @@ function formatTime(timestamp) {
     bottom: -0.75rem;
     height: 0.75rem;
     width: 100%;
-    background-image: linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
+    background-image: var(--bxs-1);
     opacity: 0.25;
 }
 
 .no-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -1274,8 +1267,8 @@ function formatTime(timestamp) {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -1289,7 +1282,7 @@ function formatTime(timestamp) {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 textarea {
@@ -1337,7 +1330,7 @@ textarea {
 .ddROGz .send-input .input-area .input-control {
     height: auto;
     padding: 0px 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     align-items: flex-end;
     border: 1px solid rgba(49, 52, 58, 0.8);
     border-radius: 1.375rem;
@@ -1378,8 +1371,7 @@ textarea {
 
 .VfNib .content .title .name a {
     line-height: 1.125rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-weight: 600;
+color: var(--text-6);    font-weight: 600;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -1416,8 +1408,7 @@ textarea {
 .VfNib .content .title .name .time {
     align-self: flex-end;
     margin-left: 0.5rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 0.75rem;
+color: var(--text-6);    font-size: 0.75rem;
 }
 
 .VfNib .head .head-link {
