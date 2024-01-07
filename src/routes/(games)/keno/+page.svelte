@@ -24,6 +24,8 @@
   const Gem = new URL("/static/gem.png", import.meta.url).href;
   const WinGem = new URL("/static/match.png", import.meta.url).href;
   let multipliers = [];
+  let uniqueRandomNumbers = [];
+  let bckendGeneratedNumbers = [];
   let multipliersObject = {
     0: [],
     1: ["0.00×", "3.96×"],
@@ -79,6 +81,23 @@
       "100.00×",
     ],
   };
+  let winningMultiplierIndex = null;
+  let wins = [];
+
+  function saveButton(index) {
+    toggleSelectState(index);
+
+    // add or remove item from array of unique numbers
+    if (uniqueRandomNumbers.includes(index + 1)) {
+      const numberIndex = uniqueRandomNumbers.findIndex(
+        (item) => item === index + 1
+      );
+
+      uniqueRandomNumbers.splice(numberIndex, 1);
+    } else {
+      uniqueRandomNumbers.push(index + 1);
+    }
+  }
 
   function toggleSelectState(index) {
     buttonStates[index] = !buttonStates[index];
@@ -87,16 +106,27 @@
     );
   }
 
-  function resetButtons() {
+  function resetGame() {
+    // reset buttons
     buttonStates = Array(40).fill(false);
+
+    // reset random numbers
+    uniqueRandomNumbers = [];
+
+    // clear winning index
+    winningMultiplierIndex = null;
+
+    multipliers = displayMultiplier(0);
+    bckendGeneratedNumbers = [];
+    wins = [];
   }
 
-  function setButtonState() {
+  function getRandomNumbers() {
     // Clear previously selected buttons
-    resetButtons();
+    resetGame();
 
     // Generate 10 random numbers from 0 - 40 and select the button states
-    const uniqueRandomNumbers = generateUniqueRandomNumbers(10, 1, 40); 
+    uniqueRandomNumbers = generateUniqueRandomNumbers(10, 1, 40);
 
     // Set toggleState to true
     uniqueRandomNumbers.forEach((number) => {
@@ -129,12 +159,35 @@
   }
 
   function startBet() {
-    console.warn("yet to implement");
+    // replace next line with random numbers from backend
+    bckendGeneratedNumbers = generateUniqueRandomNumbers(10, 1, 40);
+
+    winningMultiplierIndex = checkForMatch(
+      uniqueRandomNumbers,
+      bckendGeneratedNumbers
+    );
+
+    wins.push(
+      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex]
+    );
+
+    wins = wins;
   }
 
+  function checkForMatch(player, pc) {
+    let matchCount = 0;
+
+    player.forEach((number) => {
+      if (pc.includes(number)) matchCount++;
+    });
+
+    return matchCount;
+  }
+
+  function highlightPCNumbers() {}
+
   function clearGameTable() {
-    resetButtons();
-    multipliers = displayMultiplier(0);
+    resetGame();
   }
 </script>
 
@@ -159,7 +212,7 @@
               <button
                 on:click={() => startBet()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled={!multipliers.length}
+                disabled={multipliers && !multipliers.length}
                 ><div class="button-inner">
                   <img
                     src="https://static.nanogames.io/assets/keno_loading.d3c77d1e.png"
@@ -257,7 +310,7 @@
                 </div>
                 <div class="sc-fSDTwv lgcQbT btn-wrap">
                   <button
-                    on:click={() => setButtonState()}
+                    on:click={() => getRandomNumbers()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Auto Pick</div></button
                   ><button
@@ -396,11 +449,11 @@
               </div>
               <div class="sc-jwQYvw jcGUIr btn-wrap">
                 <button
-                  on:click={() => setButtonState()}
+                  on:click={() => getRandomNumbers()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Auto Pick</div></button
                 ><button
-                  on:click={() => resetButtons()}
+                  on:click={() => clearGameTable()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Clear Table</div></button
                 >
@@ -410,21 +463,20 @@
       </div>
       <div class="game-view">
         <div class="sc-leSONj jOOXMd game-recent">
-          <div class="sc-hoHwyw hSKlkh jackpot-enter">
-            <div class="title">
-              <span class="tit">Bankroll</span><span>CUB</span>
-            </div>
-            <div class="sc-Galmp erPQzq coin notranslate">
-              <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
-              <div class="amount">
-                <span class="amount-str">1234538.98</span>
-              </div>
-            </div>
-          </div>
           <div class="recent-list-wrap">
-            <div class="empty-item">
-              <p>Game results will be displayed here.</p>
-            </div>
+            {#if wins.length > 0}
+              <div class="wins">
+                {#each wins as win, index (index)}
+                  <div class="win" class:plus={win && !win.includes("0.00")}>
+                    {win}
+                  </div>
+                {/each}
+              </div>
+            {:else}
+              <div class="empty-item">
+                <p>Game results will be displayed here.</p>
+              </div>
+            {/if}
           </div>
         </div>
         <div class="no-web sc-bQFuvY bFXMsx">
@@ -508,14 +560,21 @@
                   <!-- Generate button list and handle toggle state -->
                   {#each buttonStates as isSelected, index (index)}
                     <button
-                      on:click={() => toggleSelectState(index)}
+                      on:click={() => saveButton(index)}
                       disabled={multipliers.length === 11 && !isSelected}
                       class="keno_styles_item"
                       ><div
                         class="keno-ritem initial"
                         class:select={isSelected}
+                        class:match={isSelected &&
+                          bckendGeneratedNumbers.includes(index + 1)}
                       >
-                        <span class="keno-num">{index + 1}</span>
+                        <span
+                          class="keno-num"
+                          class:mismatch={bckendGeneratedNumbers.includes(
+                            index + 1
+                          )}>{index + 1}</span
+                        >
                       </div></button
                     >
                   {/each}
@@ -527,19 +586,30 @@
                   <div class="game_payout">
                     {#if multipliers}
                       {#each multipliers as multiplier, index (index)}
-                        <span class="payout_item">{multiplier}</span>
+                        <span
+                          class="payout_item"
+                          class:match={winningMultiplierIndex !== null &&
+                            index === winningMultiplierIndex}>{multiplier}</span
+                        >
                       {/each}
                     {/if}
                   </div>
                   {#if multipliers && multipliers.length}
                     <div class="game_selected_items">
                       {#each multipliers as multiplier, index (index)}
-                        <div class="game_selected_num">
+                        <div
+                          class="game_selected_num"
+                          class:match={winningMultiplierIndex !== null &&
+                            index === winningMultiplierIndex}
+                        >
                           <div class="game_selected_box">
                             <span class="gem_box"
                               >{index}×<img
                                 class="gem"
-                                src={Gem}
+                                src={winningMultiplierIndex !== null &&
+                                index === winningMultiplierIndex
+                                  ? WinGem
+                                  : Gem}
                                 alt="icon"
                               /></span
                             >
@@ -3157,9 +3227,9 @@
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
   }
-  .jOOXMd .jackpot-enter {
+  /* .jOOXMd .jackpot-enter {
     margin-left: 1.5rem;
-  }
+  } */
   .hSKlkh {
     width: 10.125rem;
     height: 100%;
@@ -3219,11 +3289,12 @@
     flex: 1 1 auto;
     height: 100%;
     margin: 0px 1.5rem;
-    overflow: hidden;
+    overflow: auto; /* enable scroll on multiple wins display */
     position: relative;
     border-radius: 1.375rem;
   }
-  .jOOXMd .empty-item {
+  .jOOXMd .empty-item,
+  .win {
     display: flex;
     width: 100%;
     height: 100%;
@@ -3242,6 +3313,18 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .wins {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .win.plus {
+    background-color: rgb(38, 236, 41);
+    color: #1a041fe6;
   }
 
   p {
@@ -3284,6 +3367,7 @@
   .cKpuTs .keno_styles_item:disabled .keno-ritem {
     background-color: rgb(36, 38, 43);
     box-shadow: rgb(30, 32, 36) 0px 4px;
+    cursor: default;
   }
   .cKpuTs .keno_styles_item .keno-ritem {
     background-color: rgb(49, 52, 60);
@@ -3312,6 +3396,16 @@
     opacity: 1;
     background-color: rgb(101, 12, 255);
     box-shadow: rgb(69, 23, 179) 0px 4px;
+  }
+
+  .cKpuTs .keno_styles_item .keno-ritem.select.match {
+    /* opacity: 1; */
+    background-color: rgb(38, 236, 41);
+    box-shadow: rgb(20, 152, 36) 0px 4px;
+  }
+
+  .cKpuTs .keno_styles_item .keno-ritem.select.match .keno-num {
+    color: #1a041fe6;
   }
 
   .cKpuTs .game_payout .payout_item {
@@ -3345,6 +3439,12 @@
     text-align: center;
   }
 
+  .game_selected_num.match,
+  .cKpuTs .game_payout .payout_item.match {
+    background-color: rgb(91, 44, 215);
+    border-radius: 3px;
+  }
+
   .game_selected_box {
     font-size: 14px;
   }
@@ -3366,6 +3466,10 @@
     transform: translate(-50%, -50%);
     font-size: 16px;
     color: rgb(153, 164, 176);
+  }
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem .keno-num.mismatch {
+    color: red;
   }
 
   .cKpuTs .keno_styles_item::after {
