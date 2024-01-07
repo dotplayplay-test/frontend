@@ -116,11 +116,12 @@
     return darkColor;
   }
 
-  function pageHistory(_page, game) {
-    const n = game.history.length;
-    const i = Math.min(n, 20 * _page);
-    const a = i - 20;
-    return game.history.reverse().slice(n - i, n - a);
+  function pageHistory(_page, history) {
+    const size = history.length;
+    const offset = Math.min(size, 20 * (_page -1));
+    const end = offset + 20;
+    console.log("Offset = %d, end = %d", offset, end)
+    return history.reverse().slice(offset, end);
   }
 
   const { autorun } = connect();
@@ -166,7 +167,8 @@
     if (game) {
       autorun(() => {
         history = game.history;
-        pageHistoryList = pageHistory(currentPage, game);
+        pageHistoryList = pageHistory(currentPage, history);
+        // console.log("Page History List > ", currentPage, pageHistoryList)
 
         handleAnaylize();
         updateChart();

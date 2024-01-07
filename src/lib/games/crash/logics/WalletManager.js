@@ -62,6 +62,7 @@ class Currency {
   }
   addDeduction(e) {
     this.deducting = this.deducting.add(e);
+    console.log("Adding deduction > ", this.deducting, this.available, this.amount)
     if (this.currencyName === "USDT") {
       usdt_Wallet.update((wallet) => ({
         ...wallet,
@@ -342,7 +343,7 @@ export default class WalletManager extends EventEmitter {
             newBalance.amount = parseFloat(newBalance.amount);
 
             this.addCurrency({
-              ...{ usdPrice: 1, precision: 8 },
+              ...{ usdPrice: 1, precision: 8, unitAmount: 1 },
               ...newBalance,
             });
           }

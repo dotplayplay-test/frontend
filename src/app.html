@@ -99,7 +99,18 @@
       body {
         padding: 0;
         margin: 0;
-        background-color: #24262b;
+        overflow-anchor: none;
+        margin: 0;
+        width: 100%;
+        overflow-x: hidden;
+        font-size: .875rem;
+        line-height: 1.6;
+        background-color: var(--background-color);
+        overscroll-behavior: contain;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        scrollbar-width: thin;
+        scrollbar-color: #20313d transparent;
       }
 
       body,

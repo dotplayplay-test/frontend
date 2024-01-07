@@ -396,7 +396,7 @@ export default class CrashXBetHandler extends GameEventHandler {
     );
 
     return {
-      bet: new Decimal(amount),
+      bet: new Decimal(bet),
       usd,
       userId,
       avatar,
