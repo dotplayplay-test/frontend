@@ -21,7 +21,11 @@
   $: nextXBetInfo = {};
   $: canEscape = false;
   $: canBet = false;
-  $: canXbet = {};
+  $: canXbet = {
+    [-200]: true,
+    [200]: true,
+    [1000]: true
+  };
   $: currentGamePayout = 0;
   $: scriptRunning = false;
   $: percentChance = 0.99;
@@ -38,6 +42,10 @@
   $: autoBet = null;
   $: autoBetType = -1;
 
+
+  $: placingBet = false;
+  $: placingXBet = false;
+
   $: autoBetInfo = {
     numberOfBets: 0,
     increaseOnWin: false,
@@ -50,6 +58,7 @@
 
   let xBet = null;
   $: coinImage = "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
+  $: coinName = "PPF";
 
   $: {
     const game = $crashGame;
@@ -78,6 +87,7 @@
           (betInfo = game.betInfo);
         betRate = game.rate;
         coinImage = WalletManager.getInstance().current.currencyImage;
+        coinName = WalletManager.getInstance().current.currencyName;
         nextBetInfo = game.nextBetInfo;
         canEscape = game.canEscape;
         canBet = game.canBet;
@@ -171,9 +181,11 @@
 
   const handleBetCrash = () => {
     if (canBet) {
+      if (placingBet) return;
+      placingBet = true;
       $crashGame.handleBetCrash().catch((err) => {
         console.log("Bett error", err);
-      });
+      }).finally(() => placingBet = false);
     }
   };
 
@@ -193,10 +205,14 @@
     return (e) => {
       if (xBet) {
         if (canXbet[type]) {
+          if(placingXBet) return;
+          placingXBet = true;
           xBet.handleBetByType(type).catch((err) => {
             console.log("Trend Bet Error", err);
-          });
+          }).finally(() => placingXBet = false);
         }
+      } else {
+        console.log("Xbet Not initialized")
       }
     };
   };
@@ -701,7 +717,7 @@
               <div class="label-amount">
                 {WalletManager.getInstance().amountToLocale(
                   autoBetInfo.stopOnWin,
-                  $default_Wallet.coin_name
+                  coinName
                 )} USD
               </div>
             </div>
@@ -727,7 +743,10 @@
           <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
             <div class="input-label">
               Stop on lose
-              <div class="label-amount">0 USD</div>
+              <div class="label-amount">{WalletManager.getInstance().amountToLocale(
+                autoBetInfo.stopOnLose,
+                coinName
+              )} USD</div>
             </div>
             <div class="input-control">
               <input

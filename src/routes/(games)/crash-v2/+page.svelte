@@ -8,7 +8,7 @@
   import GameHeader from "$lib/games/crash/GameHeader.svelte";
   import LiveBets from "$lib/games/crash/LiveBets.svelte";
   import { crashGame } from "$lib/games/crash/store";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import CrashGame from "$lib/games/crash/logics/CrashGame";
 
   $: currentTab = 1;
@@ -25,6 +25,10 @@
       }
     }
   });
+  onDestroy(() => {
+    $crashGame?.deactivate();
+    crashGame.set(null);
+  })
 </script>
 
 <div id="game-crash" class="sc-haTkiu lmWKWf game-style1 sc-cBIieI ikZPEu">
