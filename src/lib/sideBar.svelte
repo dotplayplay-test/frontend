@@ -11,9 +11,25 @@
   import { theme } from "../lib/store/_theme";
   import "../styles/sidebar/sidebar.css";
   import "../styles/sidebar/sidebarmobile.css";
+  import { onMount } from "svelte";
   export let styls;
   let showOriginals = false;
 
+  function googleTranslateElementInit() {
+    console.log("sidebar")
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: "true",
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+      },
+      "google_translate_element"
+    );
+  }
+
+  onMount(() => {
+    googleTranslateElementInit();
+  });
   const openOriginal = (e) => {
     if (e) {
       showOriginals = true;
@@ -236,7 +252,7 @@
       <span>Language Options</span>
       <div class="sc-jJoQJp gOHquD select sc-dtDOqo lfiNFq">
         <div class="select-trigger">
-          English
+          <div id="google_translate_element"></div>
           <div class="arrow top">
             <Icon
               src={RiSystemArrowRightSLine}
@@ -249,11 +265,10 @@
         </div>
       </div>
       <div class="sc-gSQFLo dprxuS theme">
-        
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div on:click={() => toggleTheme()} class="theme-check">
-          <button class={`item ${$theme==="dark" ? "is-active" : ""} `}>
+          <button class={`item ${$theme === "dark" ? "is-active" : ""} `}>
             <Icon
               src={IoMoon}
               size="18"
@@ -262,7 +277,7 @@
               title="moon"
             />
           </button>
-          <button class={`item ${$theme==="light" ? "is-active" : ""} `}>
+          <button class={`item ${$theme === "light" ? "is-active" : ""} `}>
             <Icon
               src={HiSolidLightBulb}
               size="18"
