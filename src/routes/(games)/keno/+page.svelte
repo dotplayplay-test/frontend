@@ -826,7 +826,10 @@
       <div class="tabs-view" style="transform: none;">
         <div class="sc-eZhRLC iycaRo">
           <div class="sc-eCImPb cuPxwd empty">
-            <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" />
+            <img
+              src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+              alt=""
+            />
             <div class="msg">Oops! There is no data yet!</div>
           </div>
         </div>
@@ -1205,6 +1208,7 @@
                   <div class="trophy">
                     <img
                       src="https://static.nanogames.io/assets/trophy.424f8523.png"
+                      alt=""
                     />
                   </div>
                   <div>
@@ -1214,6 +1218,7 @@
                       <img
                         class="currency-icon"
                         src="/coin/NND.black.png"
+                        alt=""
                       /><span>508.24</span><span class="currency-name">
                         NND</span
                       >
@@ -1243,10 +1248,12 @@
                       ><img
                         class="avatar"
                         src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                        alt=""
                       /><svg
                         viewBox="0 0 32 32"
                         xmlns="http://www.w3.org/2000/svg"
                         class="avatar-icon"
+                        alt=""
                         ><path
                           fill="#ffd308"
                           d="M27.924 14.807l-4.892 11.74h-14.063l-4.892-11.74c-1.198-0.105-2.14-1.099-2.14-2.324 0-1.294 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 0.498-0.157 0.957-0.421 1.336 0.827 1.307 2.274 2.18 3.937 2.18 2.182 0 3.999-1.497 4.522-3.516l0.035-0.197 0.131-2.472c-0.698-0.406-1.172-1.153-1.172-2.019 0-1.295 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 0.866-0.474 1.613-1.172 2.019l0.082 2.434 0.084 0.235c0.523 2.018 2.341 3.516 4.522 3.516 1.663 0 3.109-0.873 3.937-2.18-0.264-0.379-0.421-0.839-0.421-1.336 0-1.294 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 1.225-0.942 2.218-2.14 2.324z"
@@ -1284,7 +1291,11 @@
                         <div
                           class="sc-Galmp erPQzq coin notranslate prize-coin"
                         >
-                          <img class="coin-icon" src="/coin/NND.black.png" />
+                          <img
+                            class="coin-icon"
+                            src="/coin/NND.black.png"
+                            alt=""
+                          />
                           <div class="amount">
                             <span class="amount-str">370.484841</span>
                           </div>
@@ -1326,6 +1337,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/gold.92faf9c1.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1335,6 +1347,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/413359/s"
+                          alt=""
                         />
                         <div class="name">spartman</div></a
                       >
@@ -1353,7 +1366,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">254.090423</span>
                         </div>
@@ -1366,6 +1383,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1375,6 +1393,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1401,7 +1420,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">127.045211</span>
                         </div>
@@ -1414,6 +1437,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/copper.39898678.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1423,6 +1447,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/382469/s"
+                          alt=""
                         />
                         <div class="name">Msn</div></a
                       >
@@ -1443,7 +1468,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">60.9817016</span>
                         </div>
@@ -1460,6 +1489,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/539289/s"
+                          alt=""
                         />
                         <div class="name">Psjozayoyb</div></a
                       >
@@ -1478,7 +1508,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">30.4908508</span>
                         </div>
@@ -1495,6 +1529,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1521,7 +1556,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">15.2454254</span>
                         </div>
@@ -1538,6 +1577,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/544926/s"
+                          alt=""
                         />
                         <div class="name">flowertim</div></a
                       >
@@ -1556,7 +1596,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >7.6227127<span class="suffix">0</span></span
@@ -1575,6 +1619,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1601,7 +1646,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">4.57362762</span>
                         </div>
@@ -1618,6 +1667,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/319359/s"
+                          alt=""
                         />
                         <div class="name">RuffRollr777</div></a
                       >
@@ -1636,7 +1686,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">3.55726593</span>
                         </div>
@@ -1653,6 +1707,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1679,7 +1734,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.54090423</span>
                         </div>
@@ -1696,6 +1755,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1722,7 +1782,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.03272338</span>
                         </div>
@@ -1759,6 +1823,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/gold.92faf9c1.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1768,6 +1833,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1796,7 +1862,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">370.484841</span>
                         </div>
@@ -1809,6 +1879,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1818,6 +1889,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1846,7 +1918,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >185.24242<span class="suffix">0</span></span
@@ -1861,6 +1937,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/copper.39898678.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1870,6 +1947,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1896,7 +1974,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >88.916362<span class="suffix">0</span></span
@@ -1915,6 +1997,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/2461/s"
+                          alt=""
                         />
                         <div class="name">mpletcher</div></a
                       >
@@ -1933,7 +2016,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >44.458181<span class="suffix">0</span></span
@@ -1952,6 +2039,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1978,7 +2066,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">22.2290905</span>
                         </div>
@@ -1995,6 +2087,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/319359/s"
+                          alt=""
                         />
                         <div class="name">RuffRollr777</div></a
                       >
@@ -2013,7 +2106,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">11.1145452</span>
                         </div>
@@ -2030,6 +2127,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/1446/s"
+                          alt=""
                         />
                         <div class="name">👃bloodman123👃</div></a
                       >
@@ -2048,7 +2146,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">6.66872715</span>
                         </div>
@@ -2065,6 +2167,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -2091,7 +2194,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">5.18678778</span>
                         </div>
@@ -2108,6 +2215,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/520259/s"
+                          alt=""
                         />
                         <div class="name">CHARMED</div></a
                       >
@@ -2126,7 +2234,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">3.70484841</span>
                         </div>
@@ -2143,6 +2255,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -2169,7 +2282,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.96387873</span>
                         </div>
@@ -3297,6 +3414,7 @@
   .win {
     display: flex;
     width: 100%;
+    min-width: 80px;
     height: 100%;
     color: rgba(153, 164, 176, 0.6);
     background-color: rgba(122, 128, 140, 0.15);
