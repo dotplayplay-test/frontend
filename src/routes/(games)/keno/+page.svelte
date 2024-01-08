@@ -158,20 +158,40 @@
     return multipliersObject[count];
   }
 
-  function startBet() {
-    // replace next line with random numbers from backend
-    bckendGeneratedNumbers = generateUniqueRandomNumbers(10, 1, 40);
+  async function startBet() {
+    // get random numbers from backend
+    bckendGeneratedNumbers = await pcPlay();
 
+    // get match numbers
     winningMultiplierIndex = checkForMatch(
       uniqueRandomNumbers,
       bckendGeneratedNumbers
     );
 
+    // get winning multiplier
     wins.push(
       multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex]
     );
 
     wins = wins;
+  }
+
+  async function pcPlay() {
+    const token = localStorage.getItem("user").replaceAll('"', "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const res = await fetch("http://localhost:8000/api/user/keno-game/bet", {
+      method: "POST",
+      body: null,
+      headers: config.headers,
+    });
+
+    const json = await res.json();
+    return json.nums;
   }
 
   function checkForMatch(player, pc) {
@@ -831,6 +851,17 @@
               alt=""
             />
             <div class="msg">Oops! There is no data yet!</div>
+            <table>
+              <thead>
+                <tr>Bet ID</tr>
+                <tr>Player</tr>
+                <tr>Time</tr>
+                <tr>Bet</tr>
+                <tr>Payout</tr>
+                <tr>Profit</tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
           </div>
         </div>
       </div>
