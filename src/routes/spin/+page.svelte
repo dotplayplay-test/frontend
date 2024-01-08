@@ -3,7 +3,9 @@
     import { goto } from "$app/navigation";
     import { handleAuthToken } from "$lib/store/routes";
     import { Howl } from "howler";
+    // import { Application, Text } from "svelte-pixi";
     import * as PIXI from "pixi.js";
+    import { spring } from "svelte/motion";
 
     // Define your sprite frames and metadata
     const spriteFrames = {
@@ -610,7 +612,6 @@
     const loadAssets = async () => {
         PIXI.Assets.load(["/sprites@2x.6522026d.json"]).then(() => {
             createSpinnerContainer();
-            addWheelBoard();
             addMarker();
             addSpinButton();
             addBlinkingLight();
@@ -695,53 +696,86 @@
     const createSpinnerContainer = () => {
         spinContainer = new PIXI.Container();
         const ring = PIXI.Sprite.from("ring.png");
-        spinContainer.width = ring.width * 2;
-        spinContainer.position.x = app.screen.width / 2 - ring.width;
-        spinContainer.position.y = 50;
+
+        addWheelBoard();
+        // spinContainer.width = ring.width * 2;
+
+        // spinContainer.position.x = app.screen.width / 2 - ring.width;
+        // spinContainer.position.y = 50;
+
+        // spinContainer.pivot.set(
+        //     spinContainer.position.x + spinContainer.width / 2,
+        //     spinContainer.position.y + spinContainer.height / 2,
+        // );
+
+        // spinContainer.width = ring.width * 2;
+
+        spinContainer.position.x = app.screen.width / 2;
+        // spinContainer.position.y = ring.height / 2;
+        // spinContainer.position.x = app.screen.width / 2 - ring.width;
+        spinContainer.position.y = app.screen.height / 2;
+        // spinContainer.position.y = ring.height / 2;
+
+        // spinContainer.rotation = Math.PI / 4;
 
         console.log({
-            x: spinContainer.position.x,
-            y: spinContainer.position.y,
+            w: spinContainer.width,
+            h: spinContainer.height,
+            r: ring.width,
         });
 
-        spinContainer.pivot.set(
-            122 + spinContainer.position.x + spinContainer.width / 2,
-            122 + spinContainer.position.y + spinContainer.height / 2,
-        );
+        spinContainer.pivot.set(spinContainer.width / 4, app.screen.height / 8);
+        // spinContainer.pivot.set(300, 50);
 
         app.stage.addChild(spinContainer);
 
-        let rotationCount = 0;
-        const targetRotations = 3; // hardcoded for the mean time
-        const rotationSpeed = 0.05;
+        // const texture = PIXI.Texture.from(
+        //     "https://pixijs.com/assets/bunny.png",
+        // );
 
-        app.ticker.add(function () {
-            if (spinContainer.rotation >= Math.PI * 2 * targetRotations) {
-                rotationCount++;
-            }
+        // // Create a 5x5 grid of bunnies
+        // for (let i = 0; i < 25; i++) {
+        //     const bunny = new PIXI.Sprite(texture);
 
-            if (rotationCount >= targetRotations) {
-                app.ticker.stop();
-                console.log("stopping...");
-                return;
-            }
+        //     bunny.anchor.set(0.5);
+        //     bunny.x = (i % 5) * 40;
+        //     bunny.y = Math.floor(i / 5) * 40;
+        //     spinContainer.addChild(bunny);
+        // }
 
-            spinContainer.rotation += rotationSpeed;
-        });
+        // // Move container to the center
+        // spinContainer.x = app.screen.width / 2;
+        // spinContainer.y = app.screen.height / 2;
+
+        // // Center bunny sprite in local spinContainer coordinates
+        // spinContainer.pivot.x = spinContainer.width / 2;
+        // spinContainer.pivot.y = spinContainer.height / 2;
+
+        // // Listen for animate update
+        // app.ticker.add((delta) => {
+        //     // rotate the spinContainer!
+        //     // use delta to create frame-independent transform
+        //     spinContainer.rotation -= 0.01 * delta;
+        // });
     };
 
     const addWheelBoard = () => {
         const ring = PIXI.Sprite.from("ring.png");
+        // ring.scale.x *= -1;
+        // ring.position.set(-ring.width, 0);
+        ring.anchor.set(0.5);
         spinContainer.addChild(ring);
 
         const ring2 = PIXI.Sprite.from("ring.png");
         ring2.scale.x *= -1;
-        ring2.position.set(spinContainer._width, 0);
+        ring2.anchor.set(0.5);
+        ring2.position.set(ring2.width, 0);
 
         spinContainer.addChild(ring2);
     };
 
     const addSpinButton = () => {
+        const s = spring({ scale: 1 }, { duration: 0.2 });
         spinBtnContainer = new PIXI.Container();
         const spin_button = PIXI.Sprite.from("spin_button.png");
 
@@ -753,32 +787,56 @@
         spinBtnContainer.position.y += 50;
 
         spinBtnContainer.interactive = true;
+        spinBtnContainer.buttonMode = true;
+
+        spinBtnContainer
+            .on("pointerdown", () => s.set({ scale: 0.9 }))
+            .on("pointerup", () => s.set({ scale: 1 }))
+            .on("pointerupoutside", () => s.set({ scale: 1 }))
+            .on("click", magicSpin);
+
         app.stage.addChild(spinBtnContainer);
 
         spinBtnContainer.addChild(spin_button);
-        spinBtnContainer.on("click", magicSpin);
 
         const spin_text = PIXI.Sprite.from("spin_text.png");
         spinBtnContainer.addChild(spin_text);
     };
 
     const magicSpin = () => {
-        if (!$handleAuthToken) {
-            goto("/login");
-            return;
-        }
-        console.log("yo! i am spinning!");
+        // if (!$handleAuthToken) {
+        //     goto("/login");
+        //     return;
+        // }
+
+        const rotationSpeed = Math.random() * 0.1 + 0.1; // Random rotation speed
+        const randomRotationDuration = Math.random() * 3000 + 3000; // Random duration in milliseconds
+
+        // Animate the rotation
+        let rotationStartTime = Date.now();
+        app.ticker.add(() => {
+            const elapsedTime = Date.now() - rotationStartTime;
+            if (elapsedTime > randomRotationDuration) return;
+            spinContainer.rotation += rotationSpeed;
+        });
     };
 
     const addMarker = () => {
         const bracket = PIXI.Sprite.from("bracket.png");
 
-        bracket.position.x = spinContainer.position.x + spinContainer.width / 2;
-        bracket.position.x -= 10; //remove wheel border
+        bracket.position.x = app.screen.width / 2;
+        // bracket.position.x -= bracket.width / 2;
 
-        bracket.position.y =
-            spinContainer.position.y + spinContainer.height / 2;
+        bracket.position.y = spinContainer.height / 2;
         bracket.position.y -= bracket.height / 2;
+        bracket.position.y += 55.5;
+
+        // bracket.position.x = spinContainer.position.x + spinContainer.width / 2;
+        // bracket.position.x -= 10; //remove wheel border
+
+        // bracket.position.y =
+        //     spinContainer.position.y + spinContainer.height / 2;
+        // bracket.position.y -= bracket.height / 2;
 
         app.stage.addChild(bracket);
     };
@@ -789,8 +847,10 @@
     const addBlinkingLight = () => {
         const lightContainer = new PIXI.Container();
 
-        lightContainer.position.x = 178;
-        lightContainer.position.y = 155;
+        lightContainer.position.x = 90;
+        lightContainer.position.y = -20;
+        // lightContainer.position.x = spinContainer.position.x;
+        // lightContainer.position.y = spinContainer.position.y / 2;
 
         lightContainer.rotation = (56 * Math.PI) / 180;
 
@@ -836,10 +896,8 @@
     const addPrices = () => {
         const lightContainer = new PIXI.Container();
 
-        // lightContainer.position.x = 180;
-        // lightContainer.position.y = 140;
-        lightContainer.position.x = 170;
-        lightContainer.position.y = 170;
+        lightContainer.position.x = 90;
+        lightContainer.position.y = 0;
 
         spinContainer.addChild(lightContainer);
 
@@ -901,15 +959,7 @@
         return K[assets.sprites].spritesheet?.textures[textureName];
     };
 
-    const sound = new Howl({
-        src: [assets.soundSprite],
-        sprite: {
-            SpinOpen: [0, 1979],
-            SpinAndBonus: [1979, 8268],
-            Click: [10247, 306],
-            Collect: [10553, 601],
-        },
-    });
+    let sound;
 
     // Define a function to play sounds
     const playSound = (soundName) => {
@@ -933,6 +983,16 @@
         document.getElementById("pixi-container").appendChild(app.view);
 
         await loadAssets();
+
+        sound = new Howl({
+            src: [assets.soundSprite],
+            sprite: {
+                SpinOpen: [0, 1979],
+                SpinAndBonus: [1979, 8268],
+                Click: [10247, 306],
+                Collect: [10553, 601],
+            },
+        });
     });
 
     let e = 0;
@@ -974,17 +1034,16 @@
     // });
 </script>
 
-<!-- Your Svelte component code here -->
-<div class="container">
-    <h1>hello</h1>
-    <div id="pixi-container"></div>
+<div id="main" class="sc-bkkeKt kBjSXI">
+    <div
+        class="dialog"
+        style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);"
+    >
+        <div id="pixi-container"></div>
+    </div>
 </div>
 
 <style>
-    .container {
-        margin: 0 auto;
-        max-width: 600px;
-    }
     #pixi-container {
         position: relative;
         width: 800px;
