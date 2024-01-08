@@ -31,17 +31,24 @@
   import { chats } from "$lib/chat-room/store/index";
   import { ServerURl } from "../backendUrl";
   import Mobile from "./mobile.svelte";
+
+//   http://localhost:8000/api/public-chat/mention-user
+
   let URL = ServerURl();
+  let defaultUsername = ["John", "Doe", "Rizza", "Malino"];
+  let filteredUsers = [];
+  let showMention = false;
 
   onMount(async () => {
     await axios.get(`${URL}/api/users/previus-chats`).then((res) => {
       chats.set(res.data);
     });
+    await axios.get(`${URL}/api/users/mention-user`).then((res) =>{
+        defaultUsername = res.data
+    })
   });
 
-  let defaultUsername = ["John", "Doe", "Rizza", "Malino"];
-  let filteredUsers = [];
-  let showMention = false;
+
 
   const mentionUser = (e) => {
     const inputValue = e.target.value;
