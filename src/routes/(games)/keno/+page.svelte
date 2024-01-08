@@ -26,6 +26,132 @@
   let multipliers = [];
   let uniqueRandomNumbers = [];
   let bckendGeneratedNumbers = [];
+  let bets = [
+    {
+      betId: 7283414130500837,
+      player: "Ahmm",
+      time: "22:34:24",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: "0.20480000",
+    },
+
+    {
+      betId: 7774625245205907,
+      player: "Nr1",
+      time: "22:34:23",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: "0.07459420",
+    },
+
+    {
+      betId: 8273309602945616,
+      player: "Hidden",
+      time: "22:34:22",
+      bet: 0.0000176,
+      payout: "1.10×",
+      profit: "+0.00000176",
+    },
+
+    {
+      betId: 7091867179075241,
+      player: "Hidden",
+      time: "22:34:21",
+      bet: 0.0001,
+      payout: "1.10×",
+      profit: "+0.00001000",
+    },
+
+    {
+      betId: 8285026273722425,
+      player: "Hidden",
+      time: "22:34:21",
+      bet: 0.24278732,
+      payout: "8.00×",
+      profit: +1.69951124,
+    },
+    {
+      betId: 7313371527512239,
+      player: "Hidden",
+      time: "22:34:20",
+      bet: 0.0009,
+      payout: "0.00×",
+      profit: 0.0009,
+    },
+    {
+      betId: 7283414130500836,
+      player: "Ahmm",
+      time: "22:34:19",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: 0.2048,
+    },
+    {
+      betId: 7774625245205906,
+      player: "Nr1",
+      time: "22:34:19",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: 0.0745942,
+    },
+    {
+      betId: 8285026273722424,
+      player: "Hidden",
+      time: "22:34:18",
+      bet: 0.24278732,
+      payout: "8.00×",
+      profit: +1.69951124,
+    },
+    {
+      betId: 7091867179075240,
+      player: "Hidden",
+      time: "22:34:17",
+      bet: 0.0001,
+      payout: "1.20×",
+      profit: +0.00002,
+    },
+    {
+      betId: 7313371527512238,
+      player: "Hidden",
+      time: "22:34:16",
+      bet: 0.0009,
+      payout: "0.00×",
+      profit: 0.0009,
+    },
+    {
+      betId: 8273309602945615,
+      player: "Hidden",
+      time: "22:34:16",
+      bet: 0.0000176,
+      payout: "0.00×",
+      profit: 0.0000176,
+    },
+    {
+      betId: 7774625245205905,
+      player: "Nr1",
+      time: "22:34:15",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: 0.0745942,
+    },
+    {
+      betId: 7283414130500835,
+      player: "Ahmm",
+      time: "22:34:14",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: 0.2048,
+    },
+    {
+      betId: 2245649420563671,
+      player: "JOURNIE2023",
+      time: "22:34:14",
+      bet: 0.00000095,
+      payout: "0.00×",
+      profit: 0.00000095,
+    },
+  ];
   let multipliersObject = {
     0: [],
     1: ["0.00×", "3.96×"],
@@ -845,24 +971,67 @@
     {#if activeTabB === "tabB1"}
       <div class="tabs-view" style="transform: none;">
         <div class="sc-eZhRLC iycaRo">
-          <div class="sc-eCImPb cuPxwd empty">
-            <img
-              src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
-              alt=""
-            />
-            <div class="msg">Oops! There is no data yet!</div>
-            <table>
-              <thead>
-                <tr>Bet ID</tr>
-                <tr>Player</tr>
-                <tr>Time</tr>
-                <tr>Bet</tr>
-                <tr>Payout</tr>
-                <tr>Profit</tr>
-              </thead>
-              <tbody> </tbody>
-            </table>
-          </div>
+          {#if bets && bets.length === 0}
+            <div class="sc-eCImPb cuPxwd empty">
+              <img
+                src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+                alt=""
+              />
+              <div class="msg">Oops! There is no data yet!</div>
+            </div>
+          {/if}
+          {#if bets && bets.length > 0}
+            <div class="live-bets-container">
+              <table class="sc-gWXbKe iUeetX table is-hover">
+                <thead>
+                  <tr>
+                    <th>Bet ID</th>
+                    <th>Player</th>
+                    <th>Time</th>
+                    <th>Bet</th>
+                    <th>Payout</th>
+                    <th>Profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {#each bets as bet, index (index)}
+                    <tr>
+                      <td>
+                        <a class="hash ellipsis">{bet.betId}</a>
+                      </td>
+                      <td>
+                        <a class="hash ellipsis">{bet.player}</a>
+                      </td>
+                      <td>{bet.time}</td>
+                      <td>
+                        <div>
+                          <img class="gem" src="" alt="icon" />
+                          <div>
+                            <span
+                              >{bet.bet}
+                              <span>00 bal</span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{bet.payout}</td>
+                      <td>
+                        <div>
+                          <img class="gem" src="" alt="icon" />
+                          <div>
+                            <span
+                              >{bet.profit}
+                              <span>00 bal</span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </div>
+          {/if}
         </div>
       </div>
     {/if}
@@ -4906,6 +5075,34 @@
     top: 50%;
     margin-top: 3.75rem;
     margin-left: -8.75rem;
+  }
+
+  .sc-gWXbKe.iUeetX.table.is-hover {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
+  }
+
+  .live-bets-container tr {
+    cursor: pointer;
+  }
+
+  .live-bets-container th,
+  .live-bets-container td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+    font-weight: normal;
+    color: rgba(153, 164, 176, 0.6);
+  }
+
+  .live-bets-container th:first-child {
+    text-align: left;
+  }
+
+  .live-bets-container th:last-child {
+    text-align: right;
   }
   .gONCrm {
     max-width: 50rem;
