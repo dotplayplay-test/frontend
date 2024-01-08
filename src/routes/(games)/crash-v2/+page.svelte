@@ -86,9 +86,8 @@
 </div>
 
 <style>
-  .lmWKWf.game-style0,
-  .lmWKWf.game-style1,
-  .lmWKWf.game-style-iframe {
+  
+  .lmWKWf.game-style1 {
     max-width: 1368px;
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
@@ -97,9 +96,8 @@
   .lmWKWf {
     min-height: 90vh;
   }
-  .lmWKWf.game-style0 .game-area,
-  .lmWKWf.game-style1 .game-area,
-  .lmWKWf.game-style-iframe .game-area {
+  
+  .lmWKWf.game-style1 .game-area{
     display: flex;
     flex-wrap: wrap;
   }
@@ -111,9 +109,7 @@
     min-height: 47.5rem;
   }
 
-  .lmWKWf.game-style0 .game-main,
-  .lmWKWf.game-style1 .game-main,
-  .lmWKWf.game-style-iframe .game-main {
+  .lmWKWf.game-style1 .game-main {
     display: flex;
     flex-direction: column;
     flex: 1 1 0%;

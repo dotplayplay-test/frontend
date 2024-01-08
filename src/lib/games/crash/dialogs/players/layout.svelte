@@ -1,6 +1,7 @@
 <script>
   import Loader from "$lib/components/loader.svelte";
   import useFormatter from "../../hooks/formatter";
+  import Decimal from "decimal.js";
   const { removeTrailingZeros, getSuffix } = useFormatter();
   import { UseFetchData } from "$lib/hook/useFetchData";
   import { handleAuthToken } from "$lib/store/routes";
@@ -59,15 +60,21 @@
                   <div class="name">{player.name}</div>
                 {/if}
               </a>
-            </td><td class="payout">{player.payout}×</td><td
-              class="ellipsis {player.won ? 'is-win' : 'is-lose'}"
-              ><div class="sc-Galmp erPQzq coin notranslate {player.won ? "has-sign" : ""}">
+            </td><td class="payout"
+              >{new Decimal(player.payout).toDP(2).toNumber()}×</td
+            ><td class="ellipsis {player.won ? 'is-win' : 'is-lose'}"
+              ><div
+                class="sc-Galmp erPQzq coin notranslate {player.won
+                  ? 'has-sign'
+                  : ''}"
+              >
                 <img alt="" class="coin-icon" src={player.currencyImage} />
                 <div class="amount">
                   <span class="amount-str"
                     >{player.won ? "+" : ""}{removeTrailingZeros(
-                      player.amount
-                    )}<span class="suffix">{getSuffix(player.amount)}</span
+                      player.amount.toFixed(8)
+                    )}<span class="suffix"
+                      >{getSuffix(player.amount.toFixed(8))}</span
                     ></span
                   >
                 </div>
@@ -75,8 +82,7 @@
             ></tr
           >
         {/each}
-        </tbody
-      >
+      </tbody>
     </table>
   </div>
 {:else}
@@ -119,7 +125,7 @@
     color: rgba(153, 164, 176, 0.6);
     padding-bottom: 0.875rem;
   }
-
+ 
   .jpLpkO th,
   .jpLpkO td {
     overflow: hidden;
@@ -143,7 +149,9 @@
   .jpLpkO tbody tr:nth-child(2n-1) td:first-child {
     border-radius: 1.25rem 0px 0px 1.25rem;
   }
-
+  .jpLpkO tbody tr:nth-child(2n-1) td:last-child {
+    border-radius: 0px 1.25rem 1.25rem 0px;
+}
   .jpLpkO tbody tr:nth-child(2n-1) td {
     background-color: rgb(23, 24, 27);
   }

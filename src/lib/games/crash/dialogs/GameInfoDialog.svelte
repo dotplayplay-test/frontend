@@ -2,19 +2,31 @@
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { createEventDispatcher } from "svelte";
-  import AllPlayerScreen from "./players/index.svelte";
-  import DetailsScreen from "./bet-detail/index.svelte";
+  import AllPlayerScreen from "./players/layout.svelte";
+  import DetailsScreen from "./bet-detail/layout.svelte";
+  import HotKeys from "./hotkeys/layout.svelte";
+  import TrendChart from "./trend-chart/layout.svelte";
+  import ScriptsHelp from "./script-help/layout.svelte";
+  import PreviewScripts from "./preview-script/layout.svelte";
+  import CrashHelp from "./help/layout.svelte";
+  import CrashHelpAbout from "./help/about.svelte";
+  import CrashHelpFairness from "./help/fairness.svelte";
+  import CrashHelpAutoCashout from "./help/autocashout.svelte";
+  import CrashHelpTrendball from "./help/trendball.svelte";
   const dispatch = createEventDispatcher();
   export let launchConf;
   $: gameID = "";
+  $: isBusy = false;
   $: betID = "";
-  $: startScreen = "Details";
-  $: currentScreen = "Details";
+  $: startScreen = "";
+  $: currentScreen = "";
+  $: dialogParams = null;
   $: {
-    (gameID = launchConf?.gameID),
-      (betID = launchConf?.betID),
-      (startScreen = launchConf?.startScreen);
-    currentScreen = launchConf?.startScreen || "Details";
+    gameID = launchConf?.gameID;
+    betID = launchConf?.betID;
+    dialogParams = launchConf?.params;
+    startScreen = launchConf?.startScreen;
+    currentScreen = startScreen || "Details";
   }
   const handleShowDetails = ({ betID: bet_id }) => {
     if (bet_id) return;
@@ -26,9 +38,13 @@
     gameID = game_id;
     currentScreen = "All Players";
   };
+  const handleClose = () => {
+    if (isBusy) return;
+    dispatch("close");
+  };
 </script>
 
-{#if betID || gameID}
+{#if startScreen && currentScreen}
   <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
     <div
       class="dialog"
@@ -56,7 +72,7 @@
         </div>
       </div>
       <button
-        on:click={() => dispatch("close")}
+        on:click={handleClose}
         class="sc-ieecCq fLASqZ close-icon dialog-close"
         ><svg
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -81,6 +97,91 @@
           style="z-index: 2; transform: none;"
         >
           <DetailsScreen {betID} on:allPlayers={handleShowAllPlayers} />
+        </div>
+      {:else if currentScreen === "Understanding Trend Chart"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <TrendChart />
+        </div>
+      {:else if currentScreen === "Help"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <CrashHelp on:click={(e) => (currentScreen = e.detail)} />
+        </div>
+      {:else if currentScreen === "What Game Is This?"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <CrashHelpAbout />
+        </div>
+      {:else if currentScreen === "Fairness"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <CrashHelpFairness />
+        </div>
+      {:else if currentScreen === "Auto cash out"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <CrashHelpAutoCashout />
+        </div>
+      {:else if currentScreen === "Trendball"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <CrashHelpTrendball />
+        </div>
+      {:else if currentScreen === "Hot keys"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <HotKeys />
+        </div>
+      {:else if currentScreen === "Script Help"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <ScriptsHelp />
+        </div>
+      {:else if currentScreen === "Preview the script"}
+        <div
+          in:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          out:fly={{ x: 80, duration: 150, easing: cubicOut }}
+          class="dialog-body default-style"
+          style="z-index: 2; transform: none;"
+        >
+          <PreviewScripts
+            script={dialogParams}
+            on:busy={(e) => (isBusy = e.detail)}
+            on:close={handleClose}
+          />
         </div>
       {/if}
     </div>

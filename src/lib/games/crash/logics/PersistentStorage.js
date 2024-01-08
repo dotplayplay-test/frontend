@@ -1,4 +1,5 @@
 import pkg from 'lodash';
+import { makeAutoObservable, observable } from 'mobx';
 const { debounce } = pkg;
 
 export default class PersistentStorage {
@@ -6,6 +7,9 @@ export default class PersistentStorage {
     this.data = {};
     this.store = isServer ? new ServerStore(key) : new LocalStore(key);
     this.data = Object.assign({}, initialData);
+    makeAutoObservable(this, {
+      data: observable.ref
+    })
     if (!isServer) {
       this.enableSync();
     }
@@ -15,7 +19,7 @@ export default class PersistentStorage {
     await this.forceSync();
     if (!this.isEnableSync) {
       this.isEnableSync = true;
-      debounce(() => this.store.save(JSON.stringify(this.data)), 5000, {
+      debounce(() => this.store.save(JSON.stringify( Object.assign(Object.create(null), this.data))), 5000, {
         leading: true,
       });
     }
@@ -31,6 +35,14 @@ export default class PersistentStorage {
         }
       });
     }
+  }
+
+  update(key, value) {
+    this.data = {...this.data, [key]: value};
+    this.store.save(JSON.stringify( Object.assign(Object.create(null), this.data)));
+  }
+  get(key) {
+    return this.data[key];
   }
 }
 
