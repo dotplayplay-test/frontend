@@ -5,11 +5,10 @@
 <script>
   const { autorun } = connect();
   import TrendBallDrawer from "../../logics/TrendBallDrawer";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import { createEventDispatcher, onMount } from "svelte";
   import Draggable from "../../components/draggable.svelte";
   import { crashGame } from "../../store";
+  import CrashInfoDialog from "../GameInfoDialog.svelte";
   let scrollTimeout;
   const oddsEngine = new TrendBallDrawer();
   const dispatch = createEventDispatcher();
@@ -29,9 +28,11 @@
     renderedDots = oddsEngine.render(oddsValues, 6, 32);
     console.log("Dots ", renderedDots);
   }
+  let game = null;
   $: {
-    const game = $crashGame;
-    if (game) {
+    const _game = $crashGame;
+    if (!game && _game) {
+      game = _game;
       autorun(() => {
         renderDots(game.history);
 
@@ -47,27 +48,29 @@
       });
     }
   }
-  onMount(() => {
-    renderDots($crashGame?.history || []);
-  });
+  $: dialogData = null;
 </script>
 
+{#if Boolean(dialogData)}
+  <CrashInfoDialog
+    launchConf={dialogData}
+    on:close={() => (dialogData = null)}
+  />
+{/if}
 <div id="main">
   <Draggable>
     <div
       class="sc-dJjYzT JLcsN dragpop"
-      style="transform: translate3d(468.633px, 191.146px, 0px);"
+      style="transform: translate3d(535.609px, 88px, 0px);"
     >
       <div class="dragpop-title">Trends</div>
-      <button on:click={() => handleClose()} class="dragpop-close hover">
-        <Icon
-          src={IoCloseSharp}
-          size="23"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
-      </button>
+      <button on:click={() => handleClose()} class="dragpop-close hover"
+        ><svg
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="sc-gsDKAQ hxODWG icon"
+          ><use xlink:href="#icon_Close"></use></svg
+        ></button
+      >
       <div class="dragpop-content">
         <div class="sc-iJCbQK liaPil">
           <div class="dots-wrap" bind:this={dotsContainer}>
@@ -77,43 +80,24 @@
               {/each}
             </div>
           </div>
-          <button class="sc-gDGHff cEhaBs">
-            <svg
+          <button
+            on:click={() => {
+              dialogData = {
+                startScreen: "Understanding Trend Chart",
+              };
+            }}
+            class="sc-gDGHff cEhaBs"
+            ><svg
               xmlns:xlink="http://www.w3.org/1999/xlink"
               class="sc-gsDKAQ hxODWG icon help-ico"
+              ><use xlink:href="#icon_Help"></use></svg
             >
-              <use xlink:href="#icon_Help"></use>
-            </svg>
-            <div>Understanding Trend Chart</div>
-          </button>
+            <div>Understanding Trend Chart</div></button
+          >
         </div>
       </div>
     </div>
   </Draggable>
-</div>
-
-<div class="mobile">
-  <div class="sc-dJjYzT dcGdSd">
-    <div class="dragpop-content">
-      <div class="sc-iJCbQK liaPil">
-        <div class="dots-wrap">
-          <div class="dots">
-            {#each renderedDots as dot, index (`${index}_${dot}`)}
-              <div class="sc-fSDTwv itetCR dot type-{dot}"></div>
-            {/each}
-          </div>
-        </div>
-        <button class="sc-bXRjm kFDPAv">
-          <svg
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            class="sc-gsDKAQ hxODWG icon help-ico"
-            ><use xlink:href="#icon_Help"></use>
-          </svg>
-          <div>Understanding Trend Chart</div>
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <style>
@@ -238,7 +222,7 @@
       -webkit-box-align: center;
       align-items: center;
     }
-    .dcGdSd .dots {
+    .dots {
       width: 800px;
       display: grid;
       margin-bottom: 1rem;
@@ -368,5 +352,14 @@
     gap: 1px;
     grid-template-columns: repeat(32, 1fr);
 } */
+  }
+  .cEhaBs .help-ico {
+    margin-right: 0.25rem;
+    fill: rgb(67, 179, 9);
+  }
+  .hxODWG {
+    width: 1.4em;
+    height: 1.4em;
+    fill: rgba(153, 164, 176, 0.6);
   }
 </style>

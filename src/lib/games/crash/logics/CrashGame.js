@@ -108,6 +108,7 @@ async function currencInfo() {
 function logError(err) {
   console.log("Error In crash game => ", err);
 }
+
 export default class CrashGame extends BaseGame {
   static MAX_HISTORY = 2e3;
   constructor() {
@@ -281,7 +282,7 @@ export default class CrashGame extends BaseGame {
 
     this.on("game_end", () => {
       if (!this.betInfo) {
-        this.script.onGameEnd(this.history.slice(-20).reverse());
+        this.script.onGameEnd([...this.history.slice(-20)].reverse());
       }
     });
   }
@@ -403,8 +404,13 @@ export default class CrashGame extends BaseGame {
   }
 
   waitGameStart() {
+    console.log("Waiting game start", this.__instanceID)
     return new Promise((resolve) => {
-      this.once("game_prepare", resolve);
+      this.once("game_prepare", () => {
+        console.log("Game started!!")
+        resolve(0);
+      });
+      console.log("once events of game prep : After", this._events["game_prepare"] , this.__instanceID)
     });
   }
 
@@ -488,8 +494,7 @@ export default class CrashGame extends BaseGame {
 
     if (bet.userId === this.user.userId && !this.betInfo) {
       this.setBetInfo({
-        currencyName: betData.currencyName,
-        currencyImage: betData.currencyImage,
+        ...betData,
         bet: new Decimal(betData.bet),
         rate: 0,
         autoRate: 0,
@@ -669,7 +674,7 @@ export default class CrashGame extends BaseGame {
     await this.waitGameEnd();
     return (
       (this.betInfo ? this.betInfo.rate : 0) / 100,
-      this.history.slice(-20).reverse()
+      [...this.history.slice(-20)].reverse()
     );
   }
 
@@ -740,8 +745,6 @@ export default class CrashGame extends BaseGame {
     this.setHistory(
       this.history.concat(newGames.reverse()).slice(-CrashGame.MAX_HISTORY)
     );
-    // console.log("Recent history ", this.history.reverse().slice(0, 10))
-    
   }
 
   async loadGameHistory() {

@@ -1,19 +1,44 @@
 <script>
+  import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
+  import LiveStats from "./dialogs/LiveStats.svelte";
+  $: dialogData = null;
+  $: showingStats = false;
 </script>
 
+{#if Boolean(dialogData)}
+  <CrashInfoDialog
+    launchConf={dialogData}
+    on:close={() => (dialogData = null)}
+  />
+{/if}
+{#if showingStats}
+  <LiveStats
+    on:close={() => (showingStats = false)}
+  />
+{/if}
 <div class="game-actions">
-  <button class="action-item"
+  <button on:click={() => {
+    dialogData = {
+      startScreen: "Hot keys",
+    };
+  }} class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_HotKeys"></use></svg
     ></button
-  ><button class="action-item"
+  ><button on:click={() => showingStats = true} class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"
       ><use xlink:href="#icon_LiveStats"></use></svg
     ></button
-  ><button class="action-item"
+  ><button
+    on:click={() => {
+      dialogData = {
+        startScreen: "Help",
+      };
+    }}
+    class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Help"></use></svg

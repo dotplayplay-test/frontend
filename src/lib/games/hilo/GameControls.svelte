@@ -583,15 +583,6 @@
     transform: scaleX(1) !important;
   }
 
-  .eOA-dmL .slider-before,
-  .eOA-dmL .slider-after {
-    height: 2px;
-    width: 98%;
-    position: absolute;
-    left: 1%;
-    top: 50%;
-    margin-top: -1px;
-  }
   .eOA-dmL .slider-after {
     background-color: rgba(216, 222, 227, 0.4);
     transform-origin: left center;
@@ -627,17 +618,6 @@
     width: 0.75rem;
     border-radius: 0.375rem;
     background-color: rgb(204, 207, 217);
-  }
-
-  .fCSgTW .fix-layer .slider-before,
-  .fCSgTW .fix-layer .slider-after {
-    width: 86%;
-    left: 7%;
-    height: 0.5rem;
-    margin-top: -0.25rem;
-    border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
-    transform: scaleX(1) !important;
   }
 
   .eOA-dmL .slider-before,

@@ -22,7 +22,7 @@ class Ke {
   }
 }
 export default class AutoBet extends EventEmitter {
-  constructor(game, interval = 500, betWait = Promise.resolve(0)) {
+  constructor(xBet, interval = 500, betWait = Promise.resolve(0)) {
     super();
 
     // Initialize properties
@@ -36,10 +36,10 @@ export default class AutoBet extends EventEmitter {
     this.stopOnLose = 0;
     this.stopWithZero = false;
     this.stopPrev = () => {};
-    this.game = game;
+    this.xBet = xBet;
     this.isLog = true;
-    this.bet = game.handleBet;
-    this.interval = interval;
+    this.bet = xBet.handleBet.bind(xBet);
+    this.interval = interval || 500;
     this.betWait = betWait;
     this.prevBetTime = Date.now();
 
@@ -61,13 +61,13 @@ export default class AutoBet extends EventEmitter {
 
   // Check if auto increase is enabled
   get isAutoIncrease() {
-    const amount = this.game.amount;
-    const precision = WalletManager.getInstance().getPrecision(this.game.currencyName);
+    const amount = this.xBet.amount;
+    const precision = WalletManager.getInstance().getPrecision(this.xBet.currencyName);
     if (!this.onWin.reset && this.onWin.value !== 0) {
       if (
         amount
           .add(amount.div(100).mul(this.onWin.value))
-          .toDP(precision, Decimal.ROUND_DOWN) === this.game.amount
+          .toDP(precision, Decimal.ROUND_DOWN) === this.xBet.amount
       )
         return false;
     }
@@ -75,7 +75,7 @@ export default class AutoBet extends EventEmitter {
       if (
         amount
           .add(amount.div(100).mul(this.onLose.value))
-          .toDP(precision, Decimal.ROUND_DOWN) === this.game.amount
+          .toDP(precision, Decimal.ROUND_DOWN) === this.xBet.amount
       )
         return false;
     }
@@ -98,8 +98,9 @@ export default class AutoBet extends EventEmitter {
     this.stopOnWin = _v;
   }
   setIsRunning(_v) {
-    this.isRunning = false;
+    this.isRunning = _v;
   }
+
   setTimes(_v) {
     this.times = _v;
   }
@@ -108,10 +109,11 @@ export default class AutoBet extends EventEmitter {
   // Start the game
   async start() {
     if (this.isRunning) return;
+    console.log("Auto bet running")
     this.emit("start");
-    this.isRunning(true);
+    this.setIsRunning(true);
     this.profit = new Decimal(0);
-    this.startAmount = this.game.amount;
+    this.startAmount = this.xBet.amount;
     const isTimesZero = !this.stopWithZero && this.times === 0;
     let isRunning = true;
     const logPromise = /*this.isLog
@@ -130,20 +132,27 @@ export default class AutoBet extends EventEmitter {
     this.stopPrev = () => (isRunning = false);
 
     while (isRunning) {
+      console.log("Auto betting loop start 0")
       try {
         await this.betWait();
+        console.log("Auto betting loop start 1")
         const logResult = await logPromise;
+        console.log("Auto betting loop start 2")
         if (isRunning) {
+          console.log("Auto betting loop start 3")
           let now = Date.now();
           let waitTime = this.interval - (now - this.prevBetTime);
           if (waitTime > 0) await f(waitTime);
           this.prevBetTime = Date.now();
+          console.log("Auto betting ")
           let betResult = await this.bet(undefined, logResult);
+          console.log("Auto bet result ", betResult)
           if (isRunning) {
             if (this.step(betResult)) this.stop();
           }
         }
       } catch (error) {
+        console.log("Error in auto bet ", error)
         if (error.code !== 5999) throw (this.stop(), this.emit("stop"), error);
       }
       if (!isTimesZero) {
@@ -152,7 +161,7 @@ export default class AutoBet extends EventEmitter {
       }
     }
     this.emit("stop");
-    this.game.setAmount(this.startAmount);
+    this.xBet.setAmount(this.startAmount);
   }
 
   // Stop the game
@@ -164,18 +173,18 @@ export default class AutoBet extends EventEmitter {
   // Process a step in the game
   step(betResult) {
     const bet = new Decimal(betResult);
-    const amount = new Decimal(this.game.amount);
+    const amount = new Decimal(this.xBet.amount);
     this.profit = this.profit.add(amount.mul(bet.sub(1)));
     if (bet.gt(1)) {
       this.onWin.reset
-        ? (this.game.amount = this.startAmount)
-        : (this.game.amount = amount.add(
+        ? (this.xBet.amount = this.startAmount)
+        : (this.xBet.amount = amount.add(
             amount.mul(this.onWin.value).div(100)
           ));
     } else if (bet.lt(1)) {
       this.onLose.reset
-        ? (this.game.amount = this.startAmount)
-        : (this.game.amount = amount.add(
+        ? (this.xBet.amount = this.startAmount)
+        : (this.xBet.amount = amount.add(
             amount.mul(this.onLose.value).div(100)
           ));
     }

@@ -137,7 +137,7 @@
             >Bet
           </div>
           <div class="item-desc">
-            <span class="mthan">{gameNameMap[details.betType]}</span>
+            <span class="mthan">{details.betType}</span>
           </div>
         </div>
         <div class="item-wrap">

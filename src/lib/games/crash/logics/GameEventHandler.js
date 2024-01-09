@@ -48,6 +48,9 @@ const GameEventHandler = class extends EventEmitter {
       // jackpot: observable,
     });
 
+    const { currencyName, currencyImage } = WalletManager.getInstance().current;
+    this.currencyImage = currencyImage;
+    this.currencyName = currencyName;
     // Initialize
     this.config = Object.assign(
       {
@@ -107,35 +110,41 @@ const GameEventHandler = class extends EventEmitter {
         bgSoundEnable: false,
         hotkeyEnable: false,
         fastEnable: false,
-        ignoreMaxProfit: false
+        ignoreMaxProfit: false,
       }),
       { key: this.name }
-    ).data;
+    );
     this.sounds = new SoundManager(this.config.sounds || {});
 
     // Initialize sounds
     autorun(() => {
-      this.sounds.soundEnable = this.settings.soundEnable;
+      this.sounds.soundEnable = this.settings.data.soundEnable;
     });
 
     autorun(() => {
-      if (this.settings.bgSoundEnable) {
+      if (this.settings.data.bgSoundEnable) {
         this.sounds.backgrounds.forEach((sound) => sound.play());
       } else {
         this.sounds.backgrounds.forEach((sound) => sound.stop());
       }
-      this.sounds.bgSoundEnable = this.settings.bgSoundEnable;
+      this.sounds.bgSoundEnable = this.settings.data.bgSoundEnable;
     });
 
     this.emit("bet");
 
-    reaction(() => WalletManager.getInstance().current, this.syncCurrency.bind(this));
+    reaction(
+      () => WalletManager.getInstance().current,
+      this.syncCurrency.bind(this)
+    );
 
-    reaction(() => this.settings.hotkeyEnable,(enabled) => {
-      this.getHotKeyMng().then(Keymaster => {
-        Keymaster.setScope(enabled ? this.name : "all");
-      })
-    });
+    reaction(
+      () => this.settings.data,
+      ({ hotkeyEnable: enabled }) => {
+        this.getHotKeyMng().then((Keymaster) => {
+          Keymaster.setScope(enabled ? this.name : "all");
+        });
+      }
+    );
 
     // const { disableLimitMinAmount } = this.config;
     // if (!disableLimitMinAmount) {
@@ -152,7 +161,7 @@ const GameEventHandler = class extends EventEmitter {
 
   async getHotKeyMng() {
     if (this.keymaster) return this.keymaster;
-    return import('keymaster').then(module => {
+    return import("keymaster").then((module) => {
       this.keymaster = module.default;
       return this.keymaster;
     });
@@ -168,7 +177,10 @@ const GameEventHandler = class extends EventEmitter {
     } else {
       this.needMaxTip = false;
     }
-    this.amount = Decimal.min(Decimal.max(amount, this.minAmount), this.maxAmount);
+    this.amount = Decimal.min(
+      Decimal.max(amount, this.minAmount),
+      this.maxAmount
+    );
   }
 
   // Set betting status
@@ -182,24 +194,21 @@ const GameEventHandler = class extends EventEmitter {
   }
 
   get maxAmount() {
-    // const jackpot = this.jackpot[this.currencyName];
     const wallet = WalletManager.getInstance().dict[this.currencyName];
-    if (/*!jackpot ||*/ !wallet) return new Decimal(0);
-    // let amount = wallet?.maxAmount || 200;
-    // if (wallet.amount > jackpot.minBetAmount) {
-    //   amount = Math.min(wallet.amount, jackpot.maxBetAmount);
-    // }
-    return new Decimal(wallet?.maxAmount || 200);
+    if (!wallet) return new Decimal(0);
+    return new Decimal(
+      Math.min(wallet?.maxAmount || 0, wallet?.amount || 0) || 200
+    );
   }
 
   get minAmount() {
     const wallet = WalletManager.getInstance().dict[this.currencyName];
-    return new Decimal(wallet?.minAmount || 1);
+    return new Decimal(wallet?.minAmount || 0.1);
   }
 
   async init(retry) {
     try {
-      this.gameInfo = { name: ""}; //await fetchGameInfo(this.name);
+      this.gameInfo = { name: "" }; //await fetchGameInfo(this.name);
     } catch (err) {
       // reportError(err);
       throw err;
@@ -242,8 +251,14 @@ const GameEventHandler = class extends EventEmitter {
     if (!amount) throw new Error("Set a bet amount");
     await this.checkMaxBet(amount);
     // await this.checkMaxProfit();
-    if (new Decimal(amount).gt(WalletManager.getInstance().dict[currency].amount)) {
-      console.log("Error betting ", WalletManager.getInstance().dict[currency], amount)
+    if (
+      new Decimal(amount).gt(WalletManager.getInstance().dict[currency].amount)
+    ) {
+      console.log(
+        "Error betting ",
+        WalletManager.getInstance().dict[currency],
+        amount
+      );
       throw new Error("Insufficient balance!");
     }
   }
@@ -251,7 +266,10 @@ const GameEventHandler = class extends EventEmitter {
   // Handle bet
   async handleBet(amount = this.amount, ...args) {
     // Format amount
-    amount = amount.toDP(WalletManager.getInstance().getPrecision(this.currencyName), Decimal.ROUND_DOWN);
+    amount = amount.toDP(
+      WalletManager.getInstance().getPrecision(this.currencyName),
+      Decimal.ROUND_DOWN
+    );
 
     // Validation
     await this.beforeBetCheck(amount);
@@ -292,9 +310,7 @@ const GameEventHandler = class extends EventEmitter {
   }
 
   // On bet start
-  onBetStart(amount) {
-    // ...
-  }
+  onBetStart(amount) {}
 
   // On bet end
   onBetEnd() {
@@ -331,7 +347,7 @@ const GameEventHandler = class extends EventEmitter {
       // if (!(await confirmModal(<MaxProfitWarning onChange={onChange} />))) {
       //   throw new Error();
       // }
-      this.settings.ignoreMaxProfit = true;// ignore;
+      this.settings.ignoreMaxProfit = true; // ignore;
     }
   }
 
@@ -396,14 +412,13 @@ const GameEventHandler = class extends EventEmitter {
   addHotkey(key, handler, descript = "") {
     const hotkey = { key, handler, descript };
     this.hotkeyList.push(hotkey);
-    this.getHotKeyMng().then(Keymaster => {
+    this.getHotKeyMng().then((Keymaster) => {
       Keymaster(key, this.name, () => {
         if (this.settings.hotkeyEnable) {
           return hotkey.handler();
         }
       });
-    })
-    
+    });
   }
 
   // Remove hotkey
@@ -411,10 +426,9 @@ const GameEventHandler = class extends EventEmitter {
     const index = this.hotkeyList.findIndex((h) => h.key == key);
     if (index != -1) {
       this.hotkeyList.splice(index, 1);
-      this.getHotKeyMng().then(Keymaster => {
+      this.getHotKeyMng().then((Keymaster) => {
         Keymaster.unbind(key, this.name);
-      })
-      
+      });
     }
   }
 
@@ -433,16 +447,14 @@ const GameEventHandler = class extends EventEmitter {
   enableHotkeys(enable = true) {
     if (enable) {
       if (this.settings.hotkeyEnable) {
-        this.getHotKeyMng().then(Keymaster => {
+        this.getHotKeyMng().then((Keymaster) => {
           Keymaster.setScope(this.name);
-        })
-        
+        });
       }
     } else {
-      this.getHotKeyMng().then(Keymaster => {
+      this.getHotKeyMng().then((Keymaster) => {
         Keymaster.setScope("all");
-      })
-      
+      });
     }
   }
 
@@ -479,15 +491,4 @@ const GameEventHandler = class extends EventEmitter {
     GameEventHandler.details[name] = detail;
   }
 };
-
-// Export game handler class
-
-// Tracker
-GameEventHandler.source = "";
-GameEventHandler.details = {};
-
-// userStore.on("click", (src) => {
-//   GameEventHandler.source = src;
-// });
-
 export default GameEventHandler;

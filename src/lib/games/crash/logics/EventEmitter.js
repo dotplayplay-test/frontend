@@ -1,8 +1,10 @@
+let instanceCounter = 0;
 export default class EventEmitter {
   constructor() {
     this._events = {};
     this._eventsCount = 0;
     this._maxListeners = 10;
+    this.__instanceID = ++instanceCounter;
   }
 
   static get defaultMaxListeners() {
