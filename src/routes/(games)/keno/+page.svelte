@@ -322,7 +322,6 @@
       has_won: numMultiplier > 0.0,
       profit: numMultiplier,
     };
-    console.log("handleResultPayload", handleResultPayload);
 
     // submit game
     await postGameResult(handleResultPayload);
@@ -346,6 +345,7 @@
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     };
     return config;
@@ -371,7 +371,6 @@
 
   /** Handle Result */
   async function getActiveWallet() {
-    // http://localhost:8000/api/profile
     const headerConfig = getHeaders();
 
     const res = await fetch("http://localhost:8000/api/profile", {
@@ -381,29 +380,23 @@
     });
 
     const json = await res.json();
-    // console.log("profile", json);
 
     const activeWalletInfo = json.wallet.filter(
       (wallet) => wallet.is_active
     )[0];
-    // console.log("activeWalletInfo", activeWalletInfo);
     return activeWalletInfo;
   }
 
   function generateBetId() {
     if (bet_id === 0) {
-      bet_id = Number(generateUniqueRandomNumbers(8, 11, 99).join("")); //Math.floor(Math.random() * 10000 + 1);
+      bet_id = Number(generateUniqueRandomNumbers(8, 11, 99).join(""));
     } else {
       bet_id += 1;
     }
-    // return bet_id;
   }
 
   async function postGameResult(body) {
-    // localhost:8000/api/user/keno-game/handle-cashout
     const headerConfig = getHeaders();
-
-    console.log("data", body);
 
     const res = await fetch(
       "http://localhost:8000/api/user/keno-game/handle-cashout",
@@ -415,67 +408,7 @@
     );
 
     const json = await res.json();
-    // const json = {
-    //   data: {
-    //     bet_token_name: "PPF",
-    //     bet_id: 2069304,
-    //     hidden: false,
-    //     bet_token_img:
-    //       "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
-    //     amount: 100,
-    //     has_won: false,
-    //     profit: 0,
-    //   },
-    //   payload: {
-    //     is_active: true,
-    //     balance: 39300,
-    //     coin_image:
-    //       "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
-    //     coin_name: "PPF",
-    //   },
-    //   kenoGameHistory: [
-    //     {
-    //       _id: "659c5572b38e3ff18904f9bb",
-    //       user_id: "znR6kPcOhnV6WCBHcZyVMQBCfSk2",
-    //       username: "aYBRtHjHA",
-    //       profile_img: "https://img2.nanogames.io/avatar/head2.png",
-    //       bet_amount: 100,
-    //       token_img: "insert-token-image-url",
-    //       token: "PPF",
-    //       bet_id: 3474894,
-    //       game_nonce: 15,
-    //       payout: 400,
-    //       has_won: false,
-    //       server_seed:
-    //         "ff7453c1936d5b6572e36377724e97d47edb2778586375917185fc7edf7ac9a0",
-    //       client_seed: "tye7wowjsmmo",
-    //       hidden_from_public: false,
-    //       profit: 4,
-    //       __v: 0,
-    //     },
-    //     {
-    //       _id: "659d388eb38e3ff18904fcba",
-    //       user_id: "znR6kPcOhnV6WCBHcZyVMQBCfSk2",
-    //       username: "aYBRtHjHA",
-    //       profile_img: "https://img2.nanogames.io/avatar/head2.png",
-    //       bet_amount: 100,
-    //       token_img:
-    //         "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
-    //       token: "PPF",
-    //       bet_id: 2069304534277993,
-    //       game_nonce: 39,
-    //       payout: 0,
-    //       has_won: false,
-    //       server_seed:
-    //         "ff7453c1936d5b6572e36377724e97d47edb2778586375917185fc7edf7ac9a0",
-    //       client_seed: "tye7wowjsmmo",
-    //       hidden_from_public: false,
-    //       profit: 0,
-    //       __v: 0,
-    //     },
-    //   ],
-    // };
-    console.log("sumbit game", json);
+
     return json;
   }
   /** Handle Result */
