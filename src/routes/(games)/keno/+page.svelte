@@ -19,6 +19,196 @@
   function handleTabBChange(tabB) {
     activeTabB = tabB;
   }
+
+  let buttonStates = Array(40).fill(false);
+  const Gem = new URL("/static/gem.png", import.meta.url).href;
+  const WinGem = new URL("/static/match.png", import.meta.url).href;
+  let multipliers = [];
+  let uniqueRandomNumbers = [];
+  let bckendGeneratedNumbers = [];
+  let multipliersObject = {
+    0: [],
+    1: ["0.00×", "3.96×"],
+    2: ["0.00×", "1.90×", "4.50×"],
+    3: ["0.00×", "1.00×", "3.10×", "10.40×"],
+    4: ["0.00×", "0.80×", "1.80×", "5.00×", "22.50×"],
+    5: ["0.00×", "0.25×", "1.40×", "4.10×", "16.50×", "36.00×"],
+    6: ["0.00×", "0.00×", "1.00×", "3.68×", "7.00×", "16.50×", "40.00×"],
+    7: [
+      "0.00×",
+      "0.00×",
+      "0.47×",
+      "3.00×",
+      "4.50×",
+      "14.00×",
+      "31.00×",
+      "60.00×",
+    ],
+    8: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "2.20×",
+      "4.00×",
+      "13.00×",
+      "22.00×",
+      "55.00×",
+      "70.00×",
+    ],
+    9: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "1.55×",
+      "3.00×",
+      "8.00×",
+      "15.00×",
+      "44.00×",
+      "60.00×",
+      "85.00×",
+    ],
+    10: [
+      "0.00×",
+      "0.00×",
+      "0.00×",
+      "1.40×",
+      "2.25×",
+      "4.50×",
+      "8.00×",
+      "17.00×",
+      "50.00×",
+      "80.00×",
+      "100.00×",
+    ],
+  };
+  let winningMultiplierIndex = null;
+  let wins = [];
+
+  function saveButton(index) {
+    toggleSelectState(index);
+
+    // add or remove item from array of unique numbers
+    if (uniqueRandomNumbers.includes(index + 1)) {
+      const numberIndex = uniqueRandomNumbers.findIndex(
+        (item) => item === index + 1
+      );
+
+      uniqueRandomNumbers.splice(numberIndex, 1);
+    } else {
+      uniqueRandomNumbers.push(index + 1);
+    }
+  }
+
+  function toggleSelectState(index) {
+    buttonStates[index] = !buttonStates[index];
+    multipliers = displayMultiplier(
+      buttonStates.filter((button) => button).length
+    );
+  }
+
+  function resetGame() {
+    // reset buttons
+    buttonStates = Array(40).fill(false);
+
+    // reset random numbers
+    uniqueRandomNumbers = [];
+
+    // clear winning index
+    winningMultiplierIndex = null;
+
+    multipliers = displayMultiplier(0);
+    bckendGeneratedNumbers = [];
+    wins = [];
+  }
+
+  function getRandomNumbers() {
+    // Clear previously selected buttons
+    resetGame();
+
+    // Generate 10 random numbers from 0 - 40 and select the button states
+    uniqueRandomNumbers = generateUniqueRandomNumbers(10, 1, 40);
+
+    // Set toggleState to true
+    uniqueRandomNumbers.forEach((number) => {
+      toggleSelectState(number - 1);
+    });
+
+    // display multipliers
+    multipliers = displayMultiplier(uniqueRandomNumbers.length);
+  }
+
+  function generateUniqueRandomNumbers(count, min, max) {
+    if (count > max - min + 1) {
+      throw new Error(
+        "Cannot generate unique random numbers. Not enough unique values in the specified range."
+      );
+    }
+
+    const uniqueNumbers = new Set();
+
+    while (uniqueNumbers.size < count) {
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      uniqueNumbers.add(randomNumber);
+    }
+
+    return Array.from(uniqueNumbers);
+  }
+
+  function displayMultiplier(count) {
+    return multipliersObject[count];
+  }
+
+  async function startBet() {
+    // get random numbers from backend
+    bckendGeneratedNumbers = await pcPlay();
+
+    // get match numbers
+    winningMultiplierIndex = checkForMatch(
+      uniqueRandomNumbers,
+      bckendGeneratedNumbers
+    );
+
+    // get winning multiplier
+    wins.push(
+      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex]
+    );
+
+    wins = wins;
+  }
+
+  async function pcPlay() {
+    const token = localStorage.getItem("user").replaceAll('"', "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const res = await fetch("http://localhost:8000/api/user/keno-game/bet", {
+      method: "POST",
+      body: null,
+      headers: config.headers,
+    });
+
+    const json = await res.json();
+    return json.nums;
+  }
+
+  function checkForMatch(player, pc) {
+    let matchCount = 0;
+
+    player.forEach((number) => {
+      if (pc.includes(number)) matchCount++;
+    });
+
+    return matchCount;
+  }
+
+  function highlightPCNumbers() {}
+
+  function clearGameTable() {
+    resetGame();
+  }
 </script>
 
 <div id="game-Keno" class="sc-cfJLRR gJxbeS game-style1 sc-dXNJws iClKJL">
@@ -40,8 +230,9 @@
           <div class="game-control-panel">
             <div class="sc-fUQcsx jsLoxW">
               <button
+                on:click={() => startBet()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled=""
+                disabled={multipliers && !multipliers.length}
                 ><div class="button-inner">
                   <img
                     src="https://static.nanogames.io/assets/keno_loading.d3c77d1e.png"
@@ -139,9 +330,11 @@
                 </div>
                 <div class="sc-fSDTwv lgcQbT btn-wrap">
                   <button
+                    on:click={() => getRandomNumbers()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Auto Pick</div></button
                   ><button
+                    on:click={() => clearGameTable()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                     ><div class="button-inner">Clear Table</div></button
                   >
@@ -154,8 +347,9 @@
           <div class="game-control-panel">
             <div class="sc-juEPzu kkZrMb">
               <button
+                on:click={() => startBet()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled=""
+                disabled={!multipliers.length}
                 ><div class="button-inner">
                   <span>Start Auto Bet</span>
                 </div></button
@@ -275,9 +469,11 @@
               </div>
               <div class="sc-jwQYvw jcGUIr btn-wrap">
                 <button
+                  on:click={() => getRandomNumbers()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Auto Pick</div></button
                 ><button
+                  on:click={() => clearGameTable()}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
                   ><div class="button-inner">Clear Table</div></button
                 >
@@ -287,21 +483,20 @@
       </div>
       <div class="game-view">
         <div class="sc-leSONj jOOXMd game-recent">
-          <div class="sc-hoHwyw hSKlkh jackpot-enter">
-            <div class="title">
-              <span class="tit">Bankroll</span><span>CUB</span>
-            </div>
-            <div class="sc-Galmp erPQzq coin notranslate">
-              <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
-              <div class="amount">
-                <span class="amount-str">1234538.98</span>
-              </div>
-            </div>
-          </div>
           <div class="recent-list-wrap">
-            <div class="empty-item">
-              <p>Game results will be displayed here.</p>
-            </div>
+            {#if wins.length > 0}
+              <div class="wins">
+                {#each wins as win, index (index)}
+                  <div class="win" class:plus={win && !win.includes("0.00")}>
+                    {win}
+                  </div>
+                {/each}
+              </div>
+            {:else}
+              <div class="empty-item">
+                <p>Game results will be displayed here.</p>
+              </div>
+            {/if}
           </div>
         </div>
         <div class="no-web sc-bQFuvY bFXMsx">
@@ -382,173 +577,71 @@
             <div class="keno-wrap">
               <div class="keno-item-wrap">
                 <div class="keno-list">
-                  <button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">1</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">2</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">3</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">4</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">5</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">6</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">7</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">8</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">9</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">10</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">11</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">12</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">13</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">14</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">15</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">16</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">17</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">18</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">19</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">20</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">21</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">22</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">23</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">24</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">25</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">26</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">27</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">28</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">29</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">30</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">31</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">32</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">33</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">34</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">35</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">36</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">37</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">38</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">39</span>
-                    </div></button
-                  ><button class="keno_styles_item"
-                    ><div class="keno-ritem initial">
-                      <span class="keno-num">40</span>
-                    </div></button
-                  >
+                  <!-- Generate button list and handle toggle state -->
+                  {#each buttonStates as isSelected, index (index)}
+                    <button
+                      on:click={() => saveButton(index)}
+                      disabled={multipliers.length === 11 && !isSelected}
+                      class="keno_styles_item"
+                      ><div
+                        class="keno-ritem initial"
+                        class:select={isSelected}
+                        class:match={isSelected &&
+                          bckendGeneratedNumbers.includes(index + 1)}
+                      >
+                        <span
+                          class="keno-num"
+                          class:mismatch={bckendGeneratedNumbers.includes(
+                            index + 1
+                          )}>{index + 1}</span
+                        >
+                      </div></button
+                    >
+                  {/each}
+                  <!-- Generate button list and handle toggle state -->
                 </div>
               </div>
               <div class="sc-hKumaY krTDHD">
                 <div class="sc-eTwdGJ ZOVvL">
-                  <div class="game_payout"></div>
-                  <div class="no_select">Select 1 - 10 numbers to play</div>
+                  <div class="game_payout">
+                    {#if multipliers}
+                      {#each multipliers as multiplier, index (index)}
+                        <span
+                          class="payout_item"
+                          class:match={winningMultiplierIndex !== null &&
+                            index === winningMultiplierIndex}>{multiplier}</span
+                        >
+                      {/each}
+                    {/if}
+                  </div>
+                  {#if multipliers && multipliers.length}
+                    <div class="game_selected_items">
+                      {#each multipliers as multiplier, index (index)}
+                        <div
+                          class="game_selected_num"
+                          class:match={winningMultiplierIndex !== null &&
+                            index === winningMultiplierIndex}
+                        >
+                          <div class="game_selected_box">
+                            <span class="gem_box"
+                              >{index}×<img
+                                class="gem"
+                                src={winningMultiplierIndex !== null &&
+                                index === winningMultiplierIndex
+                                  ? WinGem
+                                  : Gem}
+                                alt="icon"
+                              /></span
+                            >
+                            <span>{index} Hits</span>
+                          </div>
+                        </div>
+                      {/each}
+                    </div>
+                  {/if}
+                  {#if !multipliers || (multipliers && multipliers.length === 0)}
+                    <div class="no_select">Select 1 - 10 numbers to play</div>
+                  {/if}
                 </div>
               </div>
               <div class="bottom-line"></div>
@@ -753,8 +846,22 @@
       <div class="tabs-view" style="transform: none;">
         <div class="sc-eZhRLC iycaRo">
           <div class="sc-eCImPb cuPxwd empty">
-            <img src="https://static.nanogames.io/assets/empty.acd1f5fe.png" />
+            <img
+              src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+              alt=""
+            />
             <div class="msg">Oops! There is no data yet!</div>
+            <table>
+              <thead>
+                <tr>Bet ID</tr>
+                <tr>Player</tr>
+                <tr>Time</tr>
+                <tr>Bet</tr>
+                <tr>Payout</tr>
+                <tr>Profit</tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1132,6 +1239,7 @@
                   <div class="trophy">
                     <img
                       src="https://static.nanogames.io/assets/trophy.424f8523.png"
+                      alt=""
                     />
                   </div>
                   <div>
@@ -1141,6 +1249,7 @@
                       <img
                         class="currency-icon"
                         src="/coin/NND.black.png"
+                        alt=""
                       /><span>508.24</span><span class="currency-name">
                         NND</span
                       >
@@ -1170,10 +1279,12 @@
                       ><img
                         class="avatar"
                         src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                        alt=""
                       /><svg
                         viewBox="0 0 32 32"
                         xmlns="http://www.w3.org/2000/svg"
                         class="avatar-icon"
+                        alt=""
                         ><path
                           fill="#ffd308"
                           d="M27.924 14.807l-4.892 11.74h-14.063l-4.892-11.74c-1.198-0.105-2.14-1.099-2.14-2.324 0-1.294 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 0.498-0.157 0.957-0.421 1.336 0.827 1.307 2.274 2.18 3.937 2.18 2.182 0 3.999-1.497 4.522-3.516l0.035-0.197 0.131-2.472c-0.698-0.406-1.172-1.153-1.172-2.019 0-1.295 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 0.866-0.474 1.613-1.172 2.019l0.082 2.434 0.084 0.235c0.523 2.018 2.341 3.516 4.522 3.516 1.663 0 3.109-0.873 3.937-2.18-0.264-0.379-0.421-0.839-0.421-1.336 0-1.294 1.049-2.344 2.344-2.344s2.344 1.049 2.344 2.344c0 1.225-0.942 2.218-2.14 2.324z"
@@ -1211,7 +1322,11 @@
                         <div
                           class="sc-Galmp erPQzq coin notranslate prize-coin"
                         >
-                          <img class="coin-icon" src="/coin/NND.black.png" />
+                          <img
+                            class="coin-icon"
+                            src="/coin/NND.black.png"
+                            alt=""
+                          />
                           <div class="amount">
                             <span class="amount-str">370.484841</span>
                           </div>
@@ -1253,6 +1368,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/gold.92faf9c1.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1262,6 +1378,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/413359/s"
+                          alt=""
                         />
                         <div class="name">spartman</div></a
                       >
@@ -1280,7 +1397,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">254.090423</span>
                         </div>
@@ -1293,6 +1414,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1302,6 +1424,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1328,7 +1451,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">127.045211</span>
                         </div>
@@ -1341,6 +1468,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/copper.39898678.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1350,6 +1478,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/382469/s"
+                          alt=""
                         />
                         <div class="name">Msn</div></a
                       >
@@ -1370,7 +1499,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">60.9817016</span>
                         </div>
@@ -1387,6 +1520,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/539289/s"
+                          alt=""
                         />
                         <div class="name">Psjozayoyb</div></a
                       >
@@ -1405,7 +1539,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">30.4908508</span>
                         </div>
@@ -1422,6 +1560,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1448,7 +1587,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">15.2454254</span>
                         </div>
@@ -1465,6 +1608,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/544926/s"
+                          alt=""
                         />
                         <div class="name">flowertim</div></a
                       >
@@ -1483,7 +1627,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >7.6227127<span class="suffix">0</span></span
@@ -1502,6 +1650,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1528,7 +1677,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">4.57362762</span>
                         </div>
@@ -1545,6 +1698,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/319359/s"
+                          alt=""
                         />
                         <div class="name">RuffRollr777</div></a
                       >
@@ -1563,7 +1717,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">3.55726593</span>
                         </div>
@@ -1580,6 +1738,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1606,7 +1765,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.54090423</span>
                         </div>
@@ -1623,6 +1786,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1649,7 +1813,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.03272338</span>
                         </div>
@@ -1686,6 +1854,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/gold.92faf9c1.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1695,6 +1864,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1723,7 +1893,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">370.484841</span>
                         </div>
@@ -1736,6 +1910,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1745,6 +1920,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1773,7 +1949,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >185.24242<span class="suffix">0</span></span
@@ -1788,6 +1968,7 @@
                       <img
                         class="user-ico"
                         src="https://static.nanogames.io/assets/copper.39898678.svg"
+                        alt=""
                       />
                     </div>
                     <div class="user-td">
@@ -1797,6 +1978,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1823,7 +2005,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >88.916362<span class="suffix">0</span></span
@@ -1842,6 +2028,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/2461/s"
+                          alt=""
                         />
                         <div class="name">mpletcher</div></a
                       >
@@ -1860,7 +2047,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str"
                             >44.458181<span class="suffix">0</span></span
@@ -1879,6 +2070,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -1905,7 +2097,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">22.2290905</span>
                         </div>
@@ -1922,6 +2118,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/319359/s"
+                          alt=""
                         />
                         <div class="name">RuffRollr777</div></a
                       >
@@ -1940,7 +2137,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">11.1145452</span>
                         </div>
@@ -1957,6 +2158,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/1446/s"
+                          alt=""
                         />
                         <div class="name">👃bloodman123👃</div></a
                       >
@@ -1975,7 +2177,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">6.66872715</span>
                         </div>
@@ -1992,6 +2198,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -2018,7 +2225,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">5.18678778</span>
                         </div>
@@ -2035,6 +2246,7 @@
                         ><img
                           class="avatar"
                           src="https://img2.nanogames.io/avatar/520259/s"
+                          alt=""
                         />
                         <div class="name">CHARMED</div></a
                       >
@@ -2053,7 +2265,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">3.70484841</span>
                         </div>
@@ -2070,6 +2286,7 @@
                         ><img
                           class="avatar"
                           src="https://static.nanogames.io/assets/avatar.a1ff78fe.png"
+                          alt=""
                         />
                         <div class="name">
                           <span class="hidden-name"
@@ -2096,7 +2313,11 @@
                       <div
                         class="sc-Galmp erPQzq coin notranslate prize-coin monospace"
                       >
-                        <img class="coin-icon" src="/coin/NND.black.png" />
+                        <img
+                          class="coin-icon"
+                          src="/coin/NND.black.png"
+                          alt=""
+                        />
                         <div class="amount">
                           <span class="amount-str">2.96387873</span>
                         </div>
@@ -3149,9 +3370,9 @@ color: var(--text-6);  }
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
   }
-  .jOOXMd .jackpot-enter {
+  /* .jOOXMd .jackpot-enter {
     margin-left: 1.5rem;
-  }
+  } */
   .hSKlkh {
     width: 10.125rem;
     height: 100%;
@@ -3211,13 +3432,15 @@ color: var(--text-6);  }
     flex: 1 1 auto;
     height: 100%;
     margin: 0px 1.5rem;
-    overflow: hidden;
+    overflow: auto; /* enable scroll on multiple wins display */
     position: relative;
     border-radius: 1.375rem;
   }
-  .jOOXMd .empty-item {
+  .jOOXMd .empty-item,
+  .win {
     display: flex;
     width: 100%;
+    min-width: 80px;
     height: 100%;
 color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
@@ -3233,6 +3456,18 @@ color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .wins {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .win.plus {
+    background-color: rgb(38, 236, 41);
+    color: #1a041fe6;
   }
 
   p {
@@ -3271,6 +3506,12 @@ color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     background-color: transparent;
     position: relative;
   }
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem {
+    background-color: rgb(36, 38, 43);
+    box-shadow: rgb(30, 32, 36) 0px 4px;
+    cursor: default;
+  }
   .cKpuTs .keno_styles_item .keno-ritem {
     background-color: var(--card-bg-2);
     position: absolute;
@@ -3284,11 +3525,83 @@ color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     animation: 0.2s ease 0s 1 normal none running elastic;
     transition: 0.5s;
   }
-  .cKpuTs .keno_styles_item .keno-ritem:hover {
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem .keno-num {
+    color: rgb(255 255 255 / 22%);
+  }
+
+  .cKpuTs .keno_styles_item:not(:disabled) .keno-ritem:hover {
     top: -5px;
     bottom: 5px;
     background-color: rgb(111, 112, 114);
   }
+  .cKpuTs .keno_styles_item .keno-ritem.select {
+    opacity: 1;
+    background-color: rgb(101, 12, 255);
+    box-shadow: rgb(69, 23, 179) 0px 4px;
+  }
+
+  .cKpuTs .keno_styles_item .keno-ritem.select.match {
+    /* opacity: 1; */
+    background-color: rgb(38, 236, 41);
+    box-shadow: rgb(20, 152, 36) 0px 4px;
+  }
+
+  .cKpuTs .keno_styles_item .keno-ritem.select.match .keno-num {
+    color: #1a041fe6;
+  }
+
+  .cKpuTs .game_payout .payout_item {
+    background-color: rgb(49, 52, 60);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 0.1875rem;
+  }
+
+  .game_selected_items {
+    background-color: rgb(49, 52, 60);
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    border-radius: 0.1875rem;
+    gap: 0.8em;
+  }
+
+  .game_selected_num {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: help;
+    position: relative;
+    color: rgb(153, 164, 176);
+    text-align: center;
+  }
+
+  .game_selected_num.match,
+  .cKpuTs .game_payout .payout_item.match {
+    background-color: rgb(91, 44, 215);
+    border-radius: 3px;
+  }
+
+  .game_selected_box {
+    font-size: 14px;
+  }
+
+  .gem_box {
+    display: flex;
+    align-items: center;
+  }
+
+  .gem {
+    width: 14px;
+    margin-left: 0.1875rem;
+  }
+
   .cKpuTs .keno_styles_item .keno-ritem .keno-num {
     position: absolute;
     left: 50%;
@@ -3296,6 +3609,10 @@ color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     transform: translate(-50%, -50%);
     font-size: 16px;
     color: var(--text-4);
+  }
+
+  .cKpuTs .keno_styles_item:disabled .keno-ritem .keno-num.mismatch {
+    color: red;
   }
 
   .cKpuTs .keno_styles_item::after {
