@@ -24,66 +24,78 @@
 
 {#if Boolean(players)}
   <div class="sc-dkPtRN jScFby scroll-view sc-eZhRLC jpLpkO">
-    <table class="table">
-      <thead
-        ><tr
-          ><th class="num">Bet ID</th><th class="user">Player</th><th
-            class="payout">Payout</th
-          ><th class="profit">Profit</th></tr
-        ></thead
-      ><tbody>
-        {#each players as player, index (`${player.userID}_${index}`)}
-          <tr
-            ><td
-              ><a
-                href="/"
-                on:click={(e) => {
-                  e.preventDefault();
-                  dispatch("gameDetail", player.betID);
-                }}
-                class="betid">{player.betID}</a
-              ></td
-            ><td
-              ><a
-                class="sc-jUosCB iTDswZ user-info username"
-                href="/user/profile/{player.userID}"
-              >
-                {#if player.hidden}
-                  <span class="hidden-name"
-                    ><svg
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      class="sc-gsDKAQ hxODWG icon"
-                      ><use xlink:href="#icon_Hidden"></use></svg
-                    >Hidden</span
-                  >
-                {:else}
-                  <div class="name">{player.name}</div>
-                {/if}
-              </a>
-            </td><td class="payout"
-              >{new Decimal(player.payout).toDP(2).toNumber()}×</td
-            ><td class="ellipsis {player.won ? 'is-win' : 'is-lose'}"
-              ><div
-                class="sc-Galmp erPQzq coin notranslate {player.won
-                  ? 'has-sign'
-                  : ''}"
-              >
-                <img alt="" class="coin-icon" src={player.currencyImage} />
-                <div class="amount">
-                  <span class="amount-str"
-                    >{player.won ? "+" : ""}{removeTrailingZeros(
-                      player.amount.toFixed(8)
-                    )}<span class="suffix"
-                      >{getSuffix(player.amount.toFixed(8))}</span
-                    ></span
-                  >
-                </div>
-              </div></td
-            ></tr
-          >
-        {/each}
-      </tbody>
-    </table>
+    {#if Boolean(players.length)}
+      <table class="table">
+        <thead
+          ><tr
+            ><th class="num">Bet ID</th><th class="user">Player</th><th
+              class="payout">Payout</th
+            ><th class="profit">Profit</th></tr
+          ></thead
+        ><tbody>
+          {#each players as player, index (`${player.userID}_${index}`)}
+            <tr
+              ><td
+                ><a
+                  href="/"
+                  on:click={(e) => {
+                    e.preventDefault();
+                    dispatch("gameDetail", player.betID);
+                  }}
+                  class="betid">{player.betID}</a
+                ></td
+              ><td
+                ><a
+                  class="sc-jUosCB iTDswZ user-info username"
+                  href="/user/profile/{player.userID}"
+                >
+                  {#if player.hidden}
+                    <span class="hidden-name"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Hidden"></use></svg
+                      >Hidden</span
+                    >
+                  {:else}
+                    <div class="name">{player.name}</div>
+                  {/if}
+                </a>
+              </td><td class="payout"
+                >{new Decimal(player.payout).toDP(2).toNumber()}×</td
+              ><td class="ellipsis {player.won ? 'is-win' : 'is-lose'}"
+                ><div
+                  class="sc-Galmp erPQzq coin notranslate {player.won
+                    ? 'has-sign'
+                    : ''}"
+                >
+                  <img alt="" class="coin-icon" src={player.currencyImage} />
+                  <div class="amount">
+                    <span class="amount-str"
+                      >{player.won ? "+" : ""}{removeTrailingZeros(
+                        player.amount.toFixed(8)
+                      )}<span class="suffix"
+                        >{getSuffix(player.amount.toFixed(8))}</span
+                      ></span
+                    >
+                  </div>
+                </div></td
+              ></tr
+            >
+          {/each}
+        </tbody>
+      </table>
+    {:else}
+      <div class="sc-epFoly etYRmD">
+        <div class="sc-eCImPb biQums cuPxwd empty">
+          <img
+            alt="No data"
+            src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+          />
+          <div class="msg">Oops! There is no data yet!</div>
+        </div>
+      </div>
+    {/if}
   </div>
 {:else}
   <div style="height: 500px;">
@@ -125,7 +137,7 @@
     color: rgba(153, 164, 176, 0.6);
     padding-bottom: 0.875rem;
   }
- 
+
   .jpLpkO th,
   .jpLpkO td {
     overflow: hidden;
@@ -151,7 +163,7 @@
   }
   .jpLpkO tbody tr:nth-child(2n-1) td:last-child {
     border-radius: 0px 1.25rem 1.25rem 0px;
-}
+  }
   .jpLpkO tbody tr:nth-child(2n-1) td {
     background-color: rgb(23, 24, 27);
   }

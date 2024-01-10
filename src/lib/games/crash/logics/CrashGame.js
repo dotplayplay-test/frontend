@@ -64,7 +64,7 @@ function Gn(data) {
     hash: data.hash || "",
     maxRate: data.maxRate,
     players: Fp(data.players) || [],
-    xBets: data.xBets || [],
+    xBets: Fp(data.xBets) || [],
   };
 }
 async function currencInfo() {
@@ -180,7 +180,6 @@ export default class CrashGame extends BaseGame {
       () => UserStore.getInstance().user,
       (user) => {
         if (user) {
-          console.log("Setting user", user)
           this.user = user;
         }
       }
@@ -353,9 +352,9 @@ export default class CrashGame extends BaseGame {
   onEscape({ userId, rate, force }) {
     if (this.status !== 2) return;
 
-    const player = this.playersDict[this.user.userId];
+    const player = this.playersDict[userId];
     if (player) {
-      if (player.userId === userId) {
+      if (player.userId === this.user.userId) {
         this.betInfo && this.setBetInfo({ ...this.betInfo, rate });
         this.emit("escapeSuccess", {
           amount: this.betInfo.bet,
@@ -376,6 +375,7 @@ export default class CrashGame extends BaseGame {
       }
 
       player.rate = rate;
+      console.log("Player data > ", { ...player })
       this.emit("player_change");
       this.emit("escape", { ...player });
     }
@@ -489,7 +489,7 @@ export default class CrashGame extends BaseGame {
       avatar: bet.avatar,
       hidden: bet.hidden,
       rate: 0,
-      usd: 0,
+      usd: WalletManager.getInstance().amountToLocale(bet.bet, bet.currentName) || 0,
     };
 
     if (bet.userId === this.user.userId && !this.betInfo) {

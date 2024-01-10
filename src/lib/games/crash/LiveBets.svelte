@@ -3,6 +3,7 @@
 </script>
 
 <script>
+  import { screen } from "$lib/store/screen";
   import { onDestroy, onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
   import useFormatter from "./hooks/formatter";
@@ -75,8 +76,9 @@
   });
 </script>
 
-<div class="sc-czvZiG gnytwz">
-  <div class="top">
+<div class="sc-czvZiG gnytwz  {$screen < 1051 ? "mobile-view" : ""}">
+  {#if $screen > 1050}
+    <div class="top">
     <div class="title">All Bets</div>
 
     <div class="flex-middle">
@@ -92,6 +94,8 @@
       </div>
     </div>
   </div>
+  {/if}
+  
   {#if !trendBetActive}
     <div class="sc-eoHXOn vjsVz need-scroll">
       <table class="head">
@@ -419,12 +423,14 @@
 </div>
 
 <style>
-  .gnytwz {
-    background-color: rgb(30, 32, 36);
+  .gnytwz:not(.mobile-view) {
     margin-left: 0.625rem;
-    border-radius: 1.25rem;
     width: 40%;
     max-width: 542px;
+  }
+  .gnytwz {
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
     position: relative;
   }
   .gnytwz .top {

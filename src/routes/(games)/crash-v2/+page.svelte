@@ -1,5 +1,6 @@
 <script>
   import { browser } from "$app/environment";
+  import { screen } from "$lib/store/screen";
   import GameControls from "$lib/games/crash/GameControls.svelte";
   import GameActions from "$lib/games/crash/GameActions.svelte";
   import GameView from "$lib/games/crash/GameView.svelte";
@@ -11,7 +12,8 @@
   import { onDestroy, onMount } from "svelte";
   import CrashGame from "$lib/games/crash/logics/CrashGame";
 
-  $: currentTab = 1;
+  $: tabOffset = $screen > 1050 ? 0 : 1;
+  $: currentTab = !tabOffset && currentTab === 3 ? 1 : (currentTab || 1);
   $: gameInit = false;
   onMount(async () => {
     if (browser) {
@@ -39,26 +41,37 @@
       <GameView />
       <GameActions />
     </div>
+    {#if $screen > 1050}
     <LiveBets />
+    {/if}
   </div>
   <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
     <div class="tabs-navs">
+      {#if Boolean(tabOffset)}
       <button
-        on:click={() => (currentTab = 1)}
-        class="tabs-nav {currentTab === 1 ? 'is-active' : ''}">My Bets</button
+      on:click={() => (currentTab = 1)}
+      class="tabs-nav {currentTab === 1 ? 'is-active' : ''}">All Bets</button
+    >
+      {/if}
+      <button
+        on:click={() => (currentTab = 1 + tabOffset)}
+        class="tabs-nav {currentTab === 1 + tabOffset ? 'is-active' : ''}">My Bets</button
       ><button
-        on:click={() => (currentTab = 2)}
-        class="tabs-nav {currentTab === 2 ? 'is-active' : ''}">History</button
+        on:click={() => (currentTab = 2 + tabOffset)}
+        class="tabs-nav {currentTab === 2 + tabOffset ? 'is-active' : ''}">History</button
       >
       <div
         class="bg"
-        style="width: 50%; left: {currentTab === 2 ? '50%' : '0'};"
+        style="width: {100 /(Boolean(tabOffset) ? 3 : 2)}%; left: {(Boolean(tabOffset) ? (100/3) : 50) * (Boolean(tabOffset) ? (currentTab - tabOffset) : currentTab - 1)}%;"
       ></div>
     </div>
     <div class="tabs-view" style="transform: none;">
-      {#if currentTab === 1}
+      {#if Boolean(tabOffset) && currentTab === 1}
+        <LiveBets/>
+      {/if}
+      {#if currentTab === 1 + tabOffset}
         <MyBets />
-      {:else}
+      {:else if currentTab === 2 + tabOffset}
         <AllBets />
       {/if}
     </div>
