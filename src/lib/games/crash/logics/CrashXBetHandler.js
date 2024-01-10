@@ -53,9 +53,13 @@ export default class CrashXBetHandler extends GameEventHandler {
       addMyBet: action,
       updateNextBets: action,
       setBetStatus: action,
-      setAutoBetType: action
+      setAutoBetType: action,
     });
-    this.autoBet = new AutoBet(this, undefined, this.game.waitGameStart.bind(this.game));
+    this.autoBet = new AutoBet(
+      this,
+      undefined,
+      this.game.waitGameStart.bind(this.game)
+    );
 
     this.autoBet.on("start", () => this.setBetStatus(true));
     this.autoBet.on("stop", () => this.setBetStatus(false));
@@ -132,7 +136,7 @@ export default class CrashXBetHandler extends GameEventHandler {
           status: 0,
         });
       });
-
+    this.addBets(formattedBets);
     if (this.game.rate >= 2) {
       this.onEnd2();
     }
@@ -140,8 +144,6 @@ export default class CrashXBetHandler extends GameEventHandler {
     if (this.game.rate >= 10) {
       this.onEnd10();
     }
-
-    this.addBets(formattedBets);
   }
 
   onPrepare() {
@@ -272,11 +274,7 @@ export default class CrashXBetHandler extends GameEventHandler {
     }
 
     if (hasGreen) {
-      this.greenList = sortBy(
-        this.greenList,
-        ["type"],
-        ["desc"]
-      );
+      this.greenList = sortBy(this.greenList, ["type"], ["desc"]);
     }
   }
 
@@ -308,7 +306,7 @@ export default class CrashXBetHandler extends GameEventHandler {
       bet.bet,
       bet.currencyName
     );
-    
+
     try {
       await this.game.socketRequest("throw-xbet", {
         ...bet,

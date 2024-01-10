@@ -330,6 +330,9 @@
 .ccSpMv .red {
     color: rgb(237, 99, 0);
 }
+.ccSpMv .green {
+    color:  rgb(67, 179, 9);
+}
 .ccSpMv .moon {
     color: rgb(246, 199, 34);
 }

@@ -70,7 +70,7 @@
     if (!game && _game) {
       game = _game;
       autorun(() => {
-        gameHistory = [...game.history.reverse()].slice(0, 10).reverse();
+        gameHistory = game.history.slice(-10);
         // console.log("Game History", gameHistory);
         if (betsContainer) {
           clearTimeout(scrollTimeout);

@@ -3,6 +3,7 @@
 </script>
 
 <script>
+  import { screen } from "$lib/store/screen"
   import { browser } from "$app/environment";
   import WalletManager from "./logics/WalletManager";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
@@ -335,7 +336,7 @@
     on:close={() => (dialogData = null)}
   />
 {/if}
-<div id="crash-control-1" class="sc-hLVXRe cYiOHZ game-control style1">
+<div id="crash-control-1" class="sc-hLVXRe cYiOHZ game-control style1 {$screen < 951 ? "mobile-view" : ""}">
   <div
     class="sc-iwjdpV {autoBetting && $crashGameType === 2
       ? 'eLa-Dxl'
@@ -416,7 +417,7 @@
             {/if}
           {/if}
 
-          <div class="forms">
+          <div class="forms {$screen < 952 ? "mobile-view" : ""}">
             <div
               class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {betting
                 ? 'disabled'
@@ -556,7 +557,7 @@
           </div>
         </div>
       {:else}
-        <div class="sc-kMyqmI jDBJMt manual-control">
+        <div class="sc-kMyqmI jDBJMt manual-control  {$screen < 952 ? "mobile-view" : ""}">
           <div
             class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {xBetting
               ? 'disabled'
@@ -725,7 +726,7 @@
                 <span>Currency</span><span class="currency-name">CUB</span>
               </div>
               <div class="logs"></div>
-              <div class="forms">
+              <div class="forms  {$screen < 952 ? "mobile-view" : ""}">
                 <div class="line">Checker</div>
                 <div class="sc-ezbkAF gcQjQT input">
                   <div class="input-label">Chose color</div>
@@ -1203,10 +1204,19 @@
   .cYiOHZ {
     display: flex;
   }
+  .cYiOHZ.mobile-view {
+    flex-direction: column;
+  }
   .cYiOHZ.style1 .game-control-switch {
+    position: relative;
+  }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch {
     width: 3rem;
     flex-direction: column;
-    position: relative;
+  }
+  .cYiOHZ.style1.mobile-view .game-control-switch {
+    height: 3rem;
+    order: 2;
   }
 
   .cYiOHZ .game-control-switch {
@@ -1231,18 +1241,29 @@
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
   }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch .label {
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
   .cYiOHZ.style1 .game-control-switch .label {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg);
+    transform: translate(-50%, -50%);
     white-space: nowrap;
   }
   .cYiOHZ .game-control-switch > button.is-active {
     color: rgb(245, 246, 247);
     font-weight: bold;
   }
-  .cYiOHZ.style1 .game-control-switch > button.is-active {
+  .cYiOHZ.style1.mobile-view .game-control-switch > button.is-active {
+    border-bottom: 2px solid rgb(67, 179, 9);
+    background-image: linear-gradient(
+      to top,
+      rgba(91, 174, 28, 0.176),
+      rgba(0, 0, 0, 0) 50%
+    );
+  }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch > button.is-active {
     border-right: 2px solid rgb(67, 179, 9);
     background-image: linear-gradient(
       to left,
@@ -1250,13 +1271,22 @@
       rgba(0, 0, 0, 0) 50%
     );
   }
-  .cYiOHZ.style1 .game-control-switch::after {
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch::after {
     content: "";
     position: absolute;
     right: 0px;
     top: 0px;
     bottom: 0px;
     width: 1px;
+    background-color: rgba(49, 52, 60, 0.5);
+  }
+  .cYiOHZ.style1.mobile-view .game-control-switch::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 1px;
     background-color: rgba(49, 52, 60, 0.5);
   }
 
@@ -1468,6 +1498,9 @@
   .qPdve .button-inner {
     flex-direction: column;
   }
+  .iuHOYP .forms.mobile-view {
+    flex-direction: column;
+  }
   .iuHOYP .forms {
     margin-bottom: 1.875rem;
     display: flex;
@@ -1475,7 +1508,10 @@
     -webkit-box-pack: justify;
     justify-content: space-between;
   }
-  .iuHOYP .forms .input {
+  .iuHOYP .forms.mobile-view .input {
+    width: 100%;
+  }
+  .iuHOYP .forms:not(.mobile-view) .input {
     width: 47%;
   }
 
@@ -1717,6 +1753,15 @@
     font-size: 1.625rem;
   }
 
+  /* .jDBJMt.mobile-view {
+    flex-direction: column;
+  }
+  .jDBJMt:not(.mobile-view) {
+    
+  } */
+  .bet-item {
+    min-width: 165px;
+  }
   .jDBJMt {
     display: flex;
     flex-wrap: wrap;
@@ -1874,6 +1919,7 @@
   }
   .TTTlv .buttons {
     display: flex;
+    flex-wrap: wrap;
     flex: 1 1 0%;
   }
   .TTTlv > .input {

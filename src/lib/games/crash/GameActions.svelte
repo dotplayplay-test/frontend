@@ -1,4 +1,5 @@
 <script>
+  import { screen } from "$lib/store/screen";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import LiveStats from "./dialogs/LiveStats.svelte";
   $: dialogData = null;
@@ -12,21 +13,25 @@
   />
 {/if}
 {#if showingStats}
-  <LiveStats
-    on:close={() => (showingStats = false)}
-  />
+  <LiveStats on:close={() => (showingStats = false)} />
 {/if}
 <div class="game-actions">
-  <button on:click={() => {
-    dialogData = {
-      startScreen: "Hot keys",
-    };
-  }} class="action-item"
-    ><svg
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_HotKeys"></use></svg
-    ></button
-  ><button on:click={() => showingStats = true} class="action-item"
+  {#if $screen > 660}
+    <button
+      on:click={() => {
+        dialogData = {
+          startScreen: "Hot keys",
+        };
+      }}
+      class="action-item"
+      ><svg
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        class="sc-gsDKAQ hxODWG icon"
+        ><use xlink:href="#icon_HotKeys"></use></svg
+      ></button
+    >
+  {/if}
+  <button on:click={() => (showingStats = true)} class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"

@@ -122,7 +122,7 @@
     const size = history.length;
     const offset = Math.min(size, 20 * (_page - 1));
     const end = offset + 20;
-    return history.slice(offset, end);
+    return [...history].reverse().slice(offset, end);
   }
 
   const { autorun } = connect();
