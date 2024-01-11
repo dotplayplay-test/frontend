@@ -160,7 +160,7 @@
     }
     
     .tabs-view {
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         border-radius: 1.25rem;
         padding: 1px 0px;
     }
@@ -200,8 +200,7 @@
     
     .iUeetX th {
         font-weight: normal;
-        color: rgba(153, 164, 176, 0.6);
-    }
+    color: var(--text-6);    }
     
     
     .iUeetX td:first-child {
@@ -215,7 +214,7 @@
     
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     
     .iUeetX th,
@@ -237,11 +236,11 @@
     
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     
     .iTDswZ.user-info {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-weight: bold;
     }
     
@@ -264,7 +263,7 @@
     
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     
     .iycaRo .coin {
@@ -290,7 +289,7 @@
     }
     
      .coin .amount {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
     
     .erPQzq .amount-str {
@@ -304,7 +303,7 @@
     
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     
     .iUeetX td:last-child {
@@ -318,7 +317,7 @@
     
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     
     .iycaRo .coin {
@@ -407,10 +406,10 @@
     }
     .iUeetX td {
         border: 1px solid transparent;
-        color: rgb(153, 164, 176);
+        color: var(--text-4);
     }
     .iTDswZ.user-info {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-weight: bold;
     }
     .iTDswZ {

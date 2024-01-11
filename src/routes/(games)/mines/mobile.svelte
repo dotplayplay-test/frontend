@@ -3048,7 +3048,7 @@ const handleAutoSet = ((erii)=>{
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 0.425rem;
@@ -3078,8 +3078,7 @@ const handleAutoSet = ((erii)=>{
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
 
 .dice-animate::before {
@@ -3108,8 +3107,7 @@ const handleAutoSet = ((erii)=>{
     display: flex;
     width: 100%;
     height: 100%;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -3145,12 +3143,11 @@ const handleAutoSet = ((erii)=>{
 }
 
 .fIoiVG .is-lose {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
 }
 
 .fIoiVG .is-win {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgb(67, 179, 9);
 }
 
@@ -3455,7 +3452,7 @@ const handleAutoSet = ((erii)=>{
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 .fIoiVG .recent-list {
     position: absolute;
@@ -3477,11 +3474,10 @@ const handleAutoSet = ((erii)=>{
 }
 
 .fIoiVG .is-lose {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
 }
 .fIoiVG .is-win {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgb(67, 179, 9);
 }
 .fIoiVG .item-wrap {
@@ -3502,7 +3498,7 @@ const handleAutoSet = ((erii)=>{
     display: inline-flex;
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kQfmQV .tabs-navs .bg.is-reverse {
@@ -3572,7 +3568,7 @@ const handleAutoSet = ((erii)=>{
 .lmWKWf .game-main {
     position: relative;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .lmWKWf.game-style-mobile .game-view {
     width: 100%;
@@ -3600,8 +3596,7 @@ const handleAutoSet = ((erii)=>{
     display: flex;
     width: 100%;
     height: 100%;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -3725,8 +3720,7 @@ const handleAutoSet = ((erii)=>{
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
 .cYiOHZ.style-mobile {
     flex-direction: column;
@@ -3754,7 +3748,7 @@ const handleAutoSet = ((erii)=>{
     flex: 1 1 0%;
 }
 .cYiOHZ .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .cYiOHZ.style-mobile .game-control-switch::before {
     content: "";
@@ -3764,7 +3758,7 @@ const handleAutoSet = ((erii)=>{
     right: 0px;
     height: 1px;
     opacity: 0.3;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
 }
 .cYiOHZ.style-mobile .game-control-switch::before {
     content: "";
@@ -3774,21 +3768,20 @@ const handleAutoSet = ((erii)=>{
     right: 0px;
     height: 1px;
     opacity: 0.3;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
 }
 .cYiOHZ.style-mobile .game-control-switch > button {
     height: 3rem;
     border-bottom: 2px solid transparent;
 }
 .cYiOHZ .game-control-switch > button.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .cYiOHZ .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cYiOHZ.style-mobile .game-control-switch > button.is-active {
     border-bottom-color: rgb(67, 179, 9);
     background-image: linear-gradient(to top, rgba(123, 197, 20, 0.3), rgba(123, 197, 20, 0) 50%);

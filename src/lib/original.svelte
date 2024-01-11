@@ -106,7 +106,7 @@
     height: 100vh;
     top: 0;
     z-index: 1000;
-    background-color: rgb(45, 48, 53);
+    background: var(--original-bg);
   }
 
   .orginal-game-routes .orginal-game-routes-container {
@@ -124,7 +124,7 @@
   .IsActive-original-content .icon {
     font-size: 17px;
     padding: 0 10px;
-    fill: rgba(153, 164, 176, 0.8);
+    fill: var(--original-text);
   }
 
   .original-content .name,
@@ -139,7 +139,7 @@
     width: 90%;
     border-radius: 30px;
     border: 1px solid #42b3096b;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     margin: 5px;
     transition: 0.7s ease;
     cursor: pointer;
@@ -151,16 +151,15 @@
     padding: 6px 0;
     width: 90%;
     border-radius: 30px;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     margin: 5px;
     cursor: pointer;
   }
 
   .orginal-game-routes-container .original-content:hover,
   .original-content:hover .icon {
-    color: #f5f6f7;
     font-weight: 800;
-    fill: #f5f6f7;
+    fill: var(--text-color);
     transition: 0.5s ease;
   }
 </style>

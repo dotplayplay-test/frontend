@@ -516,7 +516,7 @@ const handleClose = (() => {
     min-width: 12.5rem;
     min-height: 12.5rem;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.5rem 0px;
 }
 .JLcsN .dragpop-title {
@@ -525,7 +525,7 @@ const handleClose = (() => {
     line-height: 3.125rem;
     font-weight: bold;
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: center;
     touch-action: none;
     user-select: none;
@@ -566,7 +566,7 @@ const handleClose = (() => {
     grid-template-columns: repeat(32, 1fr);
 }
 .grKOWb {
-    background-color: rgb(45, 48, 53);
+    background: var(--original-bg);
     border-radius: 0.1875rem;
     position: relative;
 }
@@ -638,7 +638,7 @@ const handleClose = (() => {
     grid-template-columns: repeat(32, 1fr);
 }
 .itetCR {
-    background-color: rgb(45, 48, 53);
+    background: var(--original-bg);
     border-radius: 0.1875rem;
     position: relative;
 }
@@ -672,7 +672,7 @@ const handleClose = (() => {
     min-width: 12.5rem;
     min-height: 12.5rem;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.5rem 0px;
 }
 .JLcsN .dragpop-title {
@@ -681,7 +681,7 @@ const handleClose = (() => {
     line-height: 3.125rem;
     font-weight: bold;
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: center;
     touch-action: none;
     user-select: none;
@@ -722,7 +722,7 @@ const handleClose = (() => {
     grid-template-columns: repeat(32, 1fr);
 }
 .grKOWb {
-    background-color: rgb(45, 48, 53);
+    background: var(--original-bg);
     border-radius: 0.1875rem;
     position: relative;
 }

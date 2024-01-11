@@ -108,7 +108,7 @@ const dispatch = createEventDispatcher()
     min-width: 12.5rem;
     min-height: 12.5rem;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.5rem 0px;
 }
 .JLcsN .dragpop-title {
@@ -117,7 +117,7 @@ const dispatch = createEventDispatcher()
     line-height: 3.125rem;
     font-weight: bold;
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: center;
     touch-action: none;
     user-select: none;
@@ -154,12 +154,12 @@ const dispatch = createEventDispatcher()
     height: 2.5rem;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     cursor: pointer;
 }
 .eLzuEc .m-item {
     border-radius: 1.25rem;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     margin: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -170,7 +170,7 @@ const dispatch = createEventDispatcher()
     -webkit-box-align: center;
     align-items: center;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .kACabd > .title {
     -webkit-box-pack: justify;
@@ -210,7 +210,7 @@ const dispatch = createEventDispatcher()
     margin-right: 0.3125rem;
 }
 .kACabd .chart-cont .item-wrap.wagered .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .erPQzq .amount-str {
     width: 7em;
@@ -274,7 +274,6 @@ const dispatch = createEventDispatcher()
     -webkit-box-pack: justify;
     justify-content: space-between;
     box-sizing: content-box;
-    color: rgba(153, 164, 176, 0.6);
-    padding-bottom: 1.25rem;
+color: var(--text-6);    padding-bottom: 1.25rem;
 }
 </style>

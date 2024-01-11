@@ -185,7 +185,7 @@
 <style>
 .feFcbu {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .feFcbu {
@@ -197,14 +197,14 @@
     padding: 0px;
     font-family: inherit;
     font-size: 14px;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     margin: 0.5rem 0px 1.75rem;
 }
 
 @media only screen and (max-width:650px){
     .feFcbu {
         border-radius: 20px;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         padding: 4.25rem 1.25rem 0px;
     }
     .feFcbu .affiliate-terms {
@@ -213,7 +213,7 @@
         padding: 0px;
         font-family: inherit;
         font-size: 13px;
-        color: rgba(153, 164, 176, 0.8);
+        color: var(--original-text);
         margin: 0.5rem 0px 1.75rem;
     }
 }

@@ -228,7 +228,7 @@ const handleSubmit = (()=>{
 
 .default-style>div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 

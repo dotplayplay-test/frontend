@@ -32,7 +32,7 @@
 <style>
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -44,7 +44,7 @@
 
 .default-style>div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 
@@ -55,7 +55,7 @@
 .cruphB {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     padding-bottom: 1.5rem !important;
 }
 
@@ -79,7 +79,7 @@
     font-size: 0.875rem;
     margin: 0px 0px 0.5rem;
     font-weight: 600;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .cruphB .item .content {

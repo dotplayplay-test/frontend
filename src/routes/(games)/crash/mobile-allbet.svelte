@@ -91,7 +91,7 @@ import { active_playerEl} from "$lib/crashgame/store";
 
 <style>
 .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
 }
@@ -108,8 +108,7 @@ import { active_playerEl} from "$lib/crashgame/store";
     table-layout: fixed;
     height: 3.75rem;
     font-size: 13px;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -188,7 +187,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .vjsVz .user-info {
     width: 100%;
@@ -198,7 +197,7 @@ table {
     vertical-align: middle;
 }
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .iTDswZ {
@@ -231,7 +230,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .iUeetX td {
     overflow: hidden;
@@ -261,7 +260,7 @@ table {
     margin-right: 0.25em;
 }
 .vjsVz .coin .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .erPQzq .amount-st {

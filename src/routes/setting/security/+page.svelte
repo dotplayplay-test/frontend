@@ -445,7 +445,7 @@
     margin: 0px 0px 1.25rem;
     height: 1.25rem;
     line-height: 1.25rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 0.87rem;
   }
 
@@ -459,8 +459,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 0.84rem;
+color: var(--text-6);    font-size: 0.84rem;
   }
   .gCMZdv > .pc .input .input-control {
     background-color: rgba(30, 32, 36, 0.6);
@@ -474,14 +473,14 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gcQjQT .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(30, 32, 36, 0.6);
     opacity: 1;
     height: 2.75rem;
@@ -525,7 +524,7 @@
   }
 
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -645,7 +644,7 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(30, 32, 36, 0.6);
     opacity: 1;
     height: 2.75rem;
@@ -661,7 +660,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gCMZdv > .pc .input .input-control > svg {
     cursor: pointer;
@@ -680,7 +679,7 @@
     margin: 1.875rem auto 0px;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -727,7 +726,7 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     /* background-color: rgba(30, 32, 36, 0.6); */
     background-color: rgba(30, 32, 36, 0.6);
     opacity: 1;
@@ -752,7 +751,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
   body,
@@ -822,7 +821,7 @@
     margin: 0px 0px 1.25rem;
     height: 1.25rem;
     line-height: 1.25rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .hzTJOu {
     margin-top: 1rem;
@@ -834,8 +833,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .cMCBIc > .pc .input .input-control {
     background-color: rgba(30, 32, 36, 0.6);
   }
@@ -844,7 +842,7 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(30, 32, 36, 0.6);
     opacity: 1;
     height: 2.75rem;
@@ -859,7 +857,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     outline: none;
   }
@@ -873,8 +871,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .cMCBIc > .pc .input .input-control {
     background-color: rgba(30, 32, 36, 0.6);
   }
@@ -886,7 +883,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
   }
   .gcQjQT .input-control {
@@ -894,7 +891,7 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(30, 32, 36, 0.6);
     opacity: 1;
     height: 2.75rem;

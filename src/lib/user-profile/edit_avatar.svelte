@@ -58,7 +58,7 @@ const handleDefaultImaage = ((e)=>{
 <style>
 .no-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -195,8 +195,7 @@ const handleDefaultImaage = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iYpTcp .buttons {
     display: flex;
@@ -224,7 +223,7 @@ const handleDefaultImaage = ((e)=>{
 }
 
 .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));

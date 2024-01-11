@@ -23,7 +23,7 @@
 .lmWKWf .game-main {
     position: relative;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .cYiOHZ.style0 {
     position: absolute;
@@ -34,7 +34,7 @@
     display: flex;
     flex-direction: column;
     padding: 0.625rem;
-    border-right: 1px solid rgba(49, 52, 60, 0.5);
+    border-right: 1px solid var(--border-2);
 }
 .cYiOHZ {
     display: flex;
@@ -54,21 +54,19 @@
     border-radius: 1.375rem;
 }
 .cYiOHZ .game-control-switch > button.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .cYiOHZ .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cYiOHZ .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .cYiOHZ.style0 .game-control-switch > button.is-active {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .lmWKWf.game-style0 .game-control-panel {
     height: 1%;
@@ -84,8 +82,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -122,15 +119,15 @@
     border-color: transparent;
 }
 .cYiOHZ .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .gcQjQT .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -143,7 +140,7 @@
     font-weight: bold;
 }
 .cYiOHZ .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gcQjQT .input-control textarea, .gcQjQT .input-control input {
     flex: 1 1 0%;
@@ -153,7 +150,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gOLODp .coin-icon {
     order: -1;
@@ -182,8 +179,8 @@
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -195,8 +192,8 @@
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .cMPLfC {
@@ -217,8 +214,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gOLODp .label-amount {
     margin-left: auto;
 }
@@ -226,15 +222,15 @@
     border-color: transparent;
 }
 .cYiOHZ .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .gWrsXy .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 0.5;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -248,7 +244,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .lgTgT input {
     font-weight: bold;
@@ -292,7 +288,7 @@
     line-height: 1.25rem;
     padding: 0.3125rem 0.625rem;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 1.125rem;

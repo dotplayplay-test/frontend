@@ -3346,7 +3346,7 @@
   .gJxbeS .game-main {
     position: relative;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
 
   .game-main-top {
@@ -3394,14 +3394,13 @@
     position: relative;
   }
   .eQfpOS .game-control-switch > button.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
   .eQfpOS .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   button {
     border: none;
     padding: 0;
@@ -3456,7 +3455,7 @@
     justify-content: center;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -3521,8 +3520,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .bxrMFn {
     display: flex;
     -webkit-box-align: center;
@@ -3559,7 +3557,7 @@
     line-height: 1.25rem;
     padding: 0.3125rem 0.625rem;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 1.125rem;
@@ -3596,7 +3594,7 @@
     font-weight: bold;
   }
   .eQfpOS .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gcQjQT .input-control textarea,
   .gcQjQT .input-control input {
@@ -3607,7 +3605,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gOLODp .coin-icon {
     order: -1;
@@ -3653,8 +3651,8 @@
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
   }
   .gfnHxc .icon:first-of-type {
@@ -3687,8 +3685,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .lgcQbT .input-control {
     height: 3rem;
     line-height: 3rem;
@@ -3702,8 +3699,8 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -3737,7 +3734,7 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
   .gOHquD .select-trigger .arrow {
     width: 2.5rem;
@@ -3765,8 +3762,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .lgcQbT .input-control {
     height: 3rem;
     line-height: 3rem;
@@ -3776,7 +3772,7 @@
     border-color: transparent;
   }
   .eQfpOS .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
   }
   .kDuLvp .input-control {
     position: relative;
@@ -3784,8 +3780,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -3799,7 +3795,7 @@
     opacity: 0.5;
   }
   .eQfpOS .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .kDuLvp .input-control textarea,
   .kDuLvp .input-control input {
@@ -3810,7 +3806,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .fWAvBM .copy-button {
     width: 2.5rem;
@@ -3828,7 +3824,7 @@
     flex-basis: 48%;
   }
   .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
   }
@@ -3863,7 +3859,7 @@
     -webkit-box-pack: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
   }
   .hSKlkh .title {
     font-weight: bold;
@@ -3895,7 +3891,7 @@
     margin-right: 0.25em;
   }
   .hSKlkh .coin .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
   .hSKlkh .coin .amount .amount-str {
@@ -3919,8 +3915,7 @@
     width: 100%;
     min-width: 80px;
     height: 100%;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(122, 128, 140, 0.15);
+color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -3991,7 +3986,7 @@
     cursor: default;
   }
   .cKpuTs .keno_styles_item .keno-ritem {
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     position: absolute;
     inset: 0px;
     cursor: pointer;
@@ -4086,7 +4081,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     font-size: 16px;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .cKpuTs .keno_styles_item:disabled .keno-ritem .keno-num.mismatch {
@@ -4103,7 +4098,7 @@
     position: relative;
   }
   .ZOVvL {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     display: grid;
     grid-template-rows: auto auto;
     position: relative;
@@ -4125,8 +4120,8 @@
     -webkit-box-pack: center;
     justify-content: center;
     border-radius: 0.1875rem;
-    background-color: rgb(49, 52, 60);
-    color: rgb(153, 164, 176);
+    background-color: var(--card-bg-2);
+    color: var(--text-4);
   }
   .cxPcDj .bottom-line {
     height: 0.25rem;
@@ -4144,8 +4139,7 @@
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
   }
   .fQmThe .box-bg {
     position: absolute;
@@ -4194,7 +4188,7 @@
     right: 0px;
     height: 1px;
     opacity: 0.3;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
   }
   .cWaNyl {
     margin-left: 0.9375rem;
@@ -4203,7 +4197,7 @@
     max-width: 542px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
   }
   .eXSObm {
     border-radius: 0.1875rem;
@@ -4238,7 +4232,7 @@
     flex: 0 0 auto;
     height: 0.375rem;
     margin-top: auto;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 0.1875rem;
     position: relative;
     overflow: hidden;
@@ -4259,7 +4253,7 @@
     bottom: -0.5rem;
     height: 1px;
     z-index: 1;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
   }
   .buHOgK {
     flex: 1 1 auto;
@@ -4317,7 +4311,7 @@
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
   }
   .gJxbeS .game-tabs .tabs-navs .tabs-nav {
     width: 5.625rem;
@@ -4336,7 +4330,7 @@
     z-index: 1;
   }
   .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     border-radius: 1.125rem;
     background-image: linear-gradient(
@@ -4376,7 +4370,7 @@
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
   }
   .gJxbeS .game-tabs .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
   }
@@ -4420,7 +4414,7 @@
     -webkit-box-align: center;
     align-items: center;
     flex-wrap: wrap;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     padding: 0px 1rem 1rem 0px;
   }
   .etgLiE {
@@ -4464,7 +4458,7 @@
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.56;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin: 0px 0px 0.75rem 0.625rem;
   }
   .etgLiE .prize-amount {
@@ -4472,7 +4466,7 @@
     width: 16.375rem;
     padding: 0.625rem 1.25rem;
     border-radius: 0.625rem;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -4487,7 +4481,7 @@
     margin-right: 0.5rem;
   }
   .etgLiE .currency-name {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-left: 0.5rem;
   }
   .kigfAw {
@@ -4508,7 +4502,7 @@
     margin-bottom: 0.75rem;
     font-size: 0.75rem;
     opacity: 0.6;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     text-align: center;
   }
   .kigfAw .breathe {
@@ -4518,7 +4512,7 @@
     margin: 0px auto;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -4563,7 +4557,7 @@
     margin-top: 2.25rem;
   }
   .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
   .iTDswZ {
@@ -4609,7 +4603,7 @@
   .bAjcBf .champion__title .contest-ml {
     font-size: 0.75rem;
     opacity: 0.6;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     margin-left: 0.5625rem;
   }
   .bAjcBf .user-name {
@@ -4617,7 +4611,7 @@
   }
   .bAjcBf .user-name .name {
     font-family: inherit;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .iTDswZ .name {
     flex: 1 1 0%;
@@ -4626,7 +4620,7 @@
     white-space: nowrap;
   }
   .iTDswZ.user-info .hidden-name {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -4645,7 +4639,7 @@
   }
   .bAjcBf .profit-name {
     opacity: 0.6;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     margin-right: 0.625rem;
   }
   .erPQzq {
@@ -4671,11 +4665,11 @@
     color: rgb(67, 179, 9);
   }
   .bAjcBf .percent {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .jxPnWI {
     border-radius: 1.25rem;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     margin: 0.75rem 0px;
   }
   .jxPnWI .title {
@@ -4683,8 +4677,7 @@
     text-align: center;
     height: 3.375rem;
     line-height: 3.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 0.75rem;
+color: var(--text-6);    font-size: 0.75rem;
   }
   .jxPnWI .active-icon {
     position: absolute;
@@ -4721,15 +4714,14 @@
     margin-left: 0.1875rem;
     position: relative;
     z-index: 2;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .jxPnWI .list {
     padding: 0px 0.75rem 0.75rem;
   }
   .jxPnWI .list-head {
     padding: 0px;
-    color: rgba(153, 164, 176, 0.6);
-    font-weight: normal;
+color: var(--text-6);    font-weight: normal;
     font-size: 0.75rem;
   }
   .jxPnWI .item {
@@ -4737,7 +4729,7 @@
     padding: 0.625rem 0px;
     line-height: 1.625rem;
     border-radius: 0.1875rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
   }
   .jxPnWI .item > div:first-of-type {
@@ -4745,10 +4737,9 @@
     justify-content: flex-start;
   }
   .jxPnWI .list-head .position {
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .jxPnWI .item .position {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     font-weight: normal;
     flex: 0 1 24%;
   }
@@ -4796,7 +4787,7 @@
   .hsmSjD {
     width: 100%;
     border-radius: 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.5rem 1.5rem 2rem;
     margin-top: 2rem;
   }
@@ -4808,7 +4799,7 @@
   }
   .hsmSjD .intro-title > p {
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
     margin: 0px;
     white-space: nowrap;
@@ -4822,7 +4813,7 @@
     margin: 0px 1.125rem 0.3125rem 0px;
     padding: 0.5rem 1.25rem;
     border-radius: 1.125rem;
-    background-color: rgb(43, 47, 54);
+    background-color: var(--card-bg-10);
   }
   .hsmSjD .intro-title .intro-tags > p:last-of-type {
     margin-right: 0px;
@@ -4836,7 +4827,7 @@
     height: 2.5rem;
     margin-top: 2rem;
     border-radius: 1.25rem;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -4954,7 +4945,7 @@
     width: 100%;
     height: 100%;
     transition: all 0.3s ease 0s;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
   }
   .dbJiKC .img img {
     width: 100%;
@@ -4972,7 +4963,7 @@
     opacity: 0;
   }
   .dbJiKC .hover-mask .house-edge {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: right;
     padding: 0.625rem 0.875rem 0px 0px;
   }
@@ -5009,8 +5000,7 @@
   .gVplre .item {
     height: 1.25rem;
     line-height: 1.25rem;
-    color: rgb(152, 167, 181);
-    display: block;
+color: var(--text-7);    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5048,7 +5038,7 @@
     justify-content: center;
   }
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(
@@ -5080,8 +5070,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -5112,7 +5101,7 @@
     line-height: 1.25rem;
     padding: 0.3125rem 0.625rem;
     white-space: nowrap;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background-color: rgb(37, 39, 43);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px;
     border-radius: 1.125rem;
@@ -5141,14 +5130,14 @@
     border-color: transparent;
   }
   .cYiOHZ .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
   }
   .fCSgTW .input-control input {
     font-weight: bold;
   }
 
   .cYiOHZ .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gcQjQT .input-control textarea,
   .gcQjQT .input-control input {
@@ -5159,7 +5148,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .gOLODp .coin-icon {
     order: -1;
@@ -5216,28 +5205,27 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .lmWKWf .input-control {
     border-color: transparent;
   }
   .cYiOHZ .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
   }
   .hzTJOu .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 1;
     height: 2.75rem;
     border-radius: 1.5rem;
     padding: 0px 1.375rem;
   }
   .cYiOHZ .input-control input {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
   .hzTJOu .input-control textarea,
   .hzTJOu .input-control input {
@@ -5248,7 +5236,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
   .cYiOHZ .input-control .button-group {
@@ -5284,7 +5272,7 @@
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: rgb(49, 52, 60);
+    background: var(--card-bg-2 );
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -5329,7 +5317,7 @@
     color: rgb(255, 255, 255);
   }
   .eIHoct .increse {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
   .eIHoct .text {
     padding: 0px 0.25rem;
@@ -5357,7 +5345,7 @@
   }
 
   .lmWKWf .game-tabs .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
   }
@@ -5370,8 +5358,7 @@
   }
   .cuPxwd {
     padding: 2.5rem 0px;
-    color: rgba(153, 164, 176, 0.6);
-    line-height: 1;
+color: var(--text-6);    line-height: 1;
     text-align: center;
     height: 100%;
     min-height: 16.25rem;
@@ -5430,8 +5417,7 @@
   }
   .kHsZCY .head {
     height: 3.125rem;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .kHsZCY .item,
   .kHsZCY .head {
     margin: 0px;
@@ -5465,7 +5451,7 @@
   }
   .kHsZCY .item {
     height: 3.3125rem;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
   li {
     margin: 0.5em 0;
@@ -5505,13 +5491,13 @@
     align-items: flex-end;
   }
   .bFXMsx .wrap.ball-wrap .range-item {
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     flex-wrap: wrap;
     width: 1.875rem;
     height: 1.875rem;
     text-align: center;
     line-height: 1.875rem;
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
     border-radius: 0.9375rem;
     font-weight: 800;
   }
@@ -5523,7 +5509,7 @@
     bottom: -0.5rem;
     height: 1px;
     z-index: 1;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
   }
   .bFXMsx .title {
     position: absolute;

@@ -37,7 +37,7 @@
 .deEgdn .title {
     font-size: 1rem;
     margin: 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     display: flex;
     -webkit-box-align: center;
@@ -57,7 +57,7 @@
 .hJFGXE .content-area .right-info {
     flex: 5 1 0%;
     margin-left: 0.25rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     min-height: 47.5rem;
     padding: 1.5rem 1.875rem;
@@ -68,7 +68,7 @@
     line-height: 1.25rem;
     font-weight: bold;
     margin: 0.8em 0;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
 }
 
 .bREORj .select {
@@ -85,7 +85,7 @@
 .bREORj .select .select-trigger {
     border-radius: 1.5rem;
     margin-bottom: 0.75rem;
-    background: rgba(36, 38, 43, 0.5);
+    background: var(--card-bg-8);
 }
 
 .gOHquD .select-trigger {
@@ -99,7 +99,7 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .gOHquD .select-trigger .arrow {
@@ -117,7 +117,7 @@
 .fysqIX {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     padding-bottom: 1.5rem !important;
 }
 .jScFby {
@@ -135,7 +135,7 @@
     font-size: 0.875rem;
     margin: 0px 0px 0.5rem;
     font-weight: 600;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .bREORj .item h2 {
     font-weight: 200;
@@ -161,7 +161,7 @@
     margin: 1.25rem auto 4rem;
 }
 .eWZHfu.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(88, 26, 196);
     background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
@@ -189,7 +189,7 @@
 .flYdYP {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 .flYdYP .item {
     margin-bottom: 2.75rem;
@@ -198,7 +198,7 @@
     font-size: 0.875rem;
     margin: 0.5rem 0px;
     font-weight: 600;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
 }
 .flYdYP .item p {
     margin: 0.75rem 0px;
@@ -214,7 +214,7 @@
 .flYdYP {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
 }
 .flYdYP .item {
     margin-bottom: 2.75rem;
@@ -223,7 +223,7 @@
     font-size: 0.875rem;
     margin: 0.5rem 0px;
     font-weight: 600;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
 }
 .flYdYP .item p {
     margin: 0.75rem 0px;

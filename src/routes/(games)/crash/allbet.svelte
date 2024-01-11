@@ -124,7 +124,7 @@ const handleAllbet = (()=>{
 
 <style>
 .iLyFYQ {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     margin-left: 0.625rem;
     border-radius: 1.25rem;
     width: 40%;
@@ -147,7 +147,7 @@ const handleAllbet = (()=>{
 }
 .iLyFYQ .top .title {
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .flex-middle {
     display: flex;
@@ -160,7 +160,7 @@ const handleAllbet = (()=>{
     width: 1.75rem;
     height: 1rem;
     border-radius: 0.5rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     position: relative;
     cursor: pointer;
 }
@@ -206,8 +206,7 @@ const handleAllbet = (()=>{
     table-layout: fixed;
     height: 3.75rem;
     font-size: 13px;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -263,7 +262,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .iUeetX td {
     overflow: hidden;
@@ -278,7 +277,7 @@ table {
     vertical-align: middle;
 }
 .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     font-size: 13px;
 }
@@ -314,7 +313,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .vjsVz .opacity {
     opacity: 0.5;
@@ -339,7 +338,7 @@ table {
     height: 1.2em;
 }
 .vjsVz .coin .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     font-size: 13px;
 }
@@ -397,7 +396,7 @@ table {
     color: rgb(237, 99, 0);
 }
 .vjsVz .coin .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
