@@ -40,7 +40,7 @@
   }
   .box {
     width: 100%;
-    background: #333;
+    background: #1e202466;
     padding: 12px;
     border-radius: 2px;
     color: #fff;

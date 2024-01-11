@@ -1,4 +1,7 @@
 <script>
+  import Icon from "svelte-icons-pack/Icon.svelte";
+  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
   export let coins = [];
   export let setActive;
   export let closeDialog;
@@ -7,27 +10,44 @@
   let isActive = (coin) => coin.coin_name === activeCoin.coin_name;
 </script>
 
-<div class="ui-dialog">
-  <div class="head">
-    <h5>Assets Portfolio</h5>
-    <button on:click={closeDialog}>X</button>
-  </div>
-  <div class="body">
-    {#each coins as coin}
+<div
+  class="ui-dialog ui-dialog-overlayer"
+  style="background-color: rgba(0, 0, 0, 0.667);"
+>
+  <div class="inner">
+    <div class="head">
+      <h5>Assets Portfolio</h5>
+
       <button
-        on:click={() => setActive(coin)}
-        disabled={isActive(coin)}
-        class={`coin ${isActive(coin) ? "is-active" : ""}`}
+        on:click={closeDialog}
+        class="sc-ieecCq fLASqZ close-icon dialog-close"
       >
-        <div class="coin-info">
-          <img class="icon" alt="" src={coin.coin_image} />
-          <p class="name">
-            {coin.coin_name}
-          </p>
-        </div>
-        <p class="balance">0.0001</p>
+        <Icon
+          src={IoCloseSharp}
+          size="25"
+          color="rgba(153, 164, 176, 0.6)"
+          className="custom-icon"
+          title="arror"
+        />
       </button>
-    {/each}
+    </div>
+    <div class="body">
+      {#each coins as coin}
+        <button
+          on:click={() => setActive(coin)}
+          disabled={isActive(coin)}
+          class={`coin ${isActive(coin) ? "is-active" : ""}`}
+        >
+          <div class="coin-info">
+            <img class="icon" alt="" src={coin.coin_image} />
+            <p class="name">
+              {coin.coin_name}
+            </p>
+          </div>
+          <p class="balance">0.0001</p>
+        </button>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -39,10 +59,17 @@
     width: 100%;
     height: 100%;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    place-items: center;
     overflow: hidden;
     background-color: #17181b;
+  }
+  .inner {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    width: 100%;
+    background-color: #101012;
   }
   .head {
     padding: 20px;
@@ -50,7 +77,6 @@
     align-items: center;
     justify-content: space-between;
     background-color: #101012;
-    background-color: red;
   }
   .body {
     margin: 20px;

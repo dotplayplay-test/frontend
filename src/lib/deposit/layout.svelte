@@ -2,34 +2,24 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import Crypto from "./Crypto.svelte";
-  import Swap from "./Swap.svelte";
   import { createEventDispatcher } from "svelte";
   import Fiat from "./fiat.svelte";
   const dispatch = createEventDispatcher();
   let crypto = true;
   let fiat = false;
   let buy = false;
-  let swap = false;
 
   const handleTabs = (e) => {
     if (e === 1) {
       crypto = true;
-      swap = false;
       fiat = false;
       buy = false;
     } else if (e === 2) {
       crypto = false;
-      swap = true;
-      fiat = false;
+      fiat = true;
       buy = false;
     } else if (e === 3) {
       crypto = false;
-      swap = false;
-      fiat = true;
-      buy = false;
-    } else if (e === 4) {
-      crypto = false;
-      swap = false;
       fiat = false;
       buy = true;
     }
@@ -67,14 +57,10 @@
             >
             <button
               on:click={() => handleTabs(2)}
-              class={`tabs-nav ${swap ? "is-active" : ""}`}>Swap</button
-            >
-            <button
-              on:click={() => handleTabs(3)}
               class={`tabs-nav ${fiat ? "is-active" : ""}`}>Fiat</button
             >
             <button
-              on:click={() => handleTabs(4)}
+              on:click={() => handleTabs(3)}
               class={`tabs-nav ${buy ? "is-active" : ""}`}>Buy Crypto</button
             >
           </div>
@@ -82,8 +68,6 @@
         <div class="tabs-view" style="transform: none;">
           {#if crypto}
             <Crypto />
-          {:else if swap}
-            <Swap />
           {:else if fiat}
             <Fiat />
           {/if}
