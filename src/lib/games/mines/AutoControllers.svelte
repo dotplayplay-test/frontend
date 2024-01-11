@@ -6,7 +6,10 @@ import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn } from "./store";
+import {liveStats} from "./store"
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
+import {useLiveStats} from "$lib/hook/livestats"
+const {recordGame} = useLiveStats(liveStats, "MINES_LIVE_STATS")
 
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"
@@ -172,7 +175,7 @@ const handleRollSubmit = (async()=>{
                 HandleDicePoint.set(res.data.point)
                 let prev = res.data.history[res.data.history.length - 1]
 
-                if(prev.has_won){
+                if(prev.has_won) {
                   winning_track += parseFloat(uiocd * $payout) - parseFloat(uiocd)
                   $soundHandler &&  playSound(2)
                   HandleHas_won.set(true)

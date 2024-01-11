@@ -1,9 +1,7 @@
-import { liveStats } from "../store";
-
-export default function useLiveStats() {
+export default function useLiveStats(store, key) {
 
     function recordGame(won, bet_amount, profit, token_img) {
-        let stats = JSON.parse(localStorage.getItem("HILO_LIVE_STATS") || JSON.stringify({
+        let stats = JSON.parse(localStorage.getItem(key) || JSON.stringify({
             token_img,
             profit: 0,
             wagered: 0,
@@ -28,8 +26,8 @@ export default function useLiveStats() {
             wins: won ? stats.wins + 1 : stats.wins,
             loses: !won ? stats.loses + 1 : stats.loses,
         };
-        localStorage.setItem("HILO_LIVE_STATS", JSON.stringify(stats));
-        liveStats.set(stats);
+        localStorage.setItem(key, JSON.stringify(stats));
+        store.set(stats);
     }
 
     function resetStats(token_img) {
@@ -41,13 +39,13 @@ export default function useLiveStats() {
             loses: 0,
             points: []
         };
-        localStorage.setItem("HILO_LIVE_STATS", JSON.stringify(_live));
-        liveStats.set(_live);
+        localStorage.setItem(key, JSON.stringify(_live));
+        store.set(_live);
         return _live;
     }
 
     function getStats() {
-        return JSON.parse(localStorage.getItem("HILO_LIVE_STATS") || JSON.stringify({
+        return JSON.parse(localStorage.getItem(key) || JSON.stringify({
             token_img: "/coin/BTC.black.png",
             profit: 0,
             wagered: 0,

@@ -89,3 +89,6 @@ export let Handles_alive = writable(s_alive)
 
 let s_aloading = false
 export let Handles_Loading = writable(s_aloading)
+
+let _liveStats = null;
+export let liveStats = writable(_liveStats);

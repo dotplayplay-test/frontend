@@ -36,6 +36,9 @@ import {
 } from "$lib/store/routes";
 import axios from "axios";
 import {
+    liveStats
+} from "./store";
+import {
     handleisLoggin
 } from "../../store/profile";
 import HistoryDetails from "./componets/historyDetails.svelte";

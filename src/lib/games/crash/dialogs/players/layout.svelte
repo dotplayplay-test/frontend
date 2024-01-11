@@ -1,6 +1,6 @@
 <script>
   import Loader from "$lib/components/loader.svelte";
-  import useFormatter from "../../hooks/formatter";
+  import useFormatter from "$lib/hook/formatter";
   import Decimal from "decimal.js";
   const { removeTrailingZeros, getSuffix } = useFormatter();
   import { UseFetchData } from "$lib/hook/useFetchData";

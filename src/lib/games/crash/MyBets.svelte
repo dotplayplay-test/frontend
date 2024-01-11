@@ -4,7 +4,7 @@
 
 <script>
   const { autorun } = connect();
-  import useFormatter from "./hooks/formatter";
+  import useFormatter from "$lib/hook/formatter";
   const { removeTrailingZeros, getSuffix } = useFormatter();
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { crashGame } from "./store";

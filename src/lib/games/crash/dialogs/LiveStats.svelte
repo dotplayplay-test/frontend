@@ -2,8 +2,8 @@
    import {crashGame } from "../store";
   import { browser } from "$app/environment";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
-  import useFormatter from "../hooks/formatter";
-  import useLiveStats from "../hooks/livestats";
+  import useFormatter from "$lib/hook/formatter";
+  import useLiveStats from "$lib/hook/livestats";
   import { liveStats } from "../store";
   import {
     Chart,
@@ -24,7 +24,7 @@
   );
   $: chartContainer = null;
   const { removeTrailingZeros, getSuffix } = useFormatter();
-  const { getStats, resetStats, recordGame } = useLiveStats();
+  const { getStats, resetStats, recordGame } = useLiveStats(liveStats, "CRASH_LIVE_STATS");
   $: draggableContainer = null;
   $: stats = $liveStats || getStats();
   let chartInstance = null;

@@ -6,7 +6,7 @@
   import { screen } from "$lib/store/screen";
   import { onDestroy, onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
-  import useFormatter from "./hooks/formatter";
+  import useFormatter from "$lib/hook/formatter";
   const { autorun } = connect();
   const { removeTrailingZeros, getSuffix } = useFormatter();
   $: trendBetActive = false;
