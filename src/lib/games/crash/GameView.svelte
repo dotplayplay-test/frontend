@@ -129,13 +129,6 @@
 {/if}
 <div class="game-view">
   <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
-    <!-- <div class="sc-lheXJl lhEJig jackpot-enter">
-      <div class="title"><span class="tit">Bankroll</span><span>CUB</span></div>
-      <div class="sc-Galmp erPQzq coin notranslate">
-        <img a class="coin-icon" src="/coin/BTC.black.png" />
-        <div class="amount"><span class="amount-str">4610093.31</span></div>
-      </div>
-    </div> -->
     <div bind:this={betsContainer} class="recent-list-wrap">
       <div class="recent-list" style="transform: translate(0%, 0px);">
         {#each gameHistory as game, index (`${index}_${game.gameId}`)}
@@ -163,6 +156,11 @@
             </div>
           </div>
         {/each}
+        {#if !Boolean(gameHistory.length)}
+          <div class="empty-item">
+            <p>Game results will be displayed here.</p>
+          </div>
+        {/if}
       </div>
     </div>
     <button
@@ -182,7 +180,9 @@
         <div class="Le">
           <div class="msg">
             <span>Won</span>
-            <span class="amount">{winData.profitAmount} {winData.currencyName}</span>
+            <span class="amount"
+              >{winData.profitAmount} {winData.currencyName}</span
+            >
           </div>
           <img
             alt=""
@@ -404,5 +404,11 @@
     right: 0px;
     bottom: -1px;
     width: 100%;
+  }
+  .empty-item {
+    text-align: center;
+    display: flex;
+    padding: 7px 120px 0 9px;
+    justify-content: center;
   }
 </style>
