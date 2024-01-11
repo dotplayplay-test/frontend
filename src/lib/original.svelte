@@ -1,11 +1,6 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoDice from "svelte-icons-pack/io/IoDice";
-  import IoRocket from "svelte-icons-pack/io/IoRocket";
-  import BiBomb from "svelte-icons-pack/bi/BiBomb";
   import { routes } from "../lib/store/routes";
   import { createEventDispatcher } from "svelte";
-  import BsDice5 from "svelte-icons-pack/bs/BsDice5";
   export let styls;
   let dispatch = createEventDispatcher();
   import { goto } from "$app/navigation";
@@ -15,56 +10,56 @@
       {
         id: 1,
         name: "Crash",
-        icon: IoRocket,
+        icon: "icon_Crash",
         route: "crash",
         isAtive: $routes.route === "/(games)/crash",
       },
       {
         id: 2,
         name: "Classic Dice",
-        icon: BsDice5,
+        icon: "icon_ClassicDice",
         route: "classic-dice",
         isAtive: $routes.route === "/(games)/classic-dice",
       },
       {
         id: 3,
         name: "Plinko",
-        icon: IoDice,
+        icon: "icon_Plinko",
         route: "plinko",
         isAtive: $routes.route === "/(games)/plinko",
       },
       {
         id: 4,
         name: "Tower",
-        icon: IoDice,
+        icon: "icon_Bingo",
         route: "tower",
         isAtive: $routes.route === "/(games)/tower",
       },
       {
         id: 5,
         name: "HiLo",
-        icon: IoDice,
+        icon: "icon_Hilo",
         route: "hilo",
         isAtive: $routes.route === "/(games)/hilo",
       },
       {
         id: 6,
         name: "Diamonds",
-        icon: IoDice,
+        icon: "icon_HashDice",
         route: "diamonds",
         isAtive: $routes.route === "/(games)/diamonds",
       },
       {
         id: 7,
         name: "Mines",
-        icon: BiBomb,
+        icon: "icon_Mines",
         route: "mines",
         isAtive: $routes.route === "/(games)/mines",
       },
       {
         id: 8,
         name: "Keno",
-        icon: IoDice,
+        icon: "icon_Keno",
         route: "keno",
         isAtive: $routes.route === "/(games)/keno",
       },
@@ -77,19 +72,20 @@
   };
 </script>
 
-<div class="orginal-game-routes" style={`left: ${styls ? 240 : 76}px;`}>
-  <div class="orginal-game-routes-container">
+<div class="game-list" style={`left: ${styls ? 240 : 76}px;`}>
+  <div class="game-list-container">
     {#each games as game (game.id)}
       <button on:click={() => handleOriginalRoute(`/${game.route}`, 2)}>
-        <div
-          class={game.isAtive
-            ? "IsActive-original-content"
-            : "original-content"}
-        >
-          <div class="icon">
-            <Icon src={game.icon} size="22"/>
+        <div class="game-item {game.isAtive ? 'select' : ''}">
+          <div class="game-icon">
+            <svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="sc-gsDKAQ hxODWG icon"
+              ><use xlink:href="#{game.icon}"></use></svg
+            >
+            <!-- <Icon src={game.icon} size="22"/> -->
           </div>
-          <div class="name">
+          <div class="game-name">
             <p>{game.name}</p>
           </div>
         </div>
@@ -99,68 +95,69 @@
 </div>
 
 <style>
-  .orginal-game-routes {
+  .game-list {
     transition: 0.5s ease;
     position: fixed;
     width: 200px;
     height: 100vh;
     top: 0;
     z-index: 1000;
+    width: 15rem;
     background-color: rgb(45, 48, 53);
+    padding-top: 8.125rem;
+    z-index: 0;
   }
 
-  .orginal-game-routes .orginal-game-routes-container {
-    margin-top: 140px;
-  }
+  .game-list-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
 
-  .orginal-game-routes-container button {
+  .game-list-container button {
     width: 100%;
     background: none;
     border: none;
     margin: 0;
   }
-
-  .original-content .icon,
-  .IsActive-original-content .icon {
-    font-size: 17px;
-    padding: 0 10px;
-    fill: rgba(153, 164, 176, 0.8);
-  }
-
-  .original-content .name,
-  .IsActive-original-content .name {
-    padding: 2px;
-  }
-
-  .orginal-game-routes-container .IsActive-original-content {
+  .game-item .game-icon {
+    width: 2.5rem;
+    height: 1.75rem;
     display: flex;
-    gap: 5px;
-    padding: 6px 0;
-    width: 90%;
-    border-radius: 30px;
-    border: 1px solid #42b3096b;
-    color: rgba(153, 164, 176, 0.8);
-    margin: 5px;
-    transition: 0.7s ease;
-    cursor: pointer;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
   }
-
-  .orginal-game-routes-container .original-content {
+  .game-item .game-name {
+    margin-left: 0.75rem;
+    white-space: nowrap;
+  }
+  .game-item {
+    width: 13.5rem;
+    height: 2.25rem;
+    margin: 0px auto 0.5rem;
+    border: 1px solid rgb(45, 48, 53);
+    border-radius: 1.25rem;
     display: flex;
-    gap: 5px;
-    padding: 6px 0;
-    width: 90%;
-    border-radius: 30px;
-    color: rgba(153, 164, 176, 0.8);
-    margin: 5px;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.875rem;
     cursor: pointer;
+    color: rgba(153, 164, 176, 0.6);
+  }
+  .game-item.select {
+    border: 1px solid rgba(93, 160, 0, 0.4);
+    color: rgb(245, 246, 247);
+  }
+  .game-item.select .icon {
+    fill: rgb(245, 246, 247);
   }
 
-  .orginal-game-routes-container .original-content:hover,
-  .original-content:hover .icon {
-    color: #f5f6f7;
-    font-weight: 800;
-    fill: #f5f6f7;
+  .game-item:hover,
+  .game-item:hover .icon {
+    color: rgb(245, 246, 247);
+    fill: rgb(245, 246, 247);
     transition: 0.5s ease;
   }
 </style>

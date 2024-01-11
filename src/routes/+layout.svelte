@@ -29,7 +29,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "$lib/firebaseAuth/index";
 import { onMount } from "svelte";
 import { default_Wallet } from "../lib/store/coins"
-import { handle_IsRedwinners} from "../lib/crashgame/store"
 import Closesidebar from "$lib/closesidebar.svelte";
     import Loader from "$lib/components/loader.svelte";
 let isOpenSide = true
@@ -37,19 +36,6 @@ let isChatRoom = 0
 let isMenu = false
 let sideDetection = 0
 
-
-$:{
-    for(let i = 0; i < $handle_IsRedwinners.length; i++){
-        let wllet = {
-            coin_name: $handle_IsRedwinners[i]._doc.token,
-            coin_image:  $handle_IsRedwinners[i]._doc.token_img,
-            balance:  $handle_IsRedwinners[i].update_bal
-        }
-        if($profileStore.user_id === $handle_IsRedwinners[i]._doc.user_id){
-            default_Wallet.set(wllet)
-        }
-    }
-} 
 
 
 $:{
@@ -107,32 +93,8 @@ const handleMainMenu = (() => {
 })
 
 let ens = browser && window.innerWidth
-$:{
-browser && addEventListener("resize", () => {
-    ens = (window.innerWidth)
-    screen.set(ens)
-    if (browser && window.innerWidth < 650) {
-        is_mobile = true
-    }
-    else if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
-        isOpenSide = false
-        is_mobile = false
-        is_open__Appp.set(false)
-        sideDetection = 76
-    }
-    else {
-        is_mobile = false
-        isOpenSide = true
-        is_open__Appp.set(true)
-        sideDetection = 240
-    }
-})
-}
 
-onMount(()=>{
-    ens = browser && window.innerWidth
-    screen.set(ens)
-})
+
 
 let isnotification = false
 const handleChatroom = ((e) => {
@@ -153,7 +115,7 @@ const handleChatroom = ((e) => {
 
 onMount(() => {
     if (browser && window.innerWidth < 650) {
-        isOpenSide = true
+        isOpenSide = false
         sideDetection = 0
         is_open__Appp.set(false)
     } else if (browser && window.innerWidth > 1220) {
@@ -164,6 +126,27 @@ onMount(() => {
         isOpenSide = false
         sideDetection = 76
     }
+    ens = browser && window.innerWidth
+    screen.set(ens)
+    browser && addEventListener("resize", () => {
+    ens = (window.innerWidth)
+    screen.set(ens)
+    if (browser && window.innerWidth < 650) {
+        is_mobile = true
+    }
+    else if (browser && window.innerWidth > 650 && window.innerWidth < 1000) {
+        isOpenSide = false
+        is_mobile = false
+        is_open__Appp.set(false)
+        sideDetection = 76
+    }
+    else {
+        is_mobile = false
+        isOpenSide = true
+        is_open__Appp.set(true)
+        sideDetection = 240
+    }
+})
 })
 
 
