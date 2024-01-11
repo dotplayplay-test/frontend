@@ -9,6 +9,22 @@
   import RiDocumentFolderOpenFill from "svelte-icons-pack/ri/RiDocumentFolderOpenFill";
   import BiHelpCircle from "svelte-icons-pack/bi/BiHelpCircle";
   import BsClock from "svelte-icons-pack/bs/BsClock";
+  import { default_Wallet, coin_list } from "$lib/store/coins";
+
+  /** Configure socket */
+  import { io } from "socket.io-client";
+
+  const socketURL = "ws://localhost:8000";
+
+  const socket = io(socketURL);
+
+  console.log("default_Wallet", $default_Wallet);
+
+  socket.on("latest-bet", (message) => {
+    console.log(message);
+  });
+
+  /** Configure socket */
 
   let activeTab = "tab1";
   let activeTabB = "tabB1";
@@ -28,6 +44,14 @@
   let bckendGeneratedNumbers = [];
   let bet_id = 0;
   let betAmount = "100.000000000";
+  let isWinIncrease = false;
+  let isLossIncrease = false;
+  let percentageIncreaseOfAmountBetPerWin = 0;
+  let percentageDecreaseOfAmountBetPerLoss = 0;
+  let stopOnWin = 0;
+  let stopOnLose = 0;
+  let numberOfBets = 0;
+  let currentBalance = 0;
   let bets = [
     {
       betId: 7283414130500837,
@@ -212,6 +236,39 @@
   let winningMultiplierIndex = null;
   let wins = [];
 
+  function toggleIncrease(type) {
+    if (type === "win") {
+      isWinIncrease = !isWinIncrease;
+    } else {
+      isLossIncrease = !isLossIncrease;
+    }
+  }
+
+  function setPercentage(type, event) {
+    let value = event.target.value;
+    if (type === "win") {
+      percentageIncreaseOfAmountBetPerWin = parseFloat(value).toFixed(9);
+    } else {
+      percentageDecreaseOfAmountBetPerLoss = parseFloat(value).toFixed(9);
+    }
+  }
+
+  function setTerminalValue(type, event) {
+    let value = event.target.value;
+    if (type === "win") {
+      stopOnWin = parseFloat(value).toFixed(9);
+    } else {
+      stopOnLose = parseFloat(value).toFixed(9);
+    }
+
+    console.log("stopOnWin", stopOnWin);
+    console.log("stopOnLose", stopOnLose);
+  }
+
+  function setBetCount(event) {
+    numberOfBets = event.target.value;
+  }
+
   function saveButton(index) {
     toggleSelectState(index);
 
@@ -324,7 +381,10 @@
     };
 
     // submit game
-    await postGameResult(handleResultPayload);
+    const gameResult = await postGameResult(handleResultPayload);
+
+    currentBalance = gameResult.payload.balance;
+    console.log("currentBalance", currentBalance);
   }
 
   async function pcPlay() {
@@ -408,6 +468,7 @@
     );
 
     const json = await res.json();
+    console.log("default_Wallet.balance", $default_Wallet.balance);
 
     return json;
   }
@@ -416,6 +477,87 @@
   function clearGameTable() {
     resetGame();
   }
+
+  /** Handle Auto bet - start */
+
+  async function autoBettingGame() {
+    // currentBalance = $default_Wallet.balance;
+    const currentBal = $default_Wallet.balance;
+    currentBalance = currentBal;
+    console.log("currentBal", currentBal);
+    console.log("currentBalance", currentBalance);
+
+    // const accountBalance = currentBalance;
+    const initialAmountBet = Number(betAmount);
+    // const numberOfBets = 0;
+    // const stopOnWin = 0;
+    // const stopOnLose = 0;
+
+    // let currentBalance = accountBalance;
+    let currentAmountBet = initialAmountBet;
+
+    for (let i = 0; i < numberOfBets; i++) {
+      // Simulate a random outcome (win or lose)
+      await startBet();
+      // const win = Math.random() < 0.5;
+
+      // get winning status
+      const multiplier =
+        multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex];
+
+      const numMultiplier = Number(
+        multiplier.substring(0, multiplier.length - 1)
+      );
+
+      console.log("testing currentBal", currentBal);
+      console.log("testing currentBalance", currentBalance);
+      console.log("stopOnWin", stopOnWin);
+      console.log("stopOnLose", stopOnLose);
+      console.log("testing difference", currentBalance - currentBal);
+
+      if (numMultiplier > 0.0) {
+        // Handle win
+        // currentBalance += currentAmountBet;
+        console.log(
+          `Bet ${i + 1}: Win! New Balance: ${currentBalance.toFixed(8)}`
+        );
+
+        // Check if we reached the stopOnWin amount
+        if (currentBalance - currentBal >= stopOnWin) {
+          console.log(
+            `Reached stopOnWin amount of ${stopOnWin}. Game terminated.`
+          );
+          break;
+        }
+
+        // Increase the amount bet for the next round
+        currentAmountBet *= 1 + percentageIncreaseOfAmountBetPerWin / 100;
+        console.log("new bet amount", currentAmountBet);
+      } else {
+        // Handle loss
+        // currentBalance -= currentAmountBet;
+        console.log(
+          `Bet ${i + 1}: Loss! New Balance: ${currentBalance.toFixed(8)}`
+        );
+
+        // Check if we reached the stopOnLose amount
+        if (Math.abs(currentBalance - currentBal) >= stopOnLose) {
+          console.log(
+            `Reached stopOnLose amount of ${stopOnLose}. Game terminated.`
+          );
+          break;
+        }
+
+        // Decrease the amount bet for the next round
+        currentAmountBet *= 1 - percentageDecreaseOfAmountBetPerLoss / 100;
+        console.log("new bet amount", currentAmountBet);
+      }
+    }
+
+    console.log(`Game completed. Final Balance: ${currentBalance.toFixed(8)}`);
+  }
+
+  /** Handle Auto bet - end */
 </script>
 
 <div id="game-Keno" class="sc-cfJLRR gJxbeS game-style1 sc-dXNJws iClKJL">
@@ -557,7 +699,7 @@
           <div class="game-control-panel">
             <div class="sc-juEPzu kkZrMb">
               <button
-                on:click={() => startBet()}
+                on:click={() => autoBettingGame()}
                 class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
                 disabled={!multipliers.length}
                 ><div class="button-inner">
@@ -592,10 +734,14 @@
                     <div class="label-amount">192.706811 USD</div>
                   </div>
                   <div class="input-control">
-                    <input type="text" value="0.004400000" />
+                    <input type="text" value={betAmount} />
                     <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
                     <div class="sc-kDTinF bswIvI button-group">
-                      <button>/2</button><button>x2</button>
+                      <button on:click={() => toggleAmount("divide")}>/2</button
+                      >
+                      <button on:click={() => toggleAmount("multiply")}
+                        >x2</button
+                      >
                       <button class="sc-cAhXWc cMPLfC flex-button">
                         <Icon
                           src={RiSystemArrowUpSLine}
@@ -616,7 +762,11 @@
                 <div class="sc-ezbkAF hzTJOu input">
                   <div class="input-label">Number of Bets</div>
                   <div class="input-control">
-                    <input type="text" value="0" />
+                    <input
+                      on:input={(e) => setBetCount(e)}
+                      type="text"
+                      value="0"
+                    />
                     <div class="sc-kDTinF bswIvI button-group">
                       <button>∞</button><button>10</button><button>100</button>
                     </div>
@@ -627,8 +777,16 @@
                 <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
                   <div class="input-label">On win</div>
                   <div class="input-control">
-                    <input type="text" readonly="" value="0" />
-                    <div class="sc-cxVPaa eIHoct increase-switch">
+                    <input
+                      on:input={(e) => setPercentage("win", e)}
+                      type="text"
+                      readonly={!isWinIncrease}
+                      value="0"
+                    />
+                    <div
+                      on:click={() => toggleIncrease("win")}
+                      class="sc-cxVPaa eIHoct increase-switch"
+                    >
                       <div class="dot-wrap"><div class="dot"></div></div>
                       <div class="reset text">Reset</div>
                       <div class="increse text">Increase by</div>
@@ -639,9 +797,19 @@
                 <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
                   <div class="input-label">On lose</div>
                   <div class="input-control">
-                    <input type="text" readonly="" value="0" />
-                    <div class="sc-cxVPaa eIHoct increase-switch">
-                      <div class="dot-wrap"><div class="dot"></div></div>
+                    <input
+                      on:input={(e) => setPercentage("loss", e)}
+                      type="text"
+                      readonly={!isLossIncrease}
+                      value="0"
+                    />
+                    <div
+                      on:click={() => toggleIncrease("loss")}
+                      class="sc-cxVPaa eIHoct increase-switch"
+                    >
+                      <div class="dot-wrap">
+                        <div class="dot"></div>
+                      </div>
                       <div class="reset text">Reset</div>
                       <div class="increse text">Increase by</div>
                     </div>
@@ -656,11 +824,11 @@
                     <div class="label-amount">0 USD</div>
                   </div>
                   <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
-                      class="coin-icon"
-                      src="/coin/BTC.black.png"
-                      alt=""
-                    />
+                    <input
+                      on:input={(e) => setTerminalValue("win", e)}
+                      type="text"
+                      value="0.000000000"
+                    /><img class="coin-icon" src="/coin/BTC.black.png" alt="" />
                   </div>
                 </div>
                 <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
@@ -669,11 +837,11 @@
                     <div class="label-amount">0 USD</div>
                   </div>
                   <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
-                      class="coin-icon"
-                      src="/coin/BTC.black.png"
-                      alt=""
-                    />
+                    <input
+                      on:input={(e) => setTerminalValue("loss", e)}
+                      type="text"
+                      value="0.000000000"
+                    /><img class="coin-icon" src="/coin/BTC.black.png" alt="" />
                   </div>
                 </div>
               </div>
@@ -929,7 +1097,7 @@
         >
       </div>
     </div>
-    <div class="web no-mobile sc-hRMJXU cWaNyl">
+    <!-- <div class="web no-mobile sc-hRMJXU cWaNyl">
       <div class="sc-bQFuvY bFXMsx">
         <div class="history">
           <Icon
@@ -1014,7 +1182,7 @@
           ><tbody></tbody>
         </table>
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
     <div class="tabs-navs">
@@ -5088,6 +5256,10 @@
     left: 0px;
     transition: top 0.1s ease-in-out 0s;
     top: -0.0625rem;
+  }
+
+  .eIHoct .dot-wrap .dot.increase {
+    top: 1rem;
   }
   .eIHoct .reset {
     font-weight: bold;
