@@ -38,7 +38,7 @@
     -webkit-box-align: center;
     align-items: center;
     padding: 0px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 .dWgZek .select-wrap {
     height: 100%;
@@ -52,7 +52,7 @@
     height: 100%;
 }
 .dWgZek .select-wrap .select .select-trigger {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background: transparent;
     border-radius: 0px;
     padding: 0px;
@@ -87,7 +87,7 @@
     bottom: -0.75rem;
     height: 0.75rem;
     width: 100%;
-    background-image: linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
+    background-image: var(--bxs-1);
     opacity: 0.25;
 }
 .dWgZek .chat-features {
@@ -155,8 +155,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -164,7 +164,7 @@
 .ddROGz .send-input .input-area .input-control {
     height: auto;
     padding: 0px 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     align-items: flex-end;
     border: 1px solid rgba(49, 52, 58, 0.8);
     border-radius: 1.375rem;
@@ -196,7 +196,7 @@
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
 }
 .jScFby {
     box-sizing: border-box;
@@ -288,7 +288,7 @@ textarea {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .cVsgdS {
     position: relative;

@@ -150,7 +150,7 @@
 <style>
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -162,7 +162,7 @@
 
 .default-style>div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 
@@ -173,7 +173,7 @@
 .gRlUf {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     padding-bottom: 1.5rem !important;
 }
 
@@ -197,7 +197,7 @@
     font-size: 0.875rem;
     margin: 0px 0px 0.5rem;
     font-weight: 600;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .gRlUf .item .help-content {
@@ -247,8 +247,7 @@
 
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
@@ -256,10 +255,10 @@
 
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .iUeetX.is-stripe tbody tr:nth-child(2n-1) td {
-    background: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 </style>

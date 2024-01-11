@@ -40,7 +40,7 @@
 }
 .item-title {
     font-size: 1.5rem;
-    color: rgb(223, 227, 230);
+    color: var(--text-8);
     line-height: normal;
     margin-bottom: 0.75rem;
 }

@@ -617,7 +617,7 @@ const handleCashout = (()=>{
 .cFxmZX {
     width: 100%;
     border-radius: 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.5rem 1.5rem 2rem;
     margin-top: 2rem;
 }
@@ -645,7 +645,7 @@ const handleCashout = (()=>{
 }
 .cFxmZX .intro-title > p {
     font-size: 1rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
     margin: 0px;
     white-space: nowrap;
@@ -665,7 +665,7 @@ const handleCashout = (()=>{
     margin:  0px 3px;
     padding: 5px 10px;
     border-radius: 1.125rem;
-    background-color: rgb(43, 47, 54);
+    background-color: var(--card-bg-10);
 }
 .cFxmZX .intro-title .intro-tags {
     margin-left: 0px;
@@ -694,7 +694,7 @@ const handleCashout = (()=>{
     height: 2.5rem;
     margin-top: 2rem;
     border-radius: 1.25rem;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -709,7 +709,7 @@ const handleCashout = (()=>{
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 .game-tabs .tabs-navs {
     margin-bottom: 0.75rem;
@@ -734,7 +734,7 @@ const handleCashout = (()=>{
     width: 5.625rem;
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kQfmQV .tabs-nav {
@@ -757,7 +757,7 @@ const handleCashout = (()=>{
 .game-main {
     position: relative;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .game-view {
     flex: 1 1 0%;
@@ -774,7 +774,7 @@ const handleCashout = (()=>{
 }
 
 .gfnnAw .recent-list-wrap {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
     border-radius: 1.375rem;
     padding: 0px 0.625rem;
     margin: 0px 0.625rem;
@@ -893,8 +893,7 @@ const handleCashout = (()=>{
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgba(49, 52, 60, 0.4);
+color: var(--text-6);    background-color: var(--card-bg-11);
 }
 .gUytcA {
     min-width: 6.25rem;
@@ -968,7 +967,7 @@ const handleCashout = (()=>{
     right: 0px;
     height: 1px;
     opacity: 0.3;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
 }
 .jcwJKv.style-mobile .game-control-switch > button.is-active {
     border-bottom-color: rgb(67, 179, 9);
@@ -995,7 +994,7 @@ const handleCashout = (()=>{
     right: 0px;
     height: 1px;
     opacity: 0.3;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
 }
 .jcwJKv.style-mobile .game-control-switch > button.is-active {
     border-bottom-color: rgb(67, 179, 9);
@@ -1006,19 +1005,17 @@ const handleCashout = (()=>{
     border-bottom: 2px solid transparent;
 }
 .jcwJKv .game-control-switch > button.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .jcwJKv .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .jcwJKv .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .jcwJKv.style-mobile .game-control-panel {
     padding: 0px 1.125rem;
 }
@@ -1044,8 +1041,7 @@ const handleCashout = (()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .eRjsxw .chance-title {
     display: flex;
     flex: 1 1 0%;
@@ -1075,8 +1071,7 @@ const handleCashout = (()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gqMxJF {
     display: flex;
     -webkit-box-align: center;
@@ -1087,10 +1082,10 @@ const handleCashout = (()=>{
     border-color: transparent;
 }
 .jcwJKv .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .jcwJKv .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
+    background-color: var(--card-bg-11);
 }
 .gcQjQT .input-control input {
     flex: 1 1 0%;
@@ -1100,7 +1095,7 @@ const handleCashout = (()=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
  .coin-icon {
     order: -1;
@@ -1114,8 +1109,8 @@ const handleCashout = (()=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     opacity: 0.5;
     height: 2.75rem;
     border-radius: 1.5rem;
@@ -1132,7 +1127,7 @@ const handleCashout = (()=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .dcPZTa .button-group {
     width: 8.375rem;
@@ -1151,8 +1146,8 @@ const handleCashout = (()=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 .bswIvI > button:last-child {
@@ -1164,8 +1159,8 @@ const handleCashout = (()=>{
     height: 2.25rem;
     width: 2.75rem;
     padding: 0px;
-    color: rgb(153, 164, 176);
-    background: rgb(49, 52, 60);
+    color: var(--text-4);
+    background: var(--card-bg-2 );
     margin-left: 1px;
 }
 
@@ -1181,8 +1176,7 @@ const handleCashout = (()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gqMxJF .max-profit {
     position: relative;
     margin-left: 0.1875rem;
@@ -1253,8 +1247,7 @@ const handleCashout = (()=>{
         font-size: 13px;
         height: 1.25rem;
         margin: 0px 1.125rem 0.375rem;
-        color: rgba(153, 164, 176, 0.6);
-    }
+    color: var(--text-6);    }
     .chance-title {
         display: flex;
         flex: 1 1 0%;
@@ -1275,8 +1268,8 @@ const handleCashout = (()=>{
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        border: 1px solid rgb(45, 48, 53);
-        background-color: rgba(45, 48, 53, 0.5);
+        border: 1px solid var(--border-1);
+        background-color: var(--sidebar-card-bg);
         opacity: 1;
         height: 2.75rem;
         border-radius: 1.5rem;
@@ -1286,7 +1279,7 @@ const handleCashout = (()=>{
         border-color: transparent;
     }
     .input-control input {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
     .input-control input {
         flex: 1 1 0%;
@@ -1296,7 +1289,7 @@ const handleCashout = (()=>{
         padding: 0px;
         border: none;
         background-color: transparent;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-weight: bold;
     }
     .payout-txt {

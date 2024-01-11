@@ -5,7 +5,7 @@
   left: 0px;
   top: 0px;
   right: 0px;
-  background-color: rgb(36, 38, 43);
+  background-color: var(--card-bg-12);
   transition: all 0.2s linear 0s;
 }
 .gAvMHL .header-wrap {
@@ -29,7 +29,7 @@
   bottom: -0.75rem;
   width: 100%;
   height: 0.75rem;
-  background-image: linear-gradient(rgb(17, 20, 21), rgba(36, 38, 43, 0));
+  background-image: var(--bxs-1);
   opacity: 0.25;
 }
 .gAvMHL .left {
@@ -86,7 +86,7 @@
   height: 100%;
 }
 .fnKcEH.button {
-  color: rgb(245, 246, 247);
+  color: var(--text-5);
   box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
   background-color: rgb(67, 179, 9);
   background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
@@ -118,7 +118,7 @@
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  background-color: rgb(28, 30, 34);
+  background-color: var(--card-bg-1);
   border-radius: 1.4375rem;
   padding: 0px 0.875rem;
   height: 100%;
@@ -161,6 +161,11 @@
     fill: rgba(153, 164, 176, 0.6);
 }
 
+.PGOpB .chat-btn svg{
+  fill: var(--text-1);
+}
+
+
 
 
 .gAvMHL .right {
@@ -175,7 +180,7 @@
   margin-right: 24px;
 }
 .LQlWw {
-  background-color: rgb(30, 32, 36);
+  background-color: var(--card-bg-5);
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -204,7 +209,7 @@
   white-space: nowrap;
 }
 .icGouR .balance .amount {
-  color: rgb(245, 246, 247);
+  color: var(--text-5);
   font-weight: 800;
 }
 
@@ -212,7 +217,7 @@
   opacity: 0.5;
 }
 .eWZHfu.button {
-  color: rgb(245, 246, 247);
+  color: var(--text-5);
   box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
   background-color: rgb(88, 26, 196);
   background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
@@ -230,7 +235,7 @@
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  background-color: rgb(30, 32, 36);
+  background-color: var(--card-bg-5);
   border-radius: 1.25rem;
   cursor: pointer;
   position: relative;

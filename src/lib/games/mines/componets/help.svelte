@@ -140,7 +140,7 @@ $:{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .fLASqZ {
@@ -159,7 +159,7 @@ $:{
 
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -171,7 +171,7 @@ $:{
 
 .default-style>div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 
@@ -192,7 +192,7 @@ $:{
 }
 
 .cTaiTH .help-list>button {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 1.25rem;
     display: flex;
     width: 100%;
@@ -204,8 +204,7 @@ $:{
     padding: 0px 1.25rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 @media screen and (min-width: 650px){
 .dialog {
@@ -221,7 +220,7 @@ $:{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 }

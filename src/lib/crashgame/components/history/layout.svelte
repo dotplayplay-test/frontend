@@ -85,7 +85,7 @@ $: {
 }
 
 .tabs-view {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 1px 0px;
 }
@@ -98,7 +98,7 @@ $: {
 }
 .ewHNmT .history-tab {
     height: 3.5rem;
-    border-bottom: 1px solid rgba(49, 52, 60, 0.6);
+    border-bottom: 1px solid var(--border-2);
     padding: 0px 1.25rem;
 }
 .ikWSlH {
@@ -134,8 +134,7 @@ table {
 }
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .iUeetX th, .iUeetX td {
     overflow: hidden;
     text-align: center;
@@ -143,8 +142,7 @@ table {
 }
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .iUeetX th:last-child, .iUeetX td:last-child {
     text-align: right;
 }
@@ -155,8 +153,7 @@ table {
 }
 .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
 }
@@ -165,7 +162,7 @@ table {
 }
 .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 .iUeetX th, .iUeetX td {
     overflow: hidden;
@@ -214,8 +211,7 @@ table {
     line-height: 2rem;
     margin: 0px 0.5rem 0px 24px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -228,7 +224,7 @@ table {
     padding: 0px 1.125rem;
 }
 .dORpLZ.pages-wrap .active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
 }
 .ewHNmT .pagination button {
@@ -263,7 +259,7 @@ table {
     padding: 0px;
 }
 .bnBwbM.page-pn button.disabled {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 .dORpLZ.page-pn button {
     width: 2.125rem;

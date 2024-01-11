@@ -151,7 +151,7 @@
     margin: 0px 0px 1.25rem;
     height: 1.25rem;
     line-height: 1.25rem;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .kIgFIY .left .word {
     margin-top: 3.125rem;
@@ -171,7 +171,7 @@
 }
 .jilEdF .step__item.current {
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     border-color: rgb(67, 179, 9);
     background: transparent;
 }
@@ -228,8 +228,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gcQjQT .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -238,7 +237,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
 }
 
@@ -247,7 +246,7 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     background-color: rgba(30, 32, 36, 0.6);
 
     opacity: 1;
@@ -305,7 +304,7 @@
     max-width: 16.25rem;
 }
 .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));

@@ -28,7 +28,7 @@
 <style>
 .ilqTnv {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .ilqTnv{
@@ -37,7 +37,7 @@
 
 .ilqTnv .commissions-rules {
     white-space: pre-line;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     background: none;
     padding: 0px;
     font-family: inherit;
@@ -48,7 +48,7 @@
 @media only screen and (max-width:650px){
     .ilqTnv {
         border-radius: 20px;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         padding: 4.25rem 1.25rem 0px;
     }
     .ilqTnv .commissions-rules {
@@ -57,7 +57,7 @@
         padding: 0px;
         font-family: inherit;
         font-size: 13px;
-        color: rgba(153, 164, 176, 0.8);
+        color: var(--original-text);
         margin: 0.5rem 0px 1.75rem;
     }
 }
