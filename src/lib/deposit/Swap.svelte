@@ -9,6 +9,7 @@
 
   import SwapField from "./components/SwapField.svelte";
   import SwapFooter from "./components/SwapFooter.svelte";
+  import SelectCoin from "./components/SelectCoin.svelte";
 
   const url = ServerURl();
 
@@ -73,7 +74,7 @@
   }
 
   const handleOnClickMax = () => {
-    from.amount = 900;
+    from.amount = 0;
   };
 
   const switchFields = () => {
@@ -83,9 +84,48 @@
     to = oldFrom;
   };
 
+  const handleCloseSelectCoins = () => {
+    showDialog = { isFrom: false, isShown: false };
+  };
+
+  const handleSelectCoin = (coin) => {
+    if (!showDialog.isShown) return;
+
+    if (showDialog.isFrom) {
+      from.coin = coin;
+    } else {
+      to.coin = coin;
+    }
+
+    showDialog = { isFrom: false, isShown: false };
+  };
+
+  const getDialogCoins = () => {
+    if (showDialog.isFrom) {
+      return getUsableCoins().filter(
+        (element) => element.coin_name !== to.coin.coin_name
+      );
+    } else {
+      return getUsableCoins().filter(
+        (element) => element.coin_name !== from.coin.coin_name
+      );
+    }
+  };
+
   let from = { amount: 0, coin: null };
   let to = { amount: 0, coin: null };
+
+  let showDialog = { isFrom: false, isShown: false };
 </script>
+
+{#if showDialog.isShown}
+  <SelectCoin
+    coins={getDialogCoins()}
+    activeCoin={showDialog.isFrom ? from.coin : to.coin}
+    setActive={handleSelectCoin}
+    on:closeDialog={handleCloseSelectCoins}
+  />
+{/if}
 
 <div class="ui-scrollview">
   <div class="s4kezgj limit-width" id="deposit">
@@ -103,7 +143,9 @@
         <div class="button-box">
           <div class="sq07zth">
             <SwapField
-              onClick={() => computeSwap()}
+              onClick={() => {
+                showDialog = { isFrom: true, isShown: true };
+              }}
               activeCoin={from.coin}
               onClickMax={handleOnClickMax}
               bind:amount={from.amount}
@@ -113,7 +155,9 @@
           </div>
           <div class="to-item">
             <SwapField
-              onClick={() => computeSwap()}
+              onClick={() => {
+                showDialog = { isFrom: false, isShown: true };
+              }}
               disabled={true}
               activeCoin={to.coin}
               bind:amount={to.amount}
