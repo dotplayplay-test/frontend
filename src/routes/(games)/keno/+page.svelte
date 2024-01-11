@@ -9,6 +9,22 @@
   import RiDocumentFolderOpenFill from "svelte-icons-pack/ri/RiDocumentFolderOpenFill";
   import BiHelpCircle from "svelte-icons-pack/bi/BiHelpCircle";
   import BsClock from "svelte-icons-pack/bs/BsClock";
+  import { default_Wallet, coin_list } from "$lib/store/coins";
+
+  /** Configure socket */
+  import { io } from "socket.io-client";
+
+  const socketURL = "ws://localhost:8000";
+
+  const socket = io(socketURL);
+
+  console.log("default_Wallet", $default_Wallet);
+
+  socket.on("latest-bet", (message) => {
+    console.log(message);
+  });
+
+  /** Configure socket */
 
   let activeTab = "tab1";
   let activeTabB = "tabB1";
@@ -26,6 +42,142 @@
   let multipliers = [];
   let uniqueRandomNumbers = [];
   let bckendGeneratedNumbers = [];
+  let bet_id = 0;
+  let betAmount = "100.000000000";
+  let isWinIncrease = false;
+  let isLossIncrease = false;
+  let percentageIncreaseOfAmountBetPerWin = 0;
+  let percentageDecreaseOfAmountBetPerLoss = 0;
+  let stopOnWin = 0;
+  let stopOnLose = 0;
+  let numberOfBets = 0;
+  let currentBalance = 0;
+  let bets = [
+    {
+      betId: 7283414130500837,
+      player: "Ahmm",
+      time: "22:34:24",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: "0.20480000",
+    },
+
+    {
+      betId: 7774625245205907,
+      player: "Nr1",
+      time: "22:34:23",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: "0.07459420",
+    },
+
+    {
+      betId: 8273309602945616,
+      player: "Hidden",
+      time: "22:34:22",
+      bet: 0.0000176,
+      payout: "1.10×",
+      profit: "+0.00000176",
+    },
+
+    {
+      betId: 7091867179075241,
+      player: "Hidden",
+      time: "22:34:21",
+      bet: 0.0001,
+      payout: "1.10×",
+      profit: "+0.00001000",
+    },
+
+    {
+      betId: 8285026273722425,
+      player: "Hidden",
+      time: "22:34:21",
+      bet: 0.24278732,
+      payout: "8.00×",
+      profit: +1.69951124,
+    },
+    {
+      betId: 7313371527512239,
+      player: "Hidden",
+      time: "22:34:20",
+      bet: 0.0009,
+      payout: "0.00×",
+      profit: 0.0009,
+    },
+    {
+      betId: 7283414130500836,
+      player: "Ahmm",
+      time: "22:34:19",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: 0.2048,
+    },
+    {
+      betId: 7774625245205906,
+      player: "Nr1",
+      time: "22:34:19",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: 0.0745942,
+    },
+    {
+      betId: 8285026273722424,
+      player: "Hidden",
+      time: "22:34:18",
+      bet: 0.24278732,
+      payout: "8.00×",
+      profit: +1.69951124,
+    },
+    {
+      betId: 7091867179075240,
+      player: "Hidden",
+      time: "22:34:17",
+      bet: 0.0001,
+      payout: "1.20×",
+      profit: +0.00002,
+    },
+    {
+      betId: 7313371527512238,
+      player: "Hidden",
+      time: "22:34:16",
+      bet: 0.0009,
+      payout: "0.00×",
+      profit: 0.0009,
+    },
+    {
+      betId: 8273309602945615,
+      player: "Hidden",
+      time: "22:34:16",
+      bet: 0.0000176,
+      payout: "0.00×",
+      profit: 0.0000176,
+    },
+    {
+      betId: 7774625245205905,
+      player: "Nr1",
+      time: "22:34:15",
+      bet: 0.0745942,
+      payout: "0.00×",
+      profit: 0.0745942,
+    },
+    {
+      betId: 7283414130500835,
+      player: "Ahmm",
+      time: "22:34:14",
+      bet: 0.2048,
+      payout: "0.00×",
+      profit: 0.2048,
+    },
+    {
+      betId: 2245649420563671,
+      player: "JOURNIE2023",
+      time: "22:34:14",
+      bet: 0.00000095,
+      payout: "0.00×",
+      profit: 0.00000095,
+    },
+  ];
   let multipliersObject = {
     0: [],
     1: ["0.00×", "3.96×"],
@@ -83,6 +235,41 @@
   };
   let winningMultiplierIndex = null;
   let wins = [];
+
+  function toggleIncrease(type) {
+    if (type === "win") {
+      isWinIncrease = !isWinIncrease;
+    } else {
+      isLossIncrease = !isLossIncrease;
+    }
+  }
+
+  function setPercentage(type, event) {
+    let value = event.target.value;
+    if (type === "win") {
+      percentageIncreaseOfAmountBetPerWin = parseFloat(value).toFixed(9);
+    } else {
+      percentageDecreaseOfAmountBetPerLoss = parseFloat(value).toFixed(9);
+    }
+  }
+
+  function setTerminalValue(type, event) {
+    let value = event.target.value;
+    if (type === "win") {
+      stopOnWin = parseFloat(value).toFixed(9);
+    } else {
+      stopOnLose = parseFloat(value).toFixed(9);
+    }
+
+    console.log("stopOnWin", stopOnWin);
+    console.log("stopOnLose", stopOnLose);
+  }
+
+  function setBetCount(value) {
+    console.log("bet count", value);
+    numberOfBets = Number(value);
+    console.log("numberOfBets", numberOfBets);
+  }
 
   function saveButton(index) {
     toggleSelectState(index);
@@ -168,30 +355,62 @@
       bckendGeneratedNumbers
     );
 
+    const multiplier =
+      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex];
+
     // get winning multiplier
-    wins.push(
-      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex]
-    );
+    wins.push(multiplier);
 
     wins = wins;
+
+    /** handle game result */
+    const activeWallet = await getActiveWallet();
+    generateBetId();
+
+    // get winning status
+    const numMultiplier = Number(
+      multiplier.substring(0, multiplier.length - 1)
+    );
+
+    const handleResultPayload = {
+      bet_token_name: activeWallet.coin_name,
+      bet_id: bet_id,
+      hidden: false,
+      bet_token_img: activeWallet.coin_image,
+      amount: Number(betAmount),
+      has_won: numMultiplier > 0.0,
+      profit: numMultiplier,
+    };
+
+    // submit game
+    const gameResult = await postGameResult(handleResultPayload);
+
+    currentBalance = gameResult.payload.balance;
+    console.log("currentBalance", currentBalance);
   }
 
   async function pcPlay() {
-    const token = localStorage.getItem("user").replaceAll('"', "");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    const headerConfig = getHeaders();
 
     const res = await fetch("http://localhost:8000/api/user/keno-game/bet", {
       method: "POST",
       body: null,
-      headers: config.headers,
+      headers: headerConfig.headers,
     });
 
     const json = await res.json();
     return json.nums;
+  }
+
+  function getHeaders() {
+    const token = localStorage.getItem("user").replaceAll('"', "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    return config;
   }
 
   function checkForMatch(player, pc) {
@@ -204,131 +423,440 @@
     return matchCount;
   }
 
-  function highlightPCNumbers() {}
+  function toggleAmount(action) {
+    if (action === "multiply") {
+      betAmount = "200.000000000";
+    } else {
+      betAmount = "100.000000000";
+    }
+  }
+
+  /** Handle Result */
+  async function getActiveWallet() {
+    const headerConfig = getHeaders();
+
+    const res = await fetch("http://localhost:8000/api/profile", {
+      method: "GET",
+      body: null,
+      headers: headerConfig.headers,
+    });
+
+    const json = await res.json();
+
+    const activeWalletInfo = json.wallet.filter(
+      (wallet) => wallet.is_active
+    )[0];
+    return activeWalletInfo;
+  }
+
+  function generateBetId() {
+    if (bet_id === 0) {
+      bet_id = Number(generateUniqueRandomNumbers(8, 11, 99).join(""));
+    } else {
+      bet_id += 1;
+    }
+  }
+
+  async function postGameResult(body) {
+    const headerConfig = getHeaders();
+
+    const res = await fetch(
+      "http://localhost:8000/api/user/keno-game/handle-cashout",
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: headerConfig.headers,
+      }
+    );
+
+    const json = await res.json();
+    console.log("default_Wallet.balance", $default_Wallet.balance);
+
+    return json;
+  }
+  /** Handle Result */
 
   function clearGameTable() {
     resetGame();
   }
+
+  /** Handle Auto bet - start */
+
+  async function autoBettingGame() {
+    // currentBalance = $default_Wallet.balance;
+    const currentBal = $default_Wallet.balance;
+    currentBalance = currentBal;
+    console.log("currentBal", currentBal);
+    console.log("currentBalance", currentBalance);
+
+    // const accountBalance = currentBalance;
+    const initialAmountBet = Number(betAmount);
+    // const numberOfBets = 0;
+    // const stopOnWin = 0;
+    // const stopOnLose = 0;
+
+    // let currentBalance = accountBalance;
+    let currentAmountBet = initialAmountBet;
+
+    for (let i = 0; i < numberOfBets; i++) {
+      // Simulate a random outcome (win or lose)
+      await startBet();
+      // const win = Math.random() < 0.5;
+
+      // get winning status
+      const multiplier =
+        multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex];
+
+      const numMultiplier = Number(
+        multiplier.substring(0, multiplier.length - 1)
+      );
+
+      console.log("testing currentBal", currentBal);
+      console.log("testing currentBalance", currentBalance);
+      console.log("stopOnWin", stopOnWin);
+      console.log("stopOnLose", stopOnLose);
+      console.log("testing difference", currentBalance - currentBal);
+
+      if (numMultiplier > 0.0) {
+        // Handle win
+        // currentBalance += currentAmountBet;
+        console.log(
+          `Bet ${i + 1}: Win! New Balance: ${currentBalance.toFixed(8)}`
+        );
+
+        // Check if we reached the stopOnWin amount
+        if (currentBalance - currentBal >= stopOnWin) {
+          console.log(
+            `Reached stopOnWin amount of ${stopOnWin}. Game terminated.`
+          );
+          break;
+        }
+
+        // Increase the amount bet for the next round
+        currentAmountBet *= 1 + percentageIncreaseOfAmountBetPerWin / 100;
+        console.log("new bet amount", currentAmountBet);
+      } else {
+        // Handle loss
+        // currentBalance -= currentAmountBet;
+        console.log(
+          `Bet ${i + 1}: Loss! New Balance: ${currentBalance.toFixed(8)}`
+        );
+
+        // Check if we reached the stopOnLose amount
+        if (Math.abs(currentBalance - currentBal) >= stopOnLose) {
+          console.log(
+            `Reached stopOnLose amount of ${stopOnLose}. Game terminated.`
+          );
+          break;
+        }
+
+        // Decrease the amount bet for the next round
+        currentAmountBet *= 1 - percentageDecreaseOfAmountBetPerLoss / 100;
+        console.log("new bet amount", currentAmountBet);
+      }
+    }
+
+    console.log(`Game completed. Final Balance: ${currentBalance.toFixed(8)}`);
+  }
+
+  /** Handle Auto bet - end */
 </script>
 
 <div id="game-Keno" class="sc-cfJLRR gJxbeS game-style1 sc-dXNJws iClKJL">
   <div class="game-area">
     <div class="game-main">
-      <div id="Keno-control-0" class="sc-cQMzAB eQfpOS game-control style1">
-        <div class="sc-iwjdpV ikWSlH radio game-control-switch">
-          <button
-            on:click={() => handleTabChange("tab1")}
-            class:is-active={activeTab === "tab1"}
-            ><div class="label">Manual</div></button
-          ><button
-            on:click={() => handleTabChange("tab2")}
-            class:is-active={activeTab === "tab2"}
-            ><div class="label">Auto</div></button
-          >
-        </div>
-        {#if activeTab === "tab1"}
-          <div class="game-control-panel">
-            <div class="sc-fUQcsx jsLoxW">
-              <button
-                on:click={() => startBet()}
-                class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled={multipliers && !multipliers.length}
-                ><div class="button-inner">
-                  <img
-                    src="https://static.nanogames.io/assets/keno_loading.d3c77d1e.png"
-                    alt="img.png"
-                  /><span>Bet</span>
-                </div></button
-              >
-              <div class="sc-fSDTwv lgcQbT">
-                <div
-                  class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput"
-                >
-                  <div class="input-label">
-                    <div class="sc-gsFzgR bxrMFn label">
-                      <div>Amount</div>
-                      <div class="max-profit">
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          class="sc-gsDKAQ hxODWG icon"
-                          ><use xlink:href="#icon_Inform"></use></svg
-                        >
-                        <div class="tip">
-                          <span class="tit">Max Profit:&nbsp;</span>
-                          <div class="sc-Galmp erPQzq coin notranslate">
-                            <div class="amount">
-                              <span class="amount-str"
-                                >5000.<span class="suffix">00000</span></span
-                              >
+      <div class="game-main-top">
+        <div id="Keno-control-0" class="sc-cQMzAB eQfpOS game-control style1">
+          <div class="sc-iwjdpV ikWSlH radio game-control-switch">
+            <button
+              on:click={() => handleTabChange("tab1")}
+              class:is-active={activeTab === "tab1"}
+              ><div class="label">Manual</div></button
+            ><button
+              on:click={() => handleTabChange("tab2")}
+              class:is-active={activeTab === "tab2"}
+              ><div class="label">Auto</div></button
+            >
+          </div>
+          {#if activeTab === "tab1"}
+            <div class="game-control-panel">
+              <div class="sc-fUQcsx jsLoxW">
+                <div class="sc-fSDTwv lgcQbT">
+                  <div
+                    class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput"
+                  >
+                    <div class="input-label">
+                      <div class="sc-gsFzgR bxrMFn label">
+                        <div>Amount</div>
+                        <div class="max-profit">
+                          <svg
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            class="sc-gsDKAQ hxODWG icon"
+                            ><use xlink:href="#icon_Inform"></use></svg
+                          >
+                          <div class="tip">
+                            <span class="tit">Max Profit:&nbsp;</span>
+                            <div class="sc-Galmp erPQzq coin notranslate">
+                              <div class="amount">
+                                <span class="amount-str"
+                                  >5000.<span class="suffix">00000</span></span
+                                >
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                      <div class="label-amount">0 USD</div>
                     </div>
-                    <div class="label-amount">0 USD</div>
-                  </div>
-                  <div class="input-control">
-                    <input type="text" value="184.778645833" />
-                    <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
-                    <div class="sc-kDTinF bswIvI button-group">
-                      <button>/2</button><button>x2</button><button
-                        class="sc-cAhXWc cMPLfC flex-button"
-                      >
-                        <Icon
-                          src={RiSystemArrowUpSLine}
-                          size="17"
-                          color="rgba(153, 164, 176, 0.6)"
-                          title=""
-                        />
-                        <Icon
-                          src={RiSystemArrowDownSLine}
-                          size="17"
-                          color="rgba(153, 164, 176, 0.6)"
-                          title=""
-                        />
-                      </button>
+                    <div class="input-control">
+                      <input type="text" value={betAmount} />
+                      <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
+                      <div class="sc-kDTinF bswIvI button-group">
+                        <button on:click={() => toggleAmount("divide")}
+                          >/2</button
+                        >
+                        <button on:click={() => toggleAmount("multiply")}
+                          >x2</button
+                        >
+                        <button class="sc-cAhXWc cMPLfC flex-button">
+                          <Icon
+                            src={RiSystemArrowUpSLine}
+                            size="17"
+                            color="rgba(153, 164, 176, 0.6)"
+                            title=""
+                          />
+                          <Icon
+                            src={RiSystemArrowDownSLine}
+                            size="17"
+                            color="rgba(153, 164, 176, 0.6)"
+                            title=""
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="sc-ezbkAF gcQjQT input">
-                  <div class="input-label">Risk</div>
-                  <div class="input-control">
-                    <div class="sc-jJoQJp gOHquD select sc-iKMXQg dChWmb">
-                      <div class="select-trigger">
-                        Classic
-                        <div class="arrow">
-                          <svg
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            class="sc-gsDKAQ hxODWG icon"
-                            ><use xlink:href="#icon_Arrow"></use></svg
-                          >
+                  <div class="sc-ezbkAF gcQjQT input">
+                    <div class="input-label">Risk</div>
+                    <div class="input-control">
+                      <div class="sc-jJoQJp gOHquD select sc-iKMXQg dChWmb">
+                        <div class="select-trigger">
+                          Classic
+                          <div class="arrow">
+                            <svg
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                              class="sc-gsDKAQ hxODWG icon"
+                              ><use xlink:href="#icon_Arrow"></use></svg
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="sc-fSDTwv lgcQbT pick-wrap">
-                <div class="sc-ezbkAF kDuLvp input sc-fbyfCU fWAvBM">
-                  <div class="input-label">Last game hash</div>
-                  <div class="input-control">
-                    <input
-                      type="text"
-                      readonly=""
-                      value="903ac7fef36b3f5e2a8d78cf23c3441b88a5ec5f1bdf2fce0091ade302bcf7e3"
-                    /><button
-                      class="sc-iqseJM cBmlor button button-normal copy-button"
-                      ><div class="button-inner">
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          class="sc-gsDKAQ hxODWG icon"
-                          ><use xlink:href="#icon_Copy"></use></svg
-                        >
-                      </div></button
+                <div class="sc-fSDTwv lgcQbT pick-wrap">
+                  <!-- <div class="sc-ezbkAF kDuLvp input sc-fbyfCU fWAvBM">
+                    <div class="input-label">Last game hash</div>
+                    <div class="input-control">
+                      <input
+                        type="text"
+                        readonly=""
+                        value="903ac7fef36b3f5e2a8d78cf23c3441b88a5ec5f1bdf2fce0091ade302bcf7e3"
+                      /><button
+                        class="sc-iqseJM cBmlor button button-normal copy-button"
+                        ><div class="button-inner">
+                          <svg
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            class="sc-gsDKAQ hxODWG icon"
+                            ><use xlink:href="#icon_Copy"></use></svg
+                          >
+                        </div></button
+                      >
+                    </div>
+                  </div> -->
+                  <div class="sc-fSDTwv lgcQbT btn-wrap">
+                    <button
+                      on:click={() => getRandomNumbers()}
+                      class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
+                      ><div class="button-inner">Auto Pick</div></button
+                    ><button
+                      on:click={() => clearGameTable()}
+                      class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
+                      ><div class="button-inner">Clear Table</div></button
                     >
                   </div>
                 </div>
-                <div class="sc-fSDTwv lgcQbT btn-wrap">
+                <button
+                  on:click={() => startBet()}
+                  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
+                  disabled={multipliers && !multipliers.length}
+                  ><div class="button-inner">
+                    <img
+                      src="https://static.nanogames.io/assets/keno_loading.d3c77d1e.png"
+                      alt="img.png"
+                    /><span>Bet</span>
+                  </div></button
+                >
+              </div>
+            </div>
+          {/if}
+          {#if activeTab === "tab2"}
+            <div class="game-control-panel">
+              <div class="sc-juEPzu kkZrMb">
+                <div class="sc-gFSQbh dOhRZH">
+                  <div
+                    class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput"
+                  >
+                    <div class="input-label">
+                      <div class="sc-hmvnCu efWjNZ label">
+                        <div>Amount</div>
+                        <div class="max-profit">
+                          <svg
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            class="sc-gsDKAQ hxODWG icon"
+                            ><use xlink:href="#icon_Inform"></use></svg
+                          >
+                          <div class="tip">
+                            <span class="tit">Max Profit:&nbsp;</span>
+                            <div class="sc-Galmp erPQzq coin notranslate">
+                              <div class="amount">
+                                <span class="amount-str"
+                                  >0.11<span class="suffix">000000</span></span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="label-amount">0 USD</div>
+                    </div>
+                    <div class="input-control">
+                      <input type="text" value={betAmount} />
+                      <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
+                      <div class="sc-kDTinF bswIvI button-group">
+                        <button on:click={() => toggleAmount("divide")}
+                          >/2</button
+                        >
+                        <button on:click={() => toggleAmount("multiply")}
+                          >x2</button
+                        >
+                        <button class="sc-cAhXWc cMPLfC flex-button">
+                          <Icon
+                            src={RiSystemArrowUpSLine}
+                            size="17"
+                            color="rgba(153, 164, 176, 0.6)"
+                            title=""
+                          />
+                          <Icon
+                            src={RiSystemArrowDownSLine}
+                            size="17"
+                            color="rgba(153, 164, 176, 0.6)"
+                            title=""
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sc-ezbkAF hzTJOu input">
+                    <div class="input-label">Number of Bets</div>
+                    <div class="input-control">
+                      <input
+                        on:input={(e) => setBetCount(e.target.value)}
+                        type="text"
+                        value={numberOfBets}
+                      />
+                      <div class="sc-kDTinF bswIvI button-group">
+                        <button on:click={() => setBetCount(0)}>∞</button>
+                        <button on:click={() => setBetCount(10)}>10</button>
+                        <button on:click={() => setBetCount(100)}>100</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sc-gFSQbh dOhRZH">
+                  <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+                    <div class="input-label">On win</div>
+                    <div class="input-control">
+                      <input
+                        on:input={(e) => setPercentage("win", e)}
+                        type="text"
+                        readonly={!isWinIncrease}
+                        value="0"
+                      />
+                      <div
+                        on:click={() => toggleIncrease("win")}
+                        class="sc-cxVPaa eIHoct increase-switch"
+                        class:increase={isWinIncrease}
+                      >
+                        <div class="dot-wrap">
+                          <div class="dot"></div>
+                        </div>
+                        <div class="reset text">Reset</div>
+                        <div class="increse text">Increase by</div>
+                      </div>
+                      <div class="percent">%</div>
+                    </div>
+                  </div>
+                  <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+                    <div class="input-label">On lose</div>
+                    <div class="input-control">
+                      <input
+                        on:input={(e) => setPercentage("loss", e)}
+                        type="text"
+                        readonly={!isLossIncrease}
+                        value="0"
+                      />
+                      <div
+                        on:click={() => toggleIncrease("loss")}
+                        class="sc-cxVPaa eIHoct increase-switch"
+                        class:increase={isLossIncrease}
+                      >
+                        <div class="dot-wrap">
+                          <div class="dot"></div>
+                        </div>
+                        <div class="reset text">Reset</div>
+                        <div class="increse text">Increase by</div>
+                      </div>
+                      <div class="percent">%</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sc-gFSQbh dOhRZH">
+                  <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+                    <div class="input-label">
+                      Stop on win
+                      <div class="label-amount">0 USD</div>
+                    </div>
+                    <div class="input-control">
+                      <input
+                        on:input={(e) => setTerminalValue("win", e)}
+                        type="text"
+                        value="0.000000000"
+                      /><img
+                        class="coin-icon"
+                        src="/coin/BTC.black.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+                    <div class="input-label">
+                      Stop on lose
+                      <div class="label-amount">0 USD</div>
+                    </div>
+                    <div class="input-control">
+                      <input
+                        on:input={(e) => setTerminalValue("loss", e)}
+                        type="text"
+                        value="0.000000000"
+                      /><img
+                        class="coin-icon"
+                        src="/coin/BTC.black.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="sc-jwQYvw jcGUIr btn-wrap">
                   <button
                     on:click={() => getRandomNumbers()}
                     class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
@@ -339,339 +867,215 @@
                     ><div class="button-inner">Clear Table</div></button
                   >
                 </div>
+                <button
+                  on:click={() => autoBettingGame()}
+                  class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
+                  disabled={!multipliers.length}
+                  ><div class="button-inner">
+                    <span>Start Auto Bet</span>
+                  </div></button
+                >
+              </div>
+            </div>{/if}
+        </div>
+        <div class="game-view">
+          <div class="sc-leSONj jOOXMd game-recent">
+            <div class="recent-list-wrap">
+              {#if wins.length > 0}
+                <div class="wins">
+                  {#each wins as win, index (index)}
+                    <div class="win" class:plus={win && !win.includes("0.00")}>
+                      {win}
+                    </div>
+                  {/each}
+                </div>
+              {:else}
+                <div class="empty-item">
+                  <p>Game results will be displayed here.</p>
+                </div>
+              {/if}
+            </div>
+          </div>
+          <div class="no-web sc-bQFuvY bFXMsx">
+            <div class="history">
+              <Icon
+                src={BsClock}
+                size="12"
+                color="rgba(153, 164, 176, 0.6)"
+                title=""
+              />History
+            </div>
+            <div class="title">Result</div>
+            <div class="wrap ball-wrap">
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                23
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                14
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                6
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                5
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                11
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                18
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                39
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                15
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                31
+              </div>
+              <div
+                class="range-item"
+                style="opacity: 1; transform: translate(0px, 0px);"
+              >
+                24
               </div>
             </div>
           </div>
-        {/if}
-        {#if activeTab === "tab2"}
-          <div class="game-control-panel">
-            <div class="sc-juEPzu kkZrMb">
-              <button
-                on:click={() => startBet()}
-                class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big bet-button"
-                disabled={!multipliers.length}
-                ><div class="button-inner">
-                  <span>Start Auto Bet</span>
-                </div></button
-              >
-              <div class="sc-gFSQbh dOhRZH">
-                <div
-                  class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput"
-                >
-                  <div class="input-label">
-                    <div class="sc-hmvnCu efWjNZ label">
-                      <div>Amount</div>
-                      <div class="max-profit">
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          class="sc-gsDKAQ hxODWG icon"
-                          ><use xlink:href="#icon_Inform"></use></svg
+          <div class="sc-oXPCX fQmThe game-box sc-bOtlzW cxPcDj">
+            <div class="sc-bjztik cKpuTs">
+              <div class="keno-wrap">
+                <div class="keno-item-wrap">
+                  <div class="keno-list">
+                    <!-- Generate button list and handle toggle state -->
+                    {#each buttonStates as isSelected, index (index)}
+                      <button
+                        on:click={() => saveButton(index)}
+                        disabled={multipliers.length === 11 && !isSelected}
+                        class="keno_styles_item"
+                        ><div
+                          class="keno-ritem initial"
+                          class:select={isSelected}
+                          class:match={isSelected &&
+                            bckendGeneratedNumbers.includes(index + 1)}
                         >
-                        <div class="tip">
-                          <span class="tit">Max Profit:&nbsp;</span>
-                          <div class="sc-Galmp erPQzq coin notranslate">
-                            <div class="amount">
-                              <span class="amount-str"
-                                >0.11<span class="suffix">000000</span></span
+                          <span
+                            class="keno-num"
+                            class:mismatch={bckendGeneratedNumbers.includes(
+                              index + 1
+                            )}>{index + 1}</span
+                          >
+                        </div></button
+                      >
+                    {/each}
+                    <!-- Generate button list and handle toggle state -->
+                  </div>
+                </div>
+                <div class="sc-hKumaY krTDHD">
+                  <div class="sc-eTwdGJ ZOVvL">
+                    <div class="game_payout">
+                      {#if multipliers}
+                        {#each multipliers as multiplier, index (index)}
+                          <span
+                            class="payout_item"
+                            class:match={winningMultiplierIndex !== null &&
+                              index === winningMultiplierIndex}
+                            >{multiplier}</span
+                          >
+                        {/each}
+                      {/if}
+                    </div>
+                    {#if multipliers && multipliers.length}
+                      <div class="game_selected_items">
+                        {#each multipliers as multiplier, index (index)}
+                          <div
+                            class="game_selected_num"
+                            class:match={winningMultiplierIndex !== null &&
+                              index === winningMultiplierIndex}
+                          >
+                            <div class="game_selected_box">
+                              <span class="gem_box"
+                                >{index}×<img
+                                  class="gem"
+                                  src={winningMultiplierIndex !== null &&
+                                  index === winningMultiplierIndex
+                                    ? WinGem
+                                    : Gem}
+                                  alt="icon"
+                                /></span
                               >
+                              <span>{index} Hits</span>
                             </div>
                           </div>
-                        </div>
+                        {/each}
                       </div>
-                    </div>
-                    <div class="label-amount">192.706811 USD</div>
-                  </div>
-                  <div class="input-control">
-                    <input type="text" value="0.004400000" />
-                    <img class="coin-icon" src="/coin/BTC.black.png" alt="" />
-                    <div class="sc-kDTinF bswIvI button-group">
-                      <button>/2</button><button>x2</button>
-                      <button class="sc-cAhXWc cMPLfC flex-button">
-                        <Icon
-                          src={RiSystemArrowUpSLine}
-                          size="17"
-                          color="rgba(153, 164, 176, 0.6)"
-                          title=""
-                        />
-                        <Icon
-                          src={RiSystemArrowDownSLine}
-                          size="17"
-                          color="rgba(153, 164, 176, 0.6)"
-                          title=""
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="sc-ezbkAF hzTJOu input">
-                  <div class="input-label">Number of Bets</div>
-                  <div class="input-control">
-                    <input type="text" value="0" />
-                    <div class="sc-kDTinF bswIvI button-group">
-                      <button>∞</button><button>10</button><button>100</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="sc-gFSQbh dOhRZH">
-                <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
-                  <div class="input-label">On win</div>
-                  <div class="input-control">
-                    <input type="text" readonly="" value="0" />
-                    <div class="sc-cxVPaa eIHoct increase-switch">
-                      <div class="dot-wrap"><div class="dot"></div></div>
-                      <div class="reset text">Reset</div>
-                      <div class="increse text">Increase by</div>
-                    </div>
-                    <div class="percent">%</div>
-                  </div>
-                </div>
-                <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
-                  <div class="input-label">On lose</div>
-                  <div class="input-control">
-                    <input type="text" readonly="" value="0" />
-                    <div class="sc-cxVPaa eIHoct increase-switch">
-                      <div class="dot-wrap"><div class="dot"></div></div>
-                      <div class="reset text">Reset</div>
-                      <div class="increse text">Increase by</div>
-                    </div>
-                    <div class="percent">%</div>
-                  </div>
-                </div>
-              </div>
-              <div class="sc-gFSQbh dOhRZH">
-                <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
-                  <div class="input-label">
-                    Stop on win
-                    <div class="label-amount">0 USD</div>
-                  </div>
-                  <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
-                      class="coin-icon"
-                      src="/coin/BTC.black.png"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
-                  <div class="input-label">
-                    Stop on lose
-                    <div class="label-amount">0 USD</div>
-                  </div>
-                  <div class="input-control">
-                    <input type="text" value="0.000000000" /><img
-                      class="coin-icon"
-                      src="/coin/BTC.black.png"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="sc-jwQYvw jcGUIr btn-wrap">
-                <button
-                  on:click={() => getRandomNumbers()}
-                  class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
-                  ><div class="button-inner">Auto Pick</div></button
-                ><button
-                  on:click={() => clearGameTable()}
-                  class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal hold-btn"
-                  ><div class="button-inner">Clear Table</div></button
-                >
-              </div>
-            </div>
-          </div>{/if}
-      </div>
-      <div class="game-view">
-        <div class="sc-leSONj jOOXMd game-recent">
-          <div class="recent-list-wrap">
-            {#if wins.length > 0}
-              <div class="wins">
-                {#each wins as win, index (index)}
-                  <div class="win" class:plus={win && !win.includes("0.00")}>
-                    {win}
-                  </div>
-                {/each}
-              </div>
-            {:else}
-              <div class="empty-item">
-                <p>Game results will be displayed here.</p>
-              </div>
-            {/if}
-          </div>
-        </div>
-        <div class="no-web sc-bQFuvY bFXMsx">
-          <div class="history">
-            <Icon
-              src={BsClock}
-              size="12"
-              color="rgba(153, 164, 176, 0.6)"
-              title=""
-            />History
-          </div>
-          <div class="title">Result</div>
-          <div class="wrap ball-wrap">
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              23
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              14
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              6
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              5
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              11
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              18
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              39
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              15
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              31
-            </div>
-            <div
-              class="range-item"
-              style="opacity: 1; transform: translate(0px, 0px);"
-            >
-              24
-            </div>
-          </div>
-        </div>
-        <div class="sc-oXPCX fQmThe game-box sc-bOtlzW cxPcDj">
-          <div class="sc-bjztik cKpuTs">
-            <div class="keno-wrap">
-              <div class="keno-item-wrap">
-                <div class="keno-list">
-                  <!-- Generate button list and handle toggle state -->
-                  {#each buttonStates as isSelected, index (index)}
-                    <button
-                      on:click={() => saveButton(index)}
-                      disabled={multipliers.length === 11 && !isSelected}
-                      class="keno_styles_item"
-                      ><div
-                        class="keno-ritem initial"
-                        class:select={isSelected}
-                        class:match={isSelected &&
-                          bckendGeneratedNumbers.includes(index + 1)}
-                      >
-                        <span
-                          class="keno-num"
-                          class:mismatch={bckendGeneratedNumbers.includes(
-                            index + 1
-                          )}>{index + 1}</span
-                        >
-                      </div></button
-                    >
-                  {/each}
-                  <!-- Generate button list and handle toggle state -->
-                </div>
-              </div>
-              <div class="sc-hKumaY krTDHD">
-                <div class="sc-eTwdGJ ZOVvL">
-                  <div class="game_payout">
-                    {#if multipliers}
-                      {#each multipliers as multiplier, index (index)}
-                        <span
-                          class="payout_item"
-                          class:match={winningMultiplierIndex !== null &&
-                            index === winningMultiplierIndex}>{multiplier}</span
-                        >
-                      {/each}
+                    {/if}
+                    {#if !multipliers || (multipliers && multipliers.length === 0)}
+                      <div class="no_select">Select 1 - 10 numbers to play</div>
                     {/if}
                   </div>
-                  {#if multipliers && multipliers.length}
-                    <div class="game_selected_items">
-                      {#each multipliers as multiplier, index (index)}
-                        <div
-                          class="game_selected_num"
-                          class:match={winningMultiplierIndex !== null &&
-                            index === winningMultiplierIndex}
-                        >
-                          <div class="game_selected_box">
-                            <span class="gem_box"
-                              >{index}×<img
-                                class="gem"
-                                src={winningMultiplierIndex !== null &&
-                                index === winningMultiplierIndex
-                                  ? WinGem
-                                  : Gem}
-                                alt="icon"
-                              /></span
-                            >
-                            <span>{index} Hits</span>
-                          </div>
-                        </div>
-                      {/each}
-                    </div>
-                  {/if}
-                  {#if !multipliers || (multipliers && multipliers.length === 0)}
-                    <div class="no_select">Select 1 - 10 numbers to play</div>
-                  {/if}
                 </div>
+                <div class="bottom-line"></div>
               </div>
-              <div class="bottom-line"></div>
             </div>
+            <div class="sc-hIagIn jLprWf house-edge">
+              <span>House Edge 1%</span>
+            </div>
+            <svg
+              class="box-bg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 996 46"
+              ><defs
+                ><linearGradient
+                  id="gcardBg"
+                  x1="50%"
+                  x2="50%"
+                  y1="0%"
+                  y2="100%"
+                  ><stop offset="0%" stop-color="#31343C"></stop><stop
+                    offset="100%"
+                    stop-color="#1E2024"
+                    stop-opacity="0"
+                  ></stop></linearGradient
+                ></defs
+              ><g opacity=".899"
+                ><path
+                  fill="url(#gcardBg)"
+                  fill-rule="evenodd"
+                  d="M0 0h996L892 46H96z"
+                  opacity=".598"
+                  transform="rotate(-180 498 23)"
+                ></path></g
+              ></svg
+            >
           </div>
-          <div class="sc-hIagIn jLprWf house-edge">
-            <span>House Edge 1%</span>
-          </div>
-          <svg
-            class="box-bg"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 996 46"
-            ><defs
-              ><linearGradient id="gcardBg" x1="50%" x2="50%" y1="0%" y2="100%"
-                ><stop offset="0%" stop-color="#31343C"></stop><stop
-                  offset="100%"
-                  stop-color="#1E2024"
-                  stop-opacity="0"
-                ></stop></linearGradient
-              ></defs
-            ><g opacity=".899"
-              ><path
-                fill="url(#gcardBg)"
-                fill-rule="evenodd"
-                d="M0 0h996L892 46H96z"
-                opacity=".598"
-                transform="rotate(-180 498 23)"
-              ></path></g
-            ></svg
-          >
         </div>
       </div>
       <div class="game-actions">
@@ -719,7 +1123,7 @@
         >
       </div>
     </div>
-    <div class="web no-mobile sc-hRMJXU cWaNyl">
+    <!-- <div class="web no-mobile sc-hRMJXU cWaNyl">
       <div class="sc-bQFuvY bFXMsx">
         <div class="history">
           <Icon
@@ -804,7 +1208,7 @@
           ><tbody></tbody>
         </table>
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="sc-cxpSdN kQfmQV tabs game-tabs len-3">
     <div class="tabs-navs">
@@ -845,24 +1249,67 @@
     {#if activeTabB === "tabB1"}
       <div class="tabs-view" style="transform: none;">
         <div class="sc-eZhRLC iycaRo">
-          <div class="sc-eCImPb cuPxwd empty">
-            <img
-              src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
-              alt=""
-            />
-            <div class="msg">Oops! There is no data yet!</div>
-            <table>
-              <thead>
-                <tr>Bet ID</tr>
-                <tr>Player</tr>
-                <tr>Time</tr>
-                <tr>Bet</tr>
-                <tr>Payout</tr>
-                <tr>Profit</tr>
-              </thead>
-              <tbody> </tbody>
-            </table>
-          </div>
+          {#if bets && bets.length === 0}
+            <div class="sc-eCImPb cuPxwd empty">
+              <img
+                src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+                alt=""
+              />
+              <div class="msg">Oops! There is no data yet!</div>
+            </div>
+          {/if}
+          {#if bets && bets.length > 0}
+            <div class="live-bets-container">
+              <table class="sc-gWXbKe iUeetX table is-hover">
+                <thead>
+                  <tr>
+                    <th>Bet ID</th>
+                    <th>Player</th>
+                    <th>Time</th>
+                    <th>Bet</th>
+                    <th>Payout</th>
+                    <th>Profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {#each bets as bet, index (index)}
+                    <tr>
+                      <td>
+                        <a class="hash ellipsis">{bet.betId}</a>
+                      </td>
+                      <td>
+                        <a class="hash ellipsis">{bet.player}</a>
+                      </td>
+                      <td>{bet.time}</td>
+                      <td>
+                        <div>
+                          <img class="gem" src="" alt="icon" />
+                          <div>
+                            <span
+                              >{bet.bet}
+                              <span>00 bal</span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{bet.payout}</td>
+                      <td>
+                        <div>
+                          <img class="gem" src="" alt="icon" />
+                          <div>
+                            <span
+                              >{bet.profit}
+                              <span>00 bal</span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </div>
+          {/if}
         </div>
       </div>
     {/if}
@@ -2901,36 +3348,49 @@
     border-radius: 1.25rem;
     background: var(--affiliate-bg);
   }
+
+  .game-main-top {
+    display: flex;
+  }
   .eQfpOS.style1 {
-    order: 2;
+    /* order: 2; */
+    flex-direction: column;
     min-height: 230px;
     margin-top: 1px;
+    max-width: 330px;
   }
   .eQfpOS {
     display: flex;
   }
   .eQfpOS.style1 .game-control-switch {
-    width: 3rem;
-    flex-direction: column;
+    /* width: 3rem;
+    flex-direction: column; */
     position: relative;
   }
   .eQfpOS .game-control-switch {
     display: flex;
     flex: 0 0 auto;
+    /* padding: 1.25rem 1.375rem; */
+    padding: 0.625rem;
   }
   .ikWSlH {
     display: flex;
     opacity: 1;
   }
   .eQfpOS.style1 .game-control-switch > button.is-active {
-    border-right: 2px solid rgb(67, 179, 9);
+    background-color: rgba(49, 52, 60, 0.4);
+    /* border-right: 2px solid rgb(67, 179, 9);
     background-image: linear-gradient(
       to left,
       rgba(91, 174, 28, 0.176),
       rgba(0, 0, 0, 0) 50%
-    );
+    ); */
   }
   .eQfpOS.style1 .game-control-switch > button {
+    height: 2.75rem;
+    line-height: 2.75rem;
+    text-align: center;
+    border-radius: 1.375rem;
     position: relative;
   }
   .eQfpOS .game-control-switch > button.is-active {
@@ -2948,13 +3408,13 @@ color: var(--text-6);  }
     cursor: pointer;
     background-color: transparent;
   }
-  .eQfpOS.style1 .game-control-switch .label {
+  /* .eQfpOS.style1 .game-control-switch .label {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) rotate(-90deg);
     white-space: nowrap;
-  }
+  } */
   .eQfpOS.style1 .game-control-switch > button {
     position: relative;
   }
@@ -2962,8 +3422,9 @@ color: var(--text-6);  }
   .eQfpOS .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-color: var(--text-6);  }
-  .eQfpOS.style1 .game-control-switch::after {
+    color: rgba(153, 164, 176, 0.6);
+  }
+  /* .eQfpOS.style1 .game-control-switch::after {
     content: "";
     position: absolute;
     right: 0px;
@@ -2971,9 +3432,10 @@ color: var(--text-6);  }
     bottom: 0px;
     width: 1px;
     background-color: rgba(49, 52, 60, 0.5);
-  }
+  } */
   .eQfpOS.style1 .game-control-panel {
-    padding: 1.25rem 1.375rem;
+    /* padding: 1.25rem 1.375rem; */
+    padding: 0.625rem;
   }
   .eQfpOS .game-control-panel {
     flex: 1 1 0%;
@@ -2983,8 +3445,8 @@ color: var(--text-6);  }
     cursor: default;
   }
   .jsLoxW .bet-button {
-    width: 90%;
-    max-width: 19.75rem;
+    /* width: 90%;
+    max-width: 19.75rem; */
     margin: 1rem auto 1.5rem;
     display: flex;
     -webkit-box-align: center;
@@ -3035,9 +3497,19 @@ color: var(--text-6);  }
     align-items: flex-end;
     flex-wrap: wrap;
   }
-  .lgcQbT > div {
+  /* .lgcQbT > div {
     flex-basis: 49%;
+    flex-grow: 1;
+  } */
+
+  .game-coininput {
+    width: 100%;
   }
+
+  .Keno-control-0 {
+    border-right: 1px solid rgba(49, 52, 60, 0.5);
+  }
+
   .gcQjQT {
     margin-top: 1rem;
   }
@@ -3200,7 +3672,8 @@ color: var(--text-6);  }
     fill: rgba(153, 164, 176, 0.6);
   }
   .lgcQbT > div {
-    flex-basis: 49%;
+    /* flex-basis: 49%; */
+    flex-grow: 1;
   }
   .gcQjQT {
     margin-top: 1rem;
@@ -4542,7 +5015,8 @@ color: var(--text-7);    display: block;
     opacity: 0.6;
   }
   .cYiOHZ.style1 .game-control-panel {
-    padding: 1.25rem 1.375rem;
+    /* padding: 1.25rem 1.375rem; */
+    padding: 0.625rem;
   }
 
   .cYiOHZ .game-control-panel {
@@ -4554,8 +5028,8 @@ color: var(--text-7);    display: block;
   }
 
   .kkZrMb .bet-button {
-    width: 90%;
-    max-width: 19.75rem;
+    /* width: 90%;
+    max-width: 19.75rem; */
     margin: 1rem auto 0.25rem;
     display: flex;
     -webkit-box-align: center;
@@ -4584,7 +5058,7 @@ color: var(--text-7);    display: block;
     flex-wrap: wrap;
   }
   .dOhRZH > div {
-    flex-basis: 48%;
+    /* flex-basis: 48%; */
   }
   .gcQjQT {
     margin-top: 1rem;
@@ -4722,6 +5196,7 @@ color: var(--text-6);  }
   }
   .hzTJOu {
     margin-top: 1rem;
+    flex-grow: 1;
   }
   .hzTJOu .input-label {
     display: flex;
@@ -4823,6 +5298,20 @@ color: var(--text-6);  }
     transition: top 0.1s ease-in-out 0s;
     top: -0.0625rem;
   }
+
+  .eIHoct.increase-switch.increase .dot-wrap .dot {
+    top: 1rem;
+  }
+
+  .eIHoct.increase-switch.increase .reset {
+    color: rgb(153, 164, 176);
+  }
+
+  .eIHoct.increase-switch.increase .increse {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+  }
+
   .eIHoct .reset {
     font-weight: bold;
     color: rgb(255, 255, 255);
@@ -4892,6 +5381,34 @@ color: var(--text-6);    line-height: 1;
     top: 50%;
     margin-top: 3.75rem;
     margin-left: -8.75rem;
+  }
+
+  .sc-gWXbKe.iUeetX.table.is-hover {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px;
+  }
+
+  .live-bets-container tr {
+    cursor: pointer;
+  }
+
+  .live-bets-container th,
+  .live-bets-container td {
+    overflow: hidden;
+    text-align: center;
+    padding: 0.875rem 0.75rem;
+    font-weight: normal;
+    color: rgba(153, 164, 176, 0.6);
+  }
+
+  .live-bets-container th:first-child {
+    text-align: left;
+  }
+
+  .live-bets-container th:last-child {
+    text-align: right;
   }
   .gONCrm {
     max-width: 50rem;
