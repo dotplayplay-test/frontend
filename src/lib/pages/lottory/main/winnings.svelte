@@ -131,10 +131,9 @@
 
   .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .bcoOmv table thead tr th {
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
   }
@@ -148,8 +147,7 @@
 
   .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
 
   .iUeetX td:first-child {
     border-radius: 0.625rem 0px 0px 0.625rem;
@@ -171,7 +169,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,
@@ -266,7 +264,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,
@@ -302,7 +300,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,

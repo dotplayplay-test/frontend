@@ -174,7 +174,7 @@ $:{
 .title {
     font-size: 24px;
     font-weight: 600;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin-bottom: 40px;
     text-align: center;
 }
@@ -182,7 +182,7 @@ $:{
     font-weight: 600;
     height: 68px;
     line-height: 68px;
-    background: url(https://static.nanogames.io/assets/star.321c7b6c.png) 23px center / 30px no-repeat rgb(30, 32, 36);
+    background: url(https://static.nanogames.io/assets/star.321c7b6c.png) 23px center / 30px no-repeat var(--sidebar-bg);
     border-radius: 12px 0px 0px 12px;
     padding: 0px 5px 0px 65px;
     margin: 0px auto 0px -25px;
@@ -198,7 +198,7 @@ $:{
     right: -44px;
     height: 100%;
     width: 50px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAADUCAMAAAB5wzuWAAAAk1BMVEUAAAAeICQgKi0eICQeICQeISUeISUeISUeISUfICUpLi5OTk4eICQfICQfIiUgIiYgIiYeICUfICQeICUeICQfICUhIicfICUeISQfISQfISQjIyktLS0eICQeICQeICQfISQfISUfISUfISUeIiYhIychJCciIismJiaAgIAfICQeICQfICUfICUfISUhISYeICRbUIDiAAAAMHRSTlMA9w/v/fu6opJmBwPbxks+NPPp5uFfJtfSeFkVC87AmYaAc1JCKyMdGgK2sKyeai/GNLYaAAACYElEQVR42uzOS07CUABA0bavpdBaoFBAfsof/OHd/+qMYWZiogPjHfSs4ET8WBaaKp8Piujv8Fvx8ySJbv4/A9SbW0eRgbD97EgyEHpRpMlAvhJluJ+KMoS+KEM6EWVIr6IMzE0ZNqYMj0+iDHkpyvBSiDJ0VqIMVSLKcL8UZbg7izI0U1GG0bsoQxiKMtQHUYZ4L8qQLUQZ0qsoA3NTho0pQ9eUIS9FGV4KUYbOSpShSkQZ1ktRhtlZlKE5iTKMj6IMYSjKUB9EGeK+KEO2EGVIe6IM7EwZtqYMXVOGvBRleC1EGTorUYYqEWVYL0UZZhdRhuYkyjA+ijKEoShDPRBliPuiDNlClCHtiTKwM2XYmjJ0TRneSlGG10KU4bkQZXhIRBnWS1GG2UWU4e4kyjA+ijKMhqIMYSDKEPdFGbK9KEO6EGVI96IM8UCUYXQRZahKUYadKVOfRRlyUyadijK8mTJxIsowMWU6pkxciDIcTJm5KZObMpUp05gywZTJTBnaTJtpM23mizbznTbz0c4d2zAIBEAQNEigf/ECCwQmgpj+G3QD3tS6YLeCaeCOEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKDCWGEkOJocRQYigxlBhKzL/qkjBrEqYlYcYkTEnC1CTMEYTZkhamdxJmCcK0pL32HoQ5nyDMHHQ4cAX9QgzvIEwN+hIpQS8r45SD+fQ5Zzhjn3MTVKaYA6Wh5vxcXTkPYOccc9TW9ifkwm67l4Dbw25tY6nH61dfgXj42O/H5kkAAAAASUVORK5CYII=) right top / auto 69px no-repeat;
+    background: var(--curve-bg-img-2) right top / auto 69px no-repeat;
 }
 .funZYP {
     display: flex;
@@ -208,9 +208,9 @@ $:{
 }
 .funZYP .rewards-item {
     flex: 1 1 0%;
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 20px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     text-align: center;
 }
 .funZYP .rewards .common {
@@ -253,8 +253,8 @@ $:{
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    background-color: rgb(30, 32, 36);
-    color: rgb(245, 246, 247);
+    background-color: var(--card-bg-5);
+    color: var(--text-5);
     font-size: 16px;
     height: 92px;
     margin-top: 8px;
@@ -295,7 +295,7 @@ $:{
     height: 44px;
     line-height: 44px;
     border-radius: 22px;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     color: rgb(93, 160, 0);
     font-size: 16px;
     margin: 20px auto 0px;
@@ -343,8 +343,7 @@ $:{
     text-align: left;
 }
 .funZYP .list-content .thead {
-    color: rgba(153, 164, 176, 0.6);
-    padding: 0px 30px;
+color: var(--text-6);    padding: 0px 30px;
     margin-bottom: 5px;
     white-space: nowrap;
 }
@@ -359,7 +358,7 @@ $:{
     white-space: nowrap;
 }
 .funZYP .list-content .tr {
-    background: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 20px;
     height: 56px;
     padding: 0px 30px;
@@ -408,7 +407,7 @@ $:{
     width: 80px;
     height: 4px;
     border-radius: 1.5px;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     margin-right: 6px;
 }
 .funZYP .list-content .bar-cover {
@@ -420,7 +419,7 @@ $:{
     width: 80px;
     height: 4px;
     border-radius: 1.5px;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     margin-right: 6px;
 }
 .funZYP .list-content .th:nth-child(3), .funZYP .list-content .td:nth-child(3) {
@@ -435,7 +434,7 @@ $:{
     background: none;
 }
 .funZYP .list-content .tr {
-    background: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 20px;
     height: 56px;
     padding: 0px 30px;
@@ -469,14 +468,14 @@ $:{
     width: 80px;
     height: 4px;
     border-radius: 1.5px;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     margin-right: 6px;
 }
 .funZYP .list-footer {
     width: 184px;
     height: 44px;
     border-radius: 22px;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     margin: 0px auto;
     display: flex;
     -webkit-box-align: center;
@@ -505,7 +504,7 @@ $:{
     margin-right: auto;
     height: 62px;
     border-radius: 13px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 0px 50px;
     margin-top: 8px;
     display: flex;
@@ -548,8 +547,7 @@ $:{
 }
 .funZYP .list-group .nothing-tip {
     font-size: 12px;
-    color: rgba(153, 164, 176, 0.6);
-    text-align: center;
+color: var(--text-6);    text-align: center;
     position: absolute;
     left: 0px;
     right: 0px;
@@ -577,7 +575,7 @@ $:{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-head {
     position: relative;
@@ -601,7 +599,7 @@ $:{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fLASqZ {
     position: absolute;
@@ -618,7 +616,7 @@ $:{
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;
@@ -628,7 +626,7 @@ $:{
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {

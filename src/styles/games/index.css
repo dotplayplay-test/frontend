@@ -4,7 +4,7 @@
     top: 0px;
     width: 3.5rem;
     height: 100%;
-    background-color: rgb(45, 48, 53);
+    background: var(--original-bg);
     padding-top: 8.125rem;
     z-index: 0;
 }

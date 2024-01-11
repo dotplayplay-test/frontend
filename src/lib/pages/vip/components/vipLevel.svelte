@@ -482,10 +482,10 @@
         transition-duration: 0.5s;
         border-radius: 1.25rem;
         overflow: hidden;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
     .jDpeEE .dialog-head {
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
         margin: 0px;
         padding: 0px 3.75rem 0px 1.125rem;
     }
@@ -513,7 +513,7 @@
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
 
     .fLASqZ {
@@ -530,11 +530,11 @@
         height: 3.75rem;
     }
     .jDpeEE .dialog-body {
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
     .no-style {
         padding-top: 3.75rem;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
     .dialog-body {
         position: absolute;
@@ -588,7 +588,7 @@
         height: 3.125rem;
         line-height: 3.125rem;
         font-size: 1rem;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-weight: bold;
         margin-top: 0.625rem;
         background: url(https://static.nanogames.io/assets/ribbon.f9e96837.png)
@@ -627,7 +627,7 @@
     .faOyUB .vip-bonus-title .vip-bonus-subtit {
         display: inline-block;
         vertical-align: top;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-size: 0.75rem;
         line-height: 1rem;
         font-weight: bold;
@@ -726,7 +726,7 @@
         left: 0px;
         right: 0px;
         top: 0.375rem;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-size: 0.75rem;
         font-weight: bold;
         z-index: 1;
@@ -905,7 +905,7 @@
     .faOyUB .vip-bonus-progress {
         height: 2rem;
         border-radius: 1rem;
-        background-color: rgba(45, 48, 53, 0.5);
+        background-color: var(--sidebar-card-bg);
         display: flex;
         -webkit-box-align: center;
         align-items: center;
@@ -985,7 +985,7 @@
         -webkit-box-pack: center;
         justify-content: center;
         background-color: rgb(26, 27, 30);
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-size: 0.75rem;
         font-weight: bold;
     }

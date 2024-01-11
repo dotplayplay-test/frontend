@@ -96,13 +96,13 @@
     margin: 20px 0px 0.5rem 0.625rem;
     font-size: 18px;
     line-height: 18px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 800;
     font-family: FuturaBold;
 }
 .hupcRr {
     padding: 1rem;
-    background-color: rgb(49, 52, 60);
+    background-color: var(--card-bg-2);
     border-radius: 1.25rem;
     display: flex;
     -webkit-box-pack: justify;
@@ -126,7 +126,7 @@
     margin: -1rem 0px;
 }
 .flAnOy .info .tit {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
     font-size: 1.375rem;
     letter-spacing: -0.73px;
@@ -146,7 +146,7 @@
     height: 100%;
 }
 .blefOg.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(241, 149, 17);
     background-image: conic-gradient(from 1turn, rgb(241, 149, 17), rgb(246, 199, 34));
@@ -172,7 +172,7 @@
 }
 .llygwG {
     flex: 1 1 0%;
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-4);
     border-radius: 0.375rem;
     padding: 0.625rem;
     margin: 0px;
@@ -213,7 +213,7 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
     padding: 1.25rem;
 }
 .llygwG .user-number .user-info {
@@ -234,7 +234,7 @@
 .llygwG .select-trigger {
     width: 10.3125rem;
     padding: 0px 1.875rem 0px 0.75rem;
-    background: rgb(36, 38, 43);
+    background: var(--card-bg-4);
 }
 .gOHquD .select-trigger {
     position: relative;
@@ -247,7 +247,7 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .llygwG .user-number .user-info {
     flex: 1 1 auto;

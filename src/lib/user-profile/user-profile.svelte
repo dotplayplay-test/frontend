@@ -46,7 +46,7 @@ const handleSubmit = (()=>{
 <style>
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-body {
     position: absolute;
@@ -56,7 +56,7 @@ const handleSubmit = (()=>{
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {
@@ -103,14 +103,13 @@ const handleSubmit = (()=>{
     border-radius: 1.125rem;
     padding: 0px 0.875rem;
     color: rgb(255, 255, 255);
-    background-color: rgba(49, 52, 60, 0.6);
+    background-color: var(--card-bg-13);
 }
 .bUoqwc .dialog-box {
     flex: 1 1 0%;
 }
 .dialog-box {
-    color: rgba(153, 164, 176, 0.6);
-    background-color: rgb(30, 32, 36);
+color: var(--text-6);    background-color: var(--card-bg-5);
     border-top-left-radius: 2.5rem;
     border-top-right-radius: 2.5rem;
     padding: 1.75rem 1.125rem;
@@ -134,16 +133,15 @@ const handleSubmit = (()=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .kDuLvp .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -156,6 +154,6 @@ const handleSubmit = (()=>{
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 </style>

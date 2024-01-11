@@ -299,7 +299,7 @@ input[type="checkbox"]{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    /* background-color: rgb(23, 24, 27); */
+    /* background: var(--affiliate-bg); */
 }
 
 .dialog-head.has-close {
@@ -362,7 +362,7 @@ img {
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .dialog-body>div {
@@ -399,8 +399,7 @@ img {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .kDuLvp .input-label {
     display: flex;
@@ -409,8 +408,7 @@ img {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .kDuLvp .input-control {
     position: relative;
@@ -418,8 +416,8 @@ img {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -434,7 +432,7 @@ img {
     border: none;
     background-color: transparent;
     outline: none;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .iajVfs .box-title {
@@ -442,8 +440,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs {
     padding: 1rem 2.5rem 1.25rem;
@@ -458,8 +455,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs .other-group {
     border-radius: 1.75rem;
@@ -491,7 +487,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .jScFby {
@@ -559,7 +555,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .kDuLvp .input-control input {
@@ -571,7 +567,7 @@ img {
     border: none;
     outline: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 input:-webkit-autofill {
@@ -609,8 +605,8 @@ input:-webkit-autofill {
     vertical-align: middle;
     border-radius: 0.1875rem;
     box-sizing: border-box;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     font-size: 0.875rem;
     padding: 0.0625rem 0.0625rem 0.0625rem 0.125rem;
     color: transparent;
@@ -624,8 +620,8 @@ input:-webkit-autofill {
 }
 
 .cfNMkN .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 
 .cfNMkN .button {
@@ -653,7 +649,7 @@ input:-webkit-autofill {
 }
 
 .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
@@ -674,8 +670,8 @@ input:-webkit-autofill {
 }
 
 .cfNMkN .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 
 .cBmlor:disabled.sc-iqseJM:not(.is-loading) {
@@ -710,7 +706,7 @@ input:-webkit-autofill {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dA-dCPD .dialog-head {
@@ -765,7 +761,7 @@ input:-webkit-autofill {
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .dialog-body>div {
@@ -797,7 +793,7 @@ input:-webkit-autofill {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     overflow-y: scroll;
 }
 
@@ -808,8 +804,7 @@ input:-webkit-autofill {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 12px;
+color: var(--text-6);    font-size: 12px;
 }
 
 .kDuLvp .input-control {
@@ -818,8 +813,8 @@ input:-webkit-autofill {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -833,7 +828,7 @@ input:-webkit-autofill {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
 }
 
@@ -868,7 +863,7 @@ input:-webkit-autofill {
 }
 
 .Vvcdr {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     width: 29rem;
 }
 
@@ -887,8 +882,7 @@ input:-webkit-autofill {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .kDuLvp .input-control {
     position: relative;
@@ -896,8 +890,8 @@ input:-webkit-autofill {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -911,7 +905,7 @@ input:-webkit-autofill {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .Vvcdr .casino-code {
@@ -938,7 +932,7 @@ input:-webkit-autofill {
 }
 
 .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
 }
@@ -954,8 +948,8 @@ input:-webkit-autofill {
 }
 
 .Vvcdr .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 
 .Vvcdr .button {
@@ -1015,8 +1009,7 @@ input:-webkit-autofill {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .gIMEzD .other-group {
     border-radius: 1.75rem;

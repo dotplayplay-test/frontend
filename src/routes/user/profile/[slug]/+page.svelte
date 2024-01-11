@@ -762,8 +762,7 @@ $:{
 .jXCVwe .user-info .actions .button {
     min-width: 5.8125rem;
     padding: 0px 1.25rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .jXCVwe .user-info .actions .tip {
     margin-right: 0.625rem;
 }
@@ -776,7 +775,7 @@ $:{
     border-radius: 1.6875rem;
 }
 .bRYT {
-    background: rgb(30, 32, 36);
+    background: var(--card-bg-5);
     border-radius: 1.25rem;
     padding: 0.875rem;
     margin-bottom: 0.5rem;
@@ -787,7 +786,7 @@ $:{
     align-items: center;
 }
 .bRYT .module-name {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     margin: 0.25rem 0px 0.75rem;
 }
 .cgBQzA .nothing {
@@ -797,8 +796,7 @@ $:{
 }
 .cuPxwd {
     padding: 2.5rem 0px;
-    color: rgba(153, 164, 176, 0.6);
-    line-height: 1;
+color: var(--text-6);    line-height: 1;
     text-align: center;
     height: 100%;
     min-height: 16.25rem;
@@ -827,8 +825,7 @@ $:{
     margin-top: 0.625rem;
 }
 .bRYT .darken {
-    color: rgba(153, 164, 176, 0.6);
-    background: none;
+color: var(--text-6);    background: none;
 }
 
 @media screen and (max-width: 650px){

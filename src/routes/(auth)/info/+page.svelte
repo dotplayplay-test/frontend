@@ -277,16 +277,15 @@ h2 {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .kDuLvp .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -299,7 +298,7 @@ h2 {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
 }
 .kDuLvp {
@@ -312,8 +311,7 @@ h2 {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .kmovRe .buttons {
     display: flex;
     -webkit-box-pack: justify;
@@ -355,7 +353,7 @@ h2 {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    /* background-color: rgb(23, 24, 27); */
+    /* background: var(--affiliate-bg); */
 }
 
 .dialog-head.has-close {
@@ -412,7 +410,7 @@ img {
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .dialog-body>div {
@@ -443,8 +441,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs {
     padding: 1rem 2.5rem 1.25rem;
@@ -459,8 +456,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs .other-group {
     border-radius: 1.75rem;
@@ -492,7 +488,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .jScFby {
@@ -539,7 +535,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 /* ============================= mobile ===================================== */
@@ -565,7 +561,7 @@ img {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-head.has-close {

@@ -100,7 +100,7 @@
         border-radius: 1.25rem;
         overflow: hidden;
         padding: 0.91rem 1.25rem;
-        background: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
         color: rgb(255, 255, 255);
         font-size: 0.875rem;
         display: flex;

@@ -205,7 +205,7 @@ let listArr = [{
 <style>
 .lawjdN {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 
@@ -218,14 +218,14 @@ let listArr = [{
 }
 
 .lawjdN .rewards-dialog_content {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     border-radius: 8px;
     padding: 0px 8px 16px;
     margin-bottom: 20px;
 }
 
 .lawjdN .rewards-dialog_content_head {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     line-height: 42px;
 }
 
@@ -243,7 +243,7 @@ let listArr = [{
 }
 
 .lawjdN .rewards-dialog_content_head {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
     line-height: 42px;
 }
 
@@ -253,7 +253,7 @@ let listArr = [{
 }
 
 /* .lawjdN .rewards-dialog .bg {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 } */
 
 .lawjdN .rewards-dialog_content_head,
@@ -269,7 +269,7 @@ let listArr = [{
 }
 
 .lawjdN .rewards-dialog .item_wager {
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 .lawjdN .rewards-dialog .item_rewards {
@@ -289,7 +289,7 @@ let listArr = [{
 @media only screen and (max-width:650px) {
     .lawjdN {
         border-radius: 20px;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         padding: 4.25rem 1.25rem 0px;
     }
 
@@ -299,7 +299,7 @@ let listArr = [{
         padding: 0px;
         font-family: inherit;
         font-size: 13px;
-        color: rgba(153, 164, 176, 0.8);
+        color: var(--original-text);
         margin: 0.5rem 0px 1.75rem;
     }
 }

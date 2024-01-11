@@ -14,9 +14,6 @@
     <div class="lottery-page">
         <Main  />
     </div>
-    <!-- <div class="lottery-mobile">
-        <Mobile />
-    </div> -->
 </div>
 
 <style>

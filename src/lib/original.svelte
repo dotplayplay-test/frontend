@@ -148,16 +148,16 @@
   }
   .game-item.select {
     border: 1px solid rgba(93, 160, 0, 0.4);
-    color: rgb(245, 246, 247);
+    color: var(--text-color);
   }
   .game-item.select .icon {
-    fill: rgb(245, 246, 247);
+    fill: var(--text-color);
   }
 
   .game-item:hover,
   .game-item:hover .icon {
-    color: rgb(245, 246, 247);
-    fill: rgb(245, 246, 247);
+    color: var(--text-color);
+    fill: var(--text-color);
     transition: 0.5s ease;
   }
 </style>
