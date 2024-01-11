@@ -501,7 +501,6 @@
     for (let i = 0; i < numberOfBets; i++) {
       // Simulate a random outcome (win or lose)
       await startBet();
-      // const win = Math.random() < 0.5;
 
       // get winning status
       const multiplier =
@@ -3299,12 +3298,19 @@
     }
   }
   @media (min-width: 1000px) {
-    .no-web {
+    /* .no-web {
       display: none !important;
-    }
+    } */
     .web {
       display: block;
     }
+  }
+
+  #game-Keno {
+    /* margin-left: 240px; */
+  }
+  .no-web {
+    display: none !important;
   }
 
   .flex-button {
@@ -3497,6 +3503,7 @@
     justify-content: space-between;
     align-items: flex-end;
     flex-wrap: wrap;
+    margin-bottom: 16px;
   }
   /* .lgcQbT > div {
     flex-basis: 49%;
@@ -5540,5 +5547,22 @@
     gap: 5px;
     margin-left: auto;
     align-items: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    .game-main-top {
+      flex-direction: column-reverse;
+    }
+
+    .eQfpOS.style1 {
+      max-width: none;
+    }
+    .cxPcDj.game-box {
+      padding: 0.625rem;
+    }
+
+    .jLprWf {
+      bottom: 0.6rem;
+    }
   }
 </style>
