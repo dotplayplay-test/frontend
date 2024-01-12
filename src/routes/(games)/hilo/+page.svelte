@@ -1,5 +1,6 @@
 <script>
   import { browser } from "$app/environment";
+  import { screen } from "$lib/store/screen";
   import GameControls from "$lib/games/hilo/GameControls.svelte";
   import GameActions from "$lib/games/hilo/GameActions.svelte";
   import GameView from "$lib/games/hilo/GameView.svelte";
@@ -82,19 +83,19 @@
         new SM({ hilo: { enabled: settings.music } }, settings.soundFx)
       );
 
-      error_msg.subscribe(v => {
+      error_msg.subscribe((v) => {
         clearTimeout(messageTimeout);
         if (v) {
           setTimeout(() => {
-            error_msg.set("")
-          }, 3000)
+            error_msg.set("");
+          }, 3000);
         }
-      })
+      });
     }
   });
   onDestroy(() => {
-    $soundManager.stop();
-  })
+    $soundManager?.stop();
+  });
 </script>
 
 {#if $error_msg}
@@ -110,7 +111,7 @@
   style="opacity: 1; transform: none;"
 >
   <div class="game-area">
-    <div class="game-main">
+    <div class="game-main {$screen < 1292 ? 'mobile-view' : ''}">
       <GameControls
         on:hiloNextRound={handleNextRound}
         on:hiloCashout={handleCashOut}
@@ -173,8 +174,10 @@
     display: flex;
     flex-wrap: wrap;
   }
-  .lmWKWf.game-style0 .game-main {
+  .lmWKWf.game-style0 .game-main:not(.mobile-view) {
     padding-left: 330px;
+  }
+  .lmWKWf.game-style0 .game-main {
     min-height: 47.5rem;
   }
 
@@ -284,6 +287,39 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
+  }
+  @media screen and (max-width: 621px) {
+    .cFxmZX {
+      margin: 1.25rem 0px 0px !important;
+      width: auto !important;
+      padding: 1rem 0.75rem 1.5rem !important;
+    }
+    .cFxmZX .intro-title {
+      flex-wrap: wrap !important;
+      height: auto !important;
+    }
+    .cFxmZX .intro-title .intro-tags > p {
+      margin: 0px 0.3125rem 0.3125rem 0px !important;
+      white-space: nowrap !important;
+      padding: 0.375rem 0.875rem !important;
+      line-height: 1.25rem !important;
+      height: 2rem !important;
+    }
+    .cFxmZX .description {
+      margin-top: 0.625rem !important;
+      line-height: 1.25rem !important;
+      padding-left: 0.25rem !important;
+    }
+    .cFxmZX .intro-title > p {
+      width: 100% !important;
+      margin: 0px 0px 1rem !important;
+      line-height: 1.25rem !important;
+      padding: 0px 0.625rem !important;
+    }
+    .cFxmZX .intro-title .intro-tags {
+      margin-left: 0px !important;
+      flex-wrap: wrap !important;
+    }
   }
   .cFxmZX .intro-title > p {
     font-size: 1rem;

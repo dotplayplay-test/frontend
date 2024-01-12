@@ -68,4 +68,5 @@ export const handleCountdown = (() => {
         Handles_Loading.set(false)
     })
     return { handleDicebet, handleChattingMessages, handleMinesHistory, handleCrashActiveBet, handleGrabCoinDrop }
+
 })

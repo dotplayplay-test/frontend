@@ -75,7 +75,7 @@ export default class BaseGame extends GameEventHandler {
       winAmount: parseFloat(t.winAmount),
       profitAmount: new Decimal(t.winAmount).sub(t.betAmount).toNumber(),
       nickName: t.userName,
-      betTime: t.time,
+      betTime: t.betTime,
     }))
   }
 }

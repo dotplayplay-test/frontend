@@ -1,9 +1,10 @@
 <script>
   import { soundSettings, soundManager, hilo_game } from "./store";
+  import { screen } from "$lib/store/screen";
   import Hotkeys from "./dialogs/Hotkeys.svelte";
   import LiveStats from "./dialogs/LiveStats.svelte";
   import Help from "./dialogs/Help.svelte";
-  import HiloDialog from "./dialogs/HiloDialog.svelte"
+  import HiloDialog from "./dialogs/HiloDialog.svelte";
   $: showHotkeyDialog = false;
   $: showHelpDialog = false;
   $: showLiveStatsDialog = false;
@@ -44,30 +45,38 @@
       ><use xlink:href="#icon_Sound{$soundSettings.soundFx ? 'On' : 'Off'}"
       ></use></svg
     ></button
-  ><button on:click={() => showHotkeyDialog = true} class="action-item"
-    ><svg
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_HotKeys"></use></svg
-    ></button
-  ><button on:click={() =>  {
-    if ($hilo_game?.bet_id) {
-      hiloDialogDialogData = {
-        betID: $hilo_game.bet_id,
-        tab: 2
+  >
+  {#if $screen > 660}
+    <button on:click={() => (showHotkeyDialog = true)} class="action-item"
+      ><svg
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        class="sc-gsDKAQ hxODWG icon"
+        ><use xlink:href="#icon_HotKeys"></use></svg
+      ></button
+    >
+  {/if}
+  <button
+    on:click={() => {
+      if ($hilo_game?.bet_id) {
+        hiloDialogDialogData = {
+          betID: $hilo_game.bet_id,
+          tab: 2,
+        };
       }
-    }
-  }} class="action-item" id="set_seed"
+    }}
+    class="action-item"
+    id="set_seed"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Seed"></use></svg
     ></button
-  ><button on:click={() => showLiveStatsDialog = true} class="action-item"
+  ><button on:click={() => (showLiveStatsDialog = true)} class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"
       ><use xlink:href="#icon_LiveStats"></use></svg
     ></button
-  ><button on:click={() => showHelpDialog = true} class="action-item"
+  ><button on:click={() => (showHelpDialog = true)} class="action-item"
     ><svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Help"></use></svg
@@ -75,17 +84,21 @@
   >
 </div>
 {#if showHotkeyDialog}
-  <Hotkeys on:close={() => showHotkeyDialog = false}/>
+  <Hotkeys on:close={() => (showHotkeyDialog = false)} />
 {/if}
 {#if showHelpDialog}
-  <Help on:close={() => showHelpDialog = false}/>
+  <Help on:close={() => (showHelpDialog = false)} />
 {/if}
 {#if showLiveStatsDialog}
-  <LiveStats on:close={() => showLiveStatsDialog = false}/>
+  <LiveStats on:close={() => (showLiveStatsDialog = false)} />
 {/if}
 {#if Boolean(hiloDialogDialogData)}
-  <HiloDialog launchConf={hiloDialogDialogData} on:close={() => hiloDialogDialogData =  null}/>
+  <HiloDialog
+    launchConf={hiloDialogDialogData}
+    on:close={() => (hiloDialogDialogData = null)}
+  />
 {/if}
+
 <style>
   .game-actions {
     display: flex;

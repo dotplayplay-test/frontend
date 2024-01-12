@@ -1,5 +1,6 @@
 <script>
   import { browser } from "$app/environment";
+  import { screen } from "$lib/store/screen";
   import { onMount, createEventDispatcher } from "svelte";
   import { default_Wallet } from "$lib/store/coins";
   import { goto } from "$app/navigation";
@@ -275,7 +276,7 @@
   });
 </script>
 
-<div id="Hilo-control-0" class="sc-hLVXRe cYiOHZ game-control style0">
+<div id="Hilo-control-0" class="sc-hLVXRe cYiOHZ game-control style0  {$screen < 1292 ? "mobile-view" : ""}">
   <div class="game-control-panel">
     <div class="sc-fSDTwv kqpylJ">
       <div class="sc-fUQcsx kqrzPs betting">
@@ -505,26 +506,6 @@
       </button>
     </div>
   </div>
-  <svg
-    aria-hidden="true"
-    style="position: absolute; width: 0; height: 0; overflow: hidden;"
-    version="1.1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-  >
-    <defs>
-      <symbol id="icon_Inform" viewBox="0 0 32 32">
-        <path
-          d="M16 2c7.732 0 14 6.268 14 14s-6.268 14-14 14c-7.732 0-14-6.268-14-14s6.268-14 14-14zM16 5c-6.075 0-11 4.925-11 11s4.925 11 11 11c6.075 0 11-4.925 11-11s-4.925-11-11-11zM16 20c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM16 7.404c0.918 0 1.671 0.707 1.744 1.606l0.006 0.144v8.138c0 0.966-0.784 1.75-1.75 1.75-0.918 0-1.671-0.707-1.744-1.606l-0.006-0.144v-8.138c0-0.966 0.784-1.75 1.75-1.75z"
-        ></path>
-      </symbol>
-      <symbol id="icon_Arrow" viewBox="0 0 32 32">
-        <path
-          d="M9.714 27.889c-0.803-0.771-0.845-1.995-0.127-2.814l0.127-0.132 8.549-8.207c0.391-0.375 0.421-0.966 0.090-1.375l-0.090-0.098-8.549-8.207c-0.847-0.814-0.847-2.133 0-2.946 0.803-0.771 2.079-0.811 2.931-0.122l0.138 0.122 8.549 8.207c2.054 1.972 2.117 5.133 0.187 7.177l-0.187 0.188-8.549 8.207c-0.847 0.814-2.221 0.814-3.069 0z"
-        ></path>
-      </symbol>
-    </defs>
-  </svg>
 </div>
 
 <style>
@@ -583,15 +564,6 @@
     transform: scaleX(1) !important;
   }
 
-  .eOA-dmL .slider-before,
-  .eOA-dmL .slider-after {
-    height: 2px;
-    width: 98%;
-    position: absolute;
-    left: 1%;
-    top: 50%;
-    margin-top: -1px;
-  }
   .eOA-dmL .slider-after {
     background-color: rgba(216, 222, 227, 0.4);
     transform-origin: left center;
@@ -627,17 +599,6 @@
     width: 0.75rem;
     border-radius: 0.375rem;
     background-color: rgb(204, 207, 217);
-  }
-
-  .fCSgTW .fix-layer .slider-before,
-  .fCSgTW .fix-layer .slider-after {
-    width: 86%;
-    left: 7%;
-    height: 0.5rem;
-    margin-top: -0.25rem;
-    border-radius: 0.25rem;
-    background-color: rgb(23, 24, 27);
-    transform: scaleX(1) !important;
   }
 
   .eOA-dmL .slider-before,
@@ -680,16 +641,22 @@
     fill: rgb(184, 194, 204);
     margin-left: 0.625rem;
   }
-  .cYiOHZ.style0 {
+  .cYiOHZ.style0:not(.mobile-view) {
     position: absolute;
     left: 0px;
     top: 0px;
     bottom: 0px;
     width: 330px;
+    border-right: 1px solid rgba(49, 52, 60, 0.5);
+  }
+  .cYiOHZ.style0.mobile-view {
+    width: 100%;
+    order: 2;
+  }
+  .cYiOHZ.style0 {
     display: flex;
     flex-direction: column;
     padding: 0.625rem;
-    border-right: 1px solid rgba(49, 52, 60, 0.5);
   }
 
   .cYiOHZ {
@@ -701,6 +668,20 @@
   }
   .kqpylJ {
     margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  @media screen and (max-width: 621px) {
+    .kqpylJ .cashout-btn,
+    .kqpylJ .bet-button {
+      order: -3;
+    }
+    .kqpylJ .inline-btns {
+      order: -2;
+    }
+    .kqpylJ .skip-btn {
+      order: -1;
+    }
   }
   .gcQjQT .input-label {
     display: flex;
@@ -879,9 +860,6 @@
   .kqpylJ .flex-btn,
   .kqpylJ .inline-btns {
     display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
     align-items: center;
     margin-top: 1.25rem;
   }

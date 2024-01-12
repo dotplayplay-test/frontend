@@ -3,7 +3,7 @@
 </script>
 
 <script>
-  import TrendDialog from "./dialogs/trends/index.svelte";
+  import TrendDialog from "./dialogs/trends/layout.svelte";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { onMount, onDestroy } from "svelte";
   const { autorun } = connect();
@@ -55,6 +55,7 @@
 
     return observeElement;
   }
+  let game = null;
   $: betsContainer = null;
   $: viewContainer = null;
   $: canvas = null;
@@ -65,18 +66,20 @@
   $: isMoon = false;
   let scrollTimeout;
   $: {
-    const game = $crashGame;
-    if (game) {
+    const _game = $crashGame;
+    if (!game && _game) {
+      game = _game;
       autorun(() => {
-        [].slice();
-        gameHistory = game.history.reverse().slice(0, 10).reverse();
+        gameHistory = game.history.slice(-10);
         // console.log("Game History", gameHistory);
         if (betsContainer) {
           clearTimeout(scrollTimeout);
           scrollTimeout = setTimeout(() => {
-            const { scrollLeft, scrollWidth } = betsContainer;
-            if (scrollLeft === 0 || scrollLeft > 350) {
-              betsContainer.scrollTo(scrollWidth, 0);
+            if (betsContainer) {
+              const { scrollLeft, scrollWidth } = betsContainer;
+              if (scrollLeft === 0 || scrollLeft > 350) {
+                betsContainer.scrollTo(scrollWidth, 0);
+              }
             }
           }, 100);
         }
@@ -95,7 +98,7 @@
       const handleEscapeSuccess = ({ amount, odds, currencyName }) => {
         if (odds > 1) {
           winData = {
-            profitAmount: new Decimal(amount).times(odds).toNumber(),
+            profitAmount: new Decimal(amount).times(odds).toFixed(4),
             currencyName: currencyName,
             odds: odds,
           };
@@ -126,13 +129,6 @@
 {/if}
 <div class="game-view">
   <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
-    <!-- <div class="sc-lheXJl lhEJig jackpot-enter">
-      <div class="title"><span class="tit">Bankroll</span><span>CUB</span></div>
-      <div class="sc-Galmp erPQzq coin notranslate">
-        <img a class="coin-icon" src="/coin/BTC.black.png" />
-        <div class="amount"><span class="amount-str">4610093.31</span></div>
-      </div>
-    </div> -->
     <div bind:this={betsContainer} class="recent-list-wrap">
       <div class="recent-list" style="transform: translate(0%, 0px);">
         {#each gameHistory as game, index (`${index}_${game.gameId}`)}
@@ -160,6 +156,11 @@
             </div>
           </div>
         {/each}
+        {#if !Boolean(gameHistory.length)}
+          <div class="empty-item">
+            <p>Game results will be displayed here.</p>
+          </div>
+        {/if}
       </div>
     </div>
     <button
@@ -179,7 +180,9 @@
         <div class="Le">
           <div class="msg">
             <span>Won</span>
-            <span class="amount">{winData.profitAmount}</span>
+            <span class="amount"
+              >{winData.profitAmount} {winData.currencyName}</span
+            >
           </div>
           <img
             alt=""
@@ -219,14 +222,17 @@
 
 <style>
   .Le {
+    z-index: 9999;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     width: 320px;
     height: 200px;
-    margin: -100px 0 0 -160px;
   }
   .Le .msg {
     font-size: 24px;
@@ -250,65 +256,6 @@
     height: 2.75rem;
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
-  }
-  .fIoiVG .jackpot-enter {
-    margin-left: 1.5rem;
-  }
-
-  .lhEJig {
-    width: 10.125rem;
-    height: 100%;
-    line-height: 1.25rem;
-    border-radius: 1.375rem;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: rgba(49, 52, 60, 0.4);
-  }
-  .lhEJig .title {
-    font-weight: bold;
-    height: 1.25rem;
-  }
-  .lhEJig .coin {
-    vertical-align: top;
-    height: 1.25rem;
-    margin-top: -0.25rem;
-  }
-  .erPQzq {
-    display: inline-flex;
-    vertical-align: middle;
-    -webkit-box-align: center;
-    align-items: center;
-    white-space: nowrap;
-  }
-  .lhEJig .coin .coin-icon {
-    width: 1rem;
-    height: 1rem;
-  }
-  .lhEJig .title .tit {
-    margin-right: 0.25rem;
-    color: rgb(67, 179, 9);
-  }
-  .erPQzq .coin-icon {
-    width: 1.4em;
-    height: 1.4em;
-    margin-right: 0.25em;
-  }
-  .lhEJig .coin .amount {
-    color: rgb(245, 246, 247);
-    font-weight: bold;
-  }
-  .lhEJig .coin .amount .amount-str {
-    width: auto;
-  }
-  .erPQzq .amount-str {
-    width: 7em;
-    display: inline-block;
   }
   .kQtbd .recent-list-wrap {
     background-color: rgba(49, 52, 60, 0.4);
@@ -457,5 +404,11 @@
     right: 0px;
     bottom: -1px;
     width: 100%;
+  }
+  .empty-item {
+    text-align: center;
+    display: flex;
+    padding: 7px 120px 0 9px;
+    justify-content: center;
   }
 </style>

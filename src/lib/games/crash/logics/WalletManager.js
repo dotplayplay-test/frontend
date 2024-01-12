@@ -62,7 +62,6 @@ class Currency {
   }
   addDeduction(e) {
     this.deducting = this.deducting.add(e);
-    console.log("Adding deduction > ", this.deducting, this.available, this.amount)
     if (this.currencyName === "USDT") {
       usdt_Wallet.update((wallet) => ({
         ...wallet,
@@ -117,7 +116,10 @@ export default class WalletManager extends EventEmitter {
     this.deductions = {};
     this.isFirstSync = true;
     this.hideAmount = false;
-    this.current = "PPF";
+    this.current = { 
+      currencyName: appData.currencyName,
+      currencyImage: appData.currencyImage
+    };
 
     this.onBalanceChangeDecode = this.onBalanceChange.bind(this);
 
@@ -131,19 +133,15 @@ export default class WalletManager extends EventEmitter {
       updateDeduction: action,
       cancelDeduction: action,
     });
-
-    this.current = {
-      currencyName: appData.currencyName,
-      currencyImage: appData.currencyImage,
-    };
-
     this.addCurrency({
       amount: 0,
-      currencyName: "PPF",
-      currencyImage:
-        "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
-      aliasCurrencyName: "PPF",
+      currencyName: appData.currencyName,
+      currencyImage: appData.currencyImage,
+      aliasCurrencyName: appData.currencyName,
+      minAmount: 1, maxAmount: 100,
+      usdPrice: 0,
     });
+    
 
     setInterval(() => this.syncSystemConfig(), 96e4);
     reaction(
@@ -154,15 +152,20 @@ export default class WalletManager extends EventEmitter {
     );
     
     const updateWallet = (wallet) => {
-      if (wallet) {
+      if (wallet && wallet.coin_name) {
+        let minAmount = wallet.coin_name === "PPF" ? 100 : wallet.coin_name === "USDT" ? 0.1 : 1;
+          let maxAmount = wallet.coin_name === "PPF" ? 10_000 : wallet.coin_name === "USDT" ? 5_000 : 30_000;
         if (this.dict[wallet.coin_name]) {
           this.dict[wallet.coin_name].setAmount(wallet.balance);
+          this.dict[wallet.coin_name].minAmount = minAmount;
+          this.dict[wallet.coin_name].maxAmount = maxAmount;
         } else {
+          
           this.addCurrency({
             amount: wallet.balance,
             currencyName: wallet.coin_name,
             currencyImage: wallet.coin_image,
-            ...{ usdPrice: 1, precision: 8 },
+            ...{ usdPrice: wallet.coin_name === "PPF" ? 0 : 1, unitAmount: 1, precision: 4, minAmount, maxAmount },
           });
         }
       }
@@ -181,7 +184,7 @@ export default class WalletManager extends EventEmitter {
     });
     default_Wallet.subscribe((wallet) => {
       updateWallet(wallet);
-      if (wallet) {
+      if (wallet && wallet.coin_name) {
         this.setCurrent({
           currencyName: wallet.coin_name,
           currencyImage: wallet.coin_image,
@@ -332,10 +335,16 @@ export default class WalletManager extends EventEmitter {
       balances
         .sort((a, b) => a.sort - b.sort)
         .forEach((balance) => {
+          const minAmount = balance.currencyName === "PPF" ? 100 : balance.currencyName === "USDT" ? 0.1 : 1;
+          const maxAmount = balance.currencyName === "PPF" ? 10_000 : balance.currencyName === "USDT" ? 5_000 : 30_000;
+          const usdPrice = balance.currencyName === "PPF" ? 0 : 1;
           let currency = this.dict[balance.currencyName];
 
           if (currency) {
             currency.amount = parseFloat(balance.amount);
+            currency.minAmount = minAmount;
+            currency.maxAmount = maxAmount;
+            currency.usdPrice = usdPrice;
           } else {
             // const info = currenciesInfo.currency[balance.currencyName] || {};
 
@@ -343,8 +352,8 @@ export default class WalletManager extends EventEmitter {
             newBalance.amount = parseFloat(newBalance.amount);
 
             this.addCurrency({
-              ...{ usdPrice: 1, precision: 8, unitAmount: 1 },
               ...newBalance,
+              ...{ usdPrice, precision: 4, unitAmount: 1, minAmount, maxAmount },
             });
           }
         });

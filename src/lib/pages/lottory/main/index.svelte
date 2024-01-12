@@ -1,5 +1,6 @@
 <script>
   import { slide, fade } from "svelte/transition";
+  import { screen } from "$lib/store/screen"
   import { goto } from "$app/navigation";
   import moment from "moment";
   import { handleisLoggin } from "$lib/store/profile";
@@ -205,7 +206,7 @@
 {/if}
 
 {#if !loading}
-  <div id="main" class="sc-zjkyB jlxrhk">
+  <div class="sc-zjkyB jlxrhk">
     <div class="sc-gDGHff jtyGOM lottery-header">
       <div class="wrap">
         <div class="period">

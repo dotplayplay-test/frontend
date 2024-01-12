@@ -3,6 +3,7 @@
 </script>
 
 <script>
+  import { screen } from "$lib/store/screen";
   import { onDestroy, onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
   import useFormatter from "./hooks/formatter";
@@ -10,6 +11,8 @@
   const { removeTrailingZeros, getSuffix } = useFormatter();
   $: trendBetActive = false;
   $: showingMore = false;
+
+  let game = null;
 
   $: players = [];
   $: playersWithBets = 0;
@@ -26,8 +29,9 @@
   $: trendListEmpty = true;
 
   $: {
-    const game = $crashGame;
-    if (game) {
+    const _game = $crashGame;
+    if (!game && _game) {
+      game = _game;
       autorun(() => {
         gameStatus = game.status;
         xBet = game.xbet;
@@ -72,8 +76,9 @@
   });
 </script>
 
-<div class="sc-czvZiG gnytwz">
-  <div class="top">
+<div class="sc-czvZiG gnytwz  {$screen < 1051 ? "mobile-view" : ""}">
+  {#if $screen > 1050}
+    <div class="top">
     <div class="title">All Bets</div>
 
     <div class="flex-middle">
@@ -89,6 +94,8 @@
       </div>
     </div>
   </div>
+  {/if}
+  
   {#if !trendBetActive}
     <div class="sc-eoHXOn vjsVz need-scroll">
       <table class="head">
@@ -105,65 +112,48 @@
           ? 'has-scroll scroll-view jScFby sc-dkPtRN'
           : ''}"
       >
-        <table class="sc-gWXbKe iUeetX table is-hover">
-          <tbody>
-            {#each players as player (player.userId)}
-              <tr
-                ><td class="user"
-                  ><a
-                    class="sc-jUosCB iTDswZ user-info"
-                    href="/user/profile/{player.userId}"
-                    ><img
-                      alt=""
-                      class="avatar"
-                      src={player.hidden
-                        ? "/assets/avatar.a1ff78fe.png"
-                        : player.avatar}
-                    />
-                    <div class="name">
-                      {#if player.hidden}
-                        <span class="hidden-name"
-                          ><svg
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            class="sc-gsDKAQ hxODWG icon"
-                            ><use xlink:href="#icon_Hidden"></use></svg
-                          >Hidden</span
-                        >
+        {#if Boolean(players.length)}
+          <table class="sc-gWXbKe iUeetX table is-hover">
+            <tbody>
+              {#each players as player (player.userId)}
+                <tr
+                  ><td class="user"
+                    ><a
+                      class="sc-jUosCB iTDswZ user-info"
+                      href="/user/profile/{player.userId}"
+                      ><img
+                        alt=""
+                        class="avatar"
+                        src={player.hidden
+                          ? "/assets/avatar.a1ff78fe.png"
+                          : player.avatar}
+                      />
+                      <div class="name">
+                        {#if player.hidden}
+                          <span class="hidden-name"
+                            ><svg
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                              class="sc-gsDKAQ hxODWG icon"
+                              ><use xlink:href="#icon_Hidden"></use></svg
+                            >Hidden</span
+                          >
+                        {:else}
+                          {player.name}
+                        {/if}
+                      </div></a
+                    ></td
+                  ><td class="escape"
+                    ><span class="ttl opacity"
+                      >{#if player.rate > 0}
+                        {player.rate.toFixed(2) + "x"}
+                      {:else if gameStatus === 3}
+                        "bang"
                       {:else}
-                        {player.name}
-                      {/if}
-                    </div></a
-                  ></td
-                ><td class="escape"
-                  ><span class="ttl opacity"
-                    >{#if player.rate > 0}
-                      {(player.rate).toFixed(2) + "x"}
-                    {:else if gameStatus === 3}
-                      "bang"
-                    {:else}
-                      "betting"
-                    {/if}</span
-                  ></td
-                ><td
-                  ><div
-                    class="sc-Galmp erPQzq coin notranslate {player.rate > 0
-                      ? 'is-win'
-                      : gameStatus === 3
-                        ? 'is-lose'
-                        : ''}"
-                  >
-                    <img alt="" class="coin-icon" src={player.currencyImage} />
-                    <div class="amount">
-                      <span class="amount-str"
-                        >{removeTrailingZeros(player.bet.toFixed(8))}<span
-                          class="suffix">{getSuffix(player.bet.toFixed(8))}</span
-                        ></span
-                      >
-                    </div>
-                  </div></td
-                ><td
-                  >{#if player.rate > 0}
-                    <div
+                        "betting"
+                      {/if}</span
+                    ></td
+                  ><td
+                    ><div
                       class="sc-Galmp erPQzq coin notranslate {player.rate > 0
                         ? 'is-win'
                         : gameStatus === 3
@@ -177,26 +167,60 @@
                       />
                       <div class="amount">
                         <span class="amount-str"
-                          >{removeTrailingZeros(
-                            player.bet.mul(player.rate).sub(player.bet)
-                          )}<span class="suffix"
-                            >{getSuffix(
-                              player.bet.mul(player.rate).sub(player.bet)
-                            )}</span
+                          >{removeTrailingZeros(player.bet.toFixed(8))}<span
+                            class="suffix"
+                            >{getSuffix(player.bet.toFixed(8))}</span
                           ></span
                         >
                       </div>
-                    </div>
-                  {:else if gameStatus === 3}
-                    "bang"
-                  {:else}
-                    <span class="ttl opacity">Betting</span>
-                  {/if}
-                </td></tr
-              >
-            {/each}
-          </tbody>
-        </table>
+                    </div></td
+                  ><td
+                    >{#if player.rate > 0}
+                      <div
+                        class="sc-Galmp erPQzq coin notranslate {player.rate > 0
+                          ? 'is-win'
+                          : gameStatus === 3
+                            ? 'is-lose'
+                            : ''}"
+                      >
+                        <img
+                          alt=""
+                          class="coin-icon"
+                          src={player.currencyImage}
+                        />
+                        <div class="amount">
+                          <span class="amount-str"
+                            >{removeTrailingZeros(
+                              player.bet.mul(player.rate).sub(player.bet)
+                            )}<span class="suffix"
+                              >{getSuffix(
+                                player.bet.mul(player.rate).sub(player.bet)
+                              )}</span
+                            ></span
+                          >
+                        </div>
+                      </div>
+                    {:else if gameStatus === 3}
+                      "bang"
+                    {:else}
+                      <span class="ttl opacity">Betting</span>
+                    {/if}
+                  </td></tr
+                >
+              {/each}
+            </tbody>
+          </table>
+        {:else}
+          <div class="sc-epFoly etYRmD">
+            <div class="sc-eCImPb biQums cuPxwd empty">
+              <img
+                alt="No data"
+                src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+              />
+              <div class="msg">Oops! There is no data yet!</div>
+            </div>
+          </div>
+        {/if}
       </div>
       <div class="foot">
         <div class="state">{playersWithBets}/{players.length} Player(s)</div>
@@ -258,119 +282,129 @@
         </table>
       </div>
       <div class={showingMore ? "sc-dkPtRN jScFby scroll-view" : "list-wrap"}>
-        <div class="bet-list">
-          <table class="sc-gWXbKe iUeetX table is-hover">
-            <tbody>
-              {#each redList as bet, index (`${bet.userId}_${index}`)}
-                <tr
-                  ><td
-                    ><a
-                      class="sc-jUosCB iTDswZ user-info"
-                      href="/user/profile/{bet.userId}"
-                      ><img
-                        alt=""
-                        class="avatar"
-                        src={bet.hidden
-                          ? "/assets/avatar.a1ff78fe.png"
-                          : bet.avatar}
-                      />
-                      <div class="name">
-                        {#if bet.hidden}
-                          <span class="hidden-name"
-                            ><svg
-                              xmlns:xlink="http://www.w3.org/1999/xlink"
-                              class="sc-gsDKAQ hxODWG icon"
-                              ><use xlink:href="#icon_Hidden"></use></svg
-                            >Hidden</span
+        {#if !trendListEmpty}
+          <div class="bet-list">
+            <table class="sc-gWXbKe iUeetX table is-hover">
+              <tbody>
+                {#each redList as bet, index (`${bet.userId}_${index}`)}
+                  <tr
+                    ><td
+                      ><a
+                        class="sc-jUosCB iTDswZ user-info"
+                        href="/user/profile/{bet.userId}"
+                        ><img
+                          alt=""
+                          class="avatar"
+                          src={bet.hidden
+                            ? "/assets/avatar.a1ff78fe.png"
+                            : bet.avatar}
+                        />
+                        <div class="name">
+                          {#if bet.hidden}
+                            <span class="hidden-name"
+                              ><svg
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                class="sc-gsDKAQ hxODWG icon"
+                                ><use xlink:href="#icon_Hidden"></use></svg
+                              >Hidden</span
+                            >
+                          {:else}
+                            {bet.name}
+                          {/if}
+                        </div></a
+                      >
+                    </td><td>
+                      <div
+                        class="sc-Galmp erPQzq coin notranslate monospace bold status-{bet.status} {bet.rate >
+                        0
+                          ? 'is-win'
+                          : bet.status === 3
+                            ? 'is-lose'
+                            : ''}"
+                      >
+                        <img alt="" class="coin-icon" src={bet.currencyImage} />
+                        <div class="amount">
+                          <span class="amount-str"
+                            >{removeTrailingZeros(bet.bet.toFixed(8))}<span
+                              class="suffix"
+                              >{getSuffix(bet.bet.toFixed(8))}</span
+                            ></span
                           >
-                        {:else}
-                          {bet.name}
-                        {/if}
-                      </div></a
-                    >
-                  </td><td>
-                    <div
-                      class="sc-Galmp erPQzq coin notranslate monospace bold status-{bet.status} {bet.rate >
-                      0
-                        ? 'is-win'
-                        : bet.status === 3
-                          ? 'is-lose'
-                          : ''}"
-                    >
-                      <img alt="" class="coin-icon" src={bet.currencyImage} />
-                      <div class="amount">
-                        <span class="amount-str"
-                          >{removeTrailingZeros(bet.bet.mul(bet.rate / 100 - 1))}<span class="suffix"
-                            >{getSuffix(bet.bet.mul(bet.rate / 100 - 1))}</span
-                          ></span
-                        >
+                        </div>
                       </div>
-                    </div>
-                  </td></tr
-                >
-              {/each}
-            </tbody>
-          </table>
-          <table class="sc-gWXbKe iUeetX table is-hover">
-            <tbody>
-              {#each greenList as bet, index (`${bet.userId}_${index}`)}
-                <tr
-                  ><td
-                    ><a
-                      class="sc-jUosCB iTDswZ user-info"
-                      href="/user/profile/{bet.userId}"
-                      ><img
-                        alt=""
-                        class="avatar"
-                        src={bet.hidden
-                          ? "/assets/avatar.a1ff78fe.png"
-                          : bet.avatar}
-                      />
-                      <div class="name">
-                        {#if bet.hidden}
-                          <span class="hidden-name"
-                            ><svg
-                              xmlns:xlink="http://www.w3.org/1999/xlink"
-                              class="sc-gsDKAQ hxODWG icon"
-                              ><use xlink:href="#icon_Hidden"></use></svg
-                            >Hidden</span
+                    </td></tr
+                  >
+                {/each}
+              </tbody>
+            </table>
+            <table class="sc-gWXbKe iUeetX table is-hover">
+              <tbody>
+                {#each greenList as bet, index (`${bet.userId}_${index}`)}
+                  <tr
+                    ><td
+                      ><a
+                        class="sc-jUosCB iTDswZ user-info"
+                        href="/user/profile/{bet.userId}"
+                        ><img
+                          alt=""
+                          class="avatar"
+                          src={bet.hidden
+                            ? "/assets/avatar.a1ff78fe.png"
+                            : bet.avatar}
+                        />
+                        <div class="name">
+                          {#if bet.hidden}
+                            <span class="hidden-name"
+                              ><svg
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                class="sc-gsDKAQ hxODWG icon"
+                                ><use xlink:href="#icon_Hidden"></use></svg
+                              >Hidden</span
+                            >
+                          {:else}
+                            {bet.name}
+                          {/if}
+                        </div></a
+                      >
+                      {#if bet.type === 1000}
+                        <div class="moon"></div>
+                      {/if}
+                    </td><td>
+                      <div
+                        class="sc-Galmp erPQzq coin notranslate monospace bold status-{bet.status} {bet.rate >
+                        0
+                          ? 'is-win'
+                          : bet.status === 3
+                            ? 'is-lose'
+                            : ''}"
+                      >
+                        <img alt="" class="coin-icon" src={bet.currencyImage} />
+                        <div class="amount">
+                          <span class="amount-str"
+                            >{removeTrailingZeros(bet.bet.toFixed(8))}<span
+                              class="suffix"
+                              >{getSuffix(bet.bet.toFixed(8))}</span
+                            ></span
                           >
-                        {:else}
-                          {bet.name}
-                        {/if}
-                      </div></a
-                    >
-                    {#if bet.type === 1000}
-                      <div class="moon"></div>
-                    {/if}
-                  </td><td>
-                    <div
-                      class="sc-Galmp erPQzq coin notranslate monospace bold status-{bet.status} {bet.rate >
-                      0
-                        ? 'is-win'
-                        : bet.status === 3
-                          ? 'is-lose'
-                          : ''}"
-                    >
-                      <img alt="" class="coin-icon" src={bet.currencyImage} />
-                      <div class="amount">
-                        <span class="amount-str"
-                          >{removeTrailingZeros(
-                            bet.bet.mul(bet.rate / 100 - 1)
-                          )}<span class="suffix"
-                            >{getSuffix(
-                              bet.bet.mul(bet.rate / 100 - 1)
-                            )}</span
-                          ></span
-                        >
+                        </div>
                       </div>
-                    </div>
-                  </td></tr
-                >
-              {/each}
-            </tbody>
-          </table>
-        </div>
+                    </td></tr
+                  >
+                {/each}
+              </tbody>
+            </table>
+          </div>
+        {:else}
+          <div class="sc-epFoly etYRmD">
+            <div class="sc-eCImPb biQums cuPxwd empty">
+              <img
+                alt="No data"
+                src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
+              />
+              <div class="msg">Oops! There is no data yet!</div>
+            </div>
+          </div>
+        {/if}
       </div>
       <div class="foot">
         <button
@@ -389,12 +423,14 @@
 </div>
 
 <style>
-  .gnytwz {
-    background-color: rgb(30, 32, 36);
+  .gnytwz:not(.mobile-view) {
     margin-left: 0.625rem;
-    border-radius: 1.25rem;
     width: 40%;
     max-width: 542px;
+  }
+  .gnytwz {
+    background-color: rgb(30, 32, 36);
+    border-radius: 1.25rem;
     position: relative;
   }
   .gnytwz .top {
@@ -826,7 +862,7 @@
     color: rgb(237, 99, 0);
   }
   .engBBI .status-3 {
-    color: rgb(226, 180, 11)
+    color: rgb(226, 180, 11);
   }
 
   .table .sc-Galmp {
@@ -848,6 +884,9 @@
   .erPQzq .amount-str {
     width: 7em;
     display: inline-block;
+  }
+  .engBBI tr {
+    position: relative;
   }
   .engBBI .moon {
     position: absolute;
@@ -875,5 +914,5 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-}
+  }
 </style>

@@ -3,9 +3,10 @@
 </script>
 
 <script>
-  import { default_Wallet } from "$lib/store/coins";
+  import { screen } from "$lib/store/screen"
+  import { browser } from "$app/environment";
   import WalletManager from "./logics/WalletManager";
-
+  import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
   import { onDestroy } from "svelte";
@@ -24,7 +25,7 @@
   $: canXbet = {
     [-200]: true,
     [200]: true,
-    [1000]: true
+    [1000]: true,
   };
   $: currentGamePayout = 0;
   $: scriptRunning = false;
@@ -42,9 +43,8 @@
   $: autoBet = null;
   $: autoBetType = -1;
 
-
   $: placingBet = false;
-  $: placingXBet = false;
+  $: placingXBet = {};
 
   $: autoBetInfo = {
     numberOfBets: 0,
@@ -56,36 +56,47 @@
     stopOnLose: 0,
   };
 
-  let xBet = null;
-  $: coinImage = "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
+  $: xBet = null;
+  $: coinImage =
+    "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
   $: coinName = "PPF";
 
+  let game = null;
+  let betScript = null;
+  $: scriptList = [];
+  $: scriptLogs = [];
+  $: scriptConfig = null;
   $: {
-    const game = $crashGame;
+    const _game = $crashGame;
 
-    if (game) {
+    if (!game && _game) {
+      game = _game;
+      betScript = game.script;
       xBet = game.xbet;
       autoBet = xBet.autoBet;
       currentMaxRate = game.maxRate;
-      currentAmount = game.amount;
-      currentXAmount = xBet.amount;
+      currentAmount = game.amount.toFixed(4);
+      currentXAmount = xBet.amount.toFixed(4);
       autoBetInfo = {
-          numberOfBets: autoBet.times,
-          stopOnLose: new Decimal(autoBet.stopOnLose).toDP(8),
-          stopOnWin: new Decimal(autoBet.stopOnWin).toDP(8).toNumber(),
-          increaseOnWin: !autoBet.onWin.reset,
-          increaseOnWinBy: autoBet.onWin.reset
-            ? 0
-            : new Decimal(autoBet.onWin.value).toNumber(),
-          increaseOnLose: !autoBet.onLose.reset,
-          increaseOnLoseBy: autoBet.onLose.reset
-            ? 0
-            : new Decimal(autoBet.onWin.value).toNumber(),
-        };
+        numberOfBets: autoBet.times,
+        stopOnLose: new Decimal(autoBet.stopOnLose).toDP(8),
+        stopOnWin: new Decimal(autoBet.stopOnWin).toDP(8).toNumber(),
+        increaseOnWin: !autoBet.onWin.reset,
+        increaseOnWinBy: autoBet.onWin.reset
+          ? 0
+          : new Decimal(autoBet.onWin.value).toNumber(),
+        increaseOnLose: !autoBet.onLose.reset,
+        increaseOnLoseBy: autoBet.onLose.reset
+          ? 0
+          : new Decimal(autoBet.onWin.value).toNumber(),
+      };
       autorun(() => {
-        (betting = !!game.betInfo || !!game.nexBetInfo),
-          (betInfo = game.betInfo);
+        betting = !!game.betInfo && game.betInfo.rate === 0;
+        betInfo = game.betInfo;
         betRate = game.rate;
+        scriptList = game.script.scriptList;
+        scriptLogs = game.script.logs;
+        scriptConfig = game.script.config;
         coinImage = WalletManager.getInstance().current.currencyImage;
         coinName = WalletManager.getInstance().current.currencyName;
         nextBetInfo = game.nextBetInfo;
@@ -94,8 +105,7 @@
         gameStatus = game.status;
         scriptRunning = game.script.isRunning;
         percentChance = new Decimal(99 / game.maxRate).toDP(2).toNumber();
-        
-        
+
         xBetting = xBet.isBetting;
         autoBetType = xBet.autoBetType;
         autoBetting = xBet.autoBet.isRunning;
@@ -132,6 +142,21 @@
     }
   }
 
+  const inputValidate = (e) => {
+    function validateInput(input) {
+      if (!isNaN(Number(input))) {
+        if ((input.match(/\./g) || []).length <= 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+    let currentValue = e.currentTarget.value;
+    if (!validateInput(currentValue)) {
+      e.currentTarget.value = currentValue.slice(0, -1);
+    }
+  };
+
   const handleSetAmount = (opr) => {
     return (e) => {
       const game = $crashGame;
@@ -140,7 +165,9 @@
           game.setAmount(new Decimal(e.currentTarget.value) || 1);
         else if (opr === "/") game.setAmount(game.amount.div(2));
         else if (opr === "*") game.setAmount(game.amount.mul(2));
-        currentAmount = game.amount.toDP(8).toString();
+        else if (opr === "min") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
+        else if (opr === "max") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
+        currentAmount = game.amount.toFixed(4);
       }
     };
   };
@@ -152,7 +179,9 @@
           xBet.setAmount(new Decimal(e.currentTarget.value) || 1);
         else if (opr === "/") xBet.setAmount(xBet.amount.div(2));
         else if (opr === "*") xBet.setAmount(xBet.amount.mul(2));
-        currentXAmount = xBet.amount.toDP(8).toString();
+        else if (opr === "min") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
+        else if (opr === "max") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
+        currentXAmount = xBet.amount.toFixed(4);
       }
     };
   };
@@ -162,6 +191,7 @@
       if (autoBetting) {
         autoBet && autoBetType === type && autoBet.stop();
       } else {
+        console.log("StartAuto Betting");
         xBet && xBet.setAutoBetType(type);
       }
     };
@@ -183,9 +213,12 @@
     if (canBet) {
       if (placingBet) return;
       placingBet = true;
-      $crashGame.handleBetCrash().catch((err) => {
-        console.log("Bett error", err);
-      }).finally(() => placingBet = false);
+      $crashGame
+        .handleBetCrash()
+        .catch((err) => {
+          console.log("Bett error", err);
+        })
+        .finally(() => (placingBet = false));
     }
   };
 
@@ -203,54 +236,120 @@
 
   const handleXBetCrash = (type) => {
     return (e) => {
+      console.log("Handling crash bet");
       if (xBet) {
         if (canXbet[type]) {
-          if(placingXBet) return;
-          placingXBet = true;
-          xBet.handleBetByType(type).catch((err) => {
-            console.log("Trend Bet Error", err);
-          }).finally(() => placingXBet = false);
+          if (placingXBet[type]) return;
+          placingXBet[type] = true;
+          xBet
+            .handleBetByType(type)
+            .catch((err) => {
+              console.log("Trend Bet Error", err);
+            })
+            .finally(() => (placingXBet[type] = false));
+        } else {
+          console.log("Cannot bet");
         }
       } else {
-        console.log("Xbet Not initialized")
+        console.log("Xbet Not initialized");
       }
     };
   };
 
   const handleChangeMaxRateChange = (e) => {
-    $crashGame.setMaxRate(new Decimal(e.currentTarget.value).toDP(2).toNumber());
+    $crashGame.setMaxRate(
+      new Decimal(e.currentTarget.value).toDP(2).toNumber()
+    );
     currentMaxRate = $crashGame.maxRate.toFixed(2);
   };
   const updateAutoBetInfo = (field, value) => {
-    autoBetInfo = {...autoBetInfo, [field]: value}
-  }
+    autoBetInfo = { ...autoBetInfo, [field]: value };
+  };
   $: activePanel = 1;
 
   const setActivePanel = (panel) => {
     return (_) => {
-      if (autoBetting) return;
+      if (autoBetting && $crashGameType === 2) return;
+      if (scriptRunning && $crashGameType === 1) return;
       activePanel = panel;
+      if (panel === 2 && $crashGameType === 1 && betScript) {
+        betScript.initScript();
+      }
     };
   };
+
+  $: isFocused = {};
+  $: sliderOpened = {};
+  $: slider = null;
+  const sliderClose = () => {
+    if (isGrabbing) return;
+    sliderOpened = {};
+  };
+  const handlePointUp = () => {
+    isGrabbing = false;
+  };
+  $: isGrabbing = false;
+  $: sliderPercentage = 0;
+  const handleSliderMove = (e) => {
+    if (isGrabbing) {
+      const offsetX = slider?.getBoundingClientRect()?.left || 0;
+      sliderPercentage = Math.max(
+        0,
+        Math.min(
+          100,
+          ((e.clientX - offsetX) /
+            (slider?.getBoundingClientRect()?.width || 100)) *
+            100
+        )
+      );
+      const amount =
+        (sliderPercentage / 100) *
+          (WalletManager.getInstance().dict[coinName].maxAmount -
+            WalletManager.getInstance().dict[coinName].minAmount) +
+        WalletManager.getInstance().dict[coinName].minAmount;
+      if (sliderOpened.classic) {
+        handleSetAmount("=")({ currentTarget: { value: amount }});
+      } else if (sliderOpened.trend || sliderOpened.autoBet) {
+        handleSetXAmount("=")({ currentTarget: { value: amount } });
+      }
+    }
+  };
   onMount(() => {
-    crashGameType.subscribe((_) => {
-      activePanel = 1;
+    browser && document.body.addEventListener("click", sliderClose);
+    browser && document.body.addEventListener("pointerup", handlePointUp);
+    browser && document.body.addEventListener("pointermove", handleSliderMove);
+    crashGameType.subscribe((_type) => {
+      activePanel = _type === 2 && autoBetting ? 2 : 1;
     });
+    return () => {
+      document.body.removeEventListener("click", sliderClose);
+      document.body.removeEventListener("pointerup", handlePointUp);
+      document.body.removeEventListener("pointermove", handleSliderMove);
+    };
   });
+  $: dialogData = null;
 </script>
 
-<div id="crash-control-1" class="sc-hLVXRe cYiOHZ game-control style1">
+{#if Boolean(dialogData)}
+  <CrashInfoDialog
+    launchConf={dialogData}
+    on:close={() => (dialogData = null)}
+  />
+{/if}
+<div id="crash-control-1" class="sc-hLVXRe cYiOHZ game-control style1 {$screen < 951 ? "mobile-view" : ""}">
   <div
-    class="sc-iwjdpV {autoBetting ? "eLa-Dxl" : "ikWSlH"} radio game-control-switch"
-    disabled={autoBetting}
+    class="sc-iwjdpV {autoBetting && $crashGameType === 2
+      ? 'eLa-Dxl'
+      : 'ikWSlH'} radio game-control-switch"
+    disabled={autoBetting && $crashGameType === 2}
   >
     <button
-      disabled={autoBetting}
+      disabled={autoBetting && $crashGameType === 2}
       on:click={setActivePanel(1)}
       class={activePanel === 1 ? "is-active" : ""}
       ><div class="label">Manual</div></button
     ><button
-      disabled={autoBetting}
+      disabled={autoBetting && $crashGameType === 2}
       on:click={setActivePanel(2)}
       class={activePanel === 2 ? "is-active" : ""}
       ><div class="label">
@@ -284,10 +383,7 @@
               on:click={handleEscape}
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-ywFzA qPdve"
               ><div class="button-inner" style="width: 100%;">
-                <div
-                  class="monospace"
-                  style="width: 100%"
-                >
+                <div class="monospace" style="width: 100%">
                   {`${parseFloat(currentGamePayout).toFixed(8)} ${
                     betInfo.currencyName
                   }`}
@@ -321,9 +417,11 @@
             {/if}
           {/if}
 
-          <div class="forms">
+          <div class="forms {$screen < 952 ? "mobile-view" : ""}">
             <div
-              class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput"
+              class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {betting
+                ? 'disabled'
+                : ''}"
             >
               <div class="input-label">
                 <div class="sc-gsFzgR bxrMFn label">
@@ -345,20 +443,21 @@
                   </div>
                 </div>
                 <div class="label-amount">
-                  {new Decimal(currentAmount).toDP(2)} USD
+                  {WalletManager.getInstance()
+                    .amountToLocale(currentAmount, coinName)
+                    .toFixed(2)} USD
                 </div>
               </div>
-              <div class="input-control">
+              <div class="input-control {isFocused.bet ? "is-focus" : ""}">
                 <input
+                  on:focus={() => isFocused = {...isFocused, bet: true}}
+                  on:blur={() => isFocused = {...isFocused, bet: false}}
+                  on:input={inputValidate}
                   disabled={betting}
                   on:change={handleSetAmount("=")}
                   type="text"
                   value={currentAmount}
-                /><img
-                  alt=""
-                  class="coin-icon"
-                  src={coinImage}
-                />
+                /><img alt="" class="coin-icon" src={coinImage} />
                 <div class="sc-kDTinF bswIvI button-group">
                   <button disabled={betting} on:click={handleSetAmount("/")}
                     >/2</button
@@ -366,7 +465,57 @@
                   <button disabled={betting} on:click={handleSetAmount("*")}
                     >x2</button
                   >
-                  <button disabled={betting} class="sc-gqtqkP gfnHxc"
+                  {#if sliderOpened.classic}
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div
+                      on:click={(e) => {
+                        e.stopPropagation();
+                      }}
+                      class="fix-layer"
+                      style="opacity: 1; transform: none;"
+                    >
+                      <button
+                        on:click={handleSetAmount("min")}
+                        class={currentAmount <=
+                        WalletManager.getInstance().dict[coinName].minAmount
+                          ? "active"
+                          : ""}>Min</button
+                      >
+                      <div bind:this={slider} class="sc-kLwhqv eOA-dmL slider">
+                        <div
+                          class="slider-after"
+                          style="transform: scaleX(2.27273e-06);"
+                        ></div>
+                        <div
+                          on:pointerdown={() => (isGrabbing = true)}
+                          class="slider-handler-wrap"
+                          style="transform: translateX({sliderPercentage}%);"
+                        >
+                          <button class="slider-handler"></button>
+                        </div>
+                        <div
+                          class="slider-before"
+                          style="transform: scaleX(0.999998);"
+                        ></div>
+                      </div>
+                      <button
+                        on:click={handleSetAmount("max")}
+                        class={currentAmount ===
+                        WalletManager.getInstance().dict[coinName].maxAmount
+                          ? "active"
+                          : ""}>Max</button
+                      >
+                    </div>
+                  {/if}
+                  <button
+                    disabled={betting}
+                    class="sc-gqtqkP gfnHxc"
+                    on:click={(e) => {
+                      e.stopPropagation();
+                      if (betting) return;
+                      sliderOpened = { classic: true };
+                    }}
                     ><svg
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       class="sc-gsDKAQ hxODWG icon"
@@ -380,7 +529,11 @@
                 </div>
               </div>
             </div>
-            <div class="sc-ezbkAF hzTJOu input sc-gLDmcm fKDjWC">
+            <div
+              class="sc-ezbkAF hzTJOu input sc-gLDmcm fKDjWC {betting
+                ? 'disabled'
+                : ''}"
+            >
               <div class="input-label">
                 <div class="chance-title">
                   <div class="auto-title">Auto cash out&nbsp;</div>
@@ -389,8 +542,11 @@
                   </div>
                 </div>
               </div>
-              <div class="input-control">
+              <div class="input-control {isFocused.maxRate ? "is-focus" : ""}">
                 <input
+                  on:focus={() => isFocused = {...isFocused, maxRate: true}}
+                  on:blur={() => isFocused = {...isFocused, maxRate: false}}
+                  on:input={inputValidate}
                   on:input={handleChangeMaxRateChange}
                   type="number"
                   value={currentMaxRate}
@@ -401,27 +557,30 @@
           </div>
         </div>
       {:else}
-        <div class="sc-kMyqmI jDBJMt manual-control">
+        <div class="sc-kMyqmI jDBJMt manual-control  {$screen < 952 ? "mobile-view" : ""}">
           <div
-            class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput"
+            class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {xBetting
+              ? 'disabled'
+              : ''}"
           >
             <div class="input-label">
               <div class="sc-gsFzgR bxrMFn label"><div>Amount</div></div>
               <div class="label-amount">
-                {new Decimal(currentXAmount).toDP(2).toNumber()} USD
+                {WalletManager.getInstance()
+                  .amountToLocale(currentXAmount, coinName)
+                  .toFixed(2)} USD
               </div>
             </div>
-            <div class="input-control">
+            <div class="input-control {isFocused.trend ? "is-focus" : ""}">
               <input
+                on:focus={() => isFocused = {...isFocused, trend: true}}
+                on:blur={() => isFocused = {...isFocused, trend: false}}
+                on:input={inputValidate}
                 disabled={xBetting}
                 on:change={handleSetXAmount("=")}
                 type="text"
-                value={new Decimal(currentXAmount).toDP(6)}
-              /><img
-                alt=""
-                class="coin-icon"
-                src={coinImage}
-              />
+                value={currentXAmount}
+              /><img alt="" class="coin-icon" src={coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
                 <button disabled={xBetting} on:click={handleSetXAmount("/")}
                   >/2</button
@@ -429,7 +588,57 @@
                 <button disabled={xBetting} on:click={handleSetXAmount("*")}
                   >x2</button
                 >
-                <button disabled={xBetting} class="sc-gqtqkP gfnHxc"
+                {#if sliderOpened.trend}
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <div
+                    on:click={(e) => {
+                      e.stopPropagation();
+                    }}
+                    class="fix-layer"
+                    style="opacity: 1; transform: none;"
+                  >
+                    <button
+                      on:click={handleSetXAmount("min")}
+                      class={currentXAmount <=
+                      WalletManager.getInstance().dict[coinName].minAmount
+                        ? "active"
+                        : ""}>Min</button
+                    >
+                    <div bind:this={slider} class="sc-kLwhqv eOA-dmL slider">
+                      <div
+                        class="slider-after"
+                        style="transform: scaleX(2.27273e-06);"
+                      ></div>
+                      <div
+                        on:pointerdown={() => (isGrabbing = true)}
+                        class="slider-handler-wrap"
+                        style="transform: translateX({sliderPercentage}%);"
+                      >
+                        <button class="slider-handler"></button>
+                      </div>
+                      <div
+                        class="slider-before"
+                        style="transform: scaleX(0.999998);"
+                      ></div>
+                    </div>
+                    <button
+                      on:click={handleSetXAmount("max")}
+                      class={currentXAmount ===
+                      WalletManager.getInstance().dict[coinName].maxAmount
+                        ? "active"
+                        : ""}>Max</button
+                    >
+                  </div>
+                {/if}
+                <button
+                  disabled={xBetting}
+                  class="sc-gqtqkP gfnHxc"
+                  on:click={(e) => {
+                    e.stopPropagation();
+                    if (xBetting) return;
+                    sliderOpened = { trend: true };
+                  }}
                   ><svg
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     class="sc-gsDKAQ hxODWG icon"
@@ -452,13 +661,17 @@
               {#if gameStatus === 1}
                 <button
                   disabled={autoBetting}
-                  on:click={xBetInfo[trend.type] ? () => {} : handleXBetCrash}
-                  class="sc-iqseJM sc-crHmcD {xBetting && !!xBetInfo[trend.type]
+                  on:click={!!xBetInfo[trend.type]
+                    ? () => {}
+                    : handleXBetCrash(trend.type)}
+                  class="sc-iqseJM sc-crHmcD {!!xBetInfo[trend.type]
                     ? 'is-active'
                     : ''} cBmlor gEBngo button button-normal bet-button type{trend.type}"
                   ><div class="button-inner">
                     <div>
-                      {xBetInfo[trend.type] ? "Betting" : `Bet ${trend.label}`}
+                      {!!xBetInfo[trend.type]
+                        ? "Betting"
+                        : `Bet ${trend.label}`}
                     </div>
                     <!-- <div class="sub-txt">({xBetInfo[trend.type] ? "Cancel" : "Next round"})</div> -->
                   </div></button
@@ -467,20 +680,28 @@
                 <!--  -->
                 <button
                   disabled={autoBetting}
-                  on:click={handleXNextBet(nextXBetInfo[trend.type], trend.type)}
-                  class="sc-iqseJM sc-crHmcD {xBetting &&
-                  !!nextXBetInfo[trend.type]
+                  on:click={xBetInfo[trend.type] &&
+                  xBetInfo[trend.type].status === 0
+                    ? () => {}
+                    : handleXNextBet(nextXBetInfo[trend.type], trend.type)}
+                  class="sc-iqseJM sc-crHmcD {!!nextXBetInfo[trend.type] ||
+                  (xBetInfo[trend.type] && xBetInfo[trend.type].status === 0)
                     ? 'is-active'
                     : ''} cBmlor gEBngo button button-normal bet-button type{trend.type}"
                   ><div class="button-inner">
                     <div>
                       {nextXBetInfo[trend.type]
                         ? "Loading"
-                        : `Bet ${trend.label}`}
+                        : xBetInfo[trend.type] &&
+                            xBetInfo[trend.type].status === 0
+                          ? "Betting"
+                          : `Bet ${trend.label}`}
                     </div>
-                    <div class="sub-txt">
-                      ({nextXBetInfo[trend.type] ? "Cancel" : "Next Round"})
-                    </div>
+                    {#if !xBetInfo[trend.type] || xBetInfo[trend.type].status !== 0}
+                      <div class="sub-txt">
+                        ({nextXBetInfo[trend.type] ? "Cancel" : "Next Round"})
+                      </div>
+                    {/if}
                   </div></button
                 >
               {/if}
@@ -499,93 +720,173 @@
               ><div class="button-inner"><div>Cash Out</div></div></button
             >
           </div>
-          <div class="sc-eySxxw ecRzBN script-list">
-            <div class="script-item script-system">
-              <div class="script-name">Simple</div>
-              <button class="script-view"
-                ><svg
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="sc-gsDKAQ hxODWG icon"
-                  ><use xlink:href="#icon_View"></use></svg
-                ></button
-              ><button class="script-run">Run</button>
+          {#if scriptConfig}
+            <div class="sc-cqJhZP dDAoYq scripts-inputs">
+              <div class="currency">
+                <span>Currency</span><span class="currency-name">CUB</span>
+              </div>
+              <div class="logs"></div>
+              <div class="forms  {$screen < 952 ? "mobile-view" : ""}">
+                <div class="line">Checker</div>
+                <div class="sc-ezbkAF gcQjQT input">
+                  <div class="input-label">Chose color</div>
+                  <div class="input-control radio-control">
+                    <div class="sc-iwjdpV ikWSlH radio">
+                      <div class="radio-item is-active">
+                        <div class="circle"></div>
+                        <div>Red</div>
+                      </div>
+                      <div class="radio-item">
+                        <div class="circle"></div>
+                        <div>Blue</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sc-ezbkAF gcQjQT input">
+                  <div class="input-label">bet</div>
+                  <div class="input-control">
+                    <input type="text" value="1.2" />
+                  </div>
+                </div>
+                <div class="sc-ezbkAF gcQjQT input">
+                  <div class="input-label">payout</div>
+                  <div class="input-control">
+                    <input type="text" value="2" />
+                  </div>
+                </div>
+              </div>
+              <div class="actions">
+                <button
+                  class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal"
+                  ><div class="button-inner">Run Script</div></button
+                ><button
+                  on:click={() => {}}
+                  class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal action-close"
+                  ><div class="button-inner">Close</div></button
+                >
+              </div>
             </div>
-            <div class="script-item script-system">
-              <div class="script-name">Martingale</div>
-              <button class="script-view"
-                ><svg
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="sc-gsDKAQ hxODWG icon"
-                  ><use xlink:href="#icon_View"></use></svg
-                ></button
-              ><button class="script-run">Run</button>
+          {:else}
+            <div class="sc-eySxxw ecRzBN script-list">
+              {#each scriptList as script (script.id)}
+                <div
+                  class="script-item {script.userId === '0'
+                    ? 'script-system'
+                    : 'script-user'}"
+                >
+                  <div class="script-name">{script.name}</div>
+                  {#if script.userId === "0"}
+                    <button
+                      on:click={() => {
+                        dialogData = {
+                          startScreen: "Preview the script",
+                          params: script,
+                        };
+                      }}
+                      class="script-view"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_View"></use></svg
+                      ></button
+                    >
+                  {:else}
+                    <button
+                      on:click={() => {
+                        betScript && betScript.delScript(script);
+                      }}
+                      class="script-del"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Delete"></use></svg
+                      ></button
+                    ><button
+                      on:click={() => {
+                        dialogData = {
+                          startScreen: "Preview the script",
+                          params: script,
+                        };
+                      }}
+                      class="script-edit"
+                      ><svg
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="sc-gsDKAQ hxODWG icon"
+                        ><use xlink:href="#icon_Edit"></use></svg
+                      ></button
+                    >
+                  {/if}
+                  <button
+                    on:click={() => {
+                      betScript && betScript.regist(script);
+                    }}
+                    class="script-run">Run</button
+                  >
+                </div>
+              {/each}
+              <button
+                on:click={() => {
+                  dialogData = {
+                    startScreen: "Preview the script",
+                    params: { name: "Script Name", content: "" },
+                  };
+                }}
+                class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal script-add"
+                ><div class="button-inner">Add a script</div></button
+              >
             </div>
-            <div class="script-item script-system">
-              <div class="script-name">Payout Martingale</div>
-              <button class="script-view"
-                ><svg
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="sc-gsDKAQ hxODWG icon"
-                  ><use xlink:href="#icon_View"></use></svg
-                ></button
-              ><button class="script-run">Run</button>
-            </div>
-            <div class="script-item script-user">
-              <div class="script-name">Test Script</div>
-              <button class="script-del"
-                ><svg
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="sc-gsDKAQ hxODWG icon"
-                  ><use xlink:href="#icon_Delete"></use></svg
-                ></button
-              ><button class="script-edit"
-                ><svg
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="sc-gsDKAQ hxODWG icon"
-                  ><use xlink:href="#icon_Edit"></use></svg
-                ></button
-              ><button class="script-run">Run</button>
-            </div>
-            <button
-              class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal script-add"
-              ><div class="button-inner">Add a script</div></button
-            >
-          </div>
+          {/if}
+
           <div class="sc-gfXuXe kNGYYA script-tips">
             <svg
               xmlns:xlink="http://www.w3.org/1999/xlink"
               class="sc-gsDKAQ hxODWG icon"
               ><use xlink:href="#icon_Help"></use></svg
             >
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div class="tip-msg">
               <span
                 >Use of script is optional and players must take full
                 responsibility for any attendant risks. We will not be held
                 liable in this regard.</span
-              ><span class="tip-help">Help?</span>
+              ><span
+                on:click={() => {
+                  dialogData = {
+                    startScreen: "Script Help",
+                  };
+                }}
+                class="tip-help">Help?</span
+              >
             </div>
           </div>
         </div>
       {:else}
         <div class="sc-kMyqmI TTTlv auto-control">
           <div
-            class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput"
+            class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-gsFzgR fCSgTW game-coininput {autoBetting
+              ? 'disabled'
+              : ''}"
           >
             <div class="input-label">
               <div class="sc-hmvnCu efWjNZ label"><div>Amount</div></div>
-              <div class="label-amount">0 USD</div>
+              <div class="label-amount">
+                {WalletManager.getInstance()
+                  .amountToLocale(currentXAmount, coinName)
+                  .toFixed(2)} USD
+              </div>
             </div>
-            <div class="input-control">
+            <div class="input-control {isFocused.autoBet ? "is-focus" : ""}">
               <input
+                on:focus={() => isFocused = {...isFocused, autoBet: true}}
+                on:blur={() => isFocused = {...isFocused, autoBet: false}}
+                on:input={inputValidate}
                 on:change={handleSetXAmount("=")}
                 disabled={autoBetting}
                 type="text"
                 value={currentXAmount}
-              /><img
-                alt=""
-                class="coin-icon"
-                src={coinImage}
-              />
+              /><img alt="" class="coin-icon" src={coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
                 <button disabled={autoBetting} on:click={handleSetXAmount("/")}
                   >/2</button
@@ -593,7 +894,57 @@
                 <button disabled={autoBetting} on:click={handleSetXAmount("*")}
                   >x2</button
                 >
-                <button disabled={autoBetting} class="sc-cAhXWc cMPLfC"
+                {#if sliderOpened.autoBet}
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <div
+                    on:click={(e) => {
+                      e.stopPropagation();
+                    }}
+                    class="fix-layer"
+                    style="opacity: 1; transform: none;"
+                  >
+                    <button
+                      on:click={handleSetXAmount("min")}
+                      class={currentAmount <=
+                      WalletManager.getInstance().dict[coinName].minAmount
+                        ? "active"
+                        : ""}>Min</button
+                    >
+                    <div bind:this={slider} class="sc-kLwhqv eOA-dmL slider">
+                      <div
+                        class="slider-after"
+                        style="transform: scaleX(2.27273e-06);"
+                      ></div>
+                      <div
+                        on:pointerdown={() => (isGrabbing = true)}
+                        class="slider-handler-wrap"
+                        style="transform: translateX({sliderPercentage}%);"
+                      >
+                        <button class="slider-handler"></button>
+                      </div>
+                      <div
+                        class="slider-before"
+                        style="transform: scaleX(0.999998);"
+                      ></div>
+                    </div>
+                    <button
+                      on:click={handleSetXAmount("max")}
+                      class={currentAmount ===
+                      WalletManager.getInstance().dict[coinName].maxAmount
+                        ? "active"
+                        : ""}>Max</button
+                    >
+                  </div>
+                {/if}
+                <button
+                  disabled={autoBetting}
+                  class="sc-cAhXWc cMPLfC"
+                  on:click={(e) => {
+                    e.stopPropagation();
+                    if (autoBetting) return;
+                    sliderOpened = { autoBet: true };
+                  }}
                   ><svg
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     class="sc-gsDKAQ hxODWG icon"
@@ -607,16 +958,22 @@
               </div>
             </div>
           </div>
-          <div class="sc-ezbkAF hzTJOu input">
+          <div class="sc-ezbkAF hzTJOu input {autoBetting ? 'disabled' : ''}">
             <div class="input-label">Number of Bets</div>
-            <div class="input-control">
+            <div class="input-control {isFocused.bets ? "is-focus" : ""}">
               <input
-                on:input={(e) => {
+                on:focus={() => isFocused = {...isFocused, bets: true}}
+                on:blur={() => isFocused = {...isFocused, bets: false}}
+                on:input={inputValidate}
+                on:change={(e) => {
                   autoBet &&
                     autoBet.setTimes(
                       new Decimal(e.currentTarget.value).toNumber() || 0
                     );
-                    updateAutoBetInfo("numberOfBets", parseInt(e.currentTarget.value) || 0)
+                  updateAutoBetInfo(
+                    "numberOfBets",
+                    parseInt(e.currentTarget.value) || 0
+                  );
                 }}
                 disabled={autoBetting}
                 type="text"
@@ -627,34 +984,46 @@
                   disabled={autoBetting}
                   on:click={() => {
                     autoBet && autoBet.setTimes(0);
-                    updateAutoBetInfo("numberOfBets", 0)
+                    updateAutoBetInfo("numberOfBets", 0);
                   }}>∞</button
                 >
                 <button
                   disabled={autoBetting}
                   on:click={() => {
                     autoBet && autoBet.setTimes(10);
-                    updateAutoBetInfo("numberOfBets", 10)
+                    updateAutoBetInfo("numberOfBets", 10);
                   }}>10</button
                 >
                 <button
                   disabled={autoBetting}
                   on:click={() => {
                     autoBet && autoBet.setTimes(100);
-                    updateAutoBetInfo("numberOfBets", 100)
+                    updateAutoBetInfo("numberOfBets", 100);
                   }}>100</button
                 >
               </div>
             </div>
           </div>
-          <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+          <div
+            class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy {autoBetting
+              ? 'disabled'
+              : ''}"
+          >
             <div class="input-label">On win</div>
-            <div class="input-control">
+            <div class="input-control {isFocused.onWin ? "is-focus" : ""}">
               <input
-                on:input={(e) => {
-                     autoBet &&
-                    autoBet.onWin.setValue(parseFloat(e.currentTarget.value) || 0);
-                    updateAutoBetInfo("increaseOnWinBy", (parseFloat(e.currentTarget.value) || 0).toFixed(2))
+                on:focus={() => isFocused = {...isFocused, onWin: true}}
+                on:blur={() => isFocused = {...isFocused, onWin: false}}
+                on:input={inputValidate}
+                on:change={(e) => {
+                  autoBet &&
+                    autoBet.onWin.setValue(
+                      parseFloat(e.currentTarget.value) || 0
+                    );
+                  updateAutoBetInfo(
+                    "increaseOnWinBy",
+                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                  );
                 }}
                 disabled={autoBetting}
                 type="text"
@@ -665,8 +1034,9 @@
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div
                 on:click={() => {
+                  if (autoBetting) return;
                   autoBet && autoBet.onWin.setReset(!autoBet.onWin.reset);
-                  updateAutoBetInfo("increaseOnWin", !autoBet.onWin.reset)
+                  updateAutoBetInfo("increaseOnWin", !autoBet.onWin.reset);
                 }}
                 class="sc-cxVPaa {autoBetInfo.increaseOnWin
                   ? 'kvRMBr'
@@ -679,16 +1049,28 @@
               <div class="percent">%</div>
             </div>
           </div>
-          <div class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy">
+          <div
+            class="sc-ezbkAF hzTJOu input sc-gqtqkP cTKsPy {autoBetting
+              ? 'disabled'
+              : ''}"
+          >
             <div class="input-label">On lose</div>
-            <div class="input-control">
+            <div class="input-control {isFocused.onLose ? "is-focus" : ""}">
               <input
+                on:focus={() => isFocused = {...isFocused, onLose: true}}
+                on:blur={() => isFocused = {...isFocused, onLose: false}}
                 type="text"
-                on:input={(e) => {
+                on:input={inputValidate}
+                on:change={(e) => {
                   autoBet &&
-                 autoBet.onLose.setValue(parseFloat(e.currentTarget.value) || 0);
-                 updateAutoBetInfo("increaseOnLoseBy", (parseFloat(e.currentTarget.value) || 0).toFixed(2))
-             }}
+                    autoBet.onLose.setValue(
+                      parseFloat(e.currentTarget.value) || 0
+                    );
+                  updateAutoBetInfo(
+                    "increaseOnLoseBy",
+                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                  );
+                }}
                 disabled={autoBetting}
                 readonly={!autoBetInfo.increaseOnLose}
                 value={autoBetInfo.increaseOnLoseBy}
@@ -697,8 +1079,9 @@
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div
                 on:click={() => {
+                  if (autoBetting) return;
                   autoBet && autoBet.onLose.setReset(!autoBet.onLose.reset);
-                  updateAutoBetInfo("increaseOnLose", !autoBet.onLose.reset)
+                  updateAutoBetInfo("increaseOnLose", !autoBet.onLose.reset);
                 }}
                 class="sc-cxVPaa {autoBetInfo.increaseOnLose
                   ? 'kvRMBr'
@@ -711,60 +1094,72 @@
               <div class="percent">%</div>
             </div>
           </div>
-          <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+          <div
+            class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp {autoBetting
+              ? 'disabled'
+              : ''}"
+          >
             <div class="input-label">
               Stop on win
               <div class="label-amount">
-                {WalletManager.getInstance().amountToLocale(
-                  autoBetInfo.stopOnWin,
-                  coinName
-                )} USD
+                {WalletManager.getInstance()
+                  .amountToLocale(autoBetInfo.stopOnWin, coinName)
+                  .toFixed(2)} USD
               </div>
             </div>
-            <div class="input-control">
+            <div class="input-control {isFocused.sOnWin ? "is-focus" : ""}">
               <input
-                on:input={(e) => {
+                on:focus={() => isFocused = {...isFocused, sOnWin: true}}
+                on:blur={() => isFocused = {...isFocused, sOnWin: false}}
+                on:input={inputValidate}
+                on:change={(e) => {
                   autoBet &&
                     autoBet.setStopOnWin(
                       new Decimal(e.currentTarget.value).toDP(8).toNumber()
                     );
-                    updateAutoBetInfo("stopOnWin", (parseFloat(e.currentTarget.value) || 0).toFixed(2))
+                  updateAutoBetInfo(
+                    "stopOnWin",
+                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                  );
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={autoBetInfo.stopOnWin}
-              /><img
-                alt=""
-                class="coin-icon"
-                src={coinImage}
-              />
+                value={autoBetInfo.stopOnWin.toFixed(4)}
+              /><img alt="" class="coin-icon" src={coinImage} />
             </div>
           </div>
-          <div class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp">
+          <div
+            class="sc-ezbkAF hzTJOu input sc-fvxzrP gOLODp {autoBetting
+              ? 'disabled'
+              : ''}"
+          >
             <div class="input-label">
               Stop on lose
-              <div class="label-amount">{WalletManager.getInstance().amountToLocale(
-                autoBetInfo.stopOnLose,
-                coinName
-              )} USD</div>
+              <div class="label-amount">
+                {WalletManager.getInstance()
+                  .amountToLocale(autoBetInfo.stopOnLose, coinName)
+                  .toFixed(2)} USD
+              </div>
             </div>
-            <div class="input-control">
+            <div class="input-control {isFocused.sOnLose ? "is-focus" : ""}">
               <input
+                on:focus={() => isFocused = {...isFocused, ...isFocused, sOnLose: true}}
+                on:blur={() => isFocused = {...isFocused, ...isFocused, sOnLose: false}}
+                on:input={inputValidate}
                 on:change={(e) => {
                   autoBet &&
                     autoBet.setStopOnLose(
                       new Decimal(e.currentTarget.value).toDP(8).toNumber()
                     );
-                    updateAutoBetInfo("stopOnLose", (parseFloat(e.currentTarget.value) || 0).toFixed(2))
+                  updateAutoBetInfo(
+                    "stopOnLose",
+                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                  );
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={autoBetInfo.stopOnLose}
-              /><img
-                alt=""
-                class="coin-icon"
-                src={coinImage}
-              />
+                value={autoBetInfo.stopOnLose.toFixed(4)}
+              /><img alt="" class="coin-icon" src={coinImage} />
             </div>
           </div>
           <div class="buttons">
@@ -775,7 +1170,10 @@
                   <div class="bet-payout">{trend.payout}</div>
                 </div>
                 <button
-                  on:click={handleAutoBet(trend.type)}
+                  disabled={autoBetting && autoBetType !== trend.type}
+                  on:click={!autoBetting || autoBetType === trend.type
+                    ? handleAutoBet(trend.type)
+                    : () => {}}
                   class="sc-iqseJM {autoBetting && autoBetType === trend.type
                     ? 'is-active'
                     : ''} sc-crHmcD cBmlor gEBngo button button-normal bet-button type{trend.type}"
@@ -806,10 +1204,19 @@
   .cYiOHZ {
     display: flex;
   }
+  .cYiOHZ.mobile-view {
+    flex-direction: column;
+  }
   .cYiOHZ.style1 .game-control-switch {
+    position: relative;
+  }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch {
     width: 3rem;
     flex-direction: column;
-    position: relative;
+  }
+  .cYiOHZ.style1.mobile-view .game-control-switch {
+    height: 3rem;
+    order: 2;
   }
 
   .cYiOHZ .game-control-switch {
@@ -834,18 +1241,29 @@
     cursor: pointer;
     color: rgba(153, 164, 176, 0.6);
   }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch .label {
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
   .cYiOHZ.style1 .game-control-switch .label {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg);
+    transform: translate(-50%, -50%);
     white-space: nowrap;
   }
   .cYiOHZ .game-control-switch > button.is-active {
     color: rgb(245, 246, 247);
     font-weight: bold;
   }
-  .cYiOHZ.style1 .game-control-switch > button.is-active {
+  .cYiOHZ.style1.mobile-view .game-control-switch > button.is-active {
+    border-bottom: 2px solid rgb(67, 179, 9);
+    background-image: linear-gradient(
+      to top,
+      rgba(91, 174, 28, 0.176),
+      rgba(0, 0, 0, 0) 50%
+    );
+  }
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch > button.is-active {
     border-right: 2px solid rgb(67, 179, 9);
     background-image: linear-gradient(
       to left,
@@ -853,7 +1271,7 @@
       rgba(0, 0, 0, 0) 50%
     );
   }
-  .cYiOHZ.style1 .game-control-switch::after {
+  .cYiOHZ.style1:not(.mobile-view) .game-control-switch::after {
     content: "";
     position: absolute;
     right: 0px;
@@ -862,11 +1280,39 @@
     width: 1px;
     background-color: rgba(49, 52, 60, 0.5);
   }
-  
+  .cYiOHZ.style1.mobile-view .game-control-switch::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 1px;
+    background-color: rgba(49, 52, 60, 0.5);
+  }
+
   .cYiOHZ.style1 .game-control-panel {
     padding: 1.25rem 1.375rem;
   }
-
+  .fix-layer .slider-handler {
+    background: none!important;
+  }
+   .fix-layer .slider-before,.fix-layer .slider-after {
+    height: 0.5rem!important;
+    margin-top: -0.25rem!important;
+    border-radius: 0.25rem!important;
+    background-color: rgb(23, 24, 27)!important;
+    transform: scaleX(1) !important;
+}
+  .fix-layer .slider-handler::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    left: 0.3125rem;
+    width: 0.75rem;
+    border-radius: 0.375rem;
+    background-color: rgb(204, 207, 217);
+}
   .cYiOHZ .game-control-panel {
     flex: 1 1 0%;
   }
@@ -926,7 +1372,7 @@
     height: 100%;
   }
   @media screen and (min-width: 621px) {
-    .ikZPEu .script-list {
+    .script-list {
       display: flex;
       flex-wrap: wrap;
       -webkit-box-pack: justify;
@@ -934,6 +1380,18 @@
     }
   }
 
+  @media screen and (min-width: 621px) {
+    .ikZPEu .script-list .script-item,
+    .ikZPEu .script-list .script-add {
+      width: 48%;
+      flex: 0 0 auto;
+    }
+  }
+
+  .ecRzBN .script-add {
+    margin-top: 0.75rem;
+    flex: 1 1 0%;
+  }
   .ecRzBN {
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
@@ -1040,6 +1498,9 @@
   .qPdve .button-inner {
     flex-direction: column;
   }
+  .iuHOYP .forms.mobile-view {
+    flex-direction: column;
+  }
   .iuHOYP .forms {
     margin-bottom: 1.875rem;
     display: flex;
@@ -1047,7 +1508,10 @@
     -webkit-box-pack: justify;
     justify-content: space-between;
   }
-  .iuHOYP .forms .input {
+  .iuHOYP .forms.mobile-view .input {
+    width: 100%;
+  }
+  .iuHOYP .forms:not(.mobile-view) .input {
     width: 47%;
   }
 
@@ -1115,13 +1579,20 @@
   .gOLODp .label-amount {
     margin-left: auto;
   }
-  .gJxbeS .input-control {
+  .disabled .input-control {
+    opacity: 0.5 !important;
+    pointer-events: none;
+  }
+  .input-control.is-focus {
+    border-color: rgb(67, 179, 9);
+  }
+  /* .gJxbeS .input-control {
     border-color: transparent;
   }
 
   .eQfpOS .input-control {
     background-color: rgba(49, 52, 60, 0.4);
-  }
+  } */
 
   .gcQjQT .input-control {
     position: relative;
@@ -1143,7 +1614,6 @@
     color: rgb(245, 246, 247);
   }
 
-  .gcQjQT .input-control textarea,
   .gcQjQT .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -1249,13 +1719,6 @@
   .iuHOYP .chance-title .chance-num {
     color: rgb(67, 179, 9);
   }
-  .gJxbeS .input-control {
-    border-color: transparent;
-  }
-
-  .eQfpOS .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
-  }
 
   .hzTJOu .input-control {
     position: relative;
@@ -1273,7 +1736,6 @@
     color: rgb(245, 246, 247);
   }
 
-  .hzTJOu .input-control textarea,
   .hzTJOu .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -1290,13 +1752,16 @@
     margin-right: -0.3125rem;
     font-size: 1.625rem;
   }
-  .hzTJOu .input-control.is-focus {
-    border-color: rgb(67, 179, 9);
-  }
-  .gcQjQT .input-control.is-focus {
-    border-color: rgb(67, 179, 9);
-  }
 
+  /* .jDBJMt.mobile-view {
+    flex-direction: column;
+  }
+  .jDBJMt:not(.mobile-view) {
+    
+  } */
+  .bet-item {
+    min-width: 165px;
+  }
   .jDBJMt {
     display: flex;
     flex-wrap: wrap;
@@ -1306,14 +1771,6 @@
   }
   .jDBJMt > div:first-child {
     width: 100%;
-  }
-
-  .gJxbeS .input-control {
-    border-color: transparent;
-  }
-
-  .eQfpOS .input-control {
-    background-color: rgba(49, 52, 60, 0.4);
   }
 
   .gcQjQT .input-control {
@@ -1455,9 +1912,6 @@
   .ifiUVY .bet-button.type1000::before {
     background-color: rgb(226, 180, 11);
   }
-  .gcQjQT .input-control.is-focus {
-    border-color: rgb(67, 179, 9);
-  }
 
   .TTTlv {
     display: flex;
@@ -1465,6 +1919,7 @@
   }
   .TTTlv .buttons {
     display: flex;
+    flex-wrap: wrap;
     flex: 1 1 0%;
   }
   .TTTlv > .input {
@@ -1482,9 +1937,6 @@
     -webkit-box-align: center;
     align-items: center;
     height: 1rem;
-  }
-  .lmWKWf .input-control {
-    border-color: transparent;
   }
 
   .cYiOHZ .input-control {
@@ -1598,5 +2050,240 @@
   }
   input:read-only {
     opacity: 0.5;
+  }
+  .dDAoYq {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  @media screen and (min-width: 621px) {
+    .scripts-inputs {
+      position: relative;
+      padding-top: 3.125rem;
+      padding-right: 46%;
+    }
+  }
+  @media screen and (min-width: 621px) {
+    .fCozZD .scripts-inputs .currency {
+      width: 100%;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  }
+  .dDAoYq .currency .currency-name {
+    margin-left: 1em;
+    color: rgb(67, 179, 9);
+  }
+  .dDAoYq .currency {
+    border-bottom: 1px solid rgba(49, 52, 60, 0.5);
+    padding: 0.9375rem 0px;
+    margin-bottom: 1em;
+  }
+  @media screen and (min-width: 621px) {
+    .fCozZD .scripts-inputs .logs {
+      width: 44%;
+      height: auto;
+      position: absolute;
+      right: 0px;
+      top: 3.125rem;
+      bottom: 0px;
+    }
+  }
+  .dDAoYq .line {
+    margin: 1rem 0.75rem 0px;
+    color: rgb(67, 179, 9);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+  }
+  .dDAoYq .logs {
+    height: 10.625rem;
+    margin-top: 0.625rem;
+    overflow: auto;
+    border: 1px solid rgb(67, 179, 9);
+    background-color: rgba(49, 52, 60, 0.4);
+    box-sizing: border-box;
+    border-radius: 0.375rem;
+    padding: 0.3125rem;
+  }
+  .dDAoYq .line::after {
+    content: "";
+    height: 1px;
+    background-color: rgba(49, 52, 60, 0.5);
+    flex: 1 1 0%;
+    margin-left: 0.5em;
+  }
+  .dDAoYq .radio-control {
+    height: auto;
+    min-height: 2.75rem;
+    line-height: 1.5rem;
+  }
+  .dDAoYq .radio {
+    flex-wrap: wrap;
+  }
+
+  .ikWSlH {
+    display: flex;
+    opacity: 1;
+  }
+  .dDAoYq .radio-item {
+    margin-right: 0.625rem;
+    padding: 0.75rem 0px;
+  }
+  /* .dDAoYq .radio-item:last-child {
+    padding-top: 0px;
+} */
+
+  .ikWSlH .radio-item {
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  .ikWSlH .radio-item .circle {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5em;
+    margin-right: 0.3em;
+    border: 1px solid rgb(45, 48, 53);
+    box-sizing: border-box;
+    background-color: rgba(45, 48, 53, 0.5);
+  }
+  .ikWSlH .radio-item.is-active .circle::after {
+    display: block;
+  }
+
+  .ikWSlH .radio-item .circle::after {
+    content: "";
+    display: none;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 0.3125rem;
+    background-color: rgb(67, 179, 9);
+  }
+  .dDAoYq .actions {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .eWZHfu.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(88, 26, 196);
+    background-image: conic-gradient(
+      from 1turn,
+      rgb(88, 26, 196),
+      rgb(119, 60, 253)
+    );
+  }
+  .dDAoYq .action-close {
+    margin-left: 1.25rem;
+  }
+
+  .gEBngo.button {
+    color: rgb(245, 246, 247);
+    box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
+    background-color: rgb(107, 113, 128);
+  }
+  .fCSgTW .fix-layer > button:hover,
+  .fCSgTW .fix-layer > button.active {
+    color: rgb(245, 246, 247);
+    font-weight: 600;
+    background-color: rgb(60, 64, 74);
+  }
+  .fix-layer {
+    position: absolute;
+    right: 0px;
+    top: 2.875rem;
+    z-index: 2;
+    touch-action: pan-x;
+    width: 200px;
+    height: 2.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 0.625rem;
+    background-color: rgb(33, 35, 40);
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 7px 0px;
+  }
+  .fix-layer > button {
+    height: 100%;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    background-color: rgba(60, 64, 74, 0.5);
+  }
+  .eOA-dmL {
+    position: relative;
+    display: flex;
+    height: 0.875rem;
+    overflow: hidden;
+    box-sizing: content-box;
+    padding: 0px 0.8125rem;
+    cursor: pointer;
+  }
+  .fix-layer .slider {
+    flex: 1 1 0%;
+    height: 100%;
+  }
+  .eOA-dmL .slider-after {
+    background-color: rgba(216, 222, 227, 0.4);
+    transform-origin: left center;
+  }
+  .eOA-dmL .slider-handler-wrap {
+    flex: 1 1 0%;
+    position: relative;
+    z-index: 2;
+  }
+  .fCSgTW .fix-layer .slider-handler {
+    height: 100%;
+    position: relative;
+    background: none;
+  }
+  .eOA-dmL .slider-handler:active {
+    cursor: grabbing;
+  }
+  .eOA-dmL .slider-handler {
+    display: block;
+    width: 1.5rem;
+    height: 100%;
+    border-radius: 0.4375rem;
+    transform: translate(-50%, 0px);
+    background-color: rgb(216, 216, 216);
+    touch-action: pan-y;
+  }
+  .fCSgTW .fix-layer .slider-handler::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    left: 0.3125rem;
+    width: 0.75rem;
+    border-radius: 0.375rem;
+    background-color: rgb(204, 207, 217);
+  }
+
+  .eOA-dmL .slider-before,
+  .eOA-dmL .slider-after {
+    height: 2px;
+    width: 98%;
+    position: absolute;
+    left: 1%;
+    top: 50%;
+    margin-top: -1px;
+  }
+  .eOA-dmL .slider-before {
+    background-color: rgba(216, 222, 227, 0.4);
+    transform-origin: right center;
   }
 </style>

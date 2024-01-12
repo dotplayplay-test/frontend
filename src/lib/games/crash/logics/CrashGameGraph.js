@@ -30,12 +30,11 @@ export default class CrashGameGraph extends EventEmitter {
 
   static XAxisPlotMinValue = 10000;
   static YAxisSizeMultiplier = 2;
-  static fontFamily = "Monmono";
+  static fontFamily = "Montserrat";
   static RenderInterval = 3;
 
-  constructor(game, user) {
+  constructor(game) {
     super();
-    this.user = user;
     this.game = game;
     this.rendering = false;
     this.renderTimes = 0;
@@ -327,7 +326,7 @@ export default class CrashGameGraph extends EventEmitter {
   }
 
   escape(escape) {
-    if (escape.usd < 1 && escape.userId !== this.game.userId) return;
+    // if (escape.usd < 1 && escape.userId !== this.game.user.userId) return;
     if (!this.rendering || document.hidden) return;
 
     
