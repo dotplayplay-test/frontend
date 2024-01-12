@@ -21,34 +21,91 @@
   import { emojis } from "./data/index";
   import { createEventDispatcher, onMount } from "svelte";
   import { tipped_user } from "$lib/store/tipUser";
+  import { tipped } from "$lib/store/tipped";
   import { profileStore } from "$lib/store/profile";
   import { handleisLoggin } from "$lib/store/profile";
   import { handleAuthToken } from "$lib/store/routes";
   import { handleCountdown } from "../../lib/games/ClassicDice/socket/index";
-  const { handleChattingMessages } = handleCountdown();
-  let element;
-  let newMessages = "";
+  const { handleChattingMessages, handleGrabCoinDrop } = handleCountdown();
   import { chats } from "$lib/chat-room/store/index";
   import { ServerURl } from "../backendUrl";
   import Mobile from "./mobile.svelte";
+  import { region } from "../../lib/store/region";
+  import { coin_list, default_Wallet } from "$lib/store/coins";
+  import { error_msg } from "$lib/nestedpages/auth/login/store";
 
-//   http://localhost:8000/api/public-chat/mention-user
-
+  let element;
+  let newMessages = "";
+  let textareaRef;
+  let showRule = false;
+  let showRegion = false;
+  let showTopWinner = false;
   let URL = ServerURl();
   let defaultUsername = ["John", "Doe", "Rizza", "Malino"];
   let filteredUsers = [];
   let showMention = false;
+  const MATCH_TIP = /^\/tip\s+@(\S+)\s*$/;
+
+  const regions = [
+    "Global",
+    "English",
+    "Español",
+    "Tiếng việt",
+    "Руccкий",
+    "Indonesia",
+    "Português",
+    "Filipino",
+  ];
+
+  const updateWallet = () => {
+    axios
+      .get(`${URL}/api/profile`, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${$handleAuthToken}`,
+        },
+      })
+      .then((res) => {
+        let walletData = res.data.wallet;
+        coin_list.set(walletData);
+        walletData.forEach((element) => {
+          if (element.is_active) {
+            default_Wallet.set(element);
+          }
+        });
+      })
+      .catch((err) => {});
+  };
+
+  chats.subscribe(($chats) => {
+    updateWallet();
+  });
 
   onMount(async () => {
     await axios.get(`${URL}/api/users/previus-chats`).then((res) => {
       chats.set(res.data);
     });
-    await axios.get(`${URL}/api/users/mention-user`).then((res) =>{
-        defaultUsername = res.data
-    })
+    await axios.get(`${URL}/api/users/mention-user`).then((res) => {
+      defaultUsername = res.data;
+    });
   });
 
-
+  const grab_drop_coin = async (user_id, username, id) => {
+    if ($profileStore.vip_level >= 7) {
+      handleGrabCoinDrop({
+        user_id,
+        username,
+        id,
+      });
+      updateWallet();
+      error_msg.set("Coin grabbed");
+    } else {
+      error_msg.set("Vip level 7 can grab coin drops");
+      setTimeout(() => {
+        error_msg.set("");
+      }, 3000);
+    }
+  };
 
   const mentionUser = (e) => {
     const inputValue = e.target.value;
@@ -59,7 +116,7 @@
       if (atPosition - 1 == -1 || inputValue.charAt(atPosition - 1) === " ") {
         const searchTerm = inputValue.substring(atPosition + 1);
         filteredUsers = defaultUsername.filter((user) =>
-          user.toLowerCase().includes(searchTerm.toLowerCase())
+          user.username.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
         showMention = true;
@@ -85,6 +142,7 @@
     newMessages =
       newMessages.substring(0, newMessages.lastIndexOf("@")) + `@${username}`;
     showMention = false;
+    textareaRef.focus();
   }
 
   const handleSendMessage = async (e, name) => {
@@ -105,8 +163,13 @@
         goto("/user/rain");
       } else if (newMessages === "/coindrop ") {
         goto("/user/coindrop_send");
-      } else if (newMessages == "/tip @ ") {
-        tipped_user.set(newMessages);
+      } else if (newMessages.match(MATCH_TIP)) {
+        let usernameWithoutAt = newMessages.match(/@(\w+)/);
+
+        let user_name = usernameWithoutAt[1];
+        tipped_user.set(
+          defaultUsername.filter((user) => user.username === user_name)[0]
+        );
         goto("/user/tip");
       } else {
         if ($handleisLoggin) {
@@ -121,6 +184,7 @@
             hide_profile: $profileStore.hide_profile,
             vip_level: $profileStore.vip_level,
             time: new Date(),
+            profile: $profileStore,
           };
           handleChattingMessages(data);
         } else {
@@ -258,27 +322,105 @@
 <svelte:body
   on:keypress={() => handleSendMessage(event, { newMessages, type: "normal" })}
 />
+{#if $error_msg}
+  <div class="error-message">
+    <div class="hTTvsjh">
+      <div>{$error_msg}</div>
+    </div>
+  </div>
+{/if}
+{#if showRule}
+  <button
+    class="rule_container sc-ieecCq fLASqZ overlay"
+    style="position: fixed; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.7); z-index: 900; display: flex; justify-content: center; align-items: center;"
+  >
+    <div
+      style="width: 29rem; border-radius: 1.25rem; padding: 1.25rem; background-color: var(--card-bg-5);"
+      class="content"
+    >
+      <div class="heading">
+        <h3>Chat Rules</h3>
+        <button
+          on:click={() => {
+            showRule = false;
+          }}
+          class="sc-ieecCq fLASqZ close-icon"
+        >
+          <Icon
+            src={IoClose}
+            size="17"
+            color="rgba(153, 164, 176, 0.8)"
+            title="arror"
+          />
+        </button>
+      </div>
+      <ul>
+        <li>
+          1. Don't spam, harass or be offensive to other users. Also, avoid
+          using CAPS! No one likes to be screamed at!
+        </li>
+        <li>2. Don't beg or ask for loans, rains, tips and doubling coins.</li>
+        <li>3. No suspicious behavior that can be seen as potential scams.</li>
+        <li>
+          4. Don't engage in any forms of advertising/ trading/ selling/ buying
+          or offering services.
+        </li>
+        <li>6. Use the designated language chatrooms accordingly.</li>
+        <li>5. Don't use URL shortener. Always submit the original link.</li>
+      </ul>
+      <p>List of our full rules can be found on our forum.</p>
+    </div>
+  </button>
+{/if}
 <div id="main" class="sc-cVAmsi bJUiGv" style="transform: none;">
   <div class="sc-ewSTlh hHMWvP" id="public-chat">
     <div class="sc-hJZKUC dWgZek">
       <div class="select-wrap">
-        <div class="sc-jJoQJp gOHquD select">
-          <div class="select-trigger">
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          on:mouseenter={() => (showRegion = true)}
+          on:mouseleave={() => (showRegion = false)}
+          class="sc-jJoQJp gOHquD select"
+        >
+          <button class="select-trigger">
             <div class="select-label">English</div>
-            <div class="arrow">
+            <button class="sc-ieecCq fLASqZ close-icon arrow">
               <Icon
                 src={RiSystemArrowRightSLine}
                 size="16"
                 color="rgba(153, 164, 176, 0.8)"
-                title="arror"
               />
+            </button>
+          </button>
+          {#if showRegion}
+            <div class="region_container">
+              {#each regions as regionValue}
+                <button
+                  class={`${
+                    regionValue.toLowerCase() === $region.toLowerCase()
+                      ? "active"
+                      : ""
+                  }`}
+                  on:click={() => {
+                    region.set(regionValue);
+                    showRegion = false;
+                  }}>{regionValue}</button
+                >
+              {/each}
             </div>
-          </div>
+          {/if}
         </div>
       </div>
       <div class="chat-features">
-        <div class="inform">
-          <Icon src={CgInfo} size="25" color="rgb(85, 91, 101)" title="arror" />
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          on:click={() => {
+            showRule = true;
+          }}
+          class="inform"
+        >
+          <Icon src={CgInfo} size="25" color="rgb(85, 91, 101)" title="rules" />
         </div>
         <div class="sc-iWBNLc bXthlR rich-btn">
           <img
@@ -806,7 +948,8 @@
                             alt=""
                             src={chat.tipped_coin_image}
                           />
-                          {(chat.tipped_amount, chat.tip_Token)}\
+                          {(chat.tipped_amount,
+                          chat.tip_Token)}\{chat.tipped_amount}
                         </div>
                       </div>
                     </div>
@@ -826,10 +969,30 @@
                         <div class="sc-dGXBhE cfLlrJ">
                           <img
                             alt="coindrop-more"
-                            src="https://static.nanogames.io/assets/parachute-fall.193a2437.png"
+                            src="https://static.nanogames.io/assets/coindrop-more.ff14c8e3.png"
                             class="right-open-img"
                           />
-                          <div class="coindrop-status">Completed</div>
+                          <!-- svelte-ignore a11y-no-static-element-interactions -->
+                          {#if chat.coin_drop_participant}
+                            <!-- content here -->
+                            {#if chat.coin_drop_num === chat.coin_drop_participant.length || chat.coin_drop_participant.length > chat.coin_drop_num}
+                              <div class="coindrop-status">Completed</div>
+                            {:else}
+                              <!-- content here -->
+                              <!-- svelte-ignore a11y-click-events-have-key-events -->
+                              <div
+                                on:click={() =>
+                                  grab_drop_coin(
+                                    $profileStore.user_id,
+                                    $profileStore.username,
+                                    chat.msg_id
+                                  )}
+                                class="coindrop-status"
+                              >
+                                Grab
+                              </div>
+                            {/if}
+                          {/if}
                         </div>
                       </div>
                     </div>
@@ -853,6 +1016,31 @@
                         </div>
                       </div>
                     </div>
+                  {:else if chat.type === "rain"}
+                    <div class="msg-wrap">
+                      <div class="sc-jKTccl bkGvjR">
+                        <p>
+                          <span>{chat.username}</span> rained
+                          {#if chat.coin_rain_comment}
+                            and left a message: "{chat.coin_rain_comment}"
+                          {/if}
+                        </p>
+                        <div class="distribution">
+                          <ul>
+                            {#each chat.coin_rain_participant as item}
+                              <li>
+                                <p><a href="">{item.username}</a></p>
+                                <p>
+                                  <img src={chat.coin_rain_image} alt="" />
+                                  <span>{item.share}.000000</span>
+                                </p>
+                              </li>
+                            {/each}
+                          </ul>
+                        </div>
+                        <p>Congratulation!</p>
+                      </div>
+                    </div>
                   {/if}
                 </div>
               </div>
@@ -867,6 +1055,7 @@
           <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset input-area">
             <div class="input-control">
               <textarea
+                bind:this={textareaRef}
                 on:keyup={mentionUser}
                 bind:value={newMessages}
                 placeholder="Your Message"
@@ -968,15 +1157,15 @@
 
         {#if showMention}
           <ul class="sc-cHzqoD dWoTka">
-            {#each filteredUsers as username, i}
+            {#each filteredUsers as info, i}
               <button
                 on:blur={onUsernameBlur}
                 on:focus={onUsernameFocus}
-                on:click={() => userNameClick(username)}
+                on:click={() => userNameClick(info.username)}
                 class={`item ${i == 0 ? "is-selected" : ""}`}
               >
                 <div class="sc-hZpJaK guGGGt chat-command-label">
-                  <span class="label-desc">@{username}</span>
+                  <span class="label-desc">@{info.username}</span>
                 </div>
               </button>
             {/each}
@@ -1007,6 +1196,155 @@
 <Mobile on:closeChat={handlecloseChat} />
 
 <style>
+  .sc-jKTccl p span {
+    font-weight: bold;
+  }
+
+  .distribution {
+    padding: 10px;
+    min-width: 230px;
+    background-color: var(--card-bg-5);
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .distribution ul {
+    list-style: none;
+    display: grid;
+    gap: 5px;
+  }
+  .distribution ul li {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .distribution ul li p {
+    display: flex;
+    align-items: center;
+  }
+
+  .distribution ul li p img {
+    width: 15px;
+    margin-right: 2px;
+  }
+  .distribution ul li p a {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  .overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content {
+    width: 29rem;
+    border-radius: 1.25rem;
+    padding: 1.3rem !important;
+    background-color: var(--card-bg-5);
+    text-align: initial;
+    padding-top: 5px !important;
+    padding-bottom: 50px !important;
+    height: max-content;
+  }
+
+  .overlay .content .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .overlay .content .heading .close-icon {
+    position: static;
+    font-size: 25px;
+    transform: scale(1.4);
+  }
+
+  .overlay .content ul {
+    list-style: none;
+    font-size: 14px;
+  }
+
+  .overlay .content ul li {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .overlay .content p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .region_container {
+    width: 220px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    gap: 5px;
+    background-color: var(--card-bg-7);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.139);
+    top: 70px;
+    animation: slide-up 0.4s forwards;
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  @keyframes slide-up {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .region_container button {
+    font-size: 15px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .region_container button.active {
+    border: 1px solid var(--primary-color);
+    font-weight: bold;
+  }
+
+  .region_container button:hover {
+    background-color: var(--card-bg-6);
+  }
+
+  .region_container button.active::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: ghostwhite;
+    border-radius: 50%;
+    right: 0px;
+  }
+
+  .region_container button.active::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    z-index: 1;
+    right: 5px;
+  }
+
   .eA-dYOl {
     flex: 1 1 0%;
     display: flex;
