@@ -58,7 +58,7 @@ fetchFriendsInfo()
     </div>
     <div class="right">
         <div class="user">
-            <img alt="" src={$profileStore.profile_image}>
+            <img alt="" src={$profileStore?.profile_image}>
             <div class="name">{$profileStore.username}</div>
         </div>
     </div>
