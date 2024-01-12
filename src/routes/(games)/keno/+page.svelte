@@ -18,10 +18,8 @@
 
   const socket = io(socketURL);
 
-  console.log("default_Wallet", $default_Wallet);
-
   socket.on("latest-bet", (message) => {
-    console.log(message);
+    // do something
   });
 
   /** Configure socket */
@@ -260,15 +258,10 @@
     } else {
       stopOnLose = parseFloat(value).toFixed(9);
     }
-
-    console.log("stopOnWin", stopOnWin);
-    console.log("stopOnLose", stopOnLose);
   }
 
   function setBetCount(value) {
-    console.log("bet count", value);
     numberOfBets = Number(value);
-    console.log("numberOfBets", numberOfBets);
   }
 
   function saveButton(index) {
@@ -384,9 +377,7 @@
 
     // submit game
     const gameResult = await postGameResult(handleResultPayload);
-
     currentBalance = gameResult.payload.balance;
-    console.log("currentBalance", currentBalance);
   }
 
   async function pcPlay() {
@@ -470,7 +461,6 @@
     );
 
     const json = await res.json();
-    console.log("default_Wallet.balance", $default_Wallet.balance);
 
     return json;
   }
@@ -486,14 +476,7 @@
     // currentBalance = $default_Wallet.balance;
     const currentBal = $default_Wallet.balance;
     currentBalance = currentBal;
-    console.log("currentBal", currentBal);
-    console.log("currentBalance", currentBalance);
-
-    // const accountBalance = currentBalance;
     const initialAmountBet = Number(betAmount);
-    // const numberOfBets = 0;
-    // const stopOnWin = 0;
-    // const stopOnLose = 0;
 
     // let currentBalance = accountBalance;
     let currentAmountBet = initialAmountBet;
@@ -510,52 +493,28 @@
         multiplier.substring(0, multiplier.length - 1)
       );
 
-      console.log("testing currentBal", currentBal);
-      console.log("testing currentBalance", currentBalance);
-      console.log("stopOnWin", stopOnWin);
-      console.log("stopOnLose", stopOnLose);
-      console.log("testing difference", currentBalance - currentBal);
-
       if (numMultiplier > 0.0) {
         // Handle win
-        // currentBalance += currentAmountBet;
-        console.log(
-          `Bet ${i + 1}: Win! New Balance: ${currentBalance.toFixed(8)}`
-        );
 
         // Check if we reached the stopOnWin amount
         if (currentBalance - currentBal >= stopOnWin) {
-          console.log(
-            `Reached stopOnWin amount of ${stopOnWin}. Game terminated.`
-          );
           break;
         }
 
         // Increase the amount bet for the next round
         currentAmountBet *= 1 + percentageIncreaseOfAmountBetPerWin / 100;
-        console.log("new bet amount", currentAmountBet);
       } else {
         // Handle loss
-        // currentBalance -= currentAmountBet;
-        console.log(
-          `Bet ${i + 1}: Loss! New Balance: ${currentBalance.toFixed(8)}`
-        );
 
         // Check if we reached the stopOnLose amount
         if (Math.abs(currentBalance - currentBal) >= stopOnLose) {
-          console.log(
-            `Reached stopOnLose amount of ${stopOnLose}. Game terminated.`
-          );
           break;
         }
 
         // Decrease the amount bet for the next round
         currentAmountBet *= 1 - percentageDecreaseOfAmountBetPerLoss / 100;
-        console.log("new bet amount", currentAmountBet);
       }
     }
-
-    console.log(`Game completed. Final Balance: ${currentBalance.toFixed(8)}`);
   }
 
   /** Handle Auto bet - end */
@@ -3406,7 +3365,8 @@
   .eQfpOS .game-control-switch > button {
     flex: 1 1 0%;
     cursor: pointer;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   button {
     border: none;
     padding: 0;
@@ -3527,7 +3487,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .bxrMFn {
     display: flex;
     -webkit-box-align: center;
@@ -3659,7 +3620,7 @@ color: var(--text-6);  }
     width: 2.75rem;
     padding: 0px;
     color: var(--text-4);
-    background: var(--card-bg-2 );
+    background: var(--card-bg-2);
     margin-left: 1px;
   }
   .gfnHxc .icon:first-of-type {
@@ -3692,7 +3653,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .lgcQbT .input-control {
     height: 3rem;
     line-height: 3rem;
@@ -3769,7 +3731,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .lgcQbT .input-control {
     height: 3rem;
     line-height: 3rem;
@@ -3922,7 +3885,8 @@ color: var(--text-6);  }
     width: 100%;
     min-width: 80px;
     height: 100%;
-color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
+    color: var(--text-6);
+    background-color: rgba(122, 128, 140, 0.15);
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -4146,7 +4110,8 @@ color: var(--text-6);    background-color: rgba(122, 128, 140, 0.15);
     border-radius: 1.125rem;
     height: 2.25rem;
     line-height: 2.25rem;
-color: var(--text-6);    background-color: var(--card-bg-11);
+    color: var(--text-6);
+    background-color: var(--card-bg-11);
   }
   .fQmThe .box-bg {
     position: absolute;
@@ -4684,7 +4649,8 @@ color: var(--text-6);    background-color: var(--card-bg-11);
     text-align: center;
     height: 3.375rem;
     line-height: 3.375rem;
-color: var(--text-6);    font-size: 0.75rem;
+    color: var(--text-6);
+    font-size: 0.75rem;
   }
   .jxPnWI .active-icon {
     position: absolute;
@@ -4728,7 +4694,8 @@ color: var(--text-6);    font-size: 0.75rem;
   }
   .jxPnWI .list-head {
     padding: 0px;
-color: var(--text-6);    font-weight: normal;
+    color: var(--text-6);
+    font-weight: normal;
     font-size: 0.75rem;
   }
   .jxPnWI .item {
@@ -4744,7 +4711,8 @@ color: var(--text-6);    font-weight: normal;
     justify-content: flex-start;
   }
   .jxPnWI .list-head .position {
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .jxPnWI .item .position {
     color: var(--text-4);
     font-weight: normal;
@@ -4952,7 +4920,7 @@ color: var(--text-6);  }
     width: 100%;
     height: 100%;
     transition: all 0.3s ease 0s;
-    background: var(--card-bg-2 );
+    background: var(--card-bg-2);
   }
   .dbJiKC .img img {
     width: 100%;
@@ -5007,7 +4975,8 @@ color: var(--text-6);  }
   .gVplre .item {
     height: 1.25rem;
     line-height: 1.25rem;
-color: var(--text-7);    display: block;
+    color: var(--text-7);
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5077,7 +5046,8 @@ color: var(--text-7);    display: block;
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .efWjNZ {
     display: flex;
     -webkit-box-align: center;
@@ -5212,7 +5182,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 1.125rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .lmWKWf .input-control {
     border-color: transparent;
   }
@@ -5279,7 +5250,7 @@ color: var(--text-6);  }
     width: 8.125rem;
     height: 2.25rem;
     border-radius: 1.125rem;
-    background: var(--card-bg-2 );
+    background: var(--card-bg-2);
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -5365,7 +5336,8 @@ color: var(--text-6);  }
   }
   .cuPxwd {
     padding: 2.5rem 0px;
-color: var(--text-6);    line-height: 1;
+    color: var(--text-6);
+    line-height: 1;
     text-align: center;
     height: 100%;
     min-height: 16.25rem;
@@ -5424,7 +5396,8 @@ color: var(--text-6);    line-height: 1;
   }
   .kHsZCY .head {
     height: 3.125rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .kHsZCY .item,
   .kHsZCY .head {
     margin: 0px;
