@@ -35,6 +35,14 @@
     });
   }
 
+  if ($profileStore.vip_level < 7) {
+    error_msg.set("Vip level 7 can coindrop");
+    setTimeout(() => {
+      error_msg.set("");
+      history.back(-1);
+    }, 3000);
+  }
+
   let coins = $coin_list.filter(
     (coin) => coin.coin_name.toLowerCase() !== "ppd"
   );
@@ -92,16 +100,20 @@
       vip_level: $profileStore.vip_level,
       profile: $profileStore,
     };
-    if (parseInt(coinDropValue) < 0) {
-      error_msg.set("Invalid amount");
-      setTimeout(() => error_msg.set(""), 3000);
-    }
-    if (parseInt(coinDropValue) > $default_Wallet.balance) {
-      error_msg.set("Insufficient balance");
-      setTimeout(() => error_msg.set(""), 3000);
+    if (data.vip_level >= 7) {
+      if (parseInt(coinDropValue) <= 0) {
+        error_msg.set("Invalid amount");
+        setTimeout(() => error_msg.set(""), 3000);
+      } else if (parseInt(coinDropValue) > $default_Wallet.balance) {
+        error_msg.set("Insufficient balance");
+        setTimeout(() => error_msg.set(""), 3000);
+      } else {
+        handleChattingMessages(data);
+        history.back(-1);
+      }
     } else {
-      handleChattingMessages(data);
-      history.back(-1);
+      error_msg.set("Vip level 7 can coindrop");
+      setTimeout(() => error_msg.set(""), 3000);
     }
   };
 </script>
@@ -114,148 +126,156 @@
       </div>
     </div>
   {/if}
-  <div
-    class="dialog"
-    style="opacity: 1; width: 464px; height: 581px; margin-top: -290.5px; margin-left: -232px; transform: scale(1) translateZ(0px);"
-  >
-    {#if isSelectCoin}
+
+  {#if $profileStore.vip_level >= 7}
+    <div
+      class="dialog"
+      style="opacity: 1; width: 464px; height: 581px; margin-top: -290.5px; margin-left: -232px; transform: scale(1) translateZ(0px);"
+    >
+      {#if isSelectCoin}
+        <button
+          on:click={() => handleSelectCoins()}
+          class="dialog-back"
+          style="opacity: 1; transform: none;"
+        >
+          <Icon
+            src={RiSystemArrowLeftSLine}
+            size="23"
+            color="rgba(153, 164, 176, 0.6)"
+            className="custom-icon"
+            title="arror"
+          />
+        </button>
+      {/if}
+      <div class={`dialog-head ${isSelectCoin ? "has-back" : "has-close"}`}>
+        <div class="dialog-title">Coindrop</div>
+      </div>
       <button
-        on:click={() => handleSelectCoins()}
-        class="dialog-back"
-        style="opacity: 1; transform: none;"
+        on:click={() => history.back()}
+        class="sc-ieecCq fLASqZ close-icon dialog-close"
       >
         <Icon
-          src={RiSystemArrowLeftSLine}
+          src={IoCloseSharp}
           size="23"
           color="rgba(153, 164, 176, 0.6)"
           className="custom-icon"
           title="arror"
         />
       </button>
-    {/if}
-    <div class={`dialog-head ${isSelectCoin ? "has-back" : "has-close"}`}>
-      <div class="dialog-title">Coindrop</div>
-    </div>
-    <button
-      on:click={() => history.back()}
-      class="sc-ieecCq fLASqZ close-icon dialog-close"
-    >
-      <Icon
-        src={IoCloseSharp}
-        size="23"
-        color="rgba(153, 164, 176, 0.6)"
-        className="custom-icon"
-        title="arror"
-      />
-    </button>
-    <div class="dialog-body default-style" style="z-index: 2; transform: none;">
-      {#if !isSelectCoin}
-        <div class="sc-jTycuM dhoFwU">
-          <div class="sc-ezbkAF kDuLvp input sc-bTfYFJ dETeez amount-input">
-            <div class="input-label">
-              <p style="flex: 1 1 auto;">Amount</p>
-              <p>
-                Balance: <span
-                  >{$default_Wallet.balance +
-                    " " +
-                    $default_Wallet.coin_name}</span
+      <div
+        class="dialog-body default-style"
+        style="z-index: 2; transform: none;"
+      >
+        {#if !isSelectCoin}
+          <div class="sc-jTycuM dhoFwU">
+            <div class="sc-ezbkAF kDuLvp input sc-bTfYFJ dETeez amount-input">
+              <div class="input-label">
+                <p style="flex: 1 1 auto;">Amount</p>
+                <p>
+                  Balance: <span
+                    >{$default_Wallet.balance +
+                      " " +
+                      $default_Wallet.coin_name}</span
+                  >
+                </p>
+              </div>
+              <div class="input-control">
+                <input type="number" bind:value={coinDropValue} />
+                <button
+                  on:click={() => handleSelectCoins()}
+                  class="sc-kHOZwM lkOmCH"
                 >
-              </p>
+                  <img
+                    class="coin-icon"
+                    alt=""
+                    src={$default_Wallet.coin_image}
+                  />
+                  <span class="currency">{$default_Wallet.coin_name}</span>
+                  <Icon
+                    src={RiSystemArrowRightSLine}
+                    size="23"
+                    color="rgba(153, 164, 176, 0.6)"
+                    className="custom-icon"
+                    title="arror"
+                  />
+                </button>
+              </div>
+              <div class="input-after">
+                Min: {#if $default_Wallet.coin_name === "PPL"}
+                  2
+                {:else}
+                  1
+                {/if}
+                {$default_Wallet.coin_name}
+              </div>
             </div>
-            <div class="input-control">
-              <input type="number" bind:value={coinDropValue} />
-              <button
-                on:click={() => handleSelectCoins()}
-                class="sc-kHOZwM lkOmCH"
+            <div class="sc-ezbkAF kDuLvp input people-input">
+              <div class="input-label">Number of people</div>
+              <div class="input-control">
+                <input type="text" bind:value={num} />
+                <div class="min-number">1~100</div>
+              </div>
+            </div>
+            <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset send-textarea">
+              <div class="input-label">Message (Optional)</div>
+              <div class="input-control">
+                <textarea bind:value={displayComment} disabled={isCommet}
+                ></textarea>
+                <div class="send-len">0/32</div>
+              </div>
+            </div>
+            <div class="show-amount">
+              <span class="amount-num"
+                >{$default_Wallet.coin_name === "PPL" ? 2 : 1}</span
               >
-                <img
-                  class="coin-icon"
-                  alt=""
-                  src={$default_Wallet.coin_image}
-                />
-                <span class="currency">{$default_Wallet.coin_name}</span>
-                <Icon
-                  src={RiSystemArrowRightSLine}
-                  size="23"
-                  color="rgba(153, 164, 176, 0.6)"
-                  className="custom-icon"
-                  title="arror"
-                />
-              </button>
+              <span class="cl-primary">{$default_Wallet.coin_name}</span>
             </div>
-            <div class="input-after">
-              Min: {#if $default_Wallet.coin_name === "PPL"}
-                2
-              {:else}
-                1
-              {/if}
-              {$default_Wallet.coin_name}
-            </div>
-          </div>
-          <div class="sc-ezbkAF kDuLvp input people-input">
-            <div class="input-label">Number of people</div>
-            <div class="input-control">
-              <input type="text" bind:value={num} />
-              <div class="min-number">1~100</div>
-            </div>
-          </div>
-          <div class="sc-ezbkAF kDuLvp input sc-ikJyIC iowset send-textarea">
-            <div class="input-label">Message (Optional)</div>
-            <div class="input-control">
-              <textarea bind:value={displayComment} disabled={isCommet}
-              ></textarea>
-              <div class="send-len">0/32</div>
-            </div>
-          </div>
-          <div class="show-amount">
-            <span class="amount-num"
-              >{$default_Wallet.coin_name === "PPL" ? 2 : 1}</span
+            <button
+              on:click={handleSubmit}
+              class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal"
             >
-            <span class="cl-primary">{$default_Wallet.coin_name}</span>
+              <div class="button-inner">Start Coindrop</div>
+            </button>
           </div>
-          <button
-            on:click={handleSubmit}
-            class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal"
-          >
-            <div class="button-inner">Start Coindrop</div>
-          </button>
-        </div>
-      {:else}
-        <div class="sc-eLwHnm eCfWZW">
-          <div
-            class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list"
-          >
-            {#each coins as coin (coin._id)}
-              <button
-                on:click={() => handleSelectCoin(coin)}
-                class={`sc-TBWPX kjMlDW currency-item notranslate ${
-                  coin.select ? "active" : "normal"
-                }  `}
-              >
-                <div class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW">
-                  <div class="coin-wrap">
-                    <img class="coin-icon" alt="" src={coin.coin_image} />
-                  </div>
-                  <div class="name-wrap">
-                    <div class="currency-name">{coin.coin_name}</div>
-                  </div>
-                  <div class="amount-wrap">
-                    <div class="sc-Galmp erPQzq coin notranslate monospace">
-                      <div class="amount">
-                        <span class="amount-str">
-                          {coin.balance}
-                        </span>
+        {:else}
+          <div class="sc-eLwHnm eCfWZW">
+            <div
+              class="sc-dkPtRN jScFby scroll-view sc-dvQaRk bVVgo currency-list"
+            >
+              {#each coins as coin (coin._id)}
+                <button
+                  on:click={() => handleSelectCoin(coin)}
+                  class={`sc-TBWPX kjMlDW currency-item notranslate ${
+                    coin.select ? "active" : "normal"
+                  }  `}
+                >
+                  <div
+                    class="sc-ZOtfp sc-jOxtWs sc-hmjpVf bAQFCP lkOITC jNFKIW"
+                  >
+                    <div class="coin-wrap">
+                      <img class="coin-icon" alt="" src={coin.coin_image} />
+                    </div>
+                    <div class="name-wrap">
+                      <div class="currency-name">{coin.coin_name}</div>
+                    </div>
+                    <div class="amount-wrap">
+                      <div class="sc-Galmp erPQzq coin notranslate monospace">
+                        <div class="amount">
+                          <span class="amount-str">
+                            {coin.balance}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </button>
-            {/each}
+                </button>
+              {/each}
+            </div>
           </div>
-        </div>
-      {/if}
+        {/if}
+      </div>
     </div>
-  </div>
+  {/if}
 </div>
 
 <style>

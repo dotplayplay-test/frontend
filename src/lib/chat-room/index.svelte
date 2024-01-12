@@ -21,6 +21,7 @@
   import { emojis } from "./data/index";
   import { createEventDispatcher, onMount } from "svelte";
   import { tipped_user } from "$lib/store/tipUser";
+  import { tipped } from "$lib/store/tipped";
   import { profileStore } from "$lib/store/profile";
   import { handleisLoggin } from "$lib/store/profile";
   import { handleAuthToken } from "$lib/store/routes";
@@ -31,6 +32,8 @@
   import Mobile from "./mobile.svelte";
   import { region } from "../../lib/store/region";
   import { coin_list, default_Wallet } from "$lib/store/coins";
+  import { error_msg } from "$lib/nestedpages/auth/login/store";
+
   let element;
   let newMessages = "";
   let textareaRef;
@@ -71,13 +74,10 @@
           }
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   chats.subscribe(($chats) => {
-    console.log("hello friends");
     updateWallet();
   });
 
@@ -91,17 +91,20 @@
   });
 
   const grab_drop_coin = async (user_id, username, id) => {
-    console.log({
-      user_id,
-      username,
-      id,
-    });
-    handleGrabCoinDrop({
-      user_id,
-      username,
-      id,
-    });
-    updateWallet();
+    if ($profileStore.vip_level >= 7) {
+      handleGrabCoinDrop({
+        user_id,
+        username,
+        id,
+      });
+      updateWallet();
+      error_msg.set("Coin grabbed");
+    } else {
+      error_msg.set("Vip level 7 can grab coin drops");
+      setTimeout(() => {
+        error_msg.set("");
+      }, 3000);
+    }
   };
 
   const mentionUser = (e) => {
@@ -113,7 +116,7 @@
       if (atPosition - 1 == -1 || inputValue.charAt(atPosition - 1) === " ") {
         const searchTerm = inputValue.substring(atPosition + 1);
         filteredUsers = defaultUsername.filter((user) =>
-          user.toLowerCase().includes(searchTerm.toLowerCase())
+          user.username.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
         showMention = true;
@@ -161,7 +164,12 @@
       } else if (newMessages === "/coindrop ") {
         goto("/user/coindrop_send");
       } else if (newMessages.match(MATCH_TIP)) {
-        tipped_user.set(newMessages);
+        let usernameWithoutAt = newMessages.match(/@(\w+)/);
+
+        let user_name = usernameWithoutAt[1];
+        tipped_user.set(
+          defaultUsername.filter((user) => user.username === user_name)[0]
+        );
         goto("/user/tip");
       } else {
         if ($handleisLoggin) {
@@ -314,6 +322,13 @@
 <svelte:body
   on:keypress={() => handleSendMessage(event, { newMessages, type: "normal" })}
 />
+{#if $error_msg}
+  <div class="error-message">
+    <div class="hTTvsjh">
+      <div>{$error_msg}</div>
+    </div>
+  </div>
+{/if}
 {#if showRule}
   <button
     class="rule_container sc-ieecCq fLASqZ overlay"
@@ -1142,15 +1157,15 @@
 
         {#if showMention}
           <ul class="sc-cHzqoD dWoTka">
-            {#each filteredUsers as username, i}
+            {#each filteredUsers as info, i}
               <button
                 on:blur={onUsernameBlur}
                 on:focus={onUsernameFocus}
-                on:click={() => userNameClick(username)}
+                on:click={() => userNameClick(info.username)}
                 class={`item ${i == 0 ? "is-selected" : ""}`}
               >
                 <div class="sc-hZpJaK guGGGt chat-command-label">
-                  <span class="label-desc">@{username}</span>
+                  <span class="label-desc">@{info.username}</span>
                 </div>
               </button>
             {/each}

@@ -16,7 +16,6 @@
   let showOriginals = false;
 
   function googleTranslateElementInit() {
-    console.log("sidebar")
     new google.translate.TranslateElement(
       {
         pageLanguage: "en",
@@ -41,7 +40,6 @@
   let isLight = false;
   function toggleTheme() {
     const themeValue = $theme;
-    console.log(themeValue);
     if (themeValue === "dark") {
       theme.set("light");
     } else {
