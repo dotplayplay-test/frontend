@@ -58,7 +58,7 @@
     height: 2.75rem;
 }
 .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
 }

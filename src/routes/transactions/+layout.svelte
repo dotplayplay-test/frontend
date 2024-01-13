@@ -165,7 +165,7 @@ const handleCurrencySellect = ((event)=>{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-back {
@@ -210,7 +210,7 @@ const handleCurrencySellect = ((event)=>{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .fLASqZ {
@@ -229,7 +229,7 @@ const handleCurrencySellect = ((event)=>{
 
 .no-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -270,11 +270,11 @@ const handleCurrencySellect = ((event)=>{
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 
@@ -313,7 +313,7 @@ const handleCurrencySellect = ((event)=>{
 }
 
 .XkKRx {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 0.75rem 0.75rem 0.75rem 1.25rem;
     flex: 0 0 auto;
     display: flex;
@@ -349,7 +349,7 @@ const handleCurrencySellect = ((event)=>{
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .hDizvn .currency-label {
@@ -394,7 +394,7 @@ const handleCurrencySellect = ((event)=>{
 
 .dXTFyi .select-trigger {
     font-weight: 800;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     background-color: rgba(24, 25, 29, 0.6);
 }
 
@@ -416,8 +416,7 @@ const handleCurrencySellect = ((event)=>{
     line-height: 2rem;
     margin: 0px 0.5rem 0px 24px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -440,7 +439,7 @@ const handleCurrencySellect = ((event)=>{
 }
 
 .dORpLZ.pages-wrap .active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
 }
 
@@ -504,7 +503,7 @@ const handleCurrencySellect = ((event)=>{
 .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -534,8 +533,7 @@ const handleCurrencySellect = ((event)=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 
 .clvyMv .currency-label {
@@ -585,7 +583,7 @@ const handleCurrencySellect = ((event)=>{
 .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -633,8 +631,7 @@ const handleCurrencySellect = ((event)=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 
 .clvyMv .currency-label {
@@ -663,8 +660,7 @@ const handleCurrencySellect = ((event)=>{
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
 }
 
 .clvyMv .currency-label {

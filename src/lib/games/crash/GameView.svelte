@@ -3,13 +3,13 @@
 </script>
 
 <script>
-  import TrendDialog from "./dialogs/trends/index.svelte";
+  import TrendDialog from "./dialogs/trends/layout.svelte";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { onMount, onDestroy } from "svelte";
   const { autorun } = connect();
   import Decimal from "decimal.js";
-  import pkg from 'lodash';
-const { debounce } = pkg;
+  import pkg from "lodash";
+  const { debounce } = pkg;
   import { crashGame } from "./store";
   function observeElementSizeChange(callback, delay = 0) {
     let isComponentMounted = false;
@@ -55,6 +55,7 @@ const { debounce } = pkg;
 
     return observeElement;
   }
+  let game = null;
   $: betsContainer = null;
   $: viewContainer = null;
   $: canvas = null;
@@ -65,17 +66,20 @@ const { debounce } = pkg;
   $: isMoon = false;
   let scrollTimeout;
   $: {
-    const game = $crashGame;
-    if (game) {
+    const _game = $crashGame;
+    if (!game && _game) {
+      game = _game;
       autorun(() => {
-        gameHistory = game.history.slice(0, 10).reverse();
-
+        gameHistory = game.history.slice(-10);
+        // console.log("Game History", gameHistory);
         if (betsContainer) {
           clearTimeout(scrollTimeout);
           scrollTimeout = setTimeout(() => {
-            const { scrollLeft, scrollWidth } = betsContainer;
-            if (scrollLeft === 0 || scrollLeft > 350) {
-              betsContainer.scrollTo(scrollWidth, 0);
+            if (betsContainer) {
+              const { scrollLeft, scrollWidth } = betsContainer;
+              if (scrollLeft === 0 || scrollLeft > 350) {
+                betsContainer.scrollTo(scrollWidth, 0);
+              }
             }
           }, 100);
         }
@@ -94,7 +98,7 @@ const { debounce } = pkg;
       const handleEscapeSuccess = ({ amount, odds, currencyName }) => {
         if (odds > 1) {
           winData = {
-            profitAmount: new Decimal(amount).times(odds).toNumber(),
+            profitAmount: new Decimal(amount).times(odds).toFixed(4),
             currencyName: currencyName,
             odds: odds,
           };
@@ -113,6 +117,7 @@ const { debounce } = pkg;
   }
   $: dialogData = null;
 </script>
+
 {#if Boolean(dialogData)}
   <CrashInfoDialog
     launchConf={dialogData}
@@ -124,42 +129,42 @@ const { debounce } = pkg;
 {/if}
 <div class="game-view">
   <div class="sc-hoHwyw fIoiVG game-recent sc-bjztik kQtbd">
-    <!-- <div class="sc-lheXJl lhEJig jackpot-enter">
-      <div class="title"><span class="tit">Bankroll</span><span>CUB</span></div>
-      <div class="sc-Galmp erPQzq coin notranslate">
-        <img a class="coin-icon" src="/coin/BTC.black.png" />
-        <div class="amount"><span class="amount-str">4610093.31</span></div>
-      </div>
-    </div> -->
     <div bind:this={betsContainer} class="recent-list-wrap">
       <div class="recent-list" style="transform: translate(0%, 0px);">
-        {#each gameHistory as bet, index (`${index}_${bet.gameId}`)}
+        {#each gameHistory as game, index (`${index}_${game.gameId}`)}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             on:click={() => {
-              
               dialogData = {
                 startScreen: "All Players",
-                gameID: bet.gameId,
+                gameID: game.gameId,
               };
             }}
-            class="game-item {bet.odds >= 10
+            class="game-item {game.odds >= 10
               ? 'is-moon'
-              : bet.odds >= 2
+              : game.odds >= 2
                 ? 'is-double'
                 : ''}"
             style=""
           >
-            <div class="issus">{bet.gameId}</div>
-            <div>{bet.odds}x</div>
+            <div class="dot"></div>
+            <div>
+              <div class="issus">{game.gameId}</div>
+              <div>{game.odds}x</div>
+            </div>
           </div>
         {/each}
+        {#if !Boolean(gameHistory.length)}
+          <div class="empty-item">
+            <p>Game results will be displayed here.</p>
+          </div>
+        {/if}
       </div>
     </div>
     <button
-      on:click={() => showTrends = !showTrends}
+      on:click={() => (showTrends = !showTrends)}
       class="sc-iLOkMM kCvsnZ flex-center"
       ><svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -175,7 +180,9 @@ const { debounce } = pkg;
         <div class="Le">
           <div class="msg">
             <span>Won</span>
-            <span class="amount">{winData.profitAmount}</span>
+            <span class="amount"
+              >{winData.profitAmount} {winData.currencyName}</span
+            >
           </div>
           <img
             alt=""
@@ -213,17 +220,19 @@ const { debounce } = pkg;
   </div>
 </div>
 
-
 <style>
   .Le {
+    z-index: 9999;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     width: 320px;
     height: 200px;
-    margin: -100px 0 0 -160px;
   }
   .Le .msg {
     font-size: 24px;
@@ -248,65 +257,6 @@ const { debounce } = pkg;
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
   }
-  .fIoiVG .jackpot-enter {
-    margin-left: 1.5rem;
-  }
-
-  .lhEJig {
-    width: 10.125rem;
-    height: 100%;
-    line-height: 1.25rem;
-    border-radius: 1.375rem;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: rgba(49, 52, 60, 0.4);
-  }
-  .lhEJig .title {
-    font-weight: bold;
-    height: 1.25rem;
-  }
-  .lhEJig .coin {
-    vertical-align: top;
-    height: 1.25rem;
-    margin-top: -0.25rem;
-  }
-  .erPQzq {
-    display: inline-flex;
-    vertical-align: middle;
-    -webkit-box-align: center;
-    align-items: center;
-    white-space: nowrap;
-  }
-  .lhEJig .coin .coin-icon {
-    width: 1rem;
-    height: 1rem;
-  }
-  .lhEJig .title .tit {
-    margin-right: 0.25rem;
-    color: rgb(67, 179, 9);
-  }
-  .erPQzq .coin-icon {
-    width: 1.4em;
-    height: 1.4em;
-    margin-right: 0.25em;
-  }
-  .lhEJig .coin .amount {
-    color: rgb(245, 246, 247);
-    font-weight: bold;
-  }
-  .lhEJig .coin .amount .amount-str {
-    width: auto;
-  }
-  .erPQzq .amount-str {
-    width: 7em;
-    display: inline-block;
-  }
   .kQtbd .recent-list-wrap {
     background-color: rgba(49, 52, 60, 0.4);
     border-radius: 1.375rem;
@@ -330,55 +280,60 @@ const { debounce } = pkg;
     display: flex;
     gap: 5px;
     padding: 0 20px;
-    -webkit-box-pack: end;
     justify-content: flex-end;
   }
   .kQtbd .game-item.is-double {
     color: rgb(67, 179, 9);
   }
-  .kQtbd .game-item.is-double::before {
+  .kQtbd .game-item.is-double .dot {
     background-color: rgb(67, 179, 9) !important;
   }
-  .kQtbd .game-item.is-moon::before {
+  .kQtbd .game-item.is-moon .dot {
     background-color: rgb(246, 199, 34) !important;
   }
   .kQtbd .game-item.is-moon {
     color: rgb(246, 199, 34);
   }
   .kQtbd .game-item {
+    cursor: pointer;
+    flex: 0 0 auto;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
     justify-content: center;
-    flex-direction: column;
     line-height: 0.875rem;
     background-color: transparent;
     position: relative;
-    padding-left: 1.4375rem;
+    padding: 0 10px;
     color: rgb(237, 99, 0);
     text-align: left;
-    align-items: flex-start;
+    gap: 3px;
+    align-items: center;
     height: 100%;
   }
-  .kQtbd .game-item::before {
-    content: "";
-    position: absolute;
-    left: 0.125rem;
-    top: 50%;
+  .kQtbd .game-item .dot {
     width: 1rem;
     height: 1rem;
     border-radius: 0.5rem;
-    transform: translateY(-50%);
     background-color: rgb(237, 99, 0);
   }
+  .kQtbd .game-item:hover::after {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.089);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
   .kQtbd .game-item .issus {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: normal;
-    transform: scale(0.7);
-    width: 70px;
-    transform-origin: left center;
     margin-bottom: 0.125rem;
     color: rgba(153, 164, 176, 0.5);
+  }
+  .kQtbd .game-item > div:not(.dot) {
+    flex: 0 0 auto;
+    width: fit-content;
+  }
+  .kQtbd .game-item > div:not(.dot) > div:not(.issus) {
+    width: fit-content;
   }
   .kCvsnZ {
     margin-right: 1.5rem;
@@ -449,5 +404,11 @@ const { debounce } = pkg;
     right: 0px;
     bottom: -1px;
     width: 100%;
+  }
+  .empty-item {
+    text-align: center;
+    display: flex;
+    padding: 7px 120px 0 9px;
+    justify-content: center;
   }
 </style>

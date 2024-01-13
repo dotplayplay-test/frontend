@@ -45,7 +45,7 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .jmLDmK .gameno-control .select-trigger {
     min-width: 8.75rem;
@@ -54,9 +54,9 @@
     text-align: center;
     margin: 0px 6px;
     border-radius: 10px;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     padding: 0px 2.875rem 0px 0.625rem;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     color: rgb(255, 255, 255);
 }
 

@@ -347,9 +347,9 @@
     text-align: center;
     margin: 0px 6px;
     border-radius: 10px;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     padding: 0px 2.875rem 0px 0.625rem;
-    background-color: rgba(45, 48, 53, 0.5);
+    background-color: var(--sidebar-card-bg);
     color: rgb(255, 255, 255);
   }
   .gOHquD.is-open .select-options-wrap {
@@ -377,7 +377,7 @@
   .iVwWcQ .select-options {
     border-radius: 1.25rem;
     padding: 0.125rem 0.375rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 8px 0px;
     height: auto;
     max-height: 16.25rem;
@@ -435,8 +435,7 @@
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
   }
   .jScFby {
     box-sizing: border-box;
@@ -456,7 +455,7 @@
     padding: 0px 1.25rem;
     user-select: none;
     border-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
   .dTcUpI .gameno-control .select-trigger .arrow {
     border-left: 1px solid rgb(45, 48, 53);
@@ -706,10 +705,9 @@
 
   .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   .jMsmRL table thead tr th {
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     white-space: nowrap;
     padding-bottom: 0.5625rem;
   }
@@ -723,8 +721,7 @@
 
   .iUeetX th {
     font-weight: normal;
-    color: rgba(153, 164, 176, 0.6);
-  }
+color: var(--text-6);  }
   @media screen and (min-width: 800px) {
     .jMsmRL table thead tr th:first-child,
     .jMsmRL table tbody tr td:first-child {
@@ -752,7 +749,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,
@@ -762,7 +759,7 @@
     padding: 0.875rem 0.75rem;
   }
   .iTDswZ.user-info {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
   }
 
@@ -890,7 +887,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,
@@ -926,7 +923,7 @@
 
   .iUeetX td {
     border: 1px solid transparent;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
   }
 
   .iUeetX th,

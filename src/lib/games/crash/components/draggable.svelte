@@ -20,11 +20,11 @@
 	}
 </script>
 
-<button on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;" class="draggable">
+<button on:pointerdown={onMouseDown} style="left: {left}px; top: {top}px;" class="draggable">
 	<slot></slot>
 </button>
 
-<svelte:window on:mouseup={onMouseUp} on:mousemove={onMouseMove} />
+<svelte:window on:pointerup={onMouseUp} on:pointermove={onMouseMove} />
 
 <style>
    	.draggable {

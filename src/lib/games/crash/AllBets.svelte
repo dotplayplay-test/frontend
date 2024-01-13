@@ -3,6 +3,8 @@
 </script>
 
 <script>
+  import { fly } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
   import { crashGame } from "./store";
   import Decimal from "decimal.js";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
@@ -116,11 +118,11 @@
     return darkColor;
   }
 
-  function pageHistory(_page, game) {
-    const n = game.history.length;
-    const i = Math.min(n, 20 * _page);
-    const a = i - 20;
-    return game.history.reverse().slice(n - i, n - a);
+  function pageHistory(_page, history) {
+    const size = history.length;
+    const offset = Math.min(size, 20 * (_page - 1));
+    const end = offset + 20;
+    return [...history].reverse().slice(offset, end);
   }
 
   const { autorun } = connect();
@@ -156,31 +158,34 @@
     ];
     chart.update();
   }
-
+  let game = null;
+  const updatePageList = () => {
+    pageHistoryList = pageHistory(currentPage, history);
+    totalPages = Math.ceil(history.length / 20);
+    pageBoundaries = (function calculateBoundaries(current, total, bound) {
+      let boundaries = [current];
+      for (let i = 1; i < bound + 1; i++) {
+        if (current - i >= 1) boundaries.unshift(current - i);
+        if (current + i <= total) boundaries.push(current + i);
+      }
+      return boundaries;
+    })(currentPage, totalPages, 2);
+  };
   $: {
-    if (currentPage === 1) {
+    if (currentTab === 1) {
       if (chart) chart.destroy();
       chart = null;
     }
-    const game = $crashGame;
-    if (game) {
+    const _game = $crashGame;
+    if (!game && _game) {
+      game = _game;
+      history = game.history;
       autorun(() => {
         history = game.history;
-        pageHistoryList = pageHistory(currentPage, game);
-
+        updatePageList();
         handleAnaylize();
         updateChart();
       });
-
-      totalPages = Math.ceil(history.length / 20);
-      pageBoundaries = (function calculateBoundaries(current, total, bound) {
-        let boundaries = [current];
-        for (let i = 1; i < bound + 1; i++) {
-          if (current - i >= 1) boundaries.unshift(current - i);
-          if (current + i <= total) boundaries.push(current + i);
-        }
-        return boundaries;
-      })(currentPage, totalPages, 2);
     }
     if (canvasRef) {
       updateChart();
@@ -194,9 +199,9 @@
 
   let onChangePage = (page) => {
     currentPage = page;
-    if (page === 2) {
+    updatePageList();
+    if (currentTab === 2) {
       updateChart();
-    } else {
     }
   };
 
@@ -246,6 +251,7 @@
     }));
   };
   $: dialogData = null;
+  $: isFocused = false;
 </script>
 
 {#if Boolean(dialogData)}
@@ -274,11 +280,14 @@
     >
   </div>
   {#if currentTab === 1}
-    <div class="sc-gFSQbh iovqrr">
+    <div
+      in:fly={{ y: -80, duration: 150, easing: cubicOut, opacity: 0.9 }}
+      out:fly={{ y: -80, duration: 150, easing: cubicOut, opacity: 0.9 }}
+      class="sc-gFSQbh iovqrr"
+    >
       <table class="sc-gWXbKe iUeetX table is-hover">
         <thead
           ><tr
-          
             ><th style="width: 24%;">Game ID</th><th style="width: 20%;"
               >Result</th
             ><th>Hash</th></tr
@@ -286,12 +295,12 @@
         ><tbody>
           {#each pageHistoryList as game (game.gameId)}
             <tr
-            on:click={() => {
-              dialogData = {
-                startScreen: "All Players",
-                gameID: game.gameId,
-              };
-            }}
+              on:click={() => {
+                dialogData = {
+                  startScreen: "All Players",
+                  gameID: game.gameId,
+                };
+              }}
               ><td
                 ><div class="game-link">
                   <div
@@ -353,12 +362,18 @@
       </div>
     </div>
   {:else}
-    <div class="sc-jwQYvw kJYcMw">
+    <div
+      in:fly={{ y: -130, duration: 150, easing: cubicOut, opacity: 0.9 }}
+      out:fly={{ y: -80, duration: 150, easing: cubicOut, opacity: 0.9 }}
+      class="sc-jwQYvw kJYcMw"
+    >
       <div class="fix-layer">
         <div>last 2000 issue, payout &lt;</div>
         <div class="sc-ezbkAF kDuLvp input">
-          <div class="input-control">
+          <div class="input-control {isFocused ? "is-focus" : ""}">
             <input
+              on:blur={() => isFocused = false}
+              on:focus={() => isFocused = true}
               type="number"
               on:change={(e) => (threshold = Decimal(e.currentTarget.value))}
               value={threshold}
@@ -479,18 +494,6 @@
   }
   .iovqrr table {
     margin: 1.25rem auto;
-  }
-  .hidden-name .icon {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.125rem;
-    fill: rgb(153, 164, 176);
-  }
-  .user-info .hidden-name {
-    color: rgb(153, 164, 176);
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
   }
   .iUeetX {
     width: 100%;
@@ -772,9 +775,6 @@
     background-color: rgba(49, 52, 60, 0.3);
   }
 
-  .lmWKWf .input-control {
-    border-color: transparent;
-  }
 
   .kDuLvp .input-control {
     position: relative;
@@ -792,7 +792,6 @@
     text-align: center;
   }
 
-  .kDuLvp .input-control textarea,
   .kDuLvp .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -803,7 +802,7 @@
     background-color: transparent;
     color: rgb(245, 246, 247);
   }
-  .kDuLvp .input-control.is-focus {
+  .input-control.is-focus {
     border-color: rgb(67, 179, 9);
   }
   .kJYcMw .fix-layer .button {
