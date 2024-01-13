@@ -1,7 +1,7 @@
 .gbjudO .gift-box-wrap {
     width: 16rem;
     height: 20.3125rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px 0px;
     padding: 10px 10px 25px;
     border-radius: 0.3125rem;
@@ -69,7 +69,7 @@
     bottom: 100%;
     max-height: 18.75rem;
     overflow-y: scroll;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 0.5rem 0.75rem;
     border-top: 1px solid transparent;
     font-size: 13px;

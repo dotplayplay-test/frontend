@@ -103,7 +103,7 @@ const handleCoinSelect = ((e)=>{
     z-index: 1000;
     inset: 0px;
     z-index: 12;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     filter: none !important;
     transition: all 0.5s ease;
 }
@@ -128,7 +128,7 @@ const handleCoinSelect = ((e)=>{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dialog-back {
     position: absolute;
@@ -187,10 +187,10 @@ const handleCoinSelect = ((e)=>{
 }
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .ijNHle.balance-wrap {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .ijNHle .balance-list {
     padding: 0px;
@@ -202,7 +202,7 @@ const handleCoinSelect = ((e)=>{
 }
 .default-style > div {
     border-radius: 1.25rem 1.25rem 0rem 0rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .ijNHle .search-input {

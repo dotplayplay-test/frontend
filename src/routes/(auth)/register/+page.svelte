@@ -14,8 +14,7 @@
   } from "$lib/firebaseAuth/index";
   import { createEventDispatcher } from "svelte";
   import { error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store";
-  import { isLightMode } from "../../../lib/store/theme";
-
+  import { isLightMode } from "$lib/store/theme";
   const dispatch = createEventDispatcher();
   let isREf = false;
   let email = "";
@@ -132,7 +131,11 @@
           <div class="box">
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Email Address</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="text"
                   bind:value={email}
@@ -143,7 +146,11 @@
             </div>
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Login Password</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="password"
                   autocomplete="off"
@@ -155,7 +162,11 @@
             <!-- {#if  isREf} -->
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Referral/Promo Code (Optional)</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="text"
                   bind:value={referral_code}
@@ -313,7 +324,7 @@
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    /* background-color: rgb(23, 24, 27); */
+    /* background: var(--affiliate-bg); */
   }
 
   .dialog-head.has-close {
@@ -376,7 +387,7 @@
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
 
   .dialog-body > div {
@@ -413,7 +424,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
   }
 
   .kDuLvp .input-label {
@@ -423,7 +434,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
   }
 
   .kDuLvp .input-control {
@@ -432,8 +443,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -448,7 +459,7 @@
     border: none;
     background-color: transparent;
     outline: none;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
 
   .iajVfs .box-title {
@@ -456,7 +467,7 @@
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
   }
 
   .iajVfs {
@@ -472,7 +483,7 @@
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
   }
 
   .iajVfs .other-group {
@@ -505,7 +516,7 @@
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
 
   .jScFby {
@@ -573,7 +584,7 @@
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
 
   .kDuLvp .input-control input {
@@ -585,7 +596,7 @@
     border: none;
     outline: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
 
   input:-webkit-autofill {
@@ -623,8 +634,8 @@
     vertical-align: middle;
     border-radius: 0.1875rem;
     box-sizing: border-box;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     font-size: 0.875rem;
     padding: 0.0625rem 0.0625rem 0.0625rem 0.125rem;
     color: transparent;
@@ -638,8 +649,8 @@
   }
 
   .cfNMkN .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
   }
 
   .cfNMkN .button {
@@ -667,7 +678,7 @@
   }
 
   .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: var(--primary-color);
     background-image: conic-gradient(
@@ -692,8 +703,8 @@
   }
 
   .cfNMkN .signin {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
   }
 
   .cBmlor:disabled.sc-iqseJM:not(.is-loading) {
@@ -724,7 +735,7 @@
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
   }
 
   .dialog-head.has-close {
@@ -788,7 +799,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
     font-size: 12px;
   }
 
@@ -798,8 +809,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -813,7 +824,7 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
   }
 
@@ -854,7 +865,7 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
+    color: var(--text-6);
   }
 
   .kDuLvp .input-control {
@@ -863,8 +874,8 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -878,11 +889,11 @@
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
   }
 
   .gEBngo.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
   }

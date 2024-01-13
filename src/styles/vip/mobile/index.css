@@ -6,7 +6,7 @@
     padding: 0px;
 }
 .gQxvnl {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     margin-bottom: 1.25rem;
     overflow: hidden;
     border-radius: 0px;
@@ -28,7 +28,7 @@
     flex-direction: column;
     -webkit-box-pack: center;
     justify-content: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     width: 57%;
     left: 42%;
 }
@@ -45,7 +45,7 @@
     flex-direction: column;
     -webkit-box-pack: center;
     justify-content: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .gQxvnl .banner-head .vip-desc {
     width: 57%;
@@ -74,7 +74,7 @@
     margin-top: 2rem;
     padding-left: 0.625rem;
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .bxRPMC {
     position: relative;
@@ -107,7 +107,7 @@
     opacity: 0.5;
     flex: 0 0 9.375rem;
     padding: 0.625rem;
-    background: url(https://static.nanogames.io/assets/flag_bg.fcc40855.png) 0% 0% / 100% 100% no-repeat;
+    background: var(--vip-img) 0% 0% / 100% 100% no-repeat;
 }
 .Ybvgo .flag-wrap.open {
     opacity: 1;
@@ -128,7 +128,7 @@
 
 .Ybvgo .flag-wrap .top .top-lock {
     text-align: left;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 0.75rem;
     transform: scale(0.85);
 }
@@ -160,7 +160,7 @@
     font-size: 0.75rem;
     font-weight: bold;
     margin: 0.3125rem 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     white-space: nowrap;
 }
 .Ybvgo .flag-wrap .flag-box .flag-desc {
@@ -180,7 +180,7 @@
     margin-top: 2rem;
     padding-left: 0.625rem;
     font-weight: bold;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .jzbUmw .bot-other .card-wrap {
     display: flex;
@@ -200,7 +200,7 @@
 }
 .jzbUmw .bot-other .card-wrap .card .card-cont {
     border-radius: 1.25rem;
-    background: rgba(49, 52, 58, 0.8);
+    background: var(--vip-card-bg);
 }
 
 .jzbUmw .bot-other .card-wrap .card .card-cont .card-img-wrap {
@@ -244,7 +244,7 @@
     padding: 0px 0.75rem;
 }
 .jzbUmw .foot-desc > div:first-child {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .jzbUmw .foot-desc > div {
     margin-bottom: 0.25rem;

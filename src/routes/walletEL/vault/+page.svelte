@@ -68,11 +68,10 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
 }
 .gwKQBT .label button {
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .JghUg {
     border-radius: 1.25rem;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     position: relative;
     padding: 0.625rem;
 }
@@ -83,14 +82,14 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
     height: 2.25rem;
     position: relative;
     border-radius: 1.125rem;
-    background-color: rgba(49, 52, 60, 0.7);
+    background: var(--tab-nav-bg);
 }
 .tabs-navs {
     width: 17.5rem;
     margin: 0.75rem auto 1.375rem;
 }
 .kQfmQV .tabs-nav.is-active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: bold;
 }
 .kQfmQV .tabs-nav {
@@ -152,7 +151,6 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 12px;
+color: var(--text-6);    font-size: 12px;
 }
 </style>

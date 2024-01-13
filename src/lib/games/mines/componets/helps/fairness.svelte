@@ -60,7 +60,7 @@
 <style>
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -72,7 +72,7 @@
 
 .default-style>div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 
@@ -83,7 +83,7 @@
 .cruphB {
     line-height: normal;
     user-select: text;
-    color: rgba(153, 164, 176, 0.8);
+    color: var(--original-text);
     padding-bottom: 1.5rem !important;
     font-size: .875rem;
 }
@@ -100,7 +100,7 @@
     font-size: 0.875rem;
     margin: 0px 0px 0.5rem;
     font-weight: 600;
-    color: rgb(153, 164, 176);
+    color: var(--text-4);
 }
 
 p {
@@ -110,9 +110,9 @@ p {
 .jQVFAL {
     padding: 1.25rem;
     border-radius: 1.25rem;
-    color: rgb(245, 246, 247);
-    background-color: rgba(45, 48, 53, 0.5);
-    border: 1px solid rgb(45, 48, 53);
+    color: var(--text-5);
+    background-color: var(--sidebar-card-bg);
+    border: 1px solid var(--border-1);
 }
 
 .jQVFAL pre {

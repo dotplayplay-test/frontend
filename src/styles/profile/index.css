@@ -12,7 +12,7 @@
         transition-duration: 0.5s;
         border-radius: 1.25rem;
         overflow: hidden;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
         transition: all 0.5s ease;
     }
     .dialog-head {
@@ -37,7 +37,7 @@
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
     }
     .cGdWiX {
         align-self: flex-start;
@@ -74,11 +74,11 @@
     }
     .no-style {
         padding-top: 3.75rem;
-        background-color: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
     .gTGvhG.user__profile {
         padding: 0.875rem;
-        background: rgb(23, 24, 27);
+        background: var(--affiliate-bg);
     }
     .dialog-body > div {
         flex: 1 1 0%;
@@ -127,7 +127,7 @@
         border-radius: 1.125rem;
         -webkit-box-pack: center;
         justify-content: center;
-        background: rgb(30, 32, 36);
+        background: var(--card-bg-5);
     }
     .jXCVwe .edit {
         position: absolute;
@@ -137,7 +137,7 @@
         border-radius: 1.125rem;
         -webkit-box-pack: center;
         justify-content: center;
-        background: rgb(30, 32, 36);
+        background: var(--card-bg-5);
     }
     .jXCVwe .user-info .avatar-box {
         position: relative;
@@ -155,7 +155,7 @@
         -webkit-box-align: center;
         align-items: center;
         margin-top: 0.625rem;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         font-weight: 600;
     }
     .jXCVwe .user-info .user-name {
@@ -183,7 +183,7 @@
         margin-top: 1rem;
     }
     .bRYT {
-        background: rgb(30, 32, 36);
+        background: var(--card-bg-5);
         border-radius: 1.25rem;
         padding: 0.875rem;
         margin-bottom: 0.5rem;
@@ -194,7 +194,7 @@
         align-items: center;
     }
     .bRYT .module-name {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         margin: 0.25rem 0px 0.75rem;
     }
     .JQLBl .module-name .total {
@@ -232,7 +232,7 @@
         height: auto;
     }
     .bRYT {
-        background: rgb(30, 32, 36);
+        background: var(--card-bg-5);
         border-radius: 1.25rem;
         padding: 0.875rem;
         margin-bottom: 0.5rem;
@@ -281,13 +281,12 @@
         flex-wrap: nowrap;
     }
     .bRYT .darken {
-        color: rgba(153, 164, 176, 0.6);
-        background: none;
+    color: var(--text-6);        background: none;
     }
     .gvTPwc .item-value {
         font-size: 1rem;
         font-weight: 600;
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         margin-top: 0.25rem;
         max-width: 80%;
         overflow: hidden;
@@ -298,13 +297,12 @@
         margin-right: 0.25rem;
     }
     .bRYT .module-name {
-        color: rgb(245, 246, 247);
+        color: var(--text-5);
         margin: 0.25rem 0px 0.75rem;
     }
     .cuPxwd {
         padding: 2.5rem 0px;
-        color: rgba(153, 164, 176, 0.6);
-        line-height: 1;
+    color: var(--text-6);        line-height: 1;
         text-align: center;
         height: 100%;
         min-height: 16.25rem;

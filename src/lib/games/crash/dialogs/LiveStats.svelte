@@ -1,9 +1,5 @@
-<script context="module">
-  import { connect } from "svelte-mobx";
-</script>
 <script>
-   const { autorun } = connect();
-   import {crashGame } from "./store";
+   import {crashGame } from "../store";
   import { browser } from "$app/environment";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import useFormatter from "../hooks/formatter";

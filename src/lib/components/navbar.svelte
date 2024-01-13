@@ -73,7 +73,7 @@ fetchFriendsInfo()
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    background-color: rgb(36, 38, 43);
+    background-color: var(--card-bg-4);
     height: 70px;
     z-index: 2279;
     color: rgb(255, 255, 255);

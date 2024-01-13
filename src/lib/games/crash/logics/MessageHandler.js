@@ -6,11 +6,12 @@ class MessageHandlerBase {
     this.source = source;
     this.reqCallbacks = {};
     this.eventDict = {};
-    this.onMessage = this.onMessage.bind(this);
-    this.source.addEventListener("message", this.onMessage);
+    this.target.onmessage = this.onMessage.bind(this);
+    this.source.addEventListener("message", this.onMessage.bind(this));
   }
 
   async onMessage(event) {
+    console.log("On message > ", event);
     const sender = event.source;
     if (event.source && sender !== this.target) return;
     const { msgId, event: eventName, payload } = event.data;
@@ -45,6 +46,7 @@ class MessageHandlerBase {
   }
 
   sendMessage(message) {
+    console.log("Sending message > ", message, this.target);
     this.target && this.target.postMessage(message, "*");
   }
 
@@ -55,16 +57,17 @@ class MessageHandlerBase {
   request(event, data = null) {
     this.msgId++;
     let msgId = this.msgId;
+
     return new Promise((resolve, reject) => {
-      let errorCallback = (...args) => {
-          clearTimer();
-          reject(...args);
-        },
-        clearTimer = () => {
-          this.timeout > 0 && clearTimeout(timer);
-          delete this.reqCallbacks[msgId];
-        },
-        timer = 0;
+      const errorCallback = (...args) => {
+        clearTimer();
+        reject(...args);
+      };
+      const clearTimer = () => {
+        this.timeout > 0 && clearTimeout(timer);
+        delete this.reqCallbacks[msgId];
+      };
+      let timer = 0;
       if (this.timeout > 0) {
         timer = window.setTimeout(
           errorCallback.bind(this, `TimeOut: ${event}`),
@@ -78,6 +81,7 @@ class MessageHandlerBase {
         },
         errorCallback,
       ];
+      console.log("Trying to snd msg > ", data, this.target)
       this.sendMessage({ msgId, event, payload: [null, data] });
     });
   }
@@ -123,6 +127,7 @@ export default class MessageHandler extends MessageHandlerBase {
   }
 
   sendMessage(message) {
+    console.log("Sending message > ", message)
     this.target.postMessage(message);
   }
 

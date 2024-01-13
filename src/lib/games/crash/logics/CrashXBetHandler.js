@@ -9,13 +9,13 @@ import {
   runInAction,
 } from "mobx";
 import Decimal from "decimal.js";
-import { RealTimeURl } from "../../../backendUrl";
+import { ServerURl } from "../../../backendUrl";
 import WalletManager from "./WalletManager";
 import UserStore from "./UserStore";
 // Crash Game Bet Handlers
 export default class CrashXBetHandler extends GameEventHandler {
   constructor(game) {
-    super({ name: "crash_xbet", namespace: RealTimeURl() }, () => null);
+    super({ name: "crash_xbet", namespace: ServerURl() }, () => null);
 
     this.throwLimit = {};
     this.game = game;
@@ -53,8 +53,13 @@ export default class CrashXBetHandler extends GameEventHandler {
       addMyBet: action,
       updateNextBets: action,
       setBetStatus: action,
+      setAutoBetType: action,
     });
-    this.autoBet = new AutoBet(this, undefined, this.game.waitGameStart);
+    this.autoBet = new AutoBet(
+      this,
+      undefined,
+      this.game.waitGameStart.bind(this.game)
+    );
 
     this.autoBet.on("start", () => this.setBetStatus(true));
     this.autoBet.on("stop", () => this.setBetStatus(false));
@@ -108,7 +113,7 @@ export default class CrashXBetHandler extends GameEventHandler {
   }
 
   setAutoBetType(type) {
-    if (this.autoBet.isRunning) {
+    if (!this.autoBet.isRunning) {
       this.autoBetType = type;
     }
   }
@@ -131,7 +136,7 @@ export default class CrashXBetHandler extends GameEventHandler {
           status: 0,
         });
       });
-
+    this.addBets(formattedBets);
     if (this.game.rate >= 2) {
       this.onEnd2();
     }
@@ -139,8 +144,6 @@ export default class CrashXBetHandler extends GameEventHandler {
     if (this.game.rate >= 10) {
       this.onEnd10();
     }
-
-    this.addBets(formattedBets);
   }
 
   onPrepare() {
@@ -198,6 +201,10 @@ export default class CrashXBetHandler extends GameEventHandler {
       myRedBet.status = redMultiplier;
       if (myRedBet.status === 1) {
         this.emit("win", myRedBet);
+        WalletManager.getInstance().createDeduction(
+          myRedBet.bet.mul(rate).add(myRedBet.bet).negated(),
+          myRedBet.currencyName
+        );
       }
     }
 
@@ -205,6 +212,10 @@ export default class CrashXBetHandler extends GameEventHandler {
       myGreenBet.status = greenMultiplier;
       if (myGreenBet.status === 1) {
         this.emit("win", myGreenBet);
+        WalletManager.getInstance().createDeduction(
+          myGreenBet.bet.mul(rate).add(myGreenBet.bet).negated(),
+          myGreenBet.currencyName
+        );
       }
     }
 
@@ -225,6 +236,10 @@ export default class CrashXBetHandler extends GameEventHandler {
       myMoonBet.status = moonMultiplier;
       if (myMoonBet.status === 1) {
         this.emit("win", myMoonBet);
+        WalletManager.getInstance().createDeduction(
+          myMoonBet.bet.mul(rate).add(myMoonBet.bet).negated(),
+          myMoonBet.currencyName
+        );
       }
     }
 
@@ -238,6 +253,9 @@ export default class CrashXBetHandler extends GameEventHandler {
     let hasGreen = false;
 
     bets.forEach((bet) => {
+      if (!bet.betId) {
+        bet.betId = Math.floor(Math.random() * 1000) + Date.now();
+      }
       if (!this.betDict[bet.betId]) {
         this.betDict[bet.betId] = bet;
 
@@ -252,15 +270,11 @@ export default class CrashXBetHandler extends GameEventHandler {
     });
 
     if (hasRed) {
-      this.redList = sortBy(this.redList, ["type", "usd"], ["desc", "desc"]);
+      this.redList = sortBy(this.redList, ["type"], ["desc"]);
     }
 
     if (hasGreen) {
-      this.greenList = sortBy(
-        this.greenList,
-        ["type", "usd"],
-        ["desc", "desc"]
-      );
+      this.greenList = sortBy(this.greenList, ["type"], ["desc"]);
     }
   }
 
@@ -274,6 +288,10 @@ export default class CrashXBetHandler extends GameEventHandler {
         gameId: this.game.gameId,
         type: this.autoBetType,
         bet: this.amount,
+        userId: this.game.user.userId,
+        name: this.game.user.username,
+        avatar: this.game.user.avatar,
+        hidden: this.game.user.hidden,
         currencyName: this.currencyName,
         currencyImage: this.currencyImage,
         status: 0,
@@ -291,18 +309,12 @@ export default class CrashXBetHandler extends GameEventHandler {
 
     try {
       await this.game.socketRequest("throw-xbet", {
-        userId: this.game.user.userId,
-        name: this.game.user.userName,
-        avatar: this.game.user.avatar,
-        hidden: this.game.user.hidden,
-        gameId: bet.gameId,
+        ...bet,
         bet: parseFloat(
           bet.bet.toFixed(
             WalletManager.getInstance().getPrecision(bet.currencyName)
           )
         ),
-        currencyName: bet.currencyName,
-        currencyImage: bet.currencyImage,
         x: bet.type,
         scriptId,
         frontgroundId: deduction,
@@ -330,6 +342,10 @@ export default class CrashXBetHandler extends GameEventHandler {
   handleBetByType(type) {
     return this.handleBet({
       type,
+      userId: this.game.user.userId,
+      name: this.game.user.username,
+      avatar: this.game.user.avatar,
+      hidden: this.game.user.hidden,
       currencyName: this.currencyName,
       currencyImage: this.currencyImage,
       bet: this.amount,
@@ -340,9 +356,12 @@ export default class CrashXBetHandler extends GameEventHandler {
 
   async handleBetNext(type) {
     await this.beforeBetCheck(this.amount);
-
     this.updateNextBets(type, {
       type,
+      userId: this.game.user.userId,
+      name: this.game.user.username,
+      avatar: this.game.user.avatar,
+      hidden: this.game.user.hidden,
       currencyName: this.currencyName,
       currencyImage: this.currencyImage,
       bet: this.amount,
@@ -396,7 +415,7 @@ export default class CrashXBetHandler extends GameEventHandler {
     );
 
     return {
-      bet: new Decimal(amount),
+      bet: new Decimal(bet),
       usd,
       userId,
       avatar,

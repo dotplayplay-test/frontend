@@ -146,7 +146,7 @@
   }
 
   .QzMTs .cont {
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     padding: 0.875rem 0px 1.125rem;
     border-radius: 0.9375rem;
     position: relative;

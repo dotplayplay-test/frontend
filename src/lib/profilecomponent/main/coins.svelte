@@ -104,7 +104,7 @@ const handleSelectCoin = ((e) => {
 .bkvHTY.balance-select {
     display: flex;
     flex-direction: column;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .bkvHTY .search-input {
@@ -130,7 +130,7 @@ const handleSelectCoin = ((e) => {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .eAGpdQ .search {
@@ -143,8 +143,8 @@ const handleSelectCoin = ((e) => {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;

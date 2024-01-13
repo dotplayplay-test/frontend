@@ -84,7 +84,7 @@
   }
 .fpLWcl .title {
     margin: 0px;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fpLWcl .session-table {
     height: 40rem;
@@ -129,7 +129,7 @@ table {
     text-align: center;
 }
 .fpLWcl .white-td {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .kISsPx tbody tr td {
     white-space: nowrap;
@@ -150,8 +150,7 @@ table {
     line-height: 2rem;
     margin: 0px 0.5rem 0px 24px;
     font-size: 0.75rem;
-    color: rgba(153, 164, 176, 0.6);
-    white-space: nowrap;
+color: var(--text-6);    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -159,7 +158,7 @@ table {
     background-color: rgba(24, 25, 29, 0.3);
 }
 .dORpLZ.pages-wrap .active {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-weight: 600;
 }
 .dORpLZ.pages-wrap button {

@@ -245,7 +245,7 @@ const handleCoins = ((e)=>{
 @media screen and (min-width: 650px){
     #withdraw {
         border-radius: 20px;
-        background-color: rgb(30, 32, 36);
+        background-color: var(--card-bg-5);
         padding: 0.75rem 0.75rem 0px;
         box-sizing: border-box;
         /* height: 380px; */
@@ -268,8 +268,7 @@ const handleCoins = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
  .input-control {
     min-height: 3.5rem;
 }
@@ -279,8 +278,8 @@ const handleCoins = ((e)=>{
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -309,7 +308,7 @@ const handleCoins = ((e)=>{
     vertical-align: top;
 }
 .wvKye .currency {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     font-size: 1.125rem;
 }
 
@@ -326,7 +325,7 @@ const handleCoins = ((e)=>{
     padding-left: 1.25rem;
 }
 .kdWfvE .amount {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .evIEvq .amount {
@@ -340,8 +339,7 @@ const handleCoins = ((e)=>{
 }
 .blotCy .label {
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    display: flex;
+color: var(--text-6);    display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
 }
@@ -349,8 +347,8 @@ const handleCoins = ((e)=>{
     color: var(--primary-color);
 }
 .blotCy .box {
-    background-color: rgba(45, 48, 53, 0.5);
-    border: 1px solid rgb(45, 48, 53);
+    background-color: var(--sidebar-card-bg);
+    border: 1px solid var(--border-1);
     padding: 0.3125rem 1.25rem;
     width: 100%;
     border-radius: 1.25rem;
@@ -370,7 +368,7 @@ const handleCoins = ((e)=>{
 .blotCy .cont .address {
     flex: 1 1 auto;
     word-break: break-all;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .blotCy .address {
     border: none;
@@ -387,8 +385,7 @@ const handleCoins = ((e)=>{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 12px;
+color: var(--text-6);    font-size: 12px;
 }
 .hjdfLc .btn-wrap {
     width: 10.9375rem;
@@ -430,8 +427,8 @@ const handleCoins = ((e)=>{
     vertical-align: middle;
     border-radius: 0.1875rem;
     box-sizing: border-box;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     font-size: 0.875rem;
     padding: 0.0625rem 0.0625rem 0.0625rem 0.125rem;
     color: transparent;
@@ -482,7 +479,7 @@ const handleCoins = ((e)=>{
 .jksbXu {
     padding: 0.625rem 1rem;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
+    border: 1px solid var(--border-1);
     margin-top: 10px;
     font-size: 0.75rem;
 }

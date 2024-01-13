@@ -287,7 +287,7 @@ const handleForgetPassword = (()=>{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    /* background-color: rgb(23, 24, 27); */
+    /* background: var(--affiliate-bg); */
 }
 
 
@@ -345,7 +345,7 @@ img {
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 .dialog-body>div {
@@ -394,15 +394,14 @@ img {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .ipnwmW #login {
     padding-top: 0px;
 }
 
 .lnrkkr {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 
 .lnrkkr .buttons {
@@ -415,8 +414,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs {
     padding: 1rem 2.5rem 1.25rem;
@@ -431,8 +429,7 @@ img {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .iajVfs .other-group {
     border-radius: 1.75rem;
@@ -464,7 +461,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .jScFby {
@@ -526,7 +523,7 @@ img {
 }
 
 .eWZHfu.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(88, 26, 196);
     background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
@@ -541,8 +538,8 @@ img {
 }
 
 .lnrkkr .signup {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 
 .lnrkkr .button {
@@ -568,7 +565,7 @@ img {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .kDuLvp .input-control input {
@@ -580,7 +577,7 @@ img {
     border: none;
     outline: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 
 input:-webkit-autofill {
@@ -625,7 +622,7 @@ input:-webkit-autofill {
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dA-dCPD .dialog-head {
@@ -675,7 +672,7 @@ input:-webkit-autofill {
     left: 1.25rem;
     right: 0.3125rem;
     z-index: 1;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .dialog-body > div {
     flex: 1 1 0%;
@@ -702,13 +699,13 @@ input:-webkit-autofill {
     height: auto;
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 .dA-dCPD #login {
     padding-top: 0px;
 }
 .jBwyNM {
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
 }
 .jBwyNM .box {
     padding: 1.5rem 1.25rem;
@@ -723,8 +720,7 @@ input:-webkit-autofill {
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-    font-size: 12px;
+color: var(--text-6);    font-size: 12px;
 }
 .kDuLvp .input-label .forget{
     font-size: 12px;
@@ -735,8 +731,8 @@ input:-webkit-autofill {
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -749,7 +745,7 @@ input:-webkit-autofill {
     padding: 0px;
     border: none;
     background-color: transparent;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     outline: none;
 }
 .jBwyNM .button {
@@ -768,7 +764,7 @@ input:-webkit-autofill {
     height: 3.625rem;
 }
 .eWZHfu.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(88, 26, 196);
     background-image: conic-gradient(from 1turn, rgb(88, 26, 196), rgb(119, 60, 253));
@@ -779,8 +775,8 @@ input:-webkit-autofill {
     margin-right: 0.625rem;
 }
 .jBwyNM .signup {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 .cBmlor > .button-inner {
     display: flex;
@@ -792,15 +788,15 @@ input:-webkit-autofill {
     height: 100%;
 }
 .jBwyNM .signup {
-    color: rgb(245, 246, 247);
-    background-color: rgb(49, 52, 60);
+    color: var(--text-5);
+    background-color: var(--card-bg-2);
 }
 .jBwyNM .signup .icon {
     width: 1rem;
     height: 1rem;
     margin-left: 0.375rem;
     opacity: 0.6;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 @media screen and (max-width: 621px){
     .dialog {
@@ -848,8 +844,7 @@ input:-webkit-autofill {
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .gIMEzD .other-group {
     border-radius: 1.75rem;
     background-color: rgba(49, 52, 60, 0.5);

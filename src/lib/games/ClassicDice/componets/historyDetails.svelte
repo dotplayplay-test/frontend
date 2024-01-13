@@ -248,7 +248,7 @@ $:{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 @media only screen and (max-width: 650px){
@@ -265,7 +265,7 @@ $:{
     transition-duration: 0.5s;
     border-radius: 1.25rem;
     overflow: hidden;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 }
 
@@ -309,7 +309,7 @@ $:{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
 }
 .fLASqZ {
     position: absolute;
@@ -327,7 +327,7 @@ $:{
 
 .default-style {
     padding-top: 3.75rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
 }
 
 .dialog-body {
@@ -338,7 +338,7 @@ $:{
 }
 .default-style > div {
     border-radius: 20px;
-    background-color: rgb(30, 32, 36);
+    background-color: var(--card-bg-5);
     padding: 1.25rem 1.25rem 0px;
 }
 .dialog-body > div {
@@ -439,7 +439,7 @@ $:{
 .Osnbt .rt_items .item-wrap {
     height: 4.625rem;
     border-radius: 0.625rem;
-    background-color: rgb(23, 24, 27);
+    background: var(--affiliate-bg);
     display: flex;
     flex-direction: column;
     -webkit-box-pack: center;
@@ -449,8 +449,7 @@ $:{
     align-items: center;
     margin-right: 0.375rem;
     padding: 1rem 0px;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 .fmwvmO {
     margin-top: 0.5rem;
     display: flex;
@@ -460,9 +459,8 @@ $:{
 .fmwvmO .item-wrap {
     height: 4.625rem;
     border-radius: 0.625rem;
-    background-color: rgb(23, 24, 27);
-    color: rgba(153, 164, 176, 0.6);
-    display: flex;
+    background: var(--affiliate-bg);
+color: var(--text-6);    display: flex;
     flex-direction: column;
     -webkit-box-pack: center;
     justify-content: center;
@@ -528,8 +526,7 @@ $:{
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-    color: rgba(153, 164, 176, 0.6);
-}
+color: var(--text-6);}
 
 .kDuLvp .input-control {
     position: relative;
@@ -537,8 +534,8 @@ $:{
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1.25rem;
-    border: 1px solid rgb(45, 48, 53);
-    background-color: rgba(45, 48, 53, 0.5);
+    border: 1px solid var(--border-1);
+    background-color: var(--sidebar-card-bg);
     height: 3.5rem;
     padding: 0px 1.25rem;
     opacity: 1;
@@ -589,7 +586,7 @@ $:{
     margin: 1.25rem auto 0px;
 }
 .fnKcEH.button {
-    color: rgb(245, 246, 247);
+    color: var(--text-5);
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(67, 179, 9);
     background-image: conic-gradient(from 1turn, rgb(67, 179, 9), rgb(93, 219, 28));
