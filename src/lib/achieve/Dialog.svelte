@@ -5,16 +5,32 @@
   const dispatch = createEventDispatcher();
 
   export let title;
+  export let canGoBack;
 
   const cancel = () => {
     dispatch("cancel");
+  };
+
+  const goBack = () => {
+    dispatch("goBack");
   };
 </script>
 
 <div class="container">
   <div class="dialog-x">
     <div class="head">
-      <div class="title has-close">{title}</div>
+      <div class="head-item">
+        {#if canGoBack}
+          <button class="dialog-back" on:click={goBack}
+            ><svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="sc-gsDKAQ hxODWG icon"
+              ><use xlink:href="#icon_Arrow"></use></svg
+            ></button
+          >
+        {/if}
+        <div class="title has-close">{title}</div>
+      </div>
       <button on:click={cancel} class="close-icon dialog-x-close">
         <Icon
           src={IoCloseSharp}
@@ -64,6 +80,18 @@
     align-items: center;
     transition: all 0.5s ease 0s;
     padding: 24px;
+  }
+
+  .head-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dialog-back svg {
+    transform: rotate(180deg);
+    width: 16px;
+    height: 16px;
   }
 
   .body {

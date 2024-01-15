@@ -9,7 +9,12 @@
   export let selectedMedal;
 </script>
 
-<Dialog title="Medals Details" on:cancel={handleCancel}>
+<Dialog
+  canGoBack={true}
+  on:goBack
+  title="Medals Details"
+  on:cancel={handleCancel}
+>
   {#if selectedMedal}
     <div class="head">
       <img src="/achieve/{selectedMedal.src}" alt={selectedMedal.name} />
@@ -57,7 +62,9 @@
     color: rgb(67, 179, 9);
     padding: 20px;
     border-radius: 20px;
+    font-size: 14px;
     margin-top: 50px;
+    margin-bottom: 20px;
   }
   .metric {
     display: flex;
@@ -66,9 +73,10 @@
     background-color: rgba(45, 48, 53, 0.5);
     padding: 1.25rem;
     border-radius: 1.25rem;
+    font-size: 14px;
+    font-weight: 600;
   }
   .metric span:nth-child(1) {
-    font-weight: 600;
     color: rgba(153, 164, 176, 0.6);
   }
   .footer {
