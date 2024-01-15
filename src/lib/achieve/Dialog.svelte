@@ -74,6 +74,19 @@
     background: var(--affiliate-bg);
   }
 
+  @media screen and (max-width: 650px) {
+    .dialog-x {
+      border-radius: 0;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    .dialog-x {
+      max-height: 100vh;
+      width: 100%;
+    }
+  }
+
   .head {
     display: flex;
     justify-content: space-between;
@@ -101,6 +114,12 @@
     height: 90%;
     border-radius: 20px;
     background-color: rgb(30, 32, 36);
+  }
+
+  @media screen and (max-width: 650px) {
+    .body {
+      border-radius: 0;
+    }
   }
 
   @media screen and (max-width: 650px) {
