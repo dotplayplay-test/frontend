@@ -20,7 +20,7 @@
       <img src="/achieve/{selectedMedal.src}" alt={selectedMedal.name} />
       <p class="title">{selectedMedal.name}</p>
       <div class="progress"></div>
-      <p>0/200</p>
+      <p class="title">0/200</p>
     </div>
 
     <div class="info">
@@ -100,10 +100,24 @@
   }
 
   @media screen and (max-width: 650px) {
-    *,
-    *:before,
-    *:after {
-      box-sizing: border-box;
+    .title {
+      font-size: 14px;
+    }
+    .progress {
+      margin: 5px 0;
+    }
+    .metric {
+      font-size: 12px;
+    }
+    .info {
+      padding: 12px;
+      font-size: 12px;
+    }
+    .footer {
+      border-radius: 1.375rem;
+      padding: 0.625rem;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
     }
   }
 </style>

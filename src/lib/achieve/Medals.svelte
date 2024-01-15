@@ -54,10 +54,10 @@
   }
   .progress {
     width: 100%;
-    height: 10px;
+    height: 40px;
     background-color: inherit;
     border-radius: 30px;
-    box-sizing: content-box;
+    box-sizing: border-box;
     border: 15px solid var(--affiliate-bg);
     margin-top: 10px;
   }
@@ -83,7 +83,7 @@
       border-radius: 15px;
     }
     .progress {
-      height: 8px;
+      height: 30px;
       border-radius: 20px;
       margin-top: 10px;
       border: 10px solid var(--affiliate-bg);
