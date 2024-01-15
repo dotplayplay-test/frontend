@@ -84,10 +84,5 @@
   }
 
   @media screen and (max-width: 650px) {
-    *,
-    *:before,
-    *:after {
-      box-sizing: border-box;
-    }
   }
 </style>

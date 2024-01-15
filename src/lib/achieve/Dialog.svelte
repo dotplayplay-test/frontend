@@ -74,19 +74,6 @@
     background: var(--affiliate-bg);
   }
 
-  @media screen and (max-width: 650px) {
-    .dialog-x {
-      border-radius: 0;
-    }
-  }
-
-  @media screen and (max-width: 650px) {
-    .dialog-x {
-      max-height: 100vh;
-      width: 100%;
-    }
-  }
-
   .head {
     display: flex;
     justify-content: space-between;
@@ -119,17 +106,18 @@
   @media screen and (max-width: 650px) {
     .body {
       border-radius: 0;
+      padding: 10px;
     }
-  }
-
-  @media screen and (max-width: 650px) {
     .dialog-x {
+      max-height: 100vh;
       width: 100%;
+      border-radius: 0;
     }
-    *,
-    *:before,
-    *:after {
-      box-sizing: border-box;
+    .head {
+      padding: 14px;
+    }
+    .title {
+      font-size: 12px;
     }
   }
 </style>
