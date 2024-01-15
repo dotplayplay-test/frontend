@@ -78,4 +78,22 @@
     border-right: 5px solid transparent;
     border-bottom: 5px solid rgb(67, 179, 9);
   }
+  @media screen and (max-width: 650px) {
+    .bar {
+      border-radius: 15px;
+    }
+    .progress {
+      height: 8px;
+      border-radius: 20px;
+      margin-top: 10px;
+      border: 10px solid var(--affiliate-bg);
+    }
+    .single {
+      padding: 10px;
+      font-size: 10px;
+    }
+    .single img {
+      height: 1.8rem;
+    }
+  }
 </style>

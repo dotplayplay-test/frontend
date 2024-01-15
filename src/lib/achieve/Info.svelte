@@ -22,4 +22,12 @@
     color: rgb(67, 179, 9);
     font-weight: 600;
   }
+
+  @media screen and (max-width: 650px) {
+    .box {
+      padding: 1.25rem;
+      font-size: 10px;
+      line-height: 1.5rem;
+    }
+  }
 </style>
