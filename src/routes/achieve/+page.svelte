@@ -1,18 +1,16 @@
 <script>
   import { goto } from "$app/navigation";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import Card from "../promotion/Card.svelte";
   import Info from "../promotion/Info.svelte";
   import Medals from "../promotion/Medals.svelte";
+  import Dialog from "../../lib/achieve/Dialog.svelte";
 
   const handleCancel = () => {
     goto("/promotion");
   };
 
-  let is_mobile = false;
   onMount(() => {
     if (browser && window.innerWidth < 650) {
       is_mobile = true;
@@ -45,92 +43,33 @@
   ];
 </script>
 
-<div class="container">
-  <div class="dialog-x">
-    <div class="head">
-      <div class="title has-close">Master Medals</div>
-      <button on:click={() => handleCancel()} class="close-icon dialog-x-close">
-        <Icon
-          src={IoCloseSharp}
-          size="18"
-          color="rgb(255, 255, 255)"
-          className="custom-icon"
-          title="arror"
-        />
-      </button>
+<Dialog title="Master Medals" on:cancel={handleCancel}>
+  <div>
+    <div class="medals">
+      <Medals />
     </div>
-    <div class="body">
-      <div>
-        <div class="medals">
-          <Medals />
-        </div>
-        <Info />
-        <div class="divider"></div>
-        <div class="">
-          <div class="card-box">
-            {#each medals as medal}
-              <Card {medal} />
-            {/each}
-          </div>
+    <Info />
+    <div class="divider"></div>
+    <div class="">
+      <div class="card-box">
+        {#each medals as medal}
+          <Card {medal} />
+        {/each}
+      </div>
 
-          <div class="footer">
-            <svg
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              class="sc-gsDKAQ hxODWG icon"
-              ><use xlink:href="#icon_Inform"></use></svg
-            >
-            Tip CUB is not included in medal calculation Stats Updated every 24 hours
-          </div>
-        </div>
+      <div class="footer">
+        <svg
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="sc-gsDKAQ hxODWG icon"
+          ><use xlink:href="#icon_Inform"></use></svg
+        >
+        Tip CUB is not included in medal calculation Stats Updated every 24 hours
       </div>
     </div>
   </div>
-</div>
+</Dialog>
 
 <style>
-  .container {
-    display: grid;
-    position: fixed;
-    z-index: 1000;
-    inset: 0px;
-    background-color: rgba(0, 0, 0, 0.507);
-    place-content: center;
-  }
-
-  .title {
-    font-weight: 600;
-    color: white;
-  }
-
-  .dialog-x {
-    width: 524px;
-    max-height: 90vh;
-    overflow-y: scroll;
-
-    transition-property: width, height, margin-left, margin-top;
-    transition-duration: 0.5s;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background: var(--affiliate-bg);
-  }
-
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.5s ease 0s;
-    padding: 24px;
-  }
-
-  .body {
-    padding: 20px;
-    padding-bottom: 50px;
-    overflow-y: scroll;
-    height: 90%;
-    border-radius: 20px;
-    background-color: rgb(30, 32, 36);
-  }
-
   .divider {
     width: 100%;
     height: 2px;
@@ -167,9 +106,6 @@
   }
 
   @media screen and (max-width: 650px) {
-    .dialog-x {
-      width: 100%;
-    }
     *,
     *:before,
     *:after {
