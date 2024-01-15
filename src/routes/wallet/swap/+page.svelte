@@ -1,366 +1,294 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import HiOutlineSwitchVertical from "svelte-icons-pack/hi/HiOutlineSwitchVertical";
-import Coins from './coins.svelte';
-import { UserProfileEl } from "$lib/index"
-const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
-import { default_Wallet, coin_list } from "$lib/store/coins";
-import { createEventDispatcher , onMount} from 'svelte'
-let is_open = false
-const handleCOins = (()=>{
-    is_open =! is_open
-})
+  import Icon from "svelte-icons-pack/Icon.svelte";
+  import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
+  import axios from "axios";
+  import { onMount } from "svelte";
+  import { handleAuthToken } from "$lib/store/routes";
+  import { ServerURl } from "$lib/backendUrl";
+  import { coin_list } from "$lib/store/coins";
 
-onMount(async()=>{
-    let usdt = await handleUSDTwallet()
-    let ppd = await handlePPDwallet()
-    let ppl = await handlePPLwallet()
-    let ppf = await handlePPFwallet()
-    coin_list.set([usdt, ppd, ppl, ppf] )
-})
+  import SwapField from "./components/SwapField.svelte";
+  import SwapFooter from "./components/SwapFooter.svelte";
+  import SelectCoin from "./components/SelectCoin.svelte";
 
+  const url = ServerURl();
+
+  const getUsableCoins = () =>
+    $coin_list.filter((element) => element.coin_name !== "PPF");
+
+  let ispo_loading = false;
+
+  let amount = 10;
+  let isLoading = false;
+
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        senderCoin: from.coin.coin_name,
+        receiverCoin: to.coin.coin_name,
+        amount,
+      };
+
+      isLoading = true;
+      const res = await axios.post(`${url}/api/transaction/swap`, data, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${$handleAuthToken}`,
+        },
+      });
+      isLoading = false;
+      // close modal...
+      console.log({ res });
+    } catch (err) {
+      isLoading = false;
+      console.log(err);
+    }
+  };
+
+  onMount(() => {
+    from.coin = getUsableCoins()[0];
+    to.coin = getUsableCoins()[1];
+  });
+
+  function computeSwap() {
+    const conversionRates = {
+      USDT: 1, // 1 USDT = $1
+      PPD: 1, // 1 PPD = $1
+      PPL: 0.1, // 1 PPL = $0.1
+    };
+
+    const amount = from.amount;
+    const fromCurrency = from.coin.coin_name;
+    const toCurrency = to.coin.coin_name;
+
+    // Check if the currencies are valid
+    if (!conversionRates[fromCurrency] || !conversionRates[toCurrency]) {
+      throw new Error("Invalid currency");
+    }
+
+    // Perform the conversion
+    const convertedAmount =
+      (amount / conversionRates[fromCurrency]) * conversionRates[toCurrency];
+
+    to.amount = convertedAmount;
+  }
+
+  const handleOnClickMax = () => {
+    from.amount = 0;
+  };
+
+  const switchFields = () => {
+    const oldFrom = from;
+
+    from = to;
+    to = oldFrom;
+  };
+
+  const handleCloseSelectCoins = () => {
+    showDialog = { isFrom: false, isShown: false };
+  };
+
+  const handleSelectCoin = (coin) => {
+    if (!showDialog.isShown) return;
+
+    if (showDialog.isFrom) {
+      from.coin = coin;
+    } else {
+      to.coin = coin;
+    }
+
+    showDialog = { isFrom: false, isShown: false };
+  };
+
+  const getDialogCoins = () => {
+    if (showDialog.isFrom) {
+      return getUsableCoins().filter(
+        (element) => element.coin_name !== to.coin.coin_name
+      );
+    } else {
+      return getUsableCoins().filter(
+        (element) => element.coin_name !== from.coin.coin_name
+      );
+    }
+  };
+
+  let from = { amount: 0, coin: null };
+  let to = { amount: 0, coin: null };
+
+  let showDialog = { isFrom: false, isShown: false };
 </script>
 
+{#if showDialog.isShown}
+  <SelectCoin
+    coins={getDialogCoins()}
+    activeCoin={showDialog.isFrom ? from.coin : to.coin}
+    setActive={handleSelectCoin}
+    on:closeDialog={handleCloseSelectCoins}
+  />
+{/if}
 
-<div class="right-info">
-    {#if is_open}
-    <Coins on:close={handleCOins} />
+<div class="container">
+  <div class="s4kezgj limit-width" id="deposit">
+    <div class="swm8knq">
+      <div class="label-box">
+        <div class="label">You get Approximately</div>
+        <div class="label">
+          Min: {from?.amount || 0}
+          {from?.coin?.coin_name}
+        </div>
+      </div>
+    </div>
+    {#if !ispo_loading}
+      <div class="sbaeww">
+        <div class="button-box">
+          <div class="sq07zth">
+            <SwapField
+              onClick={() => {
+                showDialog = { isFrom: true, isShown: true };
+              }}
+              activeCoin={from.coin}
+              onClickMax={handleOnClickMax}
+              bind:amount={from.amount}
+              showMax={true}
+              handleOnChange={computeSwap}
+            />
+          </div>
+          <div class="to-item">
+            <SwapField
+              onClick={() => {
+                showDialog = { isFrom: false, isShown: true };
+              }}
+              disabled={true}
+              activeCoin={to.coin}
+              bind:amount={to.amount}
+            />
+          </div>
+          <button on:click={switchFields} class="switch-btn">
+            <Icon src={AiOutlineSwap} /></button
+          >
+        </div>
+
+        <div class="page-margin">
+          <SwapFooter {from} {to} />
+        </div>
+
+        <div class="page-margin">
+          <button
+            on:click={handleSubmit}
+            class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal"
+          >
+            <div class="button-inner">
+              {isLoading ? "Loading..." : `Submit`}
+            </div>
+          </button>
+        </div>
+      </div>
+    {:else}
+      <div style="height: 100px;">
+        <div class="center" style="height: 300px;">
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+        </div>
+      </div>
     {/if}
-   
-   <div class="s1j4cqzb">
-      <div class="swap-record">
-      <div>You get Approximately</div>
-      <div>Min:1 USDT</div>
-   </div>
-   <div class="input-wrap">
-      <div class="ui-input s16h1zvs from-input">
-         <div class="input-control">
-            <input type="text" value="0">
-            <button class="max-btn">Max</button>
-            <button on:click={handleCOins} class="input-pre">
-               <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-               <span class="currency">USDT</span>
-               <Icon src={RiSystemArrowDownSLine}  size="18"  color="rgb(255, 255, 255)"   />
-            </button>
-         </div>
-      </div>
-      <div class="btn-exchange">
-         <button>
-            <Icon src={HiOutlineSwitchVertical}  size="18"  color="#ffff"   />
-         </button>
-      </div>
-      <div class="ui-input s16h1zvs to-input">
-         <div class="input-control">
-            <input type="text" value="0">
-            <button on:click={handleCOins} class="input-pre">
-               <img class="coin-icon" alt="" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png">
-               <span class="currency">BCD</span>
-               <Icon src={RiSystemArrowDownSLine}  size="18"  color="rgb(255, 255, 255)"   />
-            </button>
-         </div>
-      </div>
-   </div>
-   <div class="balance-wrap">
-      <p><span>Real Money</span>:<span class="w">0 USDT</span></p>
-      <p><span>Bonus Money</span>:<span class="w">0 USDT</span></p>
-   </div>
-   <div class="tips">
-      <div class="item time-wrap">
-         <svg class="s13v8tlr cut-time" viewBox="25 25 50 50">
-            <circle cx="50" cy="50" r="20" fill="none" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dashoffset="0px" stroke-dasharray="0px 1px"></circle>
-         </svg>1 USDT ≈ 1.00000000 BCD</div>
-         <div class="item">Estimated Time* 
-            <span>Seconds</span>
-         </div>
-         <div class="item">Swap fee: <div>
-            <span>0.00000000</span>
-            USDT
-         </div>
-      </div>
-   </div>
-   <button class="ui-button button-normal s-conic submit-btn" disabled="">
-      <div class="button-inner">Swap Now</div>
-   </button>
-</div>
+  </div>
 </div>
 
 <style>
-.right-info {
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+  .container {
     margin-left: 0.25rem;
     background-color: #31343c;
     border-radius: var(--border-radius);
     padding: 1.5rem 2rem 2rem;
-}
-.s1j4cqzb {
-    --1rv42qm: #181919;
-    --1hr07om: rgba(95,105,117,.6);
-    --prlp66: #f5f6fa;
-    --cn5q3p: #fff;
-    --he6tl4: #EAECF3;
-    --p4qis: #f5f6fa;
-    --qos9gx: #ffffff;
-    position: relative;
-    font-size: .75rem;
-    max-width: 492px;
-}
-.s1j4cqzb .swap-record {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+  }
+  .label-box {
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    font-size: .875rem;
-    margin-bottom: 0.375rem;
-}
-.s1j4cqzb .input-wrap {
+  }
+
+  .button-box {
     position: relative;
-    border: 4px solid #2d3035;
-    border-radius: var(--border-radius);
-}
-.s1j4cqzb .input-wrap .ui-input {
-    margin-top: 0;
-}
-.s1j4cqzb .input-wrap .from-input {
-    border-bottom: 2px solid #2d3035;
-}
-.s1j4cqzb .input-wrap .from-input .input-control {
-    /* border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
-    border: none; */
-    padding-left: 10px;
-}
-.s1orvhr .ui-input .input-control {
-    height: 3rem;
-    background-color: #1E2024;
-    border: none;
-    display: flex;
-    padding-left: 10px;
-}
+  }
+  .switch-btn {
+    --1rv42qm: #fff;
+    --1hr07om: rgba(153, 164, 176, 0.6);
+    --prlp66: #26282c;
+    --cn5q3p: #3d4049;
+    --he6tl4: #2d3035;
+    --p4qis: #3d4049;
+    --qos9gx: #484d57;
 
-.s16h1zvs div.input-control input {
-    font-weight: 800;
-    font-size: 1.25rem;
-}
+    width: 35px;
+    height: 35px;
+    fill: white;
+    margin-top: 0.1875rem;
 
-.ui-input .input-control input {
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    min-width: 1rem;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    color: #f5f6f7;
-}
- .input-pre {
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
-    background-color: #26282C;
-    min-width: 8.125rem;
-    padding: 0.625rem 0.8125rem;
-    border-radius: var(--border-radius);
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    cursor: pointer;
-    margin: 5px;
-}
-.s16h1zvs .max-btn {
-    width: 3.75rem;
-    border-radius: var(--border-radius);
-    background-color: #26282C;
-    margin: 5px;
-}
-
-.input-pre .coin-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-.s16h1zvs .input-pre .coin-icon {
-    width: 1.75rem;
-    height: 1.75rem;
-    display: inline-block;
-    vertical-align: top;
-}
-.s16h1zvs .input-pre .currency {
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    margin-left: 0.6875rem;
-    color: #f5f6f7;
-}
-.btn-exchange {
-    text-align: center;
-    margin: 0 auto -0.75rem;
     position: absolute;
-    width: 2.25rem;
-    height: 2.25rem;
-    left: 50%;
-    top: 50%;
-    margin: -1.125rem 0 0 -1.125rem;
+    right: 50%;
+    top: 30%;
+
+    text-align: center;
     z-index: 1;
-    border: solid 3px #2d3035;
-    background-color: #3D4049;
+    border: solid 3px var(--he6tl4);
+    background-color: var(--p4qis);
     border-radius: 0.5rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
     justify-content: center;
     cursor: pointer;
-}
-.balance-wrap {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    height: 1.125rem;
-    margin-top: 1.25rem;
-}
-.balance-wrap p {
-    margin: 0;
-}
-.balance-wrap p .w {
-    color: #fff;
-    margin-left: 0.25rem;
-    font-weight: 600;
-}
- .tips {
-    margin: 0.75rem 0 2.5625rem;
-    border-radius: var(--border-radius);
-}
-.tips .time-wrap {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    color: #fff;
-    /* border-radius: var(--border-radius); */
-    margin-bottom: 1px;
-}
-.tips .item {
-    background-color:#26282C;
-    padding: 0.5rem 0.75rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-}
-.tips .time-wrap svg {
-    margin-right: 0.1875rem;
-}
-.s13v8tlr {
-    width: 1rem;
-    height: 1rem;
-    -webkit-transform: rotate(-90deg) scaleX(-1);
-    -ms-transform: rotate(-90deg) scaleX(-1);
-    transform: rotate(-90deg) scaleX(-1);
-}
-.s13v8tlr circle {
-    stroke: var(--primary-color);
-    -webkit-transition: all 1s linear;
-    transition: all 1s linear;
-}
-.s1j4cqzb .tips .item {
-    background-color:#26282C;
-    padding: 0.5rem 0.75rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-}
-.ui-button:disabled.ui-button:not(.is-loading) {
-    opacity: .5;
-    cursor: default;
-}
-.ui-button.s-conic {
-    color: #fff;
-    background-color: #1d803ab3;
-    background-image: conic-gradient(from 1turn,rgba(88,175,16,1),rgba(29,128,58,1));
-}
-.s1j4cqzb .ui-button {
-    width: 14rem;
-    margin: 0 auto;
-}
-.ui-button {
-    --3xr1hu: rgba(107,113,128,.8);
-    display: block;
-    width: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border-radius: var(--border-radius);
-    height: 3rem;
-    font-weight: 700;
-    cursor: pointer;
-    -webkit-transition: -webkit-transform .2s cubic-bezier(.36,.66,.04,1);
-    -webkit-transition: transform .2s cubic-bezier(.36,.66,.04,1);
-    transition: transform .2s cubic-bezier(.36,.66,.04,1);
-}
+  }
+  .ui-scrollview {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-flex: 1 1 1px;
+    -ms-flex: 1 1 1px;
+    flex: 1 1 1px;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .swm8knq {
+    --18w92jy: #fff;
+    --1cq0e1f: #f6f7fa;
+    --9ty6bq: rgba(218, 221, 230, 0.5);
+    margin-top: 1rem;
+  }
+  .swm8knq .label {
+    margin-bottom: 0.75rem;
+    line-height: 0.875rem;
+    font-size: 0.875rem;
+  }
+  .s4kezgj .fast-btns .ui-button .button-inner {
+    font-weight: 400;
+  }
+  .page-margin {
+    margin-top: 1rem;
+  }
+  .ui-scrollview {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-flex: 1 1 1px;
+    -ms-flex: 1 1 1px;
+    flex: 1 1 1px;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .button-box {
+    background-color: #1e202466;
+    padding: 6px;
+    border-radius: 6px;
+  }
+  .to-item {
+    margin-top: 5px;
+  }
 </style>

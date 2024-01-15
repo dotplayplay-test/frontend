@@ -21,7 +21,6 @@ export const usePublicMessages = () => {
       if (!response.ok) {
         isLoading = false;
         error = json.error
-        console.log(error)
       }
       if (response.ok) {
         // Save user to localStorage
