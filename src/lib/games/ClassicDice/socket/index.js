@@ -6,6 +6,8 @@ const socket = io(`${URL}`);
 import { dice_troo, dicegameplays, dice_wallet, Handles_Loading } from "../store/index"
 import { handleliveHistory } from "$lib/games/mines/store/index"
 import { active_playerEl } from "$lib/crashgame/store";
+import { chatCounter } from "$lib/store/chat-counter"
+import { profileStore } from "$lib/store/profile";
 
 
 export const handleCountdown = (() => {
@@ -22,21 +24,28 @@ export const handleCountdown = (() => {
     })
 
     socket.on("new-messages", data => {
+        console.log(data);
         chats.set(data.newMessage)
+        let user_id
+        profileStore.subscribe($profileStore => user_id = $profileStore.user_id);
+
+        if (data.newMessage[data.newMessage.length - 1].user_id !== user_id) {
+            chatCounter.update(currentValue => currentValue + 1)
+        }
     })
 
     socket.on("grabCoinDropResponse", data => {
         console.log(data);
         const newData = data.data
-        if(newData)
-        chats.update(existingChats => {
-            return existingChats.map(chat => {
-                if (chat.msg_id === newData.msg_id) {
-                    return newData;
-                }
-                return chat;
+        if (newData)
+            chats.update(existingChats => {
+                return existingChats.map(chat => {
+                    if (chat.msg_id === newData.msg_id) {
+                        return newData;
+                    }
+                    return chat;
+                });
             });
-        });
     })
 
     socket.on("mines-hs", data => {
@@ -67,6 +76,6 @@ export const handleCountdown = (() => {
         dice_troo.set(data)
         Handles_Loading.set(false)
     })
+    console.log("count down");
     return { handleDicebet, handleChattingMessages, handleMinesHistory, handleCrashActiveBet, handleGrabCoinDrop }
-
 })

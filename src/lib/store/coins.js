@@ -1,6 +1,4 @@
 import { writable } from "svelte/store"
-import axios from "axios"
-import { handleAuthToken } from "$lib/store/routes";
 
 let ppdWalletEl = {}
 let ppeWalletEl = {}

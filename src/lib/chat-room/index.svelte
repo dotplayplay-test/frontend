@@ -25,7 +25,7 @@
   import { profileStore } from "$lib/store/profile";
   import { handleisLoggin } from "$lib/store/profile";
   import { handleAuthToken } from "$lib/store/routes";
-  import { handleCountdown } from "../../lib/games/ClassicDice/socket/index";
+  import { handleCountdown } from "$lib/games/ClassicDice/socket/index";
   const { handleChattingMessages, handleGrabCoinDrop } = handleCountdown();
   import { chats } from "$lib/chat-room/store/index";
   import { ServerURl } from "../backendUrl";
@@ -41,7 +41,20 @@
   let showRegion = false;
   let showTopWinner = false;
   let URL = ServerURl();
-  let defaultUsername = ["John", "Doe", "Rizza", "Malino"];
+  let defaultUsername = [
+    {
+      vip_level: 3,
+      username: "wXjdkVjtm",
+    },
+    {
+      vip_level: 4,
+      username: "bl4ckm3rcy",
+    },
+    {
+      vip_level: 0,
+      username: "JE45m1gWH",
+    },
+  ];
   let filteredUsers = [];
   let showMention = false;
   const MATCH_TIP = /^\/tip\s+@(\S+)\s*$/;
@@ -383,7 +396,7 @@
           class="sc-jJoQJp gOHquD select"
         >
           <button class="select-trigger">
-            <div class="select-label">English</div>
+            <div class="select-label">{$region}</div>
             <button class="sc-ieecCq fLASqZ close-icon arrow">
               <Icon
                 src={RiSystemArrowRightSLine}
@@ -1289,17 +1302,18 @@
     align-items: flex-start;
     padding: 15px;
     gap: 5px;
-    background-color: var(--card-bg-7);
+    background-color: var(--card-bg-1);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.139);
     top: 70px;
     animation: slide-up 0.4s forwards;
     transform: translateY(-20px);
     opacity: 0;
+    z-index: 2;
   }
 
   @keyframes slide-up {
     to {
-      transform: translateY(0);
+      transform: translateY(-1px);
       opacity: 1;
     }
   }
@@ -1331,7 +1345,7 @@
     height: 20px;
     background-color: ghostwhite;
     border-radius: 50%;
-    right: 0px;
+    right: 5px;
   }
 
   .region_container button.active::before {
@@ -1342,7 +1356,7 @@
     background-color: var(--primary-color);
     border-radius: 50%;
     z-index: 1;
-    right: 5px;
+    right: 10px;
   }
 
   .eA-dYOl {
@@ -1940,6 +1954,7 @@
     position: relative;
     height: 2.5rem;
     opacity: 1;
+    z-index: 4;
   }
 
   .gOHquD .select-trigger {
