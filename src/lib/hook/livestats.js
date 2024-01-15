@@ -26,7 +26,7 @@ export default function useLiveStats(store, key) {
             wins: won ? stats.wins + 1 : stats.wins,
             loses: !won ? stats.loses + 1 : stats.loses,
         };
-        localStorage.setItem(key, JSON.stringify(stats));
+        // localStorage.setItem(key, JSON.stringify(stats));
         store.set(stats);
     }
 
@@ -39,14 +39,14 @@ export default function useLiveStats(store, key) {
             loses: 0,
             points: []
         };
-        localStorage.setItem(key, JSON.stringify(_live));
+        // localStorage.setItem(key, JSON.stringify(_live));
         store.set(_live);
         return _live;
     }
 
     function getStats() {
         return JSON.parse(localStorage.getItem(key) || JSON.stringify({
-            token_img: "/coin/BTC.black.png",
+            token_img: "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
             profit: 0,
             wagered: 0,
             wins: 0,

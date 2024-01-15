@@ -35,7 +35,7 @@
       init = true;
       function handleBetResult({bets}) {
         bets.forEach(bet => {
-          recordGame(bet.won, bet.wager, bet.profit)
+          recordGame(bet.won, bet.wager, bet.profit, bet.currencyImage)
         });
       }
       game.on("user_bet_result", handleBetResult)

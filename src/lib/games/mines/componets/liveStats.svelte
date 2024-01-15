@@ -111,7 +111,6 @@
     resetStats(stats.token_img);
   };
   let initialX;
-
   let initialY;
   let x = window.innerWidth / 2 - 150;
   let y = window.innerHeight / 2 - 227;
