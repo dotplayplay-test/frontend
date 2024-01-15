@@ -29,7 +29,7 @@
       <h3 class="title">Master Medals</h3>
       <p class="desc">Witness every step of your becoming a Master</p>
     </div>
-    <button on:click={() => goto("/login")} class="details">
+    <button on:click={() => goto("/achieve")} class="details">
       <span> Details </span>
       <svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
