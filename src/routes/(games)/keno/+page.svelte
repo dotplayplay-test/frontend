@@ -11,18 +11,8 @@
   import BsClock from "svelte-icons-pack/bs/BsClock";
   import { default_Wallet, coin_list } from "$lib/store/coins";
 
-  /** Configure socket */
-  import { io } from "socket.io-client";
-
-  const socketURL = "ws://localhost:8000";
-
-  const socket = io(socketURL);
-
-  socket.on("latest-bet", (message) => {
-    // do something
-  });
-
-  /** Configure socket */
+  import { onMount } from "svelte";
+  import socket from "./socket.js";
 
   let activeTab = "tab1";
   let activeTabB = "tabB1";
@@ -41,7 +31,7 @@
   let uniqueRandomNumbers = [];
   let bckendGeneratedNumbers = [];
   let bet_id = 0;
-  let betAmount = "100.000000000";
+  let betAmount = (100.0).toFixed(8);
   let isWinIncrease = false;
   let isLossIncrease = false;
   let percentageIncreaseOfAmountBetPerWin = 0;
@@ -50,131 +40,131 @@
   let stopOnLose = 0;
   let numberOfBets = 0;
   let currentBalance = 0;
+  let profileInfo;
+  let has_won = false;
+  let time;
+  let finalMultiplier = "";
   let bets = [
-    {
-      betId: 7283414130500837,
-      player: "Ahmm",
-      time: "22:34:24",
-      bet: 0.2048,
-      payout: "0.00×",
-      profit: "0.20480000",
-    },
-
-    {
-      betId: 7774625245205907,
-      player: "Nr1",
-      time: "22:34:23",
-      bet: 0.0745942,
-      payout: "0.00×",
-      profit: "0.07459420",
-    },
-
-    {
-      betId: 8273309602945616,
-      player: "Hidden",
-      time: "22:34:22",
-      bet: 0.0000176,
-      payout: "1.10×",
-      profit: "+0.00000176",
-    },
-
-    {
-      betId: 7091867179075241,
-      player: "Hidden",
-      time: "22:34:21",
-      bet: 0.0001,
-      payout: "1.10×",
-      profit: "+0.00001000",
-    },
-
-    {
-      betId: 8285026273722425,
-      player: "Hidden",
-      time: "22:34:21",
-      bet: 0.24278732,
-      payout: "8.00×",
-      profit: +1.69951124,
-    },
-    {
-      betId: 7313371527512239,
-      player: "Hidden",
-      time: "22:34:20",
-      bet: 0.0009,
-      payout: "0.00×",
-      profit: 0.0009,
-    },
-    {
-      betId: 7283414130500836,
-      player: "Ahmm",
-      time: "22:34:19",
-      bet: 0.2048,
-      payout: "0.00×",
-      profit: 0.2048,
-    },
-    {
-      betId: 7774625245205906,
-      player: "Nr1",
-      time: "22:34:19",
-      bet: 0.0745942,
-      payout: "0.00×",
-      profit: 0.0745942,
-    },
-    {
-      betId: 8285026273722424,
-      player: "Hidden",
-      time: "22:34:18",
-      bet: 0.24278732,
-      payout: "8.00×",
-      profit: +1.69951124,
-    },
-    {
-      betId: 7091867179075240,
-      player: "Hidden",
-      time: "22:34:17",
-      bet: 0.0001,
-      payout: "1.20×",
-      profit: +0.00002,
-    },
-    {
-      betId: 7313371527512238,
-      player: "Hidden",
-      time: "22:34:16",
-      bet: 0.0009,
-      payout: "0.00×",
-      profit: 0.0009,
-    },
-    {
-      betId: 8273309602945615,
-      player: "Hidden",
-      time: "22:34:16",
-      bet: 0.0000176,
-      payout: "0.00×",
-      profit: 0.0000176,
-    },
-    {
-      betId: 7774625245205905,
-      player: "Nr1",
-      time: "22:34:15",
-      bet: 0.0745942,
-      payout: "0.00×",
-      profit: 0.0745942,
-    },
-    {
-      betId: 7283414130500835,
-      player: "Ahmm",
-      time: "22:34:14",
-      bet: 0.2048,
-      payout: "0.00×",
-      profit: 0.2048,
-    },
-    {
-      betId: 2245649420563671,
-      player: "JOURNIE2023",
-      time: "22:34:14",
-      bet: 0.00000095,
-      payout: "0.00×",
-      profit: 0.00000095,
-    },
+    // {
+    //   betId: 7283414130500837,
+    //   player: "Ahmm",
+    //   time: "22:34:24",
+    //   bet: 0.2048,
+    //   payout: "0.00×",
+    //   profit: "0.20480000",
+    // },
+    // {
+    //   betId: 7774625245205907,
+    //   player: "Nr1",
+    //   time: "22:34:23",
+    //   bet: 0.0745942,
+    //   payout: "0.00×",
+    //   profit: "0.07459420",
+    // },
+    // {
+    //   betId: 8273309602945616,
+    //   player: "Hidden",
+    //   time: "22:34:22",
+    //   bet: 0.0000176,
+    //   payout: "1.10×",
+    //   profit: "+0.00000176",
+    // },
+    // {
+    //   betId: 7091867179075241,
+    //   player: "Hidden",
+    //   time: "22:34:21",
+    //   bet: 0.0001,
+    //   payout: "1.10×",
+    //   profit: "+0.00001000",
+    // },
+    // {
+    //   betId: 8285026273722425,
+    //   player: "Hidden",
+    //   time: "22:34:21",
+    //   bet: 0.24278732,
+    //   payout: "8.00×",
+    //   profit: +1.69951124,
+    // },
+    // {
+    //   betId: 7313371527512239,
+    //   player: "Hidden",
+    //   time: "22:34:20",
+    //   bet: 0.0009,
+    //   payout: "0.00×",
+    //   profit: 0.0009,
+    // },
+    // {
+    //   betId: 7283414130500836,
+    //   player: "Ahmm",
+    //   time: "22:34:19",
+    //   bet: 0.2048,
+    //   payout: "0.00×",
+    //   profit: 0.2048,
+    // },
+    // {
+    //   betId: 7774625245205906,
+    //   player: "Nr1",
+    //   time: "22:34:19",
+    //   bet: 0.0745942,
+    //   payout: "0.00×",
+    //   profit: 0.0745942,
+    // },
+    // {
+    //   betId: 8285026273722424,
+    //   player: "Hidden",
+    //   time: "22:34:18",
+    //   bet: 0.24278732,
+    //   payout: "8.00×",
+    //   profit: +1.69951124,
+    // },
+    // {
+    //   betId: 7091867179075240,
+    //   player: "Hidden",
+    //   time: "22:34:17",
+    //   bet: 0.0001,
+    //   payout: "1.20×",
+    //   profit: +0.00002,
+    // },
+    // {
+    //   betId: 7313371527512238,
+    //   player: "Hidden",
+    //   time: "22:34:16",
+    //   bet: 0.0009,
+    //   payout: "0.00×",
+    //   profit: 0.0009,
+    // },
+    // {
+    //   betId: 8273309602945615,
+    //   player: "Hidden",
+    //   time: "22:34:16",
+    //   bet: 0.0000176,
+    //   payout: "0.00×",
+    //   profit: 0.0000176,
+    // },
+    // {
+    //   betId: 7774625245205905,
+    //   player: "Nr1",
+    //   time: "22:34:15",
+    //   bet: 0.0745942,
+    //   payout: "0.00×",
+    //   profit: 0.0745942,
+    // },
+    // {
+    //   betId: 7283414130500835,
+    //   player: "Ahmm",
+    //   time: "22:34:14",
+    //   bet: 0.2048,
+    //   payout: "0.00×",
+    //   profit: 0.2048,
+    // },
+    // {
+    //   betId: 2245649420563671,
+    //   player: "JOURNIE2023",
+    //   time: "22:34:14",
+    //   bet: 0.00000095,
+    //   payout: "0.00×",
+    //   profit: 0.00000095,
+    // },
   ];
   let multipliersObject = {
     0: [],
@@ -233,6 +223,67 @@
   };
   let winningMultiplierIndex = null;
   let wins = [];
+  let winning_amount;
+
+  /** Configure socket */
+
+  onMount(() => {
+    // Listen for 'eventA' response from the server
+    socket.on("latest-bet", (data) => {
+      const newData = {
+        ...data,
+        betAmount,
+        has_won,
+        time,
+        finalMultiplier,
+        winning_amount,
+      };
+
+      bets.unshift(newData);
+      bets = bets;
+      // console.log("latest-bet", newData);
+    });
+
+    socket.on("active-bets-keno", (data) => {
+      // do something
+      // console.log("active-bets-keno", data);
+    });
+  });
+
+  function emitResult() {
+    // Emit event to the server
+    const user = profileInfo.users[0];
+    const multiplayerInfo = getMultiplier();
+
+    // console.log("multiplier", multiplayerInfo);
+
+    finalMultiplier = multiplayerInfo.multiplier;
+
+    has_won = finalMultiplier !== "0.00×";
+    time = Date.now();
+
+    const payload = {
+      user_id: user.user_id,
+      username: user.hide_profile ? "Hidden" : user.username,
+      bet_id: bet_id,
+      token_img: "insert-token-img",
+      wining_amount: ((multiplayerInfo.numMultiplier - 1) * betAmount).toFixed(
+        8
+      ),
+      betAmount,
+      has_won,
+      time,
+    };
+
+    winning_amount = ((multiplayerInfo.numMultiplier - 1) * betAmount).toFixed(
+      8
+    );
+
+    // console.log("about to emit", payload);
+    socket.emit("keno-activebets", payload);
+  }
+
+  /** Configure socket */
 
   function toggleIncrease(type) {
     if (type === "win") {
@@ -348,11 +399,10 @@
       bckendGeneratedNumbers
     );
 
-    const multiplier =
-      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex];
+    const objMultiplier = getMultiplier();
 
     // get winning multiplier
-    wins.push(multiplier);
+    wins.push(objMultiplier.multiplier);
 
     wins = wins;
 
@@ -361,9 +411,7 @@
     generateBetId();
 
     // get winning status
-    const numMultiplier = Number(
-      multiplier.substring(0, multiplier.length - 1)
-    );
+    const numMultiplier = objMultiplier.numMultiplier;
 
     const handleResultPayload = {
       bet_token_name: activeWallet.coin_name,
@@ -375,9 +423,27 @@
       profit: numMultiplier,
     };
 
+    // has_won = numMultiplier > 0.0;
+
+    // console.log("handleResultPayload", handleResultPayload);
+
     // submit game
     const gameResult = await postGameResult(handleResultPayload);
     currentBalance = gameResult.payload.balance;
+
+    // emit to socket
+    emitResult();
+  }
+
+  function getMultiplier() {
+    const multiplier =
+      multipliersObject[uniqueRandomNumbers.length][winningMultiplierIndex];
+
+    const numMultiplier = Number(
+      multiplier.substring(0, multiplier.length - 1)
+    );
+
+    return { multiplier, numMultiplier };
   }
 
   async function pcPlay() {
@@ -433,6 +499,12 @@
     });
 
     const json = await res.json();
+
+    if (json) {
+      profileInfo = json;
+    }
+
+    // console.log("profile info", json);
 
     const activeWalletInfo = json.wallet.filter(
       (wallet) => wallet.is_active
@@ -567,7 +639,11 @@
                       <div class="label-amount">0 USD</div>
                     </div>
                     <div class="input-control">
-                      <input type="text" value={betAmount} />
+                      <input
+                        type="number"
+                        value={betAmount}
+                        on:input={(e) => (betAmount = Number(e.target.value))}
+                      />
                       <img class="coin-icon" src="/coin/CUB.black.png" alt="" />
                       <div class="sc-kDTinF bswIvI button-group">
                         <button on:click={() => toggleAmount("divide")}
@@ -1233,31 +1309,31 @@
                   {#each bets as bet, index (index)}
                     <tr>
                       <td>
-                        <a class="hash ellipsis">{bet.betId}</a>
+                        <a class="hash ellipsis">{bet.bet_id}</a>
                       </td>
                       <td>
                         <a class="hash ellipsis">{bet.player}</a>
                       </td>
-                      <td>{bet.time}</td>
+                      <td>{new Date(bet.time).toLocaleTimeString()}</td>
                       <td>
                         <div>
                           <img class="gem" src="" alt="icon" />
                           <div>
                             <span
-                              >{bet.bet}
-                              <span>00 bal</span>
+                              >{bet.betAmount}
+                              <span>00</span>
                             </span>
                           </div>
                         </div>
                       </td>
-                      <td>{bet.payout}</td>
+                      <td>{bet.finalMultiplier}</td>
                       <td>
                         <div>
                           <img class="gem" src="" alt="icon" />
                           <div>
                             <span
-                              >{bet.profit}
-                              <span>00 bal</span>
+                              >{bet.winning_amount}
+                              <span>00</span>
                             </span>
                           </div>
                         </div>
@@ -3249,9 +3325,9 @@
 
 <style>
   @media (max-width: 1000px) {
-    .no-mobile {
+    /* .no-mobile {
       display: none !important;
-    }
+    } */
     .mobile {
       display: block;
     }
@@ -3260,14 +3336,14 @@
     /* .no-web {
       display: none !important;
     } */
-    .web {
+    /* .web {
       display: block;
-    }
+    } */
   }
 
-  #game-Keno {
-    /* margin-left: 240px; */
-  }
+  /* #game-Keno {
+    margin-left: 240px;
+  } */
   .no-web {
     display: none !important;
   }
@@ -3278,9 +3354,9 @@
     align-items: center;
     justify-content: center;
   }
-  .gJxbeS.game-style0,
-  .gJxbeS.game-style1,
-  .gJxbeS.game-style-iframe {
+  /* .gJxbeS.game-style0,
+  .gJxbeS.game-style-iframe, */
+  .gJxbeS.game-style1 {
     max-width: 1368px;
     margin: 0px auto;
     padding: 1.25rem 0.625rem;
@@ -3288,9 +3364,9 @@
   .gJxbeS {
     min-height: 90vh;
   }
-  .gJxbeS.game-style0 .game-area,
-  .gJxbeS.game-style1 .game-area,
-  .gJxbeS.game-style-iframe .game-area {
+  /* .gJxbeS.game-style0 .game-area,
+  .gJxbeS.game-style-iframe .game-area, */
+  .gJxbeS.game-style1 .game-area {
     display: flex;
     flex-wrap: wrap;
   }
@@ -3300,9 +3376,9 @@
   .gJxbeS.game-style1 .game-main {
     min-height: 47.5rem;
   }
-  .gJxbeS.game-style0 .game-main,
-  .gJxbeS.game-style1 .game-main,
-  .gJxbeS.game-style-iframe .game-main {
+  /* .gJxbeS.game-style0 .game-main,
+  .gJxbeS.game-style-iframe .game-main, */
+  .gJxbeS.game-style1 .game-main {
     display: flex;
     flex-direction: column;
     flex: 1 1 0%;
@@ -3473,9 +3549,9 @@
     width: 100%;
   }
 
-  .Keno-control-0 {
+  /* .Keno-control-0 {
     border-right: 1px solid rgba(49, 52, 60, 0.5);
-  }
+  } */
 
   .gcQjQT {
     margin-top: 1rem;
@@ -3564,7 +3640,7 @@
   .eQfpOS .input-control input {
     color: var(--text-5);
   }
-  .gcQjQT .input-control textarea,
+  /* .gcQjQT .input-control textarea, */
   .gcQjQT .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -3623,7 +3699,7 @@
     background: var(--card-bg-2);
     margin-left: 1px;
   }
-  .gfnHxc .icon:first-of-type {
+  /* .gfnHxc .icon:first-of-type {
     transform: rotate(-90deg);
     margin-bottom: 0.125rem;
   }
@@ -3633,7 +3709,7 @@
   .gfnHxc .icon {
     width: 0.75rem;
     height: 0.75rem;
-  }
+  } */
   .hxODWG {
     width: 1.4em;
     height: 1.4em;
@@ -3721,7 +3797,7 @@
     font-size: 0.625rem;
     transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
   }
-  .kDuLvp {
+  /* .kDuLvp {
     margin-top: 1rem;
   }
   .kDuLvp .input-label {
@@ -3732,7 +3808,7 @@
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
     color: var(--text-6);
-  }
+  } */
   .lgcQbT .input-control {
     height: 3rem;
     line-height: 3rem;
@@ -3744,7 +3820,7 @@
   .eQfpOS .input-control {
     background-color: var(--card-bg-11);
   }
-  .kDuLvp .input-control {
+  /* .kDuLvp .input-control {
     position: relative;
     display: flex;
     -webkit-box-align: center;
@@ -3759,15 +3835,15 @@
   .jsLoxW .pick-wrap input[readonly] {
     opacity: 1;
     font-weight: 600;
-  }
-  .kDuLvp .input-control textarea[readonly],
+  } */
+  /* .kDuLvp .input-control textarea[readonly], */
   .kDuLvp .input-control input[readonly] {
     opacity: 0.5;
   }
   .eQfpOS .input-control input {
     color: var(--text-5);
   }
-  .kDuLvp .input-control textarea,
+  /* .kDuLvp .input-control textarea, */
   .kDuLvp .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -3778,11 +3854,11 @@
     background-color: transparent;
     color: var(--text-5);
   }
-  .fWAvBM .copy-button {
+  /* .fWAvBM .copy-button {
     width: 2.5rem;
     height: 2.5rem;
     margin-right: -1.25rem;
-  }
+  } */
   .lgcQbT button {
     display: flex;
     -webkit-box-align: center;
@@ -3798,9 +3874,9 @@
     box-shadow: rgba(29, 34, 37, 0.1) 0px 4px 8px 0px;
     background-color: rgb(107, 113, 128);
   }
-  .gJxbeS.game-style0 .game-view,
-  .gJxbeS.game-style1 .game-view,
-  .gJxbeS.game-style-iframe .game-view {
+  /* .gJxbeS.game-style0 .game-view,
+  .gJxbeS.game-style-iframe .game-view, */
+  .gJxbeS.game-style1 .game-view {
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
@@ -3816,7 +3892,7 @@
   /* .jOOXMd .jackpot-enter {
     margin-left: 1.5rem;
   } */
-  .hSKlkh {
+  /* .hSKlkh {
     width: 10.125rem;
     height: 100%;
     line-height: 1.25rem;
@@ -3843,7 +3919,7 @@
     vertical-align: top;
     height: 1.25rem;
     margin-top: -0.25rem;
-  }
+  } */
   .erPQzq {
     display: inline-flex;
     vertical-align: middle;
@@ -4162,7 +4238,7 @@
     opacity: 0.3;
     background-color: var(--card-bg-2);
   }
-  .cWaNyl {
+  /* .cWaNyl {
     margin-left: 0.9375rem;
     border-radius: 1.25rem;
     width: 40%;
@@ -4195,12 +4271,12 @@
     display: inline-block;
     vertical-align: top;
     margin: 1px 3px 0px 0px;
-  }
+  } */
   .eXSObm .title .time {
     min-width: 2.1875rem;
     display: inline-block;
   }
-  .eXSObm .wrap.propgress {
+  /* .eXSObm .wrap.propgress {
     flex: 0 0 auto;
     height: 0.375rem;
     margin-top: auto;
@@ -4226,7 +4302,7 @@
     height: 1px;
     z-index: 1;
     background-color: var(--card-bg-13);
-  }
+  } */
   .buHOgK {
     flex: 1 1 auto;
     box-sizing: border-box;
@@ -4322,7 +4398,7 @@
     transform: translateZ(0px);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
   }
-  .tabs-navs .bg {
+  /* .tabs-navs .bg {
     border-radius: 1.125rem;
     background-image: linear-gradient(
       to left,
@@ -4340,7 +4416,7 @@
       left 0.3s ease-out 0s;
     transform: translateZ(0px);
     box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 0.3125rem;
-  }
+  } */
   .gJxbeS .game-tabs .tabs-view {
     background-color: var(--card-bg-5);
     border-radius: 1.25rem;
@@ -4873,7 +4949,7 @@
     padding: 0;
     z-index: 1;
   }
-  .swiper-android .swiper-slide,
+  /* .swiper-android .swiper-slide, */
   .swiper-wrapper {
     transform: translate(0);
   }
@@ -4990,14 +5066,13 @@
     padding: 0.5rem;
     opacity: 0.6;
   }
-  .cYiOHZ.style1 .game-control-panel {
-    /* padding: 1.25rem 1.375rem; */
+  /* .cYiOHZ.style1 .game-control-panel {
     padding: 0.625rem;
-  }
+  } */
 
-  .cYiOHZ .game-control-panel {
+  /* .cYiOHZ .game-control-panel {
     flex: 1 1 0%;
-  }
+  } */
   .cBmlor:disabled.sc-iqseJM:not(.is-loading) {
     opacity: 0.5;
     cursor: default;
@@ -5033,9 +5108,9 @@
     align-items: flex-end;
     flex-wrap: wrap;
   }
-  .dOhRZH > div {
-    /* flex-basis: 48%; */
-  }
+  /* .dOhRZH > div {
+    flex-basis: 48%;
+  } */
   .gcQjQT {
     margin-top: 1rem;
   }
@@ -5103,12 +5178,12 @@
   .gOLODp .label-amount {
     margin-left: auto;
   }
-  .lmWKWf .input-control {
+  /* .lmWKWf .input-control {
     border-color: transparent;
   }
   .cYiOHZ .input-control {
     background-color: var(--card-bg-11);
-  }
+  } */
   .fCSgTW .input-control input {
     font-weight: bold;
   }
@@ -5116,7 +5191,7 @@
   .cYiOHZ .input-control input {
     color: var(--text-5);
   }
-  .gcQjQT .input-control textarea,
+  /* .gcQjQT .input-control textarea, */
   .gcQjQT .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -5160,7 +5235,7 @@
     border-top-right-radius: 1.125rem;
     border-bottom-right-radius: 1.125rem;
   }
-  .cMPLfC .icon:first-of-type {
+  /* .cMPLfC .icon:first-of-type {
     transform: rotate(-190deg);
     margin-bottom: 0.125rem;
   }
@@ -5170,7 +5245,7 @@
   }
   .cMPLfC .icon:last-of-type {
     transform: rotate(90deg);
-  }
+  } */
   .hzTJOu {
     margin-top: 1rem;
     flex-grow: 1;
@@ -5184,12 +5259,12 @@
     margin: 0px 1.125rem 0.375rem;
     color: var(--text-6);
   }
-  .lmWKWf .input-control {
+  /* .lmWKWf .input-control {
     border-color: transparent;
   }
   .cYiOHZ .input-control {
     background-color: var(--card-bg-11);
-  }
+  } */
   .hzTJOu .input-control {
     position: relative;
     display: flex;
@@ -5205,7 +5280,7 @@
   .cYiOHZ .input-control input {
     color: var(--text-5);
   }
-  .hzTJOu .input-control textarea,
+  /* .hzTJOu .input-control textarea, */
   .hzTJOu .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -5234,7 +5309,7 @@
     border-top-right-radius: 1.125rem;
     border-bottom-right-radius: 1.125rem;
   }
-  .hzTJOu .input-control textarea[readonly],
+  /* .hzTJOu .input-control textarea[readonly], */
   .hzTJOu .input-control input[readonly] {
     opacity: 0.5;
   }
@@ -5424,7 +5499,7 @@
     padding: 0px;
     margin: 0px 0px 1.25rem;
   }
-  ol,
+  /* ol, */
   ul {
     padding-left: 1.2em;
     margin: 0;
