@@ -30,7 +30,6 @@
   import { chats } from "$lib/chat-room/store/index";
   import { ServerURl } from "../backendUrl";
   import Mobile from "./mobile.svelte";
-  import { region } from "../../lib/store/region";
   import { coin_list, default_Wallet } from "$lib/store/coins";
   import { error_msg } from "$lib/nestedpages/auth/login/store";
 
@@ -41,34 +40,10 @@
   let showRegion = false;
   let showTopWinner = false;
   let URL = ServerURl();
-  let defaultUsername = [
-    {
-      vip_level: 3,
-      username: "wXjdkVjtm",
-    },
-    {
-      vip_level: 4,
-      username: "bl4ckm3rcy",
-    },
-    {
-      vip_level: 0,
-      username: "JE45m1gWH",
-    },
-  ];
+  let defaultUsername = [];
   let filteredUsers = [];
   let showMention = false;
   const MATCH_TIP = /^\/tip\s+@(\S+)\s*$/;
-
-  const regions = [
-    "Global",
-    "English",
-    "Español",
-    "Tiếng việt",
-    "Руccкий",
-    "Indonesia",
-    "Português",
-    "Filipino",
-  ];
 
   const updateWallet = () => {
     axios
@@ -120,6 +95,13 @@
     }
   };
 
+  function levelColor(level){
+    if(level <=7) return "type-1"
+    if(level > 7 && level <= 21) return "type-2"
+    if(level > 21 && level <= 37) return "type-3"
+    if(level > 37 && level <= 55) return "type-4"
+  }
+
   const mentionUser = (e) => {
     const inputValue = e.target.value;
 
@@ -153,9 +135,23 @@
 
   function userNameClick(username) {
     newMessages =
-      newMessages.substring(0, newMessages.lastIndexOf("@")) + `@${username}`;
+      newMessages.substring(0, newMessages.lastIndexOf("@")) + `@${username} `;
     showMention = false;
     textareaRef.focus();
+  }
+
+
+  function chatFormatter(text) {
+    const pattern = /@(\w+)/g;
+    return text.replace(pattern, (match, username) => {
+      const user = defaultUsername.find((user) => user.username === username);
+      if (user) {
+        const userId = user.user_id;
+        return `<a style="color: var(--primary-color); font-weight:bold;" href='/user/profile/${userId}' >@${username}</a>`;
+      }
+      // If user not found, return the original match
+      return match;
+    });
   }
 
   const handleSendMessage = async (e, name) => {
@@ -389,40 +385,7 @@
   <div class="sc-ewSTlh hHMWvP" id="public-chat">
     <div class="sc-hJZKUC dWgZek">
       <div class="select-wrap">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div
-          on:mouseenter={() => (showRegion = true)}
-          on:mouseleave={() => (showRegion = false)}
-          class="sc-jJoQJp gOHquD select"
-        >
-          <button class="select-trigger">
-            <div class="select-label">{$region}</div>
-            <button class="sc-ieecCq fLASqZ close-icon arrow">
-              <Icon
-                src={RiSystemArrowRightSLine}
-                size="16"
-                color="rgba(153, 164, 176, 0.8)"
-              />
-            </button>
-          </button>
-          {#if showRegion}
-            <div class="region_container">
-              {#each regions as regionValue}
-                <button
-                  class={`${
-                    regionValue.toLowerCase() === $region.toLowerCase()
-                      ? "active"
-                      : ""
-                  }`}
-                  on:click={() => {
-                    region.set(regionValue);
-                    showRegion = false;
-                  }}>{regionValue}</button
-                >
-              {/each}
-            </div>
-          {/if}
-        </div>
+        <div></div>
       </div>
       <div class="chat-features">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -458,13 +421,14 @@
         class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list"
       >
         <div class="sc-AjmGg kgsidd">
+          {#if defaultUsername.length > 0}          
           {#each $chats as chat, i}
             <div class="flat-item">
               <div class="sc-tAExr VfNib notranslate">
                 <div class="head">
                   <a class="head-link" href={`/user/profile/${chat.user_id}`}>
                     <img class="avatar" alt="" src={chat.profle_img} />
-                    <div class="sc-jQrDum jouJMO user-level type-1">
+                    <div class={`sc-jQrDum jouJMO user-level ${levelColor(chat.vip_level)}`}>
                       <div class="level-wrap">
                         <span>V</span><span>{chat.vip_level}</span>
                       </div>
@@ -824,7 +788,9 @@
                   </div>
                   {#if chat.type === "normal"}
                     <div class="msg-wrap">
-                      <div class="sc-jKTccl bkGvjR">{chat.text}</div>
+                      <div class="sc-jKTccl bkGvjR">
+                        {@html chatFormatter(chat.text)}
+                      </div>
                     </div>
                   {:else if chat.type === "wol"}
                     <!-- ====================== Win or lose ======================= -->
@@ -1059,6 +1025,7 @@
               </div>
             </div>
           {/each}
+          {/if}
         </div>
       </div>
 
@@ -1211,6 +1178,10 @@
 <style>
   .sc-jKTccl p span {
     font-weight: bold;
+  }
+
+  .sc-jKTccl a {
+    color: var(--primary-color) !important;
   }
 
   .distribution {
@@ -2190,6 +2161,10 @@
     position: relative;
   }
 
+  .VfNib .content .msg-wrap a {
+    color: var(--primary-color) !important;
+  }
+
   .VfNib .content .title .name a > span {
     max-width: 12.5rem;
     overflow: hidden;
@@ -2271,17 +2246,32 @@
     color: rgb(23, 24, 27);
   }
 
-  .VfNib .head .head-link .user-level .level-wrap span {
-    font-size: 0.75rem;
-    line-height: normal;
+  
+  .VfNib .head .head-link .user-level{
+    border-radius: 20px;
   }
 
-  .jouJMO.type-3 {
+  .VfNib .head .head-link .user-level.type-1{
+    background-color: #D9DDEC;
+  }
+
+  .VfNib .head .head-link .user-level.type-2{
+    background-color: #E8DAFF;
+  }
+
+  .VfNib .head .head-link .user-level.type-3 {
     background-color: rgb(246, 199, 34);
   }
 
-  .jouJMO.type-2 {
-    background-color: rgb(232, 218, 255);
+  .VfNib .head .head-link .user-level.type-4 {
+    background-color: #773DFC;
+  }
+
+
+  .VfNib .head .head-link .user-level .level-wrap span {
+    font-size: 0.75rem;
+    line-height: normal;
+    color: black;
   }
 
   .VfNib .head .head-link .user-level {

@@ -8,7 +8,7 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
   import { theme } from "$lib/store/_theme";
-
+  import SpinWheel from "$lib/spin-wheel/index.svelte"
   setTimeout(() => {
     if (data.preloaed === null) {
       window.location.href = "/";
@@ -261,6 +261,7 @@
       </main>
       <footer>
         <Footer />
+        <!-- <SpinWheel /> -->
       </footer>
     {/if}
   </div>

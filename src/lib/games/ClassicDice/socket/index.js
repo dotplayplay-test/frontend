@@ -24,6 +24,7 @@ export const handleCountdown = (() => {
     })
 
     socket.on("new-messages", data => {
+        chats.set(data.newMessage)
         let user_id
         profileStore.subscribe($profileStore => user_id = $profileStore.user_id);
         if (data.newMessage[data.newMessage.length - 1].user_id !== user_id) {
