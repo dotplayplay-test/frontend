@@ -5,7 +5,7 @@
 <script>
   import { screen } from "$lib/store/screen"
   import { browser } from "$app/environment";
-  import WalletManager from "./logics/WalletManager";
+  import WalletManager from "$lib/logics/WalletManager";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
@@ -384,7 +384,7 @@
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-ywFzA qPdve"
               ><div class="button-inner" style="width: 100%;">
                 <div class="monospace" style="width: 100%">
-                  {`${parseFloat(currentGamePayout).toFixed(8)} ${
+                  {`${parseFloat(currentGamePayout * currentAmount).toFixed(4)} ${
                     betInfo.currencyName
                   }`}
                 </div>

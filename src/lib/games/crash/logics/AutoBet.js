@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { action, computed, makeObservable, observable } from "mobx";
-import EventEmitter from "./EventEmitter";
-import WalletManager from "./WalletManager";
+import EventEmitter from "$lib/logics/EventEmitter";
+import WalletManager from "$lib/logics/WalletManager";
 
 class Ke {
   constructor() {

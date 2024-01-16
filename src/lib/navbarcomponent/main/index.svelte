@@ -18,9 +18,10 @@
     handleisLoggin,
     app_Loading,
   } from "$lib/store/profile";
-  import {chatCounter} from "$lib/store/chat-counter"
+  import { chatCounter } from "$lib/store/chat-counter";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  
   import { default_Wallet, coin_list } from "$lib/store/coins";
   import { ServerURl } from "$lib/backendUrl";
   import Layout from "../../deposit/layout.svelte";
@@ -37,7 +38,7 @@
             Authorization: `Bearer ${$handleAuthToken}`,
           },
         })
-        .then((res) => {
+        .then(async (res) => {
           app_Loading.set(false);
           profileStore.set(res.data.users[0]);
           let wallet = res.data.wallet;
@@ -230,7 +231,7 @@
             className="custom-icon"
           />
           {#if $chatCounter}
-          <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
+            <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
           {/if}
         </div>
       </button>
