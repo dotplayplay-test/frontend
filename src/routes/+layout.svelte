@@ -39,9 +39,13 @@
   import {showChatCounter, chatCounter} from "$lib/store/chat-counter"
 
   let isOpenSide = true;
-  let isChatRoom = 0;
+  let isChatRoom = 1;
   let isMenu = false;
   let sideDetection = 0;
+
+  setTimeout(() => {
+    isChatRoom = 0
+  }, 1);
 
   $: {
     for (let i = 0; i < $handle_IsRedwinners.length; i++) {

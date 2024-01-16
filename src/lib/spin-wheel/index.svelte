@@ -1,9 +1,51 @@
 <script>
   import { profileStore } from "$lib/store/profile";
+  import axios from "axios";
+  import { ServerURl } from "../backendUrl";
+  import { handleAuthToken } from "$lib/store/routes";
+  import { onMount, onDestroy } from "svelte";
+  import { goto } from "$app/navigation";
+  import Icon from "svelte-icons-pack/Icon.svelte";
+  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
   let light;
   let spinWheel;
   let rotate;
   let data;
+
+  let hours = "";
+  let minutes = "";
+  let seconds = "";
+  let intervalId;
+  let lastBonusTimeUtc;
+  let timeUntilEligible;
+  onMount(() => {
+    if ($profileStore.last_bonus) {
+      lastBonusTimeUtc = $profileStore.last_bonus;
+      const currentTimeUtc = new Date().toUTCString();
+      const timeDifference =
+        Date.parse(currentTimeUtc) - Date.parse(lastBonusTimeUtc);
+      timeUntilEligible = 24 * 60 * 60 * 1000 - timeDifference;
+
+      const updateCounter = () => {
+        const remainingTime =
+          timeUntilEligible - (Date.now() - Date.parse(currentTimeUtc));
+        hours = Math.floor(remainingTime / (1000 * 60 * 60));
+        minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+        hours = hours.toString().padStart(2, "0");
+        minutes = minutes.toString().padStart(2, "0");
+        seconds = seconds.toString().padStart(2, "0");
+      };
+
+      updateCounter();
+      intervalId = setInterval(updateCounter, 1000); // Update every second
+    }
+  });
+
+  let URL = ServerURl();
+
   const values = [
     { id: 1, position: 90, value: 0.0001, token: "USDT" },
     { id: 2, position: 67, value: 0.0002, token: "USDT" },
@@ -43,9 +85,25 @@
     }, 900);
   }
 
+  function addBonus(data) {
+    axios
+      .post(`${URL}/api/spin`, data, {
+        headers: {
+          Authorization: `bearer ${$handleAuthToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+
   function spinWheels() {
+    if (!$handleAuthToken) {
+      goto("/login");
+      return;
+    }
     let valuePosition = getRandomNumber(0, values.length);
-    valuePosition = --valuePosition
+    valuePosition = --valuePosition;
     spinWheel.style.animation = `spin 0.1s linear infinite`;
     setTimeout(() => {
       spinWheel.style.animationDuration = "0.3s";
@@ -62,27 +120,36 @@
     setTimeout(() => {
       spinWheel.style.animation = "none";
       spinWheel.style.transform = `rotate(${values[valuePosition].position}deg)`;
-      setTimeout(()=>{
+      setTimeout(() => {
         data = {
-        user_id: $profileStore.user_id,
-        token: values[valuePosition].token,
-        amount: values[valuePosition].value,
-      };
-      },1300)
-      console.log(data);
+          user_id: $profileStore.user_id,
+          token: values[valuePosition].token,
+          amount: values[valuePosition].value,
+        };
+        addBonus(data);
+        console.log(data);
+      }, 1300);
     }, 3000);
   }
+
+  const handleCancel = () => {
+    history.back(-1);
+
+  };
 
   function init() {
     roundLight();
   }
 
   init();
+  onDestroy(() => {
+    clearInterval(intervalId);
+  });
 </script>
 
 <div class="body">
   <div class="container">
-    {#if data}    
+    {#if data}
       <div class="win-modal">
         <div class="win-modal-content">
           <div class="win-modal-header">
@@ -91,11 +158,25 @@
             <h3>{data.amount} {data.token}</h3>
           </div>
           <a href="">
-            <button class="ui-button">Collect now</button>
+            <button on:click={() => goto("/")} class="ui-button"
+              >Collect now</button
+            >
           </a>
         </div>
       </div>
     {/if}
+    <button
+      on:click={() => handleCancel()}
+      class="sc-ieecCq fLASqZ close-icon dialog-close"
+    >
+      <Icon
+        src={IoCloseSharp}
+        size="18"
+        color="rgb(255, 255, 255)"
+        className="custom-icon"
+        title="arror"
+      />
+    </button>
     <div class="header">
       <h1>SPIN TO WIN</h1>
       <h1>500 USDT</h1>
@@ -103,52 +184,61 @@
     <div class="btgr"></div>
     <div class="togr"></div>
     <div class="spin-wrapper">
-    <div class="spinner-container">
-      <div class="spinner">
-        <div bind:this={spinWheel} class="circle">
-          <img bind:this={light} class="light" src={""} alt="" />
-          <div class="content">
-            {#each values as item}
-              <span>
-                <p>{parseFloat(item.value)}</p>
-                <img src={detectTokenImg(item.token)} alt="" />
-              </span>
-            {/each}
+      <div class="spinner-container">
+        <div class="spinner">
+          <div bind:this={spinWheel} class="circle">
+            <img bind:this={light} class="light" src={""} alt="" />
+            <div class="content">
+              {#each values as item}
+                <span>
+                  <p>{parseFloat(item.value)}</p>
+                  <img src={detectTokenImg(item.token)} alt="" />
+                </span>
+              {/each}
+            </div>
           </div>
-        </div>
-        <div class="indicator"></div>
+          <div class="indicator"></div>
 
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={spinWheels} class="spin_btn"></div>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          {#if !timeUntilEligible}
+            <div on:click={spinWheels} class="spin_btn"></div>
+          {/if}
+        </div>
       </div>
     </div>
-  </div>
-    <div class="btn_container">
-      <a href="">
-        <button class="ui-button">Sign up and spin now</button>
-      </a>
-    </div>
-    <div class="next_spin">
-      <h2>Next free spin bonus</h2>
-      <div class="input_container">
-        <input placeholder="0" type="text" />
-        <input placeholder="0" type="text" />
-        <div class="divider">:</div>
-        <input placeholder="0" type="text" />
-        <input placeholder="0" type="text" />
-        <div class="divider">:</div>
-        <input placeholder="0" type="text" />
-        <input placeholder="0" type="text" />
+    {#if !$handleAuthToken}
+      <div class="btn_container">
+        <button on:click={() => goto("/login")} class="ui-button"
+          >SIGN UP AND SPIN NOW</button
+        >
       </div>
-    </div>
+    {/if}
+    {#if $handleAuthToken && timeUntilEligible}
+      <div class="next_spin">
+        <h2>Next free spin bonus</h2>
+        <div class="input_container">
+          <input value={hours.slice(0, 1)} placeholder="0" type="text" />
+          <input value={hours.slice(1)} placeholder="0" type="text" />
+          <div class="divider">:</div>
+          <input value={minutes.slice(0, 1)} placeholder="0" type="text" />
+          <input value={minutes.slice(1)} placeholder="0" type="text" />
+          <div class="divider">:</div>
+          <input value={seconds.slice(0, 1)} placeholder="0" type="text" />
+          <input value={seconds.slice(1)} placeholder="0" type="text" />
+        </div>
+      </div>
+    {/if}
+
+    {#if $handleAuthToken && !timeUntilEligible}
+      <div class="btn_container">
+        <button on:click={spinWheels} class="ui-button">SPIN TO WIN</button>
+      </div>
+    {/if}
   </div>
 </div>
 
 <style>
-  .btn_container{
-    display: none;
-  }
   .ui-button {
     display: block;
     width: 100%;
@@ -231,11 +321,12 @@
     text-align: center;
     border-radius: 5px;
     background-color: var(--card-bg-2);
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 800;
+    color: white;
   }
 
-  .next_spin input::placeholder{
+  .next_spin input::placeholder {
     color: white;
   }
 
@@ -265,7 +356,7 @@
     animation-delay: 0.5s;
   }
 
-  .win-modal{
+  .win-modal {
     position: absolute;
     top: 0;
     left: 0;
@@ -279,10 +370,10 @@
     justify-content: center;
   }
 
-  .win-modal-content{
+  .win-modal-content {
     width: 100%;
     background-color: var(--card-bg-4);
-    padding:50px 30px;
+    padding: 50px 30px;
     overflow: hidden;
     position: relative;
     transform: translateY(200px);
@@ -290,31 +381,37 @@
     opacity: 0;
     animation-delay: 0.5s;
     border-radius: 10px;
-    background: linear-gradient(145deg,rgb(35, 35, 35) ,rgb(35, 33, 33),rgb(43, 59, 46),rgb(76, 99, 58));
+    background: linear-gradient(
+      145deg,
+      rgb(35, 35, 35),
+      rgb(35, 33, 33),
+      rgb(43, 59, 46),
+      rgb(76, 99, 58)
+    );
   }
 
-  .win-modal-header{
+  .win-modal-header {
     margin-bottom: 20px;
     text-align: center;
   }
 
   .win-modal-header h2,
-  .win-modal-header p{
+  .win-modal-header p {
     color: gold;
   }
 
-  .win-modal-header h2{
+  .win-modal-header h2 {
     text-transform: uppercase;
     font-size: 22px;
   }
 
-  .win-modal-header h3{
+  .win-modal-header h3 {
     font-size: 35px;
     text-transform: uppercase;
     color: var(--primary-color);
   }
 
-  .win-modal-content .ui-button{
+  .win-modal-content .ui-button {
     width: max-content;
     padding-right: 60px;
     padding-left: 60px;
@@ -348,7 +445,7 @@
     filter: blur(100px);
   }
 
-  .spin-wrapper{
+  .spin-wrapper {
     height: 320px;
     overflow: hidden;
     display: flex;
@@ -404,7 +501,7 @@
 
   .spinner span p {
     color: white;
-    font-size: 18px;
+    font-size: 20px;
   }
   .spinner span {
     position: absolute;
