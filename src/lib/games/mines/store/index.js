@@ -75,6 +75,9 @@ export let HandleSelectedMine = writable(SelectedMine)
 let netTile = 0
 export let HandleNextTime = writable(netTile)
 
+let _liveStats = null;
+export let liveStats = writable(_liveStats);
+
 let skownEl = [{
     id: 1,
     active: false,

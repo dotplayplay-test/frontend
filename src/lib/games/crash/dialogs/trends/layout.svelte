@@ -26,7 +26,7 @@
     });
 
     renderedDots = oddsEngine.render(oddsValues, 6, 32);
-    console.log("Dots ", renderedDots);
+    // console.log("Dots ", renderedDots);
   }
   let game = null;
   $: {
@@ -35,16 +35,15 @@
       game = _game;
       autorun(() => {
         renderDots([...game.history]);
-
-        if (dotsContainer) {
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          if (dotsContainer) {
             const { scrollLeft, scrollWidth } = dotsContainer;
             if (scrollLeft === 0 || scrollLeft > 350) {
               dotsContainer.scrollTo(scrollWidth, 0);
             }
-          }, 100);
-        }
+          }
+        }, 100);
       });
     }
   }
@@ -181,8 +180,8 @@
       border-radius: 50%;
     }
     .grKOWb.type-3::after {
-    background-color: rgb(246, 199, 34);
-}
+      background-color: rgb(246, 199, 34);
+    }
     .grKOWb.type-2::after {
       background-color: rgb(67, 179, 9);
     }
@@ -352,6 +351,9 @@
     gap: 1px;
     grid-template-columns: repeat(32, 1fr);
 } */
+  }
+  .dragpop {
+    z-index: 888888;
   }
   .cEhaBs .help-ico {
     margin-right: 0.25rem;

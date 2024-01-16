@@ -1,5 +1,5 @@
 import Decimal from "decimal.js";
-import EventEmitter from "./EventEmitter";
+import EventEmitter from "$lib/logics/EventEmitter";
 import { UserProfileEl } from "$lib/index";
 import {
   default_Wallet,
@@ -9,6 +9,9 @@ import {
   pplWallet,
 } from "$lib/store/coins";
 import {
+  currencyRates
+} from "$lib/store/currency";
+import {
   action,
   computed,
   makeObservable,
@@ -16,7 +19,7 @@ import {
   reaction,
   runInAction,
 } from "mobx";
-import UserStore from "./UserStore";
+import UserStore from "$lib/logics/UserStore";
 let lastDeductionId;
 
 class Currency {
@@ -30,8 +33,8 @@ class Currency {
     this.amount = 0;
     this.deducting = new Decimal(0);
     this.precision = 0;
-    this.unitAmount = 0;
-    this.usdPrice = 0;
+    this.unitAmount = e.unitAmount;
+    this.usdPrice = e.usdPrice;
     this.useable = true;
     this.rainLimit = 0;
     this.redPackageLimit = 0;
@@ -45,6 +48,7 @@ class Currency {
     this.currencyType = "";
     this.withdrawLimitAmount = 0;
     Object.assign(this, e);
+    
     makeObservable(this, {
       amount: observable,
       displayStatus: observable,
@@ -59,6 +63,7 @@ class Currency {
   }
   setAmount(_a) {
     this.amount = _a;
+    this.deducting = new Decimal(0);
   }
   addDeduction(e) {
     this.deducting = this.deducting.add(e);
@@ -155,17 +160,19 @@ export default class WalletManager extends EventEmitter {
       if (wallet && wallet.coin_name) {
         let minAmount = wallet.coin_name === "PPF" ? 100 : wallet.coin_name === "USDT" ? 0.1 : 1;
           let maxAmount = wallet.coin_name === "PPF" ? 10_000 : wallet.coin_name === "USDT" ? 5_000 : 30_000;
+          const usdPrice = wallet.coin_name === "PPF" ? 0 : (wallet.coin_name === "PPL" ? 0.1 : 1);
         if (this.dict[wallet.coin_name]) {
           this.dict[wallet.coin_name].setAmount(wallet.balance);
           this.dict[wallet.coin_name].minAmount = minAmount;
           this.dict[wallet.coin_name].maxAmount = maxAmount;
+          this.dict[wallet.coin_name].usdPrice = usdPrice;
         } else {
           
           this.addCurrency({
             amount: wallet.balance,
             currencyName: wallet.coin_name,
             currencyImage: wallet.coin_image,
-            ...{ usdPrice: wallet.coin_name === "PPF" ? 0 : 1, unitAmount: 1, precision: 4, minAmount, maxAmount },
+            ...{ usdPrice, unitAmount: 1, precision: 4, minAmount, maxAmount },
           });
         }
       }
@@ -191,6 +198,10 @@ export default class WalletManager extends EventEmitter {
         });
       }
     });
+
+    currencyRates.subscribe(rates => {
+      this.currencyRates = rates;
+    })
   }
 
   get isLocale() {
@@ -295,7 +306,7 @@ export default class WalletManager extends EventEmitter {
       if (deduction.timer > 0) {
         clearTimeout(deduction.timer);
       }
-      this.dict[deduction.currency].addDeduction(deduction.amount.negated());
+      // this.dict[deduction.currency].addDeduction(deduction.amount.negated());
       if (notify) {
         this.emit("deduction", deduction);
       }
@@ -331,13 +342,12 @@ export default class WalletManager extends EventEmitter {
         this.list = [];
         this.dict = {};
       }
-
       balances
-        .sort((a, b) => a.sort - b.sort)
+        .sort((a, b) => a.amount - b.amount)
         .forEach((balance) => {
           const minAmount = balance.currencyName === "PPF" ? 100 : balance.currencyName === "USDT" ? 0.1 : 1;
           const maxAmount = balance.currencyName === "PPF" ? 10_000 : balance.currencyName === "USDT" ? 5_000 : 30_000;
-          const usdPrice = balance.currencyName === "PPF" ? 0 : 1;
+          const usdPrice = balance.currencyName === "PPF" ? 0 : (balance.currencyName === "PPL" ? 0.1 : 1);
           let currency = this.dict[balance.currencyName];
 
           if (currency) {
@@ -445,6 +455,15 @@ export default class WalletManager extends EventEmitter {
   isValuable(currency) {
     const currencyObj = this.dict[currency];
     return !!(currencyObj && currencyObj.usdPrice > 0);
+  }
+
+
+  amountToFiat(amount, token, fiat, rates = this.currencyRates) {
+    if (!this.currencyRates?.length) return 0;
+    const rate = rates.find(r => r.currency=== fiat)?.rate || 0;
+    const bnAmount = new Decimal(amount);
+    const usdPrice = token === "PPF" ? 0 : token === "PPL" ? 0.1 : 1;
+    return bnAmount.mul(usdPrice).mul(rate).toNumber()
   }
 
   amountToLocale(amount, currency) {

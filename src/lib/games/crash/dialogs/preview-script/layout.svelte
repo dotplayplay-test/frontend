@@ -23,7 +23,6 @@
     saving = true;
     dispatch("busy", true);
     try {
-      console.log("Script > ", script)
       await $crashGame.script.updateScript({
         ...script,
         name: scriptName,
