@@ -8,11 +8,12 @@
   import SSuit from "./components/ssuit.svelte";
   import Suit from "./components/suit.svelte";
   import useDeck from "./hooks/deck";
-  import useLiveStats from "./hooks/livestats";
-  import useFormatter from "./hooks/formatter";
+  import useLiveStats from "$lib/hook/livestats";
+  import useFormatter from "$lib/hook/formatter";
+  import {liveStats} from "./store";
   const { getCardSuite, suites } = useDeck();
   const { removeTrailingZeros, getSuffix } = useFormatter();
-  const { recordGame } = useLiveStats();
+  const { recordGame } = useLiveStats(liveStats, "HILO_LIVE_STATS");
   import {
     soundManager,
     hilo_game,

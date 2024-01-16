@@ -4,7 +4,7 @@
 
 <script>
   const { autorun } = connect();
-  import useFormatter from "./hooks/formatter";
+  import useFormatter from "$lib/hook/formatter";
   const { removeTrailingZeros, getSuffix } = useFormatter();
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { crashGame } from "./store";
@@ -62,14 +62,14 @@
                 <img alt="" class="coin-icon" src={bet.currencyImage} />
                 <div class="amount">
                   <span class="amount-str"
-                    >{removeTrailingZeros(bet.betAmount.toFixed(8))}
-                    <span class="suffix"
-                      >{getSuffix(bet.betAmount.toFixed(8))}</span
+                    >{removeTrailingZeros(bet.betAmount.toFixed(4))}
+                    <span style="margin-left: -3px;" class="suffix"
+                      >{getSuffix(bet.betAmount.toFixed(4))}</span
                     ></span
                   >
                 </div>
               </div></td
-            ><td class="payout">{new Decimal(bet.odds).toDP(2).toNumber()}x</td><td
+            ><td class="payout">{bet.won ? new Decimal(bet.odds).toDP(2).toNumber() : "0.00"}x</td><td
               class="profitline {bet.won ? 'is-win' : 'is-lose'}"
               ><div class="sc-Galmp erPQzq coin notranslate monospace has-sign">
                 <img alt="" class="coin-icon" src={bet.currencyImage} />
@@ -77,13 +77,13 @@
                   <span class="amount-str"
                     >{bet.won ? "+" : ""}{removeTrailingZeros(
                       bet.won
-                        ? bet.profitAmount.toFixed(8)
-                        : bet.betAmount.toFixed(8)
+                        ? bet.profitAmount.toFixed(4)
+                        : bet.betAmount.toFixed(4)
                     )}<span class="suffix"
                       >{getSuffix(
                         bet.won
-                          ? bet.profitAmount.toFixed(8)
-                          : bet.betAmount.toFixed(8)
+                          ? bet.profitAmount.toFixed(4)
+                          : bet.betAmount.toFixed(4)
                       )}</span
                     ></span
                   >

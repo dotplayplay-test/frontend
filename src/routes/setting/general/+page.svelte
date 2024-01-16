@@ -1,11 +1,14 @@
 <script>
+  import { browser } from "$app/environment";
   import Icon from "svelte-icons-pack/Icon.svelte";
   import IoMoon from "svelte-icons-pack/io/IoMoon";
+  import SelectionView from "$lib/components/selectionView.svelte";
   import FaSolidSun from "svelte-icons-pack/fa/FaSolidSun";
   import BiSolidBadgeDollar from "svelte-icons-pack/bi/BiSolidBadgeDollar";
   import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import BsClock from "svelte-icons-pack/bs/BsClock";
   import { isLightMode } from "../../../lib/store/theme";
+  import { preferredCurrency, viewInFiat } from "$lib/store/currency"
 
   let fullCurencyName = false;
   const handleFullcurrencyName = () => {
@@ -16,30 +19,33 @@
     }
     fullCurencyName = !fullCurencyName;
   };
-
-  let currencySetting = false;
   const handleCurrencySettings = () => {
-    currencySetting = !currencySetting;
+    viewInFiat.update(v => {
+      localStorage.setItem("view-in-fiat", !v);
+      return !v
+    });
   };
 
   const handleLightMode = () => {
-//     is_light_mode = !is_light_mode;
-//      // You can also save the user's preference in localStorage if needed
-//   localStorage.setItem("is_light_mode", JSON.stringify(is_light_mode));
+    //     is_light_mode = !is_light_mode;
+    //      // You can also save the user's preference in localStorage if needed
+    //   localStorage.setItem("is_light_mode", JSON.stringify(is_light_mode));
 
-// // To retrieve the boolean value
-// const storedValue = localStorage.getItem("is_light_mode");
-// const retrievedValue = storedValue ? JSON.parse(storedValue) : false;
+    // // To retrieve the boolean value
+    // const storedValue = localStorage.getItem("is_light_mode");
+    // const retrievedValue = storedValue ? JSON.parse(storedValue) : false;
 
-// console.log(retrievedValue)
+    // console.log(retrievedValue)
     $isLightMode = !$isLightMode; // Update the store value
-
-};
-
-
+  };
+  const handleCurrencySettingChanged =  (currency) => {
+    preferredCurrency.set(currency);
+    localStorage.setItem("preferred-currency", currency);
+  }
 </script>
 
-<div class={$isLightMode ? " light-mode sc-oXPCX iyNvkI" : "sc-oXPCX iyNvkI" }>
+
+<div class={$isLightMode ? " light-mode sc-oXPCX iyNvkI" : "sc-oXPCX iyNvkI"}>
   <div class={$isLightMode ? " light-mode fullname-item" : "fullname-item"}>
     <p>Show full name of currency in crypto list</p>
     <button
@@ -52,21 +58,25 @@
   <div class="fullname-item">
     <div>
       <p>Currency Setting</p>
-      <div class={$isLightMode ? "light-grey-bg light-text local-currency" : "local-currency"}>
-        <span class="coin-icon">
-          <Icon
-            src={BiSolidBadgeDollar}
-            size="23"
-            color="#E94544"
-            title="rror"
-          />
-        </span>
+      <!-- <div class={$isLightMode ? "light-grey-bg light-text local-currency" : "local-currency"}>
+        
         USD
-      </div>
+      </div> -->
+      <SelectionView
+        value={$preferredCurrency}
+        on:onSelectionChanged={({ detail: curr }) => {
+          handleCurrencySettingChanged(curr)
+        }}
+        items={["MYR", "SGD", "AUD", "IDR", "PHP", "VND", "CNY"]}
+      >
+        <Icon src={BiSolidBadgeDollar} size="23" color="#E94544" title="rror" />
+      </SelectionView>
     </div>
     <button
       on:click={handleCurrencySettings}
-      class={$isLightMode ? `light-gery-bg sc-giYglK hRMjrF switch ${currencySetting && "open"} ` :`sc-giYglK hRMjrF switch ${currencySetting && "open"} `}
+      class={$isLightMode
+        ? `light-gery-bg sc-giYglK hRMjrF switch ${$viewInFiat && "open"} `
+        : `sc-giYglK hRMjrF switch ${$viewInFiat && "open"} `}
     >
       <div class={$isLightMode ? "light-dot dot" : "dot"}></div>
     </button>
@@ -75,12 +85,17 @@
     <div class="dviHQs-div">
       <p>Display mode</p>
       <div class="sc-gSQFLo dprxuS theme">
-        <button on:click={handleLightMode} class={$isLightMode ? "light-grey-bg theme-check" :"theme-check"}>
+        <button
+          on:click={handleLightMode}
+          class={$isLightMode ? "light-grey-bg theme-check" : "theme-check"}
+        >
           <div class:is-active={!$isLightMode} class="item">
             <Icon
               src={IoMoon}
               size="23"
-              color={$isLightMode ? "rgba(153, 164, 176, 0.6)" :"rgb(245, 246, 247)"}
+              color={$isLightMode
+                ? "rgba(153, 164, 176, 0.6)"
+                : "rgb(245, 246, 247)"}
               title="Dark"
             />
           </div>
@@ -88,13 +103,15 @@
             <Icon
               src={FaSolidSun}
               size="23"
-              color={$isLightMode ? "rgb(245, 246, 247)" :"rgba(153, 164, 176, 0.6)"}
+              color={$isLightMode
+                ? "rgb(245, 246, 247)"
+                : "rgba(153, 164, 176, 0.6)"}
               title="Light"
             />
           </div>
         </button>
         <div class="theme-word">
-          <p class={$isLightMode ? "light-text" :""}>Darkmode</p>
+          <p class={$isLightMode ? "light-text" : ""}>Darkmode</p>
           <p>Currently</p>
         </div>
       </div>
@@ -102,7 +119,11 @@
     <div>
       <p>Language</p>
       <div class="sc-jJoQJp gOHquD select language-select">
-        <div class={$isLightMode ? "light-grey-bg light-text select-trigger" :"select-trigger"}>
+        <div
+          class={$isLightMode
+            ? "light-grey-bg light-text select-trigger"
+            : "select-trigger"}
+        >
           English
           <div class="arrow">
             <Icon
@@ -122,11 +143,11 @@
 Option 2: Bahasa Melayu
 Option 3: Simplified Chinese -->
 <style>
-  .light-mode{
+  .light-mode {
     background-color: rgb(255, 255, 255) !important;
     color: rgb(49, 55, 61) !important;
   }
-  .light-grey-bg{
+  .light-grey-bg {
     background-color: rgb(245, 246, 250) !important;
   }
   .light-bg {
@@ -135,8 +156,8 @@ Option 3: Simplified Chinese -->
   .light-text {
     color: rgb(49, 55, 61) !important;
   }
-  .light-dot{
-    background-color: #FFF !important;
+  .light-dot {
+    background-color: #fff !important;
   }
   .iyNvkI > div:first-child {
     padding-top: 0px;
@@ -158,7 +179,7 @@ Option 3: Simplified Chinese -->
     line-height: 1.25rem;
   }
   .switch {
-    background-color: rgb(0, 85, 255)
+    background-color: rgb(0, 85, 255);
   }
   .hRMjrF.open {
     background-color: rgba(93, 160, 0, 0.2);

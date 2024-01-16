@@ -6,20 +6,22 @@ import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine"
 import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
 import { payout , minesStore, betDetails, Cashout } from "../mines/store/index";
-import { handleAuthToken } from "$lib/store/routes"
-import { handleisLoggin, profileStore } from "$lib/store/profile"
-import { error_msg } from "./store/index"
-import { bet_amount, soundHandler,mine_history,HandleSelectedMine,HandleNextTime,HandleGame_id,
+import { handleAuthToken } from "$lib/store/routes";
+import { handleisLoggin, profileStore } from "$lib/store/profile";
+import { error_msg, liveStats } from "./store/index";
+import { bet_amount, soundHandler, mine_history, HandleSelectedMine,HandleNextTime,HandleGame_id,
      MinesEncription,HandleHas_won,HandleMineCount, HandlemineGems,HandleWinning,  HandleIsAlive} from "$lib/games/mines/store/index"
 import axios from "axios";
 import Loader from "$lib/components/loader.svelte";
-import successSound from "./audio/success-1-6297.mp3"
-import { ServerURl } from "$lib/backendUrl"
+import successSound from "./audio/success-1-6297.mp3";
+import { ServerURl } from "$lib/backendUrl";
 import { onMount } from "svelte";
-import { handleCountdown } from "$lib/games/ClassicDice/socket/index"
+import { handleCountdown } from "$lib/games/ClassicDice/socket/index";
 const { handleMinesHistory } = handleCountdown()
-const URL = ServerURl()
+const URL = ServerURl();
 
+import {useLiveStats} from "$lib/hook/livestats"
+const {recordGame} = useLiveStats(liveStats, "MINES_LIVE_STATS")
 let max_profit_tips = false
 let Handlemax_profit_tips = ((e)=>{
     if(e === 1){
@@ -338,13 +340,15 @@ const handleCashout = (async()=>{
         game_id: $HandleGame_id,
         time: new Date()
     }
-     await axios.post(`${URL}/api/user/mine-game/cashout`, {
+    
+    await axios.post(`${URL}/api/user/mine-game/cashout`, {
         data
     },{
         headers:{
         Authorization: `Bearer ${$handleAuthToken}`
     }})
     .then((response)=>{
+        recordGame(true, data.bet_amount, data.profit, data.bet_token_img);
         HandleWinningSound()
         Cashout.set(0)
         HandleNextTime.set(0)

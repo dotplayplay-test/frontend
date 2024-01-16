@@ -5,7 +5,7 @@
 <script>
   import { screen } from "$lib/store/screen"
   import { browser } from "$app/environment";
-  import WalletManager from "./logics/WalletManager";
+  import WalletManager from "$lib/logics/WalletManager";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
   import { onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
@@ -236,7 +236,6 @@
 
   const handleXBetCrash = (type) => {
     return (e) => {
-      console.log("Handling crash bet");
       if (xBet) {
         if (canXbet[type]) {
           if (placingXBet[type]) return;
@@ -247,11 +246,7 @@
               console.log("Trend Bet Error", err);
             })
             .finally(() => (placingXBet[type] = false));
-        } else {
-          console.log("Cannot bet");
         }
-      } else {
-        console.log("Xbet Not initialized");
       }
     };
   };
@@ -384,7 +379,7 @@
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-ywFzA qPdve"
               ><div class="button-inner" style="width: 100%;">
                 <div class="monospace" style="width: 100%">
-                  {`${parseFloat(currentGamePayout).toFixed(8)} ${
+                  {`${parseFloat(currentGamePayout * currentAmount).toFixed(4)} ${
                     betInfo.currencyName
                   }`}
                 </div>

@@ -2,7 +2,7 @@
   import { userBets, initializing } from "$lib/games/hilo/store";
   import Loader from "$lib/components/loader.svelte";
   import HiloDialog from "./dialogs/HiloDialog.svelte";
-  import useFormatter from "./hooks/formatter";
+  import useFormatter from "$lib/hook/formatter";
   const { removeTrailingZeros, getSuffix } = useFormatter();
   $: hiloDialogData = null;
 </script>

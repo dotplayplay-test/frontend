@@ -12,7 +12,7 @@ import CrashGameGraph from "./CrashGameGraph";
 import CrashXBetHandler from "./CrashXBetHandler";
 import Decimal from "decimal.js";
 import { sortedIndexBy } from "lodash";
-import UserStore from "./UserStore";
+import UserStore from "$lib/logics/UserStore";
 import WalletManager from "./WalletManager";
 import { ServerURl } from "../../../backendUrl";
 import axios from "axios";
@@ -375,7 +375,6 @@ export default class CrashGame extends BaseGame {
       }
 
       player.rate = rate;
-      console.log("Player data > ", { ...player })
       this.emit("player_change");
       this.emit("escape", { ...player });
     }
@@ -404,13 +403,10 @@ export default class CrashGame extends BaseGame {
   }
 
   waitGameStart() {
-    console.log("Waiting game start", this.__instanceID)
     return new Promise((resolve) => {
       this.once("game_prepare", () => {
-        console.log("Game started!!")
         resolve(0);
       });
-      console.log("once events of game prep : After", this._events["game_prepare"] , this.__instanceID)
     });
   }
 

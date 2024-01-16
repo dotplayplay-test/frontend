@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { action, computed, makeObservable, observable } from "mobx";
-import EventEmitter from "./EventEmitter";
-import WalletManager from "./WalletManager";
+import EventEmitter from "$lib/logics/EventEmitter";
+import WalletManager from "$lib/logics/WalletManager";
 
 class Ke {
   constructor() {
@@ -109,7 +109,6 @@ export default class AutoBet extends EventEmitter {
   // Start the game
   async start() {
     if (this.isRunning) return;
-    console.log("Auto bet running")
     this.emit("start");
     this.setIsRunning(true);
     this.profit = new Decimal(0);
@@ -132,21 +131,15 @@ export default class AutoBet extends EventEmitter {
     this.stopPrev = () => (isRunning = false);
 
     while (isRunning) {
-      console.log("Auto betting loop start 0")
       try {
         await this.betWait();
-        console.log("Auto betting loop start 1")
         const logResult = await logPromise;
-        console.log("Auto betting loop start 2")
         if (isRunning) {
-          console.log("Auto betting loop start 3")
           let now = Date.now();
           let waitTime = this.interval - (now - this.prevBetTime);
           if (waitTime > 0) await f(waitTime);
           this.prevBetTime = Date.now();
-          console.log("Auto betting ")
           let betResult = await this.bet(undefined, logResult);
-          console.log("Auto bet result ", betResult)
           if (isRunning) {
             if (this.step(betResult)) this.stop();
           }

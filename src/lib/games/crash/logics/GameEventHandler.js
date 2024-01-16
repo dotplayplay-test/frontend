@@ -1,12 +1,12 @@
 import Decimal from "decimal.js";
-import EventEmitter from "./EventEmitter";
+import EventEmitter from "$lib/logics/EventEmitter";
 import { action, autorun, makeObservable, observable, reaction } from "mobx";
 import SocketManager from "./SocketManager";
 import ScriptManager from "./ScriptManager";
 import SoundManager from "./SoundManager";
 import PersistentStorage from "./PersistentStorage";
-import WalletManager from "./WalletManager";
-import UserStore from "./UserStore";
+import WalletManager from "$lib/logics/WalletManager";
+import UserStore from "$lib/logics/UserStore";
 
 // Game Handler Base Class
 const GameEventHandler = class extends EventEmitter {
@@ -19,8 +19,8 @@ const GameEventHandler = class extends EventEmitter {
     this.isInited = false;
     this.initPms = null;
     this.isActived = false;
-    this.currencyName = "PPL";
-    this.currencyImage = "/coin/BTC.black.png";
+    this.currencyName = "PPF";
+    this.currencyImage = "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
     this.amount = new Decimal(1);
     this.isBetting = false;
     this.controlIdx = 0;

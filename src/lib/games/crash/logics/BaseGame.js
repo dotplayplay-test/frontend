@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 import GameEventHandler from "./GameEventHandler";
-import UserStore from "./UserStore";
+import UserStore from "$lib/logics/UserStore";
 import {ServerURl} from "../../../backendUrl"
 import { action, makeObservable, observable } from "mobx";
 import axios from "axios";
@@ -64,7 +64,7 @@ export default class BaseGame extends GameEventHandler {
       betId: t.betId,
       currencyName: t.currencyName,
       currencyImage: t.currencyImage,
-      userName: t.userName,
+      name: t.name,
       userId: t.userId,
       hidden: t.hidden,
       avatar: t.avatar,
@@ -74,7 +74,7 @@ export default class BaseGame extends GameEventHandler {
       betAmount: parseFloat(t.betAmount),
       winAmount: parseFloat(t.winAmount),
       profitAmount: new Decimal(t.winAmount).sub(t.betAmount).toNumber(),
-      nickName: t.userName,
+      nickName: t.name,
       betTime: t.betTime,
     }))
   }
