@@ -74,6 +74,5 @@ export const handleCountdown = (() => {
         dice_troo.set(data)
         Handles_Loading.set(false)
     })
-    console.log("count down");
     return { handleDicebet, handleChattingMessages, handleMinesHistory, handleCrashActiveBet, handleGrabCoinDrop }
 })

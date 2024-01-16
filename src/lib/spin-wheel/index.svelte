@@ -3,6 +3,7 @@
   let light;
   let spinWheel;
   let rotate;
+  let data;
   const values = [
     { id: 1, position: 90, value: 0.0001, token: "USDT" },
     { id: 2, position: 67, value: 0.0002, token: "USDT" },
@@ -43,7 +44,8 @@
   }
 
   function spinWheels() {
-    const valuePosition = getRandomNumber(0, values.length);
+    let valuePosition = getRandomNumber(0, values.length);
+    valuePosition = --valuePosition
     spinWheel.style.animation = `spin 0.1s linear infinite`;
     setTimeout(() => {
       spinWheel.style.animationDuration = "0.3s";
@@ -60,12 +62,14 @@
     setTimeout(() => {
       spinWheel.style.animation = "none";
       spinWheel.style.transform = `rotate(${values[valuePosition].position}deg)`;
-      const data = {
-        user_id:$profileStore.user_id,
-        token:values[valuePosition].token,
-        amount:values[valuePosition].value
-      }
-      console.log(data)
+      setTimeout(()=>{
+        data = {
+        user_id: $profileStore.user_id,
+        token: values[valuePosition].token,
+        amount: values[valuePosition].value,
+      };
+      },1300)
+      console.log(data);
     }, 3000);
   }
 
@@ -78,12 +82,27 @@
 
 <div class="body">
   <div class="container">
+    {#if data}    
+      <div class="win-modal">
+        <div class="win-modal-content">
+          <div class="win-modal-header">
+            <h2>Bonus zoom</h2>
+            <p>Wheel bonus</p>
+            <h3>{data.amount} {data.token}</h3>
+          </div>
+          <a href="">
+            <button class="ui-button">Collect now</button>
+          </a>
+        </div>
+      </div>
+    {/if}
     <div class="header">
       <h1>SPIN TO WIN</h1>
       <h1>500 USDT</h1>
     </div>
     <div class="btgr"></div>
     <div class="togr"></div>
+    <div class="spin-wrapper">
     <div class="spinner-container">
       <div class="spinner">
         <div bind:this={spinWheel} class="circle">
@@ -104,15 +123,32 @@
         <div on:click={spinWheels} class="spin_btn"></div>
       </div>
     </div>
-    <div>
+  </div>
+    <div class="btn_container">
       <a href="">
         <button class="ui-button">Sign up and spin now</button>
       </a>
+    </div>
+    <div class="next_spin">
+      <h2>Next free spin bonus</h2>
+      <div class="input_container">
+        <input placeholder="0" type="text" />
+        <input placeholder="0" type="text" />
+        <div class="divider">:</div>
+        <input placeholder="0" type="text" />
+        <input placeholder="0" type="text" />
+        <div class="divider">:</div>
+        <input placeholder="0" type="text" />
+        <input placeholder="0" type="text" />
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+  .btn_container{
+    display: none;
+  }
   .ui-button {
     display: block;
     width: 100%;
@@ -164,6 +200,52 @@
     text-shadow: 0px -1px 10px gold;
     font-size: 35px;
   }
+
+  .next_spin {
+    margin-top: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .next_spin h2 {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+  }
+
+  .next_spin .divider {
+    /* padding: 0px 5px; */
+    font-size: 50px;
+    line-height: 0;
+    color: white;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-2px);
+  }
+
+  .next_spin input {
+    width: 40px !important;
+    height: 50px;
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    background-color: var(--card-bg-2);
+    font-size: 30px;
+    font-weight: 800;
+  }
+
+  .next_spin input::placeholder{
+    color: white;
+  }
+
+  .next_spin .input_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+  }
   .container {
     top: 0;
     left: 0;
@@ -177,6 +259,66 @@
     align-items: center;
     border-radius: 20px;
     position: relative;
+    transform: translateY(200px);
+    animation: slideIn 0.5s ease-in-out forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+  }
+
+  .win-modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.815);
+    z-index: 5;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .win-modal-content{
+    width: 100%;
+    background-color: var(--card-bg-4);
+    padding:50px 30px;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(200px);
+    animation: slideIn 0.5s ease-in-out forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+    border-radius: 10px;
+    background: linear-gradient(145deg,rgb(35, 35, 35) ,rgb(35, 33, 33),rgb(43, 59, 46),rgb(76, 99, 58));
+  }
+
+  .win-modal-header{
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .win-modal-header h2,
+  .win-modal-header p{
+    color: gold;
+  }
+
+  .win-modal-header h2{
+    text-transform: uppercase;
+    font-size: 22px;
+  }
+
+  .win-modal-header h3{
+    font-size: 35px;
+    text-transform: uppercase;
+    color: var(--primary-color);
+  }
+
+  .win-modal-content .ui-button{
+    width: max-content;
+    padding-right: 60px;
+    padding-left: 60px;
+    margin: 0 auto;
   }
 
   .togr {
@@ -206,6 +348,14 @@
     filter: blur(100px);
   }
 
+  .spin-wrapper{
+    height: 320px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
   .spinner-container {
     position: relative;
     width: 400px;
@@ -213,7 +363,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(0.85);
+    transform: scale(0.75);
   }
 
   .spinner {

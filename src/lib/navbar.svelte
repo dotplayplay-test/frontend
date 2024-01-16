@@ -21,7 +21,7 @@
   import { handleNestedRoute } from "$lib/store/nested_routes";
   import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
   import { isLightMode } from "../lib/store/theme";
-  import {chatCounter} from "$lib/store/chat-counter"
+  import {chatCounter, showChatCounter} from "$lib/store/chat-counter"
   $: browser && localStorage.setItem("preload", JSON.stringify("is_active"));
   const dispatch = createEventDispatcher();
   const handleChat = (e) => {
@@ -162,7 +162,9 @@
                   className="custom-icon"
                   title="arror"
                 />
-                <div class="sc-fotOHu gGSOuF badge">26</div>
+                {#if $showChatCounter && $chatCounter}                
+                <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
+                {/if}
               </div>
             </button>
           </div>
@@ -234,7 +236,7 @@
               className="custom-icon"
               title="arror"
             />
-            {#if $chatCounter}
+            {#if $showChatCounter && $chatCounter}
             <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
             {/if}
           </button>

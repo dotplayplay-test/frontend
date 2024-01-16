@@ -18,7 +18,7 @@
     handleisLoggin,
     app_Loading,
   } from "$lib/store/profile";
-  import {chatCounter} from "$lib/store/chat-counter"
+  import {chatCounter,showChatCounter} from "$lib/store/chat-counter"
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { default_Wallet, coin_list } from "$lib/store/coins";
@@ -229,7 +229,7 @@
             color="#fff"
             className="custom-icon"
           />
-          {#if $chatCounter}
+          {#if $showChatCounter && $chatCounter}
           <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
           {/if}
         </div>

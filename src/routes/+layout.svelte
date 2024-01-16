@@ -8,7 +8,6 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
   import { theme } from "$lib/store/_theme";
-  import SpinWheel from "$lib/spin-wheel/index.svelte"
   setTimeout(() => {
     if (data.preloaed === null) {
       window.location.href = "/";
@@ -37,6 +36,8 @@
   import { handle_IsRedwinners } from "../lib/crashgame/store";
   import Closesidebar from "$lib/closesidebar.svelte";
   import Loader from "$lib/components/loader.svelte";
+  import {showChatCounter, chatCounter} from "$lib/store/chat-counter"
+
   let isOpenSide = true;
   let isChatRoom = 0;
   let isMenu = false;
@@ -144,9 +145,12 @@
     if (isChatRoom) {
       isnotification = false;
       isChatRoom = 0;
+      showChatCounter.set(true)
+      chatCounter.set(0)
       is_open__chat.set(false);
     } else {
       isChatRoom = 360;
+      showChatCounter.set(false)
       is_open__chat.set(true);
       if (e === "notification") {
         isnotification = true;
@@ -261,7 +265,6 @@
       </main>
       <footer>
         <Footer />
-        <!-- <SpinWheel /> -->
       </footer>
     {/if}
   </div>
