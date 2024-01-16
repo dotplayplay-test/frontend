@@ -236,7 +236,6 @@
 
   const handleXBetCrash = (type) => {
     return (e) => {
-      console.log("Handling crash bet");
       if (xBet) {
         if (canXbet[type]) {
           if (placingXBet[type]) return;
@@ -247,11 +246,7 @@
               console.log("Trend Bet Error", err);
             })
             .finally(() => (placingXBet[type] = false));
-        } else {
-          console.log("Cannot bet");
         }
-      } else {
-        console.log("Xbet Not initialized");
       }
     };
   };

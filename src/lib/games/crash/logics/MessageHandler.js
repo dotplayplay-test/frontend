@@ -11,7 +11,6 @@ class MessageHandlerBase {
   }
 
   async onMessage(event) {
-    console.log("On message > ", event);
     const sender = event.source;
     if (event.source && sender !== this.target) return;
     const { msgId, event: eventName, payload } = event.data;
@@ -46,7 +45,6 @@ class MessageHandlerBase {
   }
 
   sendMessage(message) {
-    console.log("Sending message > ", message, this.target);
     this.target && this.target.postMessage(message, "*");
   }
 
@@ -81,7 +79,6 @@ class MessageHandlerBase {
         },
         errorCallback,
       ];
-      console.log("Trying to snd msg > ", data, this.target)
       this.sendMessage({ msgId, event, payload: [null, data] });
     });
   }
@@ -127,7 +124,6 @@ export default class MessageHandler extends MessageHandlerBase {
   }
 
   sendMessage(message) {
-    console.log("Sending message > ", message)
     this.target.postMessage(message);
   }
 

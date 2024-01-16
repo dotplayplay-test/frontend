@@ -403,10 +403,8 @@ export default class CrashGame extends BaseGame {
   }
 
   waitGameStart() {
-    console.log("Waiting game start", this.__instanceID)
     return new Promise((resolve) => {
       this.once("game_prepare", () => {
-        console.log("Game started!!")
         resolve(0);
       });
     });

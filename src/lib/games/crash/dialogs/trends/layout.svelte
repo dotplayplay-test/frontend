@@ -26,7 +26,7 @@
     });
 
     renderedDots = oddsEngine.render(oddsValues, 6, 32);
-    console.log("Dots ", renderedDots);
+    // console.log("Dots ", renderedDots);
   }
   let game = null;
   $: {
