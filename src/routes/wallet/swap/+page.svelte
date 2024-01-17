@@ -6,6 +6,7 @@
   import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
   import { coin_list } from "$lib/store/coins";
+  import Dialog from "$lib/achieve/Dialog.svelte";
 
   import SwapField from "./components/SwapField.svelte";
   import SwapFooter from "./components/SwapFooter.svelte";
@@ -119,12 +120,14 @@
 </script>
 
 {#if showDialog.isShown}
-  <SelectCoin
-    coins={getDialogCoins()}
-    activeCoin={showDialog.isFrom ? from.coin : to.coin}
-    setActive={handleSelectCoin}
-    on:closeDialog={handleCloseSelectCoins}
-  />
+  <Dialog title="Assets Portfolio" on:cancel={handleCloseSelectCoins}>
+    <SelectCoin
+      coins={getDialogCoins()}
+      activeCoin={showDialog.isFrom ? from.coin : to.coin}
+      setActive={handleSelectCoin}
+      on:closeDialog={handleCloseSelectCoins}
+    />
+  </Dialog>
 {/if}
 
 <div class="container">

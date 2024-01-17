@@ -1,54 +1,27 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-
   export let coins = [];
   export let setActive;
-  export let closeDialog;
   export let activeCoin;
 
   let isActive = (coin) => coin.coin_name === activeCoin.coin_name;
 </script>
 
-<div
-  class="ui-dialog ui-dialog-overlayer"
-  style="background-color: rgba(0, 0, 0, 0.667);"
->
-  <div class="inner">
-    <div class="head">
-      <h5>Assets Portfolio</h5>
-
-      <button
-        on:click={closeDialog}
-        class="sc-ieecCq fLASqZ close-icon dialog-close"
-      >
-        <Icon
-          src={IoCloseSharp}
-          size="25"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
-      </button>
-    </div>
-    <div class="body">
-      {#each coins as coin}
-        <button
-          on:click={() => setActive(coin)}
-          disabled={isActive(coin)}
-          class={`coin ${isActive(coin) ? "is-active" : ""}`}
-        >
-          <div class="coin-info">
-            <img class="icon" alt="" src={coin.coin_image} />
-            <p class="name">
-              {coin.coin_name}
-            </p>
-          </div>
-          <p class="balance">0.0001</p>
-        </button>
-      {/each}
-    </div>
-  </div>
+<div class="body">
+  {#each coins as coin}
+    <button
+      on:click={() => setActive(coin)}
+      disabled={isActive(coin)}
+      class={`coin ${isActive(coin) ? "is-active" : ""}`}
+    >
+      <div class="coin-info">
+        <img class="icon" alt="" src={coin.coin_image} />
+        <p class="name">
+          {coin.coin_name}
+        </p>
+      </div>
+      <p class="balance">0.0001</p>
+    </button>
+  {/each}
 </div>
 
 <style>
