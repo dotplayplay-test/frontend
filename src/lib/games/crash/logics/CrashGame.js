@@ -13,7 +13,7 @@ import CrashXBetHandler from "./CrashXBetHandler";
 import Decimal from "decimal.js";
 import { sortedIndexBy } from "lodash";
 import UserStore from "$lib/logics/UserStore";
-import WalletManager from "./WalletManager";
+import WalletManager from "$lib/logics/WalletManager";
 import { ServerURl } from "../../../backendUrl";
 import axios from "axios";
 function Bn(seed) {

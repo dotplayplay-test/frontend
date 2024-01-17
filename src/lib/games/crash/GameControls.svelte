@@ -39,6 +39,7 @@
   $: currentMaxRate = 100;
   $: xBetting = false;
   $: betting = false;
+  $: inputDisabled = false;
   $: autoBetting = false;
   $: autoBet = null;
   $: autoBetType = -1;
@@ -97,11 +98,14 @@
         scriptList = game.script.scriptList;
         scriptLogs = game.script.logs;
         scriptConfig = game.script.config;
+        currentAmount = game.amount.toFixed(4);
+        currentXAmount = xBet.amount.toFixed(4);
         coinImage = WalletManager.getInstance().current.currencyImage;
         coinName = WalletManager.getInstance().current.currencyName;
         nextBetInfo = game.nextBetInfo;
         canEscape = game.canEscape;
-        canBet = game.canBet;
+        inputDisabled = coinName !== "USDT" && coinName !== "PPF";
+        canBet = game.canBet && (coinName === "USDT" || coinName === "PPF");
         gameStatus = game.status;
         scriptRunning = game.script.isRunning;
         percentChance = new Decimal(99 / game.maxRate).toDP(2).toNumber();
@@ -167,7 +171,6 @@
         else if (opr === "*") game.setAmount(game.amount.mul(2));
         else if (opr === "min") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
         else if (opr === "max") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
-        currentAmount = game.amount.toFixed(4);
       }
     };
   };
@@ -181,7 +184,6 @@
         else if (opr === "*") xBet.setAmount(xBet.amount.mul(2));
         else if (opr === "min") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
         else if (opr === "max") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
-        currentXAmount = xBet.amount.toFixed(4);
       }
     };
   };
@@ -191,7 +193,6 @@
       if (autoBetting) {
         autoBet && autoBetType === type && autoBet.stop();
       } else {
-        console.log("StartAuto Betting");
         xBet && xBet.setAutoBetType(type);
       }
     };
@@ -448,16 +449,16 @@
                   on:focus={() => isFocused = {...isFocused, bet: true}}
                   on:blur={() => isFocused = {...isFocused, bet: false}}
                   on:input={inputValidate}
-                  disabled={betting}
+                  disabled={betting || inputDisabled}
                   on:change={handleSetAmount("=")}
                   type="text"
                   value={currentAmount}
                 /><img alt="" class="coin-icon" src={coinImage} />
                 <div class="sc-kDTinF bswIvI button-group">
-                  <button disabled={betting} on:click={handleSetAmount("/")}
+                  <button disabled={betting || inputDisabled} on:click={handleSetAmount("/")}
                     >/2</button
                   >
-                  <button disabled={betting} on:click={handleSetAmount("*")}
+                  <button disabled={betting || inputDisabled} on:click={handleSetAmount("*")}
                     >x2</button
                   >
                   {#if sliderOpened.classic}
@@ -504,11 +505,11 @@
                     </div>
                   {/if}
                   <button
-                    disabled={betting}
+                    disabled={betting || inputDisabled}
                     class="sc-gqtqkP gfnHxc"
                     on:click={(e) => {
                       e.stopPropagation();
-                      if (betting) return;
+                      if (betting || inputDisabled) return;
                       sliderOpened = { classic: true };
                     }}
                     ><svg
@@ -523,6 +524,9 @@
                   >
                 </div>
               </div>
+              {#if !(coinName === "PPF" || coinName === "USDT")}
+              <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+              {/if}
             </div>
             <div
               class="sc-ezbkAF hzTJOu input sc-gLDmcm fKDjWC {betting
@@ -539,6 +543,7 @@
               </div>
               <div class="input-control {isFocused.maxRate ? "is-focus" : ""}">
                 <input
+                  disabled={betting || inputDisabled}
                   on:focus={() => isFocused = {...isFocused, maxRate: true}}
                   on:blur={() => isFocused = {...isFocused, maxRate: false}}
                   on:input={inputValidate}
@@ -571,16 +576,16 @@
                 on:focus={() => isFocused = {...isFocused, trend: true}}
                 on:blur={() => isFocused = {...isFocused, trend: false}}
                 on:input={inputValidate}
-                disabled={xBetting}
+                disabled={xBetting || inputDisabled}
                 on:change={handleSetXAmount("=")}
                 type="text"
                 value={currentXAmount}
               /><img alt="" class="coin-icon" src={coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
-                <button disabled={xBetting} on:click={handleSetXAmount("/")}
+                <button disabled={xBetting || inputDisabled} on:click={handleSetXAmount("/")}
                   >/2</button
                 >
-                <button disabled={xBetting} on:click={handleSetXAmount("*")}
+                <button disabled={xBetting || inputDisabled} on:click={handleSetXAmount("*")}
                   >x2</button
                 >
                 {#if sliderOpened.trend}
@@ -627,11 +632,11 @@
                   </div>
                 {/if}
                 <button
-                  disabled={xBetting}
+                  disabled={xBetting || inputDisabled}
                   class="sc-gqtqkP gfnHxc"
                   on:click={(e) => {
                     e.stopPropagation();
-                    if (xBetting) return;
+                    if (xBetting || inputDisabled) return;
                     sliderOpened = { trend: true };
                   }}
                   ><svg
@@ -646,6 +651,9 @@
                 >
               </div>
             </div>
+            {#if !(coinName === "PPF" || coinName === "USDT")}
+              <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+            {/if}
           </div>
           {#each trendBets as trend (trend.label)}
             <div class="sc-ezbkAF kDuLvp input sc-dpAhYB dqoGMw bet-item">
@@ -655,7 +663,7 @@
               </div>
               {#if gameStatus === 1}
                 <button
-                  disabled={autoBetting}
+                  disabled={autoBetting || inputDisabled}
                   on:click={!!xBetInfo[trend.type]
                     ? () => {}
                     : handleXBetCrash(trend.type)}
@@ -674,7 +682,7 @@
               {:else}
                 <!--  -->
                 <button
-                  disabled={autoBetting}
+                  disabled={autoBetting || inputDisabled}
                   on:click={xBetInfo[trend.type] &&
                   xBetInfo[trend.type].status === 0
                     ? () => {}

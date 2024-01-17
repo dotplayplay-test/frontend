@@ -18,16 +18,16 @@
   $: isFocused = false;
   $: sliderOpened = false;
 
-  $: bet_amount = 0;
-  $: usd = 0;
-  $: betRange = { min: 100, max: 1000 };
+  $: bet_amount = $default_Wallet.coin_name === "USDT" ? 0.2 : 100;
+  $: usd = $default_Wallet.coin_name === "USDT" ? 100 : 0;
+  $: betRange = $default_Wallet.coin_name === "USDT" ? {min: 0.2, max: 5000, rate: 1} : { min: 100, max: 1000, rate: 1 };
 
   $: slider = null;
 
   $: coin_image =
     $hilo_game?.token_img ||
     $default_Wallet.coin_image ||
-    "/coin/BTC.black.png";
+    "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
   $: isLoading = $processingRequest || !$hilo_game;
   $: currentRound = null;
   $: canGoNext = !isLoading && !!$hilo_game?.bet_id && !$hilo_game?.has_ended;
@@ -39,38 +39,25 @@
 
   $: canBet =
     !!bet_amount &&
+    ($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT") &&
     $default_Wallet.balance >= bet_amount &&
     (!$hilo_game?.bet_id || $hilo_game?.has_ended || $hilo_game?.new_game);
   $: canCashOut =
     !!$hilo_game?.bet_id && !$hilo_game?.has_ended && !!$hilo_game?.profit;
 
   const updateUSD = () => {
+    if (!betRange) return;
     if ($default_Wallet.coin_name === "PPF") {
       usd = 0;
       return;
     }
-    let calculatedUsd = (bet_amount * (betRange.rate || 1)).toFixed(6);
-    usd = calculatedUsd.includes(".000000")
+    let calculatedUsd = (bet_amount * (betRange.rate || 1)).toFixed(4);
+    usd = calculatedUsd.includes(".0000")
       ? parseInt(calculatedUsd)
       : calculatedUsd;
   };
   default_Wallet.subscribe((v) => {
     if (!$hilo_game?.bet_id) {
-      const rate = v.coin_name === "PPL" ? 0.1 : 1;
-      if (v.coin_name !== "PPF") {
-        betRange = {
-          min: 0.0001 / rate,
-          max: 140 / rate,
-          rate,
-        };
-      } else {
-        betRange = {
-          min: 100,
-          max: 200,
-          rate,
-        };
-      }
-      bet_amount = betRange.min;
       updateUSD();
     }
   });
@@ -153,7 +140,7 @@
   $: inputDisabled =
     !$handleisLoggin ||
     (!!$hilo_game && $hilo_game.bet_id && !$hilo_game.has_ended) ||
-    $default_Wallet.coin_name === "PPL";
+    !($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT");
 
   const handleSliderMove = (e) => {
     if (isGrabbing) {
@@ -373,6 +360,9 @@
               >
             </div>
           </div>
+          {#if $default_Wallet.coin_name && !($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT")}
+          <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+          {/if}
         </div>
         <div class="sc-ezbkAF gcQjQT input">
           <div class="input-label">Total Profit ({controlStats.payout}x)</div>
