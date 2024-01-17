@@ -13,6 +13,22 @@
     background-position: center center;
 }
 
+@media screen and (max-width: 621px) {
+    .jtyGOM .wrap .cont {
+        top: 16.9375rem!important;
+    }
+    .jtyGOM {
+        background-image: url(https://static.nanogames.io/assets/banner_mobile.20561a0b.png)!important;
+        background-repeat: no-repeat!important;
+        background-size: 100%!important;
+        height: 33.1875rem!important;
+    }
+    .jtyGOM .wrap {
+        background-image: none!important;
+        height: 20.625rem!important;
+    }
+}
+
 .jtyGOM .wrap {
     padding: 0.9375rem;
     height: 282px;
@@ -291,10 +307,19 @@
 .gEYowd {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
+}
+
+@media screen and (max-width: 621px) {
+    .gEYowd .item {
+        margin: 0px!important;
+        flex: 1 1 100%!important;
+    }
 }
 
 .gEYowd .item {
@@ -616,6 +641,15 @@ tbody {
     align-items: center;
     color: rgb(67, 179, 9);
     cursor: pointer;
+}
+@media screen and (max-width: 621px) {
+    .biQums {
+        flex-direction: column;
+    }
+    .biQums .empty {
+        width: 100%!important;
+        min-width: unset!important;
+    }
 }
 .biQums .empty {
     -webkit-box-align: center;

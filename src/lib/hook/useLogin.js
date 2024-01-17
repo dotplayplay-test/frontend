@@ -30,6 +30,7 @@ export const useLogin = () => {
     if (response.ok) {
  
       localStorage.setItem("user", JSON.stringify(json.Token));
+      console.log(json.Token)
       handleAuthToken.set(json.Token)
       profileStore.set(json.result)
       window.location.href = ("/")

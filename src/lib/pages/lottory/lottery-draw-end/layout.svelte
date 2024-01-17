@@ -321,7 +321,7 @@
     );
     z-index: -1;
   }
-  .fLASqZ:hover svg {
+  .fLASqZ.close-icon:hover  {
     transform: rotate(-90deg);
     fill: rgb(245, 246, 247);
   }

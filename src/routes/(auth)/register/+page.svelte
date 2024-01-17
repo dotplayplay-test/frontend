@@ -14,8 +14,7 @@
   } from "$lib/firebaseAuth/index";
   import { createEventDispatcher } from "svelte";
   import { error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store";
-  import { isLightMode } from "../../../lib/store/theme";
-
+  import { isLightMode } from "$lib/store/theme";
   const dispatch = createEventDispatcher();
   let isREf = false;
   let email = "";
@@ -132,7 +131,11 @@
           <div class="box">
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Email Address</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="text"
                   bind:value={email}
@@ -143,7 +146,11 @@
             </div>
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Login Password</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="password"
                   autocomplete="off"
@@ -155,7 +162,11 @@
             <!-- {#if  isREf} -->
             <div class="sc-ezbkAF kDuLvp input">
               <div class="input-label">Referral/Promo Code (Optional)</div>
-              <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+              <div
+                class={$isLightMode
+                  ? "light-input-control input-control"
+                  : "input-control"}
+              >
                 <input
                   type="text"
                   bind:value={referral_code}
@@ -413,7 +424,8 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .kDuLvp .input-label {
     display: flex;
@@ -422,7 +434,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .kDuLvp .input-control {
     position: relative;
@@ -454,7 +467,8 @@ color: var(--text-6);  }
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .iajVfs {
     padding: 1rem 2.5rem 1.25rem;
@@ -469,7 +483,8 @@ color: var(--text-6);  }
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .iajVfs .other-group {
     border-radius: 1.75rem;
@@ -784,7 +799,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);    font-size: 12px;
+    color: var(--text-6);
+    font-size: 12px;
   }
 
   .kDuLvp .input-control {
@@ -849,7 +865,8 @@ color: var(--text-6);    font-size: 12px;
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .kDuLvp .input-control {
     position: relative;

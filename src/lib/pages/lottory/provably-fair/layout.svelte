@@ -39,7 +39,7 @@
 	};
 
 	onMount(() => {
-		console.log("SHOW DATA", showData)
+		// console.log("SHOW DATA", showData)
 		if (!!showData.game_id && showData.tab == 2) {
 			handleTabChange(2);
 		}
@@ -521,12 +521,9 @@
 	.gKwlPS .input .input-control input {
 		color: var(--text-5);
 	}
-	.kDuLvp .input-control textarea[readonly],
 	.kDuLvp .input-control input[readonly] {
 		opacity: 0.5;
 	}
-
-	.kDuLvp .input-control textarea,
 	.kDuLvp .input-control input {
 		flex: 1 1 0%;
 		width: 100%;

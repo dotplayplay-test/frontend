@@ -47,6 +47,7 @@
             if (diffInSeconds <= 0) {
                 clearInterval(countdownInterval);
                 countdown = "";
+                setTimeout(() => startCountDown(), 2000);
             } else {
                 const days = Math.floor(diffInSeconds / (3600 * 24));
                 const hours = Math.floor((diffInSeconds % (3600 * 24)) / 3600);
@@ -83,7 +84,7 @@
 
     onMount(() => {
         allcashback.subscribe((v) => {
-            console.log("Claim available > ", claimAvailable(v), v);
+            // console.log("Claim available > ", claimAvailable(v), v);
             if (
                 v.recharge_activated &&
                 v.vip_level > 21 &&
@@ -494,7 +495,7 @@
         justify-content: center;
         margin-right: 0.25rem;
     }
-    .in button {
+    /* .in button {
         cursor: pointer;
         width: 1.125rem;
         height: 1.125rem;
@@ -511,7 +512,7 @@
         -ms-flex-pack: center;
         justify-content: center;
         border-radius: 50%;
-    }
+    } */
 
     .bonus-desc.last {
         margin-top: 0.5rem;

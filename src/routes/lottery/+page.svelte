@@ -1,6 +1,6 @@
 <script>
   import Main from "$lib/pages/lottory/main/index.svelte"
-  import Mobile from "$lib/pages/lottory/mobile/index.svelte"
+  // import Mobile from "$lib/pages/lottory/mobile/index.svelte"
   import "../../styles/lottery/mobile/index.css"
   import "../../styles/lottery/lottery.css"
 //   import "../../styles/lottery/mobile/history.css"
@@ -13,9 +13,6 @@
 <div>
     <div class="lottery-page">
         <Main  />
-    </div>
-    <div class="lottery-mobile">
-        <Mobile />
     </div>
 </div>
 
