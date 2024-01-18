@@ -6,6 +6,7 @@
 
   let swaps = [];
   const URL = ServerURl();
+  let isLoading = false;
 
   function formatTime(timestamp) {
     const date = new Date(timestamp);

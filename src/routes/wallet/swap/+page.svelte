@@ -18,7 +18,8 @@
     $coin_list.filter((element) => element.coin_name !== "PPF");
 
   let ispo_loading = false;
-
+  let feedbackMessage = null;
+  let canSwap = true;
   let amount = 10;
   let isLoading = false;
 
@@ -38,11 +39,17 @@
         },
       });
       isLoading = false;
-      // close modal...
-      console.log({ res });
+      feedbackMessage = res.data.message;
+      setTimeout(() => {
+        feedbackMessage = null;
+      }, 4000);
     } catch (err) {
       isLoading = false;
       console.log(err);
+      feedbackMessage = "Unable to complete action, please try again";
+      setTimeout(() => {
+        feedbackMessage = null;
+      }, 4000);
     }
   };
 
@@ -61,6 +68,13 @@
     const amount = from.amount;
     const fromCurrency = from.coin.coin_name;
     const toCurrency = to.coin.coin_name;
+    const currenBalance = parseFloat(from.coin.balance);
+
+    if (amount > currenBalance) {
+      canSwap = false;
+      return;
+    }
+    canSwap = true;
 
     // Check if the currencies are valid
     if (!conversionRates[fromCurrency] || !conversionRates[toCurrency]) {
@@ -84,6 +98,7 @@
 
     from = to;
     to = oldFrom;
+    computeSwap();
   };
 
   const handleCloseSelectCoins = () => {
@@ -119,6 +134,14 @@
 
   let showDialog = { isFrom: false, isShown: false };
 </script>
+
+{#if feedbackMessage}
+  <div class="error-message">
+    <div class="hTTvsjh">
+      <div>{feedbackMessage}</div>
+    </div>
+  </div>
+{/if}
 
 {#if showDialog.isShown}
   <Dialog title="Assets Portfolio" on:cancel={handleCloseSelectCoins}>
@@ -170,6 +193,11 @@
           <button on:click={switchFields} class="switch-btn">
             <Icon src={AiOutlineSwap} /></button
           >
+          {#if !canSwap}
+            <p class="insufficient-hint">
+              Insufficient {from?.coin?.coin_name} Balance
+            </p>
+          {/if}
         </div>
 
         <div class="page-margin">
@@ -179,6 +207,7 @@
         <div class="page-margin">
           <button
             on:click={handleSubmit}
+            disabled={canSwap === false}
             class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal"
           >
             <div class="button-inner">
@@ -251,6 +280,10 @@
     justify-content: center;
     cursor: pointer;
   }
+  .button:disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
   .swm8knq {
     --18w92jy: #fff;
     --1cq0e1f: #f6f7fa;
@@ -275,5 +308,9 @@
   }
   .to-item {
     margin-top: 5px;
+  }
+  .insufficient-hint {
+    font-size: 0.8rem;
+    margin-top: 10px;
   }
 </style>
