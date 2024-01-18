@@ -24,16 +24,18 @@
   const fetchData = async (asset) => {
     try {
       isLoading = true;
+      let url = `${URL}/api/transaction-history/swap`;
 
-      const response = await axios.get(
-        `${URL}/api/transaction-history/swap?asset=${asset}`,
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${$handleAuthToken}`,
-          },
-        }
-      );
+      if (asset.length < 5) {
+        url = `${URL}/api/transaction-history/swap?asset=${asset}`;
+      }
+
+      const response = await axios.get(url, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${$handleAuthToken}`,
+        },
+      });
 
       isLoading = false;
 
