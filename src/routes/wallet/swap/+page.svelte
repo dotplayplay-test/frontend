@@ -20,7 +20,6 @@
   let ispo_loading = false;
   let feedbackMessage = null;
   let canSwap = true;
-  let amount = 10;
   let isLoading = false;
 
   const handleSubmit = async () => {
@@ -28,7 +27,7 @@
       const data = {
         senderCoin: from.coin.coin_name,
         receiverCoin: to.coin.coin_name,
-        amount,
+        amount: from.amount,
       };
 
       isLoading = true;
