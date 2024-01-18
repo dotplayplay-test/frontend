@@ -49,4 +49,10 @@
     display: flex;
     justify-content: space-between;
   }
+
+  @media screen and (max-width: 650px) {
+    .footer {
+      font-size: 12px;
+    }
+  }
 </style>

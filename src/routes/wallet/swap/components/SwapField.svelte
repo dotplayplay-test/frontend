@@ -96,4 +96,10 @@
   .show-max {
     margin-right: 5px;
   }
+  @media screen and (max-width: 650px) {
+    .input-control input,
+    .select-trigger {
+      font-size: 12px;
+    }
+  }
 </style>
