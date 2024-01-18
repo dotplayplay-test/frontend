@@ -3,6 +3,7 @@
   import axios from "axios";
   import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
+  import { activeRouteAsset } from "./store";
 
   let swaps = [];
   const URL = ServerURl();
@@ -18,20 +19,25 @@
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   }
 
-  const fetchData = async () => {
+  $: $activeRouteAsset, fetchData($activeRouteAsset.tabName);
+
+  const fetchData = async (asset) => {
     try {
       isLoading = true;
 
-      const response = await axios.get(`${URL}/api/transaction-history/swap`, {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${$handleAuthToken}`,
-        },
-      });
+      const response = await axios.get(
+        `${URL}/api/transaction-history/swap?asset=${asset}`,
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${$handleAuthToken}`,
+          },
+        }
+      );
 
       isLoading = false;
 
-      return response.data;
+      swaps = response.data;
     } catch (err) {
       isLoading = false;
       console.log(err);
@@ -39,7 +45,7 @@
   };
 
   onMount(async () => {
-    swaps = await fetchData();
+    await fetchData();
   });
 </script>
 
