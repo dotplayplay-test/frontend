@@ -254,7 +254,7 @@
     --9ty6bq: rgba(218, 221, 230, 0.5);
     margin-top: 1rem;
   }
-  .swm8knq .label {
+  .label {
     margin-bottom: 0.75rem;
     line-height: 0.875rem;
     font-size: 0.875rem;
@@ -266,7 +266,7 @@
     margin-top: 1rem;
   }
   .button-box {
-    background-color: #1e202466;
+    background-color: #1e202424;
     padding: 6px;
     border-radius: 6px;
   }

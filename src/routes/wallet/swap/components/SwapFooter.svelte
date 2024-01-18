@@ -31,7 +31,7 @@
 
 <style>
   .footer {
-    font-size: 13px;
+    font-size: 0.875rem;
   }
   .head {
     padding: 12px 0;
