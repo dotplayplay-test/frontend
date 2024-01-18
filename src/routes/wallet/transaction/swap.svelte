@@ -1,14 +1,13 @@
 <script>
   import { onMount } from "svelte";
   import axios from "axios";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { handleAuthToken } from "$lib/store/routes";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import { ServerURl } from "$lib/backendUrl";
+  import { activeRouteAsset } from "./store";
 
   let swaps = [];
-  let isLoading = false;
   const URL = ServerURl();
+  let isLoading = false;
 
   function formatTime(timestamp) {
     const date = new Date(timestamp);
@@ -20,11 +19,18 @@
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   }
 
-  const fetchData = async () => {
+  $: $activeRouteAsset, fetchData($activeRouteAsset.tabName);
+
+  const fetchData = async (asset) => {
     try {
       isLoading = true;
+      let url = `${URL}/api/transaction-history/swap`;
 
-      const response = await axios.get(`${URL}/api/transaction-history/swap`, {
+      if (asset.length < 5) {
+        url = `${URL}/api/transaction-history/swap?asset=${asset}`;
+      }
+
+      const response = await axios.get(url, {
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${$handleAuthToken}`,
@@ -33,7 +39,7 @@
 
       isLoading = false;
 
-      return response.data;
+      swaps = response.data;
     } catch (err) {
       isLoading = false;
       console.log(err);
@@ -41,7 +47,7 @@
   };
 
   onMount(async () => {
-    swaps = await fetchData();
+    await fetchData();
   });
 </script>
 
@@ -52,20 +58,37 @@
         <thead>
           <th>From</th>
           <th>To</th>
-          <th>Amount</th>
           <th>Time</th>
         </thead>
         <tbody>
           {#each swaps as item}
             <tr>
               <td class="cl-light align-center">
-                {item.senderCoin}
+                <div class="icon-box">
+                  <img
+                    class="icon"
+                    src={item.senderCoinIcon}
+                    alt="Sender Coin Icon"
+                  />
+                  <span>
+                    {parseFloat(item.amountSwapped)}
+                    {item.senderCoin}
+                  </span>
+                </div>
               </td>
-              <td class={`amount-change`}>
-                {item.receiverCoin}
-              </td>
-              <td class={`amount-change`}>
-                {item.amountSwapped}
+              <td class="amount-change">
+                <div class="icon-box">
+                  <img
+                    class="icon"
+                    src={item.receiverCoinIcon}
+                    alt="Receiver coin icon"
+                  />
+                  <span>
+                    {parseFloat(item.receiverCoin_new_balance) -
+                      parseFloat(item.receiverCoin_previous_balance)}
+                    {item.receiverCoin}
+                  </span>
+                </div>
               </td>
               <td
                 >{new Date(item.createdAt).getFullYear()}/{new Date(
@@ -77,38 +100,6 @@
           {/each}
         </tbody>
       </table>
-      <!-- <div class="ui-pagination m-fixbot">
-        <div class="ui-select">
-          <div class="select-trigger">
-            10
-            <div class="arrow top">
-              <Icon
-                src={RiSystemArrowRightSLine}
-                size="23"
-                color="rgba(153, 164, 176, 0.6)"
-                className="custom-icon"
-                title="arror"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="total">Total 1</div>
-        <div class="pages-box pages-wrap">
-          <button class="active" disabled="">1</button>
-        </div>
-        <div class="pages-box page-pn pageConic">
-          <button disabled="" class="disabled previous-btn">
-            <svg class="s1ff97qc icon prev">
-                        <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Arrow"></use>
-                    </svg>
-          </button>
-          <button disabled="" class="disabled next-page">
-            <svg class="s1ff97qc icon next">
-                        <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Arrow"></use>
-                    </svg>
-          </button>
-        </div>
-      </div> -->
     </div>
   {:else}
     <div class="transaction-list">
@@ -178,5 +169,17 @@
   .ui-table th:first-child,
   .ui-table td:first-child {
     text-align: left;
+  }
+  .icon-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .amount-change {
+    justify-content: center;
+  }
+  .icon {
+    width: 30px;
   }
 </style>

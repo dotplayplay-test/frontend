@@ -31,7 +31,7 @@
 
 <style>
   .footer {
-    font-size: 13px;
+    font-size: 0.875rem;
   }
   .head {
     padding: 12px 0;
@@ -48,5 +48,11 @@
   .result-box {
     display: flex;
     justify-content: space-between;
+  }
+
+  @media screen and (max-width: 650px) {
+    .footer {
+      font-size: 12px;
+    }
   }
 </style>
