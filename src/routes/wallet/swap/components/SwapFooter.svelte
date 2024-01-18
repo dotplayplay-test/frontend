@@ -1,6 +1,7 @@
 <script>
   export let from;
   export let to;
+  export let conversionRate;
 </script>
 
 {#if !from || !to}
@@ -13,9 +14,14 @@
       <p>Real Money: <strong>0 {from?.coin?.coin_name}</strong></p>
       <p>Bonus Money: <strong>0 {from?.coin?.coin_name}</strong></p>
     </div>
-    <div class="box">
-      <p>1 {from?.coin?.coin_name} ≈ 0.1 {to?.coin?.coin_name}</p>
-    </div>
+    {#if conversionRate !== 0}
+      <div class="box">
+        <p>
+          1 {from?.coin?.coin_name} ≈ {conversionRate}
+          {to?.coin?.coin_name}
+        </p>
+      </div>
+    {/if}
     <div class="box">
       <div class="result-box">
         <div>Estimated time*</div>

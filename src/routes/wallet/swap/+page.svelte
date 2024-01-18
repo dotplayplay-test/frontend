@@ -21,6 +21,7 @@
   let feedbackMessage = null;
   let canSwap = true;
   let isLoading = false;
+  let conversionRate = 0;
 
   const handleSubmit = async () => {
     try {
@@ -81,8 +82,10 @@
     }
 
     // Perform the conversion
-    const convertedAmount =
-      (amount / conversionRates[fromCurrency]) * conversionRates[toCurrency];
+    conversionRate =
+      conversionRates[fromCurrency] / conversionRates[toCurrency];
+
+    const convertedAmount = amount * conversionRate;
 
     to.amount = convertedAmount;
   }
@@ -200,7 +203,7 @@
         </div>
 
         <div class="page-margin">
-          <SwapFooter {from} {to} />
+          <SwapFooter {from} {to} {conversionRate} />
         </div>
 
         <div class="page-margin">

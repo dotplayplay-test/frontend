@@ -19,14 +19,14 @@
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   }
 
-  $: $activeRouteAsset, fetchData($activeRouteAsset.tabName);
+  $: $activeRouteAsset, fetchData($activeRouteAsset?.tabName);
 
   const fetchData = async (asset) => {
     try {
       isLoading = true;
       let url = `${URL}/api/transaction-history/swap`;
 
-      if (asset.length < 5) {
+      if (asset && asset.length < 5) {
         url = `${URL}/api/transaction-history/swap?asset=${asset}`;
       }
 
@@ -84,8 +84,10 @@
                     alt="Receiver coin icon"
                   />
                   <span>
-                    {parseFloat(item.receiverCoin_new_balance) -
-                      parseFloat(item.receiverCoin_previous_balance)}
+                    {Math.abs(
+                      parseFloat(item.receiverCoin_new_balance) -
+                        parseFloat(item.receiverCoin_previous_balance)
+                    )}
                     {item.receiverCoin}
                   </span>
                 </div>
