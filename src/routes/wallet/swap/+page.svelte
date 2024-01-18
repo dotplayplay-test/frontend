@@ -212,6 +212,9 @@
     border-radius: var(--border-radius);
     padding: 1.5rem 2rem 2rem;
   }
+  .limit-width {
+    max-width: 500px;
+  }
   .label-box {
     display: flex;
     justify-content: space-between;

@@ -19,7 +19,7 @@
           {coin.coin_name}
         </p>
       </div>
-      <p class="balance">0.0001</p>
+      <p class="balance">{parseFloat(coin.balance).toFixed(4)}</p>
     </button>
   {/each}
 </div>
