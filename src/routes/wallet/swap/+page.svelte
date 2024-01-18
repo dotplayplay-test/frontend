@@ -75,7 +75,8 @@
   }
 
   const handleOnClickMax = () => {
-    from.amount = 0;
+    from.amount = from.coin.balance;
+    computeSwap();
   };
 
   const switchFields = () => {
@@ -136,7 +137,7 @@
       <div class="label-box">
         <div class="label">You get Approximately</div>
         <div class="label">
-          Min: {from?.amount || 0}
+          Min: {parseFloat(0.1).toFixed(4) || 0}
           {from?.coin?.coin_name}
         </div>
       </div>
@@ -247,17 +248,6 @@
     justify-content: center;
     cursor: pointer;
   }
-  .ui-scrollview {
-    box-sizing: border-box;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-flex: 1 1 1px;
-    -ms-flex: 1 1 1px;
-    flex: 1 1 1px;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
-  }
   .swm8knq {
     --18w92jy: #fff;
     --1cq0e1f: #f6f7fa;
@@ -274,17 +264,6 @@
   }
   .page-margin {
     margin-top: 1rem;
-  }
-  .ui-scrollview {
-    box-sizing: border-box;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-flex: 1 1 1px;
-    -ms-flex: 1 1 1px;
-    flex: 1 1 1px;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
   }
   .button-box {
     background-color: #1e202466;

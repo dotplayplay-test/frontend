@@ -1,13 +1,10 @@
 <script>
   import { onMount } from "svelte";
   import axios from "axios";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { handleAuthToken } from "$lib/store/routes";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import { ServerURl } from "$lib/backendUrl";
 
   let swaps = [];
-  let isLoading = false;
   const URL = ServerURl();
 
   function formatTime(timestamp) {
