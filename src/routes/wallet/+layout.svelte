@@ -9,52 +9,62 @@
     <div class="menyu m-fixbot">
       <a
         href="/wallet/balance"
-        class={`${data.route === "/wallet/balance" ? "is-active" : ""}`}
+        class={`${
+          data.route === "/wallet/balance" ? "is-active" : ""
+        } menu-item`}
       >
-        <!-- <svg class="s1ff97qc icon">
-               <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Wallet"></use>
-            </svg> -->
+        <svg class="s1ff97qc icon">
+          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Wallet"></use>
+        </svg>
         <div class="name" title="Balance">Balance</div>
       </a>
       <a
         href="/wallet/deposit"
         keep-scroll-position="true"
-        class={` ${data.route === "/wallet/deposit" ? "is-active" : ""}`}
+        class={` ${
+          data.route === "/wallet/deposit" ? "is-active" : ""
+        } menu-item`}
       >
-        <!-- <svg class="s1ff97qc icon">
-               <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Deposit"></use>
-            </svg> -->
+        <svg class="s1ff97qc icon">
+          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Deposit"></use>
+        </svg>
         <div class="name" title="Deposit">Deposit</div>
       </a>
       <a
         href="/wallet/withdraw"
         keep-scroll-position="true"
-        class={`${data.route === "/wallet/withdraw" ? "is-active" : ""}`}
+        class={`${
+          data.route === "/wallet/withdraw" ? "is-active" : ""
+        } menu-item`}
       >
-        <!-- <svg class="s1ff97qc icon">
-               <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_WithDraw"></use>
-            </svg> -->
+        <svg class="s1ff97qc icon">
+          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_WithDraw"></use>
+        </svg>
         <div class="name" title="Withdraw">Withdraw</div></a
       >
       <a
         href="/wallet/swap"
         keep-scroll-position="true"
-        class={` ${data.route === "/wallet/swap" ? "is-active" : ""}`}
+        class={` ${data.route === "/wallet/swap" ? "is-active" : ""} menu-item`}
       >
-        <!-- <svg class="s1ff97qc icon">
-                  <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Swap"></use>
-               </svg> -->
+        <svg class="s1ff97qc icon"
+          ><use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Swap"
+          ></use></svg
+        >
         <div class="name" title="DPP Swap">DPP Swap</div>
       </a>
       <div class="line"></div>
       <a
         href="/wallet/transaction"
         keep-scroll-position="true"
-        class={` ${data.route === "/wallet/transaction" ? "is-active" : ""}`}
+        class={` ${
+          data.route === "/wallet/transaction" ? "is-active" : ""
+        } menu-item`}
       >
-        <!-- <svg class="s1ff97qc icon">
-                  <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Transaction"></use>
-               </svg> -->
+        <svg class="s1ff97qc icon">
+          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Transaction"
+          ></use>
+        </svg>
         <div class="name" title="Transaction">Transaction</div>
       </a>
     </div>
@@ -110,24 +120,16 @@
     color: #f5f6f7;
   }
   .s1orvhr .content-area .menyu > a {
-    display: block;
     height: 2.75rem;
     border-radius: 0.25rem;
     padding-left: 1rem;
     line-height: 2.75rem;
-    -webkit-text-decoration: none;
     text-decoration: none;
     margin-bottom: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
   }
   .s1orvhr .content-area .menyu .name {
@@ -155,6 +157,14 @@
     padding: 0;
     background-color: transparent;
   }
+  .icon {
+    height: 20px;
+    overflow: hidden;
+    width: 20px;
+    fill: #cdcdcdcc;
+    margin-right: 10px;
+    overflow: hidden;
+  }
 
   @media screen and (max-width: 650px) {
     .page-max-width-wrap {
@@ -167,7 +177,6 @@
       width: 100%;
       max-width: 100%;
       display: flex;
-      margin-bottom: 12px;
       padding: 0;
     }
     .content-area .menyu.s-10hdcrst2DyS.s-10hdcrst2DyS {
@@ -176,15 +185,41 @@
     .content-area .right-info.s-10hdcrst2DyS.s-10hdcrst2DyS {
       margin-left: 0;
     }
-
-    .menyu > a {
-      font-size: 12px;
-      margin-bottom: 0 !important;
+    .menyu {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      margin: 0;
     }
 
+    .s1orvhr .content-area .menyu > a {
+      height: auto;
+      flex-grow: 1;
+      font-size: 10px;
+      justify-content: center;
+      flex-direction: column;
+      padding: 10px 0;
+    }
+    .menyu > a {
+      margin-bottom: 0 !important;
+    }
     .title {
       padding: 12px;
       padding-top: 20px;
+    }
+    .icon {
+      display: grid;
+      place-content: center;
+      padding: 0;
+      margin: 0;
+    }
+    .name {
+      padding: 0;
+      margin: 0;
+      margin-top: 5px;
+      line-height: normal;
     }
   }
 </style>
