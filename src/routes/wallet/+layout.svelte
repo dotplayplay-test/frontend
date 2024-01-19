@@ -165,6 +165,9 @@
     margin-right: 10px;
     overflow: hidden;
   }
+  .is-active .icon {
+    fill: #fff;
+  }
 
   @media screen and (max-width: 650px) {
     .page-max-width-wrap {
