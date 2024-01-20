@@ -4,6 +4,7 @@
   import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
   import { activeRouteAsset } from "./store";
+  import Table from "./table.svelte";
 
   let swaps = [];
   const URL = ServerURl();
@@ -52,136 +53,83 @@
 </script>
 
 <div>
-  {#if swaps.length > 0}
-    <div class="transaction-list">
-      <table class="ui-table">
-        <thead>
-          <th>From</th>
-          <th>To</th>
-          <th>Time</th>
-        </thead>
-        <tbody>
-          {#each swaps as item}
-            <tr>
-              <td class="cl-light align-center">
-                <div class="icon-box">
-                  <img
-                    class="icon"
-                    src={item.senderCoinIcon}
-                    alt="Sender Coin Icon"
-                  />
-                  <span>
-                    {parseFloat(item.amountSwapped)}
-                    {item.senderCoin}
-                  </span>
-                </div>
-              </td>
-              <td class="amount-change">
-                <div class="icon-box">
-                  <img
-                    class="icon"
-                    src={item.receiverCoinIcon}
-                    alt="Receiver coin icon"
-                  />
-                  <span>
-                    {Math.abs(
-                      parseFloat(item.receiverCoin_new_balance) -
-                        parseFloat(item.receiverCoin_previous_balance)
-                    )}
-                    {item.receiverCoin}
-                  </span>
-                </div>
-              </td>
-              <td
-                >{new Date(item.createdAt).getFullYear()}/{new Date(
-                  item.createdAt
-                ).getMonth()}/{new Date(item.createdAt).getDate()}
-                {formatTime(item.createdAt)}</td
-              >
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
-  {:else}
-    <div class="transaction-list">
-      <div class="sc-lhMiDA">
-        <div class="sc-eCImPb cuPxwd full-abs">
-          <img
-            src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
-            alt=""
-          />
-          <div class="msg">No swaps yet!</div>
-        </div>
+  <Table
+    fields={[
+      { label: "From", id: "from" },
+      { label: "To", id: "to" },
+      { label: "Amount Swapped", id: "amount" },
+      { label: "Time", id: "time" },
+    ]}
+    data={swaps}
+    emptyText="No swaps found"
+    let:row
+    let:col
+  >
+    {#if col.id === "from"}
+      <div class="icon-box row">
+        <img
+          class="icon"
+          src={row.senderCoin === "PPL"
+            ? "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697827828/ppl_logo_mxiaot.png"
+            : row.senderCoinIcon}
+          alt="Sender Coin Icon"
+        />
+        <span>
+          {row.senderCoin}
+        </span>
       </div>
-    </div>
-  {/if}
+    {/if}
+
+    {#if col.id === "to"}
+      <div class="icon-box align-center row">
+        <img
+          class="icon"
+          src={row.receiverCoin === "PPL"
+            ? "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697827828/ppl_logo_mxiaot.png"
+            : row.receiverCoinIcon}
+          alt="Receiver coin icon"
+        />
+        <span>
+          {row.receiverCoin}
+        </span>
+      </div>
+    {/if}
+
+    {#if col.id === "amount"}
+      <span class="row amount">
+        {parseFloat(row.amountSwapped).toFixed(2)}
+      </span>
+    {/if}
+
+    {#if col.id === "time"}
+      <div class="row">
+        {new Date(row?.createdAt).getFullYear()}/{new Date(
+          row?.createdAt
+        ).getMonth()}/{new Date(row?.createdAt).getDate()}
+        {formatTime(row?.createdAt)}
+      </div>
+    {/if}
+  </Table>
 </div>
 
 <style>
-  .transaction-list {
-    width: 100%;
-    background-color: var(--1n7ksai);
-    border-radius: var(--border-radius);
-  }
-  .ui-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
-  .ui-table th:first-child,
-  .ui-table td:first-child {
-    text-align: left;
-  }
-
-  .ui-table th,
-  .ui-table td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.5rem;
-  }
-  .ui-table th {
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ui-table th,
-  .ui-table td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.5rem;
-    font-size: 14px;
-  }
-  .ui-table th {
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ui-table th:last-child,
-  .ui-table td:last-child {
-    text-align: right;
-  }
-
-  .ui-table td:first-child {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-  }
-  .ui-table th:first-child,
-  .ui-table td:first-child {
-    text-align: left;
+  .align-center {
+    display: flex;
+    justify-content: center;
   }
   .icon-box {
     display: flex;
     align-items: center;
     gap: 5px;
   }
-
-  .amount-change {
-    justify-content: center;
-  }
   .icon {
     width: 30px;
+  }
+  .row {
+    font-weight: 600;
+    color: #cdcdcdcc;
+  }
+  .amount {
+    color: #3bc117;
   }
 </style>
