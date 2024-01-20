@@ -288,7 +288,6 @@
     padding: 0;
     background-color: transparent;
   }
-
   .ui-select .coin-icon {
     width: 1rem;
     -webkit-flex: none;
@@ -296,7 +295,6 @@
     flex: none;
     margin-right: 0.5rem;
   }
-
   .s80qwti {
     display: -webkit-box;
     display: -webkit-flex;
@@ -308,7 +306,6 @@
     align-items: center;
     padding-bottom: 2rem;
   }
-
   .ui-select .coin-icon {
     width: 1rem;
     -webkit-flex: none;
@@ -316,25 +313,20 @@
     flex: none;
     margin-right: 0.5rem;
   }
-
   .ui-select {
     height: 3rem;
   }
-
   .s80qwti .ui-select {
     margin-right: 0.625rem;
     min-width: 9.375rem;
   }
-
   .ui-select {
     position: relative;
   }
-
   .ui-select .select-trigger {
     background-color: #2d3035;
     width: 100%;
   }
-
   .ui-select .select-trigger {
     position: relative;
     display: -webkit-box;
@@ -355,7 +347,6 @@
     user-select: none;
     border-radius: 12px;
   }
-
   .ui-select .select-trigger .arrow {
     width: 2.5rem;
     height: 100%;
@@ -375,11 +366,9 @@
     right: 0;
     top: 0;
   }
-
   .ui-select.is-open .select-options-wrap {
     pointer-events: auto;
   }
-
   .ui-select .select-options-wrap {
     position: absolute;
     padding: 0.3125rem 0;
@@ -388,7 +377,6 @@
     z-index: 2;
     transition: all 0.5s ease;
   }
-
   .ui-select .select-options {
     border-radius: 2px;
     padding: 0.125rem 0.375rem;
@@ -397,7 +385,6 @@
     height: auto;
     max-height: 16.25rem;
   }
-
   .ui-scrollview {
     box-sizing: border-box;
     height: 100%;
@@ -409,20 +396,15 @@
     touch-action: pan-y;
     overscroll-behavior: contain;
   }
-
   .ui-select .select-options:not(.len-1) > .active {
     border-color: #3bc11766;
   }
-
   .ui-select .select-option {
     width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     position: relative;
     padding: 0 0.625rem;
@@ -435,8 +417,12 @@
     color: rgba(153, 164, 176, 0.6);
     white-space: nowrap;
   }
-
   .ui-select .select-option:hover {
     background-color: rgba(45, 48, 53, 0.4);
+  }
+  .transaction-tabs {
+    padding: 0;
+    margin-top: 12px;
+    justify-content: center;
   }
 </style>

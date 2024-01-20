@@ -92,12 +92,12 @@
     padding: 0 40px;
     max-width: 1430px;
   }
-  .s1orvhr .title {
+  .title {
     font-size: 1.125rem;
     color: #ffff;
     margin-bottom: 0.75rem;
     font-weight: 800;
-    margin-top: 50px;
+    padding-top: 50px;
   }
   .s1orvhr .content-area {
     width: 100%;
@@ -106,10 +106,7 @@
     display: -ms-flexbox;
     display: flex;
   }
-  /* .s1orvhr .content-area.bg-transparent .right-info {
-    padding: 0;
-    background-color: transparent;
-} */
+
   .s1orvhr .content-area .menyu {
     -webkit-flex: none;
     -ms-flex: none;
@@ -171,6 +168,9 @@
   }
   .is-active .icon {
     fill: #fff;
+  }
+  .btn-close {
+    display: none;
   }
 
   @media screen and (max-width: 650px) {
@@ -256,6 +256,9 @@
       z-index: 100;
       display: flex;
       flex-direction: column;
+    }
+    .btn-close {
+      display: block;
     }
   }
 </style>
