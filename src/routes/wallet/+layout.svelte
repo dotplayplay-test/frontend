@@ -1,10 +1,20 @@
 <script>
+  import { goto } from "$app/navigation";
+
   /** @type {import('./$types').PageLoad} */
   export let data;
 </script>
 
 <div class="s1orvhr wallet-page page-max-width-wrap">
-  <div class="title ttu">Wallet</div>
+  <div class="title ttu">
+    <p>Wallet</p>
+    <button on:click={() => goto("/")} class="btn-close"
+      ><svg class="s1ff97qc icon"
+        ><use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Close"
+        ></use></svg
+      ></button
+    >
+  </div>
   <div class="content-area bg-transparent">
     <div class="menyu m-fixbot">
       <a
@@ -14,7 +24,7 @@
         } menu-item`}
       >
         <svg class="s1ff97qc icon">
-          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Wallet"></use>
+          <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Wallet"></use>
         </svg>
         <div class="name" title="Balance">Balance</div>
       </a>
@@ -26,7 +36,7 @@
         } menu-item`}
       >
         <svg class="s1ff97qc icon">
-          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Deposit"></use>
+          <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Deposit"></use>
         </svg>
         <div class="name" title="Deposit">Deposit</div>
       </a>
@@ -38,7 +48,8 @@
         } menu-item`}
       >
         <svg class="s1ff97qc icon">
-          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_WithDraw"></use>
+          <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_WithDraw"
+          ></use>
         </svg>
         <div class="name" title="Withdraw">Withdraw</div></a
       >
@@ -48,7 +59,7 @@
         class={` ${data.route === "/wallet/swap" ? "is-active" : ""} menu-item`}
       >
         <svg class="s1ff97qc icon"
-          ><use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Swap"
+          ><use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Swap"
           ></use></svg
         >
         <div class="name" title="DPP Swap">DPP Swap</div>
@@ -62,7 +73,7 @@
         } menu-item`}
       >
         <svg class="s1ff97qc icon">
-          <use xlink:href="/swap/symbol-defs.ef6a79c4.svg#icon_Transaction"
+          <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Transaction"
           ></use>
         </svg>
         <div class="name" title="Transaction">Transaction</div>
@@ -138,15 +149,8 @@
     text-overflow: ellipsis;
   }
   .s1orvhr .content-area .right-info {
-    -webkit-flex: auto;
-    -ms-flex: auto;
     flex: auto;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
     flex-direction: column;
     margin-left: 0.25rem;
     background-color: #31343c;
@@ -173,6 +177,13 @@
     .page-max-width-wrap {
       padding: 0;
     }
+    .content-area {
+      overflow-y: auto;
+      padding-bottom: 40px;
+    }
+    .title.s-10hdcrst2DyS.s-10hdcrst2DyS {
+      margin-bottom: 0;
+    }
     .content-area.s-10hdcrst2DyS.s-10hdcrst2DyS {
       flex-direction: column;
     }
@@ -196,6 +207,9 @@
       z-index: 1000;
       margin: 0;
     }
+    .s1orvhr .content-area .menyu {
+      background-color: var(--affiliate-bg);
+    }
 
     .s1orvhr .content-area .menyu > a {
       height: auto;
@@ -208,9 +222,18 @@
     .menyu > a {
       margin-bottom: 0 !important;
     }
+    .title.s-10hdcrst2DyS.s-10hdcrst2DyS {
+      margin-top: 0;
+    }
     .title {
       padding: 12px;
       padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--affiliate-bg);
+    }
+    .content-area {
+      flex-grow: 1;
     }
     .icon {
       display: grid;
@@ -223,6 +246,16 @@
       margin: 0;
       margin-top: 5px;
       line-height: normal;
+    }
+    .wallet-page {
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      left: 0;
+      background-color: #31343c;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
     }
   }
 </style>
