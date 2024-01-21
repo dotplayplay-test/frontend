@@ -1,37 +1,27 @@
 <script>
   import { goto } from "$app/navigation";
-  import axios from "axios";
   import { onMount } from "svelte";
 
   import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
   import { handleAuthToken } from "$lib/store/routes";
-  import { ServerURl } from "$lib/backendUrl";
 
-  let URL = ServerURl();
+  import { fetchMedals } from "./actions";
 
   onMount(() => {
-    fetchMedals();
+    init();
   });
 
   let isLoading = false;
 
-  const fetchMedals = async () => {
+  const init = async () => {
     try {
       isLoading = true;
 
-      let endpoint = `${URL}/api/medal/all-medals`;
-
-      if ($handleAuthToken) {
-        endpoint = `${URL}/api/medal/all-user-medals`;
-      }
-
-      const response = await axios.get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${$handleAuthToken}`,
-        },
+      const response = await fetchMedals({
+        token: $handleAuthToken,
       });
 
-      $medals = response.data.data;
+      $medals = response;
       $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
       $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
 
