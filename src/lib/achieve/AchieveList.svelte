@@ -54,11 +54,9 @@
     background-color: rgb(34, 36, 40);
     margin: 20px 0;
   }
-
   .medals {
     margin: 20px 0;
   }
-
   .icon {
     width: 1rem;
     height: 1rem;
@@ -67,7 +65,6 @@
     vertical-align: text-top;
     fill: rgb(67, 179, 9);
   }
-
   .footer {
     text-align: center;
     font-weight: 600;

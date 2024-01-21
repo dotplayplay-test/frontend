@@ -1,67 +1,92 @@
 <script>
   import { goto } from "$app/navigation";
+  import axios from "axios";
+  import { onMount } from "svelte";
 
-  const medals = [
-    "achieve_1.webp",
-    "achieve_2.webp",
-    "achieve_3.png",
-    "achieve_4.webp",
-    "achieve_5.webp",
-    "achieve_6.png",
-    "achieve_7.webp",
-    "achieve_8.webp",
-    "achieve_10.webp",
-    "achieve_11.webp",
-    "achieve_12.webp",
-    "achieve_13.webp",
-    "achieve_14.webp",
-    "achieve_15.webp",
-    "achieve_16.webp",
-    "achieve_17.webp",
-    "achieve_18.webp",
-    "achieve_19.webp",
-  ];
+  import { handleAuthToken } from "$lib/store/routes";
+  import { ServerURl } from "$lib/backendUrl";
+
+  let medals = [];
+  let URL = ServerURl();
+
+  onMount(() => {
+    fetchMedals();
+  });
+
+  let isLoading = false;
+  let earnedMedals = 0;
+
+  const fetchMedals = async () => {
+    try {
+      isLoading = true;
+
+      const response = await axios.get(`${URL}/api/medal/all-user-medals`, {
+        headers: {
+          Authorization: `Bearer ${$handleAuthToken}`,
+        },
+      });
+      medals = response.data.data;
+      earnedMedals = medals.filter((medal) => medal.hasEarned).length;
+      isLoading = false;
+    } catch (err) {
+      console.log(err.message);
+      isLoading = false;
+    }
+  };
+
+  const getProgress = () => {
+    return (earnedMedals / medals.length) * 100 + "%";
+  };
 </script>
 
-<div class="box">
-  <div class="text-box">
-    <div>
-      <h3 class="title">Master Medals</h3>
-      <p class="desc">Witness every step of your becoming a Master</p>
+{#if isLoading}
+  <div></div>
+{:else}
+  <div class="box">
+    <div class="text-box">
+      <div>
+        <h3 class="title">Master Medals</h3>
+        <p class="desc">Witness every step of your becoming a Master</p>
+      </div>
+      <button on:click={() => goto("/achieve")} class="details">
+        <span> Details </span>
+        <svg
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="sc-gsDKAQ hxODWG icon"
+          ><use xlink:href="#icon_Arrow"></use></svg
+        >
+      </button>
     </div>
-    <button on:click={() => goto("/achieve")} class="details">
-      <span> Details </span>
-      <svg
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Arrow"></use></svg
-      >
-    </button>
-  </div>
-  <div class="inner">
-    <div class="medals">
-      {#each medals as medal}
-        <div class="medal-item img-locked">
-          <img src="/achieve/{medal}" alt={medal} />
-        </div>
-      {/each}
-    </div>
-    <div class="footer">
-      <div class="percent">
-        <div class="bar">
-          <div class="tip-wrap">
-            {#each [0, 5, 10, 15] as point}
-              <div class="pointer">
-                <span class="num">{point}</span>
-                <span class="type">Medals</span>
-              </div>
-            {/each}
-            <div class="pointer">Max</div>
+    <div class="inner">
+      <div class="medals">
+        {#each medals as medal}
+          <div
+            class="medal-item img-locked"
+            style={`opacity: ${medal.hasEarned ? 1 : 0.4};`}
+          >
+            <img src="/achieve/{medal?.src}" alt={medal?.name} />
+          </div>
+        {/each}
+      </div>
+      <div class="footer">
+        <div class="percent">
+          <div class="bar">
+            <div class="progress" style={"width:" + getProgress()}></div>
+            <div class="tip-wrap">
+              {#each [0, 5, 10, 15] as point}
+                <div class="pointer">
+                  <span class="num">{point}</span>
+                  <span class="type">Medals</span>
+                </div>
+              {/each}
+              <div class="pointer">Max</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+{/if}
 
 <style>
   .box {
@@ -81,25 +106,17 @@
     font-size: 0.875rem;
     margin: 1rem 0px;
   }
-  @media only screen and (max-width: 1000px) {
-    .box {
-      grid-template-columns: 1fr;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+  .progress {
+    height: 100%;
+    border-radius: 12px;
+    position: absolute;
+    background-color: red;
   }
   .text-box {
     max-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-  @media only screen and (max-width: 1000px) {
-    .text-box {
-      max-width: 100%;
-    }
   }
   .text-box::before {
     content: "";
@@ -109,13 +126,6 @@
     width: 7.75rem;
     height: 7.75rem;
     background: url("/achieve/circle-medal.png") center center / cover no-repeat;
-  }
-  @media only screen and (max-width: 1000px) {
-    .text-box {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
   }
   .title {
     font-size: 1.5rem;
@@ -167,9 +177,7 @@
     position: relative;
     z-index: 2;
   }
-  .img-locked {
-    opacity: 0.5;
-  }
+
   .percent {
     padding-top: 1.25rem;
   }
@@ -198,5 +206,20 @@
     width: 100%;
     -webkit-box-align: center;
     align-items: center;
+  }
+  @media only screen and (max-width: 1000px) {
+    .box {
+      grid-template-columns: 1fr;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .text-box {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 100%;
+    }
   }
 </style>
