@@ -19,7 +19,13 @@
     try {
       isLoading = true;
 
-      const response = await axios.get(`${URL}/api/medal/all-user-medals`, {
+      let endpoint = `${URL}/api/medal/all-medals`;
+
+      if ($handleAuthToken) {
+        endpoint = `${URL}/api/medal/all-user-medals`;
+      }
+
+      const response = await axios.get(endpoint, {
         headers: {
           Authorization: `Bearer ${$handleAuthToken}`,
         },
