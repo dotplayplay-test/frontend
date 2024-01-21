@@ -17,13 +17,14 @@
   };
 
   export let medals;
+  export let medalProgress;
 </script>
 
 <Dialog title="Master Medals" on:cancel={handleCancel}>
   {#if medals}
     <div>
       <div class="medals">
-        <Medals />
+        <Medals {medalProgress} />
       </div>
       <Info />
       <div class="divider"></div>

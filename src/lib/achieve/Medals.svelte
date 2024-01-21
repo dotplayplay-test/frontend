@@ -1,4 +1,6 @@
 <script>
+  export let medalProgress;
+  console.log({ medalProgress });
 </script>
 
 <div>
@@ -19,7 +21,7 @@
     </div>
   </div>
   <div class="progress">
-    <div class="bar">
+    <div class="bar" style={"width:" + medalProgress}>
       <div class="progress-bar"></div>
     </div>
   </div>
@@ -62,7 +64,6 @@
     margin-top: 10px;
   }
   .bar {
-    width: 10%;
     height: 100%;
     border-radius: 30px;
     background-color: rgb(67, 179, 9);

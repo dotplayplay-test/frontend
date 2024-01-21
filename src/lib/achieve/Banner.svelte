@@ -3,10 +3,10 @@
   import axios from "axios";
   import { onMount } from "svelte";
 
+  import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
   import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
 
-  let medals = [];
   let URL = ServerURl();
 
   onMount(() => {
@@ -14,7 +14,6 @@
   });
 
   let isLoading = false;
-  let earnedMedals = 0;
 
   const fetchMedals = async () => {
     try {
@@ -25,8 +24,11 @@
           Authorization: `Bearer ${$handleAuthToken}`,
         },
       });
-      medals = response.data.data;
-      earnedMedals = medals.filter((medal) => medal.hasEarned).length;
+
+      $medals = response.data.data;
+      $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
+      $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
+
       isLoading = false;
     } catch (err) {
       console.log(err.message);
@@ -35,7 +37,7 @@
   };
 
   const getProgress = () => {
-    return (earnedMedals / medals.length) * 100 + "%";
+    return;
   };
 </script>
 
@@ -59,7 +61,7 @@
     </div>
     <div class="inner">
       <div class="medals">
-        {#each medals as medal}
+        {#each $medals as medal}
           <div
             class="medal-item img-locked"
             style={`opacity: ${medal.hasEarned ? 1 : 0.4};`}
@@ -71,7 +73,7 @@
       <div class="footer">
         <div class="percent">
           <div class="bar">
-            <div class="progress" style={"width:" + getProgress()}></div>
+            <div class="progress" style={"width:" + $medalProgress}></div>
             <div class="tip-wrap">
               {#each [0, 5, 10, 15] as point}
                 <div class="pointer">
