@@ -17,11 +17,10 @@
     try {
       isLoading = true;
 
-      const response = await fetchMedals({
+      $medals = await fetchMedals({
         token: $handleAuthToken,
       });
 
-      $medals = response;
       $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
       $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
 
@@ -30,10 +29,6 @@
       console.log(err.message);
       isLoading = false;
     }
-  };
-
-  const getProgress = () => {
-    return;
   };
 </script>
 
