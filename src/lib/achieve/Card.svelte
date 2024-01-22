@@ -4,14 +4,18 @@
 </script>
 
 <button on:click={onClick} class="card">
-  <img src="/achieve/{medal.src}" alt={medal.name} />
+  <img
+    style={`opacity: ${medal.hasEarned ? 1 : 0.4};`}
+    src="/achieve/{medal.src}"
+    alt={medal.name}
+  />
   <p class="name">{medal.name}</p>
   <div class="num">
     <svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Firends"></use></svg
     >
-    0
+    {medal.achieversCount}
   </div>
 </button>
 
@@ -54,7 +58,6 @@
 
   img {
     height: 4.375rem;
-    opacity: 0.5;
   }
 
   svg {

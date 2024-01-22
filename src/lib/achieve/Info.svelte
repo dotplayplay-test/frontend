@@ -1,8 +1,8 @@
 <div class="box">
-  <p>Achieve <span>5</span> medals: Get 20 NND</p>
-  <p>Achieve <span>10</span> medals: Get 100 NND</p>
-  <p>Achieve <span>15</span> medals: Get 2400 NND</p>
-  <p>Achieve <span>20</span> medals: Get 10000 NND</p>
+  <p>Achieve <span>5</span> medals: Get 20 PPD</p>
+  <p>Achieve <span>10</span> medals: Get 100 PPD</p>
+  <p>Achieve <span>15</span> medals: Get 2400 PPD</p>
+  <p>Achieve <span>20</span> medals: Get 10000 PPD</p>
 </div>
 
 <style>

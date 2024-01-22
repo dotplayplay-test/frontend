@@ -17,13 +17,14 @@
   };
 
   export let medals;
+  export let medalProgress;
 </script>
 
 <Dialog title="Master Medals" on:cancel={handleCancel}>
   {#if medals}
     <div>
       <div class="medals">
-        <Medals />
+        <Medals {medalProgress} />
       </div>
       <Info />
       <div class="divider"></div>
@@ -54,11 +55,9 @@
     background-color: rgb(34, 36, 40);
     margin: 20px 0;
   }
-
   .medals {
     margin: 20px 0;
   }
-
   .icon {
     width: 1rem;
     height: 1rem;
@@ -67,7 +66,6 @@
     vertical-align: text-top;
     fill: rgb(67, 179, 9);
   }
-
   .footer {
     text-align: center;
     font-weight: 600;

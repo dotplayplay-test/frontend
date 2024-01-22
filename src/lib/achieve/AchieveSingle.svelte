@@ -36,7 +36,8 @@
         class="sc-gsDKAQ hxODWG icon"
         ><use xlink:href="#icon_Firends"></use></svg
       >
-      0
+
+      {selectedMedal?.achieversCount}
     </div>
   {/if}
 </Dialog>
