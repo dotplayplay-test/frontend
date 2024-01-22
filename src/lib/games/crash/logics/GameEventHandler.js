@@ -249,16 +249,14 @@ const GameEventHandler = class extends EventEmitter {
       throw new Error("You need to be signed in");
     }
     if (!amount) throw new Error("Set a bet amount");
+    this.checkBetCurrency(currency);
     await this.checkMaxBet(amount);
+    this.checkBetLimits(amount, currency);
+    
     // await this.checkMaxProfit();
     if (
       new Decimal(amount).gt(WalletManager.getInstance().dict[currency].amount)
     ) {
-      console.log(
-        "Error betting ",
-        WalletManager.getInstance().dict[currency],
-        amount
-      );
       throw new Error("Insufficient balance!");
     }
   }
@@ -334,6 +332,24 @@ const GameEventHandler = class extends EventEmitter {
     return 0;
   }
 
+  checkBetLimits(amount, currency) {
+    const wallet = WalletManager.getInstance().dict[currency];
+    if (!wallet) throw new Error(`${currency} Wallet not found!`);
+    const {minAmount, maxAmount} = wallet;
+    if (amount < minAmount) {
+      throw new Error(`Minimum bet amount is ${minAmount.toFixed(4)}`)
+    }
+    if (amount > maxAmount) {
+      throw new Error(`Maximum bet amount is ${maxAmount.toFixed(4)}`)
+    }
+  }
+
+  checkBetCurrency(currency) {
+    if (currency !== "PPF" && currency !== "USDT") {
+      throw new Error('Select PPF or USDT to place bets!');
+    }
+  }
+
   // Max profit check
   async checkMaxProfit() {
     if (
@@ -398,13 +414,14 @@ const GameEventHandler = class extends EventEmitter {
   syncCurrency() {
     const curr = WalletManager.getInstance().current;
     if (
-      this.active &&
+      this.isActived &&
       !this.isBetting &&
       !this.script.isRunning &&
       this.currencyName != curr.currencyName
     ) {
       this.currencyName = curr.currencyName;
       this.currencyImage = curr.currencyImage;
+      this.emit("currency_changed");
     }
   }
 

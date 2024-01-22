@@ -9,13 +9,13 @@
     <div class="vip-main-page">
         <Main />
     </div>
-    <div class="vip-mobile-page">
+    <!-- <div class="vip-mobile-page">
         <Mobile />
-    </div>
+    </div> -->
 </div>
 
 <style>
-.vip-mobile-page{
+/* .vip-mobile-page{
     display: none;
-}
+} */
 </style>

@@ -1,6 +1,7 @@
 <script>
-  import { slide, fade } from "svelte/transition";
-  import { screen } from "$lib/store/screen"
+  import { slide, fade, fly } from "svelte/transition";
+  import { cubicIn, cubicOut } from "svelte/easing";
+  import { screen } from "$lib/store/screen";
   import { goto } from "$app/navigation";
   import moment from "moment";
   import { handleisLoggin } from "$lib/store/profile";
@@ -58,6 +59,8 @@
   let buyInterval;
   $: countDownParts = ["00", "00", "00"];
   $: inIntermission = false;
+
+  $: mobileTutItemPage = 1;
 
   const handleBuyTicket = () => {
     if ($handleisLoggin) {
@@ -139,10 +142,13 @@
         !saved.concluded &&
         gameData.game_id - saved.game_id <= 1
       ) {
-        lotteryDrawDialogOpen = {game_id: saved.game_id, lc: true}
+        lotteryDrawDialogOpen = { game_id: saved.game_id, lc: true };
       }
     } catch (e) {}
-    localStorage.setItem("lottery_game", JSON.stringify({game_id: gameData.game_id, concluded: false}));
+    localStorage.setItem(
+      "lottery_game",
+      JSON.stringify({ game_id: gameData.game_id, concluded: false })
+    );
   };
 
   const checkForDrawEnd = async (game_id) => {
@@ -159,8 +165,11 @@
   };
 
   const handleCloseDrawDialog = async () => {
-    const {game_id, lc} = lotteryDrawDialogOpen;
-    localStorage.setItem("lottery_game", JSON.stringify({game_id, concluded: true}));
+    const { game_id, lc } = lotteryDrawDialogOpen;
+    localStorage.setItem(
+      "lottery_game",
+      JSON.stringify({ game_id, concluded: true })
+    );
     lotteryDrawDialogOpen = null;
     if (!lc) {
       try {
@@ -180,6 +189,25 @@
       loading = false;
     }
   });
+
+  const tutItems = [
+    {
+      image: "https://static.nanogames.io/assets/buyticket.95472b7d.png",
+      title: "BUY TICKETS",
+      description: "Buy ticket with $0.1, and choose numbers for ticket.",
+    },
+    {
+      image: "https://static.nanogames.io/assets/draw.e92398c8.png",
+      title: "WAIT FOR THE DRAW",
+      description: "Wait for the draw at 15:00 UTC+0 daily.",
+    },
+    {
+      image: "https://static.nanogames.io/assets/checkprizes.4d0b07fb.png",
+      title: "CHECK FOR PRIZES",
+      description:
+        "Once the draw is over, come back to this page and check your prize.",
+    },
+  ];
 </script>
 
 {#if Boolean(provablyFairD)}
@@ -322,35 +350,61 @@
     </div>
     <div class="sc-bhnkmi guxePV">
       <div class="title">HOW TO PLAY</div>
-      <div class="sc-eTwdGJ gEYowd">
-        <div class="sc-hKumaY kgfLJt item col-1">
-          <img
-            src="https://static.nanogames.io/assets/buyticket.95472b7d.png"
-            alt=""
-          />
-          <div class="tit">BUY TICKETS</div>
-          <div class="cont">
-            Buy ticket with $0.1, and choose numbers for ticket.
+      <div class="sc-eTwdGJ gEYowd {$screen <= 621 ? 'mb' : ''}">
+        {#if $screen <= 621}
+          <div class="item-wrap">
+            {#each tutItems as item, index (item.title)}
+              {#if index + 1 === mobileTutItemPage}
+                <div
+                  in:fly={{ x: "100%", duration: 200 }}
+                  out:fly={{ x: "-100%", duration: 200 }}
+                  class="sc-hKumaY kgfLJt item col-{index + 1}"
+                >
+                  <img src={item.image} alt="" />
+                  <div class="tit">{item.title}</div>
+                  <div class="cont">
+                    {item.description}
+                  </div>
+                </div>
+              {/if}
+            {/each}
           </div>
-        </div>
-        <div class="sc-hKumaY kgfLJt item col-2">
-          <img
-            src="https://static.nanogames.io/assets/draw.e92398c8.png"
-            alt=""
-          />
-          <div class="tit">WAIT FOR THE DRAW</div>
-          <div class="cont">Wait for the draw at 15:00 UTC+0 daily.</div>
-        </div>
-        <div class="sc-hKumaY kgfLJt item col-3">
-          <img
-            src="https://static.nanogames.io/assets/checkprizes.4d0b07fb.png"
-            alt=""
-          />
-          <div class="tit">CHECK FOR PRIZES</div>
-          <div class="cont">
-            Once the draw is over, come back to this page and check your prize.
+          <div class="kpCklu navigation-btns-wrap">
+            <button
+              on:click={() => {
+                mobileTutItemPage =
+                  mobileTutItemPage === 1 ? 3 : mobileTutItemPage - 1;
+              }}
+              class="prev navigation-prev-lottery"
+              ><svg
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                class="sc-gsDKAQ hxODWG icon"
+                ><use xlink:href="#icon_Arrow"></use></svg
+              ></button
+            ><button
+              on:click={() => {
+                mobileTutItemPage =
+                  mobileTutItemPage === 3 ? 1 : mobileTutItemPage + 1;
+              }}
+              class="navigation-next-lottery"
+              ><svg
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                class="sc-gsDKAQ hxODWG icon"
+                ><use xlink:href="#icon_Arrow"></use></svg
+              ></button
+            >
           </div>
-        </div>
+        {:else}
+          {#each tutItems as item, index (item.title)}
+            <div class="sc-hKumaY kgfLJt item col-{index + 1}">
+              <img src={item.image} alt="" />
+              <div class="tit">{item.title}</div>
+              <div class="cont">
+                {item.description}
+              </div>
+            </div>
+          {/each}
+        {/if}
       </div>
       <div class="sc-iJCbQK ewSsiv">
         <div class="title">PACO LOTTERY RULE</div>
@@ -717,3 +771,80 @@
     <Loader />
   </div>
 {/if}
+
+<style>
+  .mb .item-wrap {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
+  .mb .item-wrap .item {
+    width: 100% !important;
+    flex: 1 0 100% !important;
+  }
+  .gEYowd.mb .navigation-btns-wrap {
+    width: 100%;
+  }
+  .gEYowd.mb .navigation-btns-wrap button.prev {
+    left: -0.5rem;
+  }
+
+  .gEYowd.mb .navigation-btns-wrap button {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    right: -0.5rem;
+    margin-top: -0.5rem;
+  }
+  .kpCklu > button:first-child {
+    margin-right: 4px;
+  }
+  .kpCklu button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+  .kpCklu button.prev .icon {
+    margin-left: -1px;
+    transform: rotate(180deg);
+  }
+
+  .kpCklu button .icon {
+    width: 0.9375rem;
+    height: 0.9375rem;
+    margin-left: 0.1875rem;
+    margin-top: -0.0625rem;
+  }
+  .hxODWG {
+    fill: rgba(153, 164, 176, 0.6);
+  }
+
+  @media screen and (max-width: 621px) {
+    .cont .table .big-prize .matches {
+      padding-left: 1.5625rem !important;
+    }
+    .ewSsiv .cont .table td {
+      padding: 0.875rem !important;
+    }
+    .ewSsiv .cont {
+      padding: 0px !important;
+    }
+    .exEirK {
+      width: 7.625rem !important;
+      max-width: 100% !important;
+      height: 1.625rem !important;
+      padding: 0px 0.25rem !important;
+    }
+    .exEirK .ball {
+      width: 10% !important;
+      height: auto !important;
+      margin: 0px 0.1875rem !important;
+    }
+  }
+</style>

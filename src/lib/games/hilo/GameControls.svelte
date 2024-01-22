@@ -4,6 +4,8 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { default_Wallet } from "$lib/store/coins";
   import { goto } from "$app/navigation";
+  import { viewInFiat } from "$lib/store/currency";
+  import WalletManager from "$lib/logics/WalletManager";
   import { handleisLoggin } from "$lib/store/profile";
   import Tooltip from "$lib/components/tooltip.svelte";
   import {
@@ -19,7 +21,6 @@
   $: sliderOpened = false;
 
   $: bet_amount = 0;
-  $: usd = 0;
   $: betRange = { min: 100, max: 1000 };
 
   $: slider = null;
@@ -27,7 +28,7 @@
   $: coin_image =
     $hilo_game?.token_img ||
     $default_Wallet.coin_image ||
-    "/coin/BTC.black.png";
+    "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
   $: isLoading = $processingRequest || !$hilo_game;
   $: currentRound = null;
   $: canGoNext = !isLoading && !!$hilo_game?.bet_id && !$hilo_game?.has_ended;
@@ -44,34 +45,20 @@
   $: canCashOut =
     !!$hilo_game?.bet_id && !$hilo_game?.has_ended && !!$hilo_game?.profit;
 
-  const updateUSD = () => {
-    if ($default_Wallet.coin_name === "PPF") {
-      usd = 0;
-      return;
-    }
-    let calculatedUsd = (bet_amount * (betRange.rate || 1)).toFixed(6);
-    usd = calculatedUsd.includes(".000000")
-      ? parseInt(calculatedUsd)
-      : calculatedUsd;
-  };
   default_Wallet.subscribe((v) => {
     if (!$hilo_game?.bet_id) {
-      const rate = v.coin_name === "PPL" ? 0.1 : 1;
       if (v.coin_name !== "PPF") {
         betRange = {
-          min: 0.0001 / rate,
-          max: 140 / rate,
-          rate,
+          min: 0.2,
+          max: 5000,
         };
       } else {
         betRange = {
           min: 100,
-          max: 200,
-          rate,
+          max: 1000,
         };
       }
       bet_amount = betRange.min;
-      updateUSD();
     }
   });
 
@@ -169,7 +156,6 @@
       );
       bet_amount =
         (sliderPercentage / 100) * (betRange.max - betRange.min) + betRange.min;
-      updateUSD();
     }
   };
 
@@ -187,12 +173,12 @@
       } else {
         bet_amount = Math.max(
           betRange.min,
-          Math.min(betRange.max, parseFloat(e.currentTarget.value || "0"))
+          Math.min(betRange.max, $viewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : parseFloat(e.currentTarget.value || "0"))
         );
+        console.log("Bett amount => ", bet_amount, WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")))
       }
       sliderPercentage =
         ((bet_amount - betRange.min) / (betRange.max - betRange.min)) * 100;
-      updateUSD();
     };
   };
 
@@ -276,7 +262,12 @@
   });
 </script>
 
-<div id="Hilo-control-0" class="sc-hLVXRe cYiOHZ game-control style0  {$screen < 1292 ? "mobile-view" : ""}">
+<div
+  id="Hilo-control-0"
+  class="sc-hLVXRe cYiOHZ game-control style0 {$screen <= 900
+    ? 'mobile-view'
+    : ''}"
+>
   <div class="game-control-panel">
     <div class="sc-fSDTwv kqpylJ">
       <div class="sc-fUQcsx kqrzPs betting">
@@ -297,7 +288,13 @@
                 </Tooltip>
               </div>
             </div>
-            <div class="label-amount">{usd} USD</div>
+            <div class="label-amount">
+              {#if $viewInFiat && $default_Wallet.coin_name !== "PPF"}
+                {bet_amount.toFixed(4)} {$default_Wallet.coin_name}
+              {:else}
+                {WalletManager.getInstance().amountToFiatString(bet_amount)}
+              {/if}
+            </div>
           </div>
           <div class="input-control {isFocused ? 'is-focus' : ''}">
             <input
@@ -305,9 +302,11 @@
               on:blur={() => (isFocused = false)}
               on:focus={() => (isFocused = true)}
               type="text"
-              value={bet_amount.toFixed(6)}
+              value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                bet_amount
+              ).toFixed(6) :bet_amount.toFixed(4)}
               disabled={inputDisabled}
-            /><img alt="" class="coin-icon" src={coin_image} />
+            /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" : coin_image} />
             <div class="sc-kDTinF bswIvI button-group">
               <button disabled={inputDisabled} on:click={handleAdjustBet("/")}
                 >/2</button
@@ -377,10 +376,12 @@
         <div class="sc-ezbkAF gcQjQT input">
           <div class="input-label">Total Profit ({controlStats.payout}x)</div>
           <div class="input-control">
-            <input readonly value={controlStats.profit} /><img
+            <input readonly value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+              parseFloat(controlStats.profit)
+            ).toFixed(6) : controlStats.profit} /><img
               alt=""
               class="amount-ico"
-              src={coin_image}
+              src={$viewInFiat ? "/coin/USD.black.png" : coin_image}
             />
           </div>
         </div>
@@ -395,10 +396,12 @@
               ><path
                 d="M16 3l10.833 12.588-4.815-0 0.001 13.413h-12.037l-0-13.413-4.814 0 10.833-12.588z"
               ></path></svg
-            ><input readonly value={controlStats.hiProfit} /><img
+            ><input readonly value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+              parseFloat(controlStats.hiProfit)
+            ).toFixed(6) :controlStats.hiProfit} /><img
               alt=""
               class="amount-ico"
-              src={coin_image}
+              src={$viewInFiat ? "/coin/USD.black.png" : coin_image}
             />
           </div>
         </div>
@@ -413,10 +416,12 @@
               ><path
                 d="M16 29.153l10.756-13.018-4.781 0 0.001-13.289h-11.951l-0 13.289-4.78-0 10.756 13.018z"
               ></path></svg
-            ><input readonly value={controlStats.loProfit} /><img
+            ><input readonly value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+              parseFloat(controlStats.loProfit)
+            ).toFixed(6) :controlStats.loProfit} /><img
               alt=""
               class="amount-ico"
-              src={coin_image}
+              src={$viewInFiat ? "/coin/USD.black.png" : coin_image}
             />
           </div>
         </div>
@@ -712,7 +717,7 @@
     transform: rotate(180deg);
     cursor: pointer;
   }
- 
+
   .gOLODp .label-amount {
     margin-left: auto;
   }

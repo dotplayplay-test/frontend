@@ -9,7 +9,7 @@ import {
   pplWallet,
 } from "$lib/store/coins";
 import {
-  currencyRates
+  currencyRates, preferredCurrency
 } from "$lib/store/currency";
 import {
   action,
@@ -121,6 +121,7 @@ export default class WalletManager extends EventEmitter {
     this.deductions = {};
     this.isFirstSync = true;
     this.hideAmount = false;
+    this.preferredFiatCurrency = "AUD";
     this.current = { 
       currencyName: appData.currencyName,
       currencyImage: appData.currencyImage
@@ -143,7 +144,7 @@ export default class WalletManager extends EventEmitter {
       currencyName: appData.currencyName,
       currencyImage: appData.currencyImage,
       aliasCurrencyName: appData.currencyName,
-      minAmount: 1, maxAmount: 100,
+      minAmount: 100, maxAmount: 10000,
       usdPrice: 0,
     });
     
@@ -201,6 +202,9 @@ export default class WalletManager extends EventEmitter {
 
     currencyRates.subscribe(rates => {
       this.currencyRates = rates;
+    });
+    preferredCurrency.subscribe(currency => {
+      this.preferredFiatCurrency = currency;
     })
   }
 
@@ -457,14 +461,27 @@ export default class WalletManager extends EventEmitter {
     return !!(currencyObj && currencyObj.usdPrice > 0);
   }
 
+  amountToFiatString(amount, token = this.current.currencyName , fiat = this.preferredFiatCurrency, rates = this.currencyRates, precision = 4) {
+    return `${this.amountToFiat(amount, token, fiat, rates).toFixed(precision)} ${fiat}`
+  }
 
-  amountToFiat(amount, token, fiat, rates = this.currencyRates) {
-    if (!this.currencyRates?.length) return 0;
+  amountToFiat(amount, token = this.current.currencyName , fiat = this.preferredFiatCurrency, rates = this.currencyRates) {
+    if (!rates.length) return 0;
     const rate = rates.find(r => r.currency=== fiat)?.rate || 0;
     const bnAmount = new Decimal(amount);
-    const usdPrice = token === "PPF" ? 0 : token === "PPL" ? 0.1 : 1;
+    const usdPrice = token === "PPF" ? 0 : token === "PPL" ? 0.1 : 1; //this.dict[currency].usdPrice
     return bnAmount.mul(usdPrice).mul(rate).toNumber()
   }
+
+  fiatToAmount(amount, token = this.current.currencyName, fiat = this.preferredFiatCurrency, rates = this.currencyRates) {
+    if (!rates.length) return 0;
+    const rate = rates.find(r => r.currency=== fiat)?.rate || 0;
+    const fiatAmount = new Decimal(amount);
+    const usdPrice = token === "PPF" ? 0 : token === "PPL" ? 0.1 : 1; //this.dict[currency].usdPrice
+    if (usdPrice === 0 || rate === 0) return 0
+    return fiatAmount.div(usdPrice).div(rate).toNumber()
+  }
+  
 
   amountToLocale(amount, currency) {
     const bnAmount = new Decimal(amount);

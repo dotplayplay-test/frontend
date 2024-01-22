@@ -13,9 +13,10 @@ import CrashXBetHandler from "./CrashXBetHandler";
 import Decimal from "decimal.js";
 import { sortedIndexBy } from "lodash";
 import UserStore from "$lib/logics/UserStore";
-import WalletManager from "./WalletManager";
+import WalletManager from "$lib/logics/WalletManager";
 import { ServerURl } from "../../../backendUrl";
 import axios from "axios";
+
 function Bn(seed) {
   // t = t.slice(0, 13);
   // let e = parseInt(t, 16) / Math.pow(16, 13);
@@ -430,10 +431,10 @@ export default class CrashGame extends BaseGame {
 
       if (
         userBet &&
-        userBet.rate !== player.rate &&
-        this.betInfo &&
-        ((this.betInfo.rate = userBet.rate), (player.rate = this.betInfo.rate))
+        this.betInfo
       ) {
+        this.betInfo.rate = userBet.rate;
+        player.rate = this.betInfo.rate;
         settleData.wager = player.bet.toNumber();
         settleData.cashedAt = player.rate;
       }
@@ -452,8 +453,8 @@ export default class CrashGame extends BaseGame {
               x.rate === 1.96
                 ? maxRate < 2
                 : x.rate === 2
-                ? maxRate >= 2
-                : maxRate >= 10;
+                  ? maxRate >= 2
+                  : maxRate >= 10;
             return {
               won,
               wager: player.bet.toNumber(),
@@ -604,7 +605,7 @@ export default class CrashGame extends BaseGame {
   //   });
   // }
 
-  addPlayer(players) { 
+  addPlayer(players) {
     players.forEach((player) => {
       if (!this.playersDict[player.userId]) {
         const bet = WalletManager.getInstance().amountToLocale(player.bet.toNumber(), player.currencyName);
@@ -618,7 +619,7 @@ export default class CrashGame extends BaseGame {
   }
 
   async handleBetCrash(betData, scriptId) {
-    
+
     if (!betData) {
       betData = {
         bet: this.amount,
@@ -642,7 +643,7 @@ export default class CrashGame extends BaseGame {
       gameId: this.gameId,
       currencyName: betData.currencyName,
       currencyImage: betData.currencyImage,
-      bet: betData.bet.toFixed(8),
+      bet: new Decimal(betData.bet).toNumber(),
       autoEscapeRate: betData.autoRate,
       scriptId: scriptId || null,
       frontgroundId: this.txId,
@@ -664,14 +665,14 @@ export default class CrashGame extends BaseGame {
         autoRate: e.payout,
         rate: 0,
         currencyName: this.currencyName,
+        currencyImage: this.currencyImage,
       },
       this.script.script ? this.script.script.id : undefined
     );
     await this.waitGameEnd();
-    return (
-      (this.betInfo ? this.betInfo.rate : 0) / 100,
-      [...this.history.slice(-20)].reverse()
-    );
+    return [(this.betInfo ? this.betInfo.rate : 0),
+    [...this.history.slice(-20)].reverse()
+    ];
   }
 
   async handleEscape() {
@@ -697,14 +698,14 @@ export default class CrashGame extends BaseGame {
         isNull
           ? null
           : {
-              bet: this.amount,
-              autoRate: this.maxRate,
-              rate: 0,
-              currencyName: this.currencyName,
-              currencyImage: this.currencyImage,
-            }
+            bet: this.amount,
+            autoRate: this.maxRate,
+            rate: 0,
+            currencyName: this.currencyName,
+            currencyImage: this.currencyImage,
+          }
       );
-    } catch (error) {}
+    } catch (error) { }
   }
 
   resetHistory({ gameId, hash, cashedAt, wager }) {
@@ -771,7 +772,7 @@ export default class CrashGame extends BaseGame {
 
   active() {
     if (this.script.isRunning) {
-      this.enableHotkey();
+      this.enableHotkeys();
     } else {
       this.xbet.active();
       super.active();
@@ -780,10 +781,9 @@ export default class CrashGame extends BaseGame {
 
   deactivate() {
     if (this.script.isRunning) {
-      this.enableHotkey(false);
-    } else {
-      this.xbet.deactivate();
-      super.deactivate();
+      this.script.unRegist();
     }
+    this.xbet.deactivate();
+    super.deactivate();
   }
 }

@@ -312,7 +312,7 @@
                   ></div>
                   {game.gameId}
                 </div></td
-              ><td>{game.odds}x</td><td
+              ><td>{game.odds.toFixed(2)}x</td><td
                 ><div class="flex-center">
                   <input type="text" readonly="" value={game.hash} /><a
                     target="_blank"

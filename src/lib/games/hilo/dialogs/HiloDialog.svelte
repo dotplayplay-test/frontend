@@ -78,7 +78,7 @@
           <SeedSettings
             fromDetail={launchConf.tab === 1}
             on:close={(e) => {
-              if (e.detail.fromDetail) currentTab = 3
+              if (e.detail.fromDetail) currentTab = 3;
               else dispatch("close");
             }}
           />
@@ -112,6 +112,15 @@
     background-color: rgba(0, 0, 0, 0.7);
     filter: none !important;
   }
+  @media only screen and (max-width: 800px) {
+    .dialog {
+      left: 0px !important;
+      top: 0px !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0px !important;
+    }
+  }
   .dialog {
     position: absolute;
     display: flex;
@@ -134,7 +143,7 @@
     transform: rotate(180deg);
     width: 16px;
     height: 16px;
-}
+  }
   .dialog-back {
     position: absolute;
     left: 0px;
@@ -206,13 +215,13 @@
     display: flex;
     overflow: hidden;
   }
-  :global(.default-style > div)  {
+  :global(.default-style > div) {
     border-radius: 20px;
     background-color: rgb(30, 32, 36);
     padding: 1.25rem 1.25rem 0px;
   }
 
-  :global(.dialog-body > div)  {
+  :global(.dialog-body > div) {
     flex: 1 1 0%;
   }
 </style>

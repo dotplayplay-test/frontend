@@ -1,9 +1,6 @@
 <script>
   import { handleAuthToken } from "$lib/store/routes";
-  import { handleisLoggin } from "$lib/store/profile";
   import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
   import Loader from "$lib/components/loader.svelte";
   import HiOutlineScale from "svelte-icons-pack/hi/HiOutlineScale";
   import IoArrowBack from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
@@ -41,7 +38,7 @@
     }
     try {
       const { data, error } = await UseFetchData($handleAuthToken).fetch(
-        `/lottery/game-tickets?id=${game.game_id}`,
+        `/lottery/game-tickets?id=${game.game_id}`
       );
       if (index === currentIndex) tickets = data.tickets;
     } catch (error) {
@@ -52,7 +49,8 @@
   }
   onMount(async () => {
     try {
-      const { data, error } = await UseFetchData($handleAuthToken).fetch("/lottery/history");
+      const { data, error } =
+        await UseFetchData($handleAuthToken).fetch("/lottery/history");
       gameHistory = data.games;
       loading = false;
       loadTickets(0);
@@ -76,11 +74,11 @@
           disabled={currentIndex === gameHistory.length - 1}
           class="sc-iqseJM cBmlor button button-normal pre"
           ><div class="button-inner">
-            <Icon
-              src={IoArrowBack}
-              size="23"
-              color="rgba(153, 164, 176, 0.6)"
-            />
+            <svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="sc-gsDKAQ hxODWG icon"
+              ><use xlink:href="#icon_Arrow"></use></svg
+            >
           </div></button
         >
         <div
@@ -99,11 +97,11 @@
               class="arrow"
             >
               <div class="icon-wrap">
-                <Icon
-                  src={IoArrowForward}
-                  size="23"
-                  color="rgba(153, 164, 176, 0.6)"
-                />
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  class="sc-gsDKAQ hxODWG icon"
+                  ><use xlink:href="#icon_Arrow"></use></svg
+                >
               </div>
             </div>
           </div>
@@ -139,33 +137,33 @@
           disabled={currentIndex === 0}
           class="sc-iqseJM cBmlor button button-normal"
           ><div class="button-inner">
-            <Icon
-              src={IoArrowForward}
-              size="23"
-              color="rgba(153, 164, 176, 0.6)"
-            />
+            <svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="sc-gsDKAQ hxODWG icon"
+              ><use xlink:href="#icon_Arrow"></use></svg
+            >
           </div></button
         ><button
           on:click={() => handleChangeIndex(0, true)}
           class="sc-iqseJM cBmlor button button-normal"
           disabled={currentIndex === 0}
           ><div class="button-inner">
-            <Icon
-              src={BiArrowToRight}
-              size="23"
-              color="rgba(153, 164, 176, 0.6)"
-            />
+            <svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="sc-gsDKAQ hxODWG icon"
+              ><use xlink:href="#icon_Final"></use></svg
+            >
           </div></button
         ><span class="time"
           >{new Date(currentGame.draw_date).toLocaleString()}</span
         >
       </div>
       <button on:click={handleShowPF} class="fairness"
-        ><Icon
-          src={HiOutlineScale}
-          size="23"
-          color="rgba(153, 164, 176, 0.6)"
-        /></button
+        ><svg
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="sc-gsDKAQ hxODWG icon"
+          ><use xlink:href="#icon_Fairness"></use></svg
+        ></button
       >
     </div>
     <div class="sc-cAhXWc elqmaR table-wrap">
@@ -234,7 +232,7 @@
                               {#each ticket.numbers.slice(0, 5) as number, index (`${number}_${index}`)}
                                 <div
                                   class="ball {currentGame.numbers.includes(
-                                    number,
+                                    number
                                   )
                                     ? 'active'
                                     : ''}"
@@ -296,6 +294,28 @@
 {/if}
 
 <style>
+  @media screen and (max-width: 621px) {
+    .dTcUpI {
+      display: block !important;
+      position: relative !important;
+      padding: 1.125rem 1rem 1.4375rem !important;
+      height: auto !important;
+    }
+    .dTcUpI .gameno-control .time {
+      margin-left: auto !important;
+    }
+    .dTcUpI .gameno-control {
+      margin: 1rem 0px 0px !important;
+    }
+    .dTcUpI .game-no {
+      color: rgb(255, 255, 255) !important;
+    }
+    .dTcUpI .fairness {
+      position: absolute;
+      right: 1rem;
+      top: 1.125rem;
+    }
+  }
   .dTcUpI {
     display: flex;
     -webkit-box-align: center;
@@ -316,7 +336,19 @@
     margin: 0px 0.3125rem;
     background-color: rgba(45, 48, 53, 0.8);
   }
-
+  .gameno-control .button.pre .icon {
+    transform: rotate(180deg);
+  }
+  .hxODWG {
+    width: 1.4em;
+    height: 1.4em;
+    fill: rgba(153, 164, 176, 0.6);
+  }
+  .dTcUpI .gameno-control .button .icon {
+    width: 0.75rem;
+    height: 0.75rem;
+    fill: rgb(255, 255, 255);
+  }
   .cBmlor {
     display: block;
     width: 100%;
@@ -349,7 +381,7 @@
     border-radius: 10px;
     border: 1px solid var(--border-1);
     padding: 0px 2.875rem 0px 0.625rem;
-    background-color: var(--sidebar-card-bg);
+    background-color: rgba(45, 48, 53, 0.5);
     color: rgb(255, 255, 255);
   }
   .gOHquD.is-open .select-options-wrap {
@@ -435,7 +467,8 @@
     border: 1px solid transparent;
     border-radius: 1.0625rem;
     cursor: pointer;
-color: var(--text-6);    white-space: nowrap;
+    color: var(--text-6);
+    white-space: nowrap;
   }
   .jScFby {
     box-sizing: border-box;
@@ -705,7 +738,8 @@ color: var(--text-6);    white-space: nowrap;
 
   .iUeetX th {
     font-weight: normal;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   .jMsmRL table thead tr th {
     color: var(--original-text);
     white-space: nowrap;
@@ -721,7 +755,8 @@ color: var(--text-6);  }
 
   .iUeetX th {
     font-weight: normal;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
   @media screen and (min-width: 800px) {
     .jMsmRL table thead tr th:first-child,
     .jMsmRL table tbody tr td:first-child {
