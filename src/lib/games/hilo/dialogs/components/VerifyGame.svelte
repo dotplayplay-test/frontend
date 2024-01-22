@@ -35,6 +35,7 @@
       error_msg.set(error.message);
     }
   });
+  
   let timeout;
   const handleRoundChange = (e) => {
     currentRound = parseInt(e.currentTarget.value || "0");

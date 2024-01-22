@@ -17,6 +17,7 @@
     }
     return result;
   }
+  
   $: isFocused = false;
   $: clientSeeds = generateString(10);
   const dispatch = createEventDispatcher();

@@ -51,6 +51,7 @@
   };
 </script>
 
+
 {#if Boolean(gameDetails)}
   <div class="sc-dkPtRN jScFby scroll-view sc-bvFjSx jGQOsZ">
     <div class="sc-emDsmM Osnbt">

@@ -11,6 +11,7 @@
   import useLiveStats from "$lib/hook/livestats";
   import useFormatter from "$lib/hook/formatter";
   import {liveStats} from "./store";
+  import HiloDialog from "./dialogs/HiloDialog.svelte";
   const { getCardSuite, suites } = useDeck();
   const { removeTrailingZeros, getSuffix } = useFormatter();
   const { recordGame } = useLiveStats(liveStats, "HILO_LIVE_STATS");
@@ -22,7 +23,7 @@
   } from "$lib/games/hilo/store";
 
   const dispatch = createEventDispatcher();
-
+  $: hiloDialogData = null;
   $: HIAnimContainer = null;
   $: HIAnim = null;
   $: LOAnimContainer = null;
@@ -150,7 +151,9 @@
     LOAnim?.destroy();
   });
 </script>
-
+{#if Boolean(hiloDialogData)}
+  <HiloDialog launchConf={hiloDialogData} on:close={() => hiloDialogData = null} />
+{/if}
 <div class="game-view">
   <div class="sc-hoHwyw fIoiVG game-recent">
     <div class="recent-list-wrap">
@@ -159,8 +162,10 @@
         style="width: 112.5%; transform: translate(0%, 0px);"
       >
         {#each $userBets.slice(0, 10).reverse() as bet (bet.bet_id)}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
           <div class="recent-item" style="width: 11.1111%;">
-            <div class="item-wrap {bet.won ? 'is-win' : 'is-lose'}">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div on:click={() => (hiloDialogData = { tab: 1, betID: bet.bet_id })} class="item-wrap {bet.won ? 'is-win' : 'is-lose'}">
               {bet.payout.toFixed(2)}x
             </div>
           </div>
@@ -563,6 +568,7 @@
 
   .fIoiVG .item-wrap {
     display: flex;
+    cursor: pointer;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;

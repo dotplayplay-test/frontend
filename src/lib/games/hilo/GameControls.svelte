@@ -40,6 +40,7 @@
 
   $: canBet =
     !!bet_amount &&
+    ($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT") &&
     $default_Wallet.balance >= bet_amount &&
     (!$hilo_game?.bet_id || $hilo_game?.has_ended || $hilo_game?.new_game);
   $: canCashOut =
@@ -140,7 +141,7 @@
   $: inputDisabled =
     !$handleisLoggin ||
     (!!$hilo_game && $hilo_game.bet_id && !$hilo_game.has_ended) ||
-    $default_Wallet.coin_name === "PPL";
+    !($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT");
 
   const handleSliderMove = (e) => {
     if (isGrabbing) {
@@ -372,6 +373,9 @@
               >
             </div>
           </div>
+          {#if $default_Wallet.coin_name && !($default_Wallet.coin_name === "PPF" || $default_Wallet.coin_name === "USDT")}
+          <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+          {/if}
         </div>
         <div class="sc-ezbkAF gcQjQT input">
           <div class="input-label">Total Profit ({controlStats.payout}x)</div>

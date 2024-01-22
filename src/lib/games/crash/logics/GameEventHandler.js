@@ -14,6 +14,7 @@ const GameEventHandler = class extends EventEmitter {
     super();
 
     // Config
+    this.firstSync = false;
     this.name = "";
     this.namespace = "";
     this.isInited = false;
@@ -134,7 +135,9 @@ const GameEventHandler = class extends EventEmitter {
 
     reaction(
       () => WalletManager.getInstance().current,
-      this.syncCurrency.bind(this)
+      () => {
+        this.syncCurrency();
+      }
     );
 
     reaction(
@@ -417,8 +420,9 @@ const GameEventHandler = class extends EventEmitter {
       this.isActived &&
       !this.isBetting &&
       !this.script.isRunning &&
-      this.currencyName != curr.currencyName
+      (this.currencyName != curr.currencyName || !this.firstSync)
     ) {
+      this.firstSync = true;
       this.currencyName = curr.currencyName;
       this.currencyImage = curr.currencyImage;
       this.emit("currency_changed");
