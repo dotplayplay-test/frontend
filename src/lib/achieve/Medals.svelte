@@ -1,6 +1,5 @@
 <script>
   export let medalProgress;
-  console.log({ medalProgress });
 </script>
 
 <div>
