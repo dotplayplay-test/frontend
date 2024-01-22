@@ -1,6 +1,5 @@
 <script>
   import { goto } from "$app/navigation";
-  import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
   import Icon from "svelte-icons-pack/Icon.svelte";
   import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -9,7 +8,6 @@
     handleGoogleAuth,
     handleFacebookAuth,
   } from "$lib/firebaseAuth/index";
-  import { createEventDispatcher } from "svelte";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { current_route } from "$lib/store/routes";
@@ -20,7 +18,6 @@
   import { fetchMedals } from "$lib/achieve/actions";
   import { handleAuthToken } from "$lib/store/routes";
 
-  const dispatch = createEventDispatcher();
   let email = "";
   let password = "";
   const googleAuth = () => {
@@ -301,9 +298,7 @@
   .light-bg {
     background-color: rgb(255, 255, 255) !important;
   }
-  .light-text {
-    color: rgb(49, 55, 61) !important;
-  }
+
   .light-input-control {
     border: 1px solid rgb(233, 234, 242) !important;
     background-color: rgb(245, 246, 250) !important;

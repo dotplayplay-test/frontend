@@ -15,7 +15,7 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       class="sc-gsDKAQ hxODWG icon"><use xlink:href="#icon_Firends"></use></svg
     >
-    0
+    {medal.achieversCount}
   </div>
 </button>
 

@@ -1,11 +1,9 @@
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore } from "$lib/store/profile";
 import { default_Wallet } from "$lib/store/coins";
-import { goto } from "$app/navigation";
 import { error_msg, is_loading } from "../../lib/nestedpages/auth/login/store";
 import { ServerURl } from "$lib/backendUrl";
 const URL = ServerURl();
-import * as MedalActions from "$lib/achieve/actions";
 
 export const useLogin = () => {
   let error;
@@ -32,8 +30,6 @@ export const useLogin = () => {
       handleAuthToken.set(json.Token);
       profileStore.set(json.result);
 
-      await _fetchMedals(json.Token);
-
       window.location.href = "/";
       // goto("/")
       default_Wallet.set(json.default_wallet);
@@ -41,14 +37,4 @@ export const useLogin = () => {
     }
   };
   return { login, isLoading, error };
-};
-
-const _fetchMedals = async (token) => {
-  try {
-    $medals = await MedalActions.fetchMedals({ token });
-    $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
-    $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
-  } catch (err) {
-    console.log(err.message);
-  }
 };

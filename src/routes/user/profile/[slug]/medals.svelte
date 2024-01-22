@@ -4,7 +4,7 @@
   import BiMedal from "svelte-icons-pack/bi/BiMedal";
 
   import { goto } from "$app/navigation";
-  import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
+  import { medals, earnedMedals } from "$lib/store/medal";
 </script>
 
 <div class="sc-gXRojI sc-cKVNtL bRYT JQLBl self">
