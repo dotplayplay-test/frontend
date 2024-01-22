@@ -1,7 +1,7 @@
 <script>
 import { goto } from "$app/navigation"
 import "../../styles/bonus/index.css"
-import Bonus from "$lib/mobile/pages/bonus.svelte";
+// import Bonus from "$lib/mobile/pages/bonus.svelte";
 import Mainbonus from "$lib/pages/bonus/Mainbonus.svelte";
 import { handleisLoggin } from "$lib/store/profile";
 
@@ -232,5 +232,5 @@ import { handleisLoggin } from "$lib/store/profile";
 
 
 <div class="mobile">
-    <Bonus />
+    <!-- <Bonus /> -->
 </div>

@@ -51,13 +51,13 @@
     }, 3000);
   }
 
-  if (tip_user.vip_level < 8) {
-    error_msg.set("You can tip vip level 8");
-    setTimeout(() => {
-      error_msg.set("");
-      history.back(-1);
-    }, 3000);
-  }
+  // if (tip_user.vip_level < 8) {
+  //   error_msg.set("You can tip vip level 8");
+  //   setTimeout(() => {
+  //     error_msg.set("");
+  //     history.back(-1);
+  //   }, 3000);
+  // }
 
   let coins = $coin_list.filter(
     (coin) => coin.coin_name.toLowerCase() !== "ppd"
@@ -120,7 +120,10 @@
     };
 
     if (data.vip_level >= 8) {
-      if (tip_user.vip_level >= 8) {
+      if (
+        // tip_user.vip_level >= 8
+        true
+      ) {
         if (parseInt(tipValue) <= 0) {
           error_msg.set("Amount must be above zero 0");
           setTimeout(() => error_msg.set(""), 3000);
@@ -156,7 +159,10 @@
     </div>
   {/if}
 
-  {#if $profileStore.vip_level >= 8 && tip_user.vip_level >= 8}
+  {#if $profileStore.vip_level >= 8 
+  }
+    <!-- && tip_user.vip_level >= 8 } -->
+
     <div
       class="dialog"
       style="opacity: 1; width: 464px; height: 581px; margin-top: -290.5px; margin-left: -232px; transform: scale(1) translateZ(0px);"

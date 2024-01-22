@@ -30,19 +30,44 @@
   import { error_msg } from "$lib/nestedpages/auth/login/store";
   import { chats } from "$lib/chat-room/store/index";
   import { ServerURl } from "../backendUrl";
-  import Mobile from "./mobile.svelte";
-
+  import HiSolidDotsVertical from "svelte-icons-pack/hi/HiSolidDotsVertical";
+  import HiSolidChevronRight from "svelte-icons-pack/hi/HiSolidChevronRight";
+  import BsCashCoin from "svelte-icons-pack/bs/BsCashCoin";
+  import FiAtSign from "svelte-icons-pack/fi/FiAtSign";
   let element;
   let newMessages = "";
   let textareaRef;
   let showRule = false;
   let showRegion = false;
-  let showTopWinner = false;
   let URL = ServerURl();
   let defaultUsername = [];
   let filteredUsers = [];
   let showMention = false;
   const MATCH_TIP = /^\/tip\s+@(\S+)\s*$/;
+
+  let showTopWinner = false;
+  let topWinnerContainer;
+
+  function expandWinnerContainer() {
+    if (topWinnerContainer.style.height === "80px") {
+      topWinnerContainer.style.height = "160px";
+    } else {
+      topWinnerContainer.style.height = "80px";
+    }
+  }
+
+  const winIcons = [
+    "https://static.nanogames.io/assets/rich-close.4d046450.png",
+    "https://static.nanogames.io/assets/rich.8786d13b.png",
+  ];
+
+  function toggleTopWinnerDialog() {
+    showTopWinner = true;
+    setTimeout(() => {
+      topWinnerContainer.style.height = "80px";
+      topWinnerContainer.focus();
+    }, 1);
+  }
 
   const updateWallet = () => {
     axios
@@ -94,11 +119,11 @@
     }
   };
 
-  function levelColor(level){
-    if(level <=7) return "type-1"
-    if(level > 7 && level <= 21) return "type-2"
-    if(level > 21 && level <= 37) return "type-3"
-    if(level > 37 && level <= 55) return "type-4"
+  function levelColor(level) {
+    if (level <= 7) return "type-1";
+    if (level > 7 && level <= 21) return "type-2";
+    if (level > 21 && level <= 37) return "type-3";
+    if (level > 37 && level <= 55) return "type-4";
   }
 
   const mentionUser = (e) => {
@@ -319,14 +344,14 @@
 <div class="mobile">
   <div class="sc-bkkeKt kBjSXI" style="background-color: transparent;">
     <div class="dialog sc-dkqQuH ikQOCU">
-        {#if $error_msg}
+      {#if $error_msg}
         <div class="error-message">
           <div class="hTTvsjh">
             <div>{$error_msg}</div>
           </div>
         </div>
       {/if}
-        {#if showRule}
+      {#if showRule}
         <button
           class="rule_container sc-ieecCq fLASqZ overlay"
           style="position: fixed; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.7); z-index: 900; display: flex; justify-content: center; align-items: center;"
@@ -353,8 +378,8 @@
             </div>
             <ul>
               <li>
-                1. Don't spam, harass or be offensive to other users. Also, avoid
-                using CAPS! No one likes to be screamed at!
+                1. Don't spam, harass or be offensive to other users. Also,
+                avoid using CAPS! No one likes to be screamed at!
               </li>
               <li>
                 2. Don't beg or ask for loans, rains, tips and doubling coins.
@@ -367,7 +392,9 @@
                 buying or offering services.
               </li>
               <li>6. Use the designated language chatrooms accordingly.</li>
-              <li>5. Don't use URL shortener. Always submit the original link.</li>
+              <li>
+                5. Don't use URL shortener. Always submit the original link.
+              </li>
             </ul>
             <p>List of our full rules can be found on our forum.</p>
           </div>
@@ -377,7 +404,7 @@
         <div class="sc-hJZKUC dWgZek">
           <!-- svelte-ignore a11y-no-static-element-interactions -->
 
-         <div></div>
+          <div></div>
           <div class="chat-features">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -395,10 +422,122 @@
               />
             </div>
             <div class="sc-iWBNLc bXthlR rich-btn">
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
               <img
+                on:click={toggleTopWinnerDialog}
                 alt="rich"
-                src="https://static.nanogames.io/assets/rich.8786d13b.png"
+                src={winIcons[!showTopWinner ? 1 : 0]}
               />
+              {#if showTopWinner}
+                <button
+                  bind:this={topWinnerContainer}
+                  on:blur={() =>
+                    setTimeout(() => {
+                      showTopWinner = false;
+                    }, 500)}
+                  class="top_winner_container"
+                >
+                  <div class="header">
+                    <h4>BIGGEST WINNER TODAY</h4>
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div on:click={expandWinnerContainer} class="icon">
+                      <Icon
+                        src={HiSolidDotsVertical}
+                        size="18"
+                        color="rgb(85, 91, 101)"
+                        title="rules"
+                      />
+                    </div>
+                  </div>
+                  <div class="top_winner_content">
+                    <ul>
+                      <li>
+                        <div class="profile">
+                          <img
+                            src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                            alt=""
+                          />
+                          <img
+                            src="https://img2.nanogames.io/avatar/549561/s?t=1705664362094"
+                            alt=""
+                          />
+                          <p class="username">Tester1</p>
+                        </div>
+                        <div class="amount">
+                          <p>
+                            <span>+57657</span>
+                            <span>USDT</span>
+                          </p>
+                          <div class="chev">
+                            <Icon
+                              src={HiSolidChevronRight}
+                              size="25"
+                              color="rgb(85, 91, 101)"
+                              title="rules"
+                            />
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="profile">
+                          <img
+                            src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                            alt=""
+                          />
+                          <img
+                            src="https://img2.nanogames.io/avatar/549561/s?t=1705664362094"
+                            alt=""
+                          />
+                          <p class="username">Tester1</p>
+                        </div>
+                        <div class="amount">
+                          <p>
+                            <span>+57657</span>
+                            <span>USDT</span>
+                          </p>
+                          <div class="chev">
+                            <Icon
+                              src={HiSolidChevronRight}
+                              size="25"
+                              color="rgb(85, 91, 101)"
+                              title="rules"
+                            />
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="profile">
+                          <img
+                            src="https://static.nanogames.io/assets/silver.9f31a5f7.svg"
+                            alt=""
+                          />
+                          <img
+                            src="https://img2.nanogames.io/avatar/549561/s?t=1705664362094"
+                            alt=""
+                          />
+                          <p class="username">Tester1</p>
+                        </div>
+                        <div class="amount">
+                          <p>
+                            <span>+57657</span>
+                            <span>USDT</span>
+                          </p>
+                          <div class="chev">
+                            <Icon
+                              src={HiSolidChevronRight}
+                              size="25"
+                              color="rgb(85, 91, 101)"
+                              title="rules"
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </button>
+              {/if}
             </div>
             <button
               on:click={handlecloseChat}
@@ -425,7 +564,7 @@
               class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list"
             >
               <div class="sc-AjmGg kgsidd">
-                {#if defaultUsername.length > 0}     
+                {#if defaultUsername.length > 0}
                   {#each $chats as chat, i}
                     <div class="flat-item">
                       <div class="sc-tAExr VfNib notranslate">
@@ -435,7 +574,11 @@
                             href={`/user/profile/${chat.user_id}`}
                           >
                             <img class="avatar" alt="" src={chat.profle_img} />
-                            <div class={`sc-jQrDum jouJMO user-level  ${levelColor(chat.vip_level)}`}>
+                            <div
+                              class={`sc-jQrDum jouJMO user-level  ${levelColor(
+                                chat.vip_level
+                              )}`}
+                            >
                               <div class="level-wrap">
                                 <span>V</span><span>{chat.vip_level}</span>
                               </div>
@@ -820,16 +963,26 @@
                                             <div
                                               class="sc-fDMmqs gPLFex animation-win"
                                             >
-                                              <div class="star-item item-1"></div>
-                                              <div class="star-item item-2"></div>
-                                              <div class="star-item item-3"></div>
-                                              <div class="star-item item-4"></div>
+                                              <div
+                                                class="star-item item-1"
+                                              ></div>
+                                              <div
+                                                class="star-item item-2"
+                                              ></div>
+                                              <div
+                                                class="star-item item-3"
+                                              ></div>
+                                              <div
+                                                class="star-item item-4"
+                                              ></div>
                                             </div>
                                             <div class="word">
                                               <p class="one">
                                                 Winning tastes sweet!
                                               </p>
-                                              <p class="two">Mines Wow Moment</p>
+                                              <p class="two">
+                                                Mines Wow Moment
+                                              </p>
                                             </div>
                                           </div>
                                           <div class="bet-area open">
@@ -837,7 +990,8 @@
                                               xmlns:xlink="http://www.w3.org/1999/xlink"
                                               class="sc-gsDKAQ hxODWG icon"
                                             >
-                                              <use xlink:href="#icon_Mines"></use>
+                                              <use xlink:href="#icon_Mines"
+                                              ></use>
                                             </svg>
                                             <p>Bet ID: #6397680204923891</p>
                                             <div class="right">
@@ -934,7 +1088,9 @@
                                 class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane"
                               >
                                 I tipped&nbsp;&nbsp;
-                                <a class="cl-primary" href="/user/profile/285947"
+                                <a
+                                  class="cl-primary"
+                                  href="/user/profile/285947"
                                   >{chat.tipped_user}</a
                                 >
                                 <div class="msg-cont">
@@ -977,7 +1133,10 @@
                                 class="sc-jKTccl sc-bUbRBg sc-iuqRDJ bkGvjR Gdkwx gkHCXh ane"
                               >
                                 I tipped&nbsp;&nbsp;
-                                <a class="cl-primary" href="/user/profile/336277">
+                                <a
+                                  class="cl-primary"
+                                  href="/user/profile/336277"
+                                >
                                   @vvvvx
                                 </a>
                                 <div class="msg-cont">
@@ -1148,6 +1307,107 @@
 </div>
 
 <style>
+  .top_winner_container {
+    position: absolute;
+    right: 10px;
+    top: 75px;
+    padding: 0;
+    padding: 10px;
+    border-radius: 20px;
+    min-width: 340px;
+    background-color: var(--card-bg-2);
+    transform: translateY(-30px);
+    opacity: 0;
+    animation: slide-up 0.2s ease-in-out forwards;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .top_winner_container .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .top_winner_container .header h4 {
+    font-size: 15px;
+  }
+
+  .top_winner_container .header .icon {
+    position: absolute;
+    right: 0;
+    margin: 0 !important;
+    width: 20px;
+  }
+
+  .top_winner_container .top_winner_content {
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .top_winner_container .top_winner_content ul {
+    display: grid;
+    gap: 10px;
+  }
+
+  .top_winner_container .top_winner_content li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  .top_winner_container .top_winner_content li .profile {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+  }
+  .top_winner_container .top_winner_content li .profile .username {
+    margin-left: 3px;
+    font-weight: bold;
+  }
+  .top_winner_container .top_winner_content li img {
+    width: 23px;
+    border-radius: 50%;
+  }
+
+  .top_winner_container .top_winner_content li img:nth-child(1) {
+    width: 20px;
+  }
+
+  .top_winner_container .top_winner_content li .amount {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    padding-right: 20px;
+    background-color: var(--card-bg-6);
+    border-radius: 50px;
+    position: relative;
+  }
+
+  .top_winner_container .top_winner_content li .amount p {
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--text-6);
+  }
+
+  .top_winner_container .top_winner_content li .amount p span:nth-child(1) {
+    color: var(--primary-color);
+  }
+
+  .chev {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+  }
+
   .eA-dYOl {
     flex: 1 1 0%;
     display: flex;
@@ -2209,12 +2469,12 @@
     left: 0.0625rem;
   }
 
-  .VfNib .head .head-link .user-level.type-1{
-    background-color: #D9DDEC;
+  .VfNib .head .head-link .user-level.type-1 {
+    background-color: #d9ddec;
   }
 
-  .VfNib .head .head-link .user-level.type-2{
-    background-color: #E8DAFF;
+  .VfNib .head .head-link .user-level.type-2 {
+    background-color: #e8daff;
   }
 
   .VfNib .head .head-link .user-level.type-3 {
@@ -2222,7 +2482,7 @@
   }
 
   .VfNib .head .head-link .user-level.type-4 {
-    background-color: #773DFC;
+    background-color: #773dfc;
   }
 
   .fPtvsS .img-star {
