@@ -154,11 +154,7 @@
                     ></td
                   ><td
                     ><div
-                      class="sc-Galmp erPQzq coin notranslate {player.rate > 0
-                        ? 'is-win'
-                        : gameStatus === 3
-                          ? 'is-lose'
-                          : ''}"
+                      class="sc-Galmp erPQzq coin notranslate"
                     >
                       <img
                         alt=""
@@ -167,21 +163,19 @@
                       />
                       <div class="amount">
                         <span class="amount-str"
-                          >{removeTrailingZeros(player.bet.toFixed(8))}<span
+                          >{removeTrailingZeros(player.bet.toFixed(4))}<span
                             class="suffix"
-                            >{getSuffix(player.bet.toFixed(8))}</span
+                            >{getSuffix(player.bet.toFixed(4))}</span
                           ></span
                         >
                       </div>
                     </div></td
                   ><td
-                    >{#if player.rate > 0}
+                    >{#if gameStatus === 3 || player.rate > 0}
                       <div
                         class="sc-Galmp erPQzq coin notranslate {player.rate > 0
                           ? 'is-win'
-                          : gameStatus === 3
-                            ? 'is-lose'
-                            : ''}"
+                          : 'is-lose'}"
                       >
                         <img
                           alt=""
@@ -191,17 +185,16 @@
                         <div class="amount">
                           <span class="amount-str"
                             >{removeTrailingZeros(
-                              player.bet.mul(player.rate).sub(player.bet)
+                              player.rate ? player.bet.mul(player.rate).sub(player.bet).toFixed(4) : player.bet.toFixed(4)
                             )}<span class="suffix"
                               >{getSuffix(
-                                player.bet.mul(player.rate).sub(player.bet)
+                                player.rate ? player.bet.mul(player.rate).sub(player.bet).toFixed(4) : player.bet.toFixed(4)
                               )}</span
                             ></span
                           >
                         </div>
                       </div>
-                    {:else if gameStatus === 3}
-                      "bang"
+                    
                     {:else}
                       <span class="ttl opacity">Betting</span>
                     {/if}
@@ -325,9 +318,9 @@
                         <img alt="" class="coin-icon" src={bet.currencyImage} />
                         <div class="amount">
                           <span class="amount-str"
-                            >{removeTrailingZeros(bet.bet.toFixed(8))}<span
+                            >{removeTrailingZeros(bet.bet.toFixed(4))}<span
                               class="suffix"
-                              >{getSuffix(bet.bet.toFixed(8))}</span
+                              >{getSuffix(bet.bet.toFixed(4))}</span
                             ></span
                           >
                         </div>
@@ -381,9 +374,9 @@
                         <img alt="" class="coin-icon" src={bet.currencyImage} />
                         <div class="amount">
                           <span class="amount-str"
-                            >{removeTrailingZeros(bet.bet.toFixed(8))}<span
+                            >{removeTrailingZeros(bet.bet.toFixed(4))}<span
                               class="suffix"
-                              >{getSuffix(bet.bet.toFixed(8))}</span
+                              >{getSuffix(bet.bet.toFixed(4))}</span
                             ></span
                           >
                         </div>
@@ -883,6 +876,7 @@
   }
   .erPQzq .amount-str {
     width: 7em;
+    text-align: left;
     display: inline-block;
   }
   .engBBI tr {

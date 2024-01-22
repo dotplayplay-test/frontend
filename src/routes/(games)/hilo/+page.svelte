@@ -111,7 +111,7 @@
   style="opacity: 1; transform: none;"
 >
   <div class="game-area">
-    <div class="game-main {$screen < 1292 ? 'mobile-view' : ''}">
+    <div class="game-main {$screen < 900 ? 'mobile-view' : ''}">
       <GameControls
         on:hiloNextRound={handleNextRound}
         on:hiloCashout={handleCashOut}

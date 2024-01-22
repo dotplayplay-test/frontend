@@ -3,21 +3,24 @@
 </script>
 
 <script>
-  import { screen } from "$lib/store/screen"
+  import { screen } from "$lib/store/screen";
   import { browser } from "$app/environment";
+  import { viewInFiat } from "$lib/store/currency";
   import WalletManager from "$lib/logics/WalletManager";
   import CrashInfoDialog from "./dialogs/GameInfoDialog.svelte";
+  import ConfirmDialog from "../../components/ConfirmDialog.svelte";
   import { onMount } from "svelte";
   import { crashGameType, crashGame } from "./store";
   import { onDestroy } from "svelte";
   import Decimal from "decimal.js";
+  
   const { autorun } = connect();
   let trendBets = [
     { type: -200, label: "Red", payout: "1.96x" },
     { type: 200, label: "Green", payout: "2x" },
     { type: 1000, label: "Moon", payout: "10x" },
   ];
-
+  
   $: nextBetInfo = null;
   $: nextXBetInfo = {};
   $: canEscape = false;
@@ -39,6 +42,7 @@
   $: currentMaxRate = 100;
   $: xBetting = false;
   $: betting = false;
+  $: inputDisabled = false;
   $: autoBetting = false;
   $: autoBet = null;
   $: autoBetType = -1;
@@ -97,11 +101,14 @@
         scriptList = game.script.scriptList;
         scriptLogs = game.script.logs;
         scriptConfig = game.script.config;
+        currentAmount = game.amount.toFixed(4);
+        currentXAmount = xBet.amount.toFixed(4);
         coinImage = WalletManager.getInstance().current.currencyImage;
         coinName = WalletManager.getInstance().current.currencyName;
         nextBetInfo = game.nextBetInfo;
         canEscape = game.canEscape;
-        canBet = game.canBet;
+        inputDisabled = coinName !== "USDT" && coinName !== "PPF";
+        canBet = game.canBet && (coinName === "USDT" || coinName === "PPF");
         gameStatus = game.status;
         scriptRunning = game.script.isRunning;
         percentChance = new Decimal(99 / game.maxRate).toDP(2).toNumber();
@@ -141,7 +148,7 @@
       });
     }
   }
-
+  $: canViewInFiat = $viewInFiat && coinName !== "PPF";
   const inputValidate = (e) => {
     function validateInput(input) {
       if (!isNaN(Number(input))) {
@@ -156,17 +163,51 @@
       e.currentTarget.value = currentValue.slice(0, -1);
     }
   };
+  $: confirmDialogData = null;
 
+  const handleRunScript = () => {
+    if (!betScript) return;
+    if (scriptRunning) {
+      betScript.stop();
+      return;
+    }
+    confirmDialogData = {
+      message:
+        "Please note that enabling computer sleep mode, shutdown and switching mobile phone to the background may affect normal functioning of the script.",
+      response: (res) => {
+        confirmDialogData = null;
+        if (res) {
+          betScript && betScript.start();
+        }
+      },
+    };
+  };
+  const handleScriptConfigChange = (key) => {
+    return (e) => {
+      if (!betScript) return;
+      const update =
+        scriptConfig[key].type === "number"
+          ? parseFloat(e.currentTarget.value || "0")
+          : e.currentTarget.value;
+      betScript.updateConfig(key, update);
+    };
+  };
   const handleSetAmount = (opr) => {
     return (e) => {
       const game = $crashGame;
       if (game && !betting) {
         if (opr === "=")
-          game.setAmount(new Decimal(e.currentTarget.value) || 1);
+          game.setAmount(new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
         else if (opr === "/") game.setAmount(game.amount.div(2));
         else if (opr === "*") game.setAmount(game.amount.mul(2));
-        else if (opr === "min") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
-        else if (opr === "max") game.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
+        else if (opr === "min")
+          game.setAmount(
+            new Decimal(WalletManager.getInstance().dict[coinName].minAmount)
+          );
+        else if (opr === "max")
+          game.setAmount(
+            new Decimal(WalletManager.getInstance().dict[coinName].maxAmount)
+          );
         currentAmount = game.amount.toFixed(4);
       }
     };
@@ -176,11 +217,17 @@
     return (e) => {
       if (xBet && !xBetting) {
         if (opr === "=")
-          xBet.setAmount(new Decimal(e.currentTarget.value) || 1);
+          xBet.setAmount(new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
         else if (opr === "/") xBet.setAmount(xBet.amount.div(2));
         else if (opr === "*") xBet.setAmount(xBet.amount.mul(2));
-        else if (opr === "min") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].minAmount));
-        else if (opr === "max") xBet.setAmount(new Decimal(WalletManager.getInstance().dict[coinName].maxAmount));
+        else if (opr === "min")
+          xBet.setAmount(
+            new Decimal(WalletManager.getInstance().dict[coinName].minAmount)
+          );
+        else if (opr === "max")
+          xBet.setAmount(
+            new Decimal(WalletManager.getInstance().dict[coinName].maxAmount)
+          );
         currentXAmount = xBet.amount.toFixed(4);
       }
     };
@@ -191,7 +238,6 @@
       if (autoBetting) {
         autoBet && autoBetType === type && autoBet.stop();
       } else {
-        console.log("StartAuto Betting");
         xBet && xBet.setAutoBetType(type);
       }
     };
@@ -303,12 +349,13 @@
             WalletManager.getInstance().dict[coinName].minAmount) +
         WalletManager.getInstance().dict[coinName].minAmount;
       if (sliderOpened.classic) {
-        handleSetAmount("=")({ currentTarget: { value: amount }});
+        handleSetAmount("=")({ currentTarget: { value: amount } });
       } else if (sliderOpened.trend || sliderOpened.autoBet) {
         handleSetXAmount("=")({ currentTarget: { value: amount } });
       }
     }
   };
+
   onMount(() => {
     browser && document.body.addEventListener("click", sliderClose);
     browser && document.body.addEventListener("pointerup", handlePointUp);
@@ -331,7 +378,15 @@
     on:close={() => (dialogData = null)}
   />
 {/if}
-<div id="crash-control-1" class="sc-hLVXRe cYiOHZ game-control style1 {$screen < 951 ? "mobile-view" : ""}">
+{#if Boolean(confirmDialogData)}
+  <ConfirmDialog dialogData={confirmDialogData} />
+{/if}
+<div
+  id="crash-control-1"
+  class="sc-hLVXRe cYiOHZ game-control style1 {$screen < 951
+    ? 'mobile-view'
+    : ''}"
+>
   <div
     class="sc-iwjdpV {autoBetting && $crashGameType === 2
       ? 'eLa-Dxl'
@@ -379,9 +434,9 @@
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-ywFzA qPdve"
               ><div class="button-inner" style="width: 100%;">
                 <div class="monospace" style="width: 100%">
-                  {`${parseFloat(currentGamePayout * currentAmount).toFixed(4)} ${
-                    betInfo.currencyName
-                  }`}
+                  {`${parseFloat(currentGamePayout * currentAmount).toFixed(
+                    4
+                  )} ${betInfo.currencyName}`}
                 </div>
                 <div class="sub-text">(Cash out)</div>
               </div></button
@@ -412,7 +467,7 @@
             {/if}
           {/if}
 
-          <div class="forms {$screen < 952 ? "mobile-view" : ""}">
+          <div class="forms {$screen < 952 ? 'mobile-view' : ''}">
             <div
               class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {betting
                 ? 'disabled'
@@ -438,26 +493,32 @@
                   </div>
                 </div>
                 <div class="label-amount">
-                  {WalletManager.getInstance()
-                    .amountToLocale(currentAmount, coinName)
-                    .toFixed(2)} USD
+                  {#if canViewInFiat}
+                    {currentAmount} {coinName}
+                  {:else}
+                    {WalletManager.getInstance().amountToFiatString(
+                      currentAmount
+                    )}
+                  {/if}
                 </div>
               </div>
-              <div class="input-control {isFocused.bet ? "is-focus" : ""}">
+              <div class="input-control {isFocused.bet ? 'is-focus' : ''}">
                 <input
-                  on:focus={() => isFocused = {...isFocused, bet: true}}
-                  on:blur={() => isFocused = {...isFocused, bet: false}}
+                  on:focus={() => (isFocused = { ...isFocused, bet: true })}
+                  on:blur={() => (isFocused = { ...isFocused, bet: false })}
                   on:input={inputValidate}
-                  disabled={betting}
+                  disabled={betting || inputDisabled}
                   on:change={handleSetAmount("=")}
                   type="text"
-                  value={currentAmount}
-                /><img alt="" class="coin-icon" src={coinImage} />
+                  value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
+                    currentAmount
+                  ).toFixed(4) : currentAmount}
+                /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
                 <div class="sc-kDTinF bswIvI button-group">
-                  <button disabled={betting} on:click={handleSetAmount("/")}
+                  <button disabled={betting || inputDisabled} on:click={handleSetAmount("/")}
                     >/2</button
                   >
-                  <button disabled={betting} on:click={handleSetAmount("*")}
+                  <button disabled={betting || inputDisabled} on:click={handleSetAmount("*")}
                     >x2</button
                   >
                   {#if sliderOpened.classic}
@@ -504,11 +565,11 @@
                     </div>
                   {/if}
                   <button
-                    disabled={betting}
+                    disabled={betting || inputDisabled}
                     class="sc-gqtqkP gfnHxc"
                     on:click={(e) => {
                       e.stopPropagation();
-                      if (betting) return;
+                      if (betting || inputDisabled) return;
                       sliderOpened = { classic: true };
                     }}
                     ><svg
@@ -523,6 +584,9 @@
                   >
                 </div>
               </div>
+              {#if !(coinName === "PPF" || coinName === "USDT")}
+              <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+              {/if}
             </div>
             <div
               class="sc-ezbkAF hzTJOu input sc-gLDmcm fKDjWC {betting
@@ -537,10 +601,11 @@
                   </div>
                 </div>
               </div>
-              <div class="input-control {isFocused.maxRate ? "is-focus" : ""}">
+              <div class="input-control {isFocused.maxRate ? 'is-focus' : ''}">
                 <input
-                  on:focus={() => isFocused = {...isFocused, maxRate: true}}
-                  on:blur={() => isFocused = {...isFocused, maxRate: false}}
+                  disabled={betting || inputDisabled}
+                  on:focus={() => (isFocused = { ...isFocused, maxRate: true })}
+                  on:blur={() => (isFocused = { ...isFocused, maxRate: false })}
                   on:input={inputValidate}
                   on:input={handleChangeMaxRateChange}
                   type="number"
@@ -552,7 +617,11 @@
           </div>
         </div>
       {:else}
-        <div class="sc-kMyqmI jDBJMt manual-control  {$screen < 952 ? "mobile-view" : ""}">
+        <div
+          class="sc-kMyqmI jDBJMt manual-control {$screen < 952
+            ? 'mobile-view'
+            : ''}"
+        >
           <div
             class="sc-ezbkAF gcQjQT input sc-fvxzrP gOLODp sc-cAhXWc lnBinR game-coininput {xBetting
               ? 'disabled'
@@ -561,26 +630,32 @@
             <div class="input-label">
               <div class="sc-gsFzgR bxrMFn label"><div>Amount</div></div>
               <div class="label-amount">
-                {WalletManager.getInstance()
-                  .amountToLocale(currentXAmount, coinName)
-                  .toFixed(2)} USD
+                {#if canViewInFiat}
+                  {currentXAmount} {coinName}
+                {:else}
+                  {WalletManager.getInstance().amountToFiatString(
+                    currentXAmount
+                  )}
+                {/if}
               </div>
             </div>
-            <div class="input-control {isFocused.trend ? "is-focus" : ""}">
+            <div class="input-control {isFocused.trend ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, trend: true}}
-                on:blur={() => isFocused = {...isFocused, trend: false}}
+                on:focus={() => (isFocused = { ...isFocused, trend: true })}
+                on:blur={() => (isFocused = { ...isFocused, trend: false })}
                 on:input={inputValidate}
-                disabled={xBetting}
+                disabled={xBetting || inputDisabled}
                 on:change={handleSetXAmount("=")}
                 type="text"
-                value={currentXAmount}
-              /><img alt="" class="coin-icon" src={coinImage} />
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
+                  currentXAmount
+                ).toFixed(4) :currentXAmount}
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
-                <button disabled={xBetting} on:click={handleSetXAmount("/")}
+                <button disabled={xBetting || inputDisabled} on:click={handleSetXAmount("/")}
                   >/2</button
                 >
-                <button disabled={xBetting} on:click={handleSetXAmount("*")}
+                <button disabled={xBetting || inputDisabled} on:click={handleSetXAmount("*")}
                   >x2</button
                 >
                 {#if sliderOpened.trend}
@@ -627,11 +702,11 @@
                   </div>
                 {/if}
                 <button
-                  disabled={xBetting}
+                  disabled={xBetting || inputDisabled}
                   class="sc-gqtqkP gfnHxc"
                   on:click={(e) => {
                     e.stopPropagation();
-                    if (xBetting) return;
+                    if (xBetting || inputDisabled) return;
                     sliderOpened = { trend: true };
                   }}
                   ><svg
@@ -646,6 +721,9 @@
                 >
               </div>
             </div>
+            {#if !(coinName === "PPF" || coinName === "USDT")}
+              <span style="display: block; padding: 10px; color: #fd4d4d; font-size: 0.8rem;">Select PPF or USDT</span>
+            {/if}
           </div>
           {#each trendBets as trend (trend.label)}
             <div class="sc-ezbkAF kDuLvp input sc-dpAhYB dqoGMw bet-item">
@@ -655,7 +733,7 @@
               </div>
               {#if gameStatus === 1}
                 <button
-                  disabled={autoBetting}
+                  disabled={autoBetting || inputDisabled}
                   on:click={!!xBetInfo[trend.type]
                     ? () => {}
                     : handleXBetCrash(trend.type)}
@@ -674,7 +752,7 @@
               {:else}
                 <!--  -->
                 <button
-                  disabled={autoBetting}
+                  disabled={autoBetting || inputDisabled}
                   on:click={xBetInfo[trend.type] &&
                   xBetInfo[trend.type].status === 0
                     ? () => {}
@@ -710,53 +788,107 @@
         <div class="sc-fvpsdx gkwtXR game-script sc-ywFzA eOSgwM">
           <div>
             <button
+              on:click={gameStatus === 2 && betInfo && betInfo.rate === 0
+                ? handleEscape
+                : () => {}}
+              disabled={!(gameStatus === 2 && betInfo && betInfo.rate === 0)}
               class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-big sc-eqUgKp fOeGco"
-              disabled=""
-              ><div class="button-inner"><div>Cash Out</div></div></button
+              ><div class="button-inner" style="width: 100%;">
+                {#if gameStatus === 2 && betInfo && betInfo.rate === 0}
+                  <div class="monospace" style="width: 100%">
+                    {`${parseFloat(betInfo.bet.mul(currentGamePayout)).toFixed(
+                      4
+                    )} ${betInfo.currencyName}`}
+                  </div>
+                  <div class="sub-text">(Cash out)</div>
+                {:else}
+                  <div>Cash out</div>
+                {/if}
+              </div></button
             >
           </div>
           {#if scriptConfig}
             <div class="sc-cqJhZP dDAoYq scripts-inputs">
               <div class="currency">
-                <span>Currency</span><span class="currency-name">CUB</span>
+                <span>Currency</span><span class="currency-name"
+                  >{coinName}</span
+                >
               </div>
-              <div class="logs"></div>
-              <div class="forms  {$screen < 952 ? "mobile-view" : ""}">
-                <div class="line">Checker</div>
-                <div class="sc-ezbkAF gcQjQT input">
-                  <div class="input-label">Chose color</div>
-                  <div class="input-control radio-control">
-                    <div class="sc-iwjdpV ikWSlH radio">
-                      <div class="radio-item is-active">
-                        <div class="circle"></div>
-                        <div>Red</div>
+              <div class="logs">
+                {#each scriptLogs as log (log.id)}
+                  <div class="type-{log.type}">{log.message}</div>
+                {/each}
+              </div>
+              <div class="forms">
+                {#each Object.keys(scriptConfig) as config, index (`${scriptConfig[config].label}_${scriptConfig[config].type}_${index}`)}
+                  {#if scriptConfig[config].type === "number" || scriptConfig[config].type === "text"}
+                    <div
+                      class="sc-ezbkAF gcQjQT input {scriptRunning
+                        ? 'disabled'
+                        : ''}"
+                    >
+                      <div class="input-label">
+                        {scriptConfig[config].label}
                       </div>
-                      <div class="radio-item">
-                        <div class="circle"></div>
-                        <div>Blue</div>
+                      <div class="input-control">
+                        <input
+                          on:change={handleScriptConfigChange(config)}
+                          on:input={scriptConfig[config].type === "number"
+                            ? inputValidate
+                            : () => {}}
+                          type="text"
+                          value={scriptConfig[config].value || ""}
+                        />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="sc-ezbkAF gcQjQT input">
-                  <div class="input-label">bet</div>
-                  <div class="input-control">
-                    <input type="text" value="1.2" />
-                  </div>
-                </div>
-                <div class="sc-ezbkAF gcQjQT input">
-                  <div class="input-label">payout</div>
-                  <div class="input-control">
-                    <input type="text" value="2" />
-                  </div>
-                </div>
+                  {:else if scriptConfig[config].type === "radio"}
+                    <div
+                      class="sc-ezbkAF gcQjQT input {scriptRunning
+                        ? 'disabled'
+                        : ''}"
+                    >
+                      <div class="input-label">
+                        {scriptConfig[config].label}
+                      </div>
+                      <div class="input-control radio-control">
+                        <div class="sc-iwjdpV ikWSlH radio">
+                          {#each scriptConfig[config].options as option (option.value)}
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <div
+                              on:click={() => {
+                                handleScriptConfigChange(config)({
+                                  currentTarget: { value: option.value },
+                                });
+                              }}
+                              class="radio-item {scriptConfig[config].value ===
+                              option.value
+                                ? 'is-active'
+                                : ''}"
+                            >
+                              <div class="circle"></div>
+                              <div>{option.label}</div>
+                            </div>
+                          {/each}
+                        </div>
+                      </div>
+                    </div>
+                  {:else if scriptConfig[config].type === "title"}
+                    <div class="line">{scriptConfig[config].label}</div>
+                  {/if}
+                {/each}
               </div>
               <div class="actions">
                 <button
+                  on:click={handleRunScript}
                   class="sc-iqseJM sc-bqiRlB cBmlor eWZHfu button button-normal"
-                  ><div class="button-inner">Run Script</div></button
+                  ><div class="button-inner">
+                    {scriptRunning ? "Stop" : "Run Script"}
+                  </div></button
                 ><button
-                  on:click={() => {}}
+                  on:click={() => {
+                    betScript && betScript.unRegist();
+                  }}
                   class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal action-close"
                   ><div class="button-inner">Close</div></button
                 >
@@ -867,21 +999,27 @@
             <div class="input-label">
               <div class="sc-hmvnCu efWjNZ label"><div>Amount</div></div>
               <div class="label-amount">
-                {WalletManager.getInstance()
-                  .amountToLocale(currentXAmount, coinName)
-                  .toFixed(2)} USD
+                {#if canViewInFiat}
+                  {currentXAmount} {coinName}
+                {:else}
+                  {WalletManager.getInstance().amountToFiatString(
+                    currentXAmount
+                  )}
+                {/if}
               </div>
             </div>
-            <div class="input-control {isFocused.autoBet ? "is-focus" : ""}">
+            <div class="input-control {isFocused.autoBet ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, autoBet: true}}
-                on:blur={() => isFocused = {...isFocused, autoBet: false}}
+                on:focus={() => (isFocused = { ...isFocused, autoBet: true })}
+                on:blur={() => (isFocused = { ...isFocused, autoBet: false })}
                 on:input={inputValidate}
                 on:change={handleSetXAmount("=")}
                 disabled={autoBetting}
                 type="text"
-                value={currentXAmount}
-              /><img alt="" class="coin-icon" src={coinImage} />
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
+                  currentXAmount
+                ).toFixed(4) : currentXAmount}
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
                 <button disabled={autoBetting} on:click={handleSetXAmount("/")}
                   >/2</button
@@ -955,12 +1093,13 @@
           </div>
           <div class="sc-ezbkAF hzTJOu input {autoBetting ? 'disabled' : ''}">
             <div class="input-label">Number of Bets</div>
-            <div class="input-control {isFocused.bets ? "is-focus" : ""}">
+            <div class="input-control {isFocused.bets ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, bets: true}}
-                on:blur={() => isFocused = {...isFocused, bets: false}}
+                on:focus={() => (isFocused = { ...isFocused, bets: true })}
+                on:blur={() => (isFocused = { ...isFocused, bets: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
+                
                   autoBet &&
                     autoBet.setTimes(
                       new Decimal(e.currentTarget.value).toNumber() || 0
@@ -1005,10 +1144,10 @@
               : ''}"
           >
             <div class="input-label">On win</div>
-            <div class="input-control {isFocused.onWin ? "is-focus" : ""}">
+            <div class="input-control {isFocused.onWin ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, onWin: true}}
-                on:blur={() => isFocused = {...isFocused, onWin: false}}
+                on:focus={() => (isFocused = { ...isFocused, onWin: true })}
+                on:blur={() => (isFocused = { ...isFocused, onWin: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
                   autoBet &&
@@ -1050,10 +1189,10 @@
               : ''}"
           >
             <div class="input-label">On lose</div>
-            <div class="input-control {isFocused.onLose ? "is-focus" : ""}">
+            <div class="input-control {isFocused.onLose ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, onLose: true}}
-                on:blur={() => isFocused = {...isFocused, onLose: false}}
+                on:focus={() => (isFocused = { ...isFocused, onLose: true })}
+                on:blur={() => (isFocused = { ...isFocused, onLose: false })}
                 type="text"
                 on:input={inputValidate}
                 on:change={(e) => {
@@ -1097,30 +1236,37 @@
             <div class="input-label">
               Stop on win
               <div class="label-amount">
-                {WalletManager.getInstance()
-                  .amountToLocale(autoBetInfo.stopOnWin, coinName)
-                  .toFixed(2)} USD
+                {#if canViewInFiat}
+                  {autoBetInfo.stopOnWin} {coinName}
+                {:else}
+                  {WalletManager.getInstance().amountToFiatString(
+                    autoBetInfo.stopOnWin
+                  )}
+                {/if}
               </div>
             </div>
-            <div class="input-control {isFocused.sOnWin ? "is-focus" : ""}">
+            <div class="input-control {isFocused.sOnWin ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, sOnWin: true}}
-                on:blur={() => isFocused = {...isFocused, sOnWin: false}}
+                on:focus={() => (isFocused = { ...isFocused, sOnWin: true })}
+                on:blur={() => (isFocused = { ...isFocused, sOnWin: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
+                  const update = new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
                   autoBet &&
                     autoBet.setStopOnWin(
-                      new Decimal(e.currentTarget.value).toDP(8).toNumber()
+                      update.toDP(8).toNumber()
                     );
                   updateAutoBetInfo(
                     "stopOnWin",
-                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                    update.toFixed(2)
                   );
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={autoBetInfo.stopOnWin.toFixed(4)}
-              /><img alt="" class="coin-icon" src={coinImage} />
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
+                  autoBetInfo.stopOnWin
+                ).toFixed(4) : autoBetInfo.stopOnWin.toFixed(4)}
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
             </div>
           </div>
           <div
@@ -1131,30 +1277,40 @@
             <div class="input-label">
               Stop on lose
               <div class="label-amount">
-                {WalletManager.getInstance()
-                  .amountToLocale(autoBetInfo.stopOnLose, coinName)
-                  .toFixed(2)} USD
+                {#if canViewInFiat}
+                  {autoBetInfo.stopOnLose} {coinName}
+                {:else}
+                  {WalletManager.getInstance().amountToFiatString(
+                    autoBetInfo.stopOnLose
+                  )}
+                {/if}
               </div>
             </div>
-            <div class="input-control {isFocused.sOnLose ? "is-focus" : ""}">
+            <div class="input-control {isFocused.sOnLose ? 'is-focus' : ''}">
               <input
-                on:focus={() => isFocused = {...isFocused, ...isFocused, sOnLose: true}}
-                on:blur={() => isFocused = {...isFocused, ...isFocused, sOnLose: false}}
+                on:focus={() =>
+                  (isFocused = { ...isFocused, ...isFocused, sOnLose: true })}
+                on:blur={() =>
+                  (isFocused = { ...isFocused, ...isFocused, sOnLose: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
+                  const update = new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
+                  
                   autoBet &&
                     autoBet.setStopOnLose(
-                      new Decimal(e.currentTarget.value).toDP(8).toNumber()
+                      update.toDP(8).toNumber()
                     );
                   updateAutoBetInfo(
                     "stopOnLose",
-                    (parseFloat(e.currentTarget.value) || 0).toFixed(2)
+                    update.toFixed(2)
                   );
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={autoBetInfo.stopOnLose.toFixed(4)}
-              /><img alt="" class="coin-icon" src={coinImage} />
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
+                  autoBetInfo.stopOnLose
+                ).toFixed(4) :autoBetInfo.stopOnLose.toFixed(4)}
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
             </div>
           </div>
           <div class="buttons">
@@ -1289,15 +1445,16 @@
     padding: 1.25rem 1.375rem;
   }
   .fix-layer .slider-handler {
-    background: none!important;
+    background: none !important;
   }
-   .fix-layer .slider-before,.fix-layer .slider-after {
-    height: 0.5rem!important;
-    margin-top: -0.25rem!important;
-    border-radius: 0.25rem!important;
-    background-color: rgb(23, 24, 27)!important;
+  .fix-layer .slider-before,
+  .fix-layer .slider-after {
+    height: 0.5rem !important;
+    margin-top: -0.25rem !important;
+    border-radius: 0.25rem !important;
+    background-color: rgb(23, 24, 27) !important;
     transform: scaleX(1) !important;
-}
+  }
   .fix-layer .slider-handler::after {
     content: "";
     position: absolute;
@@ -1307,7 +1464,7 @@
     width: 0.75rem;
     border-radius: 0.375rem;
     background-color: rgb(204, 207, 217);
-}
+  }
   .cYiOHZ .game-control-panel {
     flex: 1 1 0%;
   }
@@ -2059,8 +2216,8 @@
     }
   }
   @media screen and (min-width: 621px) {
-    .fCozZD .scripts-inputs .currency {
-      width: 100%;
+    .dDAoYq.scripts-inputs .currency {
+      width: 100% !important;
       position: absolute;
       left: 0px;
       top: 0px;
@@ -2076,9 +2233,9 @@
     margin-bottom: 1em;
   }
   @media screen and (min-width: 621px) {
-    .fCozZD .scripts-inputs .logs {
+    .dDAoYq .logs {
       width: 44%;
-      height: auto;
+      height: auto !important;
       position: absolute;
       right: 0px;
       top: 3.125rem;
@@ -2102,6 +2259,12 @@
     box-sizing: border-box;
     border-radius: 0.375rem;
     padding: 0.3125rem;
+  }
+  .dDAoYq .logs .type-1 {
+    color: rgb(67, 179, 9);
+  }
+  .dDAoYq .logs .type-2 {
+    color: rgb(237, 99, 0);
   }
   .dDAoYq .line::after {
     content: "";
@@ -2127,9 +2290,6 @@
     margin-right: 0.625rem;
     padding: 0.75rem 0px;
   }
-  /* .dDAoYq .radio-item:last-child {
-    padding-top: 0px;
-} */
 
   .ikWSlH .radio-item {
     cursor: pointer;

@@ -51,6 +51,7 @@
   };
 </script>
 
+
 {#if Boolean(gameDetails)}
   <div class="sc-dkPtRN jScFby scroll-view sc-bvFjSx jGQOsZ">
     <div class="sc-emDsmM Osnbt">
@@ -691,9 +692,9 @@
     -webkit-box-pack: justify;
     justify-content: space-between;
   }
-  .jGQOsZ .seed-main .input .seed-col .cl-primary {
+  /* .jGQOsZ .seed-main .input .seed-col {
     color: rgb(67, 179, 9);
-  }
+  } */
   .jGQOsZ .seed-main .col > .input:first-of-type {
     flex: 2 1 0%;
   }
