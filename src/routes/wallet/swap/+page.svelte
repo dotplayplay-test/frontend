@@ -188,6 +188,8 @@
                 showDialog = { isFrom: false, isShown: true };
               }}
               disabled={true}
+              handleOnChange={computeSwap}
+              onClickMax={() => {}}
               activeCoin={to.coin}
               bind:amount={to.amount}
             />
