@@ -13,14 +13,14 @@
   import { crashGameType, crashGame } from "./store";
   import { onDestroy } from "svelte";
   import Decimal from "decimal.js";
-  import { keys } from "mobx";
+  
   const { autorun } = connect();
   let trendBets = [
     { type: -200, label: "Red", payout: "1.96x" },
     { type: 200, label: "Green", payout: "2x" },
     { type: 1000, label: "Moon", payout: "10x" },
   ];
-
+  
   $: nextBetInfo = null;
   $: nextXBetInfo = {};
   $: canEscape = false;
@@ -148,7 +148,7 @@
       });
     }
   }
-
+  $: canViewInFiat = $viewInFiat && coinName !== "PPF";
   const inputValidate = (e) => {
     function validateInput(input) {
       if (!isNaN(Number(input))) {
@@ -197,7 +197,7 @@
       const game = $crashGame;
       if (game && !betting) {
         if (opr === "=")
-          game.setAmount(new Decimal($viewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
+          game.setAmount(new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
         else if (opr === "/") game.setAmount(game.amount.div(2));
         else if (opr === "*") game.setAmount(game.amount.mul(2));
         else if (opr === "min")
@@ -217,7 +217,7 @@
     return (e) => {
       if (xBet && !xBetting) {
         if (opr === "=")
-          xBet.setAmount(new Decimal($viewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
+          xBet.setAmount(new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : e.currentTarget.value) || 1);
         else if (opr === "/") xBet.setAmount(xBet.amount.div(2));
         else if (opr === "*") xBet.setAmount(xBet.amount.mul(2));
         else if (opr === "min")
@@ -493,7 +493,7 @@
                   </div>
                 </div>
                 <div class="label-amount">
-                  {#if $viewInFiat && coinName !== "PPF"}
+                  {#if canViewInFiat}
                     {currentAmount} {coinName}
                   {:else}
                     {WalletManager.getInstance().amountToFiatString(
@@ -510,10 +510,10 @@
                   disabled={betting || inputDisabled}
                   on:change={handleSetAmount("=")}
                   type="text"
-                  value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                  value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
                     currentAmount
                   ).toFixed(4) : currentAmount}
-                /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" :  coinImage} />
+                /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
                 <div class="sc-kDTinF bswIvI button-group">
                   <button disabled={betting || inputDisabled} on:click={handleSetAmount("/")}
                     >/2</button
@@ -630,7 +630,7 @@
             <div class="input-label">
               <div class="sc-gsFzgR bxrMFn label"><div>Amount</div></div>
               <div class="label-amount">
-                {#if $viewInFiat && coinName !== "PPF"}
+                {#if canViewInFiat}
                   {currentXAmount} {coinName}
                 {:else}
                   {WalletManager.getInstance().amountToFiatString(
@@ -647,10 +647,10 @@
                 disabled={xBetting || inputDisabled}
                 on:change={handleSetXAmount("=")}
                 type="text"
-                value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
                   currentXAmount
                 ).toFixed(4) :currentXAmount}
-              /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" :  coinImage} />
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
                 <button disabled={xBetting || inputDisabled} on:click={handleSetXAmount("/")}
                   >/2</button
@@ -999,7 +999,7 @@
             <div class="input-label">
               <div class="sc-hmvnCu efWjNZ label"><div>Amount</div></div>
               <div class="label-amount">
-                {#if $viewInFiat && coinName !== "PPF"}
+                {#if canViewInFiat}
                   {currentXAmount} {coinName}
                 {:else}
                   {WalletManager.getInstance().amountToFiatString(
@@ -1016,10 +1016,10 @@
                 on:change={handleSetXAmount("=")}
                 disabled={autoBetting}
                 type="text"
-                value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
                   currentXAmount
                 ).toFixed(4) : currentXAmount}
-              /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" :  coinImage} />
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
               <div class="sc-kDTinF bswIvI button-group">
                 <button disabled={autoBetting} on:click={handleSetXAmount("/")}
                   >/2</button
@@ -1236,7 +1236,7 @@
             <div class="input-label">
               Stop on win
               <div class="label-amount">
-                {#if $viewInFiat && coinName !== "PPF"}
+                {#if canViewInFiat}
                   {autoBetInfo.stopOnWin} {coinName}
                 {:else}
                   {WalletManager.getInstance().amountToFiatString(
@@ -1251,7 +1251,7 @@
                 on:blur={() => (isFocused = { ...isFocused, sOnWin: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
-                  const update = new Decimal($viewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
+                  const update = new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
                   autoBet &&
                     autoBet.setStopOnWin(
                       update.toDP(8).toNumber()
@@ -1263,10 +1263,10 @@
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
                   autoBetInfo.stopOnWin
                 ).toFixed(4) : autoBetInfo.stopOnWin.toFixed(4)}
-              /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" :  coinImage} />
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
             </div>
           </div>
           <div
@@ -1277,7 +1277,7 @@
             <div class="input-label">
               Stop on lose
               <div class="label-amount">
-                {#if $viewInFiat && coinName !== "PPF"}
+                {#if canViewInFiat}
                   {autoBetInfo.stopOnLose} {coinName}
                 {:else}
                   {WalletManager.getInstance().amountToFiatString(
@@ -1294,7 +1294,7 @@
                   (isFocused = { ...isFocused, ...isFocused, sOnLose: false })}
                 on:input={inputValidate}
                 on:change={(e) => {
-                  const update = new Decimal($viewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
+                  const update = new Decimal(canViewInFiat ? WalletManager.getInstance().fiatToAmount(parseFloat(e.currentTarget.value || "0")) : (e.currentTarget.value || "0"));
                   
                   autoBet &&
                     autoBet.setStopOnLose(
@@ -1307,10 +1307,10 @@
                 }}
                 disabled={autoBetting}
                 type="text"
-                value={$viewInFiat ? WalletManager.getInstance().amountToFiat(
+                value={canViewInFiat ? WalletManager.getInstance().amountToFiat(
                   autoBetInfo.stopOnLose
                 ).toFixed(4) :autoBetInfo.stopOnLose.toFixed(4)}
-              /><img alt="" class="coin-icon" src={$viewInFiat ? "/coin/USD.black.png" :  coinImage} />
+              /><img alt="" class="coin-icon" src={canViewInFiat ? "/coin/USD.black.png" :  coinImage} />
             </div>
           </div>
           <div class="buttons">
