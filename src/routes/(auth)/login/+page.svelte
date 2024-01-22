@@ -11,21 +11,19 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { current_route } from "$lib/store/routes";
-  import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
   import { error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store";
   import Forget from "../forget/+page.svelte";
   import { isLightMode } from "../../../lib/store/theme";
-  import { fetchMedals } from "$lib/achieve/actions";
   import { handleAuthToken } from "$lib/store/routes";
 
   let email = "";
   let password = "";
   const googleAuth = () => {
-    handleGoogleAuth(callbackFetchMedals);
+    handleGoogleAuth();
   };
 
   const handleFacebookAuthi = () => {
-    handleFacebookAuth(callbackFetchMedals);
+    handleFacebookAuth();
   };
 
   const handleSubmit = () => {
@@ -40,7 +38,7 @@
         error_msgS.set(false);
       }, 4000);
     } else {
-      handleLogin(email, password, callbackFetchMedals);
+      handleLogin(email, password);
       // hook my function here
     }
   };
@@ -48,21 +46,6 @@
   const handleCancel = () => {
     // dispatch("close", 3)
     goto("/");
-  };
-
-  const callbackFetchMedals = async () => {
-    try {
-      $medals = await fetchMedals({
-        token: $handleAuthToken,
-      });
-
-      $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
-      $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
-
-      isLoading = false;
-    } catch (err) {
-      console.log(err.message);
-    }
   };
 
   let is_mobile = false;

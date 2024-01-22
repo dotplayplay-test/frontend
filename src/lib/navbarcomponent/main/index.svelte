@@ -9,6 +9,8 @@
   import Coins from "../../profilecomponent/main/coins.svelte";
   import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
   import axios from "axios";
+  import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
+  import { fetchMedals } from "$lib/achieve/actions";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
   import { handleAuthToken } from "$lib/store/routes";
@@ -21,7 +23,7 @@
   import { chatCounter } from "$lib/store/chat-counter";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  
+
   import { default_Wallet, coin_list } from "$lib/store/coins";
   import { ServerURl } from "$lib/backendUrl";
   import Layout from "../../deposit/layout.svelte";
@@ -62,8 +64,24 @@
   };
 
   onMount(() => {
-    $handleAuthToken && $profileStore != {} && handleProfile();
+    $handleAuthToken &&
+      $profileStore != {} &&
+      handleProfile() &&
+      initFetchMedals();
   });
+
+  const initFetchMedals = async () => {
+    try {
+      $medals = await fetchMedals({
+        token: $handleAuthToken,
+      });
+
+      $earnedMedals = $medals.filter((medal) => medal.hasEarned).length;
+      $medalProgress = ($earnedMedals / $medals.length) * 100 + "%";
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const handleDailyPPFbonus = async () => {
     await axios.get(`${URL}/api/profile/ppf-daily-bonus`, {

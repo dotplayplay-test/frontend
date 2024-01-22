@@ -1,7 +1,7 @@
 import { handleAuthToken } from "$lib/store/routes";
 import { profileStore } from "$lib/store/profile";
 import { default_Wallet } from "$lib/store/coins";
-import { error_msg, is_loading } from "../../lib/nestedpages/auth/login/store";
+import { is_loading } from "$lib/nestedpages/auth/login/store";
 import { ServerURl } from "$lib/backendUrl";
 const URL = ServerURl();
 
@@ -30,10 +30,10 @@ export const useLogin = () => {
       handleAuthToken.set(json.Token);
       profileStore.set(json.result);
 
-      window.location.href = "/";
-      // goto("/")
       default_Wallet.set(json.default_wallet);
       isLoading = false;
+      window.location.href = "/";
+      // goto("/")
     }
   };
   return { login, isLoading, error };

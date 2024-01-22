@@ -54,15 +54,12 @@ export const handleSignIn = async (email, password, reff) => {
     });
 };
 
-export const handleLogin = async (email, password, callback) => {
+export const handleLogin = async (email, password) => {
   is_loadingS.set(true);
   const auth = getAuth(app);
   await signInWithEmailAndPassword(auth, email, password)
     .then(async (res) => {
-      const response = await login(res);
-      if (response && typeof callback === "function") {
-        callback();
-      }
+      await login(res);
       is_loadingS.set(false);
     })
     .catch((err) => {
@@ -74,31 +71,24 @@ export const handleLogin = async (email, password, callback) => {
     });
 };
 
-export const handleGoogleAuth = (callback) => {
+export const handleGoogleAuth = () => {
   const auth = getAuth(app);
   signInWithPopup(auth, new GoogleAuthProvider())
     .then(async (res) => {
-      const response = await fblogin(res);
-      if (response && typeof callback === "function") {
-        callback();
-      }
+      await fblogin(res);
     })
     .catch((err) => {
       alert(err.code);
     });
 };
 
-export const handleFacebookAuth = (callback) => {
+export const handleFacebookAuth = () => {
   const auth = getAuth(app);
   signInWithPopup(auth, new FacebookAuthProvider())
     .then(async (res) => {
       goto("/");
-      const response = await login(res);
+      await login(res);
       createProfile(res);
-
-      if (response && typeof callback === "function") {
-        callback();
-      }
     })
     .catch((err) => {
       alert(err.code);
