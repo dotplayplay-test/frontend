@@ -47,18 +47,18 @@ export default function useLiveStats(store, key) {
   }
 
   function getStats() {
-    return Object.keys(stats).length ? stats : JSON.parse(
+    return Object.keys(stats).length ? stats : {
+      token_img:
+        "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
+      profit: 0,
+      wagered: 0,
+      wins: 0,
+      loses: 0,
+      points: [],
+    } /*JSON.parse(
       localStorage.getItem(key) ||
-        JSON.stringify({
-          token_img:
-            "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png",
-          profit: 0,
-          wagered: 0,
-          wins: 0,
-          loses: 0,
-          points: [],
-        })
-    );
+        JSON.stringify()
+    )*/;
   }
 
   return { getStats, resetStats, recordGame };

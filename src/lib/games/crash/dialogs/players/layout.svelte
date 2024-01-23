@@ -40,6 +40,7 @@
                   href="/"
                   on:click={(e) => {
                     e.preventDefault();
+                    console.log("Dispatching ID => ", player.betID)
                     dispatch("gameDetail", player.betID);
                   }}
                   class="betid">{player.betID}</a

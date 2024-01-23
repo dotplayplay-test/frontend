@@ -28,14 +28,14 @@
     startScreen = launchConf?.startScreen;
     currentScreen = startScreen || "Details";
   }
-  const handleShowDetails = ({ betID: bet_id }) => {
-    if (bet_id) return;
-    betID = bet_id;
+  const handleShowDetails = ({detail}) => {
+    if (!detail) return;
+    betID = detail;
     currentScreen = "Details";
   };
-  const handleShowAllPlayers = ({ gameID: game_id }) => {
-    if (game_id) return;
-    gameID = game_id;
+  const handleShowAllPlayers = ({detail}) => {
+    if (!detail) return;
+    gameID = detail;
     currentScreen = "All Players";
   };
   const handleClose = () => {

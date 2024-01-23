@@ -152,7 +152,7 @@
             <div class="dot"></div>
             <div>
               <div class="issus">{game.gameId}</div>
-              <div>{game.odds}x</div>
+              <div>{game.odds.toFixed(2)}x</div>
             </div>
           </div>
         {/each}

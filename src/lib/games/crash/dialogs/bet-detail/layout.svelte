@@ -8,22 +8,19 @@
   const dispatch = createEventDispatcher();
   export let betID = "";
   $: details = null;
-  let gameNameMap = {
-    normal: "Classic",
-    red: "Red",
-    green: "Green",
-    moon: "Moon",
-  };
-  onMount(async () => {
+  async function loadDetails(token) {
     try {
-      const { data } = await UseFetchData($handleAuthToken).fetch(
+      const { data } = await UseFetchData(token).fetch(
         `/user/crash-game/details/${betID}`
       );
       details = data.details;
     } catch (error) {
       error_msg.set(error.message);
     }
-  });
+  }
+  $: {
+    betID && loadDetails($handleAuthToken);
+  }
 </script>
 
 {#if Boolean(details)}
@@ -36,20 +33,18 @@
           ? 'win.431b83d6.png'
           : 'lose.b4ff48b7.png'}"
       />
-      <div class="sc-emDsmM fkioFo game-share">
+      <!-- <div class="sc-emDsmM fkioFo game-share">
         <svg
           xmlns:xlink="http://www.w3.org/1999/xlink"
           class="sc-gsDKAQ hxODWG icon"
           ><use xlink:href="#icon_Share"></use></svg
         >
-      </div>
+      </div> -->
       <div class="rt_info">
         <img
           alt=""
           class="avatar avatar"
-          src={details.hidden
-            ? "/assets/avatar.a1ff78fe.png"
-            : details.avatar}
+          src={details.hidden ? "/assets/avatar.a1ff78fe.png" : details.avatar}
         />
         <div class="name">
           {#if details.hidden}
@@ -84,7 +79,8 @@
             >Amount
           </div>
           <div class="number flex-center">
-            {new Decimal(details.betAmount).toDP(6)} {details.currencyName}
+            {new Decimal(details.betAmount).toDP(6)}
+            {details.currencyName}
           </div>
         </div>
         <div class="item-wrap">
@@ -452,5 +448,8 @@
       rgb(67, 179, 9),
       rgb(93, 219, 28)
     );
+  }
+  .flex {
+    display: flex;
   }
 </style>

@@ -182,11 +182,6 @@
       <div class="sc-zjkyB jElDBn">
         <div class="trigger flex-center m-item fold">
           <div class="current">Bet</div>
-          <svg
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            class="sc-gsDKAQ hxODWG icon"
-            ><use xlink:href="#icon_Arrow"></use></svg
-          >
         </div>
       </div>
       <div class="sc-jHwEXd dQxvCn m-item">

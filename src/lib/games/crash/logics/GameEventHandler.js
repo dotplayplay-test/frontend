@@ -425,6 +425,7 @@ const GameEventHandler = class extends EventEmitter {
       this.firstSync = true;
       this.currencyName = curr.currencyName;
       this.currencyImage = curr.currencyImage;
+      this.setAmount(this.minAmount);
       this.emit("currency_changed");
     }
   }
