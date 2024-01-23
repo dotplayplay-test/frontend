@@ -1,6 +1,7 @@
 <script>
   export let from;
   export let to;
+  export let conversionRate;
 </script>
 
 {#if !from || !to}
@@ -13,9 +14,14 @@
       <p>Real Money: <strong>0 {from?.coin?.coin_name}</strong></p>
       <p>Bonus Money: <strong>0 {from?.coin?.coin_name}</strong></p>
     </div>
-    <div class="box">
-      <p>1 {from?.coin?.coin_name} ≈ 0.1 {to?.coin?.coin_name}</p>
-    </div>
+    {#if conversionRate !== 0}
+      <div class="box">
+        <p>
+          1 {from?.coin?.coin_name} ≈ {conversionRate}
+          {to?.coin?.coin_name}
+        </p>
+      </div>
+    {/if}
     <div class="box">
       <div class="result-box">
         <div>Estimated time*</div>
@@ -31,7 +37,7 @@
 
 <style>
   .footer {
-    font-size: 13px;
+    font-size: 0.875rem;
   }
   .head {
     padding: 12px 0;
@@ -48,5 +54,11 @@
   .result-box {
     display: flex;
     justify-content: space-between;
+  }
+
+  @media screen and (max-width: 650px) {
+    .footer {
+      font-size: 12px;
+    }
   }
 </style>

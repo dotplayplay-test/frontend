@@ -20,10 +20,9 @@
     currencyRates,
   } from "$lib/store/currency";
   import useFormatter from "$lib/hook/formatter";
-  import { UseFetchData } from "$lib/hook/useFetchData";
+
   const { removeTrailingZeros, getSuffix } = useFormatter();
   import { browser } from "$app/environment";
-  import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
   const URL = ServerURl();
   let show_currencyName;
@@ -43,17 +42,13 @@
     let ppd = await handlePPDwallet();
     let ppl = await handlePPLwallet();
     let ppf = await handlePPFwallet();
-    const {
-      data: { rates },
-    } = await UseFetchData($handleAuthToken).fetch(`/system/currency-rates`);
-    currencyRates.set(rates);
     coin_list.set([usdt, ppd, ppl, ppf].map((coin) => ({
       ...coin,
       fiat: WalletManager.getInstance().amountToFiat(
         coin.balance,
         coin.coin_name,
         $preferredCurrency,
-        rates
+        $currencyRates
       ),
     })));
     preferredCurrency.subscribe((pref) => {
@@ -64,7 +59,7 @@
             coin.balance,
             coin.coin_name,
             pref,
-            rates
+            $currencyRates
           ),
         }))
       );

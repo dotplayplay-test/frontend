@@ -1,14 +1,14 @@
 <script>
   import { onMount } from "svelte";
   import axios from "axios";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { handleAuthToken } from "$lib/store/routes";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import { ServerURl } from "$lib/backendUrl";
+  import { activeRouteAsset } from "./store";
+  import Table from "./table.svelte";
 
   let swaps = [];
-  let isLoading = false;
   const URL = ServerURl();
+  let isLoading = false;
 
   function formatTime(timestamp) {
     const date = new Date(timestamp);
@@ -20,11 +20,18 @@
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   }
 
-  const fetchData = async () => {
+  $: $activeRouteAsset, fetchData($activeRouteAsset?.tabName);
+
+  const fetchData = async (asset) => {
     try {
       isLoading = true;
+      let url = `${URL}/api/transaction-history/swap`;
 
-      const response = await axios.get(`${URL}/api/transaction-history/swap`, {
+      if (asset && asset.length < 5) {
+        url = `${URL}/api/transaction-history/swap?asset=${asset}`;
+      }
+
+      const response = await axios.get(url, {
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${$handleAuthToken}`,
@@ -33,7 +40,7 @@
 
       isLoading = false;
 
-      return response.data;
+      swaps = response.data;
     } catch (err) {
       isLoading = false;
       console.log(err);
@@ -41,142 +48,88 @@
   };
 
   onMount(async () => {
-    swaps = await fetchData();
+    await fetchData();
   });
 </script>
 
 <div>
-  {#if swaps.length > 0}
-    <div class="transaction-list">
-      <table class="ui-table">
-        <thead>
-          <th>From</th>
-          <th>To</th>
-          <th>Amount</th>
-          <th>Time</th>
-        </thead>
-        <tbody>
-          {#each swaps as item}
-            <tr>
-              <td class="cl-light align-center">
-                {item.senderCoin}
-              </td>
-              <td class={`amount-change`}>
-                {item.receiverCoin}
-              </td>
-              <td class={`amount-change`}>
-                {item.amountSwapped}
-              </td>
-              <td
-                >{new Date(item.createdAt).getFullYear()}/{new Date(
-                  item.createdAt
-                ).getMonth()}/{new Date(item.createdAt).getDate()}
-                {formatTime(item.createdAt)}</td
-              >
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-      <!-- <div class="ui-pagination m-fixbot">
-        <div class="ui-select">
-          <div class="select-trigger">
-            10
-            <div class="arrow top">
-              <Icon
-                src={RiSystemArrowRightSLine}
-                size="23"
-                color="rgba(153, 164, 176, 0.6)"
-                className="custom-icon"
-                title="arror"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="total">Total 1</div>
-        <div class="pages-box pages-wrap">
-          <button class="active" disabled="">1</button>
-        </div>
-        <div class="pages-box page-pn pageConic">
-          <button disabled="" class="disabled previous-btn">
-            <svg class="s1ff97qc icon prev">
-                        <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Arrow"></use>
-                    </svg>
-          </button>
-          <button disabled="" class="disabled next-page">
-            <svg class="s1ff97qc icon next">
-                        <use xlink:href="/assets/symbol-defs.ef6a79c4.svg#icon_Arrow"></use>
-                    </svg>
-          </button>
-        </div>
-      </div> -->
-    </div>
-  {:else}
-    <div class="transaction-list">
-      <div class="sc-lhMiDA">
-        <div class="sc-eCImPb cuPxwd full-abs">
-          <img
-            src="https://static.nanogames.io/assets/empty.acd1f5fe.png"
-            alt=""
-          />
-          <div class="msg">No swaps yet!</div>
-        </div>
+  <Table
+    fields={[
+      { label: "From", id: "from" },
+      { label: "To", id: "to" },
+      { label: "Amount Swapped", id: "amount" },
+      { label: "Time", id: "time" },
+    ]}
+    data={swaps}
+    emptyText="No swaps found"
+    let:row
+    let:col
+  >
+    {#if col.id === "from"}
+      <div class="icon-box row">
+        <img
+          class="icon"
+          src={row.senderCoin === "PPL"
+            ? "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697827828/ppl_logo_mxiaot.png"
+            : row.senderCoinIcon}
+          alt="Sender Coin Icon"
+        />
+        <span>
+          {row.senderCoin}
+        </span>
       </div>
-    </div>
-  {/if}
+    {/if}
+
+    {#if col.id === "to"}
+      <div class="icon-box align-center row">
+        <img
+          class="icon"
+          src={row.receiverCoin === "PPL"
+            ? "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697827828/ppl_logo_mxiaot.png"
+            : row.receiverCoinIcon}
+          alt="Receiver coin icon"
+        />
+        <span>
+          {row.receiverCoin}
+        </span>
+      </div>
+    {/if}
+
+    {#if col.id === "amount"}
+      <span class="row amount">
+        {parseFloat(row.amountSwapped).toFixed(2)}
+      </span>
+    {/if}
+
+    {#if col.id === "time"}
+      <div class="row">
+        {new Date(row?.createdAt).getFullYear()}/{new Date(
+          row?.createdAt
+        ).getMonth()}/{new Date(row?.createdAt).getDate()}
+        {formatTime(row?.createdAt)}
+      </div>
+    {/if}
+  </Table>
 </div>
 
 <style>
-  .transaction-list {
-    width: 100%;
-    background-color: var(--1n7ksai);
-    border-radius: var(--border-radius);
+  .align-center {
+    display: flex;
+    justify-content: center;
   }
-  .ui-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 0;
+  .icon-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
-  .ui-table th:first-child,
-  .ui-table td:first-child {
-    text-align: left;
+  .icon {
+    width: 30px;
   }
-
-  .ui-table th,
-  .ui-table td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.5rem;
+  .row {
+    font-weight: 600;
+    color: #cdcdcdcc;
   }
-  .ui-table th {
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ui-table th,
-  .ui-table td {
-    overflow: hidden;
-    text-align: center;
-    padding: 0.875rem 0.5rem;
-    font-size: 14px;
-  }
-  .ui-table th {
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ui-table th:last-child,
-  .ui-table td:last-child {
-    text-align: right;
-  }
-
-  .ui-table td:first-child {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-  }
-  .ui-table th:first-child,
-  .ui-table td:first-child {
-    text-align: left;
+  .amount {
+    color: #3bc117;
   }
 </style>

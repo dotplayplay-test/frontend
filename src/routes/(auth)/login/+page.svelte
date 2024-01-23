@@ -1,6 +1,5 @@
 <script>
   import { goto } from "$app/navigation";
-  import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
   import Icon from "svelte-icons-pack/Icon.svelte";
   import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
@@ -9,15 +8,14 @@
     handleGoogleAuth,
     handleFacebookAuth,
   } from "$lib/firebaseAuth/index";
-  import { createEventDispatcher } from "svelte";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { current_route } from "$lib/store/routes";
   import { error_msgS, is_loadingS } from "$lib/nestedpages/auth/signup/store";
   import Forget from "../forget/+page.svelte";
   import { isLightMode } from "../../../lib/store/theme";
+  import { handleAuthToken } from "$lib/store/routes";
 
-  const dispatch = createEventDispatcher();
   let email = "";
   let password = "";
   const googleAuth = () => {
@@ -41,6 +39,7 @@
       }, 4000);
     } else {
       handleLogin(email, password);
+      // hook my function here
     }
   };
 
@@ -132,15 +131,25 @@
           />
         </div>
         <div
-          class={$isLightMode ? "light-bg sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf" :"sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf"}
+          class={$isLightMode
+            ? "light-bg sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf"
+            : "sc-dkPtRN jScFby scroll-view hide-bar sc-bjztik ceTZhf"}
           style="transform: none;"
         >
-          <div id="login" 
-          class={$isLightMode ? "light-bg sc-czvZiG lnrkkr" :"sc-czvZiG lnrkkr"}>
+          <div
+            id="login"
+            class={$isLightMode
+              ? "light-bg sc-czvZiG lnrkkr"
+              : "sc-czvZiG lnrkkr"}
+          >
             <div class="box">
               <div class="sc-ezbkAF kDuLvp input">
                 <div class="input-label">Email Address</div>
-                <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+                <div
+                  class={$isLightMode
+                    ? "light-input-control input-control"
+                    : "input-control"}
+                >
                   <input
                     bind:value={email}
                     type="text"
@@ -156,7 +165,11 @@
                     >Forgot password?</button
                   >
                 </div>
-                <div class={$isLightMode ? "light-input-control input-control": "input-control"}>
+                <div
+                  class={$isLightMode
+                    ? "light-input-control input-control"
+                    : "input-control"}
+                >
                   <input
                     bind:value={password}
                     type="password"
@@ -265,13 +278,11 @@
 </div>
 
 <style>
-      .light-bg {
+  .light-bg {
     background-color: rgb(255, 255, 255) !important;
   }
-  .light-text {
-    color: rgb(49, 55, 61) !important;
-  }
-  .light-input-control{
+
+  .light-input-control {
     border: 1px solid rgb(233, 234, 242) !important;
     background-color: rgb(245, 246, 250) !important;
   }
@@ -406,7 +417,8 @@
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .ipnwmW #login {
     padding-top: 0px;
@@ -426,7 +438,8 @@ color: var(--text-6);  }
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .iajVfs {
     padding: 1rem 2.5rem 1.25rem;
@@ -441,7 +454,8 @@ color: var(--text-6);  }
     width: 100%;
     line-height: 1;
     margin-bottom: 0.875rem;
-color: var(--text-6);  }
+    color: var(--text-6);
+  }
 
   .iajVfs .other-group {
     border-radius: 1.75rem;
@@ -691,7 +705,8 @@ color: var(--text-6);  }
     line-height: 1em;
     height: 1.25rem;
     margin: 0px 0.75rem 0.375rem;
-color: var(--text-6);    font-size: 12px;
+    color: var(--text-6);
+    font-size: 12px;
   }
 
   .kDuLvp .input-control {

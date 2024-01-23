@@ -83,15 +83,27 @@ export default class ScriptManager extends EventEmitter {
       addLog: action,
       delScript: action,
       updateScript: action,
+      setIsRunning: action,
+      updateConfig: action,
     });
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.unRegist = this.unRegist.bind(this);
     this.step = this.step.bind(this);
-
+    this.game.on("currency_changed", this.syncCurrency.bind(this));
     this.enableAutoStep(true);
   }
+  setIsRunning(v) {
+    this.isRunning = v;
+  }
 
+  updateConfig(key, value) {
+    if (!this.isRunning) {
+      runInAction(() => {
+        this.config = {...this.config, [key]: {...this.config[key], value}}
+      })
+    }
+  }
   async initScript() {
     if (!this.initPms) {
       this.initPms = axios
@@ -169,18 +181,16 @@ export default class ScriptManager extends EventEmitter {
   }
 
   async regist(script) {
-    this.messager = new MessageHandler(new Worker('scripts/worker2.js', {type: "classic"}));
+    this.messager = new MessageHandler(getWorker());
     this.messager.on("bet", this.handleBet.bind(this));
     this.messager.on("log", (msg) => this.addLog(msg.message, msg.type));
     this.messager.on("stop", this.stop.bind(this));
     this.messager.on("getHistory", () => this.emit("getHistory"));
     this.syncCurrency();
     let config = null;
-    console.log("Registering script > ", )
     try {
       config = await this.messager.request("regist", script.content);
     } catch (error) {
-      console.log("Error reging ",error )
       this.addLog(error.message, ScriptStatus.ERROR);
     } finally {
       runInAction(() => {
@@ -188,16 +198,17 @@ export default class ScriptManager extends EventEmitter {
         if (!this.config) {
           this.config = config;
         }
-        console.log("Done reg ",script, config )
       });
     }
   }
 
   unRegist() {
     this.stop();
-    this.script = null;
-    this.logs = [];
-    this.config = null;
+    runInAction(() => {
+      this.script = null;
+      this.logs = [];
+      this.config = null;
+    });
   }
 
   syncCurrency() {
@@ -220,9 +231,9 @@ export default class ScriptManager extends EventEmitter {
 
   async start() {
     this.game.setBetStatus(true);
-    this.isRunning = true;
+    this.setIsRunning(true);
     if (!this.messager && this.script) {
-      this.regist(this.script);
+      await this.regist(this.script);
     }
     this.messager?.emit("run", JSON.parse(JSON.stringify(this.config)));
     this.addLog("Script is running!");
@@ -238,7 +249,7 @@ export default class ScriptManager extends EventEmitter {
   }
 
   stop() {
-    this.isRunning = false;
+    this.setIsRunning(false);
     this.game.setBetStatus(false);
     this.addLog("Script is stopped!");
     this.syncCurrency();

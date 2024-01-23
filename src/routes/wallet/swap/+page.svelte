@@ -6,6 +6,7 @@
   import { handleAuthToken } from "$lib/store/routes";
   import { ServerURl } from "$lib/backendUrl";
   import { coin_list } from "$lib/store/coins";
+  import Dialog from "$lib/achieve/Dialog.svelte";
 
   import SwapField from "./components/SwapField.svelte";
   import SwapFooter from "./components/SwapFooter.svelte";
@@ -17,16 +18,17 @@
     $coin_list.filter((element) => element.coin_name !== "PPF");
 
   let ispo_loading = false;
-
-  let amount = 10;
+  let feedbackMessage = null;
+  let canSwap = true;
   let isLoading = false;
+  let conversionRate = 0;
 
   const handleSubmit = async () => {
     try {
       const data = {
         senderCoin: from.coin.coin_name,
         receiverCoin: to.coin.coin_name,
-        amount,
+        amount: from.amount,
       };
 
       isLoading = true;
@@ -37,11 +39,17 @@
         },
       });
       isLoading = false;
-      // close modal...
-      console.log({ res });
+      feedbackMessage = res.data.message;
+      setTimeout(() => {
+        feedbackMessage = null;
+      }, 4000);
     } catch (err) {
       isLoading = false;
       console.log(err);
+      feedbackMessage = "Unable to complete action, please try again";
+      setTimeout(() => {
+        feedbackMessage = null;
+      }, 4000);
     }
   };
 
@@ -60,6 +68,13 @@
     const amount = from.amount;
     const fromCurrency = from.coin.coin_name;
     const toCurrency = to.coin.coin_name;
+    const currenBalance = parseFloat(from.coin.balance);
+
+    if (amount > currenBalance) {
+      canSwap = false;
+      return;
+    }
+    canSwap = true;
 
     // Check if the currencies are valid
     if (!conversionRates[fromCurrency] || !conversionRates[toCurrency]) {
@@ -67,14 +82,17 @@
     }
 
     // Perform the conversion
-    const convertedAmount =
-      (amount / conversionRates[fromCurrency]) * conversionRates[toCurrency];
+    conversionRate =
+      conversionRates[fromCurrency] / conversionRates[toCurrency];
+
+    const convertedAmount = amount * conversionRate;
 
     to.amount = convertedAmount;
   }
 
   const handleOnClickMax = () => {
-    from.amount = 0;
+    from.amount = from.coin.balance;
+    computeSwap();
   };
 
   const switchFields = () => {
@@ -82,6 +100,7 @@
 
     from = to;
     to = oldFrom;
+    computeSwap();
   };
 
   const handleCloseSelectCoins = () => {
@@ -118,13 +137,23 @@
   let showDialog = { isFrom: false, isShown: false };
 </script>
 
+{#if feedbackMessage}
+  <div class="error-message">
+    <div class="hTTvsjh">
+      <div>{feedbackMessage}</div>
+    </div>
+  </div>
+{/if}
+
 {#if showDialog.isShown}
-  <SelectCoin
-    coins={getDialogCoins()}
-    activeCoin={showDialog.isFrom ? from.coin : to.coin}
-    setActive={handleSelectCoin}
-    on:closeDialog={handleCloseSelectCoins}
-  />
+  <Dialog title="Assets Portfolio" on:cancel={handleCloseSelectCoins}>
+    <SelectCoin
+      coins={getDialogCoins()}
+      activeCoin={showDialog.isFrom ? from.coin : to.coin}
+      setActive={handleSelectCoin}
+      on:closeDialog={handleCloseSelectCoins}
+    />
+  </Dialog>
 {/if}
 
 <div class="container">
@@ -133,7 +162,7 @@
       <div class="label-box">
         <div class="label">You get Approximately</div>
         <div class="label">
-          Min: {from?.amount || 0}
+          Min: {parseFloat(0.1).toFixed(4) || 0}
           {from?.coin?.coin_name}
         </div>
       </div>
@@ -159,6 +188,8 @@
                 showDialog = { isFrom: false, isShown: true };
               }}
               disabled={true}
+              handleOnChange={computeSwap}
+              onClickMax={() => {}}
               activeCoin={to.coin}
               bind:amount={to.amount}
             />
@@ -166,15 +197,21 @@
           <button on:click={switchFields} class="switch-btn">
             <Icon src={AiOutlineSwap} /></button
           >
+          {#if !canSwap}
+            <p class="insufficient-hint">
+              Insufficient {from?.coin?.coin_name} Balance
+            </p>
+          {/if}
         </div>
 
         <div class="page-margin">
-          <SwapFooter {from} {to} />
+          <SwapFooter {from} {to} {conversionRate} />
         </div>
 
         <div class="page-margin">
           <button
             on:click={handleSubmit}
+            disabled={canSwap === false}
             class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal"
           >
             <div class="button-inner">
@@ -208,6 +245,9 @@
     border-radius: var(--border-radius);
     padding: 1.5rem 2rem 2rem;
   }
+  .limit-width {
+    max-width: 500px;
+  }
   .label-box {
     display: flex;
     justify-content: space-between;
@@ -217,14 +257,6 @@
     position: relative;
   }
   .switch-btn {
-    --1rv42qm: #fff;
-    --1hr07om: rgba(153, 164, 176, 0.6);
-    --prlp66: #26282c;
-    --cn5q3p: #3d4049;
-    --he6tl4: #2d3035;
-    --p4qis: #3d4049;
-    --qos9gx: #484d57;
-
     width: 35px;
     height: 35px;
     fill: white;
@@ -236,32 +268,22 @@
 
     text-align: center;
     z-index: 1;
-    border: solid 3px var(--he6tl4);
-    background-color: var(--p4qis);
+    border: solid 3px #2d3035;
+    background-color: #3d4049;
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
   }
-  .ui-scrollview {
-    box-sizing: border-box;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-flex: 1 1 1px;
-    -ms-flex: 1 1 1px;
-    flex: 1 1 1px;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
+  .button:disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
   }
   .swm8knq {
-    --18w92jy: #fff;
-    --1cq0e1f: #f6f7fa;
-    --9ty6bq: rgba(218, 221, 230, 0.5);
     margin-top: 1rem;
   }
-  .swm8knq .label {
+  .label {
     margin-bottom: 0.75rem;
     line-height: 0.875rem;
     font-size: 0.875rem;
@@ -272,23 +294,27 @@
   .page-margin {
     margin-top: 1rem;
   }
-  .ui-scrollview {
-    box-sizing: border-box;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-flex: 1 1 1px;
-    -ms-flex: 1 1 1px;
-    flex: 1 1 1px;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
-  }
   .button-box {
-    background-color: #1e202466;
+    background-color: #1e202424;
     padding: 6px;
     border-radius: 6px;
   }
   .to-item {
     margin-top: 5px;
+  }
+  .insufficient-hint {
+    font-size: 0.8rem;
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 650px) {
+    .container {
+      margin-left: 0;
+      padding: 12px;
+      border-radius: 0;
+    }
+    .label {
+      font-size: 12px;
+    }
   }
 </style>

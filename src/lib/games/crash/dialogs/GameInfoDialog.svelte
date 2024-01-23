@@ -203,6 +203,15 @@
     background-color: rgba(0, 0, 0, 0.7);
     filter: none !important;
   }
+  @media only screen and (max-width: 800px) {
+    .dialog {
+      left: 0px !important;
+      top: 0px !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0px !important;
+    }
+  }
   .dialog {
     position: absolute;
     display: flex;

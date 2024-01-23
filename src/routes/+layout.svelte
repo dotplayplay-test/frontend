@@ -8,6 +8,7 @@
   import Icon from "svelte-icons-pack/Icon.svelte";
   import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
   import { theme } from "$lib/store/_theme";
+  import SpinWheel from "$lib/spin-wheel/index.svelte";
   setTimeout(() => {
     if (data.preloaed === null) {
       window.location.href = "/";
@@ -35,6 +36,10 @@
   import { default_Wallet } from "../lib/store/coins";
   import { handle_IsRedwinners } from "../lib/crashgame/store";
   import Closesidebar from "$lib/closesidebar.svelte";
+  import { UseFetchData } from "$lib/hook/useFetchData";
+  import {
+    currencyRates,
+  } from "$lib/store/currency";
   import Loader from "$lib/components/loader.svelte";
   import {showChatCounter, chatCounter} from "$lib/store/chat-counter"
 
@@ -46,6 +51,12 @@
   setTimeout(() => {
     isChatRoom = 0
   }, 1);
+  onMount(async () => {
+    const {
+      data: { rates },
+    } = await UseFetchData($handleAuthToken).fetch(`/system/currency-rates`);
+    currencyRates.set(rates);
+  });
 
   $: {
     for (let i = 0; i < $handle_IsRedwinners.length; i++) {
@@ -73,7 +84,6 @@
       }
     } else {
       handleisLoading.set(false);
-
     }
   }
 

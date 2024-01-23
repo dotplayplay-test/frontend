@@ -6,40 +6,39 @@ class MessageHandlerBase {
     this.source = source;
     this.reqCallbacks = {};
     this.eventDict = {};
-    this.target.onmessage = this.onMessage.bind(this);
     this.source.addEventListener("message", this.onMessage.bind(this));
   }
 
   async onMessage(event) {
     const sender = event.source;
-    if (event.source && sender !== this.target) return;
-    const { msgId, event: eventName, payload } = event.data;
+    if (sender && sender !== this.target) return;
+    const { msgid, event: eventName, payload } = event.data;
     if (!payload) return;
     const [error, data] = payload;
     if (eventName) {
       try {
         let result = this.trigger(eventName, data);
-        if (!msgId) return;
+        if (!msgid) return;
         if (result instanceof Promise) {
           result
             .then((res) => {
-              this.sendMessage({ msgId, payload: [null, res] });
+              this.sendMessage({ msgid, payload: [null, res] });
             })
             .catch((err) => {
-              this.sendMessage({ msgId, payload: [err.message] });
+              this.sendMessage({ msgid, payload: [err.message] });
             });
         } else {
-          this.sendMessage({ msgId, payload: [null, result] });
+          this.sendMessage({ msgid, payload: [null, result] });
         }
       } catch (err) {
-        this.sendMessage({ msgId, payload: [err.message] });
+        this.sendMessage({ msgid, payload: [err.message] });
       }
-    } else if (msgId && payload !== null) {
-      if (!this.reqCallbacks[msgId]) return;
+    } else if (msgid && payload !== null) {
+      if (!this.reqCallbacks[msgid]) return;
       if (error !== null) {
-        this.reqCallbacks[msgId][1](new MessageError(error));
+        this.reqCallbacks[msgid][1](new MessageError(error));
       } else {
-        this.reqCallbacks[msgId][0](data);
+        this.reqCallbacks[msgid][0](data);
       }
     }
   }
@@ -54,8 +53,7 @@ class MessageHandlerBase {
 
   request(event, data = null) {
     this.msgId++;
-    let msgId = this.msgId;
-
+    let msgid = this.msgId;
     return new Promise((resolve, reject) => {
       const errorCallback = (...args) => {
         clearTimer();
@@ -63,7 +61,7 @@ class MessageHandlerBase {
       };
       const clearTimer = () => {
         this.timeout > 0 && clearTimeout(timer);
-        delete this.reqCallbacks[msgId];
+        delete this.reqCallbacks[msgid];
       };
       let timer = 0;
       if (this.timeout > 0) {
@@ -72,14 +70,14 @@ class MessageHandlerBase {
           this.timeout
         );
       }
-      this.reqCallbacks[msgId] = [
+      this.reqCallbacks[msgid] = [
         (...args) => {
           clearTimer();
           resolve(...args);
         },
         errorCallback,
       ];
-      this.sendMessage({ msgId, event, payload: [null, data] });
+      this.sendMessage({ msgid, event, payload: [null, data] });
     });
   }
 

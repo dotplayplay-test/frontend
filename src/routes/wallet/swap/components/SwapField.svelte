@@ -48,14 +48,15 @@
 
 <style>
   :root {
-    --bg: #17181b;
+    --bg: #1e202466;
+    --bg2: #26282c;
   }
   .ui-select {
     padding: 6px;
     display: flex;
     flex-shrink: 0;
     border-radius: 6px;
-    background-color: var(--bg);
+    background-color: var(--bg2);
   }
   .input-control {
     flex-grow: 1;
@@ -75,9 +76,10 @@
     align-items: center;
     cursor: pointer;
     padding: 6px;
+    font-size: 0.875rem;
     user-select: none;
     border-radius: 4px;
-    background-color: #26282aa7;
+    background-color: #00000059;
   }
   .arrow {
     display: grid;
@@ -93,5 +95,11 @@
   }
   .show-max {
     margin-right: 5px;
+  }
+  @media screen and (max-width: 650px) {
+    .input-control input,
+    .select-trigger {
+      font-size: 12px;
+    }
   }
 </style>
