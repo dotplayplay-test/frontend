@@ -41,11 +41,16 @@
     currencyRates,
   } from "$lib/store/currency";
   import Loader from "$lib/components/loader.svelte";
+  import {showChatCounter, chatCounter} from "$lib/store/chat-counter"
+
   let isOpenSide = true;
-  let isChatRoom = 0;
+  let isChatRoom = 1;
   let isMenu = false;
   let sideDetection = 0;
 
+  setTimeout(() => {
+    isChatRoom = 0
+  }, 1);
   onMount(async () => {
     const {
       data: { rates },
@@ -154,9 +159,12 @@
     if (isChatRoom) {
       isnotification = false;
       isChatRoom = 0;
+      showChatCounter.set(true)
+      chatCounter.set(0)
       is_open__chat.set(false);
     } else {
       isChatRoom = 360;
+      showChatCounter.set(false)
       is_open__chat.set(true);
       if (e === "notification") {
         isnotification = true;
@@ -271,7 +279,6 @@
       </main>
       <footer>
         <Footer />
-        <!-- <SpinWheel /> -->
       </footer>
     {/if}
   </div>

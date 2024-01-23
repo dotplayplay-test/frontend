@@ -70,10 +70,10 @@
   });
 
   onMount(async () => {
-    await axios.get(`${URL}/api/users/previus-chats`).then((res) => {
+    axios.get(`${URL}/api/users/previus-chats`).then((res) => {
       chats.set(res.data);
     });
-    await axios.get(`${URL}/api/users/mention-user`).then((res) => {
+    axios.get(`${URL}/api/users/mention-user`).then((res) => {
       defaultUsername = res.data;
     });
   });
@@ -421,7 +421,7 @@
         class="sc-dkPtRN gtrd scroll-view sc-cNKqjZ dPmCMO sc-jvvksu fuYrTE chat-list"
       >
         <div class="sc-AjmGg kgsidd">
-          {#if defaultUsername.length > 0}          
+          <!-- {#if defaultUsername.length > 0}           -->
           {#each $chats as chat, i}
             <div class="flat-item">
               <div class="sc-tAExr VfNib notranslate">
@@ -1025,7 +1025,7 @@
               </div>
             </div>
           {/each}
-          {/if}
+          <!-- {/if} -->
         </div>
       </div>
 
