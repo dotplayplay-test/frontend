@@ -176,15 +176,6 @@ export default class CrashGame extends BaseGame {
       setRate: action,
       setHistory: action,
     });
-    this.user = UserStore.getInstance().user;
-    reaction(
-      () => UserStore.getInstance().user,
-      (user) => {
-        if (user) {
-          this.user = user;
-        }
-      }
-    );
     this.bindEvent();
   }
 

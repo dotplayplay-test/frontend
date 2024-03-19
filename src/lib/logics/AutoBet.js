@@ -1,5 +1,5 @@
 import Decimal from "decimal.js";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import EventEmitter from "$lib/logics/EventEmitter";
 import WalletManager from "$lib/logics/WalletManager";
 
@@ -22,7 +22,7 @@ class Ke {
   }
 }
 export default class AutoBet extends EventEmitter {
-  constructor(xBet, interval = 500, betWait = Promise.resolve(0)) {
+  constructor(xBet, interval = 500, betWait = () => Promise.resolve(0)) {
     super();
 
     // Initialize properties
@@ -168,19 +168,21 @@ export default class AutoBet extends EventEmitter {
     const bet = new Decimal(betResult);
     const amount = new Decimal(this.xBet.amount);
     this.profit = this.profit.add(amount.mul(bet.sub(1)));
-    if (bet.gt(1)) {
-      this.onWin.reset
-        ? (this.xBet.amount = this.startAmount)
-        : (this.xBet.amount = amount.add(
-            amount.mul(this.onWin.value).div(100)
-          ));
-    } else if (bet.lt(1)) {
-      this.onLose.reset
-        ? (this.xBet.amount = this.startAmount)
-        : (this.xBet.amount = amount.add(
-            amount.mul(this.onLose.value).div(100)
-          ));
-    }
+    runInAction(() => {
+      if (bet.gt(1)) {
+        this.onWin.reset
+          ? (this.xBet.amount = this.startAmount)
+          : (this.xBet.amount = amount.add(
+              amount.mul(this.onWin.value).div(100)
+            ));
+      } else if (bet.lt(1)) {
+        this.onLose.reset
+          ? (this.xBet.amount = this.startAmount)
+          : (this.xBet.amount = amount.add(
+              amount.mul(this.onLose.value).div(100)
+            ));
+      }
+    })
     return (
       !(this.stopOnWin === 0 || !this.profit.gte(this.stopOnWin)) ||
       !(this.stopOnLose === 0 || !amount.sub(this.profit).gte(this.stopOnLose))

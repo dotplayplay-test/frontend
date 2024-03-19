@@ -1,12 +1,21 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  export let value = "";
+  import { createEventDispatcher } from 'svelte';
+  export let value = '';
+  export let disabled = false;
+  export let embeded = false;
+  export let openOnHover = true;
   export let items = [];
-  $: selectedView = "";
+  $: isEmebed = false;
+  $: selectedView = '';
   $: selectionItems = [];
+  $: isDisabled = false;
+  $: canOpenOnHover = false;
   $: {
+    isEmebed = embeded;
     selectedView = value;
     selectionItems = items;
+    isDisabled = disabled;
+    canOpenOnHover= openOnHover;
   }
   const dispatch = createEventDispatcher();
   $: selectOptionsOpen = false;
@@ -14,16 +23,20 @@
 
 <div
   on:pointerleave={() => (selectOptionsOpen = false)}
-  class="sc-jJoQJp gOHquD select {selectOptionsOpen
+  class="sc-jJoQJp {isDisabled ? 'fbdnux' : ''} gOHquD select {selectOptionsOpen
     ? 'is-open'
-    : ''} language-select"
+    : ''} language-select {embeded ? "embed" : ""}"
 >
-  <div on:pointerover={() => (selectOptionsOpen = true)} class="select-trigger">
-    <slot></slot><span style="margin-left: 5px;">{selectedView}</span>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div
+    on:click={() => !isDisabled && (selectOptionsOpen = !selectOptionsOpen)}
+    on:pointerover={() => !isDisabled && canOpenOnHover && (selectOptionsOpen = true)}
+    class="select-trigger"
+  >
+    <slot /><span style="margin-left: 5px;">{selectedView}</span>
+    
     <div
-      on:click={() => (selectOptionsOpen = !selectOptionsOpen)}
       class="arrow"
     >
       <svg
@@ -43,10 +56,11 @@
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <div
             on:click={() => {
-                dispatch("onSelectionChanged", item);
-                selectOptionsOpen = false;
+              dispatch('onSelectionChanged', item);
+              selectOptionsOpen = false;
             }}
-            class="select-option {item === selectedView ? 'active' : ''}">
+            class="select-option {item === selectedView ? 'active' : ''}"
+          >
             {item}
           </div>
         {/each}
@@ -56,6 +70,15 @@
 </div>
 
 <style>
+  .embed {
+    margin-top: 0 !important;
+    width: 100% !important;
+  }
+  .embed .select-trigger {
+    padding: 0!important;
+    margin: 0 -10px;
+    background-color: transparent !important;
+  }
   .select.language-select {
     margin-top: 5px;
     width: 11.25rem;
@@ -65,6 +88,11 @@
     position: relative;
     height: 2.5rem;
     opacity: 1;
+  }
+  .fbdnux {
+    position: relative;
+    height: 2.5rem;
+    opacity: 0.5;
   }
   .bOvhJd .select .select-trigger {
     font-weight: bold;
@@ -109,6 +137,9 @@
   }
   .gOHquD.is-open .select-options-wrap {
     pointer-events: auto;
+  }
+  .gOHquD.is-open .arrow > svg {
+    transform: rotate(90deg);
   }
 
   .iVwWcQ {
@@ -158,7 +189,7 @@
     background-color: rgba(45, 48, 53, 0.4);
   }
   .iVwWcQ .select-options:not(.len-1) > .active::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 0.5rem;
     height: 0.5rem;
@@ -168,5 +199,5 @@
     right: 0.625rem;
     background-color: rgb(67, 179, 9);
     box-shadow: rgba(91, 174, 28, 0.15) 0px 0px 0px 0.3125rem;
-}
+  }
 </style>
