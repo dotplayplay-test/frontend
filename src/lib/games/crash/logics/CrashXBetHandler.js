@@ -1,6 +1,6 @@
-import { debounce, sortBy, throttle } from "lodash";
-import AutoBet from "./AutoBet";
-import GameEventHandler from "./GameEventHandler";
+import { sortBy, throttle } from "lodash";
+import AutoBet from "$lib/logics/AutoBet";
+import CasinoGame from "$lib/logics/CasinoGame";
 import {
   action,
   makeObservable,
@@ -13,7 +13,7 @@ import { ServerURl } from "../../../backendUrl";
 import WalletManager from "$lib/logics/WalletManager";
 import UserStore from "$lib/logics/UserStore";
 // Crash Game Bet Handlers
-export default class CrashXBetHandler extends GameEventHandler {
+export default class CrashXBetHandler extends CasinoGame {
   constructor(game) {
     super({ name: "crash_xbet", namespace: ServerURl() }, () => null);
 

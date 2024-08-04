@@ -1,14 +1,15 @@
 import Decimal from "decimal.js";
-import GameEventHandler from "./GameEventHandler";
+import CasinoGame from "$lib/logics/CasinoGame";
 import UserStore from "$lib/logics/UserStore";
-import {ServerURl} from "../../../backendUrl"
+import {ServerURl} from "$lib/backendUrl"
 import { action, makeObservable, observable } from "mobx";
 import axios from "axios";
+import ScriptManager from "./ScriptManager";
 
-export default class BaseGame extends GameEventHandler {
+export default class BaseGame extends CasinoGame {
   static MAX_MYBET = 10;
   constructor(e, t) {
-    super(e, t);
+    super(e, t, new ScriptManager(this));
     this.myBets = [];
     this.onMybet = this.onMybet.bind(this);
     this.loadMybet = this.loadMybet.bind(this);

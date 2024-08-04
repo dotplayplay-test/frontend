@@ -1,16 +1,16 @@
 import Decimal from "decimal.js";
-import EventEmitter from "$lib/logics/EventEmitter";
+import EventEmitter from "./EventEmitter";
 import { action, autorun, makeObservable, observable, reaction } from "mobx";
 import SocketManager from "./SocketManager";
-import ScriptManager from "./ScriptManager";
 import SoundManager from "./SoundManager";
 import PersistentStorage from "./PersistentStorage";
-import WalletManager from "$lib/logics/WalletManager";
-import UserStore from "$lib/logics/UserStore";
+import WalletManager from "./WalletManager";
+import UserStore from "./UserStore";
+import BaseScriptManager from "./BaseScriptManager";
 
 // Game Handler Base Class
-const GameEventHandler = class extends EventEmitter {
-  constructor(config, view) {
+const CasinoGame = class extends EventEmitter {
+  constructor(config, view, scriptManager) {
     super();
 
     // Config
@@ -24,7 +24,7 @@ const GameEventHandler = class extends EventEmitter {
     this.currencyImage = "https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png";
     this.amount = new Decimal(1);
     this.isBetting = false;
-    this.controlIdx = 0;
+    this.controlIdx = 1;
     // this.jackpot = {};
     this.config = config;
     this.gameInfo = {};
@@ -46,6 +46,8 @@ const GameEventHandler = class extends EventEmitter {
       isBetting: observable,
       controlIdx: observable,
       setAmount: action,
+      setControlIdx: action,
+      setBetStatus: action,
       // jackpot: observable,
     });
 
@@ -72,7 +74,7 @@ const GameEventHandler = class extends EventEmitter {
     this.setAmount = this.setAmount.bind(this);
     this.onBetEnd = this.onBetEnd.bind(this);
     this.syncCurrency = this.syncCurrency.bind(this);
-    this.script = new ScriptManager(this);
+    this.script = scriptManager || new BaseScriptManager(this);
     this.handleBet = this.handleBet.bind(this);
 
     // Initialize socket
@@ -132,7 +134,15 @@ const GameEventHandler = class extends EventEmitter {
     });
 
     this.emit("bet");
-
+    this.user = UserStore.getInstance().user;
+    reaction(
+      () => UserStore.getInstance().user,
+      (user) => {
+        if (user) {
+          this.user = user;
+        }
+      }
+    );
     reaction(
       () => WalletManager.getInstance().current,
       () => {
@@ -169,7 +179,9 @@ const GameEventHandler = class extends EventEmitter {
       return this.keymaster;
     });
   }
-
+  setControlIdx(_v) {
+    this.controlIdx = _v;
+  }
   // Set bet amount
   setAmount(amount, force = true) {
     if (amount.gte(this.maxAmount)) {
@@ -510,7 +522,7 @@ const GameEventHandler = class extends EventEmitter {
 
   // Static method to register game details
   static registDetail(name, detail) {
-    GameEventHandler.details[name] = detail;
+    CasinoGame.details[name] = detail;
   }
 };
-export default GameEventHandler;
+export default CasinoGame;
