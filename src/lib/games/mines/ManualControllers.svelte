@@ -4,7 +4,7 @@ import {default_Wallet} from "$lib/store/coins"
 import { payout , minesStore, betDetails, Cashout } from "../mines/store/index";
 import { handleAuthToken } from "$lib/store/routes";
 import { handleisLoggin, profileStore } from "$lib/store/profile";
-import { error_msg, liveStats } from "./store/index";
+import { error_msg } from "./store/index";
 import { bet_amount, soundHandler, mine_history, HandleSelectedMine,HandleNextTime,HandleGame_id,
      MinesEncription,HandleHas_won,HandleMineCount, HandlemineGems,HandleWinning,  HandleIsAlive} from "$lib/games/mines/store/index"
 import axios from "axios";
@@ -15,9 +15,6 @@ import { onMount } from "svelte";
 import { handleCountdown } from "$lib/games/ClassicDice/socket/index";
 const { handleMinesHistory } = handleCountdown()
 const URL = ServerURl();
-
-import {useLiveStats} from "$lib/hook/livestats"
-const {recordGame} = useLiveStats(liveStats, "MINES_LIVE_STATS")
 let max_profit_tips = false
 let Handlemax_profit_tips = ((e)=>{
     if(e === 1){
@@ -344,7 +341,7 @@ const handleCashout = (async()=>{
         Authorization: `Bearer ${$handleAuthToken}`
     }})
     .then((response)=>{
-        recordGame(true, data.bet_amount, data.profit, data.bet_token_img);
+
         HandleWinningSound()
         Cashout.set(0)
         HandleNextTime.set(0)
