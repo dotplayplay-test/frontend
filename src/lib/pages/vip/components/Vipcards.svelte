@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import { vipProfiile } from "../vipstore";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
@@ -64,13 +62,7 @@
     <div class="sc-iJCbQK bXHpfl">
       <div class="title">About VIP Cards</div>
       <button on:click={handleCancel} class="sc-ieecCq fLASqZ close-icon">
-        <Icon
-          src={IoCloseSharp}
-          size="18"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
+
       </button>
       <div class="cards">
         <div class="sc-fSDTwv uxCLk">

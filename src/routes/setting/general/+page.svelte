@@ -1,12 +1,7 @@
 <script>
-  import { browser } from "$app/environment";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoMoon from "svelte-icons-pack/io/IoMoon";
   import SelectionView from "$lib/components/selectionView.svelte";
-  import FaSolidSun from "svelte-icons-pack/fa/FaSolidSun";
-  import BiSolidBadgeDollar from "svelte-icons-pack/bi/BiSolidBadgeDollar";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import BsClock from "svelte-icons-pack/bs/BsClock";
+
+
   import { isLightMode } from "../../../lib/store/theme";
   import { preferredCurrency, viewInFiat } from "$lib/store/currency"
 
@@ -69,7 +64,6 @@
         }}
         items={["MYR", "SGD", "AUD", "IDR", "PHP", "VND", "CNY"]}
       >
-        <Icon src={BiSolidBadgeDollar} size="23" color="#E94544" title="rror" />
       </SelectionView>
     </div>
     <button
@@ -90,24 +84,10 @@
           class={$isLightMode ? "light-grey-bg theme-check" : "theme-check"}
         >
           <div class:is-active={!$isLightMode} class="item">
-            <Icon
-              src={IoMoon}
-              size="23"
-              color={$isLightMode
-                ? "rgba(153, 164, 176, 0.6)"
-                : "rgb(245, 246, 247)"}
-              title="Dark"
-            />
+
           </div>
           <div class:is-activeL={$isLightMode} class="item">
-            <Icon
-              src={FaSolidSun}
-              size="23"
-              color={$isLightMode
-                ? "rgb(245, 246, 247)"
-                : "rgba(153, 164, 176, 0.6)"}
-              title="Light"
-            />
+
           </div>
         </button>
         <div class="theme-word">
@@ -126,12 +106,7 @@
         >
           English
           <div class="arrow">
-            <Icon
-              src={RiSystemArrowRightSLine}
-              size="23"
-              color="rgba(153, 164, 176, 0.6)"
-              title="rror"
-            />
+
           </div>
         </div>
       </div>

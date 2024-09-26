@@ -1,9 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 import { default_Wallet } from "$lib/store/coins";
 import { handleisLoggin, profileStore } from "$lib/store/profile"
 import axios from "axios";
@@ -339,12 +335,7 @@ const handleCashout = (async()=>{
                         on:mouseenter={() => Handlemax_profit_tips(1)}
                         class="sc-gsDKAQ hxODWG icon"
                       >
-                        <Icon
-                          src={BsExclamationCircle}
-                          size="15"
-                          color="rgb(67, 179, 9)"
-                          title=""
-                        />
+       
                       </button>
                       {#if max_profit_tips}
                         <div class="tip">
@@ -412,8 +403,6 @@ const handleCashout = (async()=>{
                     </div>
                   {/if}
                     <button  on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
-                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"   />
-                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  />
                     </button>
                 </div>
             </div>
@@ -430,7 +419,7 @@ const handleCashout = (async()=>{
                   {/if}
                   {#if !$HandleIsAlive}
                   <div class="arrow ">
-                      <Icon src={RiSystemArrowRightSLine}  size="20"  color="rgba(153, 164, 176, 0.6)"  />
+                      <!-- <Icon src={RiSystemArrowRightSLine}  size="20"  color="rgba(153, 164, 176, 0.6)"  /> -->
                   </div>
                   {/if}
               </button>

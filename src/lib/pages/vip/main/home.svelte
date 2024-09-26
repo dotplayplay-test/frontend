@@ -1,7 +1,5 @@
 <script>
   import { screen } from "$lib/store/screen";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import VipLevel from "../components/vipLevel.svelte";
   import Vipcards from "../components/Vipcards.svelte";
   import { UserProfileEl } from "$lib/index";
@@ -419,12 +417,7 @@
       </div>
       <button on:click={handleIsAbout} class="about-level-btn">
         About VIP Level
-        <Icon
-          src={RiSystemArrowRightSLine}
-          size="25"
-          color="rgb(67, 179, 9)"
-          className="custom-icon"
-        />
+
       </button>
     </div>
 

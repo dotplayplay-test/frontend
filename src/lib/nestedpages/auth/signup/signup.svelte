@@ -2,11 +2,6 @@
 import {
     goto
 } from "$app/navigation"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
-import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
-import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
 import { handleSignIn } from "$lib/firebaseAuth/index"
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index"
 import { createEventDispatcher } from "svelte";
@@ -72,7 +67,6 @@ const handleCancel = (()=>{
             <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
         </div>
         <button on:click={()=> handleCancel()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
             <div class="welcome">
@@ -117,7 +111,6 @@ const handleCancel = (()=>{
                             <div class="buttons">
                                 <button on:click={()=> goto("/login")} class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin" >
                                     <div class="button-inner">
-                                        <Icon src={RiSystemArrowDropLeftLine}  size="25"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                                         <span>Sign in</span>
                                     </div>
                                 </button>
@@ -180,7 +173,6 @@ const handleCancel = (()=>{
                 <img src="https://www.linkpicture.com/q/dpp-logowhite-transparent-final_1.png" alt="" class="sc-fBgqEL gKVaPL">
             </div>
             <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
             </button>
             <div class="dialog-body no-style sc-kITQLZ dA-dCPD">
                 <div class="welcome">
@@ -212,7 +204,6 @@ const handleCancel = (()=>{
                             </div>
                             {:else}
                             <div class="casino-code hover">Referral/Promo Code (Optional)
-                                 <Icon src={RiSystemArrowDropDownLine}  size="18"  color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="arror" />
                             </div>
                             {/if}
                         </div>
@@ -220,11 +211,7 @@ const handleCancel = (()=>{
                         <div class="box">
                             <div class="argument-check">
                                 <button on:click={handleAgreement}  class="sc-iJKOTD kdCtGQ checkbox ">
-                                    {#if (!aggreement)}
-                                    <Icon src={AiOutlineCheck}  size="16"  color="rgb(67, 179, 9)" className="dot" title="arror" />
-                                    {:else}
-                                    ""
-                                    {/if}
+
                                 </button>
                                 <div class="label">
                                     I agree with

@@ -1,11 +1,6 @@
 <script>
   import { handleAuthToken } from "$lib/store/routes";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import Loader from "$lib/components/loader.svelte";
-  import HiOutlineScale from "svelte-icons-pack/hi/HiOutlineScale";
-  import IoArrowBack from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
-  import IoArrowForward from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
-  import BiArrowToRight from "svelte-icons-pack/bi/BiArrowToRight";
   import { UseFetchData } from "$lib/hook/useFetchData";
   import { createEventDispatcher, onMount } from "svelte";
   const dispatch = createEventDispatcher();

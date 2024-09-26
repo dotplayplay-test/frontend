@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
+
 </script>
 
 <div class="sc-eZKLwX jJQdnO label">
@@ -8,7 +7,6 @@ import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
         <span>5%</span>
     </div>
     <button>
-      <Icon src={BsQuestionCircleFill}  size="14"   color="rgb(93, 160, 0)" className="custom-icon" title="arror" />
         Security Rules</button>
 </div>
 <div class="sc-hKumaY JghUg">

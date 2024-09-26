@@ -2,14 +2,6 @@
 import MobileManual from "$lib/games/ClassicDice/mobileManual.svelte";
 import { payout } from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint,range, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "$lib/games/ClassicDice/store/index"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
-import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
-import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
-import BiStats from "svelte-icons-pack/bi/BiStats";
-import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
-import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
-import BsHurricane from "svelte-icons-pack/bs/BsHurricane";
 import { handleisLoggin } from "$lib/store/profile"
 import HistoryDetails from "$lib/games/ClassicDice/componets/historyDetails.svelte";
 import { soundHandler } from "$lib/games/ClassicDice/store/index"
@@ -291,7 +283,6 @@ const handleSoundState = (()=>{
                                     <button on:click={handleRollUnder} class="input-control">
                                         <input type="text" readonly value={$betPosition}>
                                         <span class="right-info">
-                                            <Icon src={AiOutlineSwap}  size="18"  color="rgb(67, 179, 9)"/>
                                         </span>
                                     </button>
                                 </div>
@@ -332,16 +323,12 @@ const handleSoundState = (()=>{
 
                 <div class="game-actions">
                     <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                        <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
                     </button>
                     <button on:click={stats} class="action-item ">
-                        <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" />
                     </button>
                     <button on:click={hanhisSeed} class="action-item " id="set_seed">
-                        <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
                     </button>
                     <button on:click={handleIsHelp} class="action-item ">
-                        <Icon src={BsHurricane}  size="18"  color="rgb(153, 164, 176)" />
                     </button>
                 </div>
             </div>

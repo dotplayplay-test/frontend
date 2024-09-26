@@ -1,20 +1,8 @@
 <script>
-  import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
   import "./styles/index.css";
   import "./styles/coinrain.css";
   import "./styles/gif.css";
   import { goto } from "$app/navigation";
-  import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
-  import BsTelegram from "svelte-icons-pack/bs/BsTelegram";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import CgInfo from "svelte-icons-pack/cg/CgInfo";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import IoClose from "svelte-icons-pack/io/IoClose";
-  import BsFiletypeGif from "svelte-icons-pack/bs/BsFiletypeGif";
-  import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
-  import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
-  import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
-  import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
   import { afterUpdate, tick } from "svelte";
   import axios from "axios";
   import { GIFs } from "./data/index";
@@ -355,12 +343,12 @@
           }}
           class="sc-ieecCq fLASqZ close-icon"
         >
-          <Icon
+          <!-- <Icon
             src={IoClose}
             size="17"
             color="rgba(153, 164, 176, 0.8)"
             title="arror"
-          />
+          /> -->
         </button>
       </div>
       <ul>
@@ -396,7 +384,7 @@
           }}
           class="inform"
         >
-          <Icon src={CgInfo} size="25" color="rgb(85, 91, 101)" title="rules" />
+          <!-- <Icon src={CgInfo} size="25" color="rgb(85, 91, 101)" title="rules" /> -->
         </div>
         <div class="sc-iWBNLc bXthlR rich-btn">
           <img
@@ -405,12 +393,12 @@
           />
         </div>
         <button on:click={handlecloseChat} class="sc-ieecCq fLASqZ close-icon">
-          <Icon
+          <!-- <Icon
             src={IoClose}
             size="17"
             color="rgba(153, 164, 176, 0.8)"
             title="arror"
-          />
+          /> -->
         </button>
       </div>
     </div>
@@ -1057,12 +1045,12 @@
                     </div>
                   </div>
                 {/if}
-                <Icon
+                <!-- <Icon
                   src={BsEmojiSunglasses}
                   size="16"
                   color="rgba(153, 164, 176, 0.8)"
                   title="arror"
-                />
+                /> -->
               </button>
             </div>
           </div>
@@ -1072,7 +1060,7 @@
                 handleSendMessage(event, { newMessages, type: "normal" })}
               class="sc-JkixQ cVsgdS emoji-r-wrap"
             >
-              <Icon src={BsTelegram} size="34" color="#fff" title="arror" />
+              <!-- <Icon src={BsTelegram} size="34" color="#fff" title="arror" /> -->
             </button>
           {/if}
         </div>
@@ -1080,28 +1068,12 @@
         <div class="send-controls">
           <div class="left-actions">
             <a class="chat-icon" href="/user/rain">
-              <Icon
-                src={WiRaindrop}
-                size="28"
-                color="rgba(153, 164, 176, 0.8)"
-                title="arror"
-              />
+
             </a>
             <button on:click={() => (newMessages = "/")} class="command-btn">
-              <Icon
-                src={IoLanguageOutline}
-                size="20"
-                color="rgba(153, 164, 176, 0.8)"
-                title="arror"
-              />
             </button>
             <a class="chat-icon" href="/user/coindrop_send">
-              <Icon
-                src={RiFinanceCopperCoinLine}
-                size="20"
-                color="rgba(153, 164, 176, 0.8)"
-                title="arror"
-              />
+
             </a>
           </div>
           <div class="sc-dkQkyq gbjudO gift-r-wrap hide-gift">
@@ -1123,12 +1095,7 @@
             {/if}
 
             <button on:click={handleGIF} class="gift-btn">
-              <Icon
-                src={BsFiletypeGif}
-                size="16"
-                color="rgba(153, 164, 176, 0.8)"
-                title="arror"
-              />
+   
             </button>
           </div>
         </div>

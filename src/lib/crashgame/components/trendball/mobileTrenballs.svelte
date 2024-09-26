@@ -1,8 +1,5 @@
 <script>
-import { goto} from "$app/navigation"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+
 import { profileStore, handleisLoggin } from "$lib/store/profile"
 import axios from "axios"
 import {default_Wallet } from "$lib/store/coins";
@@ -285,8 +282,7 @@ if($default_Wallet.coin_name === "USDT"){
                         <button on:click={()=>handleHalf(1)}>/2</button>
                         <button on:click={()=>handleHalf(2)}>x2</button>
                             <button class="sc-gqtqkP gfnHxc">
-                                <Icon src={RiSystemArrowUpSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
-                                <Icon src={RiSystemArrowDownSLine}  size="17"  color="rgba(153, 164, 176, 0.6)"  title="arror" />
+          
                             </button>
                         </div>
                     </div>

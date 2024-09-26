@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import AiOutlineCamera from "svelte-icons-pack/ai/AiOutlineCamera";
+
 let image = "https://img2.nanogames.io/avatar/505090/l?t=1695187081164"
 
 let default_images = [
@@ -33,7 +32,6 @@ const handleDefaultImaage = ((e)=>{
                 <div data-testid="cropper" class="reactEasyCrop_CropArea reactEasyCrop_CropAreaGrid croped-area" style="width: 300px; height: 300px;"></div>
             </div>
             <button class="upload flex-center">
-                <Icon src={AiOutlineCamera}  size="23"  color="rgba(153, 164, 176, 0.6)"  /> 
                 <input bind:this={image}  accept=".png,.jpg" type="file">
             </button>
         </div>

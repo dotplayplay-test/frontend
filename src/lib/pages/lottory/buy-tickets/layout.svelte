@@ -1,10 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
   import { createEventDispatcher, onMount } from "svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-  import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
   import { UseFetchData } from "$lib/hook/useFetchData";
   import { handleAuthToken } from "$lib/store/routes";
   import { default_Wallet } from "$lib/store/coins";
@@ -92,11 +88,7 @@
     <button
       on:click={handleClose}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
-      ><Icon
-        src={IoCloseSharp}
-        size="23"
-        color="rgba(153, 164, 176, 0.6)"
-      /></button
+      ></button
     >
     <div class="dialog-body default-style" style="z-index: 2; transform: none;">
       <div class="sc-dkPtRN jScFby scroll-view sc-bXdNzS jybDrO">
@@ -206,16 +198,7 @@
                     showSlider = !showSlider;
                   }}
                   class="sc-hIagIn fuYEiw"
-                  ><Icon
-                    src={RiSystemArrowUpSLine}
-                    size="80"
-                    color="rgba(153, 164, 176, 0.6)"
-                  />
-                  <Icon
-                    src={RiSystemArrowDownSLine}
-                    size="80"
-                    color="rgba(153, 164, 176, 0.6)"
-                  /></button
+                  ></button
                 >
               </div>
             </div>

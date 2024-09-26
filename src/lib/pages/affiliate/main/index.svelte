@@ -1,12 +1,8 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import TiClipboard from "svelte-icons-pack/ti/TiClipboard";
-import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
-import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
+
 import { handleisLoggin } from "$lib/store/profile";
 import { error, Handleis_activated , affilliate_info} from "./store/index";
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
 import { createEventDispatcher } from 'svelte';
 import Terms from '../component/terms.svelte';
 import Rules from '../component/rules.svelte';
@@ -152,7 +148,6 @@ const handleCreateReferral = (async()=>{
             {/if}
         </div>
         <button on:click={handlePopRule} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body default-style casino-affiliate-terms" style="z-index: 2; transform: none;">
             {#if terms && !usd_rule}
@@ -172,11 +167,9 @@ const handleCreateReferral = (async()=>{
         <div class="header-sub flex-center">
             <div class="left flex-center">
                 <button on:click={()=>handlePopRule(2)} class="m-item rules">
-                    <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon"  />
                     <span>Commission Rules</span>
                 </button>
                 <button on:click={()=>handlePopRule(1)} class="m-item terms">
-                    <Icon src={BsCircleSquare} size="18" className="custom-icon"  />
                     <span>Affiliate Terms</span>
                 </button>
             </div>
@@ -221,7 +214,6 @@ const handleCreateReferral = (async()=>{
         <div class="character banner-layer welcome"></div>
         <button on:click={()=> goto("/my-affiliate/dashboard")} class="management">
             <span style="margin: 0px 5px; display:flex;">
-                <Icon src={TiClipboard} size="18" color="#fff" className="custom-icon"  />
             </span>
             <span>Affiliate Dashboard</span>
         </button>
@@ -284,7 +276,6 @@ const handleCreateReferral = (async()=>{
                             <div class="flex">
                                 <div class="amount">100 USD</div>
                                 <button on:click={()=>handlePopRule(3)} class="hover theme" >USD Rewards Rules</button>
-                                <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon"  />
                             </div>
                         </div>
                         <div class="graph" id="system-rewards">

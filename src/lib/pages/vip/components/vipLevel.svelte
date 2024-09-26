@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import VipSystem from "./vip_system.svelte";
   import { vipProfiile } from "../vipstore";
   import { createEventDispatcher, onMount } from "svelte";
@@ -119,11 +117,7 @@
     <button
       on:click={handleCancel}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
-      ><Icon
-        src={IoCloseSharp}
-        size="23"
-        color="rgba(153, 164, 176, 0.6)"
-      /></button
+      ></button
     >
     <div
       class="dialog-body no-style sc-kszsFN jDpeEE vip_xidalog_about"

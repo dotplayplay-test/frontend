@@ -1,9 +1,8 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
   import { handleAuthToken } from "$lib/store/routes";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
   import Loader from "$lib/components/loader.svelte";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { UseFetchData } from "$lib/hook/useFetchData";
   export let gameID;
   $: loading = true;
@@ -55,11 +54,7 @@
       ></canvas>
       <div class="cont">
         <button on:click={handleClose} class="sc-ieecCq fLASqZ close-icon"
-          ><Icon
-            src={IoCloseSharp}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-          /></button
+          ></button
         >
         {#if loading}
           <div style="height: 179px">

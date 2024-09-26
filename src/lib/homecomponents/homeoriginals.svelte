@@ -1,15 +1,5 @@
 <script>
-    import IoDice from "svelte-icons-pack/io/IoDice";
 
-let games = [
-    {id:1, name : "Crash", icon: IoDice, house_edge:"House Edge 1%",  route: "crash", isAtive: false, img: "https://img2.nanogames.io/game/image/c405f953-f7ca-4da5-8309-dcba4fc44e7d.png"},
-    {id:3, name : "Plinko", icon: IoDice, house_edge:"House Edge 1%",  route: "plinko", isAtive: false, img: "https://img2.nanogames.io/game/image/ae817f12-fa67-49b8-b33e-6cafda497488.png" },
-    {id:4, name : "Tower", icon: IoDice, house_edge:"House Edge 1%",  route: "tower", isAtive: false, img: "https://img2.nanogames.io/game/image/7f1f471d-0768-42f1-9d92-e70ce0e10235.png" },
-    {id:5, name : "HiLo", icon: IoDice, house_edge:"House Edge 1%",  route: "hilo", isAtive: false, img:"https://img2.nanogames.io/game/image/d64c5ee5-68c0-4d7e-bf8d-0be925f378b1.png" },
-    {id:2, name : "Classic Dice", icon: IoDice, house_edge:"House Edge 1%",  route: "classic-dice", isAtive: false, img: "https://img2.nanogames.io/game/image/0aa80aca-75d1-4fff-b8c9-1d67f1498373.png" },
-    {id:6, name : "Diamonds", icon: IoDice, house_edge:"House Edge 1%",  route: "diamonds", isAtive: false, img: "https://img2.nanogames.io/game/image/42026a73-a033-4a57-bb1c-7e09fd2ea30f.png" },
-    {id:7, name : "Mines", icon: IoDice, house_edge:"House Edge 1%",  route: "mines", isAtive: false, img: "https://img2.nanogames.io/game/image/0aa3d807-0380-4f8e-b65e-3179d4af2234.png" },
-]
 </script>
 
 <div class='sc-jYmNlR blJYGp sc-emDsmM ijbeXh'>

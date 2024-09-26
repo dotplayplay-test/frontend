@@ -1,7 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { UseTransaction } from "$lib/hook/useTransaction"
 import {onMount} from "svelte"
 import { UserProfileEl } from "$lib/index";
@@ -164,7 +161,6 @@ const handleSubmit = (()=>{
                         <img class="coin-icon" alt="" src={$storeSender.coin_image}>
                         <span style="padding:5px;" class="currency">{$storeSender.coin_name}</span>
                         <span style="padding:7px;">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                         </span>
                     </button>
                 </div>
@@ -173,7 +169,6 @@ const handleSubmit = (()=>{
             {#if $default_Wallet.coin_name !== "PPF"}
             <div class="sc-eZKLwX jJQdnO">1 USDT ≈ 1 PPD</div>
             <div class="icon-exchange"><button>
-                <Icon src={RiSystemArrowDownSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
             </div>
             <div class="sc-ezbkAF kDuLvp input sc-bTfYFJ dETeez">
@@ -187,7 +182,6 @@ const handleSubmit = (()=>{
                         <img class="coin-icon" alt="" src={$storeReceiver.coin_image}>
                         <span style="padding:5px;" class="currency">{$storeReceiver.coin_name}</span>
                         <span style="padding:7px;">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                         </span>
                     </button>
                 </div>

@@ -1,16 +1,6 @@
 <script>
 import { error_msg } from "../store/index"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
-import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
-import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
-import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
-import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
-import BiChart from "svelte-icons-pack/bi/BiChart";
-import FaSolidDice from "svelte-icons-pack/fa/FaSolidDice";
 import { browser } from '$app/environment';
-import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
 export let DgII
 import {DiceEncription} from '$lib/games/ClassicDice/store/index'
 $: (DgII)
@@ -74,7 +64,7 @@ $:{
         
         {#if is_seeed_settigs}
         <button on:click={()=> handleSeedSettings()} class="dialog-back" style="opacity: 1; transform: none;">
-            <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+            <!-- <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" /> -->
         </button>
         {/if}
         <div class={`dialog-head ${is_seeed_settigs ? "has-back" : "has-close"} `}>
@@ -82,7 +72,7 @@ $:{
         </div>
 
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+            <!-- <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /> -->
         </button>
 
         {#if !is_seeed_settigs}
@@ -96,7 +86,7 @@ $:{
                     {/if}
                     <div class="sc-jibziO gZqspm game-share">
                         <button on:click={handleSharedBet} class="sc-jibziO gZqspm game-share">
-                            <Icon src={FaSolidShare}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="share to friends" />
+                            <!-- <Icon src={FaSolidShare}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="share to friends" /> -->
                         </button>
                     </div>
                     <div class="rt_info">
@@ -112,7 +102,7 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" />
+                                    <!-- <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" /> -->
                                 </span>
                                 Amount
                             </div>
@@ -121,7 +111,7 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" />
+                                    <!-- <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" /> -->
                                 </span>
                                 Payout
                             </div>
@@ -130,7 +120,7 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" />
+                                    <!-- <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" /> -->
                                 </span>
                                 Profit
                             </div>
@@ -146,7 +136,7 @@ $:{
                     <div class="item-wrap">
                         <div class="item-num">
                             <span style="padding-right: 3px;">
-                                <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                                <!-- <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" /> -->
                             </span>
                             Result
                         </div>
@@ -155,7 +145,7 @@ $:{
                     <div class="item-wrap">
                         <div class="item-num">
                             <span style="padding-right: 3px;">
-                                <Icon src={FaSolidDice}  size="13"  color="rgb(15, 98, 254)" className="custom-icon" title="arror" />
+                                <!-- <Icon src={FaSolidDice}  size="13"  color="rgb(15, 98, 254)" className="custom-icon" title="arror" /> -->
                             </span>
                             Bet
                         </div>
@@ -166,7 +156,7 @@ $:{
                     <div class="item-wrap">
                         <div class="item-num">
                             <span style="padding-right: 3px;">
-                                <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
+                                <!-- <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" /> -->
                             </span>
                             Chance
                         </div>

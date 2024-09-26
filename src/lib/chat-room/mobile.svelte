@@ -1,20 +1,9 @@
 <script>
-  import IoLanguageOutline from "svelte-icons-pack/io/IoLanguageOutline";
+
   import "./styles/index.css";
   import "./styles/coinrain.css";
   import "./styles/gif.css";
   import { goto } from "$app/navigation";
-  import SiRainmeter from "svelte-icons-pack/si/SiRainmeter";
-  import BsTelegram from "svelte-icons-pack/bs/BsTelegram";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import CgInfo from "svelte-icons-pack/cg/CgInfo";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import IoClose from "svelte-icons-pack/io/IoClose";
-  import BsFiletypeGif from "svelte-icons-pack/bs/BsFiletypeGif";
-  import BsEmojiSunglasses from "svelte-icons-pack/bs/BsEmojiSunglasses";
-  import FaSolidAt from "svelte-icons-pack/fa/FaSolidAt";
-  import WiRaindrop from "svelte-icons-pack/wi/WiRaindrop";
-  import RiFinanceCopperCoinLine from "svelte-icons-pack/ri/RiFinanceCopperCoinLine";
   import { afterUpdate, tick } from "svelte";
   import axios from "axios";
   import { GIFs } from "./data/index";
@@ -343,12 +332,12 @@
                 }}
                 class="sc-ieecCq fLASqZ close-icon"
               >
-                <Icon
+                <!-- <Icon
                   src={IoClose}
                   size="17"
                   color="rgba(153, 164, 176, 0.8)"
                   title="arror"
-                />
+                /> -->
               </button>
             </div>
             <ul>
@@ -387,12 +376,12 @@
               }}
               class="inform"
             >
-              <Icon
+              <!-- <Icon
                 src={CgInfo}
                 size="25"
                 color="rgb(85, 91, 101)"
                 title="arror"
-              />
+              /> -->
             </div>
             <div class="sc-iWBNLc bXthlR rich-btn">
               <img
@@ -404,12 +393,12 @@
               on:click={handlecloseChat}
               class="sc-ieecCq fLASqZ close-icon"
             >
-              <Icon
+              <!-- <Icon
                 src={IoClose}
                 size="17"
                 color="rgba(153, 164, 176, 0.8)"
                 title="arror"
-              />
+              /> -->
             </button>
           </div>
         </div>
@@ -1028,12 +1017,12 @@
                         </div>
                       </div>
                     {/if}
-                    <Icon
+                    <!-- <Icon
                       src={BsEmojiSunglasses}
                       size="16"
                       color="rgba(153, 164, 176, 0.8)"
                       title="arror"
-                    />
+                    /> -->
                   </button>
                 </div>
               </div>
@@ -1043,38 +1032,38 @@
                     handleSendMessage(event, { newMessages, type: "normal" })}
                   class="sc-JkixQ cVsgdS emoji-r-wrap"
                 >
-                  <Icon src={BsTelegram} size="34" color="#fff" title="arror" />
+                  <!-- <Icon src={BsTelegram} size="34" color="#fff" title="arror" /> -->
                 </button>
               {/if}
             </div>
             <div class="send-controls">
               <div class="left-actions">
                 <a class="chat-icon" href="/user/rain">
-                  <Icon
+                  <!-- <Icon
                     src={WiRaindrop}
                     size="28"
                     color="rgba(153, 164, 176, 0.8)"
                     title="arror"
-                  />
+                  /> -->
                 </a>
                 <button
                   on:click={() => (newMessages = "/")}
                   class="command-btn"
                 >
-                  <Icon
+                  <!-- <Icon
                     src={IoLanguageOutline}
                     size="20"
                     color="rgba(153, 164, 176, 0.8)"
                     title="arror"
-                  />
+                  /> -->
                 </button>
-                <a class="chat-icon" href="/user/coindrop_send">
-                  <Icon
+                 <a class="chat-icon" href="/user/coindrop_send">
+               <!--   <Icon
                     src={RiFinanceCopperCoinLine}
                     size="20"
                     color="rgba(153, 164, 176, 0.8)"
                     title="arror"
-                  />
+                  /> -->
                 </a>
               </div>
               <div class="sc-dkQkyq gbjudO gift-r-wrap hide-gift">
@@ -1095,12 +1084,12 @@
                   </div>
                 {/if}
                 <button on:click={handleGIF} class="gift-btn">
-                  <Icon
+                  <!-- <Icon
                     src={BsFiletypeGif}
                     size="16"
                     color="rgba(153, 164, 176, 0.8)"
                     title="arror"
-                  />
+                  /> -->
                 </button>
               </div>
             </div>
@@ -1230,46 +1219,7 @@
     }
   }
 
-  .region_container button {
-    font-size: 15px;
-    padding: 6px 10px;
-    border-radius: 50px;
-    width: 100%;
-    text-align: left;
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
 
-  .region_container button.active {
-    border: 1px solid var(--primary-color);
-    font-weight: bold;
-  }
-
-  .region_container button:hover {
-    background-color: var(--card-bg-6);
-  }
-
-  .region_container button.active::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: ghostwhite;
-    border-radius: 50%;
-    right: 5px;
-  }
-
-  .region_container button.active::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    z-index: 1;
-    right: 10px;
-  }
 
   .cVsgdS .emoji-box-wrap {
     width: 280px;
@@ -1858,74 +1808,6 @@
     padding: 0px;
     -webkit-box-pack: justify;
     justify-content: space-between;
-  }
-
-  .dWgZek .select-wrap {
-    height: 100%;
-    position: relative;
-  }
-
-  .dWgZek .select-wrap .select {
-    height: 100%;
-  }
-
-  .gOHquD {
-    position: relative;
-    height: 2.5rem;
-    opacity: 1;
-  }
-
-  .gOHquD .select-trigger {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    overflow: hidden;
-    height: 100%;
-    cursor: pointer;
-    padding: 0px 1.25rem;
-    user-select: none;
-    border-radius: 1.25rem;
-    background: var(--affiliate-bg);
-  }
-
-  .dWgZek .select-wrap .select .select-trigger {
-    color: var(--text-5);
-    background: transparent;
-    border-radius: 0px;
-    padding: 0px;
-    width: 7.25rem;
-    font-weight: bold;
-  }
-
-  .dWgZek .select-wrap .select .select-trigger .select-label {
-    width: 5.75rem;
-    line-height: 3.875rem;
-    background-image: linear-gradient(
-      to top,
-      rgba(91, 174, 28, 0.15),
-      rgba(91, 174, 28, 0) 50%
-    );
-    border-bottom: 2px solid rgb(67, 179, 9);
-    text-align: center;
-  }
-
-  .dWgZek .select-wrap .select .select-trigger .arrow {
-    width: 1.5rem;
-    height: 100%;
-  }
-
-  .gOHquD .select-trigger .arrow {
-    width: 2.5rem;
-    height: 100%;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    position: absolute;
-    right: 0px;
-    top: 0px;
   }
 
   .dWgZek::after {

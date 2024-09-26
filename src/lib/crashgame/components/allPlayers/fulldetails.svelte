@@ -1,12 +1,6 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import BiChart from "svelte-icons-pack/bi/BiChart";
-import FaSolidDice from "svelte-icons-pack/fa/FaSolidDice";
-import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
+
 import "../bankroll/styles/mybetDetails.css"
-import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
-import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
-import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
 import { SinglePlayerDetailsEl } from "../../store"
 
 </script>
@@ -32,7 +26,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="label flex-center">
                         <span style="padding-right: 3px;">
-                            <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" />
+     
                         </span>
                         Amount</div>
                     <div class="number flex-center">{$SinglePlayerDetailsEl.bet_amount}{" "}{$SinglePlayerDetailsEl.token}</div>
@@ -40,7 +34,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="label flex-center">
                         <span style="padding-right: 3px;">
-                            <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" />
+   
                         </span>
                         Payout
                     </div>
@@ -53,7 +47,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="label flex-center">
                         <span style="padding-right: 3px;">
-                            <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" />
+ 
                         </span>
                         Profit
                     </div>
@@ -71,7 +65,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="item-num">
                         <span style="padding-right: 3px;">
-                            <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+                       
                         </span>
                         Result</div>
                     <div class="item-desc">{$SinglePlayerDetailsEl.payout}x</div>
@@ -79,7 +73,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="item-num">
                         <span style="padding-right: 3px;">
-                            <Icon src={FaSolidDice}  size="13"  color="rgb(15, 98, 254)" className="custom-icon" title="arror" />
+                     
                         </span>
                         Bet
                     </div>
@@ -90,7 +84,7 @@ import { SinglePlayerDetailsEl } from "../../store"
                 <div class="item-wrap">
                     <div class="item-num">
                         <span style="padding-right: 3px;">
-                            <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
+               
                         </span>
                         Chance</div>
                     <div class="item-desc">{$SinglePlayerDetailsEl.chance}</div>

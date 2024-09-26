@@ -1,7 +1,5 @@
 <script>
   import "../styles/foooter/footer.css";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowDropUpLine from "svelte-icons-pack/ri/RiSystemArrowDropUpLine";
   import { isLightMode } from "../lib/store/theme";
 </script>
 
@@ -60,13 +58,7 @@
         <h4>©2023 Dotplayplay.COM ALL RIGHTS RESERVED</h4>
       </div>
       <div class="footer-top-arrow">
-        <Icon
-          src={RiSystemArrowDropUpLine}
-          size="18"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
+
         <span>Top</span>
       </div>
     </div>
@@ -172,13 +164,7 @@
         <div>©2023 wager.com ALL RIGHTS RESERVED</div>
       </div>
       <div class="to-top">
-        <Icon
-          src={RiSystemArrowDropUpLine}
-          size="18"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
+
         <span>Top</span>
       </div>
     </div>

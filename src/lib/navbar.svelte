@@ -1,12 +1,9 @@
 <script>
-  import HiSolidSearch from "svelte-icons-pack/hi/HiSolidSearch";
   import MainNavbar from "../lib/navbarcomponent/main/index.svelte";
   import { handleAuthToken } from "$lib/store/routes";
   import { goto } from "$app/navigation";
   import "../styles/navbar/mobileNavbar.css";
   import "../styles/navbar/navbar.css";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
   export let styles;
   export let chatroom;
   import { browser } from "$app/environment";
@@ -15,11 +12,7 @@
   import { createEventDispatcher, onMount } from "svelte";
   import Statistic from "./statistics/main/statistic.svelte";
   import { statisticsEl } from "$lib/store/statistic";
-  import Login from "./nestedpages/auth/login/login.svelte";
-  import Signup from "./nestedpages/auth/signup/signup.svelte";
-  import Info from "./nestedpages/auth/info/info.svelte";
   import { handleNestedRoute } from "$lib/store/nested_routes";
-  import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
   import { isLightMode } from "../lib/store/theme";
   import {chatCounter, showChatCounter} from "$lib/store/chat-counter"
   $: browser && localStorage.setItem("preload", JSON.stringify("is_active"));
@@ -155,13 +148,13 @@
             </button>
             <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
               <div class="chat-btn">
-                <Icon
+                <!-- <Icon
                   src={BsDroplet}
                   size="18"
                   color={$isLightMode ? "#000" : "#fff"}
                   className="custom-icon"
                   title="arror"
-                />
+                /> -->
                 {#if $showChatCounter && $chatCounter}                
                 <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
                 {/if}
@@ -195,13 +188,13 @@
         </a>
         <button on:click={handleMenu} class="sc-bQtKYq cUTdQJ">
           <span class="open-wrap">
-            <Icon
+            <!-- <Icon
               src={HiSolidMenu}
               size="15"
               color="rgb(67, 179, 9)"
               className="custom-icon"
               title="arror"
-            />
+            /> -->
           </span>
         </button>
         {#if $handleisLoggin}
@@ -229,13 +222,13 @@
             id="chat"
             class="sc-eicpiI PGOpB chat-btn"
           >
-            <Icon
+            <!-- <Icon
               src={BsDroplet}
               size="28"
               color="#fff"
               className="custom-icon"
               title="arror"
-            />
+            /> -->
             {#if $showChatCounter && $chatCounter}
             <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
             {/if}

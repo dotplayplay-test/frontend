@@ -1,15 +1,8 @@
 <script>
 import { goto } from "$app/navigation"
 import '../styles/index.css'
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import Games from '../components/games.svelte';
-import IoMoon from "svelte-icons-pack/io/IoMoon";
-import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
-import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
 import { createEventDispatcher } from 'svelte'
-import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
 
 const dispatch = createEventDispatcher()
 
@@ -44,7 +37,6 @@ const handleNavigation = ((e) => {
             <div class="sc-uojGG hksQGj">
                 <button on:click={handleMenu}>
                     <span  class="close-wrap">
-                        <Icon src={IoCloseSharp} color="rgba(153, 164, 176, 0.6)" size="35" className="custom-icon" title="Custom icon params" />
                     </span>
                 </button>
             </div>
@@ -57,7 +49,6 @@ const handleNavigation = ((e) => {
         <button class="nav-item" on:click={handleOriginals}>
                 <img alt="menu-icon" src="https://static.nanogames.io/assets/originalcasino.bb7966a7.png">
                 <div class="nav-right">NG Originals</div>
-                <Icon src={RiSystemArrowRightSLine} color="rgba(153, 164, 176, 0.6)" size="27" className="sc-gsDKAQ hxODWG icon open-icon open" title="Custom icon params" />
         </button>
 
         <!-- =================== Games ============================ -->
@@ -67,7 +58,6 @@ const handleNavigation = ((e) => {
 
         <button on:click={()=>handleNavigation("/bonus")}  class="nav-item">
             <span style="padding: 10px">
-                <Icon src={AiFillGift}  size="25"  color="#9900CC" className="custom-icon" title="bonus" />
             </span>
             <div class="nav-right">Bonus</div>
         </button>

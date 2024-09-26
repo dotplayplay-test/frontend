@@ -1,10 +1,5 @@
 <script>
   import { handleAuthToken } from "$lib/store/routes";
-  import RiSystemErrorWarningLine from "svelte-icons-pack/ri/RiSystemErrorWarningLine";
-  import RiSystemEyeCloseLine from "svelte-icons-pack/ri/RiSystemEyeCloseLine";
-  import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
-  import BiSolidCopy from "svelte-icons-pack/bi/BiSolidCopy";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { isLightMode } from "../../../lib/store/theme";
   import {Endpoints} from '../../../lib/services/endPoints'
   let showOldPassword = false;
@@ -98,21 +93,7 @@
                 class="toggle-password"
                 on:click={toggleOldPasswordVisibility}
               >
-                {#if showOldPassword}
-                  <Icon
-                    src={RiSystemEyeCloseLine}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {:else}
-                  <Icon
-                    src={AiFillEye}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {/if}
+
               </button>
             </div>
           </div>
@@ -145,21 +126,7 @@
                 class="toggle-password"
                 on:click={toggleNewPasswordVisibility}
               >
-                {#if showNewPassword}
-                  <Icon
-                    src={RiSystemEyeCloseLine}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {:else}
-                  <Icon
-                    src={AiFillEye}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {/if}
+
               </button>
             </div>
           </div>
@@ -192,31 +159,12 @@
                 class="toggle-password"
                 on:click={toggleConfirmPasswordVisibility}
               >
-                {#if showConfirmPassword}
-                  <Icon
-                    src={RiSystemEyeCloseLine}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {:else}
-                  <Icon
-                    src={AiFillEye}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {/if}
+
               </button>
             </div>
           </div>
           <div class="tips-div">
-            <Icon
-              src={RiSystemErrorWarningLine}
-              size="20"
-              color="rgb(67, 179, 9)"
-              title=""
-            />
+
             <p class="tips">
               Re-login will be required after changing the password.
             </p>
@@ -276,12 +224,7 @@
                   readonly=""
                   value="5efvci6m2jsz5rkxt236yrl4qrlsv3gi"
                 /><button class="toggle-password">
-                  <Icon
-                    src={BiSolidCopy}
-                    size="24"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  /></button
+                </button
                 >
               </div>
             </div>
@@ -323,21 +266,7 @@
                 class="toggle-password"
                 on:click={toggleLoginPasswordVisibility}
               >
-                {#if showLoginPassword}
-                  <Icon
-                    src={RiSystemEyeCloseLine}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {:else}
-                  <Icon
-                    src={AiFillEye}
-                    size="20"
-                    color="rgba(153, 164, 176, 0.6)"
-                    title=""
-                  />
-                {/if}
+
               </button>
             </div>
           </div>
@@ -379,10 +308,7 @@
 {/if}
 
 <style>
-  .light-mode {
-    background-color: rgb(255, 255, 255) !important;
-    color: rgb(49, 55, 61) !important;
-  }
+
   .light-text {
     color: rgb(49, 55, 61) !important;
   }
@@ -464,7 +390,6 @@ color: var(--text-6);    font-size: 0.84rem;
   .gCMZdv > .pc .input .input-control {
     background-color: rgba(30, 32, 36, 0.6);
   }
-  .gcQjQT .input-control textarea,
   .gcQjQT .input-control input {
     flex: 1 1 0%;
     width: 100%;
@@ -487,22 +412,13 @@ color: var(--text-6);    font-size: 0.84rem;
     border-radius: 1.5rem;
     padding: 0px 1.375rem;
   }
-  .gCMZdv > .pc .input .input-control > svg {
-    cursor: pointer;
-  }
-  .ixxYMF .input-control > svg {
-    cursor: pointer;
-  }
+
   .toggle-password {
     width: 20px !important;
     margin: auto !important;
   }
 
-  .hxODWG {
-    width: 1.4em;
-    height: 1.4em;
-    fill: rgba(153, 164, 176, 0.6);
-  }
+
   .tips-div {
     display: flex;
     align-items: center;
@@ -609,7 +525,6 @@ color: var(--text-6);    font-size: 0.84rem;
     justify-content: space-between;
     margin: 0px auto;
   }
-  ol,
   ul {
     padding-left: 1.2em;
     margin: 0;
@@ -651,28 +566,7 @@ color: var(--text-6);    font-size: 0.84rem;
     border-radius: 1.5rem;
     padding: 0px 1.375rem;
   }
-  .gcQjQT .input-control textarea,
-  .gcQjQT .input-control input {
-    flex: 1 1 0%;
-    width: 100%;
-    height: 100%;
-    min-width: 1rem;
-    padding: 0px;
-    border: none;
-    background-color: transparent;
-    color: var(--text-5);
-  }
-  .gCMZdv > .pc .input .input-control > svg {
-    cursor: pointer;
-  }
-  .ixxYMF .input-control > svg {
-    cursor: pointer;
-  }
-  .hxODWG {
-    width: 1.4em;
-    height: 1.4em;
-    fill: rgba(153, 164, 176, 0.6);
-  }
+
   .iQcnrl .wrap .box button {
     width: 11.25rem;
     height: 3rem;
@@ -738,49 +632,6 @@ color: var(--text-6);    font-size: 0.84rem;
     opacity: 1;
   }
 
-  .hzTJOu .input-control textarea[readonly],
-  .hzTJOu .input-control input[readonly] {
-    opacity: 0.5;
-  }
-  .hzTJOu .input-control textarea,
-  .hzTJOu .input-control input {
-    flex: 1 1 0%;
-    width: 100%;
-    height: 100%;
-    min-width: 1rem;
-    padding: 0px;
-    border: none;
-    background-color: transparent;
-    color: var(--text-5);
-    font-weight: bold;
-  }
-  body,
-  input,
-  textarea,
-  a,
-  button {
-    color: var(--text-color);
-  }
-  body,
-  input,
-  textarea,
-  a,
-  button {
-    font-family:
-      Montserrat,
-      -apple-system,
-      Framedcn,
-      Helvetica Neue,
-      Condensed,
-      DisplayRegular,
-      Helvetica,
-      Arial,
-      PingFang SC,
-      Hiragino Sans GB,
-      WenQuanYi Micro Hei,
-      Microsoft Yahei,
-      sans-serif;
-  }
   /*  .kQlYep {
     display: flex;
     flex-wrap: wrap;

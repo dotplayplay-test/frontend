@@ -1,13 +1,7 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import "../styles/main.css";
 import axios from "axios"
 import {onMount} from "svelte"
-import RiDeviceDatabase2Fill from "svelte-icons-pack/ri/RiDeviceDatabase2Fill";
-import BsCoin from "svelte-icons-pack/bs/BsCoin";
-import SiChakraui from "svelte-icons-pack/si/SiChakraui";
 import { statisticsEl, default_statistics } from "$lib/store/statistic";
 import { routes } from "../../store/routes"
 import { profileStore } from '../../store/profile';
@@ -74,7 +68,6 @@ const handleDropdown = ((e)=>{
             <div class="dialog-title">Details</div>
         </div>
         <button on:click={()=> handleStatistics()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="close" />
         </button>
 
         {#if is_loading}
@@ -99,7 +92,6 @@ const handleDropdown = ((e)=>{
                             <div  class="select-trigger">                                                                                                       
                                 {default_displayname}
                                 <div class="arrow ">
-                                    <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                                 </div>
                             </div>
                             {#if is_open}
@@ -132,7 +124,6 @@ const handleDropdown = ((e)=>{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                        <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="Total Wins" />
                                      </span>
                                     Total Wins
                                 </div>
@@ -143,7 +134,6 @@ const handleDropdown = ((e)=>{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon"> 
-                                        <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="Total Bets" />
                                      </span>
                                      Total Bets
                                     </div>
@@ -154,7 +144,6 @@ const handleDropdown = ((e)=>{
                             <div class="item">
                                 <div class="item-type darken">
                                     <span class="sc-gsDKAQ hxODWG icon wagered-icon"> 
-                                        <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title=" Total Wagered" />
                                      </span>
                                     Total Wagered
                                 </div>

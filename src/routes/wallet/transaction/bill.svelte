@@ -2,8 +2,6 @@
 import { handleBills } from "./hook/bill"
 import {onMount} from "svelte"
 import {billLoad, billStore} from "./store/index"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 
 onMount(async()=>{
     let sd = await handleBills()
@@ -96,7 +94,6 @@ let newItem;
         <div class="ui-pagination m-fixbot">
             <div class="ui-select">
                 <div class="select-trigger">10<div class="arrow top">
-                    <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                 </div>
             </div>
         </div>

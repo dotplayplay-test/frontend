@@ -1,12 +1,6 @@
 <script>
   export let routes;
   import { goto } from "$app/navigation";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import IoMoon from "svelte-icons-pack/io/IoMoon";
-  import HiSolidLightBulb from "svelte-icons-pack/hi/HiSolidLightBulb";
-  import FaSolidHeadphones from "svelte-icons-pack/fa/FaSolidHeadphones";
-  import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
   import Original from "./original.svelte";
   import { theme } from "../lib/store/_theme";
   import "../styles/sidebar/sidebar.css";
@@ -122,13 +116,13 @@
     >
       <div class="menu-pc">
         <span style="padding: 10px">
-          <Icon
+          <!-- <Icon
             src={AiFillGift}
             size="25"
             color="rgb(67, 179, 9)"
             className="custom-icon"
             title="arror"
-          />
+          /> -->
         </span>
         <span>Bonus</span>
       </div>
@@ -252,13 +246,13 @@
         <div class="select-trigger">
           <div id="google_translate_element"></div>
           <div class="arrow top">
-            <Icon
+            <!-- <Icon
               src={RiSystemArrowRightSLine}
               size="18"
               color="rgba(153, 164, 176, 0.6)"
               className="custom-icon"
               title="arror"
-            />
+            /> -->
           </div>
         </div>
       </div>
@@ -267,22 +261,22 @@
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div on:click={() => toggleTheme()} class="theme-check">
           <button class={`item ${$theme === "dark" ? "is-active" : ""} `}>
-            <Icon
+            <!-- <Icon
               src={IoMoon}
               size="18"
               color="rgba(153, 164, 176, 0.6)"
               className="custom-icon"
               title="moon"
-            />
+            /> -->
           </button>
           <button class={`item ${$theme === "light" ? "is-active" : ""} `}>
-            <Icon
+            <!-- <Icon
               src={HiSolidLightBulb}
               size="18"
               color="#ffff"
               className="custom-icon"
               title="light"
-            />
+            /> -->
           </button>
         </div>
         <div class="theme-word">
@@ -294,7 +288,7 @@
       <div class="border_bottom">
         <div class="live">
           <div class="support-icon">
-            <Icon src={FaSolidHeadphones} size="18" color="#ffff" />
+            <!-- <Icon src={FaSolidHeadphones} size="18" color="#ffff" /> -->
           </div>
           <span>Live Support</span>
         </div>

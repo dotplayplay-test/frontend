@@ -1,9 +1,5 @@
 <script>
-    import Icon from "svelte-icons-pack/Icon.svelte";
-    import FaSolidChessQueen from "svelte-icons-pack/fa/FaSolidChessQueen";
-    import BiCoinStack from "svelte-icons-pack/bi/BiCoinStack";
     import { allcashback, error_msg } from "../store/index";
-    import RiSystemTimeFill from "svelte-icons-pack/ri/RiSystemTimeFill";
     import { handleAuthToken } from "$lib/store/routes";
     import axios from "axios";
     import { ServerURl } from "$lib/backendUrl";
@@ -142,13 +138,7 @@
         {#if $allcashback.vip_level < 21}
             <div class="quests-btn">
                 <span style="padding-right: 12px;">
-                    <Icon
-                        src={FaSolidChessQueen}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+
                 </span>
                 <span>Available at VIP 22</span>
             </div>
@@ -165,26 +155,14 @@
         {:else if $allcashback.week_cashback < 1000}
             <div class="quests-btn">
                 <span style="padding-right: 12px;">
-                    <Icon
-                        src={BiCoinStack}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+
                 </span>
                 <span>Wager more!</span>
             </div>
         {:else}
             <button class="quests-btn">
                 <span style="padding-right: 12px; height: 18px">
-                    <Icon
-                        src={RiSystemTimeFill}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+ 
                 </span>
                 <span
                     style="font-size: 16px;  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; letter-spacing: 2px;"

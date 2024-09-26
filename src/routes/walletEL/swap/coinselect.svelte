@@ -1,14 +1,11 @@
 <script>
 import {  goto } from "$app/navigation"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+
 </script>
 
 <div class="sc-bkkeKt kBjSXI">
     <div class="dialog sc-zjkyB ipnwmW" style="opacity: 1; width: 464px; height: 585px; margin-top: -294px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <button class="dialog-back" style="opacity: 1; transform: none;">
-            <Icon src={RiSystemArrowLeftSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
 
         <div class="dialog-head has-back has-close">
@@ -21,7 +18,6 @@ import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine"
             </svg>
         </button>
         <button on:click={()=>goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
    </div>
 </div>

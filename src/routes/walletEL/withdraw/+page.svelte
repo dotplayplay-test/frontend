@@ -1,7 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import BsQuestionCircleFill from "svelte-icons-pack/bs/BsQuestionCircleFill";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import { default_Wallet } from "$lib/store/coins"
 import { handleAuthToken } from "$lib/store/routes";
@@ -108,7 +106,7 @@ const handleCoins = ((e)=>{
                     <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                     <span class="currency">{$default_Wallet.coin_name}</span>
                     <span class="svg">
-                     <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+                     <!-- <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" /> -->
                  </span>
                 </div>
             </div>
@@ -179,7 +177,6 @@ const handleCoins = ((e)=>{
                     <div class="jb-deduct">
                         <span class="txt">Unlock at VIP 22</span>
                         <button>
-                         <Icon src={BsQuestionCircleFill}  size="14"   color="rgb(93, 160, 0)" className="custom-icon" title="arror" />
                         </button>
                     </div>
                 </div>
@@ -221,7 +218,6 @@ const handleCoins = ((e)=>{
             <p><span class="hover">Deposit</span> to claim your {$default_Wallet.coin_name} bonus now.</p>
             <button class="more-about">
                 <span>More about {$default_Wallet.coin_name}</span>
-                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
             </button>
         </div>
         {/if}

@@ -1,17 +1,11 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import TiVolumeDown from "svelte-icons-pack/ti/TiVolumeDown";
+
 import { default_Wallet } from "$lib/store/coins";
 import HistoryDetails from "$lib/games/mines/componets/historyDetails.svelte";
 import MobileManualControllers from '$lib/games/mines/mobileManualControllers.svelte';
 import MobileAutoController from '$lib/games/mines/mobileAutoController.svelte';
-import FiMusic from "svelte-icons-pack/fi/FiMusic";
 import { soundHandler} from "$lib/games/mines/store/index"
 import background from "$lib/games/mines/audio/sadness.mp3"
-import TiVolumeMute from "svelte-icons-pack/ti/TiVolumeMute";
-import BsEgg from "svelte-icons-pack/bs/BsEgg";
-import RiMapGuideFill from "svelte-icons-pack/ri/RiMapGuideFill";
-import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
 import Help from "$lib/games/mines/componets/help.svelte";
 import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
 import SeedSetting from "$lib/games/mines/componets/seedSetting.svelte";
@@ -2929,23 +2923,15 @@ const handleAutoSet = ((erii)=>{
                 {/if}
                 <div class="game-actions">
                     <button on:click={()=> handleSoundState()} class={`action-item ${playPlayb ? "active" : ""} `}>
-                        <Icon src={FiMusic}  size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Music" />
                     </button>
                     <button on:click={()=> playBackground()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                        {#if $soundHandler}
-                            <Icon src={TiVolumeDown}  size="23"  color={`rgb(67, 179, 9)`} title="Sound" />
-                            {:else}
-                            <Icon src={TiVolumeMute}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Sound closed" />
-                        {/if}
+                
                     </button>
                     <button on:click={hanhisSeed} class="action-item  " id="set_seed">
-                        <Icon src={BsEgg}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Seed" />
                     </button>
                     <button on:click={stats} class="action-item  ">
-                        <Icon src={RiMapGuideFill}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Live stat" />
                     </button>
                     <button on:click={handleIsHelp} class="action-item  ">
-                        <Icon src={AiOutlineQuestionCircle}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Help" />
                     </button>
                 </div>
             </div>

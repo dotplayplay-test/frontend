@@ -2,8 +2,7 @@
 import {
     goto
 } from "$app/navigation"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 
 </script>
 
@@ -141,7 +140,6 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     <p class="text-d">Immerse yourself in the exhilarating world of Recharge, where the power is in your hands. Join BC.GAME and customize your reward.</p>
                     <button on:click={()=> goto("register")} >
                         <span>Join Dotplayplay Today</span>
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                     </button>
                 </div>
             </div>

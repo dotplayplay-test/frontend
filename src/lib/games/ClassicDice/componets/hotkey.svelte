@@ -1,6 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
 import {
     createEventDispatcher
 } from 'svelte';
@@ -17,7 +15,7 @@ const handleCloseHelp = (() => {
             <div class="dialog-title">Hot keys</div>
         </div>
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+            <!-- <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" /> -->
         </button>
 
         <div class="dialog-body default-style " style="z-index: 2; transform: none;">

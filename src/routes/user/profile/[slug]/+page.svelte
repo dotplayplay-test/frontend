@@ -1,19 +1,6 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import AiFillHeart from "svelte-icons-pack/ai/AiFillHeart";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import SiChakraui from "svelte-icons-pack/si/SiChakraui";
-  import BsCoin from "svelte-icons-pack/bs/BsCoin";
   import { browser } from "$app/environment";
-  import BiMedal from "svelte-icons-pack/bi/BiMedal";
-  import IoPersonAddSharp from "svelte-icons-pack/io/IoPersonAddSharp";
   import "../../../../styles/profile/index.css";
-  import FaSolidMoneyBillWave from "svelte-icons-pack/fa/FaSolidMoneyBillWave";
-  import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-  import RiDeviceDatabase2Fill from "svelte-icons-pack/ri/RiDeviceDatabase2Fill";
-  import RiDesignPencilFill from "svelte-icons-pack/ri/RiDesignPencilFill";
-  import BiBarChartAlt from "svelte-icons-pack/bi/BiBarChartAlt";
   import { ServerURl } from "$lib/backendUrl";
   const URL = ServerURl();
   import axios from "axios";
@@ -95,11 +82,7 @@
         class="dialog-back"
         style="opacity: 1; transform: none;"
       >
-        <Icon
-          src={RiSystemArrowLeftSLine}
-          size="23"
-          color="rgba(153, 164, 176, 0.6)"
-        />
+
       </button>
     {/if}
 
@@ -128,12 +111,7 @@
       on:click={() => history.back()}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
     >
-      <Icon
-        src={IoCloseSharp}
-        size="23"
-        color="rgba(153, 164, 176, 0.6)"
-        className="custom-icon"
-      />
+
     </button>
 
     {#if !is_loadingel && !is_loading}
@@ -146,23 +124,13 @@
               <div class="user-info">
                 <button class="like button">
                   <span class="sc-gsDKAQ hxODWG icon">
-                    <Icon
-                      src={AiFillHeart}
-                      size="16"
-                      color="rgb(237, 99, 0)"
-                      className="custom-icon"
-                    />
+      
                   </span>
                   0
                 </button>
                 {#if $profileStore.user_id === $page.params.slug}
                   <button on:click={() => handleDiooosb(2)} class="button edit">
-                    <Icon
-                      src={RiDesignPencilFill}
-                      size="16"
-                      color="rgba(153, 164, 176, 0.6)"
-                      className="custom-icon"
-                    />
+             
                   </button>
                 {/if}
 
@@ -524,11 +492,7 @@
                     {#if !$users_profile.refuse_tips}
                       <button class="tip button">
                         <span style="margin-right: 0.5rem; margin-top: 4px">
-                          <Icon
-                            src={FaSolidMoneyBillWave}
-                            size="15"
-                            color="rgba(153, 164, 176, 0.6)"
-                          />
+ 
                         </span>
                         Tip
                       </button>
@@ -536,11 +500,7 @@
                     {#if !$users_profile.refuse_friends_request}
                       <button class="button add">
                         <span style="margin-right: 0.5rem">
-                          <Icon
-                            src={IoPersonAddSharp}
-                            size="15"
-                            color="rgba(153, 164, 176, 0.6)"
-                          />
+        
                         </span>
                         Add
                       </button>
@@ -556,22 +516,12 @@
               <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                 <div class="module-name">
                   <span class="sc-gsDKAQ hxODWG icon icon-name">
-                    <Icon
-                      src={BiBarChartAlt}
-                      size="16"
-                      color="rgba(153, 164, 176, 0.6)"
-                      className="custom-icon"
-                    />
+
                   </span>
                   Statistics
                   <button on:click={() => handleDiooosb(4)} class="hover">
                     Details
-                    <Icon
-                      src={RiSystemArrowRightSLine}
-                      size="30"
-                      color="rgba(153, 164, 176, 0.8)"
-                      className="sc-gsDKAQ hxODWG icon right right-fold"
-                    />
+      
                   </button>
                 </div>
                 <div class="content">
@@ -579,12 +529,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={SiChakraui}
-                            size="30"
-                            color="rgba(153, 164, 176, 0.8)"
-                            className="sc-gsDKAQ hxODWG icon right right-fold"
-                          />
+                     
                         </span>
                         Total Wins
                       </div>
@@ -594,12 +539,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={BsCoin}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                    
                         </span>
                         Total Bets
                       </div>
@@ -608,12 +548,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={RiDeviceDatabase2Fill}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                      
                         </span>
                         Total Wagered
                       </div>
@@ -652,22 +587,12 @@
               <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                 <div class="module-name">
                   <span class="sc-gsDKAQ hxODWG icon icon-name">
-                    <Icon
-                      src={BiBarChartAlt}
-                      size="16"
-                      color="rgba(153, 164, 176, 0.6)"
-                      className="custom-icon"
-                    />
+             
                   </span>
                   Statistics
                   <button on:click={() => handleDiooosb(4)} class="hover">
                     Details
-                    <Icon
-                      src={RiSystemArrowRightSLine}
-                      size="30"
-                      color="rgba(153, 164, 176, 0.8)"
-                      className="sc-gsDKAQ hxODWG icon right right-fold"
-                    />
+                 
                   </button>
                 </div>
                 <div class="content">
@@ -675,12 +600,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={SiChakraui}
-                            size="30"
-                            color="rgba(153, 164, 176, 0.8)"
-                            className="sc-gsDKAQ hxODWG icon right right-fold"
-                          />
+                       
                         </span>
                         Total Wins
                       </div>
@@ -690,12 +610,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={BsCoin}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                 
                         </span>
                         Total Bets
                       </div>
@@ -704,12 +619,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={RiDeviceDatabase2Fill}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                    
                         </span>
                         Total Wagered
                       </div>
@@ -765,22 +675,12 @@
               <div class="sc-gXRojI sc-dXNJws bRYT cHQfvF">
                 <div class="module-name">
                   <span class="sc-gsDKAQ hxODWG icon icon-name">
-                    <Icon
-                      src={BiBarChartAlt}
-                      size="16"
-                      color="rgba(153, 164, 176, 0.6)"
-                      className="custom-icon"
-                    />
+      
                   </span>
                   Statistics
                   <button on:click={() => handleDiooosb(4)} class="hover">
                     Details
-                    <Icon
-                      src={RiSystemArrowRightSLine}
-                      size="30"
-                      color="rgba(153, 164, 176, 0.8)"
-                      className="sc-gsDKAQ hxODWG icon right right-fold"
-                    />
+                 
                   </button>
                 </div>
                 <div class="content">
@@ -788,12 +688,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={SiChakraui}
-                            size="30"
-                            color="rgba(153, 164, 176, 0.8)"
-                            className="sc-gsDKAQ hxODWG icon right right-fold"
-                          />
+                      
                         </span>
                         Total Wins
                       </div>
@@ -803,12 +698,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={BsCoin}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                     
                         </span>
                         Total Bets
                       </div>
@@ -817,12 +707,7 @@
                     <div class="item">
                       <div class="item-type darken">
                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                          <Icon
-                            src={RiDeviceDatabase2Fill}
-                            size="18"
-                            color="rgb(238, 183, 17)"
-                            className="custom-icon"
-                          />
+                       
                         </span>
                         Total Wagered
                       </div>

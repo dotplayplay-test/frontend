@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
 import { createEventDispatcher } from 'svelte';
 import "./styles/index.css"
 import Overview from './overview.svelte';
@@ -41,7 +40,7 @@ const handleTabs = ((r)=>{
         </div>
 
         <button on:click={()=> handleClose()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+
         </button>
 
         <div class="dialog-body default-style " style="z-index: 2; transform: none;">

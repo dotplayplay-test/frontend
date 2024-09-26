@@ -1,7 +1,5 @@
 <script>
   import { screen } from "$lib/store/screen";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import { slide } from "svelte/transition";
   import { vipProfiile } from "../vipstore";
   $: showCardView = {};
@@ -160,13 +158,7 @@
           {/if}
         </div>
         <button>
-          <Icon
-            src={RiSystemArrowRightSLine}
-            size="25"
-            color="rgba(153, 164, 176, 0.6)"
-            className="custom-icon"
-            title="arrow"
-          />
+
         </button>
       </div>
       {#if showCardView[level.name]}

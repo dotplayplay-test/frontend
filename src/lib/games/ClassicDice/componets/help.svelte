@@ -1,8 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
+
 import {
     createEventDispatcher
 } from 'svelte';
@@ -38,14 +35,14 @@ const HandleAboutGame = ((e) => {
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         {#if !defaultSate}
             <button on:click={()=> defaultSate = true} class="dialog-back" style="opacity: 1; transform: none;">
-                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+                <!-- <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" /> -->
             </button>
         {/if}
         <div class={`dialog-head ${defaultSate ? "has-close" : "has-back"} `}>
             <div class="dialog-title">{defaultSate ? "Help" :  is_about ? "What Game Is This?" : "Fairness"}</div>
         </div>
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" />
+            <!-- <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" /> -->
         </button>
 
         {#if defaultSate}
@@ -54,11 +51,11 @@ const HandleAboutGame = ((e) => {
                 <div class="help-list">
                     <button on:click={()=> HandleAboutGame(1)} class="usiu">
                         <span>What Game Is This?</span>
-                        <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
+                        <!-- <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  /> -->
                     </button>
                     <button on:click={()=> HandleAboutGame(2)} class="usiu">
                         <span>Fairness</span>
-                        <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
+                        <!-- <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  /> -->
                     </button>
                 </div>
             </div>

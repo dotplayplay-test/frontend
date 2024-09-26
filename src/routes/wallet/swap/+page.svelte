@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
   import axios from "axios";
   import { onMount } from "svelte";
   import { handleAuthToken } from "$lib/store/routes";
@@ -195,7 +193,6 @@
             />
           </div>
           <button on:click={switchFields} class="switch-btn">
-            <Icon src={AiOutlineSwap} /></button
           >
           {#if !canSwap}
             <p class="insufficient-hint">

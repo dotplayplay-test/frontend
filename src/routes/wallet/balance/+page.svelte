@@ -1,6 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { UserProfileEl } from "$lib/index"
 const { handlePPDwallet, handleUSDTwallet, handlePPFwallet, handlePPLwallet } = UserProfileEl()
 import { onMount} from 'svelte'
@@ -70,9 +68,7 @@ $coin_list.forEach(element => {
                 </div>
                     <div class="name-wrap">
                         <div class="currency-name">{pip.coin_name}<button class="ui-button button-normal b1d79k6a">
-                            <!-- <div class="button-inner">
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
-                            </div> -->
+                
                         </button>
                     </div>
                 </div>

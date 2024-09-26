@@ -1,6 +1,5 @@
 <script>
-    import Icon from "svelte-icons-pack/Icon.svelte";
-    import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 </script>
 
 <div class="sc-zjkyB jlxrhk">
@@ -414,13 +413,6 @@
             <button class="sc-iqseJM cBmlor button button-normal btn">
                 <div class="button-inner">
                     Provably Fair
-                    <Icon
-                        src={RiSystemArrowRightSLine}
-                        size="18"
-                        color="rgb(67, 179, 9)"
-                        className="custom-icon"
-                        title="arror"
-                    />
                 </div>
             </button>
         </div>
@@ -436,13 +428,7 @@
                 <div class="btn">
                     <button
                         >Details
-                        <Icon
-                            src={RiSystemArrowRightSLine}
-                            size="18"
-                            color="rgb(67, 179, 9)"
-                            className="custom-icon"
-                            title="arror"
-                        />
+        
                     </button>
                 </div>
             </div>

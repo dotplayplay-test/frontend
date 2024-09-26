@@ -1,9 +1,6 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
-import FiCopy from "svelte-icons-pack/fi/FiCopy";
-import IoRocket from "svelte-icons-pack/io/IoRocket";
+
+
 import {
     createEventDispatcher
 } from 'svelte';
@@ -18,7 +15,6 @@ const handleClose = (() => {
         <div class="sc-dkPtRN jScFby scroll-view sc-dWbSDx inlQlO">
 
             <button on:click={()=> handleClose()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
 
             <div class="sc-jnSlpE cAMmTh" style="cursor: auto;">
@@ -35,7 +31,6 @@ const handleClose = (() => {
                 </div>
                 <div class="bet-area ">
                   <span style="margin-left: 1rem;">
-                     <Icon src={IoRocket}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                   </span>
                     <p>Bet ID: #728240291</p>
                 </div>
@@ -66,7 +61,6 @@ const handleClose = (() => {
                 <button class="sc-iqseJM sc-egiyK cBmlor fnKcEH button button-normal share-chat">
                     <div class="button-inner">
                         <span style="margin-right: 0.5rem;">
-                            <Icon src={FaSolidShare}  size="15"  color="#fff" className="custom-icon" title="arror" />
                         </span>
                         Share to Chatroom
                     </div>
@@ -74,7 +68,6 @@ const handleClose = (() => {
                 <button class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-normal copy-link">
                     <div class="button-inner">
                         <span style="margin-right: 0.5rem;">
-                            <Icon src={FiCopy}  size="15"  color="#fff" className="custom-icon" title="arror" />
                         </span>
 
                         <p>Copy link</p>

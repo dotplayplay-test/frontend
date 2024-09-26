@@ -1,9 +1,5 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import "../../../styles/users/rain/index.css";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
   import { onMount } from "svelte";
   import { UserProfileEl } from "$lib/index";
   import { error_msg } from "$lib/nestedpages/auth/login/store";
@@ -167,13 +163,7 @@
           class="dialog-back"
           style="opacity: 1; transform: none;"
         >
-          <Icon
-            src={RiSystemArrowLeftSLine}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            className="custom-icon"
-            title="arror"
-          />
+
         </button>
       {/if}
       <div class={`dialog-head ${isSelectCoin ? "has-back" : "has-close"}`}>
@@ -183,13 +173,7 @@
         on:click={() => history.back()}
         class="sc-ieecCq fLASqZ close-icon dialog-close"
       >
-        <Icon
-          src={IoCloseSharp}
-          size="23"
-          color="rgba(153, 164, 176, 0.6)"
-          className="custom-icon"
-          title="arror"
-        />
+
       </button>
       <div
         class="dialog-body default-style"
@@ -222,13 +206,7 @@
                     src={$default_Wallet.coin_image}
                   />
                   <span class="currency">{$default_Wallet.coin_name}</span>
-                  <Icon
-                    src={RiSystemArrowRightSLine}
-                    size="23"
-                    color="rgba(153, 164, 176, 0.6)"
-                    className="custom-icon"
-                    title="arror"
-                  />
+  
                 </button>
               </div>
               <div class="input-after">

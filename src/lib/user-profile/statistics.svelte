@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 import axios from "axios"
 import {ServerURl} from "$lib/backendUrl"
 const URL = ServerURl()
@@ -8,9 +7,6 @@ const URL = ServerURl()
     page
 } from '$app/stores'
     import {onMount} from "svelte"
-    import RiDeviceDatabase2Fill from "svelte-icons-pack/ri/RiDeviceDatabase2Fill";
-    import BsCoin from "svelte-icons-pack/bs/BsCoin";
-    import SiChakraui from "svelte-icons-pack/si/SiChakraui";
     import {userStatistics} from "$lib/store/statistic"
     import { users_profile } from "$lib/store/profile"
     let gamesStats = [
@@ -96,7 +92,7 @@ const URL = ServerURl()
                                 <div  class="select-trigger">                                                                                                       
                                     {default_displayname}
                                     <div class="arrow ">
-                                        <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                                        <!-- <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /> -->
                                     </div>
                                 </div>
                                 {#if is_open}
@@ -129,7 +125,7 @@ const URL = ServerURl()
                                 <div class="item">
                                     <div class="item-type darken">
                                         <span class="sc-gsDKAQ hxODWG icon wagered-icon">
-                                            <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="Total Wins" />
+                                            <!-- <Icon src={SiChakraui}  size="30"  color="rgba(153, 164, 176, 0.8)" className="sc-gsDKAQ hxODWG icon right right-fold" title="Total Wins" /> -->
                                          </span>
                                         Total Wins
                                     </div>
@@ -140,7 +136,7 @@ const URL = ServerURl()
                                 <div class="item">
                                     <div class="item-type darken">
                                         <span class="sc-gsDKAQ hxODWG icon wagered-icon"> 
-                                            <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="Total Bets" />
+                                            <!-- <Icon src={BsCoin}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title="Total Bets" /> -->
                                          </span>
                                          Total Bets
                                         </div>
@@ -151,7 +147,7 @@ const URL = ServerURl()
                                 <div class="item">
                                     <div class="item-type darken">
                                         <span class="sc-gsDKAQ hxODWG icon wagered-icon"> 
-                                            <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title=" Total Wagered" />
+                                            <!-- <Icon src={RiDeviceDatabase2Fill}  size="18"  color="rgb(238, 183, 17)" className="custom-icon" title=" Total Wagered" /> -->
                                          </span>
                                         Total Wagered
                                     </div>

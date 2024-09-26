@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import Deposit from "./deposit.svelte";
   import Withdraaw from "./withdraaw.svelte";
   import Swap from "./swap.svelte";
@@ -167,11 +165,7 @@
         <button on:click={handleactiveRoutesTbasSelect} class="select-trigger">
           {activeRoutes.tabName}
           <div class="arrow">
-            <Icon
-              src={RiSystemArrowRightSLine}
-              size="18"
-              color="rgb(255, 255, 255)"
-            />
+
           </div>
         </button>
         <div
@@ -206,11 +200,7 @@
           />
           {RoutesAssets.tabName}
           <div class="arrow active">
-            <Icon
-              src={RiSystemArrowRightSLine}
-              size="18"
-              color="rgb(255, 255, 255)"
-            />
+
           </div>
         </button>
         <div
@@ -243,11 +233,7 @@
           <button on:click={handleactiveRoutesRoutesDess} class="select-trigger"
             >{RoutesDess.tabName}
             <div class="arrow">
-              <Icon
-                src={RiSystemArrowRightSLine}
-                size="18"
-                color="rgb(255, 255, 255)"
-              />
+
             </div>
           </button>
           <div

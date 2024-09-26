@@ -1,9 +1,6 @@
 <script>
 import { browser } from '$app/environment';
 import { goto } from "$app/navigation";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
 import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
@@ -345,8 +342,7 @@ const handlesjen = ((e)=>{
                     </div>
                    {/if}
                 <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
-                    <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="min" />
-                    <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)"  title="max" />
+
                 </button>
                 </div>
             </div>

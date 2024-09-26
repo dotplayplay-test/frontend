@@ -1,9 +1,5 @@
 <script>
 import {  goto } from "$app/navigation";
-import AiFillEye from "svelte-icons-pack/ai/AiFillEye";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { handleLogin } from "$lib/firebaseAuth/index";
 import { handleGoogleAuth, handleFacebookAuth } from "$lib/firebaseAuth/index";
 import { createEventDispatcher } from "svelte";
@@ -91,7 +87,7 @@ const handleForgetPassword = (()=>{
     </div>
 
     <button on:click={()=> handleCancel()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-        <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
+        <!-- <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" /> -->
     </button>
 
 
@@ -148,7 +144,6 @@ const handleForgetPassword = (()=>{
                         <button  on:click={()=> 3 } class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signup">
                             <div class="button-inner">
                                 <span>Sign up</span>
-                                <Icon src={RiSystemArrowRightSLine}  size="18"  color=" rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
                             </div>
                         </button>
                     </div>
@@ -195,7 +190,6 @@ const handleForgetPassword = (()=>{
                 <img src="https://www.linkpicture.com/q/dpp-logowhite-transparent-final_1.png" alt="" class="sc-fBgqEL gKVaPL">
             </div>
             <button on:click={()=> goto("/")} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
             </button>
             <div class="dialog-body no-style sc-kITQLZ dA-dCPD">
                 <div class="welcome">
@@ -218,7 +212,6 @@ const handleForgetPassword = (()=>{
                                 </div>
                                 <div class="input-control">
                                     <input type="password" autocomplete="off"  placeholder="Login Password" value="">
-                                    <Icon src={AiFillEye}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                                 </div>
                             </div>
                         </div>
@@ -231,7 +224,6 @@ const handleForgetPassword = (()=>{
                                 <div class="button-inner">
                                     <span>Sign up</span>
                                     <span class="sc-gsDKAQ hxODWG icon">
-                                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(245, 246, 247)" className="sc-gsDKAQ hxODWG icon" title="arror" />
                                     </span>
 
                                 </div>

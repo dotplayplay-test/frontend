@@ -1,7 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
+
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -11,25 +9,25 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
             <div class="gameno-control">
                 <button class="sc-iqseJM cBmlor button button-normal pre">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
+       
                     </div>
                 </button>
                 <div class="sc-jJoQJp gOHquD select  ">
                     <div class="select-trigger">
                         <p class="select-option">20230810</p>
                         <div class="arrow ">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
+           
                         </div>
                     </div>
                 </div>
                 <button class="sc-iqseJM cBmlor button button-normal" disabled="">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
+       
                     </div>
                 </button>
                 <button class="sc-iqseJM cBmlor button button-normal" disabled="">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
+       
 
                         </button>
                         <span class="time">8/10/2023, 3:55:00 PM</span>
@@ -87,7 +85,7 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                         <tr>
                                             <td>
                                                 <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
-                                                    <img class="avatar " src="https://img2.nanogames.io/avatar/510968/s">
+                                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s">
                                                     <div class="name">Qlomhffnyb</div>
                                                 </a>
                                             </td>
@@ -124,7 +122,7 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                         <tr>
                                             <td>
                                                 <a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
-                                                    <img class="avatar " src="https://img2.nanogames.io/avatar/510968/s">
+                                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s">
                                                     <div class="name">Qlomhffnyb</div>
                                                 </a>
                                             </td>
@@ -377,4 +375,5 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
                                             </td>
                                             <td class="res">3</td>
                                             <td class="el">
-                                                <span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img class="avatar " src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball active"><div>35</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>34</div></div><div class="ball active"><div>6</div></div><div class="ball"><div>23</div></div><div class="ball jackpot-ball">6</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img class="avatar " src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball"><div>4</div></div><div class="ball active"><div>32</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>14</div></div><div class="ball active"><div>7</div></div><div class="ball jackpot-ball">8</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr></tbody></table></div><div class="sc-hWBuOZ fXbWeJ"><button class="sc-iqseJM cBmlor button button-normal hide-show"><div class="button-inner">more</div></button></div></div></div></div></div>
+                                                <span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968">
+                                                    <img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball active"><div>35</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>34</div></div><div class="ball active"><div>6</div></div><div class="ball"><div>23</div></div><div class="ball jackpot-ball">6</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr><tr><td><a class="sc-jUosCB iTDswZ user-info " href="/user/profile/510968"><img class="avatar " alt="" src="https://img2.nanogames.io/avatar/510968/s"><div class="name">Qlomhffnyb</div></a></td><td><div class="nums-wrap"><div class="nums-inner"><div class="sc-iseIHH gHuzXM draw"><div class="ball"><div>4</div></div><div class="ball active"><div>32</div></div><div class="ball active"><div>5</div></div><div class="ball"><div>14</div></div><div class="ball active"><div>7</div></div><div class="ball jackpot-ball">8</div></div><p class="quantity">x 1</p></div></div></td><td class="res">3</td><td class="el"><span class="green-word">$ 1</span></td></tr></tbody></table></div><div class="sc-hWBuOZ fXbWeJ"><button class="sc-iqseJM cBmlor button button-normal hide-show"><div class="button-inner">more</div></button></div></div></div></div></div>

@@ -1,13 +1,6 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoNotifications from "svelte-icons-pack/io/IoNotifications";
-  import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
-  import BsChatLeftDotsFill from "svelte-icons-pack/bs/BsChatLeftDotsFill";
-  import BiSolidWallet from "svelte-icons-pack/bi/BiSolidWallet";
-  import CgMenuCheese from "svelte-icons-pack/cg/CgMenuCheese";
   import Navprofile from "../../profilecomponent/main/navprofile.svelte";
   import Coins from "../../profilecomponent/main/coins.svelte";
-  import BsDroplet from "svelte-icons-pack/bs/BsDroplet";
   import axios from "axios";
   import { medals, earnedMedals, medalProgress } from "$lib/store/medal";
   import { fetchMedals } from "$lib/achieve/actions";
@@ -144,12 +137,7 @@
               <span class="currency"
                 >{$handleisLoggin && $default_Wallet.coin_name}</span
               >
-              <Icon
-                src={RiSystemArrowDropDownLine}
-                size="18"
-                color="rgb(171, 182, 194)"
-                className="custom-icon"
-              />
+
             </div>
             <div class="sc-Galmp erPQzq coin notranslate balance">
               <div class="amount">
@@ -170,11 +158,7 @@
           >
             <div class="button-inner">
               <span class="wallet-icon">
-                <Icon
-                  src={BiSolidWallet}
-                  size="18"
-                  color="rgb(255, 255, 255)"
-                />
+
               </span>
               <span style="padding-left: 10px;">Wallet</span>
             </div>
@@ -202,12 +186,8 @@
             class="svg"
           >
             <span class="na-menu"
-              ><Icon
-                src={CgMenuCheese}
-                size="18"
-                color="rgba(153, 164, 176, 0.6)"
-                className="custom-icon"
-              /></span
+              >
+              </span
             >
             {#if userProfile}
               <Navprofile />
@@ -220,34 +200,19 @@
         class="sc-dcgwPl bbYXSv private-chat"
       >
         <span class="nav-message"
-          ><Icon
-            src={BsChatLeftDotsFill}
-            size="18"
-            color="rgba(153, 164, 176, 0.6)"
-            className="custom-icon"
-          /></span
+          ></span
         >
       </button>
       <button id="notice" class="sc-ksHpcM kultDa notice">
         <div class="notice-btn">
           <span class="na-notification"
-            ><Icon
-              src={IoNotifications}
-              size="18"
-              color="rgba(153, 164, 176, 0.6)"
-              className="custom-icon"
-            /></span
+            ></span
           >
         </div>
       </button>
       <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn">
-          <Icon
-            src={BsDroplet}
-            size="28"
-            color="#fff"
-            className="custom-icon"
-          />
+        
           {#if $showChatCounter && $chatCounter}
           <div class="sc-fotOHu gGSOuF badge">{$chatCounter}</div>
           {/if}
@@ -269,12 +234,7 @@
                 src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
               />
               <span class="currency">PPF</span>
-              <Icon
-                src={RiSystemArrowDropDownLine}
-                size="18"
-                color="rgb(171, 182, 194)"
-                className="custom-icon"
-              />
+ 
             </div>
             <div class="sc-Galmp erPQzq coin notranslate balance">
               <div class="amount">
@@ -293,11 +253,7 @@
           >
             <div class="button-inner">
               <span class="wallet-icon">
-                <Icon
-                  src={BiSolidWallet}
-                  size="18"
-                  color="rgb(255, 255, 255)"
-                />
+
               </span>
               <span style="padding-left: 10px;">Wallet</span>
             </div>
@@ -329,12 +285,7 @@
             class="svg"
           >
             <span class="na-menu"
-              ><Icon
-                src={CgMenuCheese}
-                size="18"
-                color="rgba(153, 164, 176, 0.6)"
-                className="custom-icon"
-              /></span
+              ></span
             >
             {#if userProfile}
               <Navprofile />
@@ -347,34 +298,19 @@
         class="sc-dcgwPl bbYXSv private-chat"
       >
         <span class="nav-message"
-          ><Icon
-            src={BsChatLeftDotsFill}
-            size="18"
-            color="rgba(153, 164, 176, 0.6)"
-            className="custom-icon"
-          /></span
+          ></span
         >
       </button>
       <button id="notice" class="sc-ksHpcM kultDa notice">
         <div class="notice-btn">
           <span class="na-notification"
-            ><Icon
-              src={IoNotifications}
-              size="18"
-              color="rgba(153, 164, 176, 0.6)"
-              className="custom-icon"
-            /></span
+            ></span
           >
         </div>
       </button>
       <button on:click={handleChat} id="chat" class="sc-eicpiI PGOpB">
         <div class="chat-btn">
-          <Icon
-            src={BsDroplet}
-            size="28"
-            color="#fff"
-            className="custom-icon"
-          />
+ 
           <div class="sc-fotOHu gGSOuF badge">6</div>
         </div>
       </button>
@@ -399,11 +335,7 @@
             <span class="currency"
               >{$handleisLoggin && $default_Wallet.coin_name}</span
             >
-            <Icon
-              src={RiSystemArrowDropDownLine}
-              size="18"
-              color="rgb(171, 182, 194)"
-            />
+
           </div>
           <div class="sc-Galmp erPQzq coin notranslate balance">
             <div class="amount">
@@ -423,7 +355,6 @@
         >
           <div class="button-inner">
             <span style="margin-right: 4px;">
-              <Icon src={BiSolidWallet} size="13" color="rgb(255, 255, 255)" />
             </span>
             <span>Wallet</span>
           </div>
@@ -440,11 +371,7 @@
             >
             <button on:click={handleUserProfile} class="svg">
               <span class="na-menu">
-                <Icon
-                  src={CgMenuCheese}
-                  size="18"
-                  color="rgba(153, 164, 176, 0.6)"
-                />
+
               </span>
             </button>
             {#if userProfile}
@@ -468,11 +395,7 @@
               src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697828376/ppf_logo_ntrqwg.png"
             />
             <span class="currency">PPF</span>
-            <Icon
-              src={RiSystemArrowDropDownLine}
-              size="18"
-              color="rgb(171, 182, 194)"
-            />
+
           </div>
           <div class="sc-Galmp erPQzq coin notranslate balance">
             <div class="amount">
@@ -490,7 +413,6 @@
         >
           <div class="button-inner">
             <span style="margin-right: 4px;">
-              <Icon src={BiSolidWallet} size="13" color="rgb(255, 255, 255)" />
             </span>
             <span>Wallet</span>
           </div>
@@ -507,11 +429,7 @@
             >
             <button on:click={handleUserProfile} class="svg">
               <span class="na-menu">
-                <Icon
-                  src={CgMenuCheese}
-                  size="18"
-                  color="rgba(153, 164, 176, 0.6)"
-                />
+
               </span>
             </button>
             {#if userProfile}

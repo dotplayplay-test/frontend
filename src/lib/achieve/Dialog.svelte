@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
@@ -32,13 +30,7 @@
         <div class="title has-close">{title}</div>
       </div>
       <button on:click={cancel} class="close-icon dialog-x-close">
-        <Icon
-          src={IoCloseSharp}
-          size="18"
-          color="rgb(255, 255, 255)"
-          className="custom-icon"
-          title="arror"
-        />
+
       </button>
     </div>
     <div class="body">

@@ -1,8 +1,5 @@
 <script>
-  import Icon from 'svelte-icons-pack/Icon.svelte';
-    import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-    import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
-    import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
+
 </script>
 
 
@@ -11,11 +8,10 @@
             <div class="header-sub flex-center">
                 <div class="left flex-center">
                     <div class="m-item rules">
-                        <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
+
                         <span>Commission Rules</span>
                     </div>
                     <div class="m-item terms">
-                        <Icon src={BsCircleSquare} size="18" className="custom-icon" title="Custom icon params" />
                         <span>Affiliate Terms</span>
                     </div>
                 </div>
@@ -32,7 +28,7 @@
             </div>
             <div class="character banner-layer welcome"></div>
             <button class="management">
-                <Icon src={CgFileDocument} size="18" color="rgb(255, 255, 255)" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
+
                 <span>Affiliate Dashboard</span>
             </button>
         </div>
@@ -80,7 +76,7 @@
                                 <div class="desc">Every friend you invite will get you</div>
                                 <div class="flex"><div class="amount">100 USD</div>
                                     <a class="hover theme" href="/" >USD Rewards Rules</a>
-                                    <Icon src={ RiSystemArrowRightSLine} size="18" className="custom-icon" title="Custom icon params" />
+
                                 </div>
                             </div>
                             <div class="graph" id="system-rewards">

@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -25,7 +24,7 @@ import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLin
                     <div class="leverage-select">
                         <div class="sc-jJoQJp gOHquD select  ">
                             <div class="select-trigger">No leverage<div class="arrow ">
-                                <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                                <!-- <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" /> -->
                             </div>
                             </div>
                         </div>

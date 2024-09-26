@@ -1,6 +1,4 @@
 <script>
-  import RiSystemSearchLine from "svelte-icons-pack/ri/RiSystemSearchLine";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import WalletManager from "$lib/logics/WalletManager";
   import { createEventDispatcher, onMount } from "svelte";
   const dispatch = createEventDispatcher();
@@ -92,12 +90,7 @@
       <div class="input-control">
         <input type="text" value="" />
         <span class="sc-gsDKAQ hxODWG icon search">
-          <Icon
-            src={RiSystemSearchLine}
-            size="18"
-            color="rgb(255, 255, 255)"
-            title="arror"
-          />
+
         </span>
       </div>
     </div>

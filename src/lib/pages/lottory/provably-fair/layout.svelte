@@ -1,15 +1,8 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
   import { handleAuthToken } from "$lib/store/routes";
-  import CgSoftwareDownload from "svelte-icons-pack/hi/HiSolidDownload";
-  import HiOutlineScale from "svelte-icons-pack/hi/HiOutlineScale";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import BiHelpCircle from "svelte-icons-pack/ri/RiSystemQuestionLine";
-  import IoCopySharp from "svelte-icons-pack/io/IoCopyOutline";
-  import BiArrowBack from "svelte-icons-pack/bi/BiArrowBack";
   import Loader from "$lib/components/loader.svelte";
   import Tooltip from "$lib/components/tooltip.svelte";
-  import Icon from "svelte-icons-pack/Icon.svelte";
   import { UseFetchData } from "$lib/hook/useFetchData";
   export let showData = { game_id: 0, tab: 1 };
 
@@ -74,11 +67,7 @@
         on:click={() => handleTabChange(1)}
         class="dialog-back"
         style="opacity: 1; transform: none;"
-        ><Icon
-          src={BiArrowBack}
-          size="23"
-          color="rgba(153, 164, 176, 0.6)"
-        /></button
+        ></button
       >
     {/if}
     <div class="dialog-head has-close">
@@ -92,22 +81,14 @@
       </div>
       {#if currentTab === 1}
         <button on:click={() => handleTabChange(2)} sc-ieecCq fLASqZ>
-          <Icon
-            src={HiOutlineScale}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-          />
+        
         </button>
       {/if}
     </div>
     <button
       on:click={handleClose}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
-      ><Icon
-        src={IoCloseSharp}
-        size="23"
-        color="rgba(153, 164, 176, 0.6)"
-      /></button
+      ></button
     >
     {#if currentTab === 1}
       <div
@@ -167,11 +148,7 @@
                 <div class="tooltip-label">
                   <span>Server Seed (hash) </span>
                   <Tooltip text="SHA-256 of server seed">
-                    <Icon
-                      src={BiHelpCircle}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+ 
                   </Tooltip>
                 </div>
               </div>
@@ -184,11 +161,7 @@
                   on:click={handleCopy}
                   class="sc-iqseJM cBmlor button button-normal copy-button"
                   ><div class="button-inner">
-                    <Icon
-                      src={IoCopySharp}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+           
                   </div></button
                 >
               </div>
@@ -198,11 +171,7 @@
                 <div class="tooltip-label">
                   <span>Server Seed </span>
                   <Tooltip text="A server randomly generated string">
-                    <Icon
-                      src={BiHelpCircle}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+                
                   </Tooltip>
                 </div>
               </div>
@@ -222,11 +191,7 @@
                   <Tooltip
                     text="The ETH blockchain height at 14:55 UTC+0 of draw date"
                   >
-                    <Icon
-                      src={BiHelpCircle}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+                
                   </Tooltip>
                 </div>
               </div>
@@ -246,11 +211,7 @@
                   <Tooltip
                     text="The ETH blockchain height after 10 blocks from stop block"
                   >
-                    <Icon
-                      src={BiHelpCircle}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+                  
                   </Tooltip>
                 </div>
               </div>
@@ -270,18 +231,10 @@
                 <div class="download-label">
                   <span>Client Seed (Hashed) </span>
                   <Tooltip text="Target block of ETH blockchain">
-                    <Icon
-                      src={BiHelpCircle}
-                      size="23"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />
+            
                   </Tooltip>
                   <a download="download.csv" href="https://img2.nanogames.io"
-                    ><Icon
-                      src={CgSoftwareDownload}
-                      size="20"
-                      color="rgba(153, 164, 176, 0.6)"
-                    />All Tickets List File</a
+                    >All Tickets List File</a
                   >
                 </div>
               </div>

@@ -1,7 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import AiFillGift from "svelte-icons-pack/ai/AiFillGift";
   import Original from "./original.svelte";
   import { goto } from "$app/navigation";
 
@@ -72,13 +69,7 @@
                 margin-right: 0.25rem; margin-top: -0.1rem;
                "
       >
-        <Icon
-          src={RiSystemArrowRightSLine}
-          size="30"
-          color="rgba(153, 164, 176, 0.8)"
-          className="sc-gsDKAQ hxODWG icon right right-fold"
-          title="arror"
-        />
+
       </div>
       {#if showOriginals}
         <Original {styls} />
@@ -91,13 +82,7 @@
       }`}
     >
       <div class="menu-mobile">
-        <Icon
-          src={AiFillGift}
-          size="25"
-          color="rgb(67, 179, 9)"
-          className="custom-icon"
-          title="arror"
-        />
+
       </div>
     </button>
     <button

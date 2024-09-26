@@ -1,14 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import BiChart from "svelte-icons-pack/bi/BiChart";
-import FaSolidDice from "svelte-icons-pack/fa/FaSolidDice";
-import AiFillSlackCircle from "svelte-icons-pack/ai/AiFillSlackCircle";
 import "../bankroll/styles/mybetDetails.css"
-import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
-import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
-import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
-import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
 import { browser } from '$app/environment';
 import {
     createEventDispatcher
@@ -55,7 +46,6 @@ $:{
             </div>
 
             <button on:click={()=> handleClose()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
 
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
@@ -67,7 +57,7 @@ $:{
                         <img class="win-state" alt="" src="https://static.nanogames.io/assets/win.431b83d6.png">
                         {/if}
                         <button on:click={handleSharedBet} class="sc-jibziO gZqspm game-share">
-                            <Icon src={FaSolidShare}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                       
                         </button>
                         <div class="rt_info">
                             <img class="avatar avatar" alt="" src={$mybetElDetails.profile_img}>
@@ -82,7 +72,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="label flex-center">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon" title="arror" />
                                     </span>
                                     Amount</div>
                                 <div class="number flex-center">{$mybetElDetails.bet_amount}{" "}{$mybetElDetails.token}</div>
@@ -90,7 +79,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="label flex-center">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon" title="arror" />
                                     </span>
                                     Payout
                                 </div>
@@ -103,7 +91,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="label flex-center">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon" title="arror" />
                                     </span>
                                     Profit
                                 </div>
@@ -121,7 +108,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="item-num">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={BiChart}  size="13"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
                                     </span>
                                     Result
                                 </div>
@@ -130,7 +116,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="item-num">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={FaSolidDice}  size="13"  color="rgb(15, 98, 254)" className="custom-icon" title="arror" />
                                     </span>
                                     Bet
                                 </div>
@@ -141,7 +126,6 @@ $:{
                             <div class="item-wrap">
                                 <div class="item-num">
                                     <span style="padding-right: 3px;">
-                                        <Icon src={AiFillSlackCircle}  size="17"  color="rgb(237, 99, 0)" className="custom-icon" title="arror" />
                                     </span>
                                     Chance</div>
                                 <div class="item-desc">{$mybetElDetails.chance}</div>

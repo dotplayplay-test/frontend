@@ -1,7 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher()
 
@@ -18,13 +16,11 @@ const handleCancel = (()=>{
 <div class="sc-bkkeKt kBjSXI" style="opacity: 1;">
     <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
         <button on:click={handleGoBack} class="dialog-back" style="opacity: 1; transform: none;">
-            <Icon src={RiSystemArrowLeftSLine}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-head has-back has-close">
             <div class="dialog-title">Reset Password</div>
         </div>
         <button on:click={()=> handleGoBack() } class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body default-style" style="z-index: 2; transform: none;">
             <div class="sc-dkPtRN jScFby scroll-view sc-eoHXOn iDSHOY">

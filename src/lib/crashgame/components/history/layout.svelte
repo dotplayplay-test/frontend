@@ -1,8 +1,7 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
+
 import { crash_historyEl } from "../../store"
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 let newItem;
 $: {
     // $crash_historyEl.sort((a, b) => b._id - a._id);
@@ -65,10 +64,9 @@ $: {
                 </div>
                 <div class="sc-jcFjpl sc-iAKWXU dORpLZ bnBwbM page-pn">
                     <button disabled="" class="disabled previous-btn">
-                        <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                     </button>
                     <button class="next-page">
-                        <Icon src={RiSystemArrowRightSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+                       
                     </button>
                 </div>
             </div>

@@ -1,6 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { handleAuthToken } from "$lib/store/routes";
 import { ServerURl } from "$lib/backendUrl"
 import axios from "axios"
@@ -86,7 +84,6 @@ networks.forEach(element => {
                           <div class="balance">Balance</div>
                           <div class="amount">{(parseFloat($usdt_Wallet.balance)).toFixed(4)}</div>
                           <div class="arrow ">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                           </div>
                       </div>
                   </div>
@@ -98,7 +95,6 @@ networks.forEach(element => {
                     <button on:click={handleNetworks_isOpen} class="select-trigger">
                         {actice_network.network}
                         <div class="arrow ">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)"   />
                         </div>
                     </button>
                     {#if is_open}

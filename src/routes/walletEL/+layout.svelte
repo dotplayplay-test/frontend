@@ -2,19 +2,11 @@
 import "../../styles/transactions/deposit.css"
 /** @type {import('./$types').PageLoad} */
 export let data;
-
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import BiTransfer from "svelte-icons-pack/bi/BiTransfer";
-import FaSolidWallet from "svelte-icons-pack/fa/FaSolidWallet";
-import IoSwapVerticalOutline from "svelte-icons-pack/io/IoSwapVerticalOutline";
-import SiVault from "svelte-icons-pack/si/SiVault";
 import {
     checkIsOpen
 } from "$lib/store/swaps/index"
 import { showcoins , handleSecurity} from "$lib/store/deposit"
-import BsCashCoin from "svelte-icons-pack/bs/BsCashCoin";
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+
 
 import {
     goto
@@ -49,7 +41,6 @@ const handleOpenCoinSelect = (() => {
         <div class="dialog " style="opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px; transform: scale(1) translateZ(0px);">
             {#if $checkIsOpen || !$handleSecurity}
             <button on:click={()=> handleOpenCoinSelect()} class="dialog-back" style="opacity: 1; transform: none;">
-                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
             </button>
             {/if}
 
@@ -64,7 +55,6 @@ const handleOpenCoinSelect = (() => {
                 <div class="sc-fZzbTk sobNK">
                     <button>
                         <span class="icon">
-                            <Icon src={BiTransfer}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                         </span>
                         <span>Transactions</span>
                     </button>
@@ -72,7 +62,6 @@ const handleOpenCoinSelect = (() => {
                 {/if}
             </div>
             <button on:click={()=> goto("/") } class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
 
            
@@ -81,19 +70,15 @@ const handleOpenCoinSelect = (() => {
                 <div id="wallet" class="sc-kMyqmI hioXRL">
                     <div class="sc-cAUCVt fsVpnS">
                         <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${ "/wallet/deposit" === data.route  ? `active` : "" } `}>
-                            <Icon src={FaSolidWallet}  size="18"  color={`${"/wallet/deposit" === data.route ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
                             <div class="title">Deposit</div>
                         </button>
                         <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${"/wallet/withdraw" === data.route  ? `active` : "" } `}>
-                            <Icon src={BsCashCoin}  size="18"   color={`${"/wallet/withdraw" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">Withdraw</div>
                         </button>
                         <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${"/wallet/swap" === data.route  ? `active` : "" } `}>
-                            <Icon src={IoSwapVerticalOutline}  size="18"   color={`${"/wallet/swap" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">DPPSwap</div>
                         </button>
                         <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${"/wallet/vault" === data.route  ? `active` : "" } `}>
-                            <Icon src={SiVault}  size="18"   color={`${"/wallet/vault" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                             <div class="title">Vault Pro</div>
                         </button>
                     </div>
@@ -133,32 +118,26 @@ const handleOpenCoinSelect = (() => {
                 <div class="dialog-title">Wallet</div>
                 <div class="sc-jSYIrd fktpVO">
                     <button>
-                        <Icon src={BiTransfer}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                         <span>Transactions</span>
                     </button>
                 </div>
             </div>
             <button on:click={()=> handleClose() } class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon src={IoCloseSharp}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
             </button>
         </div>
         <div class="dialog-body no-style" style="z-index: 2; transform: none;">
             <div id="wallet" class="sc-kMyqmI hioXRL">
                 <div class="sc-hctura jEHNdH">
                     <button on:click={()=> handleNavigation("/wallet/deposit")} class={`tab ${ "/wallet/deposit" === data.route  ? `active` : "" } `}>
-                        <Icon src={FaSolidWallet}  size="18"  color={`${"/wallet/deposit" === data.route ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `} className="custom-icon" title="arror" />
                         <div class="title">Deposit</div>
                     </button>
                     <button on:click={()=> handleNavigation("/wallet/withdraw")} class={`tab ${"/wallet/withdraw" === data.route  ? `active` : "" } `}>
-                        <Icon src={BsCashCoin}  size="18"   color={`${"/wallet/withdraw" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">Withdraw</div>
                     </button>
                     <button on:click={()=> handleNavigation("/wallet/swap")} class={`tab ${"/wallet/swap" === data.route  ? `active` : "" } `}>
-                        <Icon src={IoSwapVerticalOutline}  size="18"   color={`${"/wallet/swap" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">DPPSwap</div>
                     </button>
                     <button on:click={()=> handleNavigation("/wallet/vault")} class={`tab ${"/wallet/vault" === data.route  ? `active` : "" } `}>
-                        <Icon src={SiVault}  size="18"   color={`${"/wallet/vault" === data.route  ? `rgb(255, 255, 255` : "rgba(153, 164, 176, 0.6)" }  `}  className="custom-icon" title="arror" />
                         <div class="title">Vault Pro</div>
                     </button>
                 </div>

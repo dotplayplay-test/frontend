@@ -1,12 +1,6 @@
 <script>
 import { error_msg } from "../store/index"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp"
-import FaSolidShare from "svelte-icons-pack/fa/FaSolidShare";
-import SiMoneygram from "svelte-icons-pack/si/SiMoneygram";
-import BsCreditCardFill from "svelte-icons-pack/bs/BsCreditCardFill";
-import RiFinanceHandCoinFill from "svelte-icons-pack/ri/RiFinanceHandCoinFill";
-import RiSystemArrowLeftSLine from "svelte-icons-pack/ri/RiSystemArrowLeftSLine";
+
 import { handleAuthToken } from "$lib/store/routes"
 import { browser } from '$app/environment';
 export let DgII
@@ -91,14 +85,13 @@ $:{
     <div class="dialog "style={`${is_mobile ? "transform: scale(1) translateZ(0px);" : "opacity: 1; width: 464px; height: 631px; margin-top: -315.5px; margin-left: -232px;"}  `}>
         {#if is_seeed_settigs}
             <button on:click={()=> handleSeedSettings()} class="dialog-back" style="opacity: 1; transform: none;">
-                <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" />
+                <!-- <Icon src={RiSystemArrowLeftSLine}  size="23"  color="rgba(153, 164, 176, 0.6)" /> -->
             </button>
         {/if}
         <div class={`dialog-head ${is_seeed_settigs ? "has-back" : "has-close"} `}>
             <div class="dialog-title">{is_seeed_settigs ? "Seed Settings" : "Details"}</div>
         </div>
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon"  />
         </button>
         {#if !is_loading}
         {#if !is_seeed_settigs}
@@ -112,7 +105,6 @@ $:{
                     {/if}
                     <div class="sc-jibziO gZqspm game-share">
                         <button on:click={handleSharedBet} class="sc-jibziO gZqspm game-share">
-                            <Icon src={FaSolidShare}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="share to friends" />
                         </button>
                     </div>
                     <div class="rt_info">
@@ -128,7 +120,6 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={SiMoneygram}  size="13"  color="rgb(223, 39, 113)" className="custom-icon"  />
                                 </span>
                                 Amount
                             </div>
@@ -137,7 +128,6 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={BsCreditCardFill}  size="13"  color="rgb(119, 60, 253)" className="custom-icon"  />
                                 </span>
                                 Payout
                             </div>
@@ -146,7 +136,6 @@ $:{
                         <div class="item-wrap">
                             <div class="label flex-center">
                                 <span style="padding-right: 3px;">
-                                    <Icon src={RiFinanceHandCoinFill}  size="13"  color="rgb(218, 30, 40)" className="custom-icon"  />
                                 </span>
                                 Profit
                             </div>

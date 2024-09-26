@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import AiOutlineDoubleRight from "svelte-icons-pack/ai/AiOutlineDoubleRight";
   import { handleisLoggin } from "$lib/store/profile";
   import AchieveBanner from "$lib/achieve/Banner.svelte";
 </script>
@@ -37,13 +35,7 @@
               <div class="effect-item"></div>
             </div>
             <div class="stage__arrow flex-center">
-              <Icon
-                src={AiOutlineDoubleRight}
-                size="18"
-                color="rgb(255, 212, 68)"
-                className="custom-icon"
-                title="arror"
-              />
+
             </div>
           </div>
           {#if $handleisLoggin}
@@ -73,13 +65,7 @@
               <div class="effect-item"></div>
             </div>
             <div class="stage__arrow flex-center">
-              <Icon
-                src={AiOutlineDoubleRight}
-                size="18"
-                color="rgb(255, 212, 68)"
-                className="custom-icon"
-                title="arror"
-              />
+
             </div>
           </div>
           {#if $handleisLoggin}
@@ -109,13 +95,7 @@
               <div class="effect-item"></div>
             </div>
             <div class="stage__arrow flex-center">
-              <Icon
-                src={AiOutlineDoubleRight}
-                size="18"
-                color="rgb(255, 212, 68)"
-                className="custom-icon"
-                title="arror"
-              />
+
             </div>
           </div>
           {#if $handleisLoggin}

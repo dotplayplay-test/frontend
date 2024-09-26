@@ -2,8 +2,7 @@
   import { onMount } from "svelte";
   import { myStore, winners } from "$lib/bonus/store";
   import {getRoll, getWinners, getBonus, createRoll} from "$lib/bonus/roll";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import Icon from "svelte-icons-pack/Icon.svelte";
+
 
   let userData;
   let bonus;
@@ -110,13 +109,7 @@
       on:click={() => window.history.back()}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
     >
-      <Icon
-        src={IoCloseSharp}
-        size="20"
-        color="rgb(255, 255, 255)"
-        className="custom-icon"
-        title="arror"
-      />
+
     </button>
       <div
         class="dialog-body default-style"

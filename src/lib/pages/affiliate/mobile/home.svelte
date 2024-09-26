@@ -1,13 +1,11 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 import { createEventDispatcher } from 'svelte';
 import { handleAuthToken } from "$lib/store/routes"
 import { handleisLoggin } from "$lib/store/profile";
 import { ServerURl } from "$lib/backendUrl"
 const URL = ServerURl()
 import { affiliate_info, affilliate_info } from "$lib/pages/affiliate/main/store/index";
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 const dispatch = createEventDispatcher()
 import axios from "axios"
 
@@ -50,7 +48,6 @@ $:{
         <div class="dialog casino-commission-dialog" style="opacity: 1;  transform: scale(1) translateZ(0px);"><div class="dialog-head has-close"><div class="dialog-title">Commission Rewards Rule</div>
     </div>
     <button on:click={()=>handleOpenModal(0)} class="sc-ieecCq fLASqZ close-icon dialog-close">
-        <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" />
     </button>
     <div class="dialog-body default-style casino-commission-dialog" style="z-index: 2; transform: none;"><div class="sc-dkPtRN jScFby scroll-view sc-hcupDf fymRoF"><div class="commission-dialog"></div></div></div></div>
     </div>
@@ -68,7 +65,6 @@ $:{
                 </div>
                 <div class="hover">
                     <button on:click={()=>handleOpenModal(1)} class="theme">USD Rewards Rules</button>
-                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                 </div>
                 <div class="amount-wrap">
                     <div class="amount">{$affilliate_info.available_usd_reward}<span class="unit">USD</span></div>
@@ -79,7 +75,6 @@ $:{
                             <span class="unit gapx"> USD</span>
                         </div>
                         <div class="question-box">
-                            <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                         </div>
                         <div>Locked:&nbsp;
                             <span class="theme">{$affiliate_info.total_usd_reward}</span>
@@ -129,7 +124,6 @@ $:{
                 </div>
                 <a class="list-footer" href="//mycasino.nanogames.io/mycasino/rewards">
                     <span>View More</span>
-                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                 </a>
             </div>
         </div>
@@ -141,7 +135,6 @@ $:{
                     <span class="type theme">Commission Rewards</span></div>
                 <div class="hover">
                     <button on:click={()=>handleOpenModal(0)} class="theme">Commission Reward Rules</button>
-                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                 </div>
                 <div class="amount-wrap">
                     <div class="amount">{$affilliate_info.commission_reward}<span class="unit">USD</span></div>
@@ -162,7 +155,6 @@ $:{
                 <div class="list-content"></div>
                 <a class="list-footer" href="//mycasino.nanogames.io/mycasino/commissions">
                     <span>View More</span>
-                    <Icon src={ RiSystemArrowRightSLine} size="18" color="#fff" className="custom-icon" title="Custom icon params" />
                 </a>
             </div>
         </div>

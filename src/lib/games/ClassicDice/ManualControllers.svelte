@@ -1,9 +1,5 @@
 <script>
   import { default_Wallet } from "$lib/store/coins";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-  import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-  import BsExclamationCircle from "svelte-icons-pack/bs/BsExclamationCircle";
   import {
     payout,
     isbetLoadingBtn,
@@ -227,12 +223,7 @@
               on:mouseenter={() => Handlemax_profit_tips(1)}
               class="sc-gsDKAQ hxODWG icon"
             >
-              <Icon
-                src={BsExclamationCircle}
-                size="15"
-                color="rgb(67, 179, 9)"
-                title=""
-              />
+
             </button>
             {#if max_profit_tips}
               <div class="tip">
@@ -295,16 +286,7 @@
             </div>
           {/if}
           <button on:click={handleMinMax} class="sc-cAhXWc cMPLfC">
-            <Icon
-              src={RiSystemArrowUpSLine}
-              size="80"
-              color="rgba(153, 164, 176, 0.6)"
-            />
-            <Icon
-              src={RiSystemArrowDownSLine}
-              size="80"
-              color="rgba(153, 164, 176, 0.6)"
-            />
+
           </button>
         </div>
       </div>

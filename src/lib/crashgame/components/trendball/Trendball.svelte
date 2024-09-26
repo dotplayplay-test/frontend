@@ -1,8 +1,5 @@
 <script>
-import { goto} from "$app/navigation"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
+
 import { profileStore, handleisLoggin } from "$lib/store/profile"
 import axios from "axios"
 import { onMount  } from "svelte";
@@ -397,8 +394,7 @@ const handlesjen = ((e)=>{
                     </div>
                    {/if}
                     <button on:click={handleMinMax} class="sc-ywFzA dxoLcn">
-                        <Icon src={RiSystemArrowUpSLine}  size="80"  color="rgba(153, 164, 176, 0.6)" />
-                        <Icon src={RiSystemArrowDownSLine}  size="80"  color="rgba(153, 164, 176, 0.6)" />
+
                     </button>
                 </div>
             </div>

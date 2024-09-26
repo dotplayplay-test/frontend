@@ -1,10 +1,5 @@
 <script>
   import { goto } from "$app/navigation";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import RiSystemArrowDropDownLine from "svelte-icons-pack/ri/RiSystemArrowDropDownLine";
-  import AiOutlineCheck from "svelte-icons-pack/ai/AiOutlineCheck";
-  import RiSystemArrowDropLeftLine from "svelte-icons-pack/ri/RiSystemArrowDropLeftLine";
   import { handleSignIn } from "$lib/firebaseAuth/index";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
@@ -97,13 +92,7 @@
       on:click={() => handleCancel()}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
     >
-      <Icon
-        src={IoCloseSharp}
-        size="18"
-        color="rgb(255, 255, 255)"
-        className="custom-icon"
-        title="arror"
-      />
+
     </button>
     <div
       class="dialog-body no-style sc-zjkyB ipnwmW"
@@ -183,17 +172,7 @@
                 on:click={handleAgreement}
                 class="sc-iJKOTD kdCtGQ checkbox"
               >
-                {#if aggreement}
-                  <Icon
-                    src={AiOutlineCheck}
-                    size="16"
-                    color="rgb(67, 179, 9)"
-                    className="dot"
-                    title="arror"
-                  />
-                {:else}
-                  ""
-                {/if}
+
               </button>
               <div class="label">
                 I agree with <a href="/help/agreement" class="argument"
@@ -207,13 +186,7 @@
                 class="sc-iqseJM sc-crHmcD cBmlor gEBngo button button-big signin"
               >
                 <div class="button-inner">
-                  <Icon
-                    src={RiSystemArrowDropLeftLine}
-                    size="25"
-                    color="rgb(255, 255, 255)"
-                    className="custom-icon"
-                    title="arror"
-                  />
+
                   <span>Sign in</span>
                 </div>
               </button>
@@ -293,9 +266,7 @@
   .light-bg {
     background-color: rgb(255, 255, 255) !important;
   }
-  .light-text {
-    color: rgb(49, 55, 61) !important;
-  }
+
   .light-input-control {
     border: 1px solid rgb(233, 234, 242) !important;
     background-color: rgb(245, 246, 250) !important;

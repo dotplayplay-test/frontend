@@ -1,6 +1,5 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+
 
   export let handleOnChange;
   export let showMax = false;
@@ -36,11 +35,7 @@
         {activeCoin.coin_name}
       </p>
       <div class="arrow">
-        <Icon
-          src={RiSystemArrowRightSLine}
-          size="18"
-          color="rgb(255, 255, 255)"
-        />
+
       </div>
     </button>
   {/if}

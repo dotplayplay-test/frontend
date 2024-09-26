@@ -1,9 +1,6 @@
 <script>
 import { payout , range} from "$lib/games/ClassicDice/store/index"
 import { HandleDicePoint, betPosition, dice_history,Handles_alive, handleOnLose,Autopre_bal, HandleHas_won,winning_track,losing_track,handlediceAutoInput, handleStopOnLose, handleOnwin, rollunder,handleStopOnwin, flix} from "./store/index"
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import { dicegameplays } from "../ClassicDice/store/index"
-import AiOutlineSwap from "svelte-icons-pack/ai/AiOutlineSwap";
 import axios from "axios"
 import {dice_troo, dice_wallet} from "$lib/games/ClassicDice/store/index"
 import { onMount } from "svelte";
@@ -300,7 +297,7 @@ $:{
                     <button on:click={handleRollUnder} class="input-control">
                         <input type="text" readonly value={ $rollunder ? $betPosition : (parseFloat(100 - $betPosition)).toFixed(2)}>
                         <span class="right-info">
-                            <Icon src={AiOutlineSwap}  size="18"  color="rgb(67, 179, 9)"/>
+                            <!-- <Icon src={AiOutlineSwap}  size="18"  color="rgb(67, 179, 9)"/> -->
                         </span>
                     </button>
                 </div>

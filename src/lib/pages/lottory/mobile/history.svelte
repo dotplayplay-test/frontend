@@ -1,7 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
 </script>
 
 <div class="tabs-view" style="transform: none;">
@@ -11,25 +8,21 @@ import BiSkipNext from "svelte-icons-pack/bi/BiSkipNext";
             <div class="gameno-control">
                 <button class="sc-iqseJM cBmlor button button-normal pre">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
                     </div>
                 </button>
                 <div class="sc-jJoQJp gOHquD select  ">
                     <div class="select-trigger">
                         <p class="select-option">20230810</p>
                         <div class="arrow ">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
                         </div>
                     </div>
                 </div>
                 <button class="sc-iqseJM cBmlor button button-normal" disabled="">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
                     </div>
                 </button>
                 <button class="sc-iqseJM cBmlor button button-normal" disabled="">
                     <div class="button-inner">
-                        <Icon src={RiSystemArrowRightSLine}  size="18"  color="#fff" className="custom-icon" title="arror" />
 
                         </button>
                         <span class="time">8/10/2023, 3:55:00 PM</span>

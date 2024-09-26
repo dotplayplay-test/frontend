@@ -1,8 +1,6 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
 import Selectcoin from '$lib/wallet/selectcoin.svelte';
 import { onMount } from 'svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
 import { UserProfileEl } from "$lib/index";
 const { handleDefaultwallet, handleUSDTwallet, handlePPLwallet,handlePPFwallet, handlePPDwallet } = UserProfileEl()
 import { default_Wallet } from "$lib/store/coins";
@@ -82,7 +80,6 @@ handleFetchPendingOrder()
                         <img class="coin-icon" alt="" src={$default_Wallet.coin_image}>
                         <span class="currency">{$default_Wallet.coin_name}</span>
                         <span class="svg">
-                            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" />
                         </span>
                     </div>
                 </div>
@@ -117,7 +114,6 @@ handleFetchPendingOrder()
             <p><span class="hover">Deposit</span> to claim your {$default_Wallet.coin_name} bonus now.</p>
             <button class="more-about">
                 <span>More about {$default_Wallet.coin_name}</span>
-                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
             </button>
         </div>
         {/if}

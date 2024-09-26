@@ -1,7 +1,5 @@
 <script>
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
 
 let guideDetails = false
 let isFair = false
@@ -56,7 +54,7 @@ const handleFairness = (() => {
                 </svg> -->
             </div>
             <button on:click={handleFairness} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon   src={IoCloseSharp}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+
             </button>
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
                 <div class="sc-dkPtRN jScFby scroll-view sc-knKHOI gtkhbl">
@@ -80,7 +78,7 @@ const handleFairness = (() => {
 
     <button on:click={handleFairness} class="sc-iqseJM cBmlor button button-normal btn">
         <div class="button-inner">Provably Fair
-            <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+
         </div>
     </button>
 </div>
@@ -94,7 +92,7 @@ const handleFairness = (() => {
                 <div class="dialog-title">What is NNL?</div>
             </div>
             <button on:click={handleGudeDetails} class="sc-ieecCq fLASqZ close-icon dialog-close">
-                <Icon  src={IoCloseSharp}  size="25"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+
             </button>
             <div class="dialog-body default-style " style="z-index: 2; transform: none;">
                 <div class="sc-dkPtRN jScFby scroll-view sc-bvFjSx kBIMm">
@@ -123,7 +121,7 @@ const handleFairness = (() => {
         <div class="desc">NNL (NG Lottery) is a token created by NANOGAMES.IO for players who love the Lottery. You can use NNL to redeem lottery tickets in the Lottery at any time, 1 NNL = 1 lottery ticket. </div>
         <div class="btn">
             <button on:click={handleGudeDetails}>Details
-                <Icon src={RiSystemArrowRightSLine}  size="18"  color="rgb(67, 179, 9)" className="custom-icon" title="arror" />
+
             </button>
         </div>
     </div>

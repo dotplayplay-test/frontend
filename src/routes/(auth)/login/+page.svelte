@@ -1,8 +1,5 @@
 <script>
   import { goto } from "$app/navigation";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
   import { handleLogin } from "$lib/firebaseAuth/index";
   import {
     handleGoogleAuth,
@@ -109,13 +106,7 @@
       on:click={() => handleCancel()}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
     >
-      <Icon
-        src={IoCloseSharp}
-        size="18"
-        color="rgb(255, 255, 255)"
-        className="custom-icon"
-        title="arror"
-      />
+
     </button>
 
     {#if !is_forget_password}
@@ -218,13 +209,7 @@
               >
                 <div class="button-inner">
                   <span>Sign up</span>
-                  <Icon
-                    src={RiSystemArrowRightSLine}
-                    size="18"
-                    color=" rgb(245, 246, 247)"
-                    className="sc-gsDKAQ hxODWG icon"
-                    title="arror"
-                  />
+ 
                 </div>
               </button>
             </div>

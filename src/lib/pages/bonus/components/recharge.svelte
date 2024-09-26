@@ -1,13 +1,12 @@
 <script>
-    import Icon from "svelte-icons-pack/Icon.svelte";
+
     import { allcashback, error_msg } from "../store/index";
-    import BiCoinStack from "svelte-icons-pack/bi/BiCoinStack";
+
     import moment from "moment";
     import Tooltip from "$lib/components/tooltip.svelte";
-    import BiHelpCircle from "svelte-icons-pack/ri/RiSystemQuestionLine";
+
     import { handleAuthToken } from "$lib/store/routes";
-    import RiSystemTimeFill from "svelte-icons-pack/ri/RiSystemTimeFill";
-    import FaSolidChessQueen from "svelte-icons-pack/fa/FaSolidChessQueen";
+
     import axios from "axios";
     import { ServerURl } from "$lib/backendUrl";
     import { onMount, onDestroy } from "svelte";
@@ -236,11 +235,7 @@
                 <Tooltip
                     text="If you have wagered a minimum of $1,000 in the past 7 days (24/7). Once activated, your Recharge will be redeemable for the next 7 days."
                 >
-                    <Icon
-                        src={BiHelpCircle}
-                        size="23"
-                        color="rgba(153, 164, 176, 0.6)"
-                    />
+     
                 </Tooltip>
             </div>
         </div>
@@ -307,13 +302,7 @@
         {#if $allcashback.vip_level < 21}
             <div class="quests-btn">
                 <span style="padding-right: 12px;">
-                    <Icon
-                        src={FaSolidChessQueen}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+
                 </span>
                 <span>Available at VIP 22</span>
             </div>
@@ -353,26 +342,14 @@
         {:else if $allcashback.recharge_balance < 1000}
             <div class="quests-btn">
                 <span style="padding-right: 12px;">
-                    <Icon
-                        src={BiCoinStack}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+  
                 </span>
                 <span>Wager more!</span>
             </div>
         {:else}
             <button class="quests-btn">
                 <span style="padding-right: 12px; height: 18px">
-                    <Icon
-                        src={RiSystemTimeFill}
-                        size="18"
-                        color="#75808c"
-                        className="custom-icon"
-                        title="arror"
-                    />
+ 
                 </span>
                 <span
                     style="font-size: 16px;  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; letter-spacing: 2px;"

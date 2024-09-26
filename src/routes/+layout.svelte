@@ -5,8 +5,6 @@
   import { handleAuthToken } from "$lib/store/routes";
   import { browser } from "$app/environment";
   $: routes.set(data);
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import HiSolidMenu from "svelte-icons-pack/hi/HiSolidMenu";
   import { theme } from "$lib/store/_theme";
   import SpinWheel from "$lib/spin-wheel/index.svelte";
   setTimeout(() => {
@@ -219,7 +217,6 @@
         on:click={handleMainMenu}
         class="menu"
       >
-        <Icon src={HiSolidMenu} size="18" color="#fff" />
       </button>
     </div>
   </div>

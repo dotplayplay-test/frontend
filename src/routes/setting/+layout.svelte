@@ -4,8 +4,6 @@
 
   $: data.route;
   import "../../styles/settings/index.css";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemSettingsFill from "svelte-icons-pack/ri/RiSystemSettingsFill";
   import { isLightMode } from "../../lib/store/theme";
 
   //   // To retrieve the boolean value
@@ -21,12 +19,7 @@
 >
   <div class="sc-bXTejn dxlfST">
     <p class={$isLightMode ? "light-text title" : "title"}>
-      <Icon
-        src={RiSystemSettingsFill}
-        size="20"
-        color="rgb(67, 179, 9)"
-        title=""
-      />
+
       <span>Global Settings</span>
     </p>
     <button class="sc-ieecCq fLASqZ close-icon">

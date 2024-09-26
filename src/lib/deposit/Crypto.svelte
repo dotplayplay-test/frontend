@@ -1,7 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-  import FaSolidCopy from "svelte-icons-pack/fa/FaSolidCopy";
   import axios from "axios";
   import { onMount } from "svelte";
   import { is_loading, deposit_info } from "$lib/store/deposit";
@@ -171,11 +168,7 @@
           <div class="balance">Balance</div>
           <div class="amount">{parseFloat(active_coin.balance).toFixed(4)}</div>
           <div class="arrow">
-            <Icon
-              src={RiSystemArrowRightSLine}
-              size="18"
-              color="rgb(255, 255, 255)"
-            />
+
           </div>
         </div>
       </div>
@@ -192,13 +185,7 @@
             >
               {actice_network.network}
               <div class="arrow">
-                {#if !$deposit_info}
-                  <Icon
-                    src={RiSystemArrowRightSLine}
-                    size="18"
-                    color="rgb(255, 255, 255)"
-                  />
-                {/if}
+
               </div>
             </button>
             {#if is_open}
@@ -251,11 +238,7 @@
                     style="cursor: pointer;"
                     class="arrow"
                   >
-                    <Icon
-                      src={FaSolidCopy}
-                      size="18"
-                      color="rgb(255, 255, 255)"
-                    />
+  
                   </button>
                 {/if}
               </div>

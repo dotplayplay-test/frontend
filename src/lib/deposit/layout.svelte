@@ -1,6 +1,4 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
   import Crypto from "./Crypto.svelte";
   import { createEventDispatcher } from "svelte";
   import Fiat from "./fiat.svelte";
@@ -46,7 +44,6 @@
         <div class="dialog-title">Deposit</div>
       </div>
       <button on:click={handleCancel} class="close-icon i1gm0mn8 dialog-close">
-        <Icon src={IoCloseSharp} size="23" color="rgba(153, 164, 176, 0.6)" />
       </button>
       <div class="ui-tabs tabs-circle">
         <div class="tabs-scroll">

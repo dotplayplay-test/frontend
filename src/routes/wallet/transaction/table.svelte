@@ -1,6 +1,5 @@
 <script>
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
+\
 
   export let fields = [{ label: "", id: "" }];
   export let emptyText;
@@ -38,13 +37,7 @@
         <div class="select-trigger">
           {perPageCount}
           <div class="arrow top">
-            <Icon
-              src={RiSystemArrowRightSLine}
-              size="23"
-              color="rgba(153, 164, 176, 0.6)"
-              className="custom-icon"
-              title="arror"
-            />
+
           </div>
         </div>
       </div>

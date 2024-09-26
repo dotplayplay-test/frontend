@@ -3,13 +3,6 @@
 import Gameview from "$lib/games/ClassicDice/gameview.svelte";
 import "$lib/games/ClassicDice/styles/index.css"
 import Controls from "$lib/games/ClassicDice/Controls.svelte";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import AiFillSound from "svelte-icons-pack/ai/AiFillSound";
-import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
-import BiStats from "svelte-icons-pack/bi/BiStats";
-import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
-import BiSolidAlbum from "svelte-icons-pack/bi/BiSolidAlbum";
-import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
 import axios from "axios"
 import {onMount} from "svelte"
 import { handleAuthToken } from "$lib/store/routes"
@@ -130,19 +123,14 @@ const handleSoundState = (()=>{
                     <Gameview />
                     <div class="game-actions">
                         <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                            <Icon src={AiFillSound} size="23"  color={` ${$soundHandler ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Sound" />
                         </button>
                         <button on:click={handleHotKey} class="action-item ">
-                            <Icon src={BiSolidKeyboard}  size="23"  color="rgba(153, 164, 176, 0.6)" />
                         </button>
                         <button on:click={stats} class="action-item ">
-                            <Icon src={BiStats}  size="18"  color="rgb(153, 164, 176)" />
                         </button>
                         <button on:click={hanhisSeed} class="action-item " id="set_seed">
-                            <Icon src={BiSolidAlbum}  size="18"  color="rgb(153, 164, 176)" />
                         </button>
                         <button on:click={handleIsHelp} class="action-item ">
-                            <Icon src={AiOutlineQuestionCircle}  size="18"  color="rgb(153, 164, 176)" />
                         </button>
                     </div>
                 </div>
@@ -181,7 +169,6 @@ const handleSoundState = (()=>{
               <button class="intro-detail">
                 Details
                 <span style="margin-left: 1.125rem;">
-                  <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
                 </span>
               </button>
             </div>

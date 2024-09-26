@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
 import {
     createEventDispatcher
 } from 'svelte';
@@ -18,7 +17,7 @@ const handleClose = (() => {
         <div class="sc-dJjYzT JLcsN dragpop " style="transform: translate3d(468.633px, 191.146px, 0px);">
             <div class="dragpop-title">Trends</div>
             <button on:click={()=> handleClose()}  class="dragpop-close hover">
-                <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+             
             </button>
             <div class="dragpop-content">
                 <div class="sc-iJCbQK liaPil">

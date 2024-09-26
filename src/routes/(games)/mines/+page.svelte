@@ -2,20 +2,12 @@
 import Gameview from "$lib/games/mines/gameview.svelte";
 import "$lib/games/mines/styles/index.css";
 import Controls from "$lib/games/mines/Controls.svelte";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import FiMusic from "svelte-icons-pack/fi/FiMusic";
-import TiVolumeDown from "svelte-icons-pack/ti/TiVolumeDown";
 import {onMount} from "svelte";
 import axios from "axios";
 import { screen, is_open__Appp, is_open__chat } from "$lib/store/screen";
 import { handleAuthToken } from "$lib/store/routes";
-import RiSystemArrowDropRightLine from "svelte-icons-pack/ri/RiSystemArrowDropRightLine";
 import { DicegameSocket } from "$lib/games/mines/socket/Socket"
-import TiVolumeMute from "svelte-icons-pack/ti/TiVolumeMute";
-import BiSolidKeyboard from "svelte-icons-pack/bi/BiSolidKeyboard";
-import BsEgg from "svelte-icons-pack/bs/BsEgg";
-import RiMapGuideFill from "svelte-icons-pack/ri/RiMapGuideFill";
-import AiOutlineQuestionCircle from "svelte-icons-pack/ai/AiOutlineQuestionCircle";
+
 import Allbet from "$lib/games/mines/componets/allbet.svelte";
 import Hotkey from "$lib/games/mines/componets/hotkey.svelte";
 import LiveStats from "$lib/games/mines/componets/liveStats.svelte";
@@ -140,28 +132,19 @@ const handleSoundState = (()=>{
     
                     <div class="game-actions">
                         <button disabled={playPlayb} on:click={()=> playBackground() } class={`action-item ${playPlayb ? "active" : ""} `}>
-                            <Icon src={FiMusic}  size="23"  color={` ${playPlayb ? "rgb(67, 179, 9)" : "rgba(153, 164, 176, 0.6)"} `} title="Music" />
                         </button>
 
                         <button on:click={()=> handleSoundState()} class={`action-item ${$soundHandler ? "active" : ""} `}>
-                            {#if $soundHandler}
-                             <Icon src={TiVolumeDown}  size="23"  color={`rgb(67, 179, 9)`} title="Sound" />
-                                {:else}
-                             <Icon src={TiVolumeMute}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Sound closed" />
-                            {/if}
+                   
                         </button>
 
                         <button on:click={handleHotKey} class="action-item  ">
-                            <Icon src={BiSolidKeyboard}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Hot keys" />
                         </button>
                         <button on:click={hanhisSeed} class="action-item  " id="set_seed">
-                            <Icon src={BsEgg}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Seed" />
                         </button>
                         <button on:click={stats} class="action-item  ">
-                            <Icon src={RiMapGuideFill}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Live stat" />
                         </button>
                         <button on:click={handleIsHelp} class="action-item  ">
-                            <Icon src={AiOutlineQuestionCircle}  size="23"  color={`rgba(153, 164, 176, 0.6)`} title="Help" />
                         </button>
                     </div>
                 </div>
@@ -201,7 +184,6 @@ const handleSoundState = (()=>{
               <button class="intro-detail">
                 Details
                 <span style="margin-left: 1.125rem;">
-                  <Icon src={RiSystemArrowDropRightLine}  size="23"  color="rgba(153, 164, 176, 0.6)"  />
                 </span>
               </button>
             </div>

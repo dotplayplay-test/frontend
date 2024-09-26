@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCopy from "svelte-icons-pack/io/IoCopy";
+
 import { deposit_info } from "$lib/store/deposit"
 
 let address = $deposit_info.pay_address 
@@ -57,7 +56,6 @@ setInterval(()=>{
                     <div style="color: green; font-weight:bold">{address_msg}</div>
                     <button class="sc-iqseJM cBmlor button button-normal copy-button">
                         <button on:click={handleCopyCode} class="button-inner">
-                            <Icon src={IoCopy}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                         </button>
                     </button>
                 </div>
@@ -73,7 +71,6 @@ setInterval(()=>{
                     <input class="address" readonly value={$deposit_info.amount}>
                     <button on:click={handleCopyAmomut} class="sc-iqseJM cBmlor button button-normal copy-button">
                         <div class="button-inner">
-                            <Icon src={IoCopy}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
                         </div>
                     </button>
                 </div>

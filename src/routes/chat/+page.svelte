@@ -1,9 +1,4 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import AiFillSetting from "svelte-icons-pack/ai/AiFillSetting";
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
-import BsChatRightDotsFill from "svelte-icons-pack/bs/BsChatRightDotsFill";
-import IoPersonAdd from "svelte-icons-pack/io/IoPersonAdd";
 import "../../styles/private_chat/index.css"
 
 let isMessages = true
@@ -31,14 +26,12 @@ const handlePrivateChat = ((e) => {
             <div class="dialog-title">Chat room</div>
             <a class="sc-jLuXOi gPCRer" tag="button" href="/">
                 <span class="sc-gsDKAQ hxODWG icon">
-                    <Icon src={AiFillSetting}  size="18"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
                 </span>
                 Options
             </a>
         </div>
 
         <button on:click={()=> history.back()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
         </button>
 
         <div class="dialog-body no-style sc-dOpZeA hriBCN">
@@ -112,13 +105,11 @@ const handlePrivateChat = ((e) => {
                         <div class="tabs">
                             <button  on:click={()=> handlePrivateChat(3)} class={`tab-item ${!isMessages ? "is-active" : ""} `}>
                                 <span class="sc-gsDKAQ hxODWG icon">
-                                    <Icon src={IoPersonAdd}  size="18" color={` ${!isMessages ? " rgb(67, 179, 9)" : "rgba(152, 167, 181, 0.8)"}`}  className="custom-icon" title="arror" />
                                 </span>
                                 <div class="label">Friends</div>
                             </button>
                             <button  on:click={()=> handlePrivateChat(4)} class={`tab-item ${isMessages ? "is-active" : ""} `}>
                                 <span class="sc-gsDKAQ hxODWG icon">
-                                    <Icon src={BsChatRightDotsFill}  size="14"  color={` ${isMessages ? " rgb(67, 179, 9)" : "rgba(152, 167, 181, 0.8)"}`} className="custom-icon" title="arror" />
                                 </span>
                                 <div class="label">Messages</div>
                             </button>

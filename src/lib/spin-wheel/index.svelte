@@ -5,8 +5,6 @@
   import { handleAuthToken } from "$lib/store/routes";
   import { onMount, onDestroy } from "svelte";
   import { goto } from "$app/navigation";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 
   let light;
   let spinWheel;
@@ -169,13 +167,7 @@
       on:click={() => handleCancel()}
       class="sc-ieecCq fLASqZ close-icon dialog-close"
     >
-      <Icon
-        src={IoCloseSharp}
-        size="18"
-        color="rgb(255, 255, 255)"
-        className="custom-icon"
-        title="arror"
-      />
+
     </button>
     <div class="header">
       <h1>SPIN TO WIN</h1>

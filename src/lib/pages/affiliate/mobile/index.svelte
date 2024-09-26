@@ -1,14 +1,7 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
-import CgLoadbarDoc from "svelte-icons-pack/cg/CgLoadbarDoc";
-import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
 
-import TiClipboard from "svelte-icons-pack/ti/TiClipboard";
 import { handleisLoggin } from "$lib/store/profile";
 import { error, Handleis_activated , affilliate_info} from "../main/store/index";
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { createEventDispatcher } from 'svelte';
 import Terms from '../component/terms.svelte';
 import Rules from '../component/rules.svelte';
@@ -157,7 +150,6 @@ const handleCreateReferral = (async()=>{
             {/if}
         </div>
         <button on:click={handlePopRule} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" />
         </button>
         <div class="dialog-body default-style casino-affiliate-terms" style="z-index: 2; transform: none;">
             {#if terms && !usd_rule}
@@ -178,11 +170,9 @@ const handleCreateReferral = (async()=>{
                 <div class="header-sub flex-center">
                     <div class="left flex-center">
                         <button on:click={()=>handlePopRule(2)} class="m-item rules">
-                            <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon" />
                             <span>Rules</span>
                         </button>
                         <button on:click={()=>handlePopRule(1)} class="m-item terms">
-                            <Icon src={BsCircleSquare} size="18" className="sc-gsDKAQ hxODWG icon" />
                             <span>Terms</span>
                         </button>
                     </div>
@@ -191,7 +181,6 @@ const handleCreateReferral = (async()=>{
             </div>
             <div class="banner">
                 <button class="management">
-                    <Icon src={CgLoadbarDoc} size="24" color="#fff" className="sc-gsDKAQ hxODWG icon" />
                 </button>
             </div>
             <div class="container">
@@ -284,7 +273,6 @@ const handleCreateReferral = (async()=>{
                                     <div class="flex">
                                         <div class="amount">100 USD</div>
                                         <a href="/#" class="hover theme">USD Rewards Rules</a>
-                                        <Icon src={RiSystemArrowRightSLine} color="rgb(245, 246, 247)" size="18" />
                                     </div>
                                 </div>
 

@@ -1,14 +1,5 @@
 <script>
-  import { isLightMode } from "../../../lib/store/theme";
-  import Icon from "svelte-icons-pack/Icon.svelte";
-  import RiSystemArrowDownSLine from "svelte-icons-pack/ri/RiSystemArrowDownSLine";
-  import RiSystemArrowUpSLine from "svelte-icons-pack/ri/RiSystemArrowUpSLine";
-  import HiSolidSpeakerphone from "svelte-icons-pack/hi/HiSolidSpeakerphone";
-  import VscLaw from "svelte-icons-pack/vsc/VscLaw";
-  import IoGitNetwork from "svelte-icons-pack/io/IoGitNetwork";
-  import RiDocumentFolderOpenFill from "svelte-icons-pack/ri/RiDocumentFolderOpenFill";
-  import BiHelpCircle from "svelte-icons-pack/bi/BiHelpCircle";
-  import BsClock from "svelte-icons-pack/bs/BsClock";
+
   import { default_Wallet, coin_list } from "$lib/store/coins";
 
   import { onMount } from "svelte";
@@ -532,18 +523,7 @@
                           >x2</button
                         >
                         <button class="sc-cAhXWc cMPLfC flex-button">
-                          <Icon
-                            src={RiSystemArrowUpSLine}
-                            size="17"
-                            color="rgba(153, 164, 176, 0.6)"
-                            title=""
-                          />
-                          <Icon
-                            src={RiSystemArrowDownSLine}
-                            size="17"
-                            color="rgba(153, 164, 176, 0.6)"
-                            title=""
-                          />
+            
                         </button>
                       </div>
                     </div>
@@ -653,18 +633,7 @@
                           >x2</button
                         >
                         <button class="sc-cAhXWc cMPLfC flex-button">
-                          <Icon
-                            src={RiSystemArrowUpSLine}
-                            size="17"
-                            color="rgba(153, 164, 176, 0.6)"
-                            title=""
-                          />
-                          <Icon
-                            src={RiSystemArrowDownSLine}
-                            size="17"
-                            color="rgba(153, 164, 176, 0.6)"
-                            title=""
-                          />
+                  
                         </button>
                       </div>
                     </div>
@@ -811,12 +780,7 @@
           </div>
           <div class="no-web sc-bQFuvY bFXMsx">
             <div class="history">
-              <Icon
-                src={BsClock}
-                size="12"
-                color="rgba(153, 164, 176, 0.6)"
-                title=""
-              />History
+          History
             </div>
             <div class="title">Result</div>
             <div class="wrap ball-wrap">
@@ -993,40 +957,15 @@
       </div>
       <div class="game-actions">
         <button class="action-item"
-          ><Icon
-            src={HiSolidSpeakerphone}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            title=""
-          /></button
+          ></button
         ><button class="action-item"
-          ><Icon
-            src={IoGitNetwork}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            title=""
-          /></button
+          ></button
         ><button class="action-item"
-          ><Icon
-            src={VscLaw}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            title=""
-          /></button
+          ></button
         ><button class="action-item"
-          ><Icon
-            src={RiDocumentFolderOpenFill}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            title=""
-          /></button
+          ></button
         ><button class="action-item"
-          ><Icon
-            src={BiHelpCircle}
-            size="23"
-            color="rgba(153, 164, 176, 0.6)"
-            title=""
-          /></button
+          ></button
         ><button class="action-item"
           ><svg
             xmlns:xlink="http://www.w3.org/1999/xlink"

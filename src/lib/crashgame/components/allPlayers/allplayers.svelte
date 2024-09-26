@@ -1,6 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
+
 import { createEventDispatcher } from 'svelte';
 import { handleAllPlayerStore } from "../../store"
 import Fulldetails from './fulldetails.svelte';
@@ -40,7 +39,7 @@ onMount(() => {
             <div class="dialog-title">All Players</div>
         </div> 
         <button on:click={()=> handleCloseHelp()}  class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="23"  color="rgba(153, 164, 176, 0.6)" className="custom-icon" title="arror" />
+
         </button>
 
         {#if !isFullDetails}

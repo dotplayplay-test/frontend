@@ -1,9 +1,5 @@
 <script>
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import RiSystemArrowRightSLine from "svelte-icons-pack/ri/RiSystemArrowRightSLine";
-import CgFileDocument from "svelte-icons-pack/cg/CgFileDocument";
-import CgLoadbarDoc from "svelte-icons-pack/cg/CgLoadbarDoc";
-import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
+
 </script>
 
 <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
@@ -13,11 +9,9 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
                 <div class="header-sub flex-center">
                     <div class="left flex-center">
                         <div class="m-item rules">
-                            <Icon src={CgFileDocument} size="18" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
                             <span>Rules</span>
                         </div>
                         <div class="m-item terms">
-                            <Icon src={BsCircleSquare} size="18" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
                             <span>Terms</span>
                         </div>
                     </div>
@@ -26,7 +20,6 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
             </div>
             <div class="banner">
                 <button class="management">
-                    <Icon src={CgLoadbarDoc} size="24" color="#fff" className="sc-gsDKAQ hxODWG icon" title="Custom icon params" />
                 </button>
             </div>
             <div class="container">
@@ -69,10 +62,12 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
                     <div class="sc-haTkiu fgzCdg rewards-graph">
                         <div class="title">Affiliate Rewards</div>
                         <div class="rewards-wrap">
+                            <!-- svelte-ignore a11y-invalid-attribute -->
                             <a href="#" class="item-rewards">
                                 <div class="type ttu">USD Rewards</div>
                                 <div class="tip-detail">Click for more details</div>
                             </a>
+                              <!-- svelte-ignore a11y-invalid-attribute -->
                             <a href="#" class="item-commission">
                                 <div class="type">Commission Rewards</div>
                                 <div class="tip-detail">Click for more details</div>
@@ -91,8 +86,8 @@ import BsCircleSquare from "svelte-icons-pack/bs/BsCircleSquare";
                                     <div class="desc">Every friend you invite will get you</div>
                                     <div class="flex">
                                         <div class="amount">100 USD</div>
+                                            <!-- svelte-ignore a11y-invalid-attribute -->
                                         <a href="#" class="hover theme">USD Rewards Rules</a>
-                                        <Icon src={RiSystemArrowRightSLine} color="rgb(245, 246, 247)" size="18" title="Custom icon params" />
                                     </div>
                                 </div>
                                 <div class="graph" id="system-rewards" ></div>

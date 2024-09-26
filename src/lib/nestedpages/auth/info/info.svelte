@@ -4,8 +4,6 @@ import { handleNestedRoute } from "$lib/store/nested_routes";
 import { error_msg } from "./store";
 import { handleSepProfile } from "$lib/profleAuth/store"
 import axios from "axios";
-import Icon from 'svelte-icons-pack/Icon.svelte';
-import IoCloseSharp from "svelte-icons-pack/io/IoCloseSharp";
 import { profileStore } from "$lib/store/profile";
 import { routes} from "$lib/store/routes";
 import { handleAuthToken } from "$lib/store/routes";
@@ -155,7 +153,6 @@ const handleClose = (()=>{
             <img alt="logo" class="sc-bOtlzW QccSQ" src="https://res.cloudinary.com/dxwhz3r81/image/upload/v1697848521/dpp-logowhite_lbifm7.png">
         </div>
         <button on:click={()=> handleClose()} class="sc-ieecCq fLASqZ close-icon dialog-close">
-            <Icon src={IoCloseSharp}  size="18"  color="rgb(255, 255, 255)" className="custom-icon" title="arror" />
         </button>
         <div class="dialog-body no-style sc-zjkyB ipnwmW" style="z-index: 2; transform: none;">
             <div class="welcome">
