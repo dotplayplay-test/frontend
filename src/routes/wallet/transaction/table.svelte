@@ -1,5 +1,4 @@
 <script>
-\
 
   export let fields = [{ label: "", id: "" }];
   export let emptyText;

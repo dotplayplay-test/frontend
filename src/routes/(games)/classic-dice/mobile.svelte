@@ -11,7 +11,7 @@ import cr from "$lib/games/ClassicDice/audio/click.wav"
 import Allbet from "$lib/games/ClassicDice/componets/allbet.svelte";
 import Mybet from "$lib/games/ClassicDice/componets/mybet.svelte";
 import LiveStats from "$lib/games/ClassicDice/componets/liveStats.svelte";
-import Help from "../crash/help.svelte";
+// import Help from "../crash/help.svelte";
 import SeedSetting from "$lib/games/ClassicDice/componets/seedSetting.svelte";
 
 
@@ -199,9 +199,9 @@ const handleSoundState = (()=>{
   <SeedSetting on:close={hanhisSeed}/>
 {/if}
 
-{#if isHelp}
+<!-- {#if isHelp}
 <Help on:close={handleIsHelp} />
-{/if}
+{/if} -->
 
 
 <div class="sc-lhMiDA ePAxUv" style="opacity: 1; transform: none;">
