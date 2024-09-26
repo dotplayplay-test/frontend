@@ -444,25 +444,7 @@
     padding-top: 3.75rem;
     background-color: rgb(23, 24, 27);
   }
-  svg:not(:root) {
-    overflow-clip-margin: content-box;
-    overflow: hidden;
-  }
 
-  svg:hover {
-    color: #fff;
-  }
-  .hxODWG {
-    width: 1.4em;
-    height: 1.4em;
-    fill: rgba(153, 164, 176, 0.6);
-  }
-  .fLASqZ:hover svg {
-    transition: transform 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
-    cursor: pointer;
-    font-size: 0.75rem;
-    color: #fff;
-  }
   .dialog-body {
     position: absolute;
     inset: 0px;

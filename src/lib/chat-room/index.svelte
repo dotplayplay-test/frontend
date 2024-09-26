@@ -996,7 +996,9 @@
                           <ul>
                             {#each chat.coin_rain_participant as item}
                               <li>
-                                <p><a href="">{item.username}</a></p>
+                                <p>
+                                  <!-- svelte-ignore a11y-invalid-attribute -->
+                                  <a href="">{item.username}</a></p>
                                 <p>
                                   <img src={chat.coin_rain_image} alt="" />
                                   <span>{item.share}.000000</span>
@@ -1256,46 +1258,6 @@
     }
   }
 
-  .region_container button {
-    font-size: 15px;
-    padding: 6px 10px;
-    border-radius: 50px;
-    width: 100%;
-    text-align: left;
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .region_container button.active {
-    border: 1px solid var(--primary-color);
-    font-weight: bold;
-  }
-
-  .region_container button:hover {
-    background-color: var(--card-bg-6);
-  }
-
-  .region_container button.active::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: ghostwhite;
-    border-radius: 50%;
-    right: 5px;
-  }
-
-  .region_container button.active::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    z-index: 1;
-    right: 10px;
-  }
 
   .eA-dYOl {
     flex: 1 1 0%;
@@ -1883,69 +1845,11 @@
     height: 100%;
     position: relative;
   }
-
-  .dWgZek .select-wrap .select {
-    height: 100%;
-  }
-
   .gOHquD {
     position: relative;
     height: 2.5rem;
     opacity: 1;
     z-index: 4;
-  }
-
-  .gOHquD .select-trigger {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    overflow: hidden;
-    height: 100%;
-    cursor: pointer;
-    padding: 0px 1.25rem;
-    user-select: none;
-    border-radius: 1.25rem;
-    background: var(--affiliate-bg);
-  }
-
-  .dWgZek .select-wrap .select .select-trigger {
-    color: var(--text-5);
-    background: transparent;
-    border-radius: 0px;
-    padding: 0px;
-    width: 7.25rem;
-    font-weight: bold;
-  }
-
-  .dWgZek .select-wrap .select .select-trigger .select-label {
-    width: 5.75rem;
-    line-height: 3.875rem;
-    background-image: linear-gradient(
-      to top,
-      rgba(91, 174, 28, 0.15),
-      rgba(91, 174, 28, 0) 50%
-    );
-    border-bottom: 2px solid rgb(67, 179, 9);
-    text-align: center;
-  }
-
-  .dWgZek .select-wrap .select .select-trigger .arrow {
-    width: 1.5rem;
-    height: 100%;
-  }
-
-  .gOHquD .select-trigger .arrow {
-    width: 2.5rem;
-    height: 100%;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    position: absolute;
-    right: 0px;
-    top: 0px;
   }
 
   .dWgZek::after {

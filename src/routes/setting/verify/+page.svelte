@@ -119,12 +119,7 @@
 </div>
 
 <style>
-      .light-grey-bg {
-    background-color: rgb(245, 246, 250) !important;
-  }
-  .light-bg {
-    background-color: rgb(255, 255, 255) !important;
-  }
+
   .light-text {
     color: rgb(49, 55, 61) !important;
   }

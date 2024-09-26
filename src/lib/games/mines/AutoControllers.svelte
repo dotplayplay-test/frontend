@@ -3,10 +3,8 @@ import { default_Wallet } from '../../store/coins';
 import { profileStore,handleisLoggin } from "$lib/store/profile"
 import { handleAuthToken } from "$lib/store/routes"
 import { payout, isbetLoadingBtn } from "./store";
-import {liveStats} from "./store"
 import { error_msg, handlediceAutoInput, onWin, HandleDicePoint, soundHandler ,dice_history, HandleHas_won } from "../ClassicDice/store/index"
-import {useLiveStats} from "$lib/hook/livestats"
-const {recordGame} = useLiveStats(liveStats, "MINES_LIVE_STATS")
+
 
 import cr from "./audio/click-button-140881.mp3"
 import win from "./audio/mixkit-achievement-bell-600.wav"

@@ -407,9 +407,7 @@
     display: inline-block;
   }
 
-  .erPQzq .suffix {
-    opacity: 0.5;
-  }
+
 
   .kjMlDW.active {
     border-color: rgb(67, 179, 9);
