@@ -1,5 +1,4 @@
 <script>
-  import AnimatedCounter from "@benzara/svelte-animated-counter";
 
   let isOpen = true;
 </script>
@@ -43,40 +42,13 @@
                     class="bg-appDark100 p-8 justify-around flex my-10 rounded-3xl"
                   >
                     <div class="egg-counter">
-                      <AnimatedCounter
-                        values={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((val) =>
-                          val.toString()
-                        )}
-                        interval={250}
-                        startImmediately={false}
-                        direction="up"
-                        loop={false}
-                        ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-                      />
+                   
                     </div>
                     <div class="egg-counter">
-                      <AnimatedCounter
-                        values={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((val) =>
-                          val.toString()
-                        )}
-                        interval={225}
-                        startImmediately={false}
-                        direction="up"
-                        loop={false}
-                        ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-                      />
+                    
                     </div>
                     <div class="egg-counter">
-                      <AnimatedCounter
-                        values={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((val) =>
-                          val.toString()
-                        )}
-                        interval={200}
-                        startImmediately={false}
-                        direction="up"
-                        loop={false}
-                        ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-                      />
+              
                     </div>
                   </div>
                 {/if}
